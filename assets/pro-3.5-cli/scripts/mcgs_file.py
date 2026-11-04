@@ -12,7 +12,8 @@ import sys
 
 import native_format as f
 from mcs_input_text import InputRecord
-from mcs_window_archive import ControlRecord
+from mcs_window_archive import ControlRecord, WindowSettings
+from control_factory import make_control, page_events, record
 
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8')
@@ -102,25 +103,27 @@ def set_variables(data, additions, updates):
     return {r['name']:r for r in rows}
 
 
-def control(item, variables, primitives):
-    if set(item)-{'type','name','bounds','text','binding','minimum','maximum'}:
-        raise ValueError('Unknown control property')
-    preset=primitives['controls'].get(item['type'])
-    if preset is None:raise ValueError('Unsupported control type')
-    edits={k:v for k,v in item.items() if k!='type'}
-    title(edits['name'])
-    if 'binding' in edits:
-        if edits['binding'] not in variables:raise ValueError('Unknown variable binding')
-        if variables[edits['binding']]['kind'] not in (1,2):raise ValueError('Numeric input requires numeric variable')
-        edits['binding_id']=variables[edits['binding']]['id']
-        edits['binding_type']=variables[edits['binding']]['kind']
-    elif item['type']=='numeric-input':raise ValueError('Numeric input binding required')
-    payload=bytes.fromhex(preset['payload'])
-    if item['type']=='numeric-input':
-        parsed=InputRecord.parse(ControlRecord(preset['kind'],payload,b'',0))
-        parsed.disable_images()
-        payload=parsed.to_bytes()
-    return preset['kind'],f.edit_control(preset['kind'],payload,edits)
+def control(item, variables, primitives, source_pages=()):
+    return make_control(item, variables, primitives, source_pages)
+
+
+def page_columns(data):
+    names={field['name'] for field in data['WndUser']['fields']}
+    # Native Pro currently uses strNote. Preserve an actual legacy annotation
+    # column if supplied; never add a guessed column to the copied schema.
+    note='strNote' if 'strNote' in names else ('strComment' if 'strComment' in names else None)
+    columns=('iID','strName',note,'lbObjects','iDeleteFlag','iCompileFlag')
+    if note is None or any(name not in names for name in columns):
+        raise ValueError('Current WndUser schema is missing a native page field')
+    return columns
+
+
+def template_pages(data):
+    result = []
+    for row in data['WndUser']['rows']:
+        _, values, _ = f.window(f.binary(row['lbObjects']))
+        result.append({'id': row['iID'], 'controls': [record(kind, payload) for kind, payload in values]})
+    return result
 
 
 def root_startup(blob, prefix_size, page_name, page_id):
@@ -142,11 +145,13 @@ def create_data(spec):
     base=data['WndUser']['rows'][0];header,_,trailer=f.window(f.binary(base['lbObjects']))
     pages=[]
     for ident,item in enumerate(spec['pages'],1):
-        if set(item)-{'name','controls'}:raise ValueError('Unknown page property')
+        if set(item)-{'name','controls','events'}:raise ValueError('Unknown page property')
         name=title(item['name']);controls=[control(c,variables,presets) for c in item.get('controls',[])]
         if len({f.common(b)['name'] for _,b in controls})!=len(controls):raise ValueError('Duplicate control name')
         row=copy.deepcopy(base);row.update(iID=ident,strName=name,iCompileFlag=0)
-        row['lbObjects']=f.wrap(f.pack_window(header,controls,f.page_properties(trailer,ident=ident,name=name)))
+        new_trailer=f.page_properties(trailer,ident=ident,name=name)
+        new_trailer=page_events(new_trailer,item.get('events',{}),fresh=True)
+        row['lbObjects']=f.wrap(f.pack_window(header,controls,new_trailer))
         pages.append(row)
     if not pages or len({r['strName'] for r in pages})!=len(pages):raise ValueError('Unique nonempty page list required')
     data['WndUser']['rows']=pages
@@ -175,11 +180,12 @@ def inspect_data(data):
 
 
 def edit_data(data,spec):
-    if set(spec)-{'source_sha256','add_variables','variables','pages'}:raise ValueError('Unknown edit property')
+    if set(spec)-{'source_sha256','add_variables','variables','pages','add_pages'}:raise ValueError('Unknown edit property')
+    originals=copy.deepcopy(data['WndUser']['rows']); source_pages=template_pages(data)
     variables=set_variables(data,spec.get('add_variables',[]),spec.get('variables',[]))
     primitives=json.loads((HOME/'assets/primitives.json').read_text(encoding='utf-8'))
     for page in spec.get('pages',[]):
-        if set(page)-{'id','controls','add_controls'}:raise ValueError('Unknown page edit')
+        if set(page)-{'id','controls','add_controls','events'}:raise ValueError('Unknown page edit')
         row=one(r for r in data['WndUser']['rows'] if r['iID']==page['id'])
         header,records,trailer=f.window(f.binary(row['lbObjects']))
         for change in page.get('controls',[]):
@@ -193,19 +199,31 @@ def edit_data(data,spec):
             if hashlib.sha256(b).hexdigest()!=change['sha256']:raise ValueError('Control preimage mismatch')
             edits=dict(change['edits'])
             if 'name' in edits:title(edits['name'])
-            if 'binding' in edits:
-                target=variables.get(edits['binding'])
-                if target is None or target['kind'] not in (1,2):raise ValueError('Numeric binding not found')
-                edits['binding_id']=target['id']
-                edits['binding_type']=target['kind']
-            records[index]=(kind,f.edit_control(kind,b,edits))
-        records.extend(control(c,variables,primitives) for c in page.get('add_controls',[]))
+            records[index]=(kind,f.edit_control(kind,b,edits,variables))
+        records.extend(control(c,variables,primitives,source_pages) for c in page.get('add_controls',[]))
         names=[]
         for _,b in records:
             try:names.append(f.common(b)['name'])
             except (ValueError,UnicodeError,struct.error):pass
         if len(set(names))!=len(names):raise ValueError('Duplicate control name')
+        if 'events' in page:trailer=page_events(trailer,page['events'])
         row['lbObjects']=f.wrap(f.pack_window(header,records,trailer));row['iCompileFlag']=0
+    ids={r['iID'] for r in data['WndUser']['rows']};names={r['strName'].casefold() for r in data['WndUser']['rows']}
+    for page in spec.get('add_pages',[]):
+        if set(page)-{'id','name','template_page_id','controls','events'}:raise ValueError('Unknown new page property')
+        if 'template_page_id' not in page:raise ValueError('New page needs explicit template_page_id')
+        template=one(r for r in originals if r['iID']==page['template_page_id'])
+        ident=page.get('id',max(ids,default=0)+1);name=title(page['name'])
+        if type(ident)is not int or not 0<ident<=2147483647 or ident in ids or name.casefold() in names:raise ValueError('New page ID/name is invalid or repeated')
+        header,_,trailer=f.window(f.binary(template['lbObjects']))
+        settings=WindowSettings.parse(trailer).clone(ident,name)
+        trailer=page_events(settings.to_bytes(),page.get('events',{}),fresh=True)
+        records=[control(c,variables,primitives,source_pages) for c in page.get('controls',[])]
+        if len({f.common(b)['name'] for _,b in records})!=len(records):raise ValueError('Duplicate new page control name')
+        row=copy.deepcopy(template);row.update(iID=ident,strName=name,iCompileFlag=0,iDeleteFlag=0)
+        row[page_columns(data)[2]]=''
+        row['lbObjects']=f.wrap(f.pack_window(header,records,trailer))
+        data['WndUser']['rows'].append(row);ids.add(ident);names.add(name.casefold())
     return data
 
 
@@ -239,14 +257,28 @@ def write_project(output,spec,source=None):
         if sha(source)!=before_sha:raise ValueError('Source changed while planning')
         with source.open('rb') as src,output.open('xb') as dst:shutil.copyfileobj(src,dst)
         changes=[]
+        new_page_templates={}
+        existing_ids={r['iID'] for r in before['WndUser']['rows']}
+        next_id=max(existing_ids,default=0)+1
+        for page in spec.get('add_pages',[]):
+            ident=page.get('id',next_id);new_page_templates[ident]=page['template_page_id']
+            existing_ids.add(ident);next_id=max(existing_ids)+1
         for table,new in after.items():
             key='iID' if table in ('System','WndUser') else None
-            for old,row in zip(before[table]['rows'],new['rows']):
+            old_rows={row[key]:row for row in before[table]['rows']} if key else None
+            if not key:
+                if canonical({table:before[table]})!=canonical({table:new}):raise ValueError('Unexpected table modification')
+                continue
+            for row in new['rows']:
+                old=old_rows.get(row[key])
+                if old is None:
+                    if table!='WndUser' or row[key] not in new_page_templates:raise ValueError('Unexpected new table row')
+                    columns=page_columns(before)
+                    changes.append({'action':'insert-page','table':'WndUser','template_key':new_page_templates[row[key]],'values':{name:row[name] for name in columns}})
+                    continue
                 values={k:v for k,v in row.items() if v!=old[k]}
-                if values:
-                    if not key:raise ValueError('Unexpected table modification')
-                    changes.append({'action':'update','table':table,'key':key,'id':row[key],'values':values})
-        db({'action':'write','path':str(output),'changes':changes})
+                if values:changes.append({'action':'update','table':table,'key':key,'id':row[key],'values':values})
+        db({'action':'write','path':str(output),'changes':changes,'expected_sha256':before_sha})
     else:
         before_sha=None;after=create_data(spec)
         db({'action':'create','path':str(output),'seed':after})

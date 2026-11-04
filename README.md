@@ -8,7 +8,7 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本次可迁移性补丁移除了控件、策略和批次的样本数量配额，补齐显式安装路径与编辑器路径绑定、ACE 创建失败回退及在线独立预检。仍需适配的真实 ABI、控件和驱动，以及本轮实际验证范围见[可迁移性复查](references/portability-review.md)。
+本次补齐 Pro 离线新增原生按钮及 Stu/Pro 共用的控件、页面与样式工具，规格和分项验收见[离线工厂](references/offline-factories.md)。此前移除数量配额、补齐安装路径绑定与 ACE 回退的记录见[可迁移性复查](references/portability-review.md)。
 
 ## 功能范围
 
@@ -19,18 +19,21 @@
 | 已有文字、输入框、标准按钮等控件修改 | `controls`，支持组内路径及控件前指纹 | 同左，按真实结构适配 |
 | 已有策略源码、配方单元格 | `strategy-source` / `recipe-cell` | 同左，保留双容器与封套 |
 | 已测历史输入框长度异常 | 显式 `normalize-inputs`，只读不自动修复 | 同左 |
-| 基础 JSON 工程、变量、控件创建与编辑 | 无空白工程工厂 | `create` / `edit` / `demo` |
-| 模板控件工厂、样式、预览、文字检查、受限新增窗口 | 保留既有 `tools/` 工具链 | 未将这组 Stu 工具扩展为通用 Pro 工厂 |
+| 基础 JSON 工程、变量、控件创建与编辑 | 无空白工程工厂 | `create` / `edit` / `demo`；含原生按钮、数值/字符输入与显示 |
+| 模板新页、克隆页及事件 | 共享 `new_window/clone_window`、`new-window` | 同左；JSON `add_pages/events` |
+| 模板控件工厂、样式、预览、文字检查、受限新增窗口 | 共用 `tools/` 工具链 | 已接 Pro 变量、封套、模板及受限事务；未知厂商控件保留 |
 | 已打开工程的原生页面、控件、策略、数据库、配方、设备和资源编辑 | 本版不提供在线入口 | `native-engineering`，按已闭合 ABI 与实际产品能力执行 |
 | 原厂保存、检查、关闭重开 | 离线输出后另行验收 | 在线原生入口；各项结果分别记录 |
 
-离线字段、命令和规格见[有界修改](references/bounded-edits.md)、[Pro 适配](references/pro-adapter.md)、[Stu 界面工具](references/ui-tools.md)。离线工厂不提供任意新控件或通用表增删；在线原生能力见[工程入口](references/pro-native-engineering.md)。本技能不提供设备协议生成、PLC 程序开发或现场下载。
+离线字段、命令和规格见[有界修改](references/bounded-edits.md)、[Pro 适配](references/pro-adapter.md)、[共享界面工具](references/ui-tools.md)。离线工厂不提供任意新控件或通用表增删；在线原生能力见[工程入口](references/pro-native-engineering.md)。本技能不提供设备协议生成、PLC 程序开发或现场下载。
 
 离线文件读写不启动厂商软件、不连接设备。离线 `apply` 默认只预检；提交输出新文件，或在独立备份后就地修改。在线入口使用当前 Pro 的原生对象及保存方法，也不连接设备。文件回读、原厂检查、关闭重开和本机模拟分别验收。
 
-重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu 预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
+重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu/Pro 离线预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
 
 历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。此前发布的 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。统一更名版 `v2026.11.04-engineering` 保留这些历史结果；当前可迁移性补丁的隔离证据另列，不视作真实工程重新验收。
+
+Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](references/offline-factories.md)，本轮实际测试见[离线功能对接验证](references/offline-parity-validation.json)。新增、克隆、修改已有控件分别记录，未执行的原厂项目不计通过。
 
 ## 选择离线或在线
 
@@ -72,7 +75,7 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 - Windows、PowerShell 7、Python 3.11+。
 - 离线数据库读写需要与 PowerShell 位数匹配的 Microsoft ACE OLEDB 16.0 或 12.0；优先 16.0，实际失败再试 12.0。纯在线组态无需先安装 ACE。
 - Pro 新建数据库另需同位数 `ADOX.Catalog`，不再使用独立 32 位 PowerShell 5.1 / Jet OLEDB 环境。
-- 核心命令无 pip 依赖；Stu 预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
+- 核心命令无 pip 依赖；Stu/Pro 离线预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
 - 原厂 McgsStu / McgsPro、驱动、控件和字体用于最终验证，由使用者安装。
 
 `assets/pro-3.5-cli/` 仅保留兼容路径及模板来源，不是版本门槛，也不再注册第二个技能。详见[环境说明](references/environment-and-tools.md)。
@@ -93,9 +96,17 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-### 当前可迁移性补丁
+### 本轮 Pro 离线能力补齐
 
-本轮使用自有容器、managed 夹具、文件绑定与自有消息环宿主验证，不启动 Pro、不访问用户工程。生产源码统一绑定编译及分项证据见[复查记录](references/pro-native-portability-validation.json)。安装目录可显式指定；某个未知版本的函数字节或对象布局不符，仍需实现对应适配，不能靠删除检查得到有效接口。
+- 7 份主要工程与 2 份补充样例完成适用的文件验证，Stu/Pro 共 22 项样式组合通过；新增控件、精确克隆和已有控件修改分别核对。
+- 自有 Pro 测试副本含 2 页、9 个控件和 7 个变量，实际原厂检查、保存、一次关闭重开及新上下文回读通过。检查调用正常返回且当时编译有效标志为 1；错误、警告数量未取得，保持未知。重开后控件、变量、页面事件和按钮动作相同，12 张表的结构及全部字段/BLOB 内容相同。
+- 原厂转换时发现的未配置语言字体行移除、未知 DWORD 变化及单位 getter 返回替换字符均单列记录。文件中的单位及小数位已核对，未据此宣称实际显示和模拟交互全部通过。本轮未执行本机模拟或设备通信。
+
+详细结果及本轮修复的图片引用、在线交付配置问题见[分项验证记录](references/offline-parity-validation.json)。这份测试副本的结果不代替其它用户工程的原厂验收。
+
+### 此前可迁移性补丁
+
+该轮使用自有容器、managed 夹具、文件绑定与自有消息环宿主验证，未启动 Pro、未访问用户工程。生产源码统一绑定编译及分项证据见[复查记录](references/pro-native-portability-validation.json)。安装目录可显式指定；某个未知版本的函数字节或对象布局不符，仍需实现对应适配，不能靠删除检查得到有效接口。
 
 ### 历史 Pro 在线集成
 
@@ -104,7 +115,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 - 自有原生宿主 6 个并发提交测试通过，原生 UI Dispatch 最大并发始终为 1。
 - 真实 Pro 普通启动后热接入及新版桥的 3 次纯 ping 通过，确认后台队列与原 UI 线程分离；未重启 Pro，也未恢复暂停工程。
 
-0102 后台流水线的业务 engine 尚未在 Pro 启用；新增批量创建、保存重开及整页净耗时仍未在真实工程复测。连接成功、隔离测试或 `ok=true` 均不能代替原厂工程检查通过。详见[流水线验证记录](references/pro-native-pipeline-validation.json)、[此前界面接口验证](references/native-ui-validation.json)和[性能验证](references/pro-native-performance-validation.json)。
+该历史流水线记录未包括真实 Pro 中的新版业务执行；本轮补齐了上方测试副本的检查、保存重开和回读，仍未取得新版整页在线施工净耗时。连接成功、隔离测试或 `ok=true` 均不能代替原厂工程检查通过。详见[流水线验证记录](references/pro-native-pipeline-validation.json)、[此前界面接口验证](references/native-ui-validation.json)和[性能验证](references/pro-native-performance-validation.json)。
 
 ### 历史离线与原厂验收
 
@@ -123,7 +134,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.11.04-portability --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.04-offline-parity --out local-artifacts/release
 ```
 
 静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。

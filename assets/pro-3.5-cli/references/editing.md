@@ -16,8 +16,13 @@ pages每项接受name和controls。名称1～32字符，页名唯一；每页控
 | line | name、bounds |
 | rectangle | name、bounds |
 | numeric-input | name、bounds、binding、minimum、maximum |
+| character-input | name、bounds、binding |
+| numeric-display / character-display | name、bounds、binding（原生输入框的只读显示模式） |
+| button | name、bounds、caption、press_source、release_source |
 
-bounds为`[左,上,右,下]`四整数。右大于左、下大于上；请把控件放在画面尺寸内。水平/垂直线使用至少1像素的外接矩形。binding必须为工程中已有布尔/数值变量名，工具同时写入真实ID与名称；不接受未知变量或字符串绑定。数值上下限按minimum≤maximum校验。
+已接入样式 `fill/border/text_color/font/alignment/unit/decimals`（依控件类别），可见表达式 `visible_when`，以及显式 `clone_from={page_id,path,name,kind,sha256}`。完整合同见[离线工厂](../../../references/offline-factories.md)。普通新增按钮不继承旧动作；显式克隆保留未指定业务。
+
+bounds为`[左,上,右,下]`四整数。右大于左、下大于上；请把控件放在画面尺寸内。水平/垂直线使用至少1像素的外接矩形。binding必须为工程中已有布尔/数值变量名，工具同时写入真实ID与名称；数字类不接受未知变量或字符串绑定，字符类只接已有字符串变量。数值上下限按minimum≤maximum校验。
 
 ## 修改
 
@@ -40,9 +45,11 @@ bounds为`[左,上,右,下]`四整数。右大于左、下大于上；请把控�
 }
 ```
 
-从实际inspect结果填写ID、名称与SHA，不使用上述示意值。文字支持变长/变短及中文，控件记录长度会自动更新。edits可修改名称和bounds；静态标签可改text；数值输入可改binding和上下限。暂不提供变量重命名、删除、窗口重命名、任意未知属性或脚本编辑。
+从实际inspect结果填写ID、名称与SHA，不使用上述示意值。文字支持变长/变短及中文，控件记录长度会自动更新。edits可修改名称和bounds；静态标签和按钮可改文案，数字/字符输入与显示可改对应绑定及样式，数值输入可改上下限。页面 `events` 接原生打开/循环/退出源码，按钮接明确按下/释放源码；已有策略仍走共享 `strategy-source`。暂不提供变量重命名、删除、已有窗口重命名或任意未知属性修改。
 
 原有变量的初值、note、unit可更新；新增变量通过add_variables。修改已有工程时不替换其他页面、设备、权限、策略或未知控件内容；文件级全表回读会检测意外改动。实际不支持的变量布局或控件归档分支报告具体缺口；不按软件发行版本拦截。
+
+edit 顶层 `add_pages` 接 `{id,name,template_page_id,controls,events}`；id 可省略自动分配，模板来自本次工程。新页默认空事件，不继承旧页面脚本，不改主控启动列表。已有页 `events` 未指定项保持原源码/缓存，实际更改项仅清对应缓存；`events` 字段为 `open/cycle/close/period_ms`。
 
 ## 编写需求时
 

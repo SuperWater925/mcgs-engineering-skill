@@ -11,7 +11,7 @@ pwsh -NoProfile -File .\run.ps1 create --spec 'D:\规格\create.json' --output '
 pwsh -NoProfile -File .\run.ps1 edit --source 'D:\工程\当前.mcp' --spec 'D:\规格\edit.json' --output 'D:\工程\修改.mcp'
 ```
 
-基础JSON支持变量新增/初值/注释/单位，以及标签、线、矩形、数值输入的新增和受支持字段编辑。只校验本次新增或显式修改的初值，不以现有其他变量的历史取值拒绝整项无关修改。具体字段见[JSON规格](../assets/pro-3.5-cli/references/editing.md)。
+基础JSON支持变量新增/初值/注释/单位，以及标签、线、矩形、原生标准按钮、数值/字符输入与显示的新增和受支持字段编辑；支持明确的模板控件克隆、新增页及页面事件。规格和新建/继承业务的区别见[离线工厂](offline-factories.md)。只校验本次新增或显式修改的初值，不以现有其他变量的历史取值拒绝整项无关修改。具体字段见[JSON规格](../assets/pro-3.5-cli/references/editing.md)。
 
 新建数据库必须保留原生自增身份列、主键和唯一索引；只复制字段类型与行数据不够。旧新建器漏掉COUNTER后，原厂无法新增`VARCOLLECTTABLE`，模拟器报窗口系统初始化`-95`。当前模板附带原生结构元数据，创建后比较各表行、字段类型、自增属性和索引。已有工程的`edit`保持其原结构，不暗中迁移数据库。
 

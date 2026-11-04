@@ -29,6 +29,8 @@ from 报警表原生样式 import AlarmStyle
 from 原生趋势样式 import HistoryCurveStyle
 from 旧下拉框与历史表样式 import parse_record as parse_old_legacy_style
 from 当前存盘浏览样式 import parse_record as parse_current_savedata_style
+sys.path.insert(0,str(Path(__file__).resolve().parent))
+from mcgs_ui import Export as NativeExport
 def parse_legacy_style(record):
     return parse_current_savedata_style(record) if record.type_id==0x5033 else parse_old_legacy_style(record)
 import mcgs_native_zip as nativezip
@@ -180,39 +182,50 @@ class Project:
         self.active_rules=list(active_rules or [])
         for rule in self.active_rules:
             assert isinstance(rule.get('caption'),str) and all(isinstance(w,int) for w in rule.get('windows',[])),rule
-        index_path=next((self.export/n for n in ('结构索引.json','完整结构索引.json','index.json') if (self.export/n).is_file()),None)
+        index_path=next((self.export/n for n in ('index.json','完整结构索引.json','结构索引.json') if (self.export/n).is_file()),None)
         if index_path is None:raise FileNotFoundError('导出目录里没有 index.json / 完整结构索引.json')
         self.index_sha=sha(index_path.read_bytes());ix=json.loads(index_path.read_text('utf-8-sig'))
         self.input_sha=ix['sha256'];self.is_candidate=ix.get('candidate_not_database_reread',False);self.windows={};self.read_errors=[]
-        window_rows={row['iID']:row for row in ix['rows'] if row['table']=='WndUser'}
+        self.native_export=NativeExport(self.export);self.family=self.native_export.family
+        self.shared_window_layout_limits=[]
+        window_rows={int(row.get('iID',row['row_key'])):row for row in ix['rows'] if row['table']=='WndUser'}
         self.total_window_count=len(window_rows)
         self.requested_windows=None if window_ids is None else list(window_ids)
         if window_ids is not None and set(window_ids)-set(window_rows):raise ValueError('请求的窗口号不存在')
         def load_window(wid):
             if wid in self.windows or wid not in window_rows:return
             row=window_rows[wid]
-            raw=(self.export/row['lbObjects']['file']).read_bytes()
-            if sha(raw)!=row['lbObjects']['sha256']:raise ValueError('Export hash mismatch')
+            raw=self.native_export.raw('WndUser',wid,'lbObjects')
             plain=nativezip.unpack(raw) if raw.startswith(nativezip.MARKER) else raw
             a=WindowArchive.parse(plain);assert a.to_bytes()==plain
             s=a.settings();props=[q.value for q in s.properties];ev=窗口事件.解析(s.event_tail)
-            parents=list(struct.unpack_from('<3i',ev.扩展,8))
-            w=dict(id=row['iID'],name=props[1],width=props[6],height=props[7],bg=props[15],parents=parents,controls=a.controls,source_sha=sha(raw))
+            extension=ev.扩展
+            if len(extension)>=16 and extension[:8]==bytes.fromhex('0400000000000600'):
+                parents=[struct.unpack_from('<i',extension,8)[0]]
+            elif len(extension)>=20 and extension[:8]==bytes.fromhex('0400000000000e00'):
+                parents=list(struct.unpack_from('<3i',extension,8))
+            else:
+                parents=[]
+                self.shared_window_layout_limits.append(dict(window=wid,extension_bytes=len(extension),
+                    reason='Unknown native shared-window extension; no parent IDs guessed'))
+            w=dict(id=wid,name=props[1],width=props[6],height=props[7],bg=props[15],parents=parents,controls=a.controls,source_sha=sha(raw))
             self.windows[w['id']]=w
             for parent in parents:load_window(parent)
         for wid in window_rows if window_ids is None else window_ids:load_window(wid)
-        full_index=next((self.full/n for n in ('完整结构索引.json','结构索引.json','index.json') if (self.full/n).is_file()),None)
+        full_index=next((self.full/n for n in ('index.json','完整结构索引.json','结构索引.json') if (self.full/n).is_file()),None)
         idx=json.loads(full_index.read_text('utf-8-sig'))
+        full_export=NativeExport(self.full)
         self.assets={};self.asset_errors=[];self.asset_render_limits=[];self.language=b'';self.strings={}
         pictures=[]
         for row in idx['rows']:
             if row['table']!='System':continue
             name=row.get('strName','')
             if name=='MCGSLINGUIST':
-                self.language=(self.full/row['lbContext']['file']).read_bytes()
+                self.language=full_export.raw('System',row['row_key'],'lbContext')
                 if self.language.startswith(nativezip.MARKER):self.language=nativezip.unpack(self.language)
             if not name.startswith('MCGS_PICTURE_DATA_'):continue
-            b=(self.full/row['lbContext']['file']).read_bytes()
+            b=full_export.raw('System',row['row_key'],'lbContext')
+            if b.startswith(nativezip.MARKER):b=nativezip.unpack(b)
             try:
                 r=Reader(b);nm=r.cstring()[0];r.cstring();kind=r.u32();width=r.u32();height=r.u32();n=r.u32();image=r.take(n)
                 assert r.pos==len(b)
@@ -275,7 +288,8 @@ class Project:
             if outputs:d.update(dynamic=True,caption='—'+(' '+unit if unit else ''),binding=outputs[0]['expression'])
         elif record.type_id==0x5025:
             q=InputRecord.parse(p);unit=self.translate(q.unit);d.update(align=q.properties[3],disabled_grey=(q.enabled_expression.strip()=='0' and q.disabled_style==1),kind='value',font=fonts(q.font)[0] if fonts(q.font) else {},caption='—'+(' '+unit if unit else ''),binding=q.variable,fill=clr(q.properties[1]),ink=clr(q.properties[0]),frame=q.properties[2])
-            appearance=input_picture_descriptor(q.appearance);metadata=input_picture_descriptor(q.common.metadata,14)
+            from mcs_input_text import InputMetadata
+            appearance=input_picture_descriptor(q.appearance);metadata=input_picture_descriptor(InputMetadata.parse(q.common.metadata,q.appearance).properties.value)
             d['native_images']=[dict(slot='input.appearance',**appearance),dict(slot='input.metadata_mirror',**metadata)]
             d['image_mirror_consistent']=appearance['enabled']==metadata['enabled'] and appearance['picture']==metadata['picture']
         elif record.type_id==0x5027:
@@ -296,11 +310,11 @@ class Project:
             q=parse_legacy_style(record);d.update(kind='combo' if record.type_id==0x503c else 'savedata',legacy=q)
         elif record.type_id==0x503d:
             q=PluginControl.parse(p);d.update(kind='plugin',plugin_path=q.path,plugin_core=q.core)
-            if 'DrawRecipe.ui' in q.path:
+            if 'drawrecipe' in q.path.casefold():
                 rec=RecipeCore.parse(q.core);d.update(kind='table',recipe=rec,font=plugin_fonts(rec.fields['m4c_font'],True)[0],data_font=plugin_fonts(rec.fields['m54_font'],True)[0],row_height=rec.fields['m70'],header_fill=clr(rec.fields['m40']),header_ink=clr(rec.fields['m48']),row_fill=clr(rec.fields['m60']),alternate_fill=clr(rec.fields['m68']),row_ink=clr(rec.fields['m50']),grid=clr(rec.fields['m58']))
-            elif 'XYPicture.ui' in q.path:
+            elif 'xypicture' in q.path.casefold():
                 xy=XYCore.parse(q.core);d.update(kind='xy',xy=xy,font=plugin_fonts(xy.fields['md4_font'],True)[0])
-            elif 'AlarmTableView.ui' in q.path:
+            elif 'alarmtableview' in q.path.casefold():
                 alarm=AlarmStyle(q.core);fo={role:plugin_fonts(q.core[pos:pos+n],True)[0] for role,pos,n in alarm.fonts}
                 d.update(kind='alarm',alarm=alarm,font=fo['title_font'],data_font=fo['body_font'])
         elif record.type_id in (0x5002,0x5004,0x5005):d['kind']='line' if record.type_id==0x5002 else 'shape'
@@ -499,7 +513,8 @@ def render_project(project,out,window_ids=None):
         mode='候选原生块字段' if project.is_candidate else '实际工程导出字段'
         text(canvas,[16,im.height+4,im.width-16,im.height+40],f'{wid:02d} {w["name"]} · 公共层 '+','.join(map(str,layers))+f' · {mode}',20,PALETTE['muted'])
         text(canvas,[16,im.height+42,im.width-16,im.height+82],'离线字段渲染，非原厂截图 · 动态值均为占位 · 原生内部构件/滚动条绘制近似处已列报告',19,PALETTE['muted'])
-        fn=out/f'{wid:02d}_{w["name"]}.png';canvas.save(fn)
+        safe_name=re.sub(r'[<>:"/\\|?*\x00-\x1f]','_',w['name']).rstrip(' .') or '窗口'
+        fn=out/f'{wid:02d}_{safe_name}.png';canvas.save(fn)
         results.append(dict(id=wid,name=w['name'],image=str(fn),layers=layers,own_control_count=len(w['controls']),rendered_control_records=len(drawn),fixed_text_overflow=issues,tables=tables,touch_controls=buttons,pictures_used=sorted(pictures_used),native_image_gate_checks=image_checks,native_paint_checks=paint_checks,opaque_internals=opaque))
     thumbs=[];tw=480;th=320;cols=4
     for page in results:
@@ -511,7 +526,7 @@ def render_project(project,out,window_ids=None):
     sheet=out/('全部窗口_公共层合成总览.png' if window_ids is None else '指定窗口_公共层合成总览.png');contact.save(sheet)
     used_assets=set(n for p in results for n in p['pictures_used'])
     image_map={q['control']:q for p in results for q in p['native_image_gate_checks']}
-    report=dict(input_sha256=project.input_sha,source_export_folder=str(project.export),source_index_sha256=project.index_sha,source_window_blob_sha256={str(i):w['source_sha'] for i,w in project.windows.items()},renderer_sha256=sha(Path(__file__).read_bytes()),phase='candidate_native_blocks' if project.is_candidate else 'actual_native_export',language_table_loaded=bool(project.language),active_rules=project.active_rules,actual_mcs_reread=not project.is_candidate,window_count=len(results),
+    report=dict(input_sha256=project.input_sha,project_family=project.family,source_export_folder=str(project.export),source_index_sha256=project.index_sha,source_window_blob_sha256={str(i):w['source_sha'] for i,w in project.windows.items()},renderer_sha256=sha(Path(__file__).read_bytes()),phase='candidate_native_blocks' if project.is_candidate else 'actual_native_export',language_table_loaded=bool(project.language),active_rules=project.active_rules,shared_window_layout_limits=project.shared_window_layout_limits,actual_mcs_reread=not project.is_candidate,actual_database_reread=not project.is_candidate,window_count=len(results),
                 all_pages=results,contact_sheet=str(sheet),read_errors=project.read_errors,picture_assets_loaded=len(project.assets),asset_decode_limits=project.asset_errors,vector_asset_render_approximations=project.asset_render_limits,used_picture_assets=sorted(used_assets),visible_asset_render_approximations=[v for v in project.asset_render_limits if v['picture_name'] in used_assets],
                 native_image_semantics=dict(enable_flags_followed=True,unique_control_checks=list(image_map.values()),hazards=[dict(control=k,**v) for k,q in image_map.items() for v in q['hazards']],native_check_result_not_inferred_from_pixels=True),
                 native_paint_semantics=dict(standard_button_two_state_selector_indexes=[8,9,10,11],standard_default_state_color_indexes=[6,7,5],input_color_and_frame_indexes=[0,1,2],input_frame1_border='native fixed black',multi_primary_ink='childtail DWORD0',common_enable_words_respected=True,navigation_active_state='按 --active-map 规则模拟，未执行原生表达式；无规则时全部画常态',multi_5028_common_pen='不画（原厂运行时不画）',draw_edge_pixels='原生分支已证，系统3D颜色与像素为静态近似，未伪作flat',text_alignment='Label/Input水平垂直对齐、字形与裁切仍为静态近似；MCS原对齐字段完整保留，不能据此图认定像素一致',disabled_state='安全条件、变灰/隐藏政策未执行，使用正常静态色；运行条件可能改变文字显示'),

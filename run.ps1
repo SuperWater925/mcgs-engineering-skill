@@ -1,4 +1,11 @@
 $ErrorActionPreference = 'Stop'
+if($args.Count -gt 0 -and $args[0] -eq 'new-window'){
+ $windowArgs=@()
+ if($args.Count -gt 1){$windowArgs=@($args[1..($args.Count-1)])}
+ $pwsh=(Get-Process -Id $PID).Path
+ & $pwsh -NoProfile -File (Join-Path $PSScriptRoot 'tools/新增窗口事务.ps1') @windowArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-doctor'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $doctorArgs=@()

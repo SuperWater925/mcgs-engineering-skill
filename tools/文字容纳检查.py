@@ -11,7 +11,7 @@
 改动前后各跑一次，比较两次结果，不要求绝对为 0。
 """
 from pathlib import Path
-import argparse, json, sys
+import argparse, json, struct, sys
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -26,7 +26,7 @@ def font_of(raw):
     return f['height'], f['weight']
 
 
-def check_record(rec, wid, path, group_rect, out, bound):
+def check_record(rec, wid, path, group_rect, out, bound, unsupported=None):
     cm = gen.CommonEnvelope.parse(rec)
     rect = list(cm.rect)
     if group_rect:
@@ -38,7 +38,11 @@ def check_record(rec, wid, path, group_rect, out, bound):
         return
     if rec.type_id == 0x503a:
         for ch in gen.GroupArchive.parse(rec).children:
-            check_record(ch, wid, name + '/', rect, out, bound)
+            try:
+                check_record(ch, wid, name + '/', rect, out, bound, unsupported)
+            except (ValueError, UnicodeError, IndexError, struct.error) as exc:
+                if unsupported is not None:
+                    unsupported.append(dict(window=wid, path=name + '/', type=hex(ch.type_id), reason=str(exc)))
         return
     caption = None
     if rec.type_id == 0x5008:
@@ -60,13 +64,18 @@ def check_record(rec, wid, path, group_rect, out, bound):
                         need_height=h * lines + VPAD, have_height=hh))
 
 
-def overlaps(window, wid, bound, segment_ok):
+def overlaps(window, wid, bound, segment_ok, unsupported=None):
     """同一窗口里文字/数值/按钮/多态控件之间的矩形重叠（卡片、线、图片、构件不算）。"""
     items = []
     for rec in window.controls:
         if rec.type_id not in (0x5008, 0x5025, 0x5027, 0x5028, 0x502a):
             continue
-        cm = gen.CommonEnvelope.parse(rec)
+        try:
+            cm = gen.CommonEnvelope.parse(rec)
+        except (ValueError, UnicodeError, IndexError, struct.error) as exc:
+            if unsupported is not None:
+                unsupported.append(dict(window=wid, type=hex(rec.type_id), check='overlap', reason=str(exc)))
+            continue
         r = list(cm.rect)
         if r[1] >= bound[1] or r[0] >= bound[0]:
             continue
@@ -87,15 +96,21 @@ def overlaps(window, wid, bound, segment_ok):
 
 def main(export_dir, out_path, screen=None, segment_ok=()):
     export = gen.Export(export_dir)
-    problems, clashes = [], []
+    problems, clashes, unsupported = [], [], []
     for wid in export.window_ids():
         w = export.window(wid)
         props = w.settings().properties
         bound = screen or (props[6].value, props[7].value)
         for rec in w.controls:
-            check_record(rec, wid, '', None, problems, bound)
-        clashes += overlaps(w, wid, bound, set(segment_ok))
-    Path(out_path).write_text(json.dumps(dict(text_fit=problems, overlaps=clashes), ensure_ascii=False, indent=1) + '\n', 'utf-8')
+            try:
+                check_record(rec, wid, '', None, problems, bound, unsupported)
+            except (ValueError, UnicodeError, IndexError, struct.error) as exc:
+                unsupported.append(dict(window=wid, type=hex(rec.type_id), check='text_fit', reason=str(exc)))
+        clashes += overlaps(w, wid, bound, set(segment_ok), unsupported)
+    Path(out_path).write_text(json.dumps(dict(project_family=export.family, text_fit=problems, overlaps=clashes,
+                                              unsupported=unsupported, native_display_verified=False,
+                                              limits='静态字宽/边界检查；动态文本、设备值和未知控件另列，未执行原生显示'),
+                                          ensure_ascii=False, indent=1) + '\n', 'utf-8')
     for p in problems:
         print(f"{p['window']:>3} {p['name']:<24} {p['caption'][:20]!r:<24} 需{p['need_width']:>4} 有{p['have_width']:>4}  高需{p['need_height']} 有{p['have_height']}  {p['rect']}")
     print('text_fit total', len(problems))
