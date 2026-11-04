@@ -1,0 +1,231 @@
+{
+  "schema": 1,
+  "release_tag": "v2026.11.04-offline-parity",
+  "date": "2026-11-04",
+  "file_readback": "passed",
+  "main_corpus": {
+    "Pro": 6,
+    "Stu": 1,
+    "all_passed": true
+  },
+  "supplementary_factory_samples": {
+    "Pro": 1,
+    "Stu": 1
+  },
+  "new_Pro_JSON_creation": {
+    "control_types": [
+      "label",
+      "line",
+      "rectangle",
+      "button",
+      "numeric-input",
+      "character-input",
+      "numeric-display",
+      "character-display"
+    ],
+    "all_file_validated": true,
+    "native_button_not_static_picture": true,
+    "native_press_and_release_sources": true,
+    "binding_ID_name_type_exact": true,
+    "unit_and_decimal_mirrors_checked": true,
+    "page_events_and_added_page_checked": true,
+    "clone_action_preimages_preserved": true
+  },
+  "existing_Pro_JSON_edits": {
+    "separate_from_new_creation": true,
+    "unlisted_control_and_page_fields_preserved": true,
+    "unrequested_button_release_source_preserved": true
+  },
+  "shared_tools": {
+    "style_helpers": {
+      "Pro": [
+        "alarm",
+        "button",
+        "line",
+        "multi",
+        "nav",
+        "recipe",
+        "savedata",
+        "shape",
+        "text",
+        "value",
+        "xy"
+      ],
+      "Stu": [
+        "alarm",
+        "button",
+        "line",
+        "multi",
+        "nav",
+        "recipe",
+        "savedata",
+        "shape",
+        "text",
+        "value",
+        "xy"
+      ]
+    },
+    "all_22_family_style_combinations_file_validated": true,
+    "strategy_explicit_action_and_nonempty_recipe_combined_commits_passed": true,
+    "new_page_preflight_insert_and_existing_rows_preserved": true,
+    "source_template_extra_text_blob_and_null_preserved": true,
+    "duplicate_page_ID_and_name_rejected": true,
+    "Page_numeric_character_visibility_and_button_factories_checked": true,
+    "preview_text_fit_and_style_batch_actual_commit_passed": true,
+    "Pro_one_parent_and_Stu_three_parent_layouts_checked": true,
+    "unknown_control_payload_preserved": true,
+    "preview_is_manufacturer_screenshot": false
+  },
+  "new_entry_boundaries": {
+    "all_four_new_boundaries_rejected": true,
+    "cases": [
+      {
+        "name": "clone-wrong-current-payload-SHA",
+        "rejected": true,
+        "reason": "Clone name/type/path/preimage identity differs"
+      },
+      {
+        "name": "clone-wrong-class-identity",
+        "rejected": true,
+        "reason": "Clone name/type/path/preimage identity differs"
+      },
+      {
+        "name": "new-numeric-input-cannot-bind-string",
+        "rejected": true,
+        "reason": "Binding must resolve to an existing matching numeric/character variable"
+      },
+      {
+        "name": "wrong-project-SHA-no-output",
+        "rejected": true,
+        "exit_code": 1,
+        "output_exists": false
+      }
+    ],
+    "database_successful_write_performed": false,
+    "manufacturer_called": false
+  },
+  "material_sanitization": {
+    "no_vendor_binaries_or_user_project_included": true,
+    "new_button_and_character_templates_have_generic_or_empty_known_strings": true,
+    "button_old_actions_sources_caches_and_picture_references_empty": true,
+    "ordinary_new_inputs_and_displays_have_no_enabled_image_reference": true,
+    "ordinary_new_button_image_gates_disabled": true,
+    "effective_existing_images_preserved_on_explicit_clone": true,
+    "primitive_template_sha256": "94fe56dc994504df03038810de9032c2840a480f44df8d8233b91010b13a5876"
+  },
+  "implementation_defects_found_and_fixed": [
+    "Pro add_pages strNote schema selection",
+    "new display brush enable before style application",
+    "Pro 16-byte one-public-layer preview vs Stu 84-byte three-slot layout",
+    "New input/display factories now disable both original image mirrors; new buttons close the legacy image gate while retaining its proven descriptor span.",
+    "Bound DirectDocument and the LoadDirectPlan synthetic request both carry the current delivery scope; Plan comparisons remain intact."
+  ],
+  "source_checks_and_manufacturer_acceptance_are_separate": true,
+  "native_acceptance": {
+    "connection": "passed",
+    "project_open": "passed",
+    "native_check": "passed",
+    "native_save": "passed",
+    "close_reopen": "passed",
+    "business_readback_after_reopen": "passed_with_recorded_limitations",
+    "local_simulation": "not_performed",
+    "native_check_evidence": {
+      "worker_entered": true,
+      "worker_returned": true,
+      "worker_return_int32": 0,
+      "compile_after": 1,
+      "native_check_passed": true,
+      "error_count": "unknown",
+      "warning_count": "unknown"
+    },
+    "native_save_evidence": {
+      "native_call_entered": true,
+      "native_call_returned": true,
+      "native_return_int32": 1,
+      "native_save_return_verified": true
+    },
+    "close_reopen_evidence": {
+      "close_entered": true,
+      "close_returned": true,
+      "open_entered": true,
+      "open_returned": true,
+      "normal_project_closed_then_reopened_verified": true,
+      "lifecycle_completed": true,
+      "compile_raw_before": 0,
+      "compile_raw_after": 0
+    },
+    "business_readback_evidence": {
+      "native_typed_controls_compared": 9,
+      "variables_compared": 7,
+      "devices": 0,
+      "page_events_compared": 2,
+      "file_schema_and_all_field_blob_fingerprints_equal": true,
+      "file_unit_mirrors_preserved": true
+    },
+    "observed_limitations": {
+      "unit_getter_replacement_character_observed": true,
+      "font_id_1_unconfigured_after_manufacturer_conversion": true,
+      "unknown_DWORD_changed_after_manufacturer_conversion": true,
+      "unknown_DWORD_meaning_assigned": false
+    }
+  },
+  "physical_communication": "not_performed",
+  "paused_user_project_accessed": false,
+  "originals_and_snapshots_unchanged_count": 9,
+  "software_release_whitelist": false,
+  "author_vendor_whole_file_SHA_admission": false,
+  "native_bridge_update": {
+    "unbound_CSharp_and_ABI_source_manifest_sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728",
+    "unbound_CSharp_and_ABI_guards_unchanged": true,
+    "deployment_binder_changed": true,
+    "deployment_binder_sha256": "036139b538de4889f50bf0d6a6b77aaeb895238a34f9632302f38a30912fbd12",
+    "bound_scope_fields_fixed": [
+      "DirectDocument.engineering_delivery_scope_sha256",
+      "LoadDirectPlan.synthetic_request.engineering_delivery_scope_sha256"
+    ],
+    "actual_production_DTO_regression": {
+      "passed": true,
+      "assertions": 13,
+      "DirectDocument_and_DirectPlanRequest_called": true,
+      "LoadDirectPlan_calls_tested_helper": true,
+      "both_scopes_equal_current_Layout": true,
+      "native_business_executed": false
+    },
+    "private_diagnostic_engine_included": false
+  },
+  "targeted_image_regression": {
+    "passed": true,
+    "JSON_classes": 8,
+    "new_button_clone_and_Page_button_without_active_empty_or_foreign_image": true,
+    "actual_existing_image_button_and_input_clones_preserved_byte_exact": true,
+    "legacy_picture_descriptor_span_unchanged": true
+  },
+  "public_example_validation": {
+    "example": "assets/pro-3.5-cli/examples/create-button.json",
+    "example_sha256": "4112c80916b247a50a3ebac7b682b89dd4157d6c779699ea49440bde5311c65e",
+    "file_readback": "passed",
+    "no_active_empty_or_foreign_image_gates": true,
+    "native_open": "not_performed",
+    "native_check": "not_performed",
+    "native_save": "not_performed",
+    "native_close_reopen": "not_performed",
+    "local_simulation": "not_performed"
+  },
+  "tested_product_source_sha256": {
+    "run.ps1": "7dc6640ac4cb7dc46f23ec8fadf80174981607515f4a27cd87f610582d207934",
+    "scripts/stu_project.ps1": "64fde50794663ebe98391cc2047cc755ffbb9e1e67f920635e306dc622503dd3",
+    "scripts/native_tool.py": "c15df057ed3600d9734d0f2055fe8e28c32c448a53e915e91688cd6185523c40",
+    "scripts/ace-runtime.ps1": "5a245717f87e872038f165d02d5bc9f663f5682d91f614193bb155cf953349bc",
+    "tools/mcgs_ui.py": "1dcbfc5121886f6b58e7aaa8f225ecd238991232c63b9a5a4aa47d71ebae21b2",
+    "tools/新增窗口事务.ps1": "bfec4e93f31be72d5e5ed9edfbc47fbb23430d4a466c9d56758c65f9c9fc7d7c",
+    "tools/样式规格应用.py": "da9d47aadea89a75e44422bdd79d6d3fe7767265a567b5334d5271a5f9001d22",
+    "tools/离线预览.py": "5ca892a8da3da1e42e092aafa705ea1df2d3d35c7f23c4e0831142ac9a17192b",
+    "tools/文字容纳检查.py": "ab5fb4635881c7e20f01191f64ff595bd854c2c1fe7537a8e1edcf9f956d33a7",
+    "assets/pro-3.5-cli/scripts/mcgs_file.py": "71339d0c562eb74c129ca03f87306f5b2b4c988c94b14be836b4b03cc58acf97",
+    "assets/pro-3.5-cli/scripts/native_format.py": "eb708a9b624d9f42d55e3b41937d0eb3a2ce695e5be07a631fd0384605322944",
+    "assets/pro-3.5-cli/scripts/control_factory.py": "94b0cb8c38d79d42fef82b8d69238fca2563dba42663b156c175cf12ff021cda",
+    "assets/pro-3.5-cli/scripts/database.ps1": "6c208924bfee2db8c508b575d187087f5c8ab93cab89667fedebd621b55aad8a",
+    "assets/pro-3.5-cli/assets/primitives.json": "94fe56dc994504df03038810de9032c2840a480f44df8d8233b91010b13a5876"
+  },
+  "history": "Historical failed phases retained privately; successful unaffected groups were not rerun for unrelated fixes."
+}

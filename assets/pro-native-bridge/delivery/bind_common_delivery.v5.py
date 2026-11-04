@@ -1,4 +1,4 @@
-"""Bind staged sources/profiles to an explicit portable layout; never run Pro.
+﻿"""Bind staged sources/profiles to an explicit portable layout; never run Pro.
 
 Use the sibling configuration and bound Layout source produced by device-entry/
 prepare_delivery_binding.py.  Output directories must be absent or empty; existing nonempty outputs are preserved.  The optional
@@ -66,7 +66,17 @@ def patch_common(name, text):
         need(count == 1, "Project scope fallback differs")
         text = replace_once(text, 'object raw;NativeMemory.Require(request.TryGetValue("expected_project",out raw)',
             'object delivery;NativeMemory.Require(request.TryGetValue("engineering_delivery_scope_sha256",out delivery)&&delivery is string&&(string)delivery==NativeEngineeringDeliveryLayout.ConfigurationSha256,"Request delivery configuration differs.");object raw;NativeMemory.Require(request.TryGetValue("expected_project",out raw)')
+    elif name == "NativeEngineeringDirectExecution.cs":
+        text = replace_once(text,
+            '{"schema",1},{"purpose",NativeUsableEditPermit.Purpose}',
+            '{"schema",1},{"purpose",NativeUsableEditPermit.Purpose},{"engineering_delivery_scope_sha256",NativeEngineeringDeliveryLayout.ConfigurationSha256}')
     elif name == "NativeUsableEditPermit.cs":
+        text = replace_once(text,
+            'internal static Plan LoadDirectPlan(',
+            'internal static Dictionary<string,object> DirectPlanRequest(Dictionary<string,object> document){return new Dictionary<string,object>{{"expected_project",Fixture},{"engineering_delivery_scope_sha256",NativeEngineeringDeliveryLayout.ConfigurationSha256}};}\n  internal static Plan LoadDirectPlan(')
+        text = replace_once(text,
+            'new Plan(new Dictionary<string,object>{{"expected_project",Fixture}},engine,context,summary,kinds,document)',
+            'new Plan(DirectPlanRequest(document),engine,context,summary,kinds,document)')
         text = replace_once(text, 'Path.GetFullPath(Path.Combine(NativeOperations.TaskRoot,"coverage-20261101","usable-edit-0001"))',
             'NativeEngineeringDeliveryLayout.EngineeringRoot')
         text = replace_once(text, 'internal static string Fixture{',

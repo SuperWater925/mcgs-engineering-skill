@@ -1,0 +1,150 @@
+{
+  "variables": [
+    {
+      "name": "DemoValue",
+      "type": "number",
+      "initial": "12.3",
+      "unit": "V"
+    },
+    {
+      "name": "DemoPressed",
+      "type": "boolean",
+      "initial": "0"
+    },
+    {
+      "name": "DemoText",
+      "type": "string",
+      "initial": "Native Pro demo"
+    }
+  ],
+  "pages": [
+    {
+      "name": "OfflineDemo",
+      "events": {
+        "open": "DemoPressed=0",
+        "close": "DemoPressed=0"
+      },
+      "controls": [
+        {
+          "type": "rectangle",
+          "name": "Card",
+          "bounds": [
+            20,
+            60,
+            760,
+            240
+          ],
+          "fill": 16777215,
+          "border": 13816530
+        },
+        {
+          "type": "label",
+          "name": "Title",
+          "bounds": [
+            30,
+            15,
+            750,
+            50
+          ],
+          "text": "Native Pro offline controls",
+          "font": {
+            "height": 24,
+            "family": "Microsoft YaHei"
+          }
+        },
+        {
+          "type": "button",
+          "name": "DemoButton",
+          "bounds": [
+            40,
+            80,
+            200,
+            145
+          ],
+          "caption": "Press / release",
+          "press_source": "DemoPressed=1",
+          "release_source": "DemoPressed=0\nDemoValue=DemoValue+1",
+          "font": {
+            "height": 20
+          },
+          "fill": 14248745,
+          "border": 14248745,
+          "text_color": 16777215
+        },
+        {
+          "type": "numeric-input",
+          "name": "NumericInput",
+          "bounds": [
+            240,
+            80,
+            420,
+            125
+          ],
+          "binding": "DemoValue",
+          "minimum": 0,
+          "maximum": 99999,
+          "unit": "V"
+        },
+        {
+          "type": "numeric-display",
+          "name": "NumericDisplay",
+          "bounds": [
+            450,
+            80,
+            700,
+            125
+          ],
+          "binding": "DemoValue",
+          "unit": "V",
+          "decimals": 1
+        },
+        {
+          "type": "character-input",
+          "name": "CharacterInput",
+          "bounds": [
+            240,
+            160,
+            420,
+            205
+          ],
+          "binding": "DemoText"
+        },
+        {
+          "type": "character-display",
+          "name": "CharacterDisplay",
+          "bounds": [
+            450,
+            160,
+            700,
+            205
+          ],
+          "binding": "DemoText"
+        },
+        {
+          "type": "line",
+          "name": "Separator",
+          "bounds": [
+            30,
+            250,
+            750,
+            250
+          ],
+          "border": 13816530
+        },
+        {
+          "type": "label",
+          "name": "PressedStatus",
+          "bounds": [
+            40,
+            270,
+            700,
+            315
+          ],
+          "caption": "Button is held",
+          "visible_when": "DemoPressed=1",
+          "text_color": 32768
+        }
+      ]
+    }
+  ]
+}

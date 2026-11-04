@@ -1,4 +1,4 @@
-"""McgsStu 原生界面控件工厂：读导出、改控件、建页面、出候选清单。
+"""Stu / Pro 原生界面控件工厂：读导出、改控件、建页面、出候选清单。
 
 纯字节操作：不打开数据库、不启动厂商程序。每处改动都在内存里先做字节回环，
 再写成 BLOB 和 manifest；写入工程交给 run.ps1 apply（改已有行）或
@@ -15,7 +15,8 @@ tools/新增窗口事务.ps1（新建窗口）。
 颜色一律写 '#RRGGBB'，内部转成 COLORREF（BGR）。用法见 references/ui-tools.md。
 """
 from pathlib import Path
-import collections, copy, hashlib, json, os, re, shutil, struct, sys
+import collections, copy, hashlib, importlib.util, json, os, re, shutil, struct, sys
+from types import SimpleNamespace
 
 sys.dont_write_bytecode = True
 NATIVE = Path(__file__).resolve().parents[1] / 'scripts' / 'native'
@@ -23,7 +24,7 @@ sys.path.insert(0, str(NATIVE))
 from mcs_window_archive import WindowArchive, Reader
 from 原生界面样式 import CommonEnvelope, MultiState, GenericMetadata, GroupArchive, set_font, fonts
 from mcs_button_control import ButtonArchive, bind_click
-from mcs_input_text import LabelRecord, InputRecord
+from mcs_input_text import LabelRecord, InputRecord, InputMetadata, unit_slot
 from mcs_plugin_controls import PluginControl, RecipeCore, XYCore
 from 报警表原生样式 import AlarmStyle
 from 窗口事件归档 import 窗口事件, 设置窗口事件
@@ -36,6 +37,22 @@ import 对象归档 as om
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def unwrapped(raw):
+    return nz.unpack(raw) if raw.startswith(nz.MARKER) else raw
+
+
+def wrapped_like(original, plain):
+    return nz.pack(plain) if original.startswith(nz.MARKER) else plain
+
+
+def pro_format():
+    path = Path(__file__).resolve().parents[1] / 'assets/pro-3.5-cli/scripts/native_format.py'
+    spec = importlib.util.spec_from_file_location('mcgs_ui_pro_format', path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def c(hexstr):
@@ -142,12 +159,14 @@ def common_style(record, *, rect=None, fill=None, border=None, brush_en=None, pe
 def edit_button(record, rect, kind, caption=None):
     k = BUTTON_KINDS[kind]
     cm = CommonEnvelope.parse(record)
-    assert not cm.animations
-    record = common_style(record, fill=k['fill'], border=k['border'])
-    b = ButtonArchive.parse(record)
-    assert b.to_bytes() == record.payload
+    projected = cm.project_without_animations()
+    projected = common_style(projected, fill=k['fill'], border=k['border'])
+    b = ButtonArchive.parse(projected)
+    assert b.to_bytes() == projected.payload
     w = b.metadata.properties.words
-    assert w[8:12] == [1, 1, 1, 1], 'native two-state gates must already be on'
+    # Both states use the requested custom fill/outline.  Pro often stores
+    # system-theme selectors here; these are appearance, not action gates.
+    w[8:12] = [1, 1, 1, 1]
     w[1] = w[6] = c(k['fill'])
     w[2] = w[7] = c(k['border'])
     w[5] = c(k['ink'])
@@ -159,11 +178,11 @@ def edit_button(record, rect, kind, caption=None):
         b.caption.value = b.metadata.properties.caption.value = caption
     if rect is not None:
         b.rect = tuple(rect)
-    return b.to_record()
+    return cm.restore_projected(b.to_record())
 
 
 # 原厂实机：文字 style 与 appearance_prefix[1] 同为对齐值，0 左、1 居中、2 右（实机截图证实）。输入框 properties[3] 为水平对齐，按同一 0/1/2 取值。
-ALIGN = dict(left=0, center=1)
+ALIGN = dict(left=0, center=1, right=2)
 FONT_DIR = Path(os.environ.get('WINDIR', r'C:\Windows')) / 'Fonts'
 FONT_FILES = {400: str(FONT_DIR / 'msyh.ttc'), 700: str(FONT_DIR / 'msyhbd.ttc')}
 
@@ -419,14 +438,14 @@ def neutral(record, renamed=False):
     cm.prefix = bytes(p)
     record = cm.to_record()
     if t == 0x5027:
-        b = ButtonArchive.parse(record)
-        for i in (1, 2, 5, 6, 7):
+        b = ButtonArchive.parse(cm.project_without_animations())
+        for i in (1, 2, 5, 6, 7, 8, 9, 10, 11):
             b.metadata.properties.words[i] = 0
         b.caption_words[1] = 0
         b.font = b.metadata.properties.font = b''
         if renamed:
             b.caption.value = b.metadata.properties.caption.value = ''
-        return b.to_bytes()
+        return b.to_bytes() + anim_bytes(cm)
     if t == 0x5025:
         pr = cm.project_without_animations()
         q = InputRecord.parse(pr)
@@ -495,7 +514,21 @@ def business_sources(window):
 
 
 def control_sources(rec, prefix=''):
+    try:
+        return _control_sources(rec, prefix)
+    except (ValueError, UnicodeError, struct.error, IndexError):
+        # Unsupported class-specific bodies are not silently dropped from the
+        # whole-page preservation proof. Their complete payload stays exact.
+        return [(prefix + ':opaque:' + hex(rec.type_id), rec.payload.hex())]
+
+
+def _control_sources(rec, prefix=''):
     out = []
+    try:
+        CommonEnvelope.parse(rec)
+    except (ValueError, UnicodeError, struct.error, IndexError):
+        # An unrecognised object is still protected during whole-window edits.
+        return [(prefix + ':opaque:' + hex(rec.type_id), rec.payload.hex())]
     if True:
         cm = CommonEnvelope.parse(rec)
         name = prefix + cm.name.value
@@ -531,7 +564,7 @@ def strategy_text(export):
     ix = json.loads((export / 'index.json').read_text('utf-8-sig'))
     row = next(r for r in ix['rows'] if r['table'] == 'Stgy' and str(r['row_key']) == '0')
     raw = (export / row['lbObjects']['file']).read_bytes()
-    nodes = st.parse_strategy_array(nz.unpack(raw))
+    nodes = st.parse_strategy_array(unwrapped(raw))
     texts = []
     for node in nodes:
         try:
@@ -614,15 +647,21 @@ VALUE_KINDS.update(
 BUTTON_KINDS.update(link=dict(fill=CARD, border=LINE, ink=BRAND_DARK, font=18))
 
 def set_decimals(record, places):
-    """小数位：common 元数据 +50 与外观 +36 两处 u32，原厂成对保存。"""
+    """小数位：解析嵌套元数据后定位两处同源属性，不假定计数前缀长度。"""
+    if type(places) is not int or not 0 <= places <= 15:
+        raise ValueError('小数位须为 0..15 的整数')
     cm = CommonEnvelope.parse(record)
     projected = cm.project_without_animations()
     q = InputRecord.parse(projected)
-    a, b = bytearray(q.common.metadata), bytearray(q.appearance)
-    assert struct.unpack_from('<I', a, 50)[0] == struct.unpack_from('<I', b, 36)[0]
-    struct.pack_into('<I', a, 50, places)
-    struct.pack_into('<I', b, 36, places)
-    q.common.metadata, q.appearance = bytes(a), bytes(b)
+    metadata = InputMetadata.parse(q.common.metadata, q.appearance)
+    a, b = bytearray(metadata.properties.value), bytearray(q.appearance)
+    pa, pb = unit_slot(a, 20)[1] + 12, unit_slot(b, 20)[1] + 12
+    assert struct.unpack_from('<I', a, pa)[0] == struct.unpack_from('<I', b, pb)[0]
+    struct.pack_into('<I', a, pa, places)
+    struct.pack_into('<I', b, pb, places)
+    metadata.properties.value = bytes(a)
+    metadata.normalize_counts()
+    q.common.metadata, q.appearance = metadata.to_bytes(), bytes(b)
     projected.payload = q.to_bytes()
     return cm.restore_projected(projected)
 
@@ -638,9 +677,15 @@ def bind_display(template, name, rect, obj, align):
     q.variable = obj.name.value
     q.properties[5] = obj.id
     q.properties[6] = {1: 1, 2: 2, 3: 3}[obj.kind]
+    # New Page values have no implicit unit. value_unit creates its explicit
+    # unit label; copying a template's native unit would display it twice.
+    q.set_unit('', False)
     q.set_decimal_format()
     record = copy.deepcopy(cm.record)
     record.payload = q.to_bytes()
+    # This is a new display. Enable its requested native background appearance
+    # before applying the read-only style; a source input may use brush gate 0.
+    record = common_style(record, brush_en=1)
     out = edit_value(record, rect, 'ro_small', align)
     back = InputRecord.parse(CommonEnvelope.parse(out).project_without_animations())
     assert (back.variable, back.variable_id, back.variable_type) == (obj.name.value, obj.id, obj.kind)
@@ -745,9 +790,23 @@ class Page:
 
     def button(self, name, rect, caption, script):
         b = ButtonArchive.parse(copy.deepcopy(self.tpl['button']))
+        if self.tpl.get('_family') == 'Pro' and not Templates.button_is_neutral(b):
+            raise ValueError('Pro 新按钮须用无动作模板；需要沿用原动作请用 clone_button')
         b.name.value = name
         rec = edit_button(b.to_record(), list(rect), 'link', caption)
         self.add(bind_click(rec, script))
+
+    def clone_button(self, template, name, rect, caption=None, script=None, kind='link'):
+        """显式克隆按钮，保留原动作/条件；script 非 None 才替换松开脚本。"""
+        cm = CommonEnvelope.parse(copy.deepcopy(template))
+        b = ButtonArchive.parse(cm.project_without_animations())
+        b.name.value = name
+        rec = cm.restore_projected(b.to_record())
+        rec = edit_button(rec, list(rect), kind, caption)
+        if script is not None:
+            cm = CommonEnvelope.parse(rec)
+            rec = cm.restore_projected(bind_click(cm.project_without_animations(), script))
+        self.add(rec)
 
 
 # ---- 导出读取、模板、新窗口与候选清单 -------------------------------------------
@@ -763,19 +822,30 @@ class Export:
 
     def __init__(self, path):
         self.path = Path(path)
-        index = next((self.path / n for n in ('index.json', '完整结构索引.json') if (self.path / n).is_file()), None)
+        index = next((self.path / n for n in ('index.json', '完整结构索引.json', '结构索引.json') if (self.path / n).is_file()), None)
         if index is None:
             raise FileNotFoundError(f'{self.path} 里没有 index.json')
         self.index = json.loads(index.read_text('utf-8-sig'))
         fp = self.path / 'fingerprints.json'
         self.fingerprints = json.loads(fp.read_text('utf-8-sig')) if fp.is_file() else None
         self.sha256 = self.index['sha256']
+        if self.fingerprints is not None and self.fingerprints['sha256'] != self.sha256:
+            raise ValueError('导出和字段指纹不是同一基线')
         self.rows = {(r['table'], str(r['row_key'])): r for r in self.index['rows']}
+        self.family = self.index.get('project_family', 'unrecognized')
+        if self.family not in ('Stu', 'Pro') and ('System', 'MCGSVER') in self.rows:
+            version = unwrapped(self.raw('System', 'MCGSVER', 'lbContext')).decode('utf-16le').rstrip('\0')
+            brand = re.search(r'(?<![A-Za-z])mcgs[\s_-]*(pro|stu)(?![A-Za-z])', version, re.I)
+            if brand:
+                self.family = 'Pro' if brand.group(1).lower() == 'pro' else 'Stu'
 
     def raw(self, table, key, field):
         info = self.rows[table, str(key)][field]
-        data = (self.path / info['file']).read_bytes()
-        assert sha(data) == info['sha256'], (table, key, field)
+        path = (self.path / info['file']).resolve()
+        if not path.is_relative_to(self.path.resolve()):
+            raise ValueError('导出BLOB路径越出目录')
+        data = path.read_bytes()
+        assert sha(data) == info['sha256'] and len(data) == info['bytes'], (table, key, field)
         return data
 
     def before(self, table, key, field):
@@ -789,8 +859,10 @@ class Export:
 
     def window(self, wid):
         raw = self.raw('WndUser', wid, 'lbObjects')
-        w = WindowArchive.parse(raw)
-        assert w.to_bytes() == raw, ('window roundtrip', wid)
+        plain = unwrapped(raw)
+        w = WindowArchive.parse(plain)
+        assert w.to_bytes() == plain, ('window roundtrip', wid)
+        w._template_window_id = int(wid)
         return w
 
     def window_by_name(self, name):
@@ -802,7 +874,14 @@ class Export:
         """返回 (version, 对象列表, 是否 MCGSZIPE 压缩)。"""
         raw = self.raw('System', 'ObjData', 'lbContext')
         zipped = raw.startswith(nz.MARKER)
-        version, objs = om.parse(nz.unpack(raw) if zipped else raw)
+        plain = unwrapped(raw)
+        if self.family == 'Pro':
+            rows = pro_format().variables(plain)
+            objs = [SimpleNamespace(id=r['id'], kind=r['kind'], name=SimpleNamespace(value=r['name']),
+                                    comment=SimpleNamespace(value=r['note']), unit=SimpleNamespace(value=r['unit']),
+                                    initial=SimpleNamespace(value=r['initial']), native=r) for r in rows]
+            return struct.unpack_from('<f', plain)[0], objs, zipped
+        version, objs = om.parse(plain)
         om.validate_objects(objs)
         return version, objs, zipped
 
@@ -811,7 +890,7 @@ class Export:
 
     def strategy_sources(self):
         """{策略名: 源码}，只含单脚本策略。"""
-        nodes = st.parse_strategy_array(nz.unpack(self.raw('Stgy', '0', 'lbObjects')))
+        nodes = st.parse_strategy_array(unwrapped(self.raw('Stgy', '0', 'lbObjects')))
         out = {}
         for n in nodes:
             try:
@@ -822,9 +901,26 @@ class Export:
 
 
 def find(window, name):
-    hits = [i for i, r in enumerate(window.controls) if control_name(r) == name]
+    hits = []
+    for i, rec in enumerate(window.controls):
+        try:
+            if control_name(rec) == name:
+                hits.append(i)
+        except (ValueError, UnicodeError, struct.error, IndexError):
+            continue
     assert len(hits) == 1, (name, hits)
     return hits[0]
+
+
+def known_control_names(controls):
+    """Names from known common envelopes; opaque objects are retained verbatim."""
+    names = []
+    for rec in controls:
+        try:
+            names.append(control_name(rec))
+        except (ValueError, UnicodeError, struct.error, IndexError):
+            pass
+    return names
 
 
 class Templates:
@@ -836,7 +932,49 @@ class Templates:
     KINDS = ('label', 'rect', 'line', 'num', 'str', 'button')
 
     @staticmethod
-    def _ok(kind, rec, objs_by_id):
+    def button_is_neutral(button):
+        p = button.metadata.properties
+        return (not button.release_script.value and not p.press_script.value
+                and not p.preserved_text.value and not p.action_text_down.value and not p.action_text_up.value
+                and not any(v.value for v in button.action_texts.items)
+                and not any(v.value for v in p.texts_down.items + p.texts_up.items)
+                and not any(button.action_modes.items) and not any(p.flags_down.items + p.flags_up.items)
+                and not any(p.action_words) and not any(button.action_words)
+                and all(v == 0xffffffff for v in button.action_ids.items + p.ids_down.items + p.ids_up.items)
+                and not button.enable_compiled.value and not button.release_compiled.value
+                and not p.press_compiled.value and not p.preserved_compiled.value
+                and button.enabled_expression.value.strip() in ('', '1')
+                and button.enabled_invert == 0 and button.safety_mode == 0
+                and button.caption_words[0] < 10000 and p.words[16] == 0)
+
+    @staticmethod
+    def _pro_primitive(kind):
+        """Use the shipped dependency-free Pro primitive, never a Stu blob."""
+        path = Path(__file__).resolve().parents[1] / 'assets/pro-3.5-cli/scripts/control_factory.py'
+        spec = importlib.util.spec_from_file_location('mcgs_ui_pro_control_factory', path)
+        module = importlib.util.module_from_spec(spec)
+        sys.path.insert(0, str(path.parent))
+        try:
+            spec.loader.exec_module(module)
+        finally:
+            sys.path.pop(0)
+        key = {'rect': 'rectangle', 'num': 'numeric-display', 'str': 'character-display'}.get(kind, kind)
+        record = module.primitive_record(key)
+        if kind == 'label':
+            record = apply_gates(record, 'none', 'none')
+        if kind in ('num', 'str'):
+            q = InputRecord.parse(record)
+            q.disable_images()
+            q.set_unit('', False)
+            q.enabled_expression, q.disabled_when_nonzero, q.disabled_style = '0', 0, 1
+            q.expression_cache = b''
+            q.properties[6] = 3 if kind == 'str' else 2
+            record.payload = q.to_bytes()
+            record = common_style(record, brush_en=1)
+        return record
+
+    @staticmethod
+    def _ok(kind, rec, objs_by_id, family=None):
         cm = CommonEnvelope.parse(rec)
         if cm.animations:
             return False
@@ -857,8 +995,8 @@ class Templates:
         if kind == 'button':
             if rec.type_id != 0x5027:
                 return False
-            w = ButtonArchive.parse(rec).metadata.properties.words
-            return w[8:12] == [1, 1, 1, 1]
+            words = ButtonArchive.parse(rec).metadata.properties.words
+            return family == 'Pro' or words[8:12] == [1, 1, 1, 1]
         return False
 
     @classmethod
@@ -870,7 +1008,17 @@ class Templates:
                 wid, name = named[kind]
                 w = export.window(wid)
                 out[kind] = copy.deepcopy(w.controls[find(w, name)])
+                if not cls._ok(kind, out[kind], None, export.family):
+                    raise ValueError(f'指定模板不符合 {kind} 的结构/静态条件：{wid}/{name}')
+                if kind == 'button' and export.family == 'Pro' and not cls.button_is_neutral(ButtonArchive.parse(out[kind])):
+                    raise ValueError(f'Pro 新按钮模板含原动作或条件：{wid}/{name}；请显式 clone_button')
                 source[kind] = (wid, name)
+        # New Pro buttons must not inherit a random project's existing actions.
+        if export.family == 'Pro' and 'button' in kinds and 'button' not in out:
+            out['button'] = cls._pro_primitive('button')
+            if not cls.button_is_neutral(ButtonArchive.parse(out['button'])):
+                raise ValueError('包内Pro按钮模板不是无动作模板')
+            source['button'] = ('pro-primitive', 'button')
         for wid in export.window_ids():
             if all(k in out for k in kinds):
                 break
@@ -879,16 +1027,22 @@ class Templates:
                 for kind in kinds:
                     if kind not in out:
                         try:
-                            ok = cls._ok(kind, rec, None)
+                            ok = cls._ok(kind, rec, None, export.family)
                         except Exception:
                             ok = False
                         if ok:
                             out[kind] = copy.deepcopy(rec)
                             source[kind] = (wid, control_name(rec))
+        if export.family == 'Pro':
+            for kind in kinds:
+                if kind not in out:
+                    out[kind] = cls._pro_primitive(kind)
+                    source[kind] = ('pro-primitive', kind)
         missing = [k for k in kinds if k not in out]
         if missing:
             raise LookupError(f'工程里找不到可用的模板：{missing}；请用 named 指定')
         out['_source'] = source
+        out['_family'] = export.family
         return out
 
 
@@ -901,22 +1055,29 @@ def new_window(template_window, window_id, name, controls, opening=None, loop=No
     s = template_window.settings()
     ev = 窗口事件.解析(s.event_tail)
     ns = s.clone(window_id, name)
-    ns.event_tail = 设置窗口事件(s.event_tail,
+    if any(v is not None for v in (opening, loop, leaving, period_ms)):
+        ns.event_tail = 设置窗口事件(s.event_tail,
                               ev.打开 if opening is None else opening,
                               ev.循环 if loop is None else loop,
                               ev.退出 if leaving is None else leaving,
                               ev.周期毫秒 if period_ms is None else period_ms)
-    names = [control_name(r) for r in controls]
+    names = known_control_names(controls)
     dup = sorted({n for n in names if names.count(n) > 1})
     assert not dup, ('重复控件名', dup)
     w = WindowArchive(template_window.prefix, list(controls), ns.to_bytes(), b'')
     data = w.to_bytes()
     back = WindowArchive.parse(data)
+    back._template_window_id = getattr(template_window, '_template_window_id', s.properties[0].value)
     assert back.to_bytes() == data
     props = back.settings().properties
     assert (props[0].value, props[1].value) == (window_id, name)
     assert 窗口事件.解析(back.settings().event_tail).扩展 == ev.扩展
     return back
+
+
+def clone_window(template_window, window_id, name, **events):
+    """克隆全部原控件和窗口设置；与显式传入新控件的 new_window 区分。"""
+    return new_window(template_window, window_id, name, copy.deepcopy(template_window.controls), **events)
 
 
 def references_to(window_name, control, sources):
@@ -953,22 +1114,37 @@ class Candidate:
                              values={field: dict(blob=blob_name, sha256=sha(data))}))
 
     def update_window(self, wid, window, blob_name=None):
-        data = window.to_bytes()
-        assert WindowArchive.parse(data).to_bytes() == data
+        plain = window.to_bytes()
+        assert WindowArchive.parse(plain).to_bytes() == plain
+        data = wrapped_like(self.export.raw('WndUser', wid, 'lbObjects'), plain)
         self.update('WndUser', wid, 'lbObjects', data, blob_name or f'WndUser_{wid}.bin')
 
-    def insert_window(self, window, note='自定义窗口，运行时可见', blob_name=None):
+    def insert_window(self, window, note='自定义窗口，运行时可见', blob_name=None, template_id=None):
         props = window.settings().properties
         wid, name = props[0].value, props[1].value
         assert ('WndUser', str(wid)) not in self.export.rows, ('窗口号已存在', wid)
         names = {self.export.window(i).settings().properties[1].value for i in self.export.window_ids()}
         assert name not in names, ('窗口名已存在', name)
-        data = window.to_bytes()
+        template_id = template_id if template_id is not None else getattr(window, '_template_window_id', None)
+        if template_id is None:
+            raise ValueError('新窗口须提供 template_id 或由 new_window/clone_window 生成')
+        source = self.export.rows['WndUser', str(template_id)]
+        values = {k: copy.deepcopy(v) for k, v in source.items() if k not in ('table', 'row_key')}
+        data = wrapped_like(self.export.raw('WndUser', template_id, 'lbObjects'), window.to_bytes())
         blob_name = blob_name or f'WndUser_{wid}_新增.bin'
         (self.out / blob_name).write_bytes(data)
+        values.update(iID=wid, strName=name, strNote=note, lbObjects=dict(blob=blob_name, sha256=sha(data)))
+        for flag in ('iDeleteFlag', 'iCompileFlag'):
+            if flag in values:
+                values[flag] = 0
+        for field, value in list(values.items()):
+            if field != 'lbObjects' and isinstance(value, dict) and 'file' in value:
+                raw = self.export.raw('WndUser', template_id, field)
+                extra_blob = f'WndUser_{wid}_{field}.bin'
+                (self.out / extra_blob).write_bytes(raw)
+                values[field] = dict(blob=extra_blob, sha256=sha(raw))
         self.ops.append(dict(action='insert', table='WndUser', key_column='iID', key=wid,
-                             values=dict(iID=wid, strName=name, strNote=note, lbObjects=dict(blob=blob_name, sha256=sha(data)),
-                                         iDeleteFlag=0, iCompileFlag=0)))
+                             template_key=template_id, values=values))
 
     def write(self):
         assert self.ops, '没有改动'
@@ -989,11 +1165,15 @@ class Candidate:
                 row = next(r for r in cix['rows'] if r['table'] == op['table'] and str(r['row_key']) == str(op['key']))
                 row[field] = entry
             else:
-                v = op['values']
-                cix['rows'].append(dict(table='WndUser', row_key=str(v['iID']), iID=v['iID'], strName=v['strName'],
-                                        strNote=v['strNote'], lbObjects=entry, iDeleteFlag=0, iCompileFlag=0))
-        cix.update(input='候选（内存生成，不是 MCS 实际复读）', candidate_not_database_reread=True)
-        for name in ('index.json', '完整结构索引.json'):
+                v = copy.deepcopy(op['values'])
+                for field, value in list(v.items()):
+                    if isinstance(value, dict) and 'blob' in value:
+                        src = self.out / value['blob']
+                        shutil.copyfile(src, cand / value['blob'])
+                        v[field] = dict(file=value['blob'], bytes=src.stat().st_size, sha256=value['sha256'])
+                cix['rows'].append(dict(table='WndUser', row_key=str(v['iID']), **v))
+        cix.update(input='候选（内存生成，不是数据库实际复读）', candidate_not_database_reread=True)
+        for name in ('index.json', '完整结构索引.json', '结构索引.json'):
             (cand / name).write_text(json.dumps(cix, ensure_ascii=False, indent=1) + '\n', 'utf-8')
         return dict(manifest=str(mp), manifest_sha256=sha(mp.read_bytes()), candidate_export=str(cand),
                     operations=[(o['action'], o['table'], o['key']) for o in self.ops])

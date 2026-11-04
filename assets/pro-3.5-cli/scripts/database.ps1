@@ -1,4 +1,4 @@
-$ErrorActionPreference='Stop'
+﻿$ErrorActionPreference='Stop'
 $ProgressPreference='SilentlyContinue'
 . (Join-Path $PSScriptRoot '../../../scripts/ace-runtime.ps1')
 $script:DbProvider=@('Microsoft.ACE.OLEDB.16.0','Microsoft.ACE.OLEDB.12.0') | Where-Object {$_ -in (Get-McgsAceProviders)} | Select-Object -First 1
@@ -119,16 +119,44 @@ if($request.action -eq 'create') {
     exit 0
 }
 if($request.action -notin @('read','write')) {throw 'Unsupported database action'}
+if($request.action -eq 'write' -and @($request.changes | Where-Object action -eq 'insert-page').Count) {
+    if([string]$request.expected_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
+       (Get-FileHash -LiteralPath $request.path -Algorithm SHA256).Hash -ine [string]$request.expected_sha256) {
+        throw 'Page insertion requires the exact copied project SHA256'
+    }
+}
 $c=Open-Database $request.path ($request.action -eq 'read')
 try {
     if($request.action -eq 'read') {Dump-Database $c | ConvertTo-Json -Depth 40 -Compress}
     else {
-        $before=Dump-Database $c;$transaction=$c.BeginTransaction()
+        $before=Dump-Database $c;$transaction=$c.BeginTransaction();$insertedPageIds=@{}
         try {
             foreach($change in $request.changes) {
                 $table=[string]$change.table
                 if(!$before.Contains($table)) {throw 'Unknown table'}
                 $fields=@($before[$table].fields)
+                if($change.action -eq 'insert-page') {
+                    if($table -cne 'WndUser') {throw 'Only a native WndUser page can be inserted'}
+                    $noteField=if('strNote' -cin @($fields.name)) {'strNote'} elseif('strComment' -cin @($fields.name)) {'strComment'} else {throw 'Current native page schema has no annotation field'}
+                    $standard=@('iID','strName',$noteField,'lbObjects','iDeleteFlag','iCompileFlag')
+                    $actual=@($change.values.PSObject.Properties.Name)
+                    if($actual.Count -ne $standard.Count -or @($actual | Where-Object {$_ -cnotin $standard}).Count) {throw 'Page insert requires exactly the six native page values'}
+                    foreach($name in $standard) {if(@($fields | Where-Object name -CEQ $name).Count -ne 1) {throw 'Native page schema is missing a standard field'}}
+                    $templates=@($before.WndUser.rows | Where-Object {$_['iID'] -eq $change.template_key})
+                    if($templates.Count -ne 1) {throw 'Page template identity is absent or ambiguous'}
+                    $pageId=[int]$change.values.iID
+                    if($pageId -le 0 -or @($before.WndUser.rows | Where-Object {$_['iID'] -eq $pageId}).Count -or $insertedPageIds.ContainsKey($pageId)) {throw 'New page ID is invalid or already exists'}
+                    if([string]::IsNullOrWhiteSpace([string]$change.values.strName) -or
+                       [string]$change.values.strName -match "`0" -or ([string]$change.values.strName).Length -gt 32 -or
+                       [int]$change.values.iDeleteFlag -ne 0 -or [int]$change.values.iCompileFlag -ne 0) {throw 'New page name or native initial flags differ'}
+                    $row=[ordered]@{}
+                    foreach($field in $fields) {$row[$field.name]=$templates[0][$field.name]}
+                    foreach($name in $standard) {$row[$name]=$change.values.$name}
+                    # Additional source-schema columns are copied exactly; no arbitrary insert columns or SQL are accepted.
+                    Insert-Row $c 'WndUser' $fields $row $transaction
+                    $insertedPageIds[$pageId]=$true
+                    continue
+                }
                 if($change.action -ne 'update') {throw 'Only exact updates are supported'}
                 $cmd=$c.CreateCommand();$cmd.Transaction=$transaction;$set=@()
                 foreach($prop in $change.values.PSObject.Properties) {

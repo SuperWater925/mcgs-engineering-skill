@@ -76,11 +76,17 @@ def main(export_dir, spec_path, output, tag):
     mod = load_spec(spec_path)
     windows = {wid: export.window(wid) for wid in export.window_ids()}
     originals = copy.deepcopy(windows)
-    tpl = u.Templates.pick(export, getattr(mod, 'TEMPLATES', None), kinds=('rect', 'label', 'line'))
+    needed = set()
+    for page in mod.SPEC.values():
+        if page.get('below'):
+            needed.add('rect')
+        needed.update('label' if s['op'] == 'new_text' else 'line' for s in page.get('above', []))
+    tpl = u.Templates.pick(export, getattr(mod, 'TEMPLATES', None), kinds=tuple(sorted(needed)))
     all_sources = '\n'.join(v for w in windows.values() for _, v in u.business_sources(w)) + '\n' + u.strategy_text(export.path)
     report = dict(input_sha256=export.sha256, spec=str(spec_path), spec_sha256=u.sha(Path(spec_path).read_bytes()),
                   templates=tpl['_source'], windows={}, deleted=[], added=[], gui=False, vendor_code_executed=False,
-                  database_opened=False, native_compile_verified=False, native_runtime_verified=False)
+                  database_opened=False, project_family=export.family,
+                  native_compile_verified=False, native_runtime_verified=False)
 
     for wid, spec in mod.SPEC.items():
         w = windows[wid]
@@ -116,8 +122,10 @@ def main(export_dir, spec_path, output, tag):
             if s['op'] == 'new_text':
                 align = s.get('align') or (mod.text_align(wid, s['name'], s['kind']) if hasattr(mod, 'text_align') else None)
                 rec = u.new_text(tpl['label'], s['name'], s['rect'], s['kind'], s['caption'], align)
-            else:
+            elif s['op'] == 'new_line':
                 rec = u.new_line(tpl['line'], s['name'], s['rect'], s['color'])
+            else:
+                raise ValueError(('不支持的新控件操作', s['op']))
             w.controls.append(rec)
         for s in spec.get('below', []) + spec.get('above', []):
             report['added'].append(dict(window_id=wid, **{k: v for k, v in s.items() if k != 'op'}, op=s['op']))
@@ -126,7 +134,7 @@ def main(export_dir, spec_path, output, tag):
             assert settings.properties[15].vt == 3
             settings.properties[15].value = u.c(spec['window_background'])
             w.trailer = settings.to_bytes()
-        names = [u.control_name(r) for r in w.controls]
+        names = u.known_control_names(w.controls)
         assert len(names) == len(set(names)), ('控件重名', wid)
         report['windows'][wid] = dict(name=win_name, changed_controls=changes,
                                       controls_before=len(originals[wid].controls), controls_after=len(w.controls))

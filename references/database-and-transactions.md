@@ -58,7 +58,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCS' -Manifest 
 
 Stu和Pro使用上表同一白名单；Pro策略双容器与配方单元格已做实际提交、复读和越界检查。Pro JSON `create/edit`有有限规格适配器，通过同一运行环境执行，按全表回读验收。软件大、小版本不做准入条件。
 
-新建窗口要新增WndUser行，`apply`不支持。本项目用受限事务脚本做过：`20261023_IO监视/执行IO监视受限事务.ps1`，只新增清单列出的行（六列`iID/strName/strNote/lbObjects/iDeleteFlag=0/iCompileFlag=0`），其余照本入口的白名单更新与全表比对。
+新建窗口要新增WndUser行，`apply`不支持；共享 `run.ps1 new-window` / `tools/新增窗口事务.ps1` 已支持 Stu/Pro，且可用 `-ExportAfter` 复用实际回读。额外窗口字段从显式 `template_key` 原行精确保留，不能任意改写。本项目用受限事务脚本做过：`20261023_IO监视/执行IO监视受限事务.ps1`，只新增清单列出的行（六列`iID/strName/strNote/lbObjects/iDeleteFlag=0/iCompileFlag=0`），其余照本入口的白名单更新与全表比对。
 - 该脚本按函数名从`scripts/stu_project.ps1`抽取`FullPath/Sha/SharedHash/ValueFingerprint/SensitiveTable/SafeSystemRow/SafeKey/Connection/ReadDatabase/Capture/StableCopy/CompareMaps/ManifestBlob`。
 - 改这些函数的名称或参数会让项目脚本失效；要改时同步修改项目脚本，或先把insert正式并入本入口并补隔离测试。
 
@@ -81,7 +81,7 @@ BLOB路径必须相对清单目录且不越界；每个字段有前指纹；重�
 
 ## 原生BLOB封套
 
-- `MCGSZIPE`为8字节标记+两份相同DWORD原文长度+标准zlib数据。随包解码器限已证`78 01`头并做长度、eof、尾部校验；未知封套拒绝。
+- `MCGSZIPE`为8字节标记+两份相同DWORD原文长度+标准zlib数据。随包解码器读取有效标准 zlib 流，不限制压缩等级；保留双长度、容量、Adler、eof 和尾部校验，未知封套拒绝。
 - `Stgy`行0保存策略数组；`System/StgyAndTrigger`还保存策略/触发注册。两份必须同步，不可只改其一。
 - 改某策略源码时只清该`CStgyFuncProg.compiled`；窗口打开/循环/退出事件分别保留未变缓存。不能把全工程缓存全部清空当修复。
 - `iCompileFlag`沿原厂值不等于编译通过证据；缓存非空也不证明最近修改经过了原厂检查。

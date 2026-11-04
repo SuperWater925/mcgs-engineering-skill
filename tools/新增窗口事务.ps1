@@ -1,10 +1,11 @@
 param(
- [Parameter(Mandatory)][string]$输入快照,
- [Parameter(Mandatory)][string]$事务清单,
- [Parameter(Mandatory)][string]$预期清单哈希,
- [Parameter(Mandatory)][string]$输出工程,
- [Parameter(Mandatory)][string]$报告路径,
+ [Parameter(Mandatory)][Alias('Project')][string]$输入快照,
+ [Parameter(Mandatory)][Alias('Manifest')][string]$事务清单,
+ [Parameter(Mandatory)][Alias('ManifestSha256')][string]$预期清单哈希,
+ [Parameter(Mandatory)][Alias('Out')][string]$输出工程,
+ [Parameter(Mandatory)][Alias('Report')][string]$报告路径,
  [string]$保护文件='',
+ [string]$ExportAfter='',
  [switch]$Commit
 )
 # 新增窗口受限事务：在 run.ps1 apply 的更新白名单之外，只多允许“新增 WndUser 行”（六列齐全、窗口号和窗口名都不重复）。
@@ -20,7 +21,7 @@ $Provider='auto';$script:SelectedProvider=$null
 $script:RawTables=@('Alarm','Data','DDEConnection','DDEConnectionPoint','Stgy','System','Trigger','WndControl','WndDevice','WndUser')
 $令牌=$null;$语法错误=$null
 $语法树=[Management.Automation.Language.Parser]::ParseFile($技能脚本,[ref]$令牌,[ref]$语法错误)
-foreach($函数名 in @('FullPath','Sha','SharedHash','ValueFingerprint','SensitiveTable','SafeSystemRow','SafeKey','Connection','ReadDatabase','Capture','StableCopy','CompareMaps','ManifestBlob')){
+foreach($函数名 in @('FullPath','Sha','SharedHash','ValueFingerprint','SensitiveTable','SafeSystemRow','SafeKey','Connection','ReadDatabase','Capture','WriteCapture','StableCopy','CompareMaps','ManifestBlob','WriteJson')){
  $节点=@($语法树.FindAll({param($项) $项 -is [Management.Automation.Language.FunctionDefinitionAst]},$true)|Where-Object Name -eq $函数名)
  if($节点.Count -ne 1){throw "技能函数定位不唯一：$函数名"}
  . ([scriptblock]::Create($节点[0].Extent.Text))
@@ -29,9 +30,10 @@ $键列=@{System='strName';Stgy='iStgyID';Trigger='iID';WndUser='iID';WndControl
 $可写字段=@{System=@('lbContext');Stgy=@('lbObjects');Trigger=@('lbContext');WndUser=@('lbObjects');WndControl=@('lbObjects')}
 $新增列=@('iID','strName','strNote','lbObjects','iDeleteFlag','iCompileFlag')
 $输入快照=FullPath $输入快照;$事务清单=FullPath $事务清单;$输出工程=FullPath $输出工程;$报告路径=FullPath $报告路径
-if([IO.Path]::GetExtension($输入快照) -ine '.MCS' -or [IO.Path]::GetExtension($输出工程) -ine '.MCS'){throw '输入和输出都必须是 McgsStu .MCS。'}
+if([IO.Path]::GetExtension($输入快照) -notin @('.MCS','.MCP') -or [IO.Path]::GetExtension($输出工程) -ine [IO.Path]::GetExtension($输入快照)){throw '输入为原生 .MCS/.MCP，输出须保持同一家族扩展名。'}
 if($输出工程 -ieq $输入快照){throw '输出必须是新文件，不能就地改。'}
 if((Test-Path -LiteralPath $输出工程) -or (Test-Path -LiteralPath $报告路径)){throw '输出或报告已存在，禁止覆盖。'}
+if($ExportAfter){$ExportAfter=FullPath $ExportAfter;if(-not $Commit){throw '-ExportAfter 需要 -Commit。'};if(Test-Path -LiteralPath $ExportAfter){throw '回读导出目录已存在，禁止覆盖。'}}
 if((SharedHash $事务清单) -cne $预期清单哈希.ToLowerInvariant()){throw '事务清单哈希不符。'}
 $保护=@($保护文件 -split ';' | Where-Object {$_} | ForEach-Object {FullPath $_})
 $保护前=@{};foreach($f in $保护){$保护前[$f]=SharedHash $f}
@@ -40,6 +42,28 @@ $清单目录=[IO.Path]::GetDirectoryName($事务清单)
 $基线=Capture $输入快照
 if($基线.sha256 -cne ([string]$清单.input_sha256).ToLowerInvariant()){throw '输入快照与清单基线不符。底稿变了就重新导出、重新生成清单，不要放宽校验。'}
 $前=$基线.fingerprints
+$窗口结构=@($基线.tables|Where-Object table -eq 'WndUser')
+if($窗口结构.Count -ne 1){throw '未找到唯一 WndUser 结构。'}
+$实际列=@($窗口结构[0].columns|ForEach-Object name)
+if(@($新增列|Where-Object {$_ -notin $实际列}).Count){throw 'WndUser 缺少已知窗口字段。'}
+$额外列=@($实际列|Where-Object {$_ -notin $新增列})
+function 模板原行([int]$Id){
+ $连接=Connection $输入快照
+ try{
+  $命令=$连接.CreateCommand();$命令.CommandText='SELECT * FROM [WndUser] WHERE [iID]=?';[void]$命令.Parameters.AddWithValue('id',$Id)
+  try{$读=$命令.ExecuteReader();try{if(-not $读.Read()){throw '新增页的模板行不存在。'};$行=[ordered]@{};for($i=0;$i -lt $读.FieldCount;$i++){$行[$读.GetName($i)]=$读.GetValue($i)};if($读.Read()){throw '模板行 ID 不唯一。'};return ,$行}finally{$读.Dispose()}}finally{$命令.Dispose()}
+ }finally{$连接.Dispose()}
+}
+function 保留模板值($清单值,$原值){
+ if($原值 -is [DBNull]){if($null -ne $清单值){throw '额外列必须保留原 NULL。'};return $原值}
+ if($原值 -is [byte[]]){$候选=ManifestBlob $清单值 $清单目录}
+ elseif($原值 -is [string]){if($清单值 -isnot [string]){throw '额外文本列类型不同。'};$候选=$清单值}
+ elseif($原值 -is [DateTime]){$候选=[DateTime]::Parse([string]$清单值,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::RoundtripKind)}
+ elseif($原值 -is [bool]){if($清单值 -isnot [bool]){throw '额外布尔列类型不同。'};$候选=$清单值}
+ else{if([decimal]$清单值 -ne [decimal]$原值){throw '额外数值列必须保持模板值。'};$候选=[Convert]::ChangeType($清单值,$原值.GetType(),[Globalization.CultureInfo]::InvariantCulture)}
+ if((ValueFingerprint $候选) -cne (ValueFingerprint $原值)){throw '额外窗口列不得改变模板值。'}
+ return ,$原值
+}
 if(-not $清单.Contains('operations') -or $清单.operations.Count -eq 0){throw '清单没有操作。'}
 $已有窗口名=@{};foreach($k in $前.WndUser.Keys){$已有窗口名[$前.WndUser[$k].strName]=$k}
 $允许=@{};$期望=@{};$新增=@{};$新增名=@{};$准备=[Collections.Generic.List[object]]::new()
@@ -60,8 +84,9 @@ foreach($op in $清单.operations){
   $准备.Add(@{action='update';table=$表;key_column=$op.key_column;key=$键;field=$f;raw=$raw})
  }elseif($op.action -eq 'insert'){
   if($表 -ne 'WndUser'){throw "只允许新增 WndUser 行：$表/$键"}
+  $新号=0;if($键 -notmatch '^[0-9]+$' -or -not [int]::TryParse($键,[ref]$新号)){throw '新增窗口号必须是非负 Int32。'}
   if($前.WndUser.Contains($键) -or $新增.Contains($键)){throw "窗口号已存在：$键"}
-  if((@($op.values.Keys|Sort-Object) -join ',') -cne (@($新增列|Sort-Object) -join ',')){throw "新增列不齐：$键"}
+  if((@($op.values.Keys|Sort-Object) -join ',') -cne (@($实际列|Sort-Object) -join ',')){throw "新增列与实际 WndUser 结构不符：$键"}
   if([int]$op.values.iID -ne [int]$键 -or [int]$op.values.iDeleteFlag -ne 0 -or [int]$op.values.iCompileFlag -ne 0){throw "新增行 ID/flag 不符：$键"}
   $名=[string]$op.values.strName
   if([string]::IsNullOrWhiteSpace($名)){throw "新增窗口没有名称：$键"}
@@ -70,7 +95,12 @@ foreach($op in $清单.operations){
   $新增名[$名指纹]=$true
   $值=[ordered]@{iID=[int]$op.values.iID;strName=$名;strNote=[string]$op.values.strNote;
    lbObjects=(ManifestBlob $op.values.lbObjects $清单目录);iDeleteFlag=[int]0;iCompileFlag=[int]0}
-  $新增[$键]=[ordered]@{};foreach($列 in $新增列){$新增[$键][$列]=ValueFingerprint $值[$列]}
+  if($额外列.Count){
+   if(-not $op.Contains('template_key') -or -not $前.WndUser.Contains([string]$op.template_key)){throw '额外窗口字段需当前工程真实 template_key。'}
+   $原行=模板原行 ([int]$op.template_key)
+   foreach($列 in $额外列){if((ValueFingerprint $原行[$列]) -cne $前.WndUser[[string]$op.template_key][$列]){throw '模板行在准备期间发生变化。'};$值[$列]=保留模板值 $op.values[$列] $原行[$列]}
+  }
+  $新增[$键]=[ordered]@{};foreach($列 in $实际列){$新增[$键][$列]=ValueFingerprint $值[$列]}
   $准备.Add(@{action='insert';table=$表;key=$键;values=$值})
  }else{throw '只接受 update/insert。'}
 }
@@ -85,13 +115,13 @@ function 核对($后){
  foreach($id in $期望.Keys){$v=$期望[$id];if($后[$v.table][$v.key][$v.field] -cne $v.fingerprint){throw "写入值复读不符：$id"}}
  foreach($k in $新增.Keys){
   if(-not $后.WndUser.Contains($k)){throw "新增行未写入：WndUser/$k"}
-  if((@($后.WndUser[$k].Keys|Sort-Object) -join ',') -cne (@($新增列|Sort-Object) -join ',')){throw "新增行列集不符：$k"}
-  foreach($列 in $新增列){if($后.WndUser[$k][$列] -cne $新增[$k][$列]){throw "新增行复读不符：WndUser/$k/$列"}}
+  if((@($后.WndUser[$k].Keys|Sort-Object) -join ',') -cne (@($实际列|Sort-Object) -join ',')){throw "新增行列集不符：$k"}
+  foreach($列 in $实际列){if($后.WndUser[$k][$列] -cne $新增[$k][$列]){throw "新增行复读不符：WndUser/$k/$列"}}
  }
  if($后.WndUser.Count -ne $前.WndUser.Count+$新增.Count){throw '窗口行数不符。'}
  return ,$变化
 }
-$结果=[ordered]@{input=$输入快照;input_sha256=$基线.sha256;output=$输出工程;manifest_sha256=$预期清单哈希.ToLowerInvariant();
+$结果=[ordered]@{input=$输入快照;input_sha256=$基线.sha256;project_family=$基线.project_family;output=$输出工程;manifest_sha256=$预期清单哈希.ToLowerInvariant();
  updated_fields=@($允许.Keys|Sort-Object);inserted_rows=@($新增.Keys|Sort-Object|ForEach-Object {"WndUser/$_"});preflight_passed=$true;committed=$false;
  gui=$false;vendor_code_executed=$false;native_compile_verified=$false}
 if(-not $Commit){
@@ -113,12 +143,14 @@ try{
     $键值=if($p.key_column -eq 'strName'){[string]$p.key}else{[int]$p.key}
     [void]$命令.Parameters.AddWithValue('rowkey',$键值)
    }else{
-    $命令.CommandText='INSERT INTO [WndUser] (['+($新增列 -join '],[')+']) VALUES ('+(($新增列|ForEach-Object {'?'}) -join ',')+')'
-    foreach($列 in $新增列){
+    $列名=@($实际列|ForEach-Object {'['+$_.Replace(']',']]')+']'})
+    $命令.CommandText='INSERT INTO [WndUser] ('+($列名 -join ',')+') VALUES ('+(($实际列|ForEach-Object {'?'}) -join ',')+')'
+    foreach($列 in $实际列){
      $v=$p.values[$列]
      if($v -is [byte[]]){$参数=$命令.Parameters.Add($列,[Data.OleDb.OleDbType]::LongVarBinary,$v.Length);$参数.Value=$v}
      elseif($v -is [int]){$参数=$命令.Parameters.Add($列,[Data.OleDb.OleDbType]::Integer);$参数.Value=$v}
-     else{$参数=$命令.Parameters.Add($列,[Data.OleDb.OleDbType]::VarWChar,[Math]::Max(1,$v.Length));$参数.Value=$v}
+     elseif($v -is [string]){$参数=$命令.Parameters.Add($列,[Data.OleDb.OleDbType]::VarWChar,[Math]::Max(1,$v.Length));$参数.Value=$v}
+     else{[void]$命令.Parameters.AddWithValue($列,$v)}
     }
    }
    if($命令.ExecuteNonQuery() -ne 1){throw "操作未精确影响一行：$($p.table)/$($p.key)"}
@@ -128,11 +160,13 @@ try{
  $事务.Commit();$事务.Dispose();$事务=$null
 }catch{if($事务){try{$事务.Rollback()}catch{}};throw}
 finally{if($事务){$事务.Dispose()};$连接.Dispose()}
-$复读=Capture $输出工程
+if($ExportAfter){[void][IO.Directory]::CreateDirectory($ExportAfter)}
+$复读=Capture $输出工程 $ExportAfter
 $变化=核对 $复读.fingerprints
 if((SharedHash $输入快照) -cne $基线.sha256){throw '输入快照发生变化。'}
 foreach($f in $保护){if((SharedHash $f) -cne $保护前[$f]){throw "受保护文件发生变化：$f"}}
 $结果.committed=$true;$结果['output_sha256']=$复读.sha256;$结果['windows_before']=$前.WndUser.Count;$结果['windows_after']=$复读.fingerprints.WndUser.Count
 $结果['all_unlisted_rows_and_fields_exact']=$true;$结果['all_written_values_reread_equal']=$true;$结果['protected_files_unchanged']=$保护.Count;$结果['changes']=$变化
+if($ExportAfter){WriteCapture $ExportAfter $复读;if((SharedHash $输出工程) -cne $复读.sha256){throw '导出期间输出工程发生变化。'};$结果['export_directory']=$ExportAfter}
 [IO.File]::WriteAllText($报告路径,($结果|ConvertTo-Json -Depth 20),[Text.UTF8Encoding]::new($false))
 [pscustomobject]$结果|Select-Object output_sha256,updated_fields,inserted_rows,windows_before,windows_after,all_unlisted_rows_and_fields_exact,all_written_values_reread_equal,protected_files_unchanged|ConvertTo-Json

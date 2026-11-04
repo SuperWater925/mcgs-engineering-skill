@@ -204,7 +204,7 @@
       "file": "assets/pro-3.5-cli/assets/primitives.json",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/assets/primitives.json",
       "source_sha256": "21f9c832322fae823817067c6cd5d332e89e315c7e442ce60a9d5ec2b790bb4b",
-      "packaged_sha256": "21f9c832322fae823817067c6cd5d332e89e315c7e442ce60a9d5ec2b790bb4b",
+      "packaged_sha256": "94fe56dc994504df03038810de9032c2840a480f44df8d8233b91010b13a5876",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction."
     },
     {
@@ -227,7 +227,7 @@
       "file": "assets/pro-3.5-cli/references/editing.md",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/references/editing.md",
       "source_sha256": "4cd09a36f9b64a0503208d738589bd03570ba87d63f4dc01968d146191d8ac22",
-      "packaged_sha256": "85d11f017814751b20044590e858f2875358f9f9206829ce835c7b797cfbc356",
+      "packaged_sha256": "c486504d51ceb93870a3407895da04a80ff3d5b7e30d3bbdfcd23f30d7aa69b0",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
@@ -260,7 +260,7 @@
       "file": "assets/pro-3.5-cli/scripts/database.ps1",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/database.ps1",
       "source_sha256": "5f491c34d5210206dfd0736fdb0f09ca1e9546f1ebc928f611317a99b0108e4b",
-      "packaged_sha256": "6d8534c7b0f623091c1ab76eedefc17d56932ce0fa4c2c5534fba838a4bb2ff8",
+      "packaged_sha256": "6c208924bfee2db8c508b575d187087f5c8ab93cab89667fedebd621b55aad8a",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md.",
@@ -270,7 +270,7 @@
       "file": "assets/pro-3.5-cli/scripts/mcgs_file.py",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/mcgs_file.py",
       "source_sha256": "7c3190b204bd0b8a446373beccf709620e4d176f8002e5c9ca1b8d4ffa5f2622",
-      "packaged_sha256": "037d9aff84e1fb452a4885b3ca5bb1967a72f8e528e842364d5df0038603e9f9",
+      "packaged_sha256": "71339d0c562eb74c129ca03f87306f5b2b4c988c94b14be836b4b03cc58acf97",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
@@ -279,7 +279,7 @@
       "file": "assets/pro-3.5-cli/scripts/native_format.py",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/native_format.py",
       "source_sha256": "23172d903ca677dab1c0d4301d089597ae6f4434d5eebb134571fd3e7e2abb18",
-      "packaged_sha256": "4143cfe0895fcbc220d9eae2079bfa396fb9c5311410b7ca24b28844c8544a2e",
+      "packaged_sha256": "eb708a9b624d9f42d55e3b41937d0eb3a2ce695e5be07a631fd0384605322944",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
@@ -459,7 +459,7 @@
   },
   "exporter_System_SQL_NULL_row_identity": {
     "file": "scripts/stu_project.ps1",
-    "sha256": "97821909769014f0517a59da0082da5fcb24054eab17998ed40448d92649b0bf",
+    "sha256": "64fde50794663ebe98391cc2047cc755ffbb9e1e67f920635e306dc622503dd3",
     "change": "System SQL NULL names retained independently by real iID; ACE helper path remains relative"
   },
   "software_write_visibility_rule_20261103": {
@@ -471,7 +471,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "7e5798f6e7273d8620cf82a88ab0ef85dad7feafd0de01feae0a8bd66218abc3"
+        "packaged_sha256": "9bad1651f33f44261b6dbfaa46f7047f13ca3659dbaebebe8a9a532cb2a0f145"
       },
       {
         "file": "references/pro-native-ui-workflow.md",
@@ -525,5 +525,25 @@
     "native_business_source_or_ABI_changed": false,
     "new_machine_and_real_Pro_business_acceptance_performed": false,
     "paused_engineering_resumed": false
+  },
+  "offline_parity_update_20261104": {
+    "file": "references/offline-parity-validation.json",
+    "sha256": "7e24e57b26e214e68544e210765e0478456fe6cd369245928a5f5aec5d980bfa",
+    "new_vs_existing_validation_separate": true,
+    "native_status": "passed",
+    "deployment_binder_scope_fix": {
+      "file": "assets/pro-native-bridge/delivery/bind_common_delivery.v5.py",
+      "sha256": "036139b538de4889f50bf0d6a6b77aaeb895238a34f9632302f38a30912fbd12",
+      "unbound_source_manifest_sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728",
+      "actual_bound_DTO_assertions": 13
+    },
+    "targeted_image_regression_passed": true,
+    "public_example_final_file_readback_passed": true,
+    "new_helper": {
+      "file": "assets/pro-3.5-cli/scripts/control_factory.py",
+      "sha256": "94b0cb8c38d79d42fef82b8d69238fca2563dba42663b156c175cf12ff021cda",
+      "source": "Own adapter connecting existing native archive codecs; generic Pro template strings/actions sanitized from current baselines."
+    },
+    "original_user_projects_or_credentials_included": false
   }
 }

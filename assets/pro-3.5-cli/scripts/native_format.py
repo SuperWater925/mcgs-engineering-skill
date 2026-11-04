@@ -108,46 +108,10 @@ def common(b):
             'name': name, 'name_pos': name_pos, 'name_end': end}
 
 
-def edit_control(kind, b, edits):
-    if kind not in (0x5008,0x5002,0x5004,0x5025):
-        raise ValueError('Unsupported control class for editing')
-    numeric_changed=False
-    if any(k in edits for k in ('binding','minimum','maximum')):
-        if kind!=0x5025:raise ValueError('Binding/range editing requires numeric input')
-        cm=CommonEnvelope.parse(ControlRecord(kind,b,b'',0));projected=cm.project_without_animations()
-        q=InputRecord.parse(projected)
-        if q.variable_type not in (1,2):raise ValueError('Numeric editor requires a numeric binding')
-        if 'binding' in edits:
-            ident=edits.get('binding_id');target_kind=edits.get('binding_type')
-            if type(ident)is not int or ident<0 or type(target_kind)is not int or target_kind not in (1,2):
-                raise ValueError('A matching binding ID and type are required')
-            if (q.variable,q.variable_id,q.variable_type)!=(edits['binding'],ident,target_kind):
-                q.variable=edits['binding'];q.properties[5]=ident;q.properties[6]=target_kind;q.expression_cache=b''
-        if any(k in edits for k in ('minimum','maximum')):
-            low=edits.get('minimum',struct.unpack('<f',q.min_raw)[0]);high=edits.get('maximum',struct.unpack('<f',q.max_raw)[0]);largest=struct.unpack('<f',bytes.fromhex('ffff7f7f'))[0]
-            if not all(type(v)in (int,float) and math.isfinite(v) and abs(v)<=largest for v in (low,high)) or low>high:raise ValueError('Invalid finite float32 input range')
-            if 'minimum' in edits:q.min_raw=struct.pack('<f',low)
-            if 'maximum' in edits:q.max_raw=struct.pack('<f',high)
-        projected.payload=q.to_bytes()
-        if InputRecord.parse(projected).to_bytes()!=projected.payload:raise ValueError('Changed input roundtrip differs')
-        b=cm.restore_projected(projected).payload;numeric_changed=True
-    c = common(b); changes = []
-    if 'bounds' in edits:
-        changes.append((c['bounds_pos'], c['bounds_pos']+16, bounds(edits['bounds'])))
-    if 'name' in edits:
-        changes.append((c['name_pos'], c['name_end'], text(edits['name'])))
-    if 'text' in edits:
-        if kind != 0x5008 or u32(b, c['name_end']) != 12 or b[c['name_end']+12:c['name_end']+14] != bytes(2):
-            raise ValueError('Text editing requires a static label')
-        start = c['name_end']+14; _, end = string(b, start)
-        changes.append((start, end, text(edits['text'])))
-    allowed = {'bounds','name','text','binding','binding_id','binding_type','minimum','maximum'}
-    if set(edits)-allowed or (not changes and not numeric_changed):
-        raise ValueError('Unknown or empty control edit')
-    for a, z, value in sorted(changes, reverse=True):
-        b = b[:a]+value+b[z:]
-    common(b)
-    return b
+def edit_control(kind, b, edits, variables=None):
+    # Reuse the same original Pro class codecs for creation and existing edits.
+    from control_factory import edit_control as edit_native_control
+    return edit_native_control(kind, b, edits, variables)
 
 
 def page_properties(trailer, *, ident=None, name=None, width=None, height=None):
