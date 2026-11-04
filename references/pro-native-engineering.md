@@ -15,7 +15,7 @@ pwsh -NoProfile -File .\run.ps1 native-engineering --scope-config '<完整路径
 pwsh -NoProfile -File .\run.ps1 native-engineering --scope-config '<完整路径>' run --directory '<同一session完整路径>' --timeout 180
 ```
 
-默认使用直接执行：同一个原生队列调用内，按动作顺序读取当前目标、准备调用并执行，不生成或要求用户提供permit文件，不逐批索要确认。多步骤program的`run`默认每个编辑step一次队列调用；同一step内按动作顺序执行。已完成动作的真实ID、名称和路径仍可通过`$ref`引用。
+默认使用直接执行：同一个原生队列调用内，按动作顺序读取当前目标、准备调用并执行，不生成或要求用户提供permit文件，不逐批索要确认。多步骤program的`run`默认把连续同页、无结果依赖且兼容的编辑step合并为队列调用，默认每组最多8个动作（`--max-merged-actions`可调）；`$ref`依赖、显式inspect、页面/元数据变化、保存、检查或不兼容动作结束当前组。原单step不因自动分组预算被拆分或拒绝，同一step内仍按动作顺序执行；`--no-merge-steps`保留逐step路线。已完成动作的真实ID、名称和路径仍可通过`$ref`引用。
 
 ```powershell
 # 连接配置也可在本次终端一次设置。

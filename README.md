@@ -61,6 +61,8 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 
 从旧版迁移时，先保全并比较本地修改，将旧 `mcgs-offline-edit` 安装目录备份移到 `skills` 目录之外，再安装新包唯一根目录 `mcgs-engineering`；不要同时保留两个技能。本版不保留旧调用别名，改用 `$mcgs-engineering`。已有在线运行资料不自动搬动，也无需因技能更名重建运行 scope。
 
+安装后可先执行 `pwsh -NoProfile -File .\run.ps1 native-engineering --help` 和 `pwsh -NoProfile -File .\run.ps1 doctor`。首次在线接入需本机的 .NET Framework x86 编译器及实际 Pro 安装；按[首次在线准备](references/pro-native-deployment.md#首次热接的文件准备)生成并编译自有桥和业务引擎，仅复制技能目录不会自动建立连接。便携安装与隔离连接的实际范围见[安装验证记录](references/installation-validation.json)。
+
 ## 共用环境
 
 - Windows、PowerShell 7、Python 3.11+。

@@ -1,7 +1,8 @@
 $ErrorActionPreference = 'Stop'
 if($args.Count -gt 0 -and $args[0] -eq 'native-engineering'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
- $nativeArgs=if($args.Count -gt 1){@($args[1..($args.Count-1)])}else{@()}
+ $nativeArgs=@()
+ if($args.Count -gt 1){$nativeArgs=@($args[1..($args.Count-1)])}
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_native_engineering.py') @nativeArgs
  exit $LASTEXITCODE
 }

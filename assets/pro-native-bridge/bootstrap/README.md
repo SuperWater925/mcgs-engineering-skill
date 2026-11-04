@@ -1,6 +1,6 @@
 # First deployment / task change: own native bridge
 
-This entry prepares and builds the bridge only. It never edits a vendor DLL, opens an engineering project, or carries a user project/account/claim/dump. Preparation and build do not register COM, deploy into Addins, or start Pro. The existing live bridge is untouched.
+This is the optional cold-start deployment entry; ordinary running Pro processes should use [hot attachment](../hot-attach/README.md). This entry prepares and builds the bridge only. It never edits a vendor DLL, opens an engineering project, or carries a user project/account/claim/dump. Preparation and build do not register COM, deploy into Addins, or start Pro. The existing live bridge is untouched.
 
 ## Explicit inputs
 
@@ -25,7 +25,7 @@ python .\prepare_bootstrap.py `
 
 Preparation rejects existing bootstrap/runtime output roots. It creates bound own sources, the sibling `McgsInternalBridge.bridge.json`, its compile-time SHA binding, and the exact three-root private HKLM/Registry32 registration plan. It does not create the queue root yet. The build uses the installed .NET Framework x86/x64 compilers (or explicit `-CscX86`/`-CscX64` paths), compiles the own shim and launcher, exports/normalizes/embeds its own TYPELIB/#1, checks its four callback signatures, and creates the own native x86 scanner adapter in pure Python. Type-library helper execution processes only the own assembly; no vendor module or bridge callback runs. Output `build-manifest.json` contains exact hashes and the uninstalled status.
 
-The callback interface and private CLSID/ProgID stay the established bridge interface. The constructor is inert. Its original native UI callback supplies the thread; a WinForms timer runs the durable at-most-once queue. A runtime-root mutex prevents two bootstrap owners from sharing one queue. Native runtime/device execution callbacks are declined.
+The callback interface and private CLSID/ProgID stay the established bridge interface. The constructor is inert. Its original native UI callback captures the UI SynchronizationContext and acquires the runtime-root mutex. A dedicated MTA worker prepares requests and publishes replies; only Dispatch returns through that captured context to the original UI thread. Native modifications, saving and owned-resource release remain on that one UI thread. The worker uses event notification with a 250ms polling fallback; shutdown posts UI cleanup without joining the worker from UI. The mutex prevents two bootstrap owners from sharing one queue. Native runtime/device execution callbacks are declined. See the [pipeline contract](../../../references/pro-native-pipeline.md) for optional engine PrepareRequest/FinalizeResponse hooks and old-engine compatibility.
 
 ## Stage the already built engine
 

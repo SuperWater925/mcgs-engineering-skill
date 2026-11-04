@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "date": "2026-11-04",
+  "release_tag": "v2026.11.04-install-fix",
+  "skill": "mcgs-engineering",
+  "names": {
+    "active_old_name_references_found": 0,
+    "historical_and_migration_old_names_retained": true
+  },
+  "links": {
+    "local_targets_and_anchors_checked": 113,
+    "local_errors": 0,
+    "distinct_external_links_checked": 8,
+    "external_missing": 0,
+    "external_unverified": 0
+  },
+  "public_download": {
+    "downloaded_release_tag": "v2026.11.04-engineering",
+    "public_full_ZIP_download_passed": true,
+    "archive_sha256": "cac9db4ecfb8b3a180caa4a21df19124acb86b9c040e8c76873303cb30278062",
+    "manifest_files_verified": 493,
+    "all_manifest_hashes_match": true,
+    "CRC_passed": true
+  },
+  "CLI": {
+    "argument_capture_cases_passed": 9,
+    "actual_entry_help_checks_passed": 3,
+    "single_argument_character_splitting_fixed": true,
+    "Chinese_space_paths_and_JSON_preserved": true,
+    "run_ps1_sha256": "ef6ed1de2c4e88cadbdd7762c5f7a9460543d10a793b3aa9eab61e1f2b748bf3"
+  },
+  "portable_deployment": {
+    "baseline_release_tag": "v2026.11.04-engineering",
+    "fresh_Chinese_and_space_path": true,
+    "baseline_manifest_files_verified": 493,
+    "offline_doctor_passed": true,
+    "production_hot_prepare_and_compile_passed": true,
+    "production_compiled_source_count_including_layout": 157,
+    "own_ABI_payload_files_promoted": 307,
+    "production_engine_and_scope_staged": true,
+    "scope_layout_attestation_passed": true,
+    "unchanged_bridge_source_files_verified": 199,
+    "native_source_and_ABI_contracts_unchanged": true
+  },
+  "own_native_connection": {
+    "pings_passed": 3,
+    "cold_CLR_transition_verified": true,
+    "UI_and_background_threads_separated": true,
+    "bridge_stopped": true,
+    "host_exit_code": 0,
+    "unique_own_COM_registration_absent_after_cleanup": true
+  },
+  "boundaries": {
+    "different_physical_machine_tested": false,
+    "real_Pro_business_acceptance_performed": false,
+    "production_engine_invoked": false,
+    "user_project_accessed": false,
+    "paused_engineering_resumed": false,
+    "unknown_binary_ABI_supported": false
+  }
+}
