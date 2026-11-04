@@ -1,0 +1,292 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "IntegerGetAtEntry",
+      "rva": 292346,
+      "bytes": "e9811e0300e98caf6000e937253000e9826f2300e9adae1b00e978919400e973",
+      "reloc_offsets": []
+    },
+    {
+      "name": "IntegerGetAt",
+      "rva": 496768,
+      "bytes": "558bec51894dfc8b4508508b4dfce80dfef8ff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "IntegerElement",
+      "rva": 499600,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b55fc8b42048b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringGetAtEntry",
+      "rva": 346831,
+      "bytes": "e9ac7e0400e937a46600e9c20c5200e93d791c00e9d8400200e913a2a200e98e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringGetAt",
+      "rva": 641408,
+      "bytes": "558bec51894dfc8b4508508b4dfce87c3cfbff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringElement",
+      "rva": 645200,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b55fc8b42048b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalCommitActionLoop",
+      "rva": 3588446,
+      "bytes": "c7853cf0ffff00000000eb0f8b8d3cf0ffff83c101898d3cf0ffff83bd3cf0ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonPropertiesCommand",
+      "rva": 3583696,
+      "bytes": "558bec6aff6830bafa0064a10000000050b890180000e8f5657c00a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "ButtonSerialize",
+      "rva": 3591472,
+      "bytes": "558bec51894dfce8724acdff8bc8e8ff33cdff85c0740e8b4508508b4dfce80f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonGenerateCompile",
+      "rva": 7627472,
+      "bytes": "558bec83ec08894dfc8b4dfc83e9048b45fc8b50fc8b82ec000000ffd0e8e232",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonClearOwnReferences",
+      "rva": 7628256,
+      "bytes": "558bec6aff6835ceff0064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ObjectModelClearPathReferences",
+      "rva": 8217504,
+      "bytes": "558bec83ec34894dfc8b4508508d4df0518b4dfc83c104e8ca6985ff8d55f052",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonCompile",
+      "rva": 3589312,
+      "bytes": "558bec6aff686abafa0064a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ButtonPhase0Resolve",
+      "rva": 3607328,
+      "bytes": "558bec6aff6887befa0064a1000000005083ec5056a1600b3b0133c5508d45f4",
+      "reloc_offsets": [
+        6,
+        22
+      ]
+    },
+    {
+      "name": "ButtonPhase1Resolve",
+      "rva": 3605728,
+      "bytes": "558bec6aff6851befa0064a1000000005083ec5056a1600b3b0133c5508d45f4",
+      "reloc_offsets": [
+        6,
+        22
+      ]
+    },
+    {
+      "name": "CommonCompile",
+      "rva": 4328176,
+      "bytes": "558bec6aff68bac7fb0064a1000000005083ec24a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BasicProxyGetter",
+      "rva": 3644576,
+      "bytes": "558bec6aff6886c6fa0064a1000000005083ec24a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "OperationProxyGetter",
+      "rva": 3645872,
+      "bytes": "558bec6aff68c1c6fa0064a1000000005083ec54a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "OperationProxySetter",
+      "rva": 3645712,
+      "bytes": "558bec51894dfc8b45fc837804007505e9850000008b4dfc83790801753f6a07",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonStringArrayCtor",
+      "rva": 631936,
+      "bytes": "558bec51894dfc8b4dfce8a9d9faff8b45fcc70058b00e018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "ButtonPhase0StringsCtorCall",
+      "rva": 3575879,
+      "bytes": "8b4df081c1e4010000e840bdc9ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ButtonPhase1StringsCtorCall",
+      "rva": 3676064,
+      "bytes": "8b4df081c130010000e8e735c8ff",
+      "reloc_offsets": []
+    }
+  ],
+  "tables": {
+    "Button": {
+      "rva": 14016108,
+      "col_rva": 15174680,
+      "type_rva": 16325940,
+      "complete_offset": 0,
+      "rtti": ".?AVCDrawButton@@",
+      "slots": [
+        267091,
+        331411,
+        347651,
+        4401,
+        130021,
+        164516,
+        18551,
+        338696,
+        249176,
+        306636,
+        329936,
+        228566,
+        100156,
+        31541,
+        216281,
+        238691,
+        77041,
+        188846,
+        160551,
+        53506,
+        339816,
+        150371,
+        156501,
+        87036,
+        36396,
+        201831,
+        11966,
+        289996,
+        307036,
+        6861
+      ]
+    },
+    "ButtonIObject": {
+      "rva": 14016436,
+      "col_rva": 15174796,
+      "type_rva": 16325940,
+      "complete_offset": 4,
+      "rtti": ".?AVCDrawButton@@",
+      "slots": [
+        227726,
+        98566,
+        243901,
+        214541,
+        133906,
+        342641,
+        202691,
+        327576,
+        206626,
+        316196,
+        346061,
+        303676,
+        336751,
+        306131,
+        347581,
+        5491,
+        288851,
+        85846,
+        158406,
+        195316,
+        44416,
+        166206,
+        23811,
+        130646,
+        334876,
+        268056,
+        344071,
+        63621
+      ]
+    },
+    "IntegerArray": {
+      "rva": 13545384,
+      "col_rva": 15133304,
+      "type_rva": 16292672,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@HH@@",
+      "slots": [
+        11727406,
+        123036,
+        193056,
+        4401,
+        130021
+      ]
+    },
+    "StringArray": {
+      "rva": 13545560,
+      "col_rva": 15133488,
+      "type_rva": 16292736,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@V?$CStringT@_WV?$StrTraitMFC_DLL@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@V12@@@",
+      "slots": [
+        11727406,
+        88816,
+        235631,
+        4401,
+        130021
+      ]
+    }
+  },
+  "phase_offsets": [
+    {
+      "phase": 0,
+      "modes": 444,
+      "ids": 464,
+      "texts": 484
+    },
+    {
+      "phase": 1,
+      "modes": 876,
+      "ids": 956,
+      "texts": 896
+    }
+  ],
+  "static_proof_file": "button-actions-native-static-proof.json",
+  "static_proof_sha256": "e09026e2e34b4f9df31853b275ea265a7651b7784ba08e66ba8d4d042c4510ea",
+  "candidate_host_verified": false,
+  "button_string_array_fix": {
+    "proof_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\page-control-prep\\button-string-array-fix\\button-string-array-static-proof-0001.json",
+    "proof_sha256": "80c61c6c41d7440332424051f42676abe042e01dac0606e9a0109b2d42bbea84",
+    "mfc_page_event_containers_unchanged": true
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "static_loader_contract_supported": true,
+  "machine": "I386",
+  "software_version_used_as_gate": false,
+  "capabilities": {
+    "cold_start_existing_startup_count_zero": true,
+    "addins_ini_preload_section": "预装载构件",
+    "native_scanner_requires_DllRegisterServer": true,
+    "type_library_resource": "TYPELIB/#1",
+    "class_interface_count": 1,
+    "dispatch_interface": "IAddInObj",
+    "callback_dispatch_ids": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "native_runtime_callback_declined": true
+  },
+  "native_loader_evidence": [
+    {
+      "name": "host-loader-tail-static.json",
+      "sha256": "229920d86be011395e6ba95c2a2ed23ae98521c1daf3848d10cbdef554cbd6a5"
+    },
+    {
+      "name": "automatic-registration-findings.json",
+      "sha256": "df0f02819de72e8a1e7c5ee874049ba9460f8d1968eadd25668dc4f25af57e95"
+    },
+    {
+      "name": "startup-single-scan-independent-findings.json",
+      "sha256": "bfcc9f2a89779253419b0d324f3e1f911c3c746ec54da2cdb768e75b50ad0648"
+    }
+  ],
+  "scope": "Exact installed executable and observed loader ABI. Unknown executable requires a separately derived loader capability contract; no release-number whitelist.",
+  "new_machine_validation": "not performed"
+}

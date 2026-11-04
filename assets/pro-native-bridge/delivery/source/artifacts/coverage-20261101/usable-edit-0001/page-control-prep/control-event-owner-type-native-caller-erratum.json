@@ -1,0 +1,214 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "actual_complete_setinfo_callsite": [
+    {
+      "va": "0xc592e8",
+      "bytes": "8b4dec",
+      "op": "mov ecx, dword ptr [ebp - 0x14]"
+    },
+    {
+      "va": "0xc592eb",
+      "bytes": "8b91b0000000",
+      "op": "mov edx, dword ptr [ecx + 0xb0]"
+    },
+    {
+      "va": "0xc592f1",
+      "bytes": "8b4208",
+      "op": "mov eax, dword ptr [edx + 8]"
+    },
+    {
+      "va": "0xc592f4",
+      "bytes": "50",
+      "op": "push eax"
+    },
+    {
+      "va": "0xc592f5",
+      "bytes": "8b4de8",
+      "op": "mov ecx, dword ptr [ebp - 0x18]"
+    },
+    {
+      "va": "0xc592f8",
+      "bytes": "51",
+      "op": "push ecx"
+    },
+    {
+      "va": "0xc592f9",
+      "bytes": "8b55ec",
+      "op": "mov edx, dword ptr [ebp - 0x14]"
+    },
+    {
+      "va": "0xc592fc",
+      "bytes": "8b8ab0000000",
+      "op": "mov ecx, dword ptr [edx + 0xb0]"
+    },
+    {
+      "va": "0xc59302",
+      "bytes": "83c148",
+      "op": "add ecx, 0x48"
+    },
+    {
+      "va": "0xc59305",
+      "bytes": "e8b3c27cff",
+      "op": "call 0x4255bd"
+    },
+    {
+      "va": "0xc5930a",
+      "bytes": "50",
+      "op": "push eax"
+    },
+    {
+      "va": "0xc5930b",
+      "bytes": "8b4dec",
+      "op": "mov ecx, dword ptr [ebp - 0x14]"
+    },
+    {
+      "va": "0xc5930e",
+      "bytes": "81c194000000",
+      "op": "add ecx, 0x94"
+    },
+    {
+      "va": "0xc59314",
+      "bytes": "e831157fff",
+      "op": "call 0x44a84a"
+    },
+    {
+      "va": "0xc59319",
+      "bytes": "83e801",
+      "op": "sub eax, 1"
+    },
+    {
+      "va": "0xc5931c",
+      "bytes": "50",
+      "op": "push eax"
+    },
+    {
+      "va": "0xc5931d",
+      "bytes": "8b4dec",
+      "op": "mov ecx, dword ptr [ebp - 0x14]"
+    },
+    {
+      "va": "0xc59320",
+      "bytes": "81c194000000",
+      "op": "add ecx, 0x94"
+    },
+    {
+      "va": "0xc59326",
+      "bytes": "e8de477eff",
+      "op": "call 0x43db09"
+    },
+    {
+      "va": "0xc5932b",
+      "bytes": "8b08",
+      "op": "mov ecx, dword ptr [eax]"
+    },
+    {
+      "va": "0xc5932d",
+      "bytes": "e882bd7bff",
+      "op": "call 0x4150b4"
+    }
+  ],
+  "actual_setinfo_argument_store": [
+    {
+      "va": "0xc57a70",
+      "bytes": "55",
+      "op": "push ebp"
+    },
+    {
+      "va": "0xc57a71",
+      "bytes": "8bec",
+      "op": "mov ebp, esp"
+    },
+    {
+      "va": "0xc57a73",
+      "bytes": "83ec08",
+      "op": "sub esp, 8"
+    },
+    {
+      "va": "0xc57a76",
+      "bytes": "894dfc",
+      "op": "mov dword ptr [ebp - 4], ecx"
+    },
+    {
+      "va": "0xc57a79",
+      "bytes": "8b45fc",
+      "op": "mov eax, dword ptr [ebp - 4]"
+    },
+    {
+      "va": "0xc57a7c",
+      "bytes": "8b4d0c",
+      "op": "mov ecx, dword ptr [ebp + 0xc]"
+    },
+    {
+      "va": "0xc57a7f",
+      "bytes": "894804",
+      "op": "mov dword ptr [eax + 4], ecx"
+    },
+    {
+      "va": "0xc57a82",
+      "bytes": "8b5508",
+      "op": "mov edx, dword ptr [ebp + 8]"
+    },
+    {
+      "va": "0xc57a85",
+      "bytes": "52",
+      "op": "push edx"
+    },
+    {
+      "va": "0xc57a86",
+      "bytes": "8b4dfc",
+      "op": "mov ecx, dword ptr [ebp - 4]"
+    },
+    {
+      "va": "0xc57a89",
+      "bytes": "83c108",
+      "op": "add ecx, 8"
+    },
+    {
+      "va": "0xc57a8c",
+      "bytes": "ff15708e3c01",
+      "op": "call dword ptr [0x13c8e70]"
+    },
+    {
+      "va": "0xc57a92",
+      "bytes": "8b45fc",
+      "op": "mov eax, dword ptr [ebp - 4]"
+    },
+    {
+      "va": "0xc57a95",
+      "bytes": "8b4d08",
+      "op": "mov ecx, dword ptr [ebp + 8]"
+    },
+    {
+      "va": "0xc57a98",
+      "bytes": "8b5108",
+      "op": "mov edx, dword ptr [ecx + 8]"
+    },
+    {
+      "va": "0xc57a9b",
+      "bytes": "89500c",
+      "op": "mov dword ptr [eax + 0xc], edx"
+    }
+  ],
+  "userwindow_native_type_store": [
+    {
+      "va": "0xc5122e",
+      "bytes": "c70590de3b0112000000",
+      "op": "mov dword ptr [0x13bde90], 0x12"
+    }
+  ],
+  "correction": {
+    "old_control_candidates_v1_through_v6": "Incorrectly used metadata+18 (raw0/2) as the EventDispatch owner type. These candidates were not compiled or invoked by this author; they must not be selected.",
+    "actual_caller": "C592EB obtains metadata; C592F1 reads [metadata+8], C592F4 pushes it, then the original actual EventInfo* is pushed and C5932D calls4150B4->C57A70.",
+    "actual_callee": "C57A7C loads its second stack argument and C57A7F stores that DWORD at EventDispatch+4.",
+    "correct_control_owner_type": "The actual native metadata type ID at metadata+8, e.g. CDrawButton0x101; not archive5027 and not raw metadata+18.",
+    "raw_metadata_field18": "Still guarded/read as its actual raw0/2, with no verified business enum name; it is not used as a SetInfo argument.",
+    "page_compatibility": "UserWindow metadata+8 is0x12, so the existing page SetInfo argument0x12 was correct.",
+    "ownership_sequence": "Factory/private initialization/adoption/unknown cleanup sequence is unchanged. Cross-class template owner-type mismatches must be refused before the target owning list is released."
+  },
+  "supersedes_incorrect_semantic_claims_in": [
+    "control-events-native-static-proof.json: SetInfo receives category2",
+    "control-events-bitmap-multibutton-static-proof.json: SetInfo receives category0"
+  ]
+}

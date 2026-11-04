@@ -1,0 +1,1019 @@
+{
+  "schema": 1,
+  "scope": "Own temporary User-strategy model/list/root deletion plus exact native Trigger-row cursor deletion. Not a single atomic original API. Requires fresh immutable session proof.",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "preferred_base": "0x400000",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+    },
+    {
+      "name": "mfc110u.dll",
+      "preferred_base": "0x10000000",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da"
+    }
+  ],
+  "functions": [
+    {
+      "name": "BlockFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bd30",
+      "bytes": "558bec83ec08894df8c745fc00000000eb098b45fc83c0018945fc8b4df883c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RowFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99b90",
+      "bytes": "558bec83ec08894dfc8b450c508b4d08518b55fc8b42088b4dfc8b108b49088b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CellFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9e4c0",
+      "bytes": "558bec83ec0c894df8c745fc00000000eb098b45fc83c0018945fc8b4df883c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArrayCount",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb3340",
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArrayGetAt",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fd0",
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e845bea7008b55fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82fb0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b55fc83c22052e85ef95bff83c40c8be5",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83080",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStringGetLength",
+      "module": "mfc110u.dll",
+      "rva": "0xa0dca",
+      "bytes": "8b018b40f4c38b01c3558bec817d080e0007807505e849651600ff7508e819be",
+      "reloc_offsets": [],
+      "ordinal": 5755
+    },
+    {
+      "name": "NextStrategyId",
+      "module": "McgsSetPro.exe",
+      "rva": "0x328450",
+      "bytes": "558bec83ec14894df4c745f800000000c745fc00000000c745fc00000000eb09",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CreateUserContext",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacdff0",
+      "bytes": "558bec6aff68e47f040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "UserContextCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0xace080",
+      "bytes": "558bec6aff681080040164a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BaseContextCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacdd60",
+      "bytes": "558bec6aff68bf7f040164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "ContextSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacdeb0",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8f5a655ff8b4d08894df88b4d08e8d3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CreateBlock",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99ca0",
+      "bytes": "558bec6aff684d4d040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BlockDeepCopy",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99f20",
+      "bytes": "558bec6aff68e34d040164a1000000005081ecd0000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "BlockDestroy",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9a750",
+      "bytes": "558bec6aff686b4f040164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RootAddStrategy",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3281f0",
+      "bytes": "558bec6aff68824dfa0064a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RootDeleteStrategy",
+      "module": "McgsSetPro.exe",
+      "rva": "0x327e60",
+      "bytes": "558bec6aff683a4dfa0064a1000000005083ec38a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BlockSetName",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ba40",
+      "bytes": "558bec51894dfc8b45fc83780c00750432c0eb708b4dfc8b510c837a0c007421",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ContextInit",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacd770",
+      "bytes": "558bec6aff682b7f040164a100000000505181ecf0000000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "ContextAllocateNewTriggerRow",
+      "module": "McgsSetPro.exe",
+      "rva": "0xaccb30",
+      "bytes": "558bec6aff68c07d040164a100000000505181ecd0000000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "CurrentProjectDatabase",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6d1b90",
+      "bytes": "558bec6aff68712bff0064a100000000505183ec70535657a1600b3b0133c550",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "DatabaseIsOpen",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2626f0",
+      "bytes": "558bec51894dfc8b45fc8b40748be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TriggerRecordCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x103770",
+      "bytes": "558bec6aff68e53af70064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TriggerRecordDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x103a60",
+      "bytes": "558bec6aff68183bf70064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TriggerRecordDefaultSQL",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1038c0",
+      "bytes": "558bec83ec08894df8c745fc0000000068a0e70f018b4d08ff1550913c018b45",
+      "reloc_offsets": [
+        17,
+        26
+      ]
+    },
+    {
+      "name": "TriggerRecordFields",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1038f0",
+      "bytes": "558bec51894dfc6a018b4d08e80722f2ff6a018b45fc05980000005068b4e70f01",
+      "reloc_offsets": [
+        29
+      ]
+    },
+    {
+      "name": "RecordOpen",
+      "module": "McgsSetPro.exe",
+      "rva": "0x654c0",
+      "bytes": "558bec83ec14894dfc8d4510508d4d0c518d5508528b45fc508d4dece89f0500",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordClose",
+      "module": "McgsSetPro.exe",
+      "rva": "0x65500",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e84b070000506a03e88307000083c408",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordFind",
+      "module": "McgsSetPro.exe",
+      "rva": "0x65770",
+      "bytes": "558bec83ec14894df8c745fc000000008d4508508b4df8518d55fc528d4dece8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ConditionSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82c30",
+      "bytes": "558bec6aff687829040164a1000000005083ec34a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ConditionCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83cb0",
+      "bytes": "558bec6aff68882b040164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "ConditionBaseSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cf90",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce815b658ff8b4d08894df88b4d08e8f3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockDeleteOwned",
+      "module": "McgsSetPro.exe",
+      "rva": "0xaa06d0",
+      "bytes": "558bec51894dfc8b4dfce8087756ff8b450883e00174098b4dfc51e8ec9957ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ContextDeleteOwned",
+      "module": "McgsSetPro.exe",
+      "rva": "0xad0b00",
+      "bytes": "558bec51894dfc8b4dfce8085055ff8b450883e00174098b4dfc51e8bc9554ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ManagerFindChild",
+      "module": "McgsSetPro.exe",
+      "rva": "0x796d60",
+      "bytes": "558bec83ec10894df8c745fc000000008d45fc508b4d08518d4df0e8a0060000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NativeArchiveStrategyForInitializationProof",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6bf730",
+      "bytes": "558bec6aff68540bff0064a100000000505181ec0c010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "NativeCreateContextForInitializationProof",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6c0b70",
+      "bytes": "558bec6aff688b0dff0064a1000000005081ecb4000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "ByteArrayCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x1c21ce",
+      "bytes": "33c089410489411089410c894108c701b86203108bc1c3ff7104c701b8620310",
+      "reloc_offsets": [
+        16,
+        28
+      ]
+    },
+    {
+      "name": "BlockRuntimeClassGetter",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99c90",
+      "bytes": "558bec51894dfcb804d93a018be55dc3558bec6aff684d4d040164a100000000",
+      "reloc_offsets": [
+        8,
+        22
+      ]
+    },
+    {
+      "name": "UserRuntimeClassGetter",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacdfe0",
+      "bytes": "558bec51894dfcb818e13a018be55dc3558bec6aff68e47f040164a100000000",
+      "reloc_offsets": [
+        8,
+        22
+      ]
+    },
+    {
+      "name": "IdentityGetAfxApp",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ObjectPath",
+      "module": "McgsSetPro.exe",
+      "rva": "0x7ccce0",
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ReferenceCheck",
+      "module": "McgsSetPro.exe",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ObjectModelRemove",
+      "module": "McgsSetPro.exe",
+      "rva": "0x7d6640",
+      "bytes": "558bec6aff689f86000164a1000000005081ec14010000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "ListFindId",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6b8d00",
+      "bytes": "558bec83ec0c894df88b4df8e8aa0f98ff8945f4c745fc00000000eb098b45fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListRemove",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6b8e60",
+      "bytes": "558bec83ec0c894dfc8b4508508b4dfce80f9796ff0fb64d0c83f9017402eb4f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListCount",
+      "module": "McgsSetPro.exe",
+      "rva": "0x100410",
+      "bytes": "558bec51894dfc6a006a0068041000008b45fc8b482051ff151c783c018be55d",
+      "reloc_offsets": [
+        25
+      ]
+    },
+    {
+      "name": "RecordBof",
+      "module": "McgsSetPro.exe",
+      "rva": "0x65570",
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8400a0000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordEof",
+      "module": "McgsSetPro.exe",
+      "rva": "0x655b0",
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8c00b0000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordFirst",
+      "module": "McgsSetPro.exe",
+      "rva": "0x656d0",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e85b130000506a01e89313000083c408",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordNext",
+      "module": "McgsSetPro.exe",
+      "rva": "0x656a0",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8db110000506a01e81312000083c408",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordDelete",
+      "module": "McgsSetPro.exe",
+      "rva": "0x65890",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8bb1f0000506a01e8f31f000083c408",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramBaseSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98240",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8650359ff8b4d08894df88b4d08e843",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramSerializeForCache",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83080",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TriggerRowDeserialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xacd5a0",
+      "bytes": "558bec6aff68fa7e040164a100000000505181ec88000000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "TriggerFieldIsNull",
+      "module": "mfc110u.dll",
+      "rva": "0x1e1bdb",
+      "bytes": "558bec578bf98b571485d27f0433c0eb355633f68bce394d0875034aeb21ff75",
+      "reloc_offsets": [],
+      "ordinal": 8039
+    }
+  ],
+  "tables": [
+    {
+      "name": "RowArray",
+      "rva": "0xe3b49c",
+      "col_rva": "0xe91eac",
+      "entries": [
+        "0xb2f606",
+        "0x1cc88",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    },
+    {
+      "name": "Row",
+      "rva": "0xe3b478",
+      "col_rva": "0xe91e50",
+      "entries": [
+        "0x4b97a",
+        "0x4296",
+        "0x10145",
+        "0x1131",
+        "0x1fbe5",
+        "0x509c0"
+      ]
+    },
+    {
+      "name": "Prog",
+      "rva": "0xe3511c",
+      "col_rva": "0xe91584",
+      "entries": [
+        "0xdba2",
+        "0x29212",
+        "0x53314",
+        "0x1131",
+        "0x1fbe5",
+        "0x5416a",
+        "0x1e39e",
+        "0x1c9e0",
+        "0x454d5",
+        "0x3de0b",
+        "0xd008",
+        "0x3f6cf",
+        "0x2e8f2",
+        "0x32484",
+        "0x2e7da",
+        "0x287cc"
+      ]
+    },
+    {
+      "name": "Cell",
+      "rva": "0xe3b5f8",
+      "col_rva": "0xe91df4",
+      "entries": [
+        "0x48121",
+        "0x2d6f5",
+        "0x2c57a",
+        "0x1131",
+        "0x1fbe5",
+        "0x1839f"
+      ]
+    },
+    {
+      "name": "Conn",
+      "rva": "0xe3b584",
+      "col_rva": "0xe91f0c",
+      "entries": [
+        "0x427ad",
+        "0x3e437",
+        "0x20752",
+        "0x1131",
+        "0x1fbe5",
+        "0x507db",
+        "0x45bb0",
+        "0x35c24",
+        "0x4003e",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x36075",
+        "0x18ab1",
+        "0x425ff",
+        "0x29a91",
+        "0x7518"
+      ]
+    },
+    {
+      "name": "ConnArray",
+      "rva": "0xe3b5dc",
+      "col_rva": "0xe91fd0",
+      "entries": [
+        "0xb2f606",
+        "0x2504a",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    },
+    {
+      "name": "UserContext",
+      "rva": "0xe50a84",
+      "col_rva": "0xe927dc",
+      "entries": [
+        "0x19b4b",
+        "0x2faf9",
+        "0x1c2c4",
+        "0x1131",
+        "0x1fbe5",
+        "0x1d886",
+        "0x11e14",
+        "0x103c0",
+        "0x4d51d",
+        "0x48275",
+        "0x70e5",
+        "0x551c8",
+        "0x18917",
+        "0x42edd",
+        "0x13a70"
+      ]
+    },
+    {
+      "name": "BlockComplete",
+      "rva": "0xe3b4b8",
+      "col_rva": "0xe91d18",
+      "entries": [
+        "0x49d46",
+        "0x511bd",
+        "0x53a08",
+        "0x1131",
+        "0x1fbe5",
+        "0x4fb1a"
+      ]
+    },
+    {
+      "name": "BlockIObject",
+      "rva": "0xe3b4dc",
+      "col_rva": "0xe91dac",
+      "entries": [
+        "0x48d2e",
+        "0xa9fc",
+        "0x3b8bd",
+        "0x3460d",
+        "0x487a2",
+        "0x3ba34",
+        "0x27d31",
+        "0x2d05b",
+        "0x32722",
+        "0x39f13",
+        "0xbf23",
+        "0x1efa1",
+        "0x5236f",
+        "0x3a99a",
+        "0x28bbe",
+        "0x417e",
+        "0x12292",
+        "0xbdd4",
+        "0x3eb3f",
+        "0x47b36",
+        "0x28f1f",
+        "0xe1c9",
+        "0xb064",
+        "0x2b1ac",
+        "0x358fa",
+        "0x2421c",
+        "0x54007",
+        "0x26d5a",
+        "0x4a54d"
+      ]
+    },
+    {
+      "name": "BlockPreloadable",
+      "rva": "0xe3b56c",
+      "col_rva": "0xe91dc4",
+      "entries": [
+        "0x3e5a4",
+        "0x2f9e6",
+        "0x114a5",
+        "0x15186"
+      ]
+    },
+    {
+      "name": "RootBlocks",
+      "rva": "0xd57648",
+      "col_rva": "0xe77d88",
+      "entries": [
+        "0xb2f606",
+        "0x38cb2",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    },
+    {
+      "name": "RootTriggers",
+      "rva": "0xd57664",
+      "col_rva": "0xe77f98",
+      "entries": [
+        "0xb2f606",
+        "0x1e7cc",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    },
+    {
+      "name": "TriggerRecord",
+      "rva": "0xcfef64",
+      "col_rva": "0xe71908",
+      "entries": [
+        "0x36f52",
+        "0x54048",
+        "0x285ba",
+        "0x1131",
+        "0x1fbe5",
+        "0xb2ea30",
+        "0xb2ea2a",
+        "0x14083",
+        "0x2329f",
+        "0xb2ea72",
+        "0xb2ea84",
+        "0x2041e",
+        "0x1f7ee",
+        "0x532c4",
+        "0x1195f",
+        "0x378fd",
+        "0xb2eb02",
+        "0x1dd3b",
+        "0xb2eab4",
+        "0xb2eaae",
+        "0xb2eac0",
+        "0x3d0c8",
+        "0xb2eacc",
+        "0xb2eac6",
+        "0xb2ead8",
+        "0xb2ead2",
+        "0x24de3",
+        "0x1deee",
+        "0x3c0d3",
+        "0xe63d",
+        "0xb2eb08",
+        "0xb2eb0e",
+        "0x18aac"
+      ]
+    },
+    {
+      "name": "ConditionIF",
+      "rva": "0xe350c4",
+      "col_rva": "0xe91524",
+      "entries": [
+        "0x1ee2f",
+        "0xc71b",
+        "0x4d4c8",
+        "0x1131",
+        "0x1fbe5",
+        "0x1348f",
+        "0x2cead",
+        "0x207f7",
+        "0x162a2",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x2487",
+        "0xdf76",
+        "0x4cb2c",
+        "0x1992a",
+        "0x1e713"
+      ]
+    },
+    {
+      "name": "StrategyList",
+      "rva": "0xdbdc14",
+      "col_rva": "0xe8629c",
+      "entries": [
+        "0x54ad4",
+        "0x30e04",
+        "0x285ba",
+        "0x1131",
+        "0x1fbe5",
+        "0xb2eb7a",
+        "0xb2ed4e",
+        "0xb2eb80",
+        "0xb2eb86",
+        "0xb2eb8c",
+        "0xb2eb92",
+        "0xb2eb98",
+        "0x3a3aa",
+        "0xb2eb9e",
+        "0xb2eba4",
+        "0xb2ebaa",
+        "0xb2ec40",
+        "0xb2ebb0",
+        "0xb2ebb6",
+        "0xb2ebbc",
+        "0xb2ebc2",
+        "0xb2ebc8",
+        "0xb2ebd4",
+        "0xb2ebda",
+        "0xb2ebe6",
+        "0xb2ebe0",
+        "0xb2ebec",
+        "0xb2ebf2",
+        "0xb2ebf8",
+        "0xb2ec04",
+        "0xb2ec0a",
+        "0xb2ec10",
+        "0xb2ec16",
+        "0xb2ec1c",
+        "0xb2ec22",
+        "0xb2ec28",
+        "0xb2ec2e",
+        "0xb2ec34",
+        "0xb2ec3a",
+        "0xb2ec46",
+        "0xb2ec4c",
+        "0xb2ec52",
+        "0xb2ec58",
+        "0xb2ec5e",
+        "0xb2ec64",
+        "0xb2ec6a",
+        "0xb2ec70",
+        "0xb2ec76",
+        "0xb2ec7c",
+        "0xb2ec82",
+        "0xb2ec88",
+        "0xb2ec8e",
+        "0xb2ec94",
+        "0xb2ec9a",
+        "0xb2eca0",
+        "0xb2eca6",
+        "0xb2ecac",
+        "0xb2ecb2",
+        "0xb2ecb8",
+        "0xb2ecbe",
+        "0xb2ecc4",
+        "0xb2ecca",
+        "0xb2ecd0",
+        "0xb2ecd6",
+        "0xb2ecdc",
+        "0xb2ece2",
+        "0x249c9",
+        "0x235f6",
+        "0x284e8",
+        "0x135c0",
+        "0xb2ecee",
+        "0xb2ecf4",
+        "0xb2ecfa",
+        "0xb2ed00",
+        "0xb2ed06",
+        "0xb2f7a4",
+        "0xb2ed12",
+        "0xb2ed18",
+        "0xb2ed1e",
+        "0xb2ed24",
+        "0xb2ed2a",
+        "0xb2ed30",
+        "0xb2ed36",
+        "0xb2ed3c",
+        "0xb2ed42",
+        "0xb2ed48",
+        "0xb2ed54",
+        "0xb2ed5a",
+        "0xb2ed60",
+        "0xb2ed66",
+        "0xb2f792",
+        "0x3df9b",
+        "0x3a120",
+        "0x43621",
+        "0x2bad0",
+        "0x3acab",
+        "0x264b8",
+        "0x36269",
+        "0x15884",
+        "0x105f",
+        "0x3089b",
+        "0x106b8",
+        "0x101cc",
+        "0x431d0",
+        "0x722a",
+        "0x4a34",
+        "0x14aa1",
+        "0x96d3",
+        "0xf731",
+        "0x26323"
+      ]
+    }
+  ],
+  "layout": {
+    "block_iobject_rows_array": 28,
+    "array_data": 4,
+    "array_count": 8,
+    "array_capacity": 12,
+    "row_function": 8,
+    "prog_source": 32
+  },
+  "user_context_runtime_class": {
+    "rva": "0xfae118",
+    "name": "CTriggerUser",
+    "size": 36,
+    "schema": 0,
+    "factory_entry_rva": "0x5293c",
+    "factory_body_rva": "0xacdff0"
+  },
+  "condition_layout": {
+    "state_word": 8,
+    "label_cstring": 20,
+    "compiled_byte_array": 24,
+    "byte_array_data": 4,
+    "byte_array_count": 8,
+    "native_logic_index": 44,
+    "native_expression_cstring": 48,
+    "mfc_bytearray_table_rva": "0x362b8",
+    "serialized_expression_rule": "native expression + U+0001 + native signed decimal logic index; exact template value U+0001 followed by0. No runtime semantic interpretation."
+  },
+  "owned_temporary_initialization_contract": {
+    "block_context_pointer": {
+      "offset": 16,
+      "before": "original context borrowed by native deep-copy; block destructor does not own/release it",
+      "after": "fresh separately constructed CTriggerUser",
+      "native_evidence": "AC0BEC..AC0BF2 writes new context to full block+10"
+    },
+    "block_strategy_id": {
+      "offset": 52,
+      "before": 0,
+      "after": "native NextStrategyId()",
+      "native_evidence": "ABF8CD..ABF8DB writes native next ID into stack full block+34"
+    },
+    "context_strategy_id": {
+      "offset": 8,
+      "before": -1,
+      "after": "same native strategy ID",
+      "native_evidence": "AC0BD1..AC0BDA copies full block+34 to new context+8"
+    },
+    "limit": "These scalar stores initialize only unregistered factory-owned objects; no existing canonical field, native CString, database ID or vtable is assigned directly."
+  },
+  "native_factories": [
+    {
+      "method": "CreateBlock",
+      "class_name": "CStrategyBlock",
+      "size": 104,
+      "schema": 0,
+      "runtime_class_rva": "0xfad904",
+      "primary_vtable_rva": "0xe3b4b8",
+      "runtime_class_getter_entry_rva": "0x49d46",
+      "runtime_class_getter_method": "BlockRuntimeClassGetter",
+      "factory_entry_rva": "0x19f1",
+      "resolved_body_rva": "0xa99ca0",
+      "static_jump_chain": [
+        "0x19f1",
+        "0xa99ca0"
+      ]
+    },
+    {
+      "method": "CreateUserContext",
+      "class_name": "CTriggerUser",
+      "size": 36,
+      "schema": 0,
+      "runtime_class_rva": "0xfae118",
+      "primary_vtable_rva": "0xe50a84",
+      "runtime_class_getter_entry_rva": "0x19b4b",
+      "runtime_class_getter_method": "UserRuntimeClassGetter",
+      "factory_entry_rva": "0x5293c",
+      "resolved_body_rva": "0xacdff0",
+      "static_jump_chain": [
+        "0x5293c",
+        "0xacdff0"
+      ]
+    }
+  ],
+  "complete_HIGHLOW_prefix_operand_policy": {
+    "minimum_bytes": 32,
+    "extended_functions": [
+      {
+        "name": "TriggerRecordFields",
+        "old_length": 32,
+        "new_length": 33
+      }
+    ],
+    "all_relocation_operands_complete": true
+  },
+  "delete_layout": {
+    "record_size": 188,
+    "record_fields": {
+      "iID": 152,
+      "lStgyID": 156,
+      "lType": 160,
+      "lbContext": 164,
+      "strNote": 176,
+      "iTemp1": 180,
+      "iTemp2": 184
+    },
+    "longbinary_vtable_mfc_rva": "0x375f8",
+    "longbinary_handle_offset": 4,
+    "longbinary_length_offset": 8,
+    "program_cache_offset": 12,
+    "program_state_offset": 4,
+    "program_label_offset": 8,
+    "root_block_array": 556,
+    "root_context_array": 576
+  },
+  "native_null_status": {
+    "method": "CDaoRecordset::IsFieldNull(void* boundFieldMember)",
+    "module": "mfc110u.dll",
+    "ordinal": 8039,
+    "rva": "0x1e1bdb",
+    "return": "int0_or1",
+    "stack_args": [
+      "bound member pointer, never field value/ordinal"
+    ],
+    "field_addresses": [
+      "record+0x98",
+      "record+0x9c",
+      "record+0xa0",
+      "record+0xa4",
+      "record+0xb0",
+      "record+0xb4",
+      "record+0xb8"
+    ],
+    "sentinel_values_not_used_for_nullness": true,
+    "proof_sha256": "2cacf412a847f80f33a6a7717bb3bc1620555c82d0eab163e617dd22898f8c52"
+  }
+}

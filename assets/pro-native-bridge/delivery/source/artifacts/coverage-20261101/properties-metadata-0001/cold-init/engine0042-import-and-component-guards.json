@@ -1,0 +1,231 @@
+{
+  "schema": 1,
+  "purpose": "engine0042 supplementary exact IAT and component-resource guards",
+  "cold_profile_sha256": "c047e66f6ed0661d01c2dad9cfa0ea4cdd9bc50631af1ec7480c0ba774540305",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": "0x400000"
+    },
+    {
+      "name": "mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": "0x10000000"
+    },
+    {
+      "name": "msvcr110.dll",
+      "sha256": "b30160e759115e24425b9bcdf606ef6ebce4657487525ede7f1ac40b90ff7e49",
+      "preferred_base": "0x10000000"
+    }
+  ],
+  "iat_guards": [
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc8e70",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 1514,
+      "pinned_import_export_rva": "0xa0e07"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc9148",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 1039,
+      "pinned_import_export_rva": "0x466d4"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc9150",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 286,
+      "pinned_import_export_rva": "0x4a111"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc8bb4",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 8308,
+      "pinned_import_export_rva": "0x54a1a"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc67a4",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "GetModuleHandleW",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc82fc",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 8309,
+      "pinned_import_export_rva": "0x54a3c"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc9154",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 280,
+      "pinned_import_export_rva": "0xa4c3a"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6710",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "GetModuleFileNameW",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc75f4",
+      "import_dll": "SHLWAPI.dll",
+      "import_name": "PathRemoveFileSpecW",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc916c",
+      "import_dll": "mfc110u.dll",
+      "import_name": null,
+      "import_ordinal": 1654,
+      "pinned_import_export_rva": "0xa0dd0"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6884",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "GetThreadUILanguage",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc68b0",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "SetThreadUILanguage",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6e3c",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "memcpy",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0xe2b0"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6eb8",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "strlen",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0x14fac"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6efc",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "memmove",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0xe906"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6ef8",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "?name@type_info@@QBEPBDPAU__type_info_node@@@Z",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0x1515c"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6ef4",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "_CxxThrowException",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0x57bde"
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc68d0",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "DecodePointer",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "McgsSetPro.exe",
+      "iat_rva": "0xfc6dc4",
+      "import_dll": "MSVCR110.dll",
+      "import_name": "_onexit",
+      "import_ordinal": null,
+      "pinned_import_export_rva": "0x26c84"
+    },
+    {
+      "owner_module": "mfc110u.dll",
+      "iat_rva": "0x2af050",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "FindResourceW",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "mfc110u.dll",
+      "iat_rva": "0x2af04c",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "LoadResource",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "mfc110u.dll",
+      "iat_rva": "0x2af27c",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "LockResource",
+      "import_ordinal": null
+    },
+    {
+      "owner_module": "mfc110u.dll",
+      "iat_rva": "0x2af048",
+      "import_dll": "KERNEL32.dll",
+      "import_name": "SizeofResource",
+      "import_ordinal": null
+    }
+  ],
+  "label_component_static_resources": [
+    {
+      "resource_id": 23261,
+      "values": {
+        "1033": {
+          "utf16_hex": "41006e0069006d006100740069006f006e002000700072006f007000650072007400690065007300",
+          "text": "Animation properties"
+        },
+        "2052": {
+          "utf16_hex": "a8523b755e5c2760",
+          "text": "动画属性"
+        }
+      },
+      "runtime_registry_entry_created_by_warmup": false
+    },
+    {
+      "resource_id": 23466,
+      "values": {
+        "1033": {
+          "utf16_hex": "4200610063006b00670072006f0075006e006400200069006d00610067006500",
+          "text": "Background image"
+        },
+        "2052": {
+          "utf16_hex": "cc806f66fe56",
+          "text": "背景图"
+        }
+      },
+      "runtime_registry_entry_created_by_warmup": false
+    }
+  ],
+  "component_clarification": "8 Label typed keys are actual primary-map reads; two component keys are static pinned RT_STRING proofs, not created by the sole cold getter. Full10 runtime declaration proof remains the later Label registration.",
+  "native_called": false,
+  "host_accessed": false
+}

@@ -1,0 +1,129 @@
+{
+  "schema": 1,
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "typed_abi_sha256": "e25ac3386b546225392cec382ad157fd1cb574c1ee8b3244d7d161cdbe0df8a9",
+  "guards": [
+    {
+      "name": "SvrCopy16",
+      "rva": 11076352,
+      "bytes": "558bec51894dfc8b4508508b4dfcff15708e3c018b4d0883c104518b4dfc83c104ff15708e3c018b55fc8b45088b480c894a0c8b55fc8b45088b4808894a088be55dc20400cccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        16,
+        35
+      ]
+    },
+    {
+      "name": "SvrCopy12",
+      "rva": 11076448,
+      "bytes": "558bec51894dfc8b4508508b4dfcff15708e3c018b4d0883c104518b4dfc83c104ff15708e3c018b55fc8b45088b4808894a088be55dc20400cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        16,
+        35
+      ]
+    },
+    {
+      "name": "SvrCtor",
+      "rva": 11074768,
+      "bytes": "558bec6aff68b23f040164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4df0e8365a57ffc745fc000000008b45f0c700d47f23018b4df083c10ce8eff10900c645fc018b4df083c128e84efd58ffc645fc028b4df083c138e8755958ffc645fc038b4df0c74120000000008b55f0c742240000000068dca600008d45e450e8b9ff5bff83c4088945ec8b4dec894de8c645fc048b55e8528b4df083c108ff15708e3c01c645fc038d4de4ff1548913c01c745fcffffffff8b45f08b4df464890d00000000598be55dc3cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        6,
+        21,
+        60,
+        171,
+        184
+      ]
+    },
+    {
+      "name": "SvrOnOK",
+      "rva": 11058362,
+      "bytes": "8b4df08b55c08951208d45c4508b4df083c108ff15708e3c018b4df08b55c8895124c745ec00000000c745ec00000000eb098b45ec83c0018945ecb998083c01e840a15bff3945ec7d408d4dccff156c913c01508b4dec51b998083c01e8258958ff8bc8ff150c8e3c0185c0751a8b55ec52b998083c01e80b8958ff508b4df083c128e835a858ffeba8c745ec00000000eb098b45ec83c0018945ecb9e4083c01e8dd835cff3945ec7d408d4dd0ff156c913c01508b4dec51b9e4083c01e8855958ff8bc8ff150c8e3c0185c0751a8b55ec52b9e4083c01e86b5958ff508b4df083c138e8dd6857ffeba88b45f08b4824894de4837de4017408837de4027440eb7a6aff8d4d98e8176657ff508b4df083c10ce8cc300a008d4d98e8036657ff508d4d98e8c62d5aff508b4df083c10ce8ba2d5aff50e8f1510a0083c40ceb3c6aff8d4dace8d96557ff508b4df083c10ce88e300a008d4dace8c56557ff508d4dace8882d5aff508b4df083c10ce87c2d5aff50",
+      "reloc_offsets": [
+        21,
+        60,
+        79,
+        89,
+        102,
+        115,
+        157,
+        176,
+        186,
+        199,
+        212
+      ]
+    },
+    {
+      "name": "SvrConfigure",
+      "rva": 11068640,
+      "bytes": "558bec6aff681e3e040164a100000000505181ec48010000535657a1600b3b0133c5508d45f464a3000000008965f0894dec6a018b4dece86a0c0a006a008b4dece8600c0a00e883325bff83b820050000000f84910100008b45ec83b8d8000000000f8581010000c745fc000000008d4dd0e8e10b0a00898530ffffffc645fc018d8d40ffffffe80ac357ff898528ffffffc645fc02e833325bff8945acb9bc083c01ff156c913c01508b4dace8748258ff894584837d8400742a8d8d40ffffff51b9bc083c01ff156c913c01508d4dd0e8880b0a00898570ffffff83bd70ffffff00755e68d0a600008d55b452e845175cff83c4088945948b459489458cc645fc036a006a108b4d8cff156c913c0150e8ee070a00c645fc028d4db4ff1548913c01c645fc018d8d40ffffffe82f265bffc645fc008d4dd0e8b0f657ffe9a6040000e886315bff8945b86a008b4db88b8920050000e817090a008945988b55988955b08d45b0508b4dec8b91d0000000526868d63a018d8504ffffff506a0c6a018b0dcc083c01518d55d052e8d80a0a0083c420c645fc018d8d40ffffffe8bd255bffc645fc008d4dd0e83ef657ffeb178b8d14ffffffe89b070a00b8bde6e800c3b8b2e6e800c3c745fcffffffffeb09c745fcffffffffeb09eb07c745fcffffffffe9000400008b45ec83b8d8000000010f85f00300008d8d74ffffffe8941359ffc745fc05000000c645eb00c745e400000000eb098b4de483c101894de4b998083c01e834775bff3945e47d4a8b55e452b998083c01e8235f58ff8bc8ff156c913c01508b4dec81c1dc000000ff150c8e3c0185c0751e8b45e450b998083c01e8f95e58ff508d8d74ffffffe8237e58ffc645eb01eb9e0fb64deb85c97517c745fcffffffff8d8d74ffffffe8f3d457ffe950030000c645fc068d4dd8e8b3090a00898520ffffffc645fc078d8d34ffffffe8dcc057ff89851cffffffc645fc08e805305bff8945888d8d78ffffffff156c913c01508b4d88e8458058ff8945a8837da80074258d9534ffffff528d8d78ffffffff156c913c01508d4dd8e858090a00894590837d9000757068d0a600008d45bc50e81b155cff83c4088945a08b4da0894dc0c645fc096a006a108b4dc0ff156c913c0150e8c4050a00c645fc088d4dbcff1548913c01c645fc078d8d34ffffffe805245bffc645fc068d4dd8e886f457ffc745fcffffffff8d8d74ffffffe80dd457ffe96a020000e84a2f5bff8945c46a008b55c48b8a20050000e8db060a008945cc8b45cc8945c88d8d5cffffffe87f060a0089852cffffffc645fc0a8b4dec81c1a8000000518d8d5cffffffe8500d0a008b55ec81c2a8000000528d8da8feffffe8e0e75bff898524ffffffc645fc0b6a008d8da8feffffe87c060a008945a48b45a489459c8d4d9c518d55c852686cd63a018d854cffffff506a0c6a018b8d7cffffff518d55d852e843080a0083c4200fb7854cffffff8945e0817de0024000007f1e817de002400000745e837de0027421837de003",
+      "reloc_offsets": [
+        6,
+        28,
+        159,
+        165,
+        195,
+        201,
+        268,
+        287,
+        371,
+        388,
+        446,
+        452,
+        546,
+        565,
+        578,
+        594,
+        607,
+        724,
+        761,
+        822,
+        841,
+        1032
+      ]
+    },
+    {
+      "name": "SvrBuiltinLoader",
+      "rva": 11056928,
+      "bytes": "558bec6aff68b539040164a1000000005081ec78020000a1600b3b0133c58945f0508d45f464a3000000008d8d9cfdffffff1588903c01c745fc0000000068447d2301e846605bff0528050000508d8588fdffff50e8827458ff83c40c89857cfdffff8b8d7cfdffff898d90fdffffc645fc018b9590fdffff528d8d9cfdffffff15708e3c01c645fc008d8d88fdffffff1548913c0168587d23018d859cfdffff508d8d98fdffff51e82e7458ff83c40cc645fc028d95a0fdffff528d8d98fdffffff156c913c0150ff1558673c01898594fdffff83bd94fdffffff0f84940000008d85ccfdffff508d8d9cfdffff518d9584fdffff52e8e07358ff83c40c898580fdffff8b8580fdffff89858cfdffffc645fc038b8d8cfdffff518d8d98fdffffff15708e3c01c645fc028d8d84fdffffff1548913c018d8d98fdffffff156c913c0150e8a6b25aff83c4048d95a0fdffff528b8594fdffff50ff158c673c0185c00f8579ffffff8b8d94fdffff51ff1554673c01c645fc008d8d98fdffffff1548913c01c745fcffffffff8d8d9cfdffffff1548913c018b4df464890d00000000598b4df033cde830570a008be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        51,
+        63,
+        130,
+        146,
+        151,
+        196,
+        203,
+        292,
+        308,
+        320,
+        349,
+        370,
+        386,
+        405
+      ]
+    }
+  ],
+  "factory": {
+    "size": 68,
+    "rva": 11056528
+  },
+  "methods": {
+    "Copy16": 11076352,
+    "Copy12": 11076448
+  },
+  "contract": {
+    "mode0": "background",
+    "mode1": "interface",
+    "mode2": "highspeed",
+    "independent_parameter_fields": [
+      "comment",
+      "command_parameter"
+    ],
+    "private_configuration_policy": "mode1 same-provider preserve only; mode0/2 empty factory payload or same-provider preserve",
+    "registry_required_for_fresh_both_members": true,
+    "loader_directory": "installed_program/Extern/*.dll",
+    "loader_invoked_by_candidate": false
+  },
+  "native_executed": false
+}

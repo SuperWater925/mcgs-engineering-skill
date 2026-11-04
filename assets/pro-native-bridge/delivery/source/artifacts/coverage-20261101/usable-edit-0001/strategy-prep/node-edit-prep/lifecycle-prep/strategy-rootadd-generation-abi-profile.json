@@ -1,0 +1,535 @@
+{
+  "schema": 1,
+  "scope": "Exact original RootAdd -> IObject21 -> Prog native generation; never STORE/LOAD normalization",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "proof_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\performance-prep\\rootadd-prog-empty-compile-static-0001.json",
+  "proof_sha256": "7513c8d78d3dd0c89b47926c840c85ec15baacb0aba67da7dc0918e0b7dc56f5",
+  "base_lifecycle_abi_sha256": "196b87fe84290adb8ca1712ce6a5e059ee479c45c696ec9264c68346a7da1a26",
+  "predicate": {
+    "class_name": "CStgyFuncProg",
+    "source_utf16_units": 0,
+    "old_compiled_bytes": 0,
+    "new_compiled_hex": "00000000000000000000000001",
+    "all_other_persistent_fields": "strict exact equality",
+    "nonempty_compiled": "strict exact equality",
+    "conditions_and_other_action_classes": "strict exact equality"
+  },
+  "guards": [
+    {
+      "name": "RootAdd",
+      "rva": 3310064,
+      "bytes": "558bec6aff68824dfa0064a1000000005083ec20a1600b3b0133c5508d45f464a300000000894dec8b450883781000750733c0e9440100008b4d088b51348955e0",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310129,
+      "bytes": "c745e800000000eb098b45e883c0018945e88b4dec81c12c020000e8f925d2ff3945e87d258b4de8518b4dec81c12c020000e8d8a5cfff8b108b45e03b42347507",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310194,
+      "bytes": "33c0e9f3000000ebbfc745e400000000eb098b4de483c101894de48b4dec81c140020000e8af25d2ff3945e47d258b55e4528b4dec81c140020000e8e54dd0ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310258,
+      "bytes": "8b008b4de03b4808750733c0e9a9000000ebbf6a68e883cad2ff8945dcc745fc00000000837ddc00740d8b4ddce84f13ceff8945d8eb07c745d8000000008b55d8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310323,
+      "bytes": "8955d4c745fcffffffff8b45d48945f08b4d08518b4df0e8dc73ceff8b55f0528b4dec81c12c020000e83050d2ff6a018b4df083c1088b45f08b50088b420cffd0",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310388,
+      "bytes": "8b4df08b5110528b4dec81c140020000e82446cfff6a018b45f08b4810e84285ceff8b4df083c1048b55f08b42048b5054ffd2b8010000008b4df464890d00000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootAdd",
+      "rva": 3310454,
+      "bytes": "598be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116320,
+      "bytes": "558bec6aff68e34d040164a1000000005081ecd0000000a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8318659ff0fb6c885c97405e96b010000",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116387,
+      "bytes": "8b55f08b45088b4810894a10c745ec00000000eb098b55ec83c2018955ec8b4df083c120e8be085bff3945ec7d608b45ec508b4df083c120e84d8356ff8b4dec",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116451,
+      "bytes": "518b4df083c120e83e8356ff833800743b8b55ec528b4df083c120e82a8356ff8b008945e48b4de4894de8837de80074146a018b55e88b028b4de88b5004ffd2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116515,
+      "bytes": "8945e0eb07c745e000000000eb878b4df083c120e86e4058ff68005000008d4db4e8654e0900c745fc000000006a0068000040006a008d45b4508d8d24ffffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116579,
+      "bytes": "e8492959ffc645fc018d8d24ffffff518b55088b028b4d088b5008ffd28d8d24ffffffe84d4e09008d4db4e8eba456ff6a0068000040006a018d45b4508d8d6cffffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116646,
+      "bytes": "e8062959ffc645fc028d8d6cffffff518b55f08b028b4df08b5008ffd28d8d6cffffffe80a4e09006a018b4df083c1088b45f08b50088b420cffd0c645fc018d8d6cffffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCopy",
+      "rva": 11116715,
+      "bytes": "e80f895affc645fc008d8d24ffffffe800895affc745fcffffffff8d4db4e8a64d09008b4df464890d00000000598be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgSerialize",
+      "rva": 11022464,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b45088945f88b4d08e8eebb5cff85c074118b4dfc83c120",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgSerialize",
+      "rva": 11022530,
+      "bytes": "518b4df8e8aca95cffeb0f8b55fc83c220528b4df8e82d865cff8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockGenerate",
+      "rva": 11123472,
+      "bytes": "558bec6aff682450040164a1000000005083ec18a1600b3b0133c5508d45f464a300000000894dece84b9c59ff8945f08d45dc508b4dece83f385bff8945e48b4de4",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BlockGenerate",
+      "rva": 11123538,
+      "bytes": "894de0c745fc000000008b55e0528b45f08b108b4df08b4208ffd0c745fcffffffff8d4ddce899315affe853da56ff8b4dec83e904e85fba5aff83f8017509c745e801000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockGenerate",
+      "rva": 11123608,
+      "bytes": "eb07c745e8000000008a45e88b4df464890d00000000598be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11126816,
+      "bytes": "558bec6aff686851040164a1000000005083ec38a1600b3b0133c5508d45f464a300000000894dec8b45ec83781000750733c0e91a0300008b4decc7413800000000",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11126882,
+      "bytes": "c745e800000000eb098b55e883c2018955e88b4dec83c120e8cbdf5aff3945e87d6c8b45e8508b4dec83c120e85a5a56ff8b4de8518b4dec83c120e84b5a56ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11126946,
+      "bytes": "833800750733c0e9c4020000837dec00740b8b55ec83c2048955dceb07c745dc000000008b45dc508b4de8518b4dec83c120e8145a56ff8b08e8d9b65aff85c0",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127010,
+      "bytes": "750733c0e987020000e97bffffff8b55ecc74238010000008b45ec508b4dec8b51108b45ec8b128b48108b4228ffd085c0750733c0e956020000b9bc0e3c01e8b93259ff",
+      "reloc_offsets": [
+        59
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127078,
+      "bytes": "85c00f85470100008b4dec8b51108b45ec8b128b48108b4214ffd03d03000300741a8b4dec8b51108b45ec8b128b48108b4214ffd03d04000300757a8b4dec83c120",
+      "reloc_offsets": []
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127144,
+      "bytes": "e8ddde5aff85c07e66685f5b00008d4dd851e899335bff83c408c745fc00000000e8204e5aff83b8200500000074216a008d4dd8ff156c913c015068b8af2301",
+      "reloc_offsets": [
+        54,
+        60
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127208,
+      "bytes": "e8014e5aff8b8820050000e8aa345bffc745d000000000c745fcffffffff8d4dd8ff1548913c018b45d0e99b010000e9990000008b55ec8b42108b4dec8b108b4910",
+      "reloc_offsets": [
+        35
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127274,
+      "bytes": "8b4214ffd03d0600030075098b4dec837934037c7668605b00008d55e452e80b335bff83c408c745fc010000008b45ec83c018508d4de4ff156c8e3c01e8824d5aff",
+      "reloc_offsets": [
+        57
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127340,
+      "bytes": "83b8200500000074216a008d4de4ff156c913c015068bcaf2301e8634d5aff8b8820050000e80c345bffc745cc00000000c745fcffffffff8d4de4ff1548913c01",
+      "reloc_offsets": [
+        16,
+        22,
+        61
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127405,
+      "bytes": "8b45cce9fd000000686aa500008d4dc051e895325bff83c4088945c88b55c88955c4c745fc020000008b4dc4ff156c913c0150b9bc0e3c01e8cb0058ff85c07509",
+      "reloc_offsets": [
+        46,
+        52
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127470,
+      "bytes": "c745d401000000eb07c745d4000000008a45d48845f3c745fcffffffff8d4dc0ff1548913c010fb64df385c90f848d0000008b55ec8b42108b4dec8b108b4910",
+      "reloc_offsets": [
+        34
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127534,
+      "bytes": "8b4214ffd03d05000300757368615b00008d4de051e810325bff83c408c745fc030000008b55ec83c218528d4de0ff156c8e3c01e8874c5aff83b82005000000",
+      "reloc_offsets": [
+        48
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127598,
+      "bytes": "74216a008d4de0ff156c913c015068c0af2301e8684c5aff8b8820050000e811335bffc745bc00000000c745fcffffffff8d4de0ff1548913c018b45bceb05b801000000",
+      "reloc_offsets": [
+        9,
+        15,
+        54
+      ]
+    },
+    {
+      "name": "BlockCompile",
+      "rva": 11127666,
+      "bytes": "8b4df464890d00000000598be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RowCompilePrefix",
+      "rva": 11110320,
+      "bytes": "558bec6aff685e4c040164a1000000005083ec14a1600b3b0133c5508d45f464a300000000894df08b45f083780400741a8b4d08518b55f08b4a04e8d8435aff",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RowCompilePrefix",
+      "rva": 11110384,
+      "bytes": "85c0750733c0e9340100008b45f0837808000f84220100008b4d08518b55f08b42088b4df08b108b49088b421cffd085c0750733c0e905010000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgCompile",
+      "rva": 11022304,
+      "bytes": "558bec51894dfc8b4dfc83c120ff15588c3c018b45fc83c00c508b4d08518b55fc83c22052e8cdb659ff83c40c0fb6c085c0750433c0eb05b8010000008be55d",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8185680,
+      "bytes": "558bec6aff68f876000164a1000000005081ec00010000a1600b3b0133c58945f0508d45f464a3000000008b450c898548ffffff83bd48ffffff007405e9e3000000",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8185746,
+      "bytes": "833dc0d43b01000f85cb00000068a8211e018d8d3cffffffff1550913c01c745fc0000000068cc211e018d8d44ffffffff1550913c01c645fc01e82f5984ff898540ffffff",
+      "reloc_offsets": [
+        2,
+        14,
+        26,
+        38,
+        50
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8185815,
+      "bytes": "8d8d3cffffff518d9544ffffff52689b00000068e8211e016800221e016a038d8df4feffffe8dce286ff898514ffffff8b8514ffffff898518ffffffc645fc02",
+      "reloc_offsets": [
+        20,
+        25
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8185879,
+      "bytes": "8b8d18ffffff518b9540ffffff8b028b8d40ffffff8b500cffd2c645fc018d8df4feffffe8e80884ffc645fc008d8d44ffffffff1548913c01c745fcffffffff",
+      "reloc_offsets": [
+        53
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8185943,
+      "bytes": "8d8d3cffffffff1548913c0132c0e93c020000a1c0d43b01898548ffffff8d4d98e8578187ffc745fc030000008b8d48ffffff518d5598528d8d2cffffffe8441184ff",
+      "reloc_offsets": [
+        8,
+        20
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186010,
+      "bytes": "c645fc048b4d08ff156c913c01508d4d98e8702b87ff8b8548ffffff508d4d98e86a2188ff6a008d4d9851e864da83ff8bc8e84b6187ff0fb6d085d20f8593010000",
+      "reloc_offsets": [
+        9
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186076,
+      "bytes": "8d4d98e880af87ff83f8040f85c90000006a00685aa500008d8528ffffff50e8181488ff83c408898510ffffff8b8d10ffffff898d08ffffffc645fc058b8d08ffffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186143,
+      "bytes": "ff156c913c01508d9568ffffff528d4d98e8f3d786ff898538ffffff8b8538ffffff89850cffffffc645fc068b8d0cffffffe8026a83ff50e8522e87ff8b8820050000",
+      "reloc_offsets": [
+        2
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186210,
+      "bytes": "e8fb1488ffc645fc058d8d68ffffffe84cde86ffc645fc048d8d28ffffffff1548913c01c6854effffff00c645fc038d8d2cffffffe8631b85ffc745fcffffffff",
+      "reloc_offsets": [
+        32
+      ]
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186275,
+      "bytes": "8d4d98e8684083ff8a854effffffe9f00000006a008d4d80518d4d98e83ead86ff898524ffffff8b9524ffffff899520ffffffc645fc078b8d20ffffffe8736983ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186341,
+      "bytes": "508d8550ffffff508d4d98e833d786ff89851cffffff8b8d1cffffff898d34ffffffc645fc088b8d34ffffffe8426983ff50e8922d87ff8b8820050000e83b1488ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186407,
+      "bytes": "c645fc078d8d50ffffffe88cdd86ffc645fc048d4d80e880dd86ffc6854fffffff00c645fc038d8d2cffffffe8a71a85ffc745fcffffffff8d4d98e8ac3f83ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186471,
+      "bytes": "8a854fffffffeb378b5510528d4d98e8fad085ffc6854dffffff01c645fc038d8d2cffffffe86e1a85ffc745fcffffffff8d4d98e8733f83ff8a854dffffff8b4df4",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCompile",
+      "rva": 8186537,
+      "bytes": "64890d00000000598b4df033cde8432536008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramByteArrayCopy",
+      "rva": 9694848,
+      "bytes": "558bec51894dfc6aff8b4dfc83c14ce84e2770ff508b4d08e801001f008b4dfc83c14ce83a2770ff508b4dfc83c14ce8a4556cff508b4d08e8ecfc6eff50e823211f00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramByteArrayCopy",
+      "rva": 9694915,
+      "bytes": "83c40c8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCtor",
+      "rva": 9693616,
+      "bytes": "558bec6aff68b126020164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df083c110e8ced46dffc745fc000000008b4df083c128e8bcd46dff",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "ProgramCtor",
+      "rva": 9693683,
+      "bytes": "c645fc018b4df083c140e885ec6effc645fc028b4df083c14ce8ac5c6effc645fc038b45f0c700000000008b4df0c74104000000008b55f0c74208000000008b45f0",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgramCtor",
+      "rva": 9693749,
+      "bytes": "c7400c0000000068589b20018b4df083c110e812886fffc745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9683984,
+      "bytes": "558bec6aff68d723020164a100000000505181ec34020000535657a1600b3b0133c5508d45f464a3000000008965f0894ddcc745fc000000008d4dc4e827e26cff",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684049,
+      "bytes": "89857cffffffc645fc018d45c4508b4d0883c128e81f8770ff508b4ddc8b09e852d96cff8d8dbcfdffffe8252471ff898570ffffffc645fc028d4d98e8959870ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684114,
+      "bytes": "898578ffffffc645fc03c745ec00000000837d0c00742f8b550c528d85bcfdffff508d4d98518d55c4528b4508508b4ddc8b0983c104e8df286fff8945888b5588",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684179,
+      "bytes": "8955eceb298d85bcfdffff508d4d98518d55c4528b4508508b4ddc8b0983c104e83dae6fff89458c8b558c8955ecc645fc04837dec0074166a008d85bcfdffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684243,
+      "bytes": "508b4dec8b118b4dec8b4208ffd08b4d0883c14c518d8d4cffffffe882ac6eff898574ffffffc645fc058b55088b02508d8d4cffffffe850ac6cff8b4d0883c140",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684308,
+      "bytes": "e8e33d6fff508d8d4cffffffe8dd576dff8d4d98e8372e71ff508d8d4cffffffe8c9576dff8d4d98894dd48d55d8528b4dd4e80f5770ff8d45a4508b4dd4e8adb36eff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684375,
+      "bytes": "eb088d4dd8e8c41c71ff8d4da4518d4dd8e8c2a36cff8845ea0fb655ea85d274398d4dd8e894d16dff8945948b45948b088b5004894d808955848b4580508d8d4cffffff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684443,
+      "bytes": "e8beab6cff8b4d84518d8d4cffffffe853576dffeba8837dec0074468d954cffffff528b45ec8b108b4dec8b4204ffd08b4dec894db08b55b08955e4837de400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684507,
+      "bytes": "74196a018b45e48b108b4de48b02ffd08945c08b4dc0894da8eb07c745a8000000006a018d8d4cffffffe8309d6cff8d8dbcfdffffe850216dff8945908b5508",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684571,
+      "bytes": "8b4590894204c645fc048d8d4cffffffe8e03b70ffeb418b4dec894db88b55b88955e0837de00074196a018b45e08b108b4de08b02ffd08945b48b4db4894dac",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684635,
+      "bytes": "eb07c745ac000000006a006a00e861491f00b8bcc6d300c3c745fc03000000eb07c745fc03000000c645eb01c645fc028d4d98e8fd5b70ffc645fc018d8dbcfdffff",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684701,
+      "bytes": "e82b486fffc645fc008d4dc4e8dac46eff8a45ebeb5d6a48e8c4221f0083c4048945ccc645fc08837dcc0074148b9548ffffff528b4dcce861a770ff8945d0eb07",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684766,
+      "bytes": "c745d0000000008b45d08945bcc645fc078b4d088b55bc895108b847c7d300c3c745fcffffffffeb07c745fcffffffff32c08b4df464890d00000000595f5e5b",
+      "reloc_offsets": [
+        27
+      ]
+    },
+    {
+      "name": "CompilerBuild",
+      "rva": 9684830,
+      "bytes": "8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WriteHeaderDWORD",
+      "rva": 9733136,
+      "bytes": "558bec51894dfc837d08647e0bb8640000002b45088945086a048d4d08518b4dfce892d66cff8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WriteDWORD",
+      "rva": 9733184,
+      "bytes": "558bec51894dfc6a048d4508508b4dfce873d66cff8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WriteByte",
+      "rva": 9732848,
+      "bytes": "558bec83ec0c894df88b45f80fb60885c9740e837d080175088b4df8e8679a6dff8b55f88b4a14e8c6926fff8945f48a45088845ff8d4dff518b55f88b4a14e828bf6eff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WriteByte",
+      "rva": 9732916,
+      "bytes": "8b45f48be55d",
+      "reloc_offsets": []
+    }
+  ],
+  "native_calls": false,
+  "project_writes": false
+}

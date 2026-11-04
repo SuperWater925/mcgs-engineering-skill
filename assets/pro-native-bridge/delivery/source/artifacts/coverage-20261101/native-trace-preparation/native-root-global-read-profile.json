@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "mode": "pure raw-memory identity locator, preparation only",
+  "binary": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "pointer_size": 4,
+  "global_app": {
+    "object_rva": "0xFBB578",
+    "is_embedded_object_not_a_pointer_slot": true,
+    "expected_primary_vtable_rva": "0xDC94AC",
+    "rtti": ".?AVC0McgsApp@@",
+    "complete_offset": 0,
+    "root_document_pointer_offset": "0x520"
+  },
+  "root_document": {
+    "expected_primary_vtable_rva": "0xD57684",
+    "rtti": ".?AVC0DocManage@@",
+    "path_CString_object_offset": "0x24",
+    "path_data_pointer_offset": 0,
+    "path_data_length_offset": -12,
+    "require_exact_owned_fixture_path": true
+  },
+  "code_guards": [
+    {
+      "name": "GlobalAppInitializer",
+      "rva": "0xc8e2f0",
+      "bytes": "558becb978b53b01e8d45038ff68b0a70c01e8ca2ceaff83c4045dc3cccccccc",
+      "length": 32,
+      "reloc_offsets": [
+        4,
+        14
+      ]
+    },
+    {
+      "name": "AppConstructorThunk",
+      "rva": "0x133d1",
+      "bytes": "e97a6a6f00e9d5e46100e9a0226f00e99bbd7900e9d6b63f00e9b1903e00e9bc",
+      "length": 32,
+      "reloc_offsets": []
+    },
+    {
+      "name": "AppConstructor",
+      "rva": "0x709e50",
+      "bytes": "558bec6aff686180ff0064a1000000005083ec28a1600b3b0133c5508d45f464a300000000894df06a008b4df0e8be684200c745fc000000008b45f0c700ac941c018b4df081c1cc000000ff1588903c01",
+      "length": 81,
+      "reloc_offsets": [
+        6,
+        21,
+        62,
+        77
+      ]
+    },
+    {
+      "name": "AppConstructorVtableWrite",
+      "rva": "0x709e89",
+      "bytes": "8b45f0c700ac941c018b4df0",
+      "length": 12,
+      "reloc_offsets": [
+        5
+      ]
+    }
+  ],
+  "read_sequence": [
+    "Verify installed EXE SHA and ASLR-normalized code guards without any native calls",
+    "appAddress = imageBase + 0xFBB578 (do not dereference to obtain app)",
+    "Require *(appAddress) == imageBase+0xDC94AC and exact RTTI/COL offset0",
+    "rootDoc = *(appAddress + 0x520); require nonnull/readable and exact rootDoc primary table",
+    "Read only path CString pointer/length/boundedUTF16; require expected owned fixture path",
+    "If any check fails: no listener installation; no lazy allocation, no native getter call, no bridge request"
+  ],
+  "GetAfxApp_comparison": {
+    "EXE": "46C060 calls F2EB56/IAT13C9064 MFC ordinal2194 then reads returned moduleState+4",
+    "MFC_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "thread_override_branch": "MFC809A obtains threadState and uses its+4 if nonnull",
+    "default_nonlazy_fallback": "*(mfcBase+2A847C) -> moduleState; +4 app; +520 rootDoc",
+    "fallback_is_not_unconditional_per_thread_GetAfxApp": true,
+    "global_locator_avoids_TLS_and_lazy_calls": true
+  },
+  "proofs": [
+    {
+      "file": "afx-current-app-global-instance-initializer.json",
+      "sha256": "becdfb6963b524b1c5fc94284f4a439dc96d413f2d66883b1c4c6c71a3638c0b"
+    },
+    {
+      "file": "afx-current-app-static-vtables.json",
+      "sha256": "c38040bb52718fe265c38ec86340c80b5d6dbe805e1ba9569f9667f0632f79bd"
+    },
+    {
+      "file": "afx-module-state-first-return-static.json",
+      "sha256": "710212724acd0152b66fcde22a253b8b4f0b73d835addf544e3184fe1dcd577a"
+    },
+    {
+      "file": "afx-module-state-nonlazy-branches-static.json",
+      "sha256": "27c24770f285515831febf4f0646c285b8ddaf15e2835b911f5774446a1e6833"
+    },
+    {
+      "file": "afx-module-state-storage-static.json",
+      "sha256": "00013b452b0da1c4e8c54b5ddb23291f4d30ba896f3c433dd917b05917d4d251"
+    },
+    {
+      "file": "afx-module-state-global-fallback-static.json",
+      "sha256": "65a16f6c1c59b40187e27f57971fe9afa91ec811d7aa849387d9879b92e84662"
+    }
+  ],
+  "native_or_bridge_calls": 0,
+  "host_memory_reads": 0,
+  "runtime_chain_validated": false
+}

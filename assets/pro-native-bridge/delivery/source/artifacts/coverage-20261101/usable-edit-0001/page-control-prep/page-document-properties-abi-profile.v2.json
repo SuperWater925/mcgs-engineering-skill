@@ -1,0 +1,326 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "base_page_control_abi": "NativePageControlAbi uses its existing pinned profiles",
+  "functions": [
+    {
+      "name": "OriginalWindowPropertyCommand",
+      "rva": 7199248,
+      "bytes": "558bec6aff68283fff0064a10000000050b894110000e8b53a4500a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "OriginalDocPropertyStores",
+      "rva": 7201264,
+      "bytes": "8b8d68f9ffff8b9508faffff8991940200008b8568f9ffff8b8d00faffff8988",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalDocGeometryStyleStores",
+      "rva": 7201750,
+      "bytes": "8b8d68f9ffff8b9550f7ffff8991680200008b8568f9ffff8b8d54f7ffff8988",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalDocPasswordStores",
+      "rva": 7201648,
+      "bytes": "e8729993ff898530f9ffff8b8530f9ffff89852cf9ffffc645fc0b8b8d2cf9ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalMainAuxCallbackSite",
+      "rva": 7202027,
+      "bytes": "8b9568f9ffff8b828802000089851cf9ffff8b8d68f9ffff8b91580200008995",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DocFlagsSet",
+      "rva": 7337536,
+      "bytes": "558bec51894dfc837d0c0074178b45fc8b88980200000b4d088b55fc898a9802",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MainAuxPresenceUpdate",
+      "rva": 7920272,
+      "bytes": "558bec51894dfc8b45fc8378040075118b4dfc83e9308b55fc8b42d08b5004ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MainAuxPresenceWorker",
+      "rva": 7234192,
+      "bytes": "558bec83ec0c894df8c745f401000000c745fc00000000eb098b45fc83c00189",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventCtor",
+      "rva": 8751408,
+      "bytes": "558bec6aff687520010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventSerialize",
+      "rva": 8750016,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e5017dff8b4d08518b4dfc83c1748b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventPayloadCtor",
+      "rva": 10970736,
+      "bytes": "558bec51894dfc8b45fcc7009ce022018b4dfc83c104e87f880b008b45fc8be5",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "EventPayloadSerialize",
+      "rva": 10970416,
+      "bytes": "558bec6aff68200f040164a100000000505183ec0c535657a1600b3b0133c550",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "UserDocSetModified",
+      "rva": 7186368,
+      "bytes": "558bec51894dfc8b4508508b4dfce892ee92ff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocBeforeModify",
+      "rva": 7190736,
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b4dfce8987695ff8be55dc20c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CommonDocBeforeModify",
+      "rva": 7136672,
+      "bytes": "558bec83ec24894df8c645ff008b45088945f4837df400752a8b4df88b118b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocSave",
+      "rva": 7202976,
+      "bytes": "558bec6aff689f3fff0064a100000000505181ec0c010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "MainDocSave",
+      "rva": 7239552,
+      "bytes": "558bec6aff68474cff0064a100000000505181ec48030000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "ViewInvalidate",
+      "rva": 701520,
+      "bytes": "558bec51894dfc8b4508506a008b4dfc8b512052ff1544783c018be55dc20400",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "name": "ViewUpdate",
+      "rva": 505232,
+      "bytes": "558bec51894dfc8b45fc8b482051ff1554783c018be55dc3cccccccccccccccc",
+      "reloc_offsets": [
+        16
+      ]
+    },
+    {
+      "name": "OriginalHistoryGenerated13Store",
+      "rva": 7222517,
+      "bytes": "8b45d0c7808c020000000000008b4dd08b918c02000081ca00010000899504ff",
+      "reloc_offsets": []
+    }
+  ],
+  "tables": {
+    "EventPointerArray": {
+      "rva": 14097076,
+      "col_rva": 15187780,
+      "type_rva": 16351532,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCEventDispatch@@@@",
+      "slots": [
+        11728390,
+        129906,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    "Event": {
+      "rva": 14606292,
+      "col_rva": 15249604,
+      "type_rva": 16415476,
+      "complete_offset": 0,
+      "rtti": ".?AVCEventDispatch@@",
+      "slots": [
+        228266,
+        251586,
+        292916,
+        4401,
+        130021,
+        180996,
+        344651,
+        198586,
+        69921,
+        138536,
+        335676,
+        54626
+      ]
+    },
+    "EventPayload": {
+      "rva": 14868636,
+      "col_rva": 15273240,
+      "type_rva": 16437252,
+      "complete_offset": 0,
+      "rtti": ".?AVCSpaceHolder@@",
+      "slots": [
+        200536
+      ]
+    },
+    "MainService": {
+      "rva": 14529284,
+      "col_rva": 15241504,
+      "type_rva": 16403232,
+      "complete_offset": 52,
+      "rtti": ".?AVMainCtrlManager@@",
+      "slots": [
+        189561,
+        258916,
+        192836,
+        15451,
+        315121,
+        48106,
+        36081,
+        30216,
+        80381,
+        15861,
+        301091,
+        201091,
+        13426,
+        165171,
+        35086,
+        164636
+      ]
+    },
+    "DrawingView": {
+      "rva": 14222364,
+      "col_rva": 15214600,
+      "type_rva": 16299752,
+      "complete_offset": 0,
+      "rtti": ".?AVC0VwDraw@@",
+      "slots": [
+        31146,
+        308506,
+        165306,
+        4401,
+        130021,
+        11729362
+      ]
+    }
+  },
+  "mfc": {
+    "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "StringArray": {
+      "rva": 222280,
+      "col_rva": 222300,
+      "type_rva": 2768644,
+      "complete_offset": 0,
+      "rtti": ".?AVCStringArray@@"
+    },
+    "ByteArray": {
+      "rva": 221880,
+      "col_rva": 221900,
+      "type_rva": 2768468,
+      "complete_offset": 0,
+      "rtti": ".?AVCByteArray@@"
+    }
+  },
+  "layout": {
+    "property0": {
+      "offset": 600,
+      "type": "Int32 identity/read-only"
+    },
+    "property1": {
+      "offset": 604,
+      "type": "CString name/rename participant only"
+    },
+    "property2": {
+      "offset": 608,
+      "type": "CString description"
+    },
+    "property3": {
+      "offset": 612,
+      "type": "CString/read-only until original setter closes"
+    },
+    "I4_properties": {
+      "4": 616,
+      "5": 620,
+      "6": 624,
+      "7": 628,
+      "8": 632,
+      "9": 636,
+      "10": 640,
+      "11": 644,
+      "12": 648,
+      "13": 652,
+      "14": 656,
+      "15": 660,
+      "16": 664,
+      "17": 668,
+      "18": 672,
+      "19": 676,
+      "20": 680
+    },
+    "read_only_generated_property13": true,
+    "flags_property16_permitted_change_mask": 3,
+    "main_aux_list_field": 580,
+    "common_event_source_offsets": [
+      336,
+      340,
+      348
+    ],
+    "common_event_scalar_offset": 344,
+    "common_event_binary_offsets": [
+      352,
+      372,
+      392
+    ],
+    "event_array_offset": 580,
+    "event_size": 140,
+    "event_offsets": {
+      "int4": 4,
+      "string8": 8,
+      "intC": 12,
+      "string10": 16,
+      "word14": 20,
+      "strings1C": 28,
+      "ints30": 48,
+      "ints44": 68,
+      "payload58": 88,
+      "string70": 112,
+      "bytes74": 116,
+      "runtime_byte88": 136
+    }
+  },
+  "static_proof_sha256": "287897580b17f4ded8d3fdd34ca69ef9ede87de38680023f9b78f92e87ad58f5",
+  "candidate_host_verified": false,
+  "original_profile_sha256": "66159c66b8cd05febcf5e7f03539123c2a9a86490c2f552a94253bf305f00ab8",
+  "history_projection_supplement_sha256": "ac668008139e2194dbdc1079dcd9c2e19c25193b9e797dae25a01d48e81ce76b",
+  "history_projection_after_uint32": 0
+}

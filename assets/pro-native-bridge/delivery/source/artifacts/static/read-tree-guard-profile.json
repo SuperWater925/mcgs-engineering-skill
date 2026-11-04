@@ -1,0 +1,465 @@
+{
+  "schema": "mcgs-pro-internal-read-tree-abi/v1",
+  "binary": {
+    "path": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "image_base": "0x400000",
+    "pointer_size": 4,
+    "version_policy": "Software release versions are observations only. This exact internal ABI profile is guarded by architecture, SHA and code/RTTI signatures; new binaries require local evidence extraction rather than a release-version whitelist.",
+    "dll_characteristics": "0x8140",
+    "dynamic_base": true,
+    "signature_comparison": "If loaded ImageBase differs, adjust every HIGHLOW relocation dword listed in function signatures and normalize all vtable/COL pointers to module-relative RVAs. Raw expected bytes are from preferred-base file."
+  },
+  "functions": [
+    {
+      "name": "GetUserWindowService",
+      "rva": "0xa56ce0",
+      "va_at_preferred_base": "0xe56ce0",
+      "expected_first_32_bytes": "558bec6a006888553a0168bc8738016a00e8e6b75aff83c4046a0050e871a40d",
+      "calling_convention": "cdecl",
+      "return": "IUserWindowService*",
+      "args": [],
+      "role": "Read-only getter; requires current host document. Native caller 0x731068.",
+      "relocatable_dword_offsets_in_first32": [
+        6,
+        11
+      ]
+    },
+    {
+      "name": "GetModuleObject",
+      "rva": "0x7d2180",
+      "va_at_preferred_base": "0xbd2180",
+      "expected_first_32_bytes": "558bec83ec08837d080c750433c0eb23e8f33586ff8945fc8b45fc8b108b4dfc",
+      "calling_convention": "cdecl",
+      "return": "IObject*",
+      "args": [
+        "int32 moduleId"
+      ],
+      "role": "Only use known IDs; no generic bounds check except id==12 returns null.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "GetCurrentObjectModel",
+      "rva": "0x7d6110",
+      "va_at_preferred_base": "0xbd6110",
+      "expected_first_32_bytes": "558bec6aff681486000164a1000000005083ec30a1600b3b0133c5508d45f464",
+      "calling_convention": "cdecl",
+      "return": "ObjectModel*",
+      "args": [],
+      "role": "Read currentDoc+0x2D4; logs null document then still accesses it, so strict current-document precondition required.",
+      "relocatable_dword_offsets_in_first32": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ObjectModel_getRoot",
+      "rva": "0x7d61e0",
+      "va_at_preferred_base": "0xbd61e0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40688be55dc3cccccccccccccccccccccccccccccc",
+      "calling_convention": "thiscall",
+      "return": "ObjectRoot*",
+      "args": [
+        "ObjectModel* this in ECX"
+      ],
+      "role": "Returns this+0x68.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "IObjectIter_ctor",
+      "rva": "0x7cc820",
+      "va_at_preferred_base": "0xbcc820",
+      "expected_first_32_bytes": "558bec51894dfc8b4dfce85d0b84ff8b45fcc70050201e018b4dfcc741040000",
+      "calling_convention": "thiscall",
+      "return": "Iter*",
+      "args": [
+        "Iter* this in ECX",
+        "IObject* owner"
+      ],
+      "role": "Initialize 16-byte caller storage; owner passed by stack, ret4.",
+      "relocatable_dword_offsets_in_first32": [
+        20
+      ]
+    },
+    {
+      "name": "IObjectIter_dtor",
+      "rva": "0x7cc860",
+      "va_at_preferred_base": "0xbcc860",
+      "expected_first_32_bytes": "558bec6aff686a71000164a1000000005051a1600b3b0133c5508d45f464a300",
+      "calling_convention": "thiscall",
+      "return": "void",
+      "args": [
+        "Iter* this in ECX"
+      ],
+      "role": "Always destroy once if constructor completed, including enumeration empty/error/early-stop; invokes owner slot26 then native free(state).",
+      "relocatable_dword_offsets_in_first32": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "WindowManager_parent",
+      "rva": "0x7747c0",
+      "va_at_preferred_base": "0xb747c0",
+      "expected_first_32_bytes": "558bec83ec08894df8e8ba0f8cff8945fc8b45fc8b108b4dfc8b02ffd08be55d",
+      "calling_convention": "thiscall",
+      "return": "IObject*",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot15; returns current ObjectModel root.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "WindowManager_size",
+      "rva": "0x774790",
+      "va_at_preferred_base": "0xb74790",
+      "expected_first_32_bytes": "558bec51894dfc8b4dfc83c10ce8448e8cff8be55dc3cccccccccccccccccccc",
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot19; existing map size.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "WindowManager_module",
+      "rva": "0x7a1690",
+      "va_at_preferred_base": "0xba1690",
+      "expected_first_32_bytes": "558bec51894dfc33c08be55dc3cccccc558bec6aff681342000164a100000000",
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot20; returns0.",
+      "relocatable_dword_offsets_in_first32": [
+        22
+      ]
+    },
+    {
+      "name": "ObjectRoot_parent",
+      "rva": "0x7eee60",
+      "va_at_preferred_base": "0xbeee60",
+      "expected_first_32_bytes": "558bec51894dfc33c08be55dc3cccccc558bec6aff68c79c000164a100000000",
+      "calling_convention": "thiscall",
+      "return": "IObject*",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot15; returnsnull.",
+      "relocatable_dword_offsets_in_first32": [
+        22
+      ]
+    },
+    {
+      "name": "ObjectRoot_size",
+      "rva": "0x7eee40",
+      "va_at_preferred_base": "0xbeee40",
+      "expected_first_32_bytes": "558bec51894dfc8b4dfc83c108e89f8784ff8be55dc3cccccccccccccccccccc",
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot19; child-vector size.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "ObjectRoot_module",
+      "rva": "0x6ab70",
+      "va_at_preferred_base": "0x46ab70",
+      "expected_first_32_bytes": "558bec51894dfcb80c0000008be55dc3cccccccccccccccccccccccccccccccc",
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot20; returns12.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "ObjectRoot_firstChild",
+      "rva": "0x7eef30",
+      "va_at_preferred_base": "0xbeef30",
+      "expected_first_32_bytes": "558bec51894dfc8b4508508b4dfc83c10851e8b12386ff83c4088be55dc20400",
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "args": [
+        "IObject* this in ECX",
+        "Iter&"
+      ],
+      "role": "Virtual slot17; caller cleanup? callee ret4; Iter current at+8.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "ObjectRoot_nextChild",
+      "rva": "0x7eef50",
+      "va_at_preferred_base": "0xbeef50",
+      "expected_first_32_bytes": "558bec51894dfc8b4508508b4dfc83c10851e850d682ff83c4088be55dc20400",
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "args": [
+        "IObject* this in ECX",
+        "Iter&"
+      ],
+      "role": "Virtual slot18; ret4.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "WindowManager_firstChild",
+      "rva": "0x7749d0",
+      "va_at_preferred_base": "0xb749d0",
+      "expected_first_32_bytes": "558bec51894dfc8b4508508b4dfc83c10c51e8d8ce89ff83c4088be55dc20400",
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "args": [
+        "IObject* this in ECX",
+        "Iter&"
+      ],
+      "role": "Virtual slot17; map-backed; ret4.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "WindowManager_nextChild",
+      "rva": "0x7749f0",
+      "va_at_preferred_base": "0xb749f0",
+      "expected_first_32_bytes": "558bec51894dfc8b4508508b4dfc83c10c51e8f6118bff83c4088be55dc20400",
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "args": [
+        "IObject* this in ECX",
+        "Iter&"
+      ],
+      "role": "Virtual slot18; map-backed; ret4.",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "UserWindow_parent",
+      "rva": "0x852b70",
+      "va_at_preferred_base": "0xc52b70",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40188be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": [],
+      "calling_convention": "thiscall",
+      "return": "IObject*",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot15; returns stored manager pointer."
+    },
+    {
+      "name": "UserWindow_module",
+      "rva": "0x852b60",
+      "va_at_preferred_base": "0xc52b60",
+      "expected_first_32_bytes": "558bec51894dfc33c08be55dc3cccccc558bec51894dfc8b45fc8b40188be55d",
+      "relocatable_dword_offsets_in_first32": [],
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "Virtual slot20; returns0."
+    },
+    {
+      "name": "UserWindow_ID",
+      "rva": "0x850800",
+      "va_at_preferred_base": "0xc50800",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": [],
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "args": [
+        "IObject* this in ECX"
+      ],
+      "role": "thiscall noargs; returns stored int32 native windowID at+0x10."
+    }
+  ],
+  "iterator": {
+    "size": 16,
+    "alignment": 4,
+    "fields": {
+      "0": "native vptr written by constructor",
+      "4": "opaque state pointer, initiallynull",
+      "8": "current IObject*",
+      "12": "owner IObject*"
+    },
+    "lifetime": "Use native ctor/dtor. Never invoke owner deleting-destructor slot0; never release IObject through COM. These are non-COM pointers. Runtime pointers valid only for current open document and host callback.",
+    "deallocator_import": {
+      "dll": "MSVCR110.dll",
+      "name": "free",
+      "ordinal": null
+    }
+  },
+  "vtable_guards": [
+    {
+      "name": "UserWindowObjectManager.IObject",
+      "rva": "0xddf7ec",
+      "col_rva": "0xe89cf0",
+      "offset_to_complete": 0,
+      "raw_col_first20": "000000000000000000000000ac563a01089d2801",
+      "slot_entry_rvas": [
+        "0x3f34b",
+        "0xb0b9",
+        "0x3b8bd",
+        "0x3460d",
+        "0x1b9af",
+        "0x8c38",
+        "0x1a7bc",
+        "0x23191",
+        "0x32722",
+        "0x8873",
+        "0x3d8b1",
+        "0x1efa1",
+        "0x5236f",
+        "0x6cbc",
+        "0x4763b",
+        "0x2cb5b",
+        "0x52ef",
+        "0x251d0",
+        "0x353b9",
+        "0x3dfeb",
+        "0xa164",
+        "0x3328a",
+        "0x29933",
+        "0x162c0",
+        "0x2c3ea",
+        "0x2f383",
+        "0x54007",
+        "0x429c9"
+      ]
+    },
+    {
+      "name": "UserWindowObjectManager.IUserWindowService",
+      "rva": "0xddf898",
+      "col_rva": "0xe89de4",
+      "offset_to_complete": 52,
+      "raw_col_first20": "000000003400000000000000ac563a01089d2801",
+      "slot_entry_rvas": [
+        "0x54480",
+        "0x3e8fb",
+        "0x4101",
+        "0x52bcb",
+        "0x2b3cd",
+        "0x538af",
+        "0x4a507",
+        "0xaef7",
+        "0x26dc8",
+        "0x249d8",
+        "0x1ec2c",
+        "0x478b1",
+        "0x21733"
+      ]
+    },
+    {
+      "name": "ObjectRoot.IObject",
+      "rva": "0xde5bcc",
+      "col_rva": "0xe8a6a0",
+      "offset_to_complete": 0,
+      "raw_col_first20": "00000000000000000000000014603a01b8a62801",
+      "slot_entry_rvas": [
+        "0xadad",
+        "0xa9fc",
+        "0x3b8bd",
+        "0x3460d",
+        "0x487a2",
+        "0x3ba34",
+        "0x27d31",
+        "0x2d05b",
+        "0x32722",
+        "0x1154f",
+        "0x1e0ec",
+        "0x2a135",
+        "0x5236f",
+        "0x6cbc",
+        "0x1bd10",
+        "0x48a2c",
+        "0x44b25",
+        "0x2f905",
+        "0xb32a",
+        "0x3e36a",
+        "0x443f",
+        "0x54afc",
+        "0x2dd30",
+        "0x162c0",
+        "0x3fadf",
+        "0x3236c",
+        "0x54007",
+        "0x218f"
+      ]
+    },
+    {
+      "name": "ObjectModel",
+      "rva": "0xde4860",
+      "col_rva": "0xe8a588",
+      "offset_to_complete": 0,
+      "raw_col_first20": "000000000000000000000000545f3a01a0a52801",
+      "slot_entry_rvas": [
+        "0x2cac0",
+        "0x5242d",
+        "0x37c22",
+        "0x3dadc",
+        "0x17355",
+        "0x53864",
+        "0x19420",
+        "0x4eb89",
+        "0x4e3aa",
+        "0x50060",
+        "0x132c8",
+        "0x1cf94",
+        "0x7603"
+      ]
+    },
+    {
+      "name": "UserWindowObject.IObject",
+      "rva": "0xded294",
+      "col_rva": "0xe8af4c",
+      "offset_to_complete": 0,
+      "raw_col_first20": "000000000000000000000000f809390164af2801",
+      "slot_entry_rvas": [
+        "0x9b65",
+        "0x41858",
+        "0x3b8bd",
+        "0x3460d",
+        "0x538be",
+        "0x432a2",
+        "0x3bf61",
+        "0x18921",
+        "0x32722",
+        "0x10825",
+        "0xcebe",
+        "0x3fc1",
+        "0x5236f",
+        "0x33dc5",
+        "0x1bb62",
+        "0x3cd26",
+        "0x1fa46",
+        "0x46830",
+        "0x3f89b",
+        "0x36610",
+        "0x47528",
+        "0xce23",
+        "0x21869",
+        "0xfb14",
+        "0x54764",
+        "0x15366",
+        "0x42e92",
+        "0xcb3a"
+      ]
+    }
+  ],
+  "readonly_sequence": [
+    "Validate exact isolated engineering project via already-proven OLE identity and current process/module.",
+    "GetUserWindowService() cdecl; nonnull, readable pointer and in-image vtable required.",
+    "Verify IUserWindowService vtable and RTTI COL ObjectManager at offset0x34; compute managerIObject=service-0x34 and verify primary vtable/RTTI.",
+    "Virtual call parent(manager)->ObjectRoot; verify ObjectRoot vtable/RTTI; require root parent==null and module==12.",
+    "Read size/module on each guarded object; no generate/save/create methods in this initial pass.",
+    "Native construct Iter(owner); virtual firstChild/nextChild; read current pointer+8 only when bool8 resulttrue; enforce finite bounds and visited set.",
+    "Native dtor in finally if constructed; all objects remain host-owned."
+  ],
+  "limitations": [
+    "This profile only establishes bounded read traversal; no write, refresh or save ABI is approved by it.",
+    "Call during real host AddIn callback on its host thread; do not dispatch stale pointers from another managed thread.",
+    "GetUserWindowService assumes a loaded document; do not call if identity/current document is unavailable."
+  ]
+}

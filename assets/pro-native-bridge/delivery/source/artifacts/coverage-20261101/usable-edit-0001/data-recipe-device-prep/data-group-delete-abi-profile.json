@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "purpose": "Native data-group-delete using the existing original DataDeleteIndices contract",
+  "base_data_recipe_abi_sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "static_source_sha256": "6dea1f8a393f34bcf4c15e73a38a076de9170c240387eb5deba660cd77af3e03",
+  "kind": "data-group-delete",
+  "module_id": 2,
+  "native_type": -1,
+  "service_slot": 8,
+  "service_entry_rva": 283731,
+  "after": {
+    "exists": false
+  },
+  "incoming_references": "must be zero in original ReferenceCheck and the complete reverse graph",
+  "member_variables": "retain original objects/IDs/order/full known records; no cascading member deletion",
+  "native_invocation": false,
+  "unified_acceptance_pending": true
+}

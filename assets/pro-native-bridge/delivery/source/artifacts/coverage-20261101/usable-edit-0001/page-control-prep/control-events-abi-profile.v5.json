@@ -1,0 +1,2885 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "DrawingTypeGetter",
+      "rva": 7624544,
+      "bytes": "558bec6aff68b8cdff0064a1000000005083ec58a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SharedMetadataPopulate",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SharedMetadataDeclarations",
+      "rva": 7615888,
+      "bytes": "558bec6aff680bccff0064a1000000005081ec34030000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "TypeCacheLookup",
+      "rva": 5779536,
+      "bytes": "558bec8b450850e8c336aaff83c4045dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TypeCacheLookupInner",
+      "rva": 5810000,
+      "bytes": "558bec83ec088d4508508d4dfc51b9608b3b01e8910fa8ff8d55fc528d45f850",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "name": "TypeCacheInsert",
+      "rva": 5779568,
+      "bytes": "558bec837d0c00750432c0eb108b450c508b4d0851e8defea7ff83c4085dc3cc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TypeCacheInsertInner",
+      "rva": 5812336,
+      "bytes": "558bec83ec148d450c508d4d08518d55ec52b9608b3b01e8c75aa9ff0fb64004",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "EventSetInfo",
+      "rva": 8747632,
+      "bytes": "558bec83ec08894dfc8b45fc8b4d0c8948048b5508528b4dfc83c108ff15708e3c01",
+      "reloc_offsets": [
+        30
+      ]
+    },
+    {
+      "name": "TypeInfoCtor",
+      "rva": 8746304,
+      "bytes": "558bec6aff681a1f010164a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeInfoDelete",
+      "rva": 756048,
+      "bytes": "558bec51894dfc8b4dfce82c58f7ff8b450883e001740c8b4dfc51e84860a700",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot43Entry",
+      "rva": 87651,
+      "bytes": "e958e73600e933746b00e9bebc7700e9e9937200e9e43c8800e92f447b00e95a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot43Body",
+      "rva": 3685824,
+      "bytes": "558bec6aff6869dbfa0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot46Entry",
+      "rva": 36611,
+      "bytes": "e988af3700e9e3750900e9aee63000e9e9ea0b00e9f4e88200e9ef6e7400e92a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot46Body",
+      "rva": 3686032,
+      "bytes": "558bec51894dfcb8010100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot43Entry",
+      "rva": 158286,
+      "bytes": "e9ad174700e9283a3100e9634aa600e93e66a300e9791f7900e914fd7800e9ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot43Body",
+      "rva": 4817408,
+      "bytes": "558bec6aff68d988fc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot46Entry",
+      "rva": 154821,
+      "bytes": "e9c63f4700e9b12a4400e9cc8a9600e957ea3700e91259a000e9bd5d2000e918",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot46Body",
+      "rva": 4824208,
+      "bytes": "558bec51894dfcb8140100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot43Entry",
+      "rva": 154486,
+      "bytes": "e9652d4700e960172d00e9bbf61c00e976427e00e9b1336f00e98c125100e9c7",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot43Body",
+      "rva": 4819168,
+      "bytes": "558bec6aff68e98afc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot46Entry",
+      "rva": 86176,
+      "bytes": "e94b4d4800e906f1ab00e9e1af8700e99c2b5a00e9b7298400e9a2d35c00e91d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot46Body",
+      "rva": 4824560,
+      "bytes": "558bec51894dfcb8120100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot43Entry",
+      "rva": 179876,
+      "bytes": "e9b7d14600e902612b00e9ddc12300e9d8ac9c00e9b3b96500e93e224500e9b9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot43Body",
+      "rva": 4821088,
+      "bytes": "558bec6aff68298dfc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot46Entry",
+      "rva": 42791,
+      "bytes": "e944f84800e97f940700e97a6d8200e9d5018200e960c31200e97b494800e9e6",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot46Body",
+      "rva": 4824944,
+      "bytes": "558bec51894dfcb8130100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot43Entry",
+      "rva": 237716,
+      "bytes": "e987f34500e972e36d00e9dd705c00e908674500e973867a00e98ee07100e9d9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot43Body",
+      "rva": 4822048,
+      "bytes": "558bec6aff68498efc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot46Entry",
+      "rva": 82576,
+      "bytes": "e99b5d4800e946ed0800e9f1f5a600e94c0c4700e9874f1300e9625b8f00e90d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot46Body",
+      "rva": 4825136,
+      "bytes": "558bec51894dfcb8150100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot12Entry",
+      "rva": 75996,
+      "bytes": "e98fb04100e91a2aa400e9a5588000e9609f6400e9dbf92f00e9a6342600e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot12Body",
+      "rva": 4381040,
+      "bytes": "558bec6aff6899d7fb0064a1000000005081ece8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot43Entry",
+      "rva": 188396,
+      "bytes": "e94fa84600e9da26a300e905587b00e980353e00e97bdf3600e9166d9c00e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot43Body",
+      "rva": 4819008,
+      "bytes": "558bec6aff68b98afc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot46Entry",
+      "rva": 212706,
+      "bytes": "e9e95e4600e984103300e96f8d4400e99a6a4800e9b5c50800e940097600e99b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot46Body",
+      "rva": 4824528,
+      "bytes": "558bec51894dfcb81a0100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot12Entry",
+      "rva": 38631,
+      "bytes": "e9d4e53a00e97f7d6300e9cafd3300e925f53300e9c00c1700e9eb159000e916",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot12Body",
+      "rva": 3898560,
+      "bytes": "558bec6aff680a3bfb0064a1000000005081ec24010000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawEditSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot43Entry",
+      "rva": 107966,
+      "bytes": "e95de03a00e998636c00e9638b5700e91e03a200e989c87a00e9c4a44c00e93f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot43Body",
+      "rva": 3966496,
+      "bytes": "558bec6aff68b952fb0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot46Entry",
+      "rva": 193706,
+      "bytes": "e941923900e9dcb93700e907ac3400e9a2e41a00e9fdb00600e948967e00e963",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot46Body",
+      "rva": 3966704,
+      "bytes": "558bec51894dfcb8100100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringGetAtEntry",
+      "rva": 154711,
+      "bytes": "e9248e0400e99f8aaa00e9fae55300e975802800e9a0a72200e9abbd8000e926",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringGetAt",
+      "rva": 453248,
+      "bytes": "558bec51894dfc8b4508508b4dfce84443faff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringElement",
+      "rva": 453856,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e83501ac008b55fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot41Entry",
+      "rva": 146176,
+      "bytes": "e99b854000e9b6922e00e951e7a400e95cc08f00e9f73b7b00e9c2e67200e97d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot41Body",
+      "rva": 4374688,
+      "bytes": "558bec6aff68f3d4fb0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot43Entry",
+      "rva": 108301,
+      "bytes": "e94eda4700e9b9eb8b00e994318700e93f893b00e93abf2200e925740f00e920",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot43Body",
+      "rva": 4817248,
+      "bytes": "558bec6aff68a988fc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot46Entry",
+      "rva": 228286,
+      "bytes": "e9ad204600e9d8933700e973ba0c00e98e276900e9c9064500e914cb0400e90f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot46Body",
+      "rva": 4824176,
+      "bytes": "558bec51894dfcb8190100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot43Entry",
+      "rva": 54391,
+      "bytes": "e9e4184000e96f654f00e97ab82d00e9a58e9d00e910d97500e99bb58000e946",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot43Body",
+      "rva": 4255072,
+      "bytes": "558bec6aff68b9affb0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot46Entry",
+      "rva": 342096,
+      "bytes": "e9dbb53b00e9a69a0200e911339200e97c4d9d00e9d72d7800e912242200e9dd",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot46Body",
+      "rva": 4255280,
+      "bytes": "558bec51894dfcb8060100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalEventSetInfoOwnerTypeCallsite",
+      "rva": 8753896,
+      "bytes": "8b4dec8b91b00000008b4208508b4de8518b55ec8b8ab000000083c148e8b3c27cff508b4dec81c194000000e831157fff83e801508b4dec81c194000000e8de477eff8b08e882bd7bff",
+      "reloc_offsets": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "CDrawButton",
+      "archive_type_id": 20519,
+      "metadata_type_id": 257,
+      "primary": {
+        "rva": 14016108,
+        "col_rva": 15174680,
+        "type_rva": 16325940,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawButton@@",
+        "slots": [
+          267091,
+          331411,
+          347651,
+          4401,
+          130021,
+          164516,
+          18551,
+          338696,
+          249176,
+          306636,
+          329936,
+          228566,
+          100156,
+          31541,
+          216281,
+          238691,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          150371,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          307036,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14016436,
+        "col_rva": 15174796,
+        "type_rva": 16325940,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawButton@@",
+        "slots": [
+          227726,
+          98566,
+          243901,
+          214541,
+          133906,
+          342641,
+          202691,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          23811,
+          130646,
+          334876,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 87651,
+        "44": 13271,
+        "46": 36611
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawCell",
+      "archive_type_id": 20537,
+      "metadata_type_id": 276,
+      "primary": {
+        "rva": 14099020,
+        "col_rva": 15188380,
+        "type_rva": 16325972,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawCell@@",
+        "slots": [
+          311051,
+          123541,
+          140921,
+          4401,
+          130021,
+          28971,
+          145656,
+          13096,
+          213556,
+          86996,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          14161,
+          188846,
+          160551,
+          53506,
+          339816,
+          202801,
+          156006,
+          87036,
+          36396,
+          153556,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14099348,
+        "col_rva": 15188492,
+        "type_rva": 16325972,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawCell@@",
+        "slots": [
+          175696,
+          333166,
+          243901,
+          214541,
+          263346,
+          88876,
+          48756,
+          337776,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 158286,
+        "44": 13271,
+        "46": 154821
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawLine",
+      "archive_type_id": 20482,
+      "metadata_type_id": 274,
+      "primary": {
+        "rva": 14098076,
+        "col_rva": 15188108,
+        "type_rva": 16351704,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawLine@@",
+        "slots": [
+          36246,
+          325576,
+          208446,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          186596,
+          283071,
+          214111,
+          39791,
+          214996,
+          164586,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14098388,
+        "col_rva": 15188220,
+        "type_rva": 16351704,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawLine@@",
+        "slots": [
+          328891,
+          292431,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 154486,
+        "44": 13271,
+        "46": 86176
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawRect",
+      "archive_type_id": 20484,
+      "metadata_type_id": 275,
+      "primary": {
+        "rva": 14098548,
+        "col_rva": 15188244,
+        "type_rva": 16351732,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawRect@@",
+        "slots": [
+          48681,
+          22546,
+          208446,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          297911,
+          156006,
+          87036,
+          36396,
+          224266,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14098860,
+        "col_rva": 15188356,
+        "type_rva": 16351732,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawRect@@",
+        "slots": [
+          271836,
+          325396,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 179876,
+        "44": 13271,
+        "46": 42791
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawUnit",
+      "archive_type_id": 20538,
+      "metadata_type_id": 277,
+      "primary": {
+        "rva": 14099508,
+        "col_rva": 15188516,
+        "type_rva": 16351760,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawUnit@@",
+        "slots": [
+          84431,
+          16381,
+          236851,
+          4401,
+          130021,
+          14086,
+          305271,
+          173941,
+          126746,
+          288066,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          179761,
+          188846,
+          160551,
+          53506,
+          339816,
+          254451,
+          156006,
+          87036,
+          36396,
+          39041,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14099828,
+        "col_rva": 15188628,
+        "type_rva": 16351760,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawUnit@@",
+        "slots": [
+          147106,
+          48826,
+          243901,
+          214541,
+          140671,
+          281426,
+          223786,
+          306431,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          57736,
+          5491,
+          48196,
+          345906,
+          100291,
+          96026,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 237716,
+        "44": 13271,
+        "46": 82576
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawLabel",
+      "archive_type_id": 20488,
+      "metadata_type_id": 282,
+      "primary": {
+        "rva": 14101900,
+        "col_rva": 15189360,
+        "type_rva": 16290752,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawLabel@@",
+        "slots": [
+          257831,
+          344516,
+          100796,
+          4401,
+          130021,
+          164516,
+          18551,
+          115581,
+          34456,
+          142111,
+          115121,
+          202046,
+          75996,
+          40931,
+          312726,
+          346861,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          285176,
+          156006,
+          233181,
+          36396,
+          343651,
+          11966,
+          289996,
+          211501,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14102212,
+        "col_rva": 15189472,
+        "type_rva": 16290752,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawLabel@@",
+        "slots": [
+          257791,
+          31906,
+          243901,
+          214541,
+          311931,
+          243861,
+          319536,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          324711,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 75996,
+        "41": 40316,
+        "43": 188396,
+        "44": 13271,
+        "46": 212706
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        },
+        {
+          "stack_base": -204,
+          "declaration_ctor_va": "0x82db00",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x82db9b"
+        },
+        {
+          "stack_base": -244,
+          "declaration_ctor_va": "0x82dbb8",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x82dc53"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawEdit",
+      "archive_type_id": 20517,
+      "metadata_type_id": 272,
+      "primary": {
+        "rva": 14040244,
+        "col_rva": 15180396,
+        "type_rva": 16338056,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawEdit@@",
+        "slots": [
+          39601,
+          309051,
+          292436,
+          4401,
+          130021,
+          164516,
+          18551,
+          36126,
+          136341,
+          35571,
+          329936,
+          228566,
+          38631,
+          315596,
+          77961,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          150371,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          131746,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14040572,
+        "col_rva": 15180512,
+        "type_rva": 16338056,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawEdit@@",
+        "slots": [
+          204356,
+          219876,
+          243901,
+          214541,
+          69901,
+          315746,
+          225031,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          120356,
+          35326,
+          23306,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 38631,
+        "41": 40316,
+        "43": 107966,
+        "44": 13271,
+        "46": 193706
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        },
+        {
+          "stack_base": -184,
+          "declaration_ctor_va": "0x7b7d98",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x7b7e36"
+        },
+        {
+          "stack_base": -264,
+          "declaration_ctor_va": "0x7b7e53",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x7b7ef1"
+        },
+        {
+          "stack_base": -224,
+          "declaration_ctor_va": "0x7b7f0e",
+          "argument_descriptors": [],
+          "native_name": "Change",
+          "description_resource_id": 23098,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 8,
+          "argument_count": 0,
+          "append_va": "0x7b7faf"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawBitmap",
+      "archive_type_id": 20489,
+      "metadata_type_id": 281,
+      "primary": {
+        "rva": 14101404,
+        "col_rva": 15189060,
+        "type_rva": 16351888,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawBitmap@@",
+        "slots": [
+          289326,
+          133961,
+          341346,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          345766,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          80771,
+          249581,
+          87036,
+          36396,
+          141756,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14101716,
+        "col_rva": 15189172,
+        "type_rva": 16351888,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawBitmap@@",
+        "slots": [
+          226651,
+          139941,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          186866,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 146176,
+        "43": 108301,
+        "44": 13271,
+        "46": 228286
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 0
+    },
+    {
+      "name": "CDrawMulBtn",
+      "archive_type_id": 20520,
+      "metadata_type_id": 262,
+      "primary": {
+        "rva": 14075788,
+        "col_rva": 15185648,
+        "type_rva": 16343000,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawMulBtn@@",
+        "slots": [
+          185171,
+          203196,
+          272386,
+          4401,
+          130021,
+          38511,
+          10916,
+          206461,
+          229986,
+          100221,
+          329936,
+          228566,
+          100156,
+          310986,
+          60751,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          34531,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14076148,
+        "col_rva": 15185860,
+        "type_rva": 16343000,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawMulBtn@@",
+        "slots": [
+          155626,
+          10121,
+          243901,
+          214541,
+          132836,
+          231656,
+          95686,
+          211156,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          62191,
+          273601,
+          133211,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 54391,
+        "44": 13271,
+        "46": 342096
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    }
+  ],
+  "definitions": [
+    {
+      "stack_base": -752,
+      "declaration_ctor_va": "0xb43bb5",
+      "argument_descriptors": [],
+      "native_name": "Click",
+      "description_resource_id": 42582,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 0,
+      "argument_count": 0,
+      "append_va": "0xb43c65"
+    },
+    {
+      "stack_base": -792,
+      "declaration_ctor_va": "0xb43c82",
+      "argument_descriptors": [],
+      "native_name": "DBLClick",
+      "description_resource_id": 42583,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 1,
+      "argument_count": 0,
+      "append_va": "0xb43d2c"
+    },
+    {
+      "stack_base": -832,
+      "declaration_ctor_va": "0xb43d49",
+      "argument_descriptors": [],
+      "native_name": "DBRClick",
+      "description_resource_id": 42584,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 2,
+      "argument_count": 0,
+      "append_va": "0xb43ded"
+    },
+    {
+      "stack_base": -468,
+      "declaration_ctor_va": "0xb43e0a",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseDown",
+      "description_resource_id": 42585,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 3,
+      "argument_count": 4,
+      "append_va": "0xb43f02"
+    },
+    {
+      "stack_base": -508,
+      "declaration_ctor_va": "0xb43f1f",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseMove",
+      "description_resource_id": 42586,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 4,
+      "argument_count": 4,
+      "append_va": "0xb44017"
+    },
+    {
+      "stack_base": -428,
+      "declaration_ctor_va": "0xb44034",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseUp",
+      "description_resource_id": 42587,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 5,
+      "argument_count": 4,
+      "append_va": "0xb4412c"
+    },
+    {
+      "stack_base": -588,
+      "declaration_ctor_va": "0xb44149",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyDown",
+      "description_resource_id": 42588,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 6,
+      "argument_count": 2,
+      "append_va": "0xb44217"
+    },
+    {
+      "stack_base": -548,
+      "declaration_ctor_va": "0xb44234",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyUp",
+      "description_resource_id": 42589,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 7,
+      "argument_count": 2,
+      "append_va": "0xb44314"
+    }
+  ],
+  "event_info_array": {
+    "rva": 13575428,
+    "col_rva": 15139228,
+    "type_rva": 16300068,
+    "complete_offset": 0,
+    "rtti": ".?AV?$CArray@VCObjEventInfo@@V1@@@",
+    "slots": [
+      11727406,
+      274291,
+      307416,
+      4401,
+      130021
+    ]
+  },
+  "argument_word_array": {
+    "rva": 13575944,
+    "col_rva": 15138952,
+    "type_rva": 16299932,
+    "complete_offset": 0,
+    "rtti": ".?AV?$CArray@GG@@",
+    "slots": [
+      11727406,
+      118441,
+      108241,
+      4401,
+      130021
+    ]
+  },
+  "metadata_event_array_offset": 72,
+  "control_event_array_offset": 48,
+  "static_proof_file": "control-events-native-static-proof.json",
+  "static_proof_sha256": "2c86987eb840df21c6bfccac16f6644be43c5c8adb0b3856802865ce18dd9dec",
+  "candidate_host_verified": false,
+  "label_edit_extension_proof_file": "control-events-label-edit-extension-static-proof.json",
+  "label_edit_extension_proof_sha256": "3990e24eb6201244da1caacae80807096bda01a892b6f3ecc46ab09c972ad0ca",
+  "argument_text_proof_file": "event-argument-text-copy-and-derived-bindings-static-proof.json",
+  "argument_text_proof_sha256": "49492b6440b9593542fab4f62af275f33bae60b328d112d27e68cabae7ca9a32",
+  "bitmap_multibutton_proof_file": "control-events-bitmap-multibutton-static-proof.json",
+  "bitmap_multibutton_proof_sha256": "b08d418d595ea3e81d7882b66f65f20d104f07728bf9924d34a4e9169a952b89",
+  "event_owner_type_offset": 8,
+  "raw_metadata_field18_offset": 24,
+  "event_owner_type_erratum_file": "control-event-owner-type-native-caller-erratum.json",
+  "event_owner_type_erratum_sha256": "26482ad086d02ea9f6e3d6145dd5842307904b804c371a7cedbcbd37778a5a3b"
+}

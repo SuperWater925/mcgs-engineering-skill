@@ -1,0 +1,59 @@
+{
+  "schema": 2,
+  "purpose": "preserve all canonical CDevDll subtree identity while editing basic protocol properties through original selected-only Get/Set/collect",
+  "driver_profile_sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6",
+  "node_profile_sha256": "e827853f68f622be6a3ff9985621025ee0b3d392ed2e86306338f484250cacff",
+  "base_device_profile_sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "name": "PrivateByteArraySetSize",
+      "module": "mfc110u.dll",
+      "rva": 1843702,
+      "bytes": "558bec538b5d08578bf985db0f880d0100008b450c85c0780389471085db751aff7704ff1594f42a1033c05989470489470c894708e9df0000008b570485d275",
+      "reloc_offsets": [
+        37
+      ],
+      "ordinal": 13781
+    },
+    {
+      "name": "ConfigurationFrontendCtorOwnerInputs",
+      "module": "McgsSetPro.exe",
+      "rva": 1446704,
+      "bytes": "558bec6aff68feccf70064a1000000005083ec24a1600b3b0133c5508d45f464a300000000894df08b4df0e8b4b3ecffc745fc000000008b45f0c740240000000068389111018b4df083c128ff1550913c01c645fc018b4df0c7412cffffffff8b55f08b450c8942308b4df0c74134000000008b55f0c7420c000000008b45f0c74010000000008b4df0c74110000000008b55f0c74214000000006a08e8ecd59c0083c4048945e8c645fc02837de8007429837d0c00740b8b450c83c0048945eceb07c745ec000000008b4dec518b4de8e8ec96eeff8945e4eb07c745e4000000008b55e48955d8c645fc018b45f08b4dd88948188b55f08b42308b4df08b903401000089512c8b45f08b48308b55f08b41408942088b4df08b513083c228528b4df0ff15708e3c018b45f08b483083c12c518b4df083c104ff15708e3c016a2ce848d59c0083c4048945e0c645fc03837de000740f6a018b4de0e8da43ecff8945dceb07c745dc000000008b55dc8955d4c645fc018b45f08b4dd489480c8b55f08b42300500010000508b4df08b490ce8df6cecff8b55f08b4a0ce86709efff6a008b45f08b480ce8edcdecff8b4df0c7411c000000008b55f0c74220000000008b4508508b4df0e83101ecff8b4df0e8b8bdebff8945d0837dd00074208b4df0c74134000000008b4df0e82af4ebff85c075088b4df0e891bdebffeb4c8b4df0e80227eeff85c074408b55f0c74234010000008b4df0e8fef3ebff85c0750a8b4df0e865bdebffeb208b45f08378240074178b4df08b512452ff1514673c018b45f0c7402400000000c745fcffffffff8b45f08b4df464890d00000000598be55dc20800cccccccccccccccccccc558bec51894dfc8b4dfce865b1ecff8b4dfc83c128ff1588903c018b45fcc7400c000000008b4dfcc74110000000008b55fcc74210000000008b45fc8be55dc3558bec6aff682dcdf70064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df0c745fc010000008b45f0508b4df0e879d9eeff8b4df083790c0074398b55f08b420c8945e48b4de4894dec837dec0074136a018b55ec8b028b4dec8b10ffd28945e0eb07c745e0000000008b45f0c7400c000000008b4df083791800743a8b55f08b42188945dc8b4ddc894de8837de80074146a018b55e88b028b4de88b5018ffd28945d8eb07c745d8000000008b45f0c7401800000000c645fc008b4df083c128ff1548913c01c745fcffffffff8b4df0e87523ebff8b4df464890d00000000598be55dc3cccc",
+      "reloc_offsets": [
+        6,
+        21,
+        66,
+        78,
+        293,
+        315,
+        573,
+        647,
+        694,
+        709,
+        892
+      ]
+    }
+  ],
+  "temporary_leaf": "original CDevDll factory; original parent/name/CString assign; only private scalar context and original bytearray allocator copying exact pinned native blob; no canonical STORE/LOAD/subtree clone, no native serial allocation",
+  "private_owner_inputs": [
+    "name28",
+    "model2c",
+    "uid118",
+    "private doc9c",
+    "original logical parent+C",
+    "private physical parent24",
+    "scalar18/38/3c/40/48/114/134",
+    "private owned configuration CByteArray100"
+  ],
+  "canonical_commit": "original full Get -> index-aligned full-size sparse names (unselected name is empty, selected original name/value) -> original Set -> full Get -> native collect -> complete tree/ref postimage",
+  "canonical_subtree_setter_calls": false,
+  "unknown_backend_mutation_rejected": true,
+  "native_execution_performed": false,
+  "actual_verified": false,
+  "driver_set_index_contract": "H5U1E50D clamps input count12, compares names[i] with globalNames[i]; McgsIoT5AAA0 similarly requires index-aligned9 arrays. Never compact selected rows.",
+  "catalog_only_kind": "device-driver-property-catalog-preserve-tree",
+  "catalog_only_contract": "claimed private leaf Get + canonical actual Get, full tree/ref/field guards; no Set/collect/STORE/serial; release only own canonical Get-created frontend; commit=false"
+}

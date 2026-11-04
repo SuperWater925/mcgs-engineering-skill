@@ -1,0 +1,505 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "PageTypeEntry",
+      "rva": 16321,
+      "bytes": "e98ad18400e9d55f7200e9f0282600e9ab735000e9f6733c00e911cf9f00e95c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PageTypeGetter",
+      "rva": 8720720,
+      "bytes": "558bec6aff68e113010164a1000000005081ec10060000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "TypeInfoCtor",
+      "rva": 8746304,
+      "bytes": "558bec6aff681a1f010164a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeInfoAtExit",
+      "rva": 13428240,
+      "bytes": "558becb988de3b01e86efb35ff5dc3cccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        4
+      ]
+    },
+    {
+      "name": "EventInfoCtor",
+      "rva": 8743824,
+      "bytes": "558bec6aff68f11d010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventInfoCopy",
+      "rva": 8743472,
+      "bytes": "558bec6aff68b61d010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventInfoDtor",
+      "rva": 754544,
+      "bytes": "558bec6aff6885c3f60064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventInfoArrayGetAt",
+      "rva": 8764976,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b45086bc0288b55",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventInfoArrayCtor",
+      "rva": 3848064,
+      "bytes": "558bec51894dfc8b4dfce8a9c6c9ff8b45fcc70004250f018b4dfcc741040000",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "ArgumentWordArrayCtor",
+      "rva": 8764128,
+      "bytes": "558bec51894dfc8b4dfce849c37eff8b45fcc70008270f018b4dfcc741040000",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "ArgumentWordArraySize",
+      "rva": 758144,
+      "bytes": "558bec83ec4c894dfc837d08007d05e89e5ca700837d0c007c098b45fc8b4d0c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArgumentWordArrayGetAt",
+      "rva": 945840,
+      "bytes": "558bec51894dfc8b4508508b4dfce8c4d8f6ff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventSetInfo",
+      "rva": 8747632,
+      "bytes": "558bec83ec08894dfc8b45fc8b4d0c8948048b5508528b4dfc83c108ff15708e3c01",
+      "reloc_offsets": [
+        30
+      ]
+    },
+    {
+      "name": "EventFactory",
+      "rva": 8746864,
+      "bytes": "558bec6aff683f1f010164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "EventScalarDelete",
+      "rva": 8764672,
+      "bytes": "558bec51894dfc8b4dfce80c0e7cff8b450883e00174098b4dfc51e8bce37bff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ResourceString",
+      "rva": 7353152,
+      "bytes": "558bec6aff681975ff0064a1000000005083ec08a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_F30FD1",
+      "rva": 11734993,
+      "bytes": "558becff7508e850fffffff7d81bc0f7d859485dc3ff253c6e3c01ff25b86e3c01",
+      "reloc_offsets": [
+        23,
+        29
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_C56750",
+      "rva": 8742736,
+      "bytes": "558bec6aff68051d010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_C56600",
+      "rva": 8742400,
+      "bytes": "558bec6aff68d51c010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_4E7470",
+      "rva": 947312,
+      "bytes": "558bec6aff682819f70064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_4B8470",
+      "rva": 754800,
+      "bytes": "558bec51894dfc8b4dfc83c104ff1548913c018b4dfcff1548913c018be55dc3",
+      "reloc_offsets": [
+        15,
+        24
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_C56970",
+      "rva": 8743280,
+      "bytes": "558bec6aff687b1d010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_C56810",
+      "rva": 8742928,
+      "bytes": "558bec6aff68401d010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_4E73C0",
+      "rva": 947136,
+      "bytes": "558bec6aff68f818f70064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_4B83F0",
+      "rva": 754672,
+      "bytes": "558bec6aff68c5c3f60064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "TypeGetterDirectDependency_791F90",
+      "rva": 3743632,
+      "bytes": "558bec6aff6868f0fa0064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    }
+  ],
+  "tables": {
+    "EventInfoArray": {
+      "rva": 13575428,
+      "col_rva": 15139228,
+      "type_rva": 16300068,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@VCObjEventInfo@@V1@@@",
+      "slots": [
+        11727406,
+        274291,
+        307416,
+        4401,
+        130021
+      ]
+    },
+    "ArgumentWordArray": {
+      "rva": 13575944,
+      "col_rva": 15138952,
+      "type_rva": 16299932,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@GG@@",
+      "slots": [
+        11727406,
+        118441,
+        108241,
+        4401,
+        130021
+      ]
+    }
+  },
+  "declarations_file": "page-event-definitions-installed-declarations.json",
+  "declarations_sha256": "d9fe3d4ecdfc02dd52540f7967314270c6c929ddec176f6e859c50c254267725",
+  "static_proof_sha256": "d963380520fc42b0be0380df22ca6361d7fcb5bcc44e0b5e26408bc5b32abaf5",
+  "type_info_rva": 16506504,
+  "ctor_flags_rva": 16506688,
+  "populated_byte_rva": 16506692,
+  "language_value_rva": 16497812,
+  "language_once_byte_rva": 16497816,
+  "resource_dependency_profile_sha256": "c047e66f6ed0661d01c2dad9cfa0ea4cdd9bc50631af1ec7480c0ba774540305",
+  "resource_guards": [
+    {
+      "name": "ResourceStringLoader",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x703340",
+      "rva": "0x703340",
+      "length": 213,
+      "bytes_hex": "558bec6aff681975ff0064a1000000005083ec08a1600b3b0133c5508d45f464a300000000c745ec0000000068ac7a1c018d4df0ff1550913c01c745fc000000008d45f0508b4d0c51e8fb5790ff83c4080fb6d085d275458b450c508d4df0ff15b48b3c0185c07534e8ecd290ff50e8674291ff83c4048b4d0c516a00ff15a4673c01508d4df0ff15fc823c018d55f0528b450c50e8c4be91ff83c4088d4df0518b4d08ff1554913c018b55ec83ca018955ecc745fcffffffff8d4df0ff1548913c018b45088b4df464890d00000000598be55dc3",
+      "highlow_offsets": [
+        6,
+        21,
+        45,
+        54,
+        97,
+        127,
+        137,
+        166,
+        191
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "CachedLanguageValueGetter",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x710480",
+      "rva": "0x710480",
+      "length": 340,
+      "bytes_hex": "558bec6aff68b58bff0064a1000000005081ec38020000a1600b3b0133c58945f0508d45f464a300000000833d94bc3b01000f85fe00000033c0668985e8fdffff68060200006a008d8deafdffff51e8ac0b420083c40c68040100008d95e8fdffff526a00ff1510673c018d85e8fdffff50ff15f4753c018d8de8fdffff518d8de4fdffffff1550913c01c745fc000000008d8dbcfdffffe8cbed91ffc645fc016800841c018d95e4fdffff528d85d8fdffff50e8c32690ff83c40c8985dcfdffff8b8ddcfdffff898de0fdffffc645fc028b8de0fdffffff156c913c01508d8dbcfdffffe8092593ffc645fc018d8dd8fdffffff1548913c016894bc3b016820841c01683c841c018d8dbcfdffffe82dba91ffc645fc008d8dbcfdffffe85ac991ffc745fcffffffff8d8de4fdffffff1548913c01a194bc3b018b4df464890d00000000598b4df033cde82e0a42008be55dc3",
+      "highlow_offsets": [
+        6,
+        24,
+        45,
+        103,
+        116,
+        135,
+        162,
+        218,
+        246,
+        251,
+        256,
+        261,
+        306,
+        311
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "InitializeThreadLanguageOnce",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x7105e0",
+      "rva": "0x7105e0",
+      "length": 56,
+      "bytes_hex": "558bec510fb60598bc3b0185c07525ff1584683c01668945fc0fb74dfc394d08740b0fb7550852ff15b0683c01c60598bc3b01018be55dc3",
+      "highlow_offsets": [
+        7,
+        17,
+        41,
+        47
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheGetWrapper",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x55af10",
+      "rva": "0x55af10",
+      "length": 64,
+      "bytes_hex": "558bec8b450c508b4d0851e8b878abff8bc8e83d15abff5dc3cccccccccccccc558bec83ec0c894dfc8b45fcc70054ad1801e86768aeff83b820050000007509",
+      "highlow_offsets": [
+        46
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheSetWrapper",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x55aef0",
+      "rva": "0x55aef0",
+      "length": 64,
+      "bytes_hex": "558bec8b450c508b4d0851e8d878abff8bc8e88866acff5dc3cccccccccccccc558bec8b450c508b4d0851e8b878abff8bc8e83d15abff5dc3cccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheGetter",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x5734b0",
+      "rva": "0x5734b0",
+      "length": 116,
+      "bytes_hex": "558bec6aff680e9efd0064a10000000050a1600b3b0133c5508d45f464a300000000a16c883b0183e00175348b0d6c883b0183c901890d6c883b01c745fc00000000b9f8873b01e883ffaaff68f2e74300e8cbda5b0083c404c745fcffffffffb8f8873b018b4df464890d00000000598be55dc3",
+      "highlow_offsets": [
+        6,
+        18,
+        35,
+        46,
+        55,
+        67,
+        77,
+        97
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheCtor",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x5670f0",
+      "rva": "0x5670f0",
+      "length": 134,
+      "bytes_hex": "558bec6aff680398fd0064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e85b55acffc745fc000000008b4df083c120e8253eabffc645fc018b4df083c140e8036baaff8b4df0e823b8adff8b4df083c120e8dd8babff8b4df083c140e87268acffc745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "highlow_offsets": [
+        6,
+        19
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheGetString",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x575c00",
+      "rva": "0x575c00",
+      "length": 64,
+      "bytes_hex": "558bec83ec0c894dfc8d4508508d4df8518b4dfc83c140e83ce4acff8d55f8528d45f4508b4dfc83c140e8a9baabff8bc8e8d142a9ff0fb6c885c974198d4df8",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheSetString",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x575c80",
+      "rva": "0x575c80",
+      "length": 64,
+      "bytes_hex": "558bec83ec0c894dfc8b450c508d4d08518d55f4528b4dfc83c140e81b68acff8a40048be55dc20800cccccccccccccccccccccccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheDereference",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x568b70",
+      "rva": "0x568b70",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce82ff1acff50e8cd6eaeff83c4048be55dc3cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4dfce86804aeff50",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheDereferenceInner",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x568cb0",
+      "rva": "0x568cb0",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce89284acff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b4dfce82fcfa9ff8be55dc3cccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheNodePayload",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x56e450",
+      "rva": "0x56e450",
+      "length": 64,
+      "bytes_hex": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ResourceCacheClear",
+      "module": "McgsSetPro.exe",
+      "entry_rva": "0x570d00",
+      "rva": "0x570d00",
+      "length": 64,
+      "bytes_hex": "558bec83ec0c894dfc8b45fc8b0851e8285da9ff83c4048b108955f88b45fc8b0851e8155da9ff83c4048b55fc8b0a89088b55fc8b0250e8c138adff83c4048b",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "MfcCStringLoadString",
+      "module": "mfc110u.dll",
+      "entry_rva": "0x54a1a",
+      "rva": "0x54a1a",
+      "length": 64,
+      "bytes_hex": "558bec56ff75088bf1e81f35ffff85c0740bff75088bce50e8050000005e5dc20400558bec8b550c538bd98b4d0857e8d934ffff8bf885ff742b560fb737568b",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "MfcCStringLoadStringFromModule",
+      "module": "mfc110u.dll",
+      "entry_rva": "0x54a3c",
+      "rva": "0x54a3c",
+      "length": 64,
+      "bytes_hex": "558bec8b550c538bd98b4d0857e8d934ffff8bf885ff742b560fb737568bcbe8f44ffbff0fb70f518d4f02518bd68bc8e85408ffff5959568bcbe88150fbff33",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "MfcFindStringResourceHandle",
+      "module": "mfc110u.dll",
+      "entry_rva": "0x47f47",
+      "rva": "0x47f47",
+      "length": 64,
+      "bytes_hex": "6a10b8201a2910e88d08fcff33c08bf88945e4897de88945ec8945fce83201fcff8bd8807b1500751ae82501fcff8b700c8b55088bcee8a5ffffff85c00f85ce",
+      "highlow_offsets": [
+        3
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "MfcFindStringResource",
+      "module": "mfc110u.dll",
+      "entry_rva": "0x47f27",
+      "rva": "0x47f27",
+      "length": 64,
+      "bytes_hex": "568bf28bc6c1e80457400fb7c06a068bf95057ff1550f02a1085c075d65f5ec36a10b8201a2910e88d08fcff33c08bf88945e4897de88945ec8945fce83201fc",
+      "highlow_offsets": [
+        21,
+        35
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "MfcLoadStringResourcePointer",
+      "module": "mfc110u.dll",
+      "entry_rva": "0x47ebe",
+      "rva": "0x47ebe",
+      "length": 64,
+      "bytes_hex": "558bec53578bfa8bd95753ff154cf02a1085c0743f5650ff157cf22a108bf085f674355753ff1548f02a108b55088d0c0683e20f76103bf1731e0fb7068d3446",
+      "highlow_offsets": [
+        13,
+        25,
+        39
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    }
+  ],
+  "mfc": {
+    "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "preferred_base": "0x10000000"
+  },
+  "skip_new_native_ids": [
+    1,
+    2
+  ],
+  "candidate_host_verified": false
+}

@@ -1,0 +1,951 @@
+{
+  "schema": 1,
+  "status": "candidate-static-closed-registration; no runtime invocation",
+  "module": {
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": "0x400000"
+  },
+  "code_guards": [
+    {
+      "name": "ButtonRegister",
+      "preferred_va": "0x76edc0",
+      "rva": "0x36edc0",
+      "length": 64,
+      "bytes_hex": "558bec6aff687dbcfa0064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df06a076a1f8b450850e82664cbff83c40c8b4df083e9048b55",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "EditRegister",
+      "preferred_va": "0x7bd7e0",
+      "rva": "0x3bd7e0",
+      "length": 64,
+      "bytes_hex": "558bec6aff683941fb0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df06a006a048b450850e8067ac6ff83c40c6a006a038b4d0851",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "RegisterTypedHelper",
+      "preferred_va": "0x9119b0",
+      "rva": "0x5119b0",
+      "length": 64,
+      "bytes_hex": "558bec6aff68a93cfd0064a1000000005083ec0ca1600b3b0133c5508d45f464a300000000837d08007502eb458b4510508b4d0c518d55e852e84e2db4ff83c4",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyKeyFactory",
+      "preferred_va": "0x9131d0",
+      "rva": "0x5131d0",
+      "length": 64,
+      "bytes_hex": "558bec51c745fc000000008b450c508b4d0851e8f26ab1ff8bc8e8867fb1ff8b55fc83ca018955fc8b45088be55dc3cc558bec51c745fc000000008b450c508b",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ButtonClassDisplayKey",
+      "preferred_va": "0x768e90",
+      "rva": "0x368e90",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df8c745fc000000006850a300008b450850e86a6eceff83c4088b4dfc83c901894dfc8b45088be55dc20400cccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "EditClassDisplayKey",
+      "preferred_va": "0x7b7660",
+      "rva": "0x3b7660",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df8c745fc0000000068daa500008b450850e89a86c9ff83c4088b4dfc83c901894dfc8b45088be55dc20400cccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "EmptyMetadataNamespace",
+      "preferred_va": "0x46a8c0",
+      "rva": "0x6a8c0",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df8c745fc000000006830470e018b4d08ff1550913c018b45fc83c8018945fc8b45088be55dc20400cccccccccccccccccccccccccccccccc",
+      "highlow_offsets": [
+        17,
+        26
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ConditionalOperationLogDeclarationTypePredicate",
+      "preferred_va": "0xb46660",
+      "rva": "0x746660",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df88b45f88b480c894dfc8b55fc81ea255000008955fc837dfc1777158b45fc0fb688ac66b400ff248da466b400b001eb0632c0eb0232c08b",
+      "highlow_offsets": [
+        42,
+        49
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ButtonRegisterThunk",
+      "preferred_va": "0x420b12",
+      "rva": "0x20b12",
+      "length": 64,
+      "bytes_hex": "e9a9e23400e9c4161000e98ff00d00e92af87d00e9258b5400e980725100e98baf3800e9c6073000e9d1a63d00e9fcfd3500e9877f9e00e9927b4600e99d662d",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "EditRegisterThunk",
+      "preferred_va": "0x41110d",
+      "rva": "0x1110d",
+      "length": 64,
+      "bytes_hex": "e9cec63a00e919706700e9e47d5300e99f23a900e95a6c8400e9a51e8200e910c63500e90b410800e946da7300e901713b00e99c022500e947d14900e932611c",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ButtonClassDisplayThunk",
+      "preferred_va": "0x418106",
+      "rva": "0x18106",
+      "length": 64,
+      "bytes_hex": "e9850d3500e9607da400e9cb683200e9466a2500e9517b9f00e96cd19900e9d7356a00e9526d2500e9ed952400e9f810a000e9c3ae9400e9ee458f00e959af87",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "EditClassDisplayThunk",
+      "preferred_va": "0x435ae4",
+      "rva": "0x35ae4",
+      "length": 64,
+      "bytes_hex": "e9771b3800e992cc3700e9cd752300e9a8277700e933855000e90e3e1100e969ff0600e9b46b8800e91f7d1d00e94a9b9f00e985e29400e9305d7400e99b3f5b",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "Primary60Thunk",
+      "preferred_va": "0x4463e4",
+      "rva": "0x463e4",
+      "length": 64,
+      "bytes_hex": "e977027000e942d69c00e9eda96500e9781e9c00e923bc7700e9ee3e7d00e9d9c36300e9644a3600e9cf712a00e9aa744200e925097b00e9f01c7700e9eb9453",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "RegisterHelperThunk",
+      "preferred_va": "0x42521b",
+      "rva": "0x2521b",
+      "length": 64,
+      "bytes_hex": "e990c74e00e9bbfc6b00e9160e0700e961969000e96c047700e937f3ac00e99210a200e9cd839e00e9b8d88a00e943998100e9def77800e9e9667600e9e46975",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ResourceGetterThunk",
+      "preferred_va": "0x44fd18",
+      "rva": "0x4fd18",
+      "length": 64,
+      "bytes_hex": "e923366b00e9ce579400e9c98d3500e974d12f00e92f351f00e93a639c00e9058b5000e9e0eb3b00e91b770500e936b89200e991648f00e99cde8c00e9c7eb8a",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    }
+  ],
+  "object_tables": [
+    {
+      "name": "ButtonIObject",
+      "vtable_va": "0x115dfb4",
+      "vtable_rva": "0xd5dfb4",
+      "col_va": "0x1278c8c",
+      "col_rva": "0xe78c8c",
+      "complete_offset": 4,
+      "col_fields": [
+        "0x0",
+        "0x4",
+        "0x0",
+        "0x1391d34",
+        "0x1278c30"
+      ],
+      "type_descriptor_rva": "0xf91d34",
+      "rtti_ascii": ".?AVCDrawButton@@",
+      "rtti_ascii_nul_hex": "2e3f41564344726177427574746f6e404000",
+      "slots": [
+        {
+          "slot": 1,
+          "entry_va": "0x418106",
+          "body_va": "0x768e90"
+        },
+        {
+          "slot": 3,
+          "entry_va": "0x43460d",
+          "body_va": "0x46a8c0"
+        },
+        {
+          "slot": 4,
+          "entry_va": "0x420b12",
+          "body_va": "0x76edc0"
+        }
+      ]
+    },
+    {
+      "name": "ButtonPrimary",
+      "vtable_va": "0x115de6c",
+      "vtable_rva": "0xd5de6c",
+      "col_va": "0x1278c18",
+      "col_rva": "0xe78c18",
+      "complete_offset": 0,
+      "col_fields": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1391d34",
+        "0x1278c30"
+      ],
+      "type_descriptor_rva": "0xf91d34",
+      "rtti_ascii": ".?AVCDrawButton@@",
+      "rtti_ascii_nul_hex": "2e3f41564344726177427574746f6e404000",
+      "slots": [
+        {
+          "slot": 60,
+          "entry_va": "0x4463e4",
+          "body_va": "0xb46660"
+        }
+      ]
+    },
+    {
+      "name": "EditIObject",
+      "vtable_va": "0x1163dfc",
+      "vtable_rva": "0xd63dfc",
+      "col_va": "0x127a2e0",
+      "col_rva": "0xe7a2e0",
+      "complete_offset": 4,
+      "col_fields": [
+        "0x0",
+        "0x4",
+        "0x0",
+        "0x1394c88",
+        "0x127a284"
+      ],
+      "type_descriptor_rva": "0xf94c88",
+      "rtti_ascii": ".?AVCDrawEdit@@",
+      "rtti_ascii_nul_hex": "2e3f4156434472617745646974404000",
+      "slots": [
+        {
+          "slot": 1,
+          "entry_va": "0x435ae4",
+          "body_va": "0x7b7660"
+        },
+        {
+          "slot": 3,
+          "entry_va": "0x43460d",
+          "body_va": "0x46a8c0"
+        },
+        {
+          "slot": 4,
+          "entry_va": "0x41110d",
+          "body_va": "0x7bd7e0"
+        }
+      ]
+    },
+    {
+      "name": "EditPrimary",
+      "vtable_va": "0x1163cb4",
+      "vtable_rva": "0xd63cb4",
+      "col_va": "0x127a26c",
+      "col_rva": "0xe7a26c",
+      "complete_offset": 0,
+      "col_fields": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x1394c88",
+        "0x127a284"
+      ],
+      "type_descriptor_rva": "0xf94c88",
+      "rtti_ascii": ".?AVCDrawEdit@@",
+      "rtti_ascii_nul_hex": "2e3f4156434472617745646974404000",
+      "slots": [
+        {
+          "slot": 60,
+          "entry_va": "0x4463e4",
+          "body_va": "0xb46660"
+        }
+      ]
+    }
+  ],
+  "base_metadata_profile_sha256": "3ed3a5b1bb0d06fc7fa7f90bb810c4f8f085d0861a148c4e3c156a7dd8f737b2",
+  "cached_schema_profile_sha256": "4ee8958e79dc40e51f0d41671bcd9941d4f2a321cdeee948a2c4f2d9bdc7b6a0",
+  "base_protocol_reused_not_redefined": true,
+  "key_constructor_data_sha256": "b41fae26f8ba350feae872eb27d3479ddff828cea0872531fc586c3bd3c652b0",
+  "api": {
+    "register": {
+      "this": "IObject complete+4",
+      "arguments": [
+        "original concrete PropertyRegister* sink"
+      ],
+      "calling_convention": "x86 thiscall",
+      "stack_pop": 4,
+      "return": "not consumed; void-only use"
+    },
+    "primary60": {
+      "this": "complete object",
+      "arguments": [],
+      "calling_convention": "x86 thiscall",
+      "return": "bool low AL only",
+      "stack_pop": 0,
+      "reads_only": "complete+C native type ID, two static switch tables"
+    },
+    "type_display": {
+      "this": "IObject complete+4",
+      "arguments": [
+        "CString* hidden_sret"
+      ],
+      "calling_convention": "x86 thiscall",
+      "stack_pop": 4,
+      "return": "same hidden sret storage"
+    },
+    "sink_slot1": {
+      "this": "owned PropertyRegister",
+      "arguments": [
+        "const CString& key",
+        "int32 native tag"
+      ],
+      "calling_convention": "x86 thiscall",
+      "stack_pop": 8,
+      "return": "not consumed"
+    },
+    "sink_slot2": {
+      "this": "owned PropertyRegister",
+      "arguments": [
+        "const CString& key"
+      ],
+      "calling_convention": "x86 thiscall",
+      "stack_pop": 4,
+      "effect": "forwards slot1 with tag9",
+      "return": "not consumed"
+    }
+  },
+  "classes": [
+    {
+      "name": "CDrawButton",
+      "type_id": 20519,
+      "page31_fixture_control_name": "控件4",
+      "iobject_vtable": "0x115dfb4",
+      "registration_entry": "0x420b12",
+      "registration_body": "0x76edc0",
+      "namespace": "exact empty CString via slot3",
+      "class_key_resource_id": 41808,
+      "class_key_resources": {
+        "1033": {
+          "text": "Standard Button",
+          "utf16_hex": "5300740061006e006400610072006400200042007500740074006f006e00"
+        },
+        "2052": {
+          "text": "标准按钮",
+          "utf16_hex": "0768c6510963ae94"
+        }
+      },
+      "base_draw_register_called": false,
+      "conditional_primary60_result_for_fixed_type": true,
+      "expected_declaration_count": 4,
+      "declarations_in_order": [
+        {
+          "order": 0,
+          "kind": "addTyped_slot1",
+          "property_id": 31,
+          "resource_id": 22027,
+          "native_type_tag": 7,
+          "resources_by_language": {
+            "1033": {
+              "text": "ExpressionSecurity",
+              "utf16_hex": "450078007000720065007300730069006f006e0053006500630075007200690074007900"
+            },
+            "2052": {
+              "text": "安全属性表达式",
+              "utf16_hex": "895b68515e5c27606888be8f0f5f"
+            }
+          },
+          "callsite": "0x76edf0",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 1,
+          "kind": "addTyped_slot1",
+          "property_id": 97,
+          "resource_id": 22092,
+          "native_type_tag": 8,
+          "resources_by_language": {
+            "1033": {
+              "text": "DescriptionOperationLog",
+              "utf16_hex": "4400650073006300720069007000740069006f006e004f007000650072006100740069006f006e004c006f006700"
+            },
+            "2052": {
+              "text": "操作日志描述",
+              "utf16_hex": "cd645c4fe565d75fcf63f08f"
+            }
+          },
+          "callsite": "0x76ee1b",
+          "conditional_on_primary60": true
+        },
+        {
+          "order": 2,
+          "kind": "bindComponent_slot2",
+          "property_id": null,
+          "resource_id": 15202,
+          "native_type_tag": 9,
+          "resources_by_language": {
+            "1033": {
+              "text": "Up state",
+              "utf16_hex": "55007000200073007400610074006500"
+            },
+            "2052": {
+              "text": "抬起状态",
+              "utf16_hex": "ac62778db6720160"
+            }
+          },
+          "callsite": "0x76ee53",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 3,
+          "kind": "bindComponent_slot2",
+          "property_id": null,
+          "resource_id": 15203,
+          "native_type_tag": 9,
+          "resources_by_language": {
+            "1033": {
+              "text": "Down state",
+              "utf16_hex": "44006f0077006e00200073007400610074006500"
+            },
+            "2052": {
+              "text": "按下状态",
+              "utf16_hex": "09630b4eb6720160"
+            }
+          },
+          "callsite": "0x76ee95",
+          "conditional_on_primary60": false
+        }
+      ]
+    },
+    {
+      "name": "CDrawEdit",
+      "type_id": 20517,
+      "page31_fixture_control_name": "控件5",
+      "iobject_vtable": "0x1163dfc",
+      "registration_entry": "0x41110d",
+      "registration_body": "0x7bd7e0",
+      "namespace": "exact empty CString via slot3",
+      "class_key_resource_id": 42458,
+      "class_key_resources": {
+        "1033": {
+          "text": "Input box",
+          "utf16_hex": "49006e00700075007400200062006f007800"
+        },
+        "2052": {
+          "text": "输入框",
+          "utf16_hex": "938f65514668"
+        }
+      },
+      "base_draw_register_called": false,
+      "conditional_primary60_result_for_fixed_type": true,
+      "sink_must_be_nonnull": true,
+      "expected_declaration_count": 13,
+      "declarations_in_order": [
+        {
+          "order": 0,
+          "kind": "addTyped_slot1",
+          "property_id": 4,
+          "resource_id": 22005,
+          "native_type_tag": 0,
+          "resources_by_language": {
+            "1033": {
+              "text": "FontColor",
+              "utf16_hex": "46006f006e00740043006f006c006f007200"
+            },
+            "2052": {
+              "text": "字符颜色",
+              "utf16_hex": "575b267b9c987282"
+            }
+          },
+          "callsite": "0x7bd810",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 1,
+          "kind": "addTyped_slot1",
+          "property_id": 3,
+          "resource_id": 22004,
+          "native_type_tag": 0,
+          "resources_by_language": {
+            "1033": {
+              "text": "FillColor",
+              "utf16_hex": "460069006c006c0043006f006c006f007200"
+            },
+            "2052": {
+              "text": "填充颜色",
+              "utf16_hex": "6b5845519c987282"
+            }
+          },
+          "callsite": "0x7bd820",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 2,
+          "kind": "addTyped_slot1",
+          "property_id": 13,
+          "resource_id": 22011,
+          "native_type_tag": 1,
+          "resources_by_language": {
+            "1033": {
+              "text": "Font",
+              "utf16_hex": "46006f006e007400"
+            },
+            "2052": {
+              "text": "字体",
+              "utf16_hex": "575b534f"
+            }
+          },
+          "callsite": "0x7bd830",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 3,
+          "kind": "addTyped_slot1",
+          "property_id": 21,
+          "resource_id": 22017,
+          "native_type_tag": 5,
+          "resources_by_language": {
+            "1033": {
+              "text": "AlignHorizontal",
+              "utf16_hex": "41006c00690067006e0048006f00720069007a006f006e00740061006c00"
+            },
+            "2052": {
+              "text": "水平对齐",
+              "utf16_hex": "346c735ef95b509f"
+            }
+          },
+          "callsite": "0x7bd840",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 4,
+          "kind": "addTyped_slot1",
+          "property_id": 22,
+          "resource_id": 22018,
+          "native_type_tag": 5,
+          "resources_by_language": {
+            "1033": {
+              "text": "AlignVertical",
+              "utf16_hex": "41006c00690067006e0056006500720074006900630061006c00"
+            },
+            "2052": {
+              "text": "垂直对齐",
+              "utf16_hex": "8257f476f95b509f"
+            }
+          },
+          "callsite": "0x7bd850",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 5,
+          "kind": "addTyped_slot1",
+          "property_id": 25,
+          "resource_id": 22021,
+          "native_type_tag": 5,
+          "resources_by_language": {
+            "1033": {
+              "text": "BoderType",
+              "utf16_hex": "42006f006400650072005400790070006500"
+            },
+            "2052": {
+              "text": "边框类型",
+              "utf16_hex": "b98f46687b7c8b57"
+            }
+          },
+          "callsite": "0x7bd860",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 6,
+          "kind": "addTyped_slot1",
+          "property_id": 79,
+          "resource_id": 22061,
+          "native_type_tag": 6,
+          "resources_by_language": {
+            "1033": {
+              "text": "ObjectEditInput",
+              "utf16_hex": "4f0062006a00650063007400450064006900740049006e00700075007400"
+            },
+            "2052": {
+              "text": "输入框连接变量",
+              "utf16_hex": "938f65514668de8fa563d853cf91"
+            }
+          },
+          "callsite": "0x7bd870",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 7,
+          "kind": "addTyped_slot1",
+          "property_id": 54,
+          "resource_id": 22044,
+          "native_type_tag": 8,
+          "resources_by_language": {
+            "1033": {
+              "text": "Unit",
+              "utf16_hex": "55006e0069007400"
+            },
+            "2052": {
+              "text": "单位",
+              "utf16_hex": "55534d4f"
+            }
+          },
+          "callsite": "0x7bd880",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 8,
+          "kind": "addTyped_slot1",
+          "property_id": 31,
+          "resource_id": 22027,
+          "native_type_tag": 7,
+          "resources_by_language": {
+            "1033": {
+              "text": "ExpressionSecurity",
+              "utf16_hex": "450078007000720065007300730069006f006e0053006500630075007200690074007900"
+            },
+            "2052": {
+              "text": "安全属性表达式",
+              "utf16_hex": "895b68515e5c27606888be8f0f5f"
+            }
+          },
+          "callsite": "0x7bd890",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 9,
+          "kind": "addTyped_slot1",
+          "property_id": 39,
+          "resource_id": 22033,
+          "native_type_tag": 7,
+          "resources_by_language": {
+            "1033": {
+              "text": "ExpreesionInputMin",
+              "utf16_hex": "450078007000720065006500730069006f006e0049006e007000750074004d0069006e00"
+            },
+            "2052": {
+              "text": "输入最小值",
+              "utf16_hex": "938f655100670f5c3c50"
+            }
+          },
+          "callsite": "0x7bd8a0",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 10,
+          "kind": "addTyped_slot1",
+          "property_id": 40,
+          "resource_id": 22034,
+          "native_type_tag": 7,
+          "resources_by_language": {
+            "1033": {
+              "text": "ExpressionInputMax",
+              "utf16_hex": "450078007000720065007300730069006f006e0049006e007000750074004d0061007800"
+            },
+            "2052": {
+              "text": "输入最大值",
+              "utf16_hex": "938f6551006727593c50"
+            }
+          },
+          "callsite": "0x7bd8b0",
+          "conditional_on_primary60": false
+        },
+        {
+          "order": 11,
+          "kind": "addTyped_slot1",
+          "property_id": 97,
+          "resource_id": 22092,
+          "native_type_tag": 8,
+          "resources_by_language": {
+            "1033": {
+              "text": "DescriptionOperationLog",
+              "utf16_hex": "4400650073006300720069007000740069006f006e004f007000650072006100740069006f006e004c006f006700"
+            },
+            "2052": {
+              "text": "操作日志描述",
+              "utf16_hex": "cd645c4fe565d75fcf63f08f"
+            }
+          },
+          "callsite": "0x7bd8db",
+          "conditional_on_primary60": true
+        },
+        {
+          "order": 12,
+          "kind": "bindComponent_slot2",
+          "property_id": null,
+          "resource_id": 23466,
+          "native_type_tag": 9,
+          "resources_by_language": {
+            "1033": {
+              "text": "Background image",
+              "utf16_hex": "4200610063006b00670072006f0075006e006400200069006d00610067006500"
+            },
+            "2052": {
+              "text": "背景图",
+              "utf16_hex": "cc806f66fe56"
+            }
+          },
+          "callsite": "0x7bd919",
+          "conditional_on_primary60": false
+        }
+      ]
+    }
+  ],
+  "ownership": {
+    "temporary_resource_keys": "native local CString constructed by B03340, borrowed during slot2, normal and native EH dtor ordinal1039",
+    "typed_keys": "9119B0 uses9131D0/keyregistry then original sink.slot1; temporary CString destroyed by1039",
+    "cached_schema": "same owned collector+4 class cache, key node+8/schema node+C; copy managed while collector alive, never read collector+48 as final schema",
+    "project_target": "borrowed only; never delete target",
+    "collector": "same original newF8/ctor/real deleting dtor flags1 as Label; no self-made receiver"
+  },
+  "admission_before_any_target_call": [
+    "exact EXE/MFC and original base profile guards; required singleton preinitialized1; language2052/once1 stable",
+    "all13 already-loaded page docs proven by raw loop before any Inspector; exact fixture/UI/PID/creation/current root",
+    "target page31 with exact name/type/primary+secondary RTTI owner; current3raw60/B0 preserved without enum mask",
+    "fixed native type+C and primary60 slot must match this profile; fresh collector per target so schema cannot alias other instances",
+    "native key must exactly equal current2052 class resource; no instance name substituted"
+  ],
+  "verification_after_candidate_call": [
+    "strict count4 or13 and exact2052 key/tag/order; capture raw traversal order",
+    "owned callback targetF4 clear; full preimage/geometry/sources/buttons/MainCtrl/raw60/B0/dirty/disk unchanged",
+    "cleanup once; exception retains diagnostic/lifetime stages; no automatic retry or native recovery assumption"
+  ],
+  "runtime_ready": false,
+  "native_calls": 0,
+  "host_access": false,
+  "compiled": false,
+  "limitations": [
+    "metadata declarations do not read current property values or expand tag9 component properties",
+    "normal registration CFG and its CString unwind are proven; reuse shared collector validators as frozen Label protocol, not an assertion all native exception recovery is safe",
+    "future helper requires its own source/guard peer and root single-call actual verification; no existing Label helper or core44 altered"
+  ],
+  "normal_cfg_functions": 8,
+  "aslr_tests": 45,
+  "partial_highlow": 0
+}

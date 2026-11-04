@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "purpose": "one explicit variable module batch",
+  "base_native_abi_sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939",
+  "module_id": 2,
+  "kind": "data-batch",
+  "operations": ["create", "edit", "rename", "delete"],
+  "preimage": "complete current known native variable catalog, next native identity and module dirty byte",
+  "normal_sequence": "prepare all delegates/resources; permanent shared Lease claim; one module precheck; independent original variable operations; exact target readback; one original list refresh; one complete module readback; one explicitly authorized module save",
+  "dependencies": "existing targets distinct; create/rename destinations absent and distinct in initial catalog; referenced rename/delete excluded until full consumer persistence adapter is attached",
+  "ownership": "all CObjData factory results are manager-owned; deletion input is a borrowed const uint-vector header read by original service; no freed variable pointer is read again",
+  "native_tests_performed": false
+}

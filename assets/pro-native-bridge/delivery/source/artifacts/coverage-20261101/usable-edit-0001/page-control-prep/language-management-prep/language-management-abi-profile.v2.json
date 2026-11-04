@@ -1,0 +1,283 @@
+{
+  "schema": 1,
+  "purpose": "original CLinguist definitions/configured-ID and text-map CRUD",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "base_profile_sha256": "e7f62d3c3f1891c0f5bcd95c86c4cef95273f64bf9b0ccdee805159b87dc8174",
+  "functions": [
+    {
+      "name": "DefinitionFactory",
+      "rva": 6625680,
+      "bytes": "558bec6aff687f9bfe0064a1000000005083ec40a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DefinitionDelete",
+      "rva": 6627488,
+      "bytes": "558bec83ec14894dfc837d08007d0732c0e98d0000008d4508508d4df8518b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DefinitionSubscript",
+      "rva": 2942544,
+      "bytes": "558bec6aff6830d1f90064a1000000005083ec6ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "LanguageInfoCtor",
+      "rva": 2028576,
+      "bytes": "558bec6aff68119df80064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "LanguageInfoAssign",
+      "rva": 2942224,
+      "bytes": "558bec51894dfc8b4508508b4dfcff15708e3c018b4d0883c104518b4dfc83c1",
+      "reloc_offsets": [
+        16
+      ]
+    },
+    {
+      "name": "LanguageInfoDtor",
+      "rva": 2030368,
+      "bytes": "558bec51894dfc8b4dfc83c11cff1548913c018b4dfc83c110ff1548913c018b",
+      "reloc_offsets": [
+        15,
+        27
+      ]
+    },
+    {
+      "name": "ConfiguredClear",
+      "rva": 6625648,
+      "bytes": "558bec51894dfc8b4dfc83c128e8c3499eff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ConfiguredAdd",
+      "rva": 6625360,
+      "bytes": "558bec83ec14894df4837d08007d0432c0eb6a8b45f483c0288945f88d4dfc51",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ConfiguredRemove",
+      "rva": 6625504,
+      "bytes": "558bec83ec14894df8837d08007d0432c0eb698d45fc508b4df883c128e863e9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeleteLanguageTranslations",
+      "rva": 6645328,
+      "bytes": "558bec83ec24894dec8b45ec83c0048945f08d4df4518b4df0e812009cff8d55",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TranslationErase",
+      "rva": 6687584,
+      "bytes": "558bec51894dfc8b450c508b4dfc8b5104528b450c83c00850e859099bff83c4",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TextSet",
+      "rva": 6624544,
+      "bytes": "558bec6aff685c9bfe0064a1000000005083ec44a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TextDelete",
+      "rva": 6625024,
+      "bytes": "558bec83ec20894df8817d08102700007d0432c0eb6c0fb6450c85c0740b8b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TextCommit",
+      "rva": 6639104,
+      "bytes": "558bec51894dfc8b45fcc64014018b4dfc83c10c518b4dfc83c104e8cb3b9fff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TextReloadWorking",
+      "rva": 6639152,
+      "bytes": "558bec51894dfc8b45fc83c004508b4dfc83c10ce8a23b9fff8be55dc3cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetModified",
+      "rva": 6639184,
+      "bytes": "558bec51894dfc8b45fc8a4d088848148be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RefreshConfiguredFontMap",
+      "rva": 6640016,
+      "bytes": "558bec83ec1c894dfc8b45fc83c0288945f48d4df8518b4df4e8b7b09dff8d55",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontMapSetFace",
+      "rva": 6717808,
+      "bytes": "558bec81ec00010000a1600b3b0133c58945fc5657898d40ffffff8d4508508d",
+      "reloc_offsets": [
+        10
+      ]
+    },
+    {
+      "name": "DefinitionNativeFullCopyCaller",
+      "rva": 6640592,
+      "bytes": "558bec6aff68e99efe0064a1000000005083ec40a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ResolveOrAllocateLanguageId",
+      "rva": 6630656,
+      "bytes": "558bec83ec24894df88b45f883c0548945f08d4df4518b4df0e8dcdd9bff8d55",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NextProjectTextId",
+      "rva": 6630512,
+      "bytes": "558bec83ec1c894df40fb6450885c0740b8b4df483c104894df0eb098b55f483",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CurrentLanguageId",
+      "rva": 6628560,
+      "bytes": "558bec51894dfc8b45fc8b40448be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PreviewLanguageId",
+      "rva": 6628656,
+      "bytes": "558bec51894dfc8b45fc8b40488be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalFullSettingsCommit",
+      "rva": 6623952,
+      "bytes": "558bec83ec2c894dfc8b45fcc6401401c745e8000000008b4dfc83c154894dec",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalTextTokenResolve",
+      "rva": 6629264,
+      "bytes": "558bec83ec24894df4c745f8000000008b4d0cff1564913c0185c07e3c68502f1b01",
+      "reloc_offsets": [
+        21,
+        30
+      ]
+    },
+    {
+      "name": "OriginalTextLookupByLanguageId",
+      "rva": 6628848,
+      "bytes": "558bec6aff68029cfe0064a1000000005083ec34a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    }
+  ],
+  "table": {
+    "rva": 14366172,
+    "slots": [
+      159181,
+      191006,
+      281421,
+      91601,
+      281766,
+      182301,
+      97156,
+      275051,
+      16796,
+      9746,
+      142831,
+      74691,
+      39351,
+      29691,
+      263776,
+      26376,
+      312536,
+      109596,
+      279821,
+      96396,
+      153536,
+      186271,
+      303276,
+      292351,
+      154886,
+      309281,
+      346946,
+      347416,
+      235781,
+      315521,
+      132886,
+      276296,
+      119191,
+      270576,
+      197561,
+      60526,
+      61076,
+      37456,
+      277436,
+      58086,
+      123171,
+      26401,
+      253876,
+      103606,
+      154296,
+      208281,
+      313521,
+      226661,
+      283856,
+      31471,
+      341481,
+      302796,
+      339536,
+      299986,
+      86371,
+      252126,
+      318786,
+      16581
+    ],
+    "first_null_slot": 58
+  },
+  "layout": {
+    "definition_map_offset": 52,
+    "definition_size": 32,
+    "definition_pair_offset": 16,
+    "definition_value_offset": 20,
+    "string_offsets": [
+      0,
+      4,
+      16,
+      28
+    ],
+    "scalar_offsets": [
+      8,
+      12,
+      20,
+      24
+    ],
+    "translation_stride": 8,
+    "text_maps": [
+      4,
+      12,
+      24
+    ]
+  },
+  "native_calls_performed": 0,
+  "functional_acceptance_pending": true
+}

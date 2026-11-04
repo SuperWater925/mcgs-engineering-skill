@@ -1,0 +1,253 @@
+{
+  "schema": "mcgs-pro-native-page-duplicate-abi/v1",
+  "status": "Static workflow established; parent must first verify owner pointer and complete readonly host callback before mutating. Not executed by this agent.",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "module": "McgsSetPro.exe",
+      "name": "C0ManListUser_ArchiveWindow",
+      "rva": "0x6b9fe0",
+      "first32": "558bec6aff682201ff0064a100000000505181ec3c070000a1600b3b0133c589",
+      "relocation_offsets": [
+        6,
+        25
+      ],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "int32 sourceWindowId",
+        "CArchive*"
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "Native_CArchive_Ctor",
+      "rva": "0xa79c0",
+      "first32": "558bec51894dfc8b4514508b4d10518b550c528b4508508b4dfce83379a8008b",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "CArchive*",
+      "stack_args": [
+        "CFile*",
+        "uint32 mode",
+        "int32 bufferSize",
+        "void* buffer"
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "Native_CArchive_Dtor",
+      "rva": "0xa79f0",
+      "first32": "558bec51894dfc8b4dfce81979a8008be55dc3cccccccccccccccccccccccccc",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "Native_CFile_SeekToBegin",
+      "rva": "0x6ee10",
+      "first32": "558bec51894dfc6a006a006a008b45fc8b108b4dfc8b4234ffd08be55dc3cccc",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "C0VwMenu_ListArray_GetAt",
+      "rva": "0x33ff30",
+      "first32": "558bec51894dfc8b4508508b4dfce8973acdff8be55dc20400cccccccccccccc",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "C0ManListBase**",
+      "stack_args": [
+        "int32 index"
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "CMemFile_Ctor_ordinal566",
+      "rva": "0x2094f9",
+      "first32": "558bec568bf1e8f5deffff8b450889461433c089461889461c894620894624c7",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "CMemFile*",
+      "stack_args": [
+        "uint32 growBytes"
+      ],
+      "ordinal": 566
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "CMemFile_Dtor_ordinal1187",
+      "rva": "0x2095d6",
+      "first32": "6a04b8348e2810e8fef1dfff8bf18975f0c7066c8a031033ff897dfc397e2474",
+      "relocation_offsets": [
+        3,
+        19
+      ],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [],
+      "ordinal": 1187
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "CDocument_GetFirstViewPosition_ordinal5485",
+      "rva": "0x5c4ef",
+      "first32": "8b4130c3558bec515153568bf1578b06ff50708945fc85c074248b068d4dfc51",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "POSITION",
+      "stack_args": [],
+      "ordinal": 5485
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "CPtrList_PositionNext_core",
+      "rva": "0x1428",
+      "first32": "558bec8b55088b0285c00f846a8a08008b08890a8b40085dc20400558bec8b55",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "void*",
+      "stack_args": [
+        "POSITION* in_out"
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "UserWindowService_SaveData",
+      "rva": "0x7a25c0",
+      "first32": "558bec6aff688c43000164a1000000005083ec38a1600b3b0133c5508d45f464",
+      "relocation_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "stack_args": [
+        "IObject* page"
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "C0DocUser_SetModified",
+      "rva": "0x6da7c0",
+      "first32": "558bec51894dfc8b4508508b4dfce892ee92ff8be55dc20400cccccccccccccc",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "int32 modified"
+      ]
+    }
+  ],
+  "objects": {
+    "CMemFile": {
+      "size": 44,
+      "evidence": "ctor writes through+0x28, native CSvrPackage embeds it at+0x28 before next field+0x54; native CAddin stack allocation agrees.",
+      "constructor_growth": 1024
+    },
+    "CArchive": {
+      "size": 72,
+      "evidence": "MFC ctor writes through+0x44; native stack allocations are0x48.",
+      "store_mode": 0,
+      "load_mode": 1,
+      "buffer_size_native_pattern": 4194304,
+      "buffer_pointer": 0
+    },
+    "C0ManListUser": {
+      "vtable_rva": "0xdbd7e4",
+      "rtti": ".?AVC0ManListUser@@",
+      "archive_method_slot": 92,
+      "archive_method_thunk_rva": "0xe14c",
+      "archive_method_main_return": "ret8 at0xABA410; prior ret instructions are catch continuations."
+    },
+    "C0VwMenu": {
+      "vtable_rva": "0xdca78c",
+      "rtti": ".?AVC0VwMenu@@",
+      "list_array_offset": "0x314",
+      "list_array_count_offset": 8,
+      "list_array_data_offset": 4,
+      "user_window_list_index": 2
+    },
+    "C0DocCtrl": {
+      "vtable_rva": "0xdc4f8c",
+      "rtti": ".?AVC0DocCtrl@@"
+    },
+    "C0FrmMultiDocTemplate": {
+      "vtable_rva": "0xdbabc4",
+      "rtti": ".?AVC0FrmMultiDocTemplate@@",
+      "getFirstDocPosition_slot": 23,
+      "getNextDoc_slot": 24,
+      "slot23_thunk_rva": "0xb304ee",
+      "slot24_thunk_rva": "0xb304f4"
+    }
+  },
+  "owner_acquisition_readonly": [
+    "Read app from the guarded native GetApp and require app+520 == current C0DocManage.",
+    "app+524 is C0FrmManage*, proven by constructor AB21B0/AB22AB; validate primary RTTI and vtable RVA DBC034.",
+    "Read its CArray at+314 (data+4,count+8), require five existing lists; element2 is C0ManListUser per third construction/append AB4862/AB48A8.",
+    "Validate C0ManListUser RTTI/vtable RVA DBD7E4 and virtual slot92 thunk RVA E14C. Do not construct/open any GUI/document."
+  ],
+  "native_duplicate_flow": [
+    "Ensure source page already persisted through guarded native OnSaveDocument; store branch loads sourceWindowId from DB into a temporary C0DocUser, so unsaved in-memory edits would otherwise be omitted.",
+    "Allocate own unmanaged44-byte CMemFile storage and72-byte CArchive storage. Native CMemFile ctor(grow1024).",
+    "Native CArchive ctor(file,mode0,bufferSize0x400000,buffer0). Virtual method92 on validated owner with sourceWindowId and archive. Native CArchive dtor closes/flushes archive (verified MFC dtor tests noFlushOnDelete bit2).",
+    "Native SeekToBegin(file). Native CArchive ctor(file,mode1,bufferSize0x400000,buffer0). Virtual method92 on same owner with sourceWindowId=-1 (load branch ignores source ID) and archive.",
+    "Native archive dtor; native memory-file dtor; free only our object storage after destructors, never free host objects.",
+    "Load branch uses native helper0xAE0980 to allocate fresh ID, C0DocUser Serialize0xADD860 to read the page, native unique-name helper0xABB700, page DB save0xADE8A0, then0xABB8C0 to register manager/UI and list refresh0xAB8EE0.",
+    "Do not trust void return. Require window count exactly+1, identify exactly one new ID, compare copied controls/bindings, then guarded whole-project Save and close/reopen/native check. If invariant fails stop; no blind duplicate retry."
+  ],
+  "mutation_limits": [
+    "This native duplicate entry chooses a generated unique page name; an optional rename must use a separately guarded native rename path after validation.",
+    "The new page contains a source-page copy, not a guaranteed blank page. This is the requested narrow duplicate-page route.",
+    "Host progress/status guards may update UI; no mouse/window-message automation occurs.",
+    "The method is not transactional across managed/native boundary; restrict to backed-up isolated project and a single attempt."
+  ],
+  "evidence": [
+    "native-page-copy-archive-full-linear.json",
+    "native-page-copy-owner-vtable.json",
+    "page-manager-owner-container-constructor.json",
+    "mainframe-four-manager-constructors.json",
+    "mainframe-template-viewclass-identities.json",
+    "mainframe-template-virtual-methods.json",
+    "page-copy-owner-context-rtti.json",
+    "page-manager-list-array-getat-final.json",
+    "mfc-view-first-position-getter-candidates.json",
+    "mfc-template-get-next-document-helper.json",
+    "mfc-memory-file-archive-abi-bodies.json",
+    "native-archive-constructor-close-destructor-wrappers.json"
+  ],
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": "0x400000"
+    },
+    {
+      "name": "mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": "0x10000000"
+    }
+  ],
+  "postcondition_identity_policy": "Compare depth/type/name structure across source/copy; preserve source raw IDs. Only >=0 IDs are assigned and required unique within the copied page. Exact -2 is a proven missing IdentityManager lookup sentinel and is accepted only for matching source structure/name also reporting -2. Record native_id_status assigned/unassigned_lookup_sentinel; reject other unproven negative values; never assign or force-copy IDs. Binding/style/coordinate/event/unknown-payload preservation still requires full offline archive readback.",
+  "flush_window_data": {
+    "page_iobject_vtable_rva": "0xded294",
+    "loaded_doc_offset": "0x14",
+    "doc_vtable_rva": "0xdc4d94",
+    "doc_id_offset": "0x258",
+    "doc_name_cstring_offset": "0x25c",
+    "doc_set_modified_virtual_slot": 27,
+    "doc_set_modified_thunk_rva": "0x3a3c8",
+    "service_save_data_virtual_slot": 12,
+    "service_save_data_thunk_rva": "0x21733",
+    "service_return": "bool8 true means dispatched to IPreLoadable saveData, not an independent persistence status",
+    "postcondition": "loaded doc IsModified()==0 required, then full root OnSaveDocument and independent offline readback"
+  },
+  "owner_path_correction_evidence": "page-owner-corrected-context.json",
+  "native_id_sentinel_evidence": "label-iobject-id-default.json"
+}

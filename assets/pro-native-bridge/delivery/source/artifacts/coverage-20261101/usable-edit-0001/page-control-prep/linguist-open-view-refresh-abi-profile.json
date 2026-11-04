@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "LinguistRefreshOpenViews",
+      "rva": 6639024,
+      "bytes": "558bec51894dfc8b45fc8b108b4dfc8b829c000000ffd06a016a006a00687cb63801",
+      "reloc_offsets": [
+        30
+      ]
+    },
+    {
+      "name": "LinguistRefreshVirtualEntry",
+      "rva": 123171,
+      "bytes": "e9886c6300e9a3dc3800e9ced2a600e99900a600e9c4213000e9fffe7700e9ca",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LinguistRefreshLanguageSelectors",
+      "rva": 6638640,
+      "bytes": "558bec83ec2c894df8c745f400000000eb098b45f483c0018945f46a00687cb63801",
+      "reloc_offsets": [
+        30
+      ]
+    },
+    {
+      "name": "MainFrameRefreshOpenViews",
+      "rva": 6955888,
+      "bytes": "558bec83ec2c894dfcc745f4000000008b45fc8b88e00300008b55fc8b018b8a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GetDrawingView",
+      "rva": 7197616,
+      "bytes": "558bec83ec0c894dfc8b45fc8b108b4dfc8b4270ffd08945f4837df40074338d",
+      "reloc_offsets": []
+    }
+  ],
+  "refresh_virtual_entry_rva": 123171,
+  "drawing_view": {
+    "rva": 14222364,
+    "col_rva": 15214600,
+    "type_rva": 16299752,
+    "complete_offset": 0,
+    "rtti": ".?AVC0VwDraw@@",
+    "slots": [
+      31146,
+      308506,
+      165306,
+      4401,
+      130021,
+      11729362
+    ]
+  },
+  "linguist_profile_sha256": "e7f62d3c3f1891c0f5bcd95c86c4cef95273f64bf9b0ccdee805159b87dc8174",
+  "page_view_profile_sha256": "50579ca3e72de9fe6511465eee806ead747f98e56ea5aaa05f819f8968a85d62",
+  "static_proof_sha256": "d74dfd933ad6d64e2b5edd8158f82bf86e38d5776e88e8402ada5e805e127080",
+  "candidate_host_verified": false
+}

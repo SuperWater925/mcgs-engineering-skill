@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "purpose": "Required raw live data checks in any future native metadata candidate; no native calls",
+  "base_candidate_profile_sha256": "d7eb4c24d9beb3b419b31e01226971bc2dc2073d797e3faa8c9121b2526ff0a8",
+  "data_guards": [
+    {
+      "name": "Primary60TypeIndex24",
+      "preferred_va": "0xb466ac",
+      "rva": "0x7466ac",
+      "length": 24,
+      "bytes_hex": "000100000101010101010100010101010101010101010100",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "Primary60ReturnJumpTargets2",
+      "preferred_va": "0xb466a4",
+      "rva": "0x7466a4",
+      "length": 8,
+      "bytes_hex": "9566b4009966b400",
+      "highlow_offsets": [
+        0,
+        4
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "NamespaceEmptyLiteralNUL",
+      "preferred_va": "0x10e4730",
+      "rva": "0xce4730",
+      "length": 2,
+      "bytes_hex": "0000",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    }
+  ],
+  "checks": 9,
+  "host_access": false,
+  "native_calls": 0,
+  "runtime_ready": false
+}

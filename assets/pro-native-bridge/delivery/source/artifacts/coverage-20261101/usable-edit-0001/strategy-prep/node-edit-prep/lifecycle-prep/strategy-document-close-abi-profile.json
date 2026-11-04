@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "purpose": "actual-private-strategy-document-explicit-close-without-project-close-or-dialog",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "node_abi_profile_sha256": "7198f12224c7bd209dddf74c3597f93e96b9994c11877cce1b71d53f2c527fcd",
+  "typed_abi_profile_sha256": "e25ac3386b546225392cec382ad157fd1cb574c1ee8b3244d7d161cdbe0df8a9",
+  "document_close_slot": 35,
+  "document_close_entry_rva": 11732578,
+  "document_close_iat_rva": 16548528,
+  "mfc_close_ordinal": 9048,
+  "mfc_close_rva": 2252383,
+  "guards": [
+    {
+      "name": "StrategyDocScalarDelete",
+      "module": "exe",
+      "rva": 7326064,
+      "bytes": "558bec51894dfc8b4dfce8f1ee90ff8b450883e00174098b4dfc51e84cd791ff8b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StrategyDocDestructor",
+      "module": "exe",
+      "rva": 7263104,
+      "bytes": "558bec6aff683055ff0064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b45f0c70074531c01c745fc000000008b4df083b9500100000074408b55f08b82500100008945e48b4de4894dec837dec0074146a018b55ec8b028b4dec8b5004ffd28945e0eb07c745e0000000008b45f0c78050010000000000008b4df08b91540100008955dc8b45dc8945e8837de80074146a018b4de88b118b4de88b4204ffd08945d8eb07c745d800000000c745fcffffffff8b4df0e8937196ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45
+      ]
+    },
+    {
+      "name": "StrategyViewScalarDelete",
+      "module": "exe",
+      "rva": 11104320,
+      "bytes": "558bec51894dfc8b4dfce810145bff8b450883e00174098b4dfc51e87c3058ff8b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StrategyViewDestructor",
+      "module": "exe",
+      "rva": 11090736,
+      "bytes": "558bec6aff68aa46040164a1000000005083ec08a1600b3b0133c5508d45f464a300000000894df08b45f0c700ac982301c745fc000000008b4df08b91c40000008955ec837dec01740e837dec027426837dec03743eeb588b45f083b8b00000000074108b4df08b91b0000000c7423c00000000eb3a8b45f083b8c00000000074108b4df08b91c0000000c7420800000000eb1c8b45f083b8bc0000000074108b4df08b91bc000000c74204000000008b4df081c1ac000000e8ebfa5bffc745fcffffffff8b4df0e8edc309008b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45
+      ]
+    },
+    {
+      "name": "StrategyBlockDestructor",
+      "module": "exe",
+      "rva": 11118416,
+      "bytes": "558bec6aff686b4f040164a1000000005083ec14a1600b3b0133c5508d45f464a300000000894df08b45f0c700b8b423018b4df0c74104dcb423018b55f0c742086cb52301c745fc05000000c745ec00000000eb098b45ec83c0018945ec8b4df083c120e891005bff3945ec7d608b4dec518b4df083c120e8207b56ff8b55ec528b4df083c120e8117b56ff833800743b8b45ec508b4df083c120e8fd7a56ff8b08894de48b55e48955e8837de80074146a018b45e88b108b4de88b4204ffd08945e0eb07c745e000000000eb878b4df083c120e8413858ffc645fc048b4df083c160ff1548913c01c645fc038b4df083c120e872fa59ffc645fc028b4df083c118ff1548913c01c645fc018b4df083c114ff1548913c01c645fc008b4df083c104e82c425bffc745fcffffffff8b4df0e848b558ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        55,
+        65,
+        229,
+        260,
+        276
+      ]
+    },
+    {
+      "name": "MfcOleOnCloseDocument",
+      "module": "mfc110u.dll",
+      "rva": 2252383,
+      "bytes": "578bf9e8d6aafdff85c07406837f4c00742e568bb79c00000083a79c000000008bcfe8b1a5fdff8d8f00010000e893fce4ff85f65e74098b076a018bcfff50045fc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MfcOnCloseDocument",
+      "module": "mfc110u.dll",
+      "rva": 2098231,
+      "bytes": "568bf1e8fe04000033c985c07405394e4c7469538b9e9c000000898e9c000000394e38742b578b46308b4808e8449ce0ff8bf885ff74478b16578bceff92e40000008b178bcfff5268837e380075d75f8b066a038bce899e9c000000ff90d80000008b068bceff507c83be9c000000005b74098b066a018bceff50045ec3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MfcPreCloseFrame",
+      "module": "mfc110u.dll",
+      "rva": 2250818,
+      "bytes": "558bec8b0156ff7508ff90180100008bf085f674108bcee8927affff6a018bcee8a94dffff5e5dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "contracts": [
+    "No SaveModified call or prompt; caller explicitly selects discard/synchronize.",
+    "Synchronization uses already guarded Doc83 before original native close, requires explicit commit and affected strategy scope.",
+    "Private context and private block must differ from canonical and match original doc/view ownership; original doc destructor alone releases them.",
+    "After close never dereference or free released doc/view/private block/context.",
+    "Canonical native reference rebuild runs before native close and complete explicit final graph is checked.",
+    "All foreign canonical/working/context serialized states are preserved."
+  ],
+  "host_invoked": false,
+  "native_acceptance_pending": true
+}

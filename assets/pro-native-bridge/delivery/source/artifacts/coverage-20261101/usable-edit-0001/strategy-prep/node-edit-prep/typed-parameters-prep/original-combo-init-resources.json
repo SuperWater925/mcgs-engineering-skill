@@ -1,0 +1,1384 @@
+[
+  {
+    "resource_id": "0x611",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c3bfc4ea00",
+        "decoded_cp936": "每年"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c3bfd4c200",
+        "decoded_cp936": "每月"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c3bfccec00",
+        "decoded_cp936": "每天"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c3bfd0a1cab100",
+        "decoded_cp936": "每小时"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c3bfb7d600",
+        "decoded_cp936": "每分"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x619",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "535300",
+        "decoded_cp936": "SS"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "4d4d00",
+        "decoded_cp936": "MM"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "484800",
+        "decoded_cp936": "HH"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "4d4d3a535300",
+        "decoded_cp936": "MM:SS"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "48483a4d4d00",
+        "decoded_cp936": "HH:MM"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "48483a4d4d3a535300",
+        "decoded_cp936": "HH:MM:SS"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c3ebd6d300",
+        "decoded_cp936": "秒钟"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b7d6d6d300",
+        "decoded_cp936": "分钟"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "d0a1cab100",
+        "decoded_cp936": "小时"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x625",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x434",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6d4cbd0d0bbb7beb300",
+        "decoded_cp936": "退出运行环境"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 4,
+        "raw_hex": "d6c33100",
+        "decoded_cp936": "置1"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 4,
+        "raw_hex": "c7e53000",
+        "decoded_cp936": "清0"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c8a1b7b400",
+        "decoded_cp936": "取反"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "b0b431cbc93000",
+        "decoded_cp936": "按1松0"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "b0b430cbc93100",
+        "decoded_cp936": "按0松1"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x62d",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x44c",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6d4cbd0d0bbb7beb300",
+        "decoded_cp936": "退出运行环境"
+      },
+      {
+        "control_id": "0x44c",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6d4cbd0d0b3ccd0f200",
+        "decoded_cp936": "退出运行程序"
+      },
+      {
+        "control_id": "0x44c",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6b2d9d7f7cfb5cdb300",
+        "decoded_cp936": "退出操作系统"
+      },
+      {
+        "control_id": "0x44c",
+        "message": "0x403",
+        "bytes": 17,
+        "raw_hex": "d6d8d0c2c6f4b6afb2d9d7f7cfb5cdb300",
+        "decoded_cp936": "重新启动操作系统"
+      },
+      {
+        "control_id": "0x44c",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b9d8bbfa00",
+        "decoded_cp936": "关机"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x62e",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "b1a8beafb2fac9fa00",
+        "decoded_cp936": "报警产生"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "b1a8beafbde1caf800",
+        "decoded_cp936": "报警结束"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "b1a8beafd3a6b4f000",
+        "decoded_cp936": "报警应答"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "b4a6d3dab1a8beafd7b4ccac00",
+        "decoded_cp936": "处于报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 19,
+        "raw_hex": "b4a6d3dac9cfc9cfcfdeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于上上限报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 17,
+        "raw_hex": "b4a6d3dac9cfcfdeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于上限报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 17,
+        "raw_hex": "b4a6d3dacfc2cfdeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于下限报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 19,
+        "raw_hex": "b4a6d3dacfc2cfc2cfdeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于下下限报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 19,
+        "raw_hex": "b4a6d3dac9cfc6abb2eeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于上偏差报警状态"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 19,
+        "raw_hex": "b4a6d3dacfc2c6abb2eeb1a8beafd7b4ccac00",
+        "decoded_cp936": "处于下偏差报警状态"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x637",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x506",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "cafdd6b5cfd4cabe00",
+        "decoded_cp936": "数值显示"
+      },
+      {
+        "control_id": "0x506",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "cebbcfd4cabe00",
+        "decoded_cp936": "位显示"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x646",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 23,
+        "raw_hex": "cafdd6b5d0cdcafdbeddb6d4cff3b1a8beafb2fac9fa00",
+        "decoded_cp936": "数值型数据对象报警产生"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 23,
+        "raw_hex": "cac2bcfed0cdcafdbeddb6d4cff3cac2bcfeb2fac9fa00",
+        "decoded_cp936": "事件型数据对象事件产生"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 21,
+        "raw_hex": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdccf8b1e400",
+        "decoded_cp936": "开关型数据对象正跳变"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 21,
+        "raw_hex": "bfaab9d8d0cdcafdbeddb6d4cff3b8baccf8b1e400",
+        "decoded_cp936": "开关型数据对象负跳变"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 23,
+        "raw_hex": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdb8baccf8b1e400",
+        "decoded_cp936": "开关型数据对象正负跳变"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 23,
+        "raw_hex": "bfaab9d8d0cdcafdbeddb6d4cff3b8bad5fdccf8b1e400",
+        "decoded_cp936": "开关型数据对象负正跳变"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x668",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b5b1ccec00",
+        "decoded_cp936": "当天"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b5b1d4c200",
+        "decoded_cp936": "当月"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "b1bed0c7c6da00",
+        "decoded_cp936": "本星期"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c7b0d2bbccec00",
+        "decoded_cp936": "前一天"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c7b0d2bbd4c200",
+        "decoded_cp936": "前一月"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c9cfd0c7c6da00",
+        "decoded_cp936": "上星期"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x66e",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "c1a2bcb4b2a5b7c500",
+        "decoded_cp936": "立即播放"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "d1adbbb7b2a5b7c500",
+        "decoded_cp936": "循环播放"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "b5c8b4fdb2a5b7c500",
+        "decoded_cp936": "等待播放"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "cda3d6b9b2a5b7c500",
+        "decoded_cp936": "停止播放"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x66f",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x434",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6d4cbd0d0bbb7beb300",
+        "decoded_cp936": "退出运行环境"
+      },
+      {
+        "control_id": "0x434",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6d4cbd0d0b3ccd0f200",
+        "decoded_cp936": "退出运行程序"
+      },
+      {
+        "control_id": "0x434",
+        "message": "0x403",
+        "bytes": 13,
+        "raw_hex": "cdcbb3f6b2d9d7f7cfb5cdb300",
+        "decoded_cp936": "退出操作系统"
+      },
+      {
+        "control_id": "0x434",
+        "message": "0x403",
+        "bytes": 17,
+        "raw_hex": "d6d8d0c2c6f4b6afb2d9d7f7cfb5cdb300",
+        "decoded_cp936": "重新启动操作系统"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 4,
+        "raw_hex": "d6c33100",
+        "decoded_cp936": "置1"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 4,
+        "raw_hex": "c7e53000",
+        "decoded_cp936": "清0"
+      },
+      {
+        "control_id": "0x435",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c8a1b7b400",
+        "decoded_cp936": "取反"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x671",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b7a2cbcd00",
+        "decoded_cp936": "发送"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "bdd3cad500",
+        "decoded_cp936": "接收"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "b9e3b2a5b7a2cbcd00",
+        "decoded_cp936": "广播发送"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "bdd3cad5b9e3b2a500",
+        "decoded_cp936": "接收广播"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x672",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x673",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x67d",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 21,
+        "raw_hex": "b1a8beafb2fac9facab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "报警产生时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 21,
+        "raw_hex": "b1a8beafbde1caf8cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "报警结束时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 21,
+        "raw_hex": "b1a8beafd3a6b4f0cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "报警应答时，执行一次"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x67f",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 29,
+        "raw_hex": "cafdbeddb6d4cff3d6b5d5fdccf8b1e4cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "数据对象值正跳变时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 29,
+        "raw_hex": "cafdbeddb6d4cff3d6b5b8baccf8b1e4cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "数据对象值负跳变时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 31,
+        "raw_hex": "cafdbeddb6d4cff3d6b5d5fdb8baccf8b1e4cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "数据对象值正负跳变时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 31,
+        "raw_hex": "cafdbeddb6d4cff3d6b5b8bad5fdccf8b1e4cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "数据对象值负正跳变时，执行一次"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 29,
+        "raw_hex": "cafdbeddb6d4cff3d6b5d3d0b8c4b1e4cab1a3acd6b4d0d0d2bbb4ce00",
+        "decoded_cp936": "数据对象值有改变时，执行一次"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x689",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e00740079008f1d00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x68a",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 264,
+        "raw_hex": "0000000093b2000004010000030008000bf25747200000005f0065007800740065006e0074007800981e0000030008000af25747200000005f0065007800740065006e00740079008f1d00000300040072d90ebc1800000072006f00770073008000000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce5000300110028937f553400000061006c006c006f007700750073006500720072006500730069007a0069006e0067000100000000000b000b007d2a37f728ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x68b",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e00740079008f1d00000300040072d90ebc1800000072006f00770073008000000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x68c",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e0074007800a01f0000030008000af25747200000005f0065007800740065006e00740079008f1d00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x68d",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e00740078005c170000030008000af25747200000005f0065007800740065006e0074007900d91000000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x68f",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e00740078007f150000030008000af25747200000005f0065007800740065006e0074007900d71900000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x691",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e0074007800e81b0000030008000af25747200000005f0065007800740065006e0074007900b31b00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x693",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780073230000030008000af25747200000005f0065007800740065006e0074007900301500000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x695",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780073230000030008000af25747200000005f0065007800740065006e0074007900301500000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x696",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e0074007800c51a0000030008000af25747200000005f0065007800740065006e0074007900fa1700000300040072d90ebc1800000072006f00770073008000000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x697",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780073230000030008000af25747200000005f0065007800740065006e00740079005c1400000300040072d90ebc1800000072006f00770073008000000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x69e",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 296,
+        "raw_hex": "0000000093b2000024010000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b001100657596ed3000000061006c006c006f007700620069006700730065006c0065006300740069006f006e00ffff0b000b007d2a37f708ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6ac",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 300,
+        "raw_hex": "0000000093b2000028010000030008000bf25747200000005f0065007800740065006e0074007800e81b0000030008000af25747200000005f0065007800740065006e0074007900381900000300040072d90ebc1800000072006f0077007300210000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c0062006100720073000200000003000c003233b6de280000006200610063006b0063006f006c006f007200730065006c0000008000030009009cff24eb2400000066006f0063007500730072006500630074000000000000000b000b007d2a37f704ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6c2",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "c3eb00",
+        "decoded_cp936": "秒"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "b7d600",
+        "decoded_cp936": "分"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "cab100",
+        "decoded_cp936": "时"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "ccec00",
+        "decoded_cp936": "天"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "d4c200",
+        "decoded_cp936": "月"
+      },
+      {
+        "control_id": "0x44a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "c4ea00",
+        "decoded_cp936": "年"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "b7d63ac3eb00",
+        "decoded_cp936": "分:秒"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "cab13ab7d600",
+        "decoded_cp936": "时:分"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "c8d520cab100",
+        "decoded_cp936": "日 时"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "d4c22dc8d500",
+        "decoded_cp936": "月-日"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 6,
+        "raw_hex": "c4ea2dd4c200",
+        "decoded_cp936": "年-月"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "cab13ab7d63ac3eb00",
+        "decoded_cp936": "时:分:秒"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "c8d520cab13ab7d600",
+        "decoded_cp936": "日 时:分"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "d4c22dc8d520cab100",
+        "decoded_cp936": "月-日 时"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 9,
+        "raw_hex": "c4ea2dd4c22dc8d500",
+        "decoded_cp936": "年-月-日"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 12,
+        "raw_hex": "c8d520cab13ab7d63ac3eb00",
+        "decoded_cp936": "日 时:分:秒"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 12,
+        "raw_hex": "d4c22dc8d520cab13ab7d600",
+        "decoded_cp936": "月-日 时:分"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 12,
+        "raw_hex": "c4ea2dd4c22dc8d520cab100",
+        "decoded_cp936": "年-月-日 时"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 15,
+        "raw_hex": "d4c22dc8d520cab13ab7d63ac3eb00",
+        "decoded_cp936": "月-日 时:分:秒"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 15,
+        "raw_hex": "c4ea2dd4c22dc8d520cab13ab7d600",
+        "decoded_cp936": "年-月-日 时:分"
+      },
+      {
+        "control_id": "0x44b",
+        "message": "0x403",
+        "bytes": 18,
+        "raw_hex": "c4ea2dd4c22dc8d520cab13ab7d63ac3eb00",
+        "decoded_cp936": "年-月-日 时:分:秒"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "c3eb00",
+        "decoded_cp936": "秒"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "b7d600",
+        "decoded_cp936": "分"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "cab100",
+        "decoded_cp936": "时"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "ccec00",
+        "decoded_cp936": "天"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "d4c200",
+        "decoded_cp936": "月"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6c9",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b5b1ccec00",
+        "decoded_cp936": "当天"
+      },
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "b1bed4c200",
+        "decoded_cp936": "本月"
+      },
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "b1bed0c7c6da00",
+        "decoded_cp936": "本星期"
+      },
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c7b0d2bbccec00",
+        "decoded_cp936": "前一天"
+      },
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c7b0d2bbd4c200",
+        "decoded_cp936": "前一月"
+      },
+      {
+        "control_id": "0x42a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c7b0d0c7c6da00",
+        "decoded_cp936": "前星期"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6ca",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 1,
+        "raw_hex": "00",
+        "decoded_cp936": ""
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6cc",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 14,
+        "raw_hex": "424d502020cdbccff1cec4bcfe00",
+        "decoded_cp936": "BMP  图像文件"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 15,
+        "raw_hex": "4a5047202020cdbccff1cec4bcfe00",
+        "decoded_cp936": "JPG   图像文件"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 17,
+        "raw_hex": "4156492020202020b6afbbadcec4bcfe00",
+        "decoded_cp936": "AVI     动画文件"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6cd",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "d7f3b6d4c6eb00",
+        "decoded_cp936": "左对齐"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "d6d0b6d4c6eb00",
+        "decoded_cp936": "中对齐"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "d3d2b6d4c6eb00",
+        "decoded_cp936": "右对齐"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "c9cfb6d4c6eb00",
+        "decoded_cp936": "上对齐"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "d6d0b6d4c6eb00",
+        "decoded_cp936": "中对齐"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 7,
+        "raw_hex": "cfc2b6d4c6eb00",
+        "decoded_cp936": "下对齐"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6d3",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 300,
+        "raw_hex": "0000000093b2000028010000030008000bf25747200000005f0065007800740065006e0074007800be100000030008000af25747200000005f0065007800740065006e0074007900aa1a00000300040072d90ebc1800000072006f0077007300210000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c0062006100720073000200000003000c003233b6de280000006200610063006b0063006f006c006f007200730065006c0000008000030009009cff24eb2400000066006f0063007500730072006500630074000000000000000b000b007d2a37f704ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6d4",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 204,
+        "raw_hex": "0000000093b20000c8000000030008000bf25747200000005f0065007800740065006e0074007800d51f0000030008000af25747200000005f0065007800740065006e00740079009117000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce5000300110028937f5574ffffff61006c006c006f007700750073006500720072006500730069007a0069006e006700010000000000",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6d5",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "c9fdd0f200",
+        "decoded_cp936": "升序"
+      },
+      {
+        "control_id": "0x47b",
+        "message": "0x403",
+        "bytes": 5,
+        "raw_hex": "bdb5d0f200",
+        "decoded_cp936": "降序"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6d8",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6d9",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780004130000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6da",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6db",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 264,
+        "raw_hex": "0000000093b2000004010000030008000bf25747200000005f0065007800740065006e0074007800981e0000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073008000000003000400f2b10dbc1800000063006f006c007300040000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce5000300110028937f553400000061006c006c006f007700750073006500720072006500730069007a0069006e0067000100000000000b000b007d2a37f728ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6dc",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6e0",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e00740078000c1a0000030008000af25747200000005f0065007800740065006e0074007900491b00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6e1",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e00740078000c1a0000030008000af25747200000005f0065007800740065006e0074007900491b00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6e2",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x458",
+        "message": "0x376",
+        "bytes": 248,
+        "raw_hex": "0000000093b20000f4000000030008000bf25747200000005f0065007800740065006e007400780084280000030008000af25747200000005f0065007800740065006e0074007900f01c00000300040072d90ebc1800000072006f00770073002100000003000400f2b10dbc1800000063006f006c007300030000000d00040075f30dbc3400000066006f006e0074000352e30b918fce119de300aa004bb851018600009001dc7c010004cbcecce50003000a00a9d2b51c240000007300630072006f006c006c006200610072007300020000000b000b007d2a37f738ffffff7300630072006f006c006c0074007200610063006b00ffff",
+        "decoded_cp936": "[raw-only]"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6e4",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 11,
+        "raw_hex": "5443502f4950cdf8c2e700",
+        "decoded_cp936": "TCP/IP网络"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 8,
+        "raw_hex": "555342cda8d1b600",
+        "decoded_cp936": "USB通讯"
+      }
+    ]
+  },
+  {
+    "resource_id": "0x6e5",
+    "language": 2052,
+    "rows": [
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3100",
+        "decoded_cp936": "1"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3200",
+        "decoded_cp936": "2"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3300",
+        "decoded_cp936": "3"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3400",
+        "decoded_cp936": "4"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3500",
+        "decoded_cp936": "5"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3600",
+        "decoded_cp936": "6"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3700",
+        "decoded_cp936": "7"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3800",
+        "decoded_cp936": "8"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 2,
+        "raw_hex": "3900",
+        "decoded_cp936": "9"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313000",
+        "decoded_cp936": "10"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313100",
+        "decoded_cp936": "11"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313200",
+        "decoded_cp936": "12"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313300",
+        "decoded_cp936": "13"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313400",
+        "decoded_cp936": "14"
+      },
+      {
+        "control_id": "0x47a",
+        "message": "0x403",
+        "bytes": 3,
+        "raw_hex": "313500",
+        "decoded_cp936": "15"
+      }
+    ]
+  }
+]

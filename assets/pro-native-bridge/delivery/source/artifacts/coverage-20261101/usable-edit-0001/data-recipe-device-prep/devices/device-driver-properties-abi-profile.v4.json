@@ -1,0 +1,986 @@
+{
+  "schema": 4,
+  "purpose": "native driver property discovery/edit and complete known H5U channel/automatic warm-cache native store projection",
+  "base_device_profile_sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "guards": [
+    {
+      "name": "DevicePropertyGet",
+      "module": "McgsSetPro.exe",
+      "rva": 1462752,
+      "bytes": "558bec6aff6887d2f70064a1000000005083ec38a1600b3b0133c5508d45f464a300000000894dec8b45ec83b8fc0000000075088b4dece85589eeff8b4dec83b9fc000000000f84bb0100006aff6a008b4d08e8729c9c006aff6a008b4d0ce8669c9c008d4dbce8eb70ebffc745fc000000006aff6a008d4dbce8ddc0ebffc745e800000000eb098b55e883c2018955e88b4d10e83efaebff3945e87d5d8b45e8508b4d10e82a46eeff833800744a8b4de8518b4d10e81946eeff8b108955d88b45d88945e4837de40074146a018b4de48b118b4de48b4204ffd08945d4eb07c745d4000000008b4de8518b4d10e8e145eeffc70000000000eb8d8d55bc528b4508508b4d0c518b55ec8b82fc000000508b4dec8b89fc000000e8513beeff6aff8d4dbce8f267eeff508b4d10e855fcedffc745f000000000eb098b55f083c2018955f08d4dbce8cf67eeff3945f00f8da30000008b45f0508d4dbce8bd4feaff0fb60885c975148b55f0528b4d10e86045eeffc70000000000eb776a14e8ecf9eeff8945e0c645fc01837de000740d8b4de0e82c9b9c008945dceb07c745dc000000008b45dc8945d0c645fc008b4df0518b4d10e81a45eeff8b55d089108b45f0508b4d10e80945eeff8b08518b55f0528b4d0ce89d08ecff508b45ec8b88fc000000518b55ec8b8afc000000e89236ecffe943ffffffc745fcffffffff8d4dbce859a1ecff33c08b4df464890d00000000598be55dc20c00cccccccccccc",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DevicePropertySet",
+      "module": "McgsSetPro.exe",
+      "rva": 1463296,
+      "bytes": "558bec51894dfc8b45fc83b8fc0000000075088b4dfce85687eeff8b4dfc83b9fc0000000074228b550c528b4508508b4dfc8b91fc000000528b45fc8b88fc000000e8e1b5eaffeb0233c08be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceFrontendInitialize",
+      "module": "McgsSetPro.exe",
+      "rva": 1474928,
+      "bytes": "558bec6aff683fd6f70064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b45f083b8fc000000007405e9cc0000008b4df0e8b36aeaff8b4df081c118010000ff1564913c0185c07505e9ac0000006a38e8ee679c0083c4048945ecc745fc00000000837dec00741b8b4df0518b55f081c218010000528b4dece8ab03eeff8945e8eb07c745e8000000008b45e88945e0c745fcffffffff8b4df08b55e08991fc0000008b45f08b88fc000000e86766ecff85c0753d8b4df08b91fc0000008955dc8b45dc8945e4837de400740f6a018b4de4e8720eebff8945d8eb07c745d8000000008b4df0c781fc00000000000000eb088b4df0e87736ebff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        76
+      ]
+    },
+    {
+      "name": "PropertyGetExportDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1512656,
+      "bytes": "558bec83ec10894df88b45f8837824007461c745fc0000000068589c11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc0074178b4514508b4d10518b550c528b450850ff55fceb10eb07b801400080eb07eb05b8570007808be55dc2",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "PropertySetExportDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1513568,
+      "bytes": "558bec83ec10894df88b45f883782400745dc745fc0000000068189c11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc0074138b4510508b4d0c518b550852ff55fceb10eb07b801400080eb07eb05b8570007808be55dc2",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "EnumPointerArrayCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 631744,
+      "bytes": "558bec51894dfc8b4dfce869dafaff8b45fcc700a8af0e018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "EnumPointerArrayDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 642304,
+      "bytes": "558bec51894dfc8b4dfce8a773fbff8b450883e00174098b4dfc51e8bcd3f7ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStringArrayCtor",
+      "module": "mfc110u.dll",
+      "rva": 1845675,
+      "bytes": "33c089410489411089410c894108c701486403108bc1c36810040000b8dc3628",
+      "reloc_offsets": [
+        16,
+        29
+      ],
+      "ordinal": 968
+    },
+    {
+      "name": "CStringArraySetSize",
+      "module": "mfc110u.dll",
+      "rva": 1846028,
+      "bytes": "558bec53568b75088bd985f60f881f0100008b450c85c078038943108b4b0485",
+      "reloc_offsets": [],
+      "ordinal": 13785
+    },
+    {
+      "name": "CStringArrayDeletingDtor",
+      "module": "mfc110u.dll",
+      "rva": 2495421,
+      "bytes": "558becf6450802568bf174265768c2291c108d7efcff376a1456e8a748e1fff6",
+      "reloc_offsets": [
+        14
+      ]
+    },
+    {
+      "name": "OriginalNew",
+      "module": "mfc110u.dll",
+      "rva": 35353,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ],
+      "ordinal": 1502
+    },
+    {
+      "name": "DevicePropertyCollect",
+      "module": "McgsSetPro.exe",
+      "rva": 1463840,
+      "bytes": "558bec51894dfc8b45fc83b8fc0000000075088b4dfce83685eeff8b4dfc83b9fc0000000074108b55fc8b8afc000000e855afeaffeb0233c08be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendUnconditionalCollect",
+      "module": "McgsSetPro.exe",
+      "rva": 1447680,
+      "bytes": "558bec83ec08894dfc8b45fc508b4dfce8136deeff8b4dfc83790c00745d8b55fc8b4a0ce867faeeff8945f88b45fc8378300074466aff8b4df8518b55fc8b4a3081c100010000e852d79c008b45fc8b480ce8e106efff6a008b4dfc8b490ce867cbecff8b55fc8b42300500010000508b4dfc8b490ce8a248ebffb8010000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendConditionalCollect",
+      "module": "McgsSetPro.exe",
+      "rva": 1447824,
+      "bytes": "558bec83ec0c894dfc8b45fc508b4dfce8836ceeff8945f8817df801400080746f817df85700078074668b4dfc83790c00745d8b55fc8b4a0ce8c2f9eeff8945f48b45fc8378300074466aff8b4df4518b55fc8b4a3081c100010000e8add69c008b45fc8b480ce83c06efff6a008b4dfc8b490ce8c2caecff8b55fc8b42300500010000508b4dfc8b490ce8fd47ebffb8010000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendSaveDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1513152,
+      "bytes": "558bec83ec10894df88b45f8837824007455c745fc0000000068789d11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc00740b8b450850ff55fceb10eb07b801400080eb07eb05b8570007808be55dc20400cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "FrontendStreamPosition",
+      "module": "McgsSetPro.exe",
+      "rva": 1511088,
+      "bytes": "558bec51894dfc8b45fc8b40188be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendStreamEnd",
+      "module": "McgsSetPro.exe",
+      "rva": 1513296,
+      "bytes": "558bec51894dfc8b45fc83782400740c8b4dfcc7411800000000eb338b55fc837a180076206aff8b45fc8b4818518b4dfc83c104e815d79b008b55fc8b45fc8b4818894a208b55fcc74218000000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendStreamMode",
+      "module": "McgsSetPro.exe",
+      "rva": 1509968,
+      "bytes": "558bec51894dfc8b45fc8b4d0889481c8be55dc20400cccccccccccccccccccc558bec83ec10894df88b45f8837824007451c745fc0000000068049d11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc007407ff55fceb10eb07b801400080eb",
+      "reloc_offsets": [
+        58,
+        67,
+        79,
+        93,
+        105
+      ]
+    },
+    {
+      "name": "FrontendStreamReadByteArray",
+      "module": "McgsSetPro.exe",
+      "rva": 8769152,
+      "bytes": "558bec83ec08894dfc8b4d08e84c557aff8945f88b45f8508b4dfce881027fff0fb6c885c9750432c0eb768b55fc837a240074358b45f8508b4dfc8b51248b45fc035018528b4d08e8dc1c7dff50e813412d0083c40c8b4dfc8b51180355f88b45fc895018b001eb388b4df8518b4dfc83c104e8b11c7dff8b55fc034218508b4d08e8a21c7dff50e8d9402d0083c40c8b45fc8b4818034df88b55fc894a18b0018be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "enum_pointer_array": {
+    "vtable_rva": 13545384,
+    "col_rva": 15133304,
+    "rtti": ".?AV?$CArray@HH@@",
+    "size": 20,
+    "count_offset": 8,
+    "data_offset": 4,
+    "slots_rva": [
+      11727406,
+      123036,
+      193056,
+      4401,
+      130021
+    ]
+  },
+  "CStringArray": {
+    "size": 20,
+    "vtable_mfc_rva": 222280,
+    "count_offset": 8,
+    "data_offset": 4,
+    "element_stride": 4
+  },
+  "drivers": [
+    {
+      "key": "H5U_MODBUSTCP",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\H5U_MODBUSTCP\\H5U_MODBUSTCP.ui",
+      "sha256": "b61665a50f428d1bc7d7fa1a7aa98b7c86a5795bee5d2d77db57f00f52fe1c8f",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 124896,
+          "bytes": "558bec8b450850e894bdffff83c40485c07d0583c8ffeb05b8010000005dc204",
+          "reloc_offsets": []
+        },
+        "SvrGetProperty": {
+          "rva": 123600,
+          "bytes": "558bec83ec088b450850e8a1c2ffff83c40485c07d0883c8ffe9110100006aff",
+          "reloc_offsets": []
+        },
+        "SvrSetProperty": {
+          "rva": 124128,
+          "bytes": "558bec83ec248b450850e891c0ffff83c40485c07d0883c8ffe936020000c745",
+          "reloc_offsets": []
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 123920,
+          "bytes": "558bec83ec0c8b450850e861c1ffff83c40485c07d0883c8ffe99d000000c745",
+          "reloc_offsets": []
+        },
+        "SvrSaveDevData": {
+          "rva": 127456,
+          "bytes": "558bec8b450850e8c4b6ffff83c404b8010000005dc20400cccccccccccccccc",
+          "reloc_offsets": []
+        }
+      },
+      "get_supported_static": true,
+      "success_return_without_output_is_support": false,
+      "cache_layout": {
+        "backend_size": 64,
+        "property_count": 12,
+        "enum_counts": [
+          0,
+          0,
+          2,
+          4,
+          4,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        "info_vtable_rva": 324316,
+        "channel_vtable_rva": 330124,
+        "info_payload_bytes": 14,
+        "info_size_version": [
+          14,
+          2000
+        ],
+        "channel_element_uncovered_when_nonempty": false,
+        "auto_element_stride": 136,
+        "auto_element_uncovered_when_nonempty": false,
+        "int_array_vtable_rva": 336552,
+        "channel_item_stride": 28,
+        "channel_item_vtable_rva": 330112,
+        "channel_global_key_count_rva": 402416,
+        "channel_global_key_vector_rva": 403800,
+        "channel_wire_key_rvas": [
+          403236,
+          403240,
+          403292,
+          403436,
+          403780,
+          402464
+        ],
+        "channel_wire_offsets": [
+          4,
+          8,
+          12,
+          16,
+          20,
+          28
+        ],
+        "channel_wire_size": 36,
+        "auto_narrow_string_offsets": [
+          0,
+          24,
+          48,
+          72
+        ],
+        "auto_record_stride": 136,
+        "auto_int4_vector_offset": 104,
+        "auto_int4_stride": 16,
+        "auto_word_double_vector_offset": 116,
+        "auto_word_double_stride": 32,
+        "auto_narrow_string_codec": "native ACP->CStringW->UTF8, including one terminal NUL in serialized length",
+        "native_store_complete_for_known_cache": true
+      },
+      "cache_guards": [
+        {
+          "name": "EnsureBackend",
+          "module": "McgsSetPro.exe",
+          "rva": 107904,
+          "bytes": "558bec6aff688466031064a1000000005083ec6856a15c15061033c5508d45f464a300000000c745a0000000008b4508837810007405e9e00200006a40e89668010083c4048945e8c745fc00000000837de800740d8b4de8e8e32f00008945e4eb07c745e4000000008b4de4894db4c745fcffffffff8b55088b45b48942108b4d088b51108955f08b450850e88f29000083c4046aff6a0c8b4df0e8605affff8b4df0c7411c000000006a18e82768010083c4048945e0c745fc01000000837de000740d8b4de0e89471ffff8945dceb07c745dc000000008b55dc8955b0c745fcffffffff8b45f08b4db08948188b55088b4a0ce85761000085c00f86760100008b45088b480ce8c4600000c745ec00000000c745d0000000008d4dec518d55d0528b45088b480ce8236400008bc8e81c6400006a14e89d67010083c4048945d8c745fc02000000837dd800740d8b4dd8e8ca53ffff8945d4eb07c745d4000000008b4dd4894dacc745fcffffffff8b55ac528b45088b481083c114e82f3b00008b4dec894da8817da8d00700007402eb2e8b55088b4a1083c114e8903000008945cc8b45ec508b4dd0518b55088b420c508b4dcc8b118b4dcc8b02ffd0eb0883c8ffe9580100008b4d088b491083c114e85a3000008945c88b55088b4210508b4dc88b118b4dc88b4208ffd08b4df083c11c518b55088b4a0ce8516300008b45f08b4818518b55088b4a0ce88f6700008d4d8ce89d670100c745fc030000008b45088b480ce8256000008bf08b4d088b490ce8f85f00002bf08975c46aff8b55c4528d4d8ce8716701008b45c4508d4d8ce8e9320000508b4d088b490ce82d610000c745fcffffffff8d4d8ce850670100e98a0000006a14e85a66010083c4048945c0c745fc04000000837dc000740d8b4dc0e88752ffff8945bceb07c745bc000000008b55bc8955a4c745fcffffffff8b45a4508b4d088b491083c114e8ec3900008b55088b4a1083c114e85e2f00008945b88b45088b4810518b55b88b028b4db88b5008ffd28b450850e8ee14000083c4048b4d0851e83200000083c4048b55f0f20f1005d0220510f20f1142288b45f0c7403000000000b8010000008b4df464890d00000000595e8be55dc3",
+          "reloc_offsets": [
+            6,
+            22,
+            776
+          ]
+        },
+        {
+          "name": "ReadyGet",
+          "module": "McgsSetPro.exe",
+          "rva": 123600,
+          "bytes": "558bec83ec088b450850e8a1c2ffff83c40485c07d0883c8ffe9110100006aff6a0c8b4d0ce8e82b01006aff6a0c8b4d10e8dc2b01006aff6a0c8b4d14e84e200000c745f800000000c745fc00000000eb098b4dfc83c101894dfc837dfc0c0f83c50000008b55fc8d049554330610508b4dfc518b4d0ce844f4ffff8bc8ff15c0b304108b55fc833c95a823051000753e8b45fc508b4d14e8731a0000c600008b4dfc518b55088b4a10e8711bffff8b0050688c2605108b4dfc518b4d10e8fdf3ffff50ff1558b3041083c40ceb568b55fc528b4d14e8351a0000c600018b45fc508b4d088b4910e8331bffff8b55f803108b0495483006105068a02605108b4dfc518b4d10e8b5f3ffff50ff1558b3041083c40c8b55fc8b45f8030495a82305108945f8e928ffffffb8010000008be55dc21000cccccccccccccccccccccc",
+          "reloc_offsets": [
+            107,
+            128,
+            138,
+            179,
+            198,
+            245,
+            251,
+            270,
+            286
+          ]
+        },
+        {
+          "name": "ReadySet",
+          "module": "McgsSetPro.exe",
+          "rva": 124128,
+          "bytes": "558bec83ec248b450850e891c0ffff83c40485c07d0883c8ffe936020000c745e4000000008b4d0ce8d3f5ffff8945ec837dec0c7607c745ec0c000000c745fc00000000eb098b4dfc83c101894dfc8b55fc3b55ec0f8dc30100008b45fc8d0c8554330610ff15a4b30410508b4dfc518b4d0ce838f2ffff8bc8ff156cb3041085c00f85910100008b55fc833c95a8230510000f850d0100008b45fc508b4d10e80bf2ffff508d4df8ff15f0b304108d4df8ff1504b2041085c00f8edb0000008d4df8ff1540b304108d4df8ff1544b304108d4df8ff1548b30410c745e800000000c745f0000000006a00b930340610ff15a4b30410508d4df8ff1564b304108945e8837de8007c628d4df8ff1504b204102b45e883e802508d4ddc518d4df8ff1560b30410508d4df8ff15c0b304108d4ddcff15e8b304108d55f05268382805108d4df8ff15a4b3041050ff15ccb0041083c40c8b45fc508b4d088b4910e8ac18ffff8b55f08910eb308d45f05068702805108d4df8ff15a4b3041050ff15ccb0041083c40c8b4dfc518b55088b4a10e87a18ffff8b4df089088d4df8ff15e8b30410eb73c745f400000000eb098b55f483c2018955f48b45fc8b4df43b0c85a823051073428b55e40355f48d0c9548300610ff15a4b30410508b45fc508b4d10e8c9f0ffff8bc8ff156cb3041085c075148b4dfc518b55088b4a10e80e18ffff8b4df48908eba68b55fc8b45e4030495a82305108945e4e928feffff8b4d088b491083c114e8a4f0ffff8945e08b55088b4210508b4de08b118b4de08b420cffd08b4d0851e884c1ffff83c404b8010000008be55dc20c00cccccccccccc558bec51b90c310610e8826cfeff508d4dfcff15c4b30410508b4d08ff15c0b304108d4dfcff15e8b304108b450cc700ee134b7db8010000008be55dc20800cc558bec8b450850e8f4bdffff83c40485c07d0583c8ffeb198b4d10518b550c528b450850e887c1ffff83c40cb8010000005dc20c00cccccccccccccccccccccc558bec8b450cc60001b8010000005dc22400cccccccccccccccccccccccccccc",
+          "reloc_offsets": [
+            97,
+            103,
+            124,
+            142,
+            171,
+            180,
+            197,
+            206,
+            215,
+            236,
+            242,
+            252,
+            270,
+            290,
+            300,
+            309,
+            318,
+            327,
+            334,
+            368,
+            377,
+            384,
+            416,
+            449,
+            464,
+            470,
+            491,
+            530,
+            613,
+            628,
+            638,
+            647
+          ]
+        },
+        {
+          "name": "CachedSave",
+          "module": "McgsSetPro.exe",
+          "rva": 108720,
+          "bytes": "558bec83ec088b45088b480ce88f5e00008b4d088b51108955f88b45088b481083c114e8d82e00008945fc8b4d088b510c528b45fc8b108b4dfc8b4204ffd08b4df88b511c528b45088b480ce8af6100008b4df88b5118528b45088b480ce8dd6500008b4d08518b55088b4a1083c134e8fb87feff8be55dc3",
+          "reloc_offsets": []
+        },
+        {
+          "name": "InfoStore",
+          "module": "McgsSetPro.exe",
+          "rva": 64368,
+          "bytes": "558bec51894dfca18cef0410508b4d08e82b0f01008b0d90ef0410518b4d08e81c0f01008b158cef0410528b45fc83c004508b4d08e8660d010033c08be55dc20400",
+          "reloc_offsets": [
+            8,
+            23,
+            38
+          ]
+        },
+        {
+          "name": "ChannelStore",
+          "module": "McgsSetPro.exe",
+          "rva": 72352,
+          "bytes": "558bec83ec0c894dfc8b4d08e86fec00000fb6c085c075328b4dfc83c114518b4d08e809f000008b55fc83c204528b4d08e8faef00008b45fc8b4804518b4dfc83c108e898820000eb2c8b4dfce87e0300008b55fc8942048b45fc8b4814518b4d08e8a9ef00008b55fc8b4204508b4d08e89aef0000c745f800000000eb098b4df883c101894df88b4dfce8400300003945f87d258b55f8528b4dfc83c108e89c5600008945f48b4508508b4df48b118b4df48b4204ffd0ebc58be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoStore",
+          "module": "McgsSetPro.exe",
+          "rva": 12576,
+          "bytes": "558bec83ec0c894df48b4df4e8bf0000008945f868401f00008b45088b480ce86cd901008b4df8518b55088b4a0ce85dd90100c745fc00000000eb098b45fc83c0018945fc8b4dfc3b4df87d198b5508528b45fc508b4df4e8231500008bc8e8acf9ffffebd633c08be55dc20400cccc558bec51894dfc8b450c508b4d08518b4dfce8191500008bc8e852ebffff8be55dc20800cccccccccccccccccccccccc558bec51894dfc8b4518508b4d14518b5510528b450c508b4d08518b4dfce8dd1400008bc8e836ebffff8be55dc21400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "InfoAccess",
+          "module": "McgsSetPro.exe",
+          "rva": 120752,
+          "bytes": "558bec51894dfc8b4dfce81100000050e83b09000083c4048be55dc3cccccccc558bec51894dfc8b45fc8b008be55dc3558bec6aff681969031064a100000000",
+          "reloc_offsets": [
+            54
+          ]
+        },
+        {
+          "name": "BackendCtor",
+          "module": "driver-ui",
+          "rva": 120256,
+          "bytes": "558bec6aff68f368031064a1000000005051a15c15061033c5508d45f464a300000000894df08b4df0e8b2feffffc745fc000000008b4df083c114e870ffffffc645fc018b4df083c134e821000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+          "reloc_offsets": [
+            6,
+            19
+          ]
+        },
+        {
+          "name": "IntArrayCtor",
+          "module": "driver-ui",
+          "rva": 119968,
+          "bytes": "558bec51894dfc8b4dfce86196ffff8b45fcc700a82205108b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+          "reloc_offsets": [
+            20
+          ]
+        },
+        {
+          "name": "ReadyEnum",
+          "module": "driver-ui",
+          "rva": 123920,
+          "bytes": "558bec83ec0c8b450850e861c1ffff83c40485c07d0883c8ffe99d000000c745f400000000c745fc00000000eb098b4dfc83c101894dfc837dfc0c73798b55fc8d0c9554330610ff15a4b30410508b4d0cff156cb3041085c075468b45fc833c85a8230510007639c745f800000000eb098b4df883c101894df88b55fc8b45f83b0495a823051073188b4df4034df88d148d48300610528b4d10e881190000ebd08b45fc8b4df4030c85a8230510894df4e978ffffffb8010000008be55dc20c00cccccccccccccccccccccccccccccc",
+          "reloc_offsets": [
+            67,
+            73,
+            83,
+            97,
+            131,
+            146,
+            170
+          ]
+        },
+        {
+          "name": "ChannelItemStore",
+          "module": "driver-ui",
+          "rva": 71040,
+          "bytes": "558bec83ec50a15c15061033c58945fc894db08b4d08e885f100000fb6c085c075206a248d4dd8518b4d08e880f300008d55d8528b45b0508b4db0e830010000eb1e8d4db4518b55b0528b4db0e87e0000006a248d45b4508b4d08e830f300008b4dfc33cde808ff01008be55dc20400",
+          "reloc_offsets": [
+            7
+          ]
+        },
+        {
+          "name": "ChannelItemToWire36",
+          "module": "driver-ui",
+          "rva": 71248,
+          "bytes": "558bec51894dfc68282706108b4d08e89cfdffff8b4d0c894108685c2706108b4d08e889fdffff8b550c89420c68242706108b4d08e876fdffff8b4d0c89410468442906108b4d08e863fdffff8b550c89421468ec2706108b4d08e850fdffff8b4d0c8941108b550cc742180000000068202406108b4d08e833fdffff8b4d0c89411c8b550cc702000000008b450cc74020010000008be55dc2",
+          "reloc_offsets": [
+            8,
+            27,
+            46,
+            65,
+            84,
+            113
+          ]
+        },
+        {
+          "name": "ChannelFindKeyIndex",
+          "module": "driver-ui",
+          "rva": 71152,
+          "bytes": "558bec83ec08894df8c745fc00000000eb098b45fc83c0018945fc8b4dfc3b0df023061073298b5508528b45fc50b958290610e8785b000050e8d259000083c4080fb6c885c974058b45fceb0aebc3a1f023061083c00a8be55dc20400",
+          "reloc_offsets": [
+            32,
+            47,
+            80
+          ]
+        },
+        {
+          "name": "ChannelGetKeyValue",
+          "module": "driver-ui",
+          "rva": 70656,
+          "bytes": "558bec83ec08894df88b4508508b4df8e8db0100008945fc8b55fc528b4df883c104e8395d00008b008be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "ChannelItemAt",
+          "module": "driver-ui",
+          "rva": 94688,
+          "bytes": "558bec51894dfc8b45086bc01c8b4dfc03018be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "ChannelIntAt",
+          "module": "driver-ui",
+          "rva": 94560,
+          "bytes": "558bec51894dfc8b45fc8b088b55088d04918be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "ChannelCStringAt",
+          "module": "driver-ui",
+          "rva": 94624,
+          "bytes": "558bec51894dfc8b45fc8b088b55088d04918be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "ChannelKeyCompare",
+          "module": "driver-ui",
+          "rva": 94208,
+          "bytes": "558bec518b4d0cff15a4b30410508b4d08ff159cb3041085c07509c745fc01000000eb07c745fc000000008a45fc8be55dc3",
+          "reloc_offsets": [
+            9,
+            19
+          ]
+        },
+        {
+          "name": "AutoRecordStore",
+          "module": "driver-ui",
+          "rva": 11056,
+          "bytes": "558bec6aff686b24031064a1000000005083ec30a15c15061033c58945f0508d45f464a300000000894dd48d4dd8e8cd160000c745fc000000008d45d8508b4dd451e83908000083c4088d4dd8e8be2d0000508b55088b4a0ce822df01008d4dd8e8aa2d0000508d4dd8e831280000508b45088b480ce845dc01008d4dd8518b55d483c21852e8f507000083c4088d4dd8e87a2d0000508b45088b480ce8dede01008d4dd8e8662d0000508d4dd8e8ed270000508b4d088b490ce801dc01008d55d8528b45d483c03050e8b107000083c4088d4dd8e8362d0000508b4d088b490ce89ade01008d4dd8e8222d0000508d4dd8e8a9270000508b55088b4a0ce8bddb01008d45d8508b4dd483c14851e86d07000083c4088d4dd8e8f22c0000508b55088b4a0ce856de01008d4dd8e8de2c0000508d4dd8e865270000508b45088b480ce879db01008b4dd483c168e8be3500008945d08b4dd0518b55088b4a0ce81cde0100c745cc00000000eb098b45cc83c0018945cc8b4dcc3b4dd07d1c8b5508528b45cc508b4dd483c168e8bf1900008bc8e818ecffffebd38b4dd483c174e84b3500008945d08b4dd0518b55088b4a0ce8c9dd0100c745c800000000eb098b45c883c0018945c88b4dc83b4dd07d1c8b5508528b45c8508b4dd483c174e82c1900008bc8e8d5e6ffffebd38b4dd48b5164528b45088b480ce8c1dd01008b4dd48b5160528b45088b480ce8afdd01008b4dd48b9180000000528b45088b480ce85add01008b4dd48b9184000000528b45088b480ce885dd0100c745c400000000c745fcffffffff8d4dd8e88f1500008b45c48b4df464890d00000000598b4df033cde859e702008be55dc20400",
+          "reloc_offsets": [
+            6,
+            21
+          ]
+        },
+        {
+          "name": "AutoDword4Store",
+          "module": "driver-ui",
+          "rva": 6368,
+          "bytes": "558bec51894dfc8b45fc8b08518b55088b4a0ce8b8f101008b45fc8b4804518b55088b4a0ce8a6f101008b45fc8b4808518b55088b4a0ce894f101008b45fc8b480c518b55088b4a0ce882f1010033c08be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoWordDoubleStore",
+          "module": "driver-ui",
+          "rva": 5104,
+          "bytes": "558bec51894dfc8b45fc8b08518b55088b4a0ce8e8f601008b45fc8b4804518b55088b4a0ce8d6f601008b45fc83ec08f20f104008f20f1104248b4d088b490ce8fbf701008b55fc8b4210508b4d088b490ce869f601008b55fc8b4214508b4d088b490ce897f601008b55fc8b4218508b4d088b490ce885f601008b55fc8b421c508b4d088b490ce873f6010033c08be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoRecordAt",
+          "module": "driver-ui",
+          "rva": 18080,
+          "bytes": "558bec51894dfc8b450869c0880000008b4dfc03018be55dc20400",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoRecordCount",
+          "module": "driver-ui",
+          "rva": 25184,
+          "bytes": "558bec51894dfc8b45fc8b4dfc8b40042b0199b988000000f7f98be55dc3",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoInt4Count",
+          "module": "driver-ui",
+          "rva": 25152,
+          "bytes": "558bec51894dfc8b45fc8b4dfc8b40042b01c1f8048be55dc3",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoWordDoubleCount",
+          "module": "driver-ui",
+          "rva": 25120,
+          "bytes": "558bec51894dfc8b45fc8b4dfc8b40042b01c1f8058be55dc3",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoNarrowStringToUtf8",
+          "module": "driver-ui",
+          "rva": 13232,
+          "bytes": "558bec6aff689924031064a1000000005083ec10a15c15061033c5508d45f464a3000000008d4decff15f4b30410c745fc000000008d45ec508b4d0851e86efeffff83c4088945f0837df0007f238b4d0ce8ca2000008b55f08955e8c745fcffffffff8d4decff15e8b304108b45e8eb2c8b450c508d4dec51e8f2feffff83c4088945f08b55f08955e4c745fcffffffff8d4decff15e8b304108b45e48b4df464890d00000000598be55dc3",
+          "reloc_offsets": [
+            6,
+            21,
+            42,
+            104,
+            150
+          ]
+        },
+        {
+          "name": "AutoACPToWide",
+          "module": "driver-ui",
+          "rva": 12896,
+          "bytes": "558bec83ec08c745fc000000006a006a006aff8b4d08e855210000506a006a00ff150cb004108945f8837df800750733c0e9830000008b45f8d1e0506a00ff1508b0041050ff1530b004108945fc837dfc00750433c0eb618b4df8518b55fc526aff8b4d08e806210000506a006a00ff150cb004103945f874178b45fc506a00ff1508b0041050ff1504b0041033c0eb288b4dfc518b4d0cff15e4b304108b55fc526a00ff1508b0041050ff1504b004108b4d08e8272600008be55dc3cccccc",
+          "reloc_offsets": [
+            34,
+            64,
+            71,
+            113,
+            130,
+            137,
+            154,
+            166,
+            173
+          ]
+        },
+        {
+          "name": "AutoWideToUtf8",
+          "module": "driver-ui",
+          "rva": 13088,
+          "bytes": "558bec516a006a006a006a006aff6a008b4d08ff15f8b30410506a0068e9fd0000ff1510b004108945fc837dfc007d0583c8ffeb558b45fc508b4d0ce8cf2d00006a006a008b4dfc518b4d0ce8af210000506aff6a008b4d08ff15f8b30410506a0068e9fd0000ff1510b004108945fc837dfc007d0583c8ffeb0f8b55fc528b4d0ce8892d00008b45fc8be55dc3",
+          "reloc_offsets": [
+            21,
+            35,
+            91,
+            105
+          ]
+        },
+        {
+          "name": "AutoNarrowStringData",
+          "module": "driver-ui",
+          "rva": 19824,
+          "bytes": "558bec83ec08894dfc8b45fc8378141072138b4dfc8b1152e883edffff83c4048945f8eb068b45fc8945f88b45f88be55dc3",
+          "reloc_offsets": []
+        },
+        {
+          "name": "AutoNarrowStringSize",
+          "module": "driver-ui",
+          "rva": 22848,
+          "bytes": "558bec51894dfc8b45fc8b40108be55dc3",
+          "reloc_offsets": []
+        }
+      ],
+      "cache_data_guards": [
+        {
+          "name": "EnumCounts",
+          "module": "McgsSetPro.exe",
+          "rva": 336808,
+          "bytes": "000000000000000002000000040000000400000002000000020000000200000002000000020000000200000002000000",
+          "reloc_offsets": []
+        },
+        {
+          "name": "InfoTable",
+          "module": "McgsSetPro.exe",
+          "rva": 324316,
+          "bytes": "20fb001070fb0010c0fb0010d0fc0010",
+          "reloc_offsets": [
+            0,
+            4,
+            8,
+            12
+          ]
+        },
+        {
+          "name": "ChannelTable",
+          "module": "McgsSetPro.exe",
+          "rva": 330124,
+          "bytes": "40780110a01a0110",
+          "reloc_offsets": [
+            0,
+            4
+          ]
+        },
+        {
+          "name": "InfoSizeVersion",
+          "module": "McgsSetPro.exe",
+          "rva": 323468,
+          "bytes": "0e000000d0070000",
+          "reloc_offsets": []
+        },
+        {
+          "name": "IntArrayTable",
+          "module": "driver-ui",
+          "rva": 336552,
+          "bytes": "ac0e0310a0d9011000db01100079011010790110",
+          "reloc_offsets": [
+            0,
+            4,
+            8,
+            12,
+            16
+          ]
+        },
+        {
+          "name": "ChannelItemTable",
+          "module": "driver-ui",
+          "rva": 330112,
+          "bytes": "1078011080150110",
+          "reloc_offsets": [
+            0,
+            4
+          ]
+        }
+      ]
+    },
+    {
+      "key": "McgsIoT",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\McgsIoT\\McgsIoT.ui",
+      "sha256": "b13f70ca606e3a6cc34d9d65f018a26a81888d3fd86fd035960a5ae3c521285a",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 23984,
+          "bytes": "558bec568b7508837e100075436a40ff1558a1001083c40485c074098bc8e8ad",
+          "reloc_offsets": [
+            17
+          ]
+        },
+        "SvrGetProperty": {
+          "rva": 22368,
+          "bytes": "558bec83e4c083ec34538b5d0856837b100057753b6a40ff1558a1001083c404",
+          "reloc_offsets": [
+            25
+          ]
+        },
+        "SvrSetProperty": {
+          "rva": 23072,
+          "bytes": "558bec83ec28a118c0001033c58945fc8b4d0c8b4510538b5d0856837b100057",
+          "reloc_offsets": [
+            7
+          ]
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 22880,
+          "bytes": "558bec53568b750857837e1000753b6a40ff1558a1001083c40485c074098bc8",
+          "reloc_offsets": [
+            19
+          ]
+        },
+        "_SvrSaveDevData@4": {
+          "rva": 24736,
+          "bytes": "558bec8b4d08e835baffffb8010000005dc2",
+          "reloc_offsets": []
+        }
+      },
+      "get_supported_static": true,
+      "success_return_without_output_is_support": false,
+      "cache_layout": {
+        "backend_size": 64,
+        "property_count": 9,
+        "int_array_vtable_rva": 42596,
+        "double_array_vtable_rva": 42572,
+        "enum_counts": [
+          2,
+          0,
+          0,
+          2,
+          0,
+          2,
+          2,
+          2,
+          0
+        ],
+        "get_kinds": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3
+        ],
+        "save_kinds": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          3
+        ],
+        "serialized_tail_hex": "284e0c000000",
+        "native_store_complete_for_known_cache": true
+      },
+      "cache_guards": [
+        {
+          "name": "ReadyGet",
+          "module": "McgsSetPro.exe",
+          "rva": 22368,
+          "bytes": "558bec83e4c083ec34538b5d0856837b100057753b6a40ff1558a1001083c40485c074098bc8e8f5c2ffffeb0233c08bcb894310e887e7ffff8b430c8bcb83780c007607e8c7c6ffffeb05e830c3ffff8b4d0c8b3540a100106aff6a09ffd68b5d106aff6a098bcbffd6518b4d146a09e8fb08000033f6c7442438000000008974243c85f60f88660100008b4d0c3b71080f8d5a0100008b49048d3cb50000000003cf8d8758c9001050ff1518a1001083bf00a60010008b45140f85bd0000003b70080f8d280100008b4004c60406008b8724a6001048747048742c480f85e90000003b73080f8d050100008b45088b53048b401003d78b4828034c243ce84d0c0000e9c40000008b45088b40103b701c0f8dda0000003b73080f8dd10000008b401883ec08f20f1004f08b4304f20f11042403c76894a6001050ff1508a1001083c410e9830000008b45088b40103b70080f8d990000003b73080f8d900000008b4004ff34388b430403c76878a6001050ff1508a1001083c40ceb4f3b70087d6f8b4004c60406018b45088b40103b70087d5d3b73087d588b40048b043803442438ff348518c900108b430403c7689ca6001050ff1508a100108b4c244483c40c038f00a60010894c24388b44243c83c018468944243c3dd80000000f8ca0feffff5f5eb8010000005b8be55dc21000ff153ca10010cccccccccccccccccc",
+          "reloc_offsets": [
+            25,
+            85,
+            165,
+            172,
+            178,
+            210,
+            310,
+            317,
+            365,
+            372,
+            422,
+            432,
+            439,
+            452,
+            499
+          ]
+        },
+        {
+          "name": "ReadySet",
+          "module": "McgsSetPro.exe",
+          "rva": 23072,
+          "bytes": "558bec83ec28a118c0001033c58945fc8b4d0c8b4510538b5d0856837b100057895de0894df08945e4753e6a40ff1558a1001083c40485c074098bc8e81fc0ffffeb0233c08bcb894310e8b1e4ffff8b430c8bcb83780c007607e8f1c3ffffeb05e85ac0ffff8b4df033ffc745e800000000897deceb098da424000000008bff8d34bd0000000085ff0f88fc0100003b79080f8df30100008b4904ffb658c9001003ceff1520a1001085c00f85c10100008b8600a6001085c00f85550100008b45e43b78080f8dc00100008b400403c6508d4df8ff150ca100108b8624a60010c745f400000000480f8481000000487426480f85110100008b43108d4df88b50280355ece8d70800008d4df8ff1514a10010e95b0100008d4df8ff15fca000108d4df8ff15f8a000108d4df8ff15f0a000108b45f88378f4000f8eca0000008b4b103b791c0f8d400100008b49188d0cf9516894a6001050ff15b0a0001083c40c8d4df8ff1514a10010e9030100008d4df8ff15fca000108d4df8ff15f8a000108d4df8ff15f0a000108b45f88378f4007e766a00ff35acc900108d4df8ff15f4a0001085c078378b4df88b49f42bc883e902518d45d8508d4df8ff1500a10010508d4df8ff1518a100108d4dd8ff1514a100108d45f4506880a60010eb098d45f4506878a60010ff75f8ff15b0a000108b4b1083c40c3b79080f8d8b0000008b49048b45f489040e8d4df8ff1514a10010eb5e33db85c074498b45e88d048518c900108945dc8b4de43b79087d5c8b4904ff3003ceff1520a1001085c075118b45e08b40103b78087d408b4004891c068b45dc4383c0048945dc3b9e00a6001072c48b4de8038e00a600108b5de0894de88b45ec83c018478945ec3dd80000007d0e8b4df0e9f5fdffffff153ca100108bcbe828beffff8b4dfc5f5e33cdb8010000005be8800800008be55dc20c00558bec8b4d086850c90010ff1518a100108b450cc700b6144b7db8010000005dc20800cccccccccccccccccccccccccc558bec568b7508837e1000753b6a40ff1558a1001083c40485c074098bc8e85dbdffffeb0233c08bce894610e8efe1ffff8b460c8bce83780c007607e82fc1ffffeb05e898bdffffff75108b550ce8adc0ffff83c404b8010000005e5dc20c00558bec8b450cc60001b8010000005dc22400cccccccccccccccccccccccccccc558bec8b450cc60001b8010000005dc20800ccccccccccccccccccccccccccccb801000000c20400cccccccccccccccc",
+          "reloc_offsets": [
+            7,
+            47,
+            157,
+            165,
+            179,
+            214,
+            220,
+            270,
+            284,
+            293,
+            302,
+            339,
+            346,
+            358,
+            372,
+            381,
+            390,
+            407,
+            416,
+            445,
+            455,
+            464,
+            473,
+            484,
+            493,
+            526,
+            544,
+            568,
+            605,
+            616,
+            653,
+            695,
+            701,
+            753
+          ]
+        },
+        {
+          "name": "CachedSave",
+          "module": "McgsSetPro.exe",
+          "rva": 6880,
+          "bytes": "558bec83e4f883ec1ca118c0001033c4894424185356578bf96a018b470c897c2418c74018000000008b4f0ce82f3a00008b4f0c6a048d44241450c744241809000000e8c83a000033db33c9894c24108b049d64a50010480f84f4000000487448480f85980100008b47108b702803f18b4f0c85c90f84810100008b7e106a048d44241c50897c2420e8823a0000837e141072028b36578b7c2418568b4f0ce86c3a0000e9530100008b471085db0f88b60100003b581c0f8dad0100008b40188b770cf20f1004d8837e1c00f20f1144241c75296a018bcee883390000837e1c008b4c241075168b461883c00839460c0f9dc084c00f8405010000eb268b46188b4e0c83c0083bc87d198d91964000008d4e046aff3bd07c0352eb0150ff1504a1001033ff8b561803d70f883a0100003b560c0f8d310100008a443c1c8b4e084788040a83ff087cdc83461808e9a60000008b471085db0f880d0100003b58080f8d040100008b40048b770c8b0498837e1c008944241875256a018bcee8de380000837e1c008b4c241075128b461883c00439460c0f9dc084c07464eb268b46188b4e0c83c0043bc87d198d91964000008d4e046aff3bd07c0352eb0150ff1504a1001033ffeb088da42400000000908b561803d70f888f0000003b560c0f8d860000008a443c188b4e084788040a83ff047cdc834618048b7c24148b4c241083c11843894c241081f9d80000000f8c3cfeffff8b770cc74424100c000000837e1c000f85880000008b4618c7461c0100000085c0740c6aff8d4e0450ff1504a100108b461cc746180000000083f801751e6a028d44241c508bcec7442420284e0000e8a8380000eb2fff153ca1001085c07525894424146a028d442418508bcee82a390000b8204e000066394424147307c7461800000000837e1c0075128b461883c00439460c0f9dc084c07455eb268b46188b4e0c83c0043bc87d198d91964000008d4e046aff3bd07c0352eb0150ff1504a1001033ff8da424000000008b561803d778833b560c0f8d7affffff8a443c108b4e084788040a83ff047ce0834618048b4c24245f5e5b33cc33c0e8564700008be55dc3",
+          "reloc_offsets": [
+            10,
+            83,
+            287,
+            448,
+            575,
+            620,
+            723
+          ]
+        },
+        {
+          "name": "Utf8ToCString",
+          "module": "McgsSetPro.exe",
+          "rva": 25776,
+          "bytes": "558bec5156578bfa8bf18bcfff152ca100108b4e1085c975085f33c05e8be55dc3837e141072048b06eb028bc66a006a0051506a0068e9fd0000ff150ca0001085c07e44837e14108b4e10894dfc72028b3650508bcfff1528a1001050ff75fc566a0068e9fd0000ff150ca000106aff8bcf8bf0ff1524a1001085f67f088bcfff152ca100",
+          "reloc_offsets": [
+            14,
+            60,
+            88,
+            106,
+            118,
+            130
+          ]
+        },
+        {
+          "name": "ReadyEnum",
+          "module": "driver-ui",
+          "rva": 22880,
+          "bytes": "558bec53568b750857837e1000753b6a40ff1558a1001083c40485c074098bc8e8fbc0ffffeb0233c08bce894610e88de5ffff8b460c8bce83780c007607e8cdc4ffffeb05e836c1ffff33db895d0833f6ffb658c900108b4d0cff1520a1001085c0753a8b8600a6001085c0743033ff85c0742a8d1c9d18c90010eb038d49008b451053ff70088bc8ff15e0a000104783c3043bbe00a6001072e58b5d08039e00a6001083c604895d0883fe247ca25f5eb8010000005b5dc20c00cccccccccc",
+          "reloc_offsets": [
+            19,
+            83,
+            92,
+            102,
+            119,
+            139,
+            149,
+            160
+          ]
+        }
+      ],
+      "cache_data_guards": [
+        {
+          "name": "EnumCounts",
+          "module": "McgsSetPro.exe",
+          "rva": 42496,
+          "bytes": "020000000000000000000000020000000000000002000000020000000200000000000000",
+          "reloc_offsets": []
+        },
+        {
+          "name": "GetKinds",
+          "module": "McgsSetPro.exe",
+          "rva": 42532,
+          "bytes": "010000000100000001000000010000000100000001000000010000000100000003000000",
+          "reloc_offsets": []
+        },
+        {
+          "name": "SaveKinds",
+          "module": "McgsSetPro.exe",
+          "rva": 42340,
+          "bytes": "010000000100000001000000010000000100000001000000010000000100000003000000",
+          "reloc_offsets": []
+        },
+        {
+          "name": "IntArrayTable",
+          "module": "McgsSetPro.exe",
+          "rva": 42596,
+          "bytes": "446500104047001020450010601a0010701a0010",
+          "reloc_offsets": [
+            0,
+            4,
+            8,
+            12,
+            16
+          ]
+        },
+        {
+          "name": "DoubleArrayTable",
+          "module": "McgsSetPro.exe",
+          "rva": 42572,
+          "bytes": "4465001080470010e0460010601a0010701a0010",
+          "reloc_offsets": [
+            0,
+            4,
+            8,
+            12,
+            16
+          ]
+        }
+      ]
+    },
+    {
+      "key": "monidevdrv",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\通用设备\\模拟数据设备\\monidevdrv.ui",
+      "sha256": "291d6e0fd5dfd1b71afa5c7172f69e6db6b6863b969c51bdc665cd566c5be1b9",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 8336,
+          "bytes": "558becff7508e8c5f7ffff6809040000e85befffff83c408b8010000005dc204",
+          "reloc_offsets": []
+        },
+        "SvrGetProperty": {
+          "rva": 8224,
+          "bytes": "b801000000c21000cccccccccccccccc558bec56578b7d088b771085f6743f80",
+          "reloc_offsets": []
+        },
+        "SvrSetProperty": {
+          "rva": 8384,
+          "bytes": "558bec578b7d08837f1000753f566a28e8591300008bf083c40485f674288d4e",
+          "reloc_offsets": []
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 7824,
+          "bytes": "b801000000c20c00cccccccccccccccc558bec56578b7d088b771085f6741f8b",
+          "reloc_offsets": []
+        }
+      },
+      "get_supported_static": false,
+      "success_return_without_output_is_support": false,
+      "cache_layout": {
+        "get_supported": false,
+        "reason": "success_without_outputs"
+      },
+      "cache_guards": [],
+      "cache_data_guards": []
+    }
+  ],
+  "get_signature": "ThisCall void(complete, CStringArray* values, CStringArray* names, CArray<int,int>* enumOwnedPointers), ret12",
+  "set_signature": "ThisCall int(complete, CStringArray* names, CStringArray* values), ret8",
+  "preclaim_driver_frontend_init_or_Get": false,
+  "private_config_chain": "factory -> original deep clone current target -> original InitDevSet frontend -> full Get/verify user before values -> original Set -> full Get selected/untouched/enum check -> original model remove/release frontend/clone into same existing target -> restore name/parent/register -> fresh target Get exact full properties",
+  "runtime_exports_called": false,
+  "native_execution_performed": false,
+  "actual_verified": false,
+  "supersedes_profile_sha256": "6d2c19d30195b2796d47a2e14bf02a324e4187f4bf9cdf10723033675080c806",
+  "cold_catalog_contract": "claimed private factory/deep-clone/Get; source STORE visual projection and one serial allocation explicitly authorized; no canonical property Set/LOAD/model remove",
+  "warm_catalog_contract": "claimed original Get only after exact non-null backend and borrowed used-buffer preimage; no Initialize/STORE/Set; before/after exact",
+  "native_stream_collect_contract": "565620->561700 always copies current stream, unlike565660->561790 E_NOTIMPL early exit; McgsIoT decorated native save is bound exactly before collect",
+  "known_cache_projection": "H5U ChannelConfig.cached_count at+4 becomes vector size; every original uint32 preserved, no broad masks"
+}

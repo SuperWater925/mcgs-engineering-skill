@@ -1,0 +1,3378 @@
+{
+  "schema": 1,
+  "source_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "scope": "Independent raw layout supplement; native functions are static evidence, not to be invoked by the raw reader.",
+  "functions": [
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918e60",
+      "resolved": "0x918e60",
+      "jump_chain": [
+        "0x918e60"
+      ],
+      "code": [
+        {
+          "address": "0x918e60",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918e61",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918e63",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918e64",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918e67",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918e6a",
+          "mnemonic": "call",
+          "operands": "0x4353be"
+        },
+        {
+          "address": "0x918e6f",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x918e70",
+          "mnemonic": "call",
+          "operands": "0x42d178"
+        },
+        {
+          "address": "0x918e75",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918e78",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918e7a",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918e7b",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918e6a",
+          "target": "0x4353be",
+          "resolved": "0x918f50",
+          "jump_chain": [
+            "0x4353be",
+            "0x918f50"
+          ]
+        },
+        {
+          "at": "0x918e70",
+          "target": "0x42d178",
+          "resolved": "0x9252e0",
+          "jump_chain": [
+            "0x42d178",
+            "0x9252e0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f50",
+      "resolved": "0x918f50",
+      "jump_chain": [
+        "0x918f50"
+      ],
+      "code": [
+        {
+          "address": "0x918f50",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f51",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918f53",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f54",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918f57",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918f5a",
+          "mnemonic": "call",
+          "operands": "0x41c3ff"
+        },
+        {
+          "address": "0x918f5f",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918f61",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f62",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918f5a",
+          "target": "0x41c3ff",
+          "resolved": "0x918ef0",
+          "jump_chain": [
+            "0x41c3ff",
+            "0x918ef0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918ef0",
+      "resolved": "0x918ef0",
+      "jump_chain": [
+        "0x918ef0"
+      ],
+      "code": [
+        {
+          "address": "0x918ef0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918ef1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918ef3",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918ef4",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918ef7",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918efa",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x918efc",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918efd",
+          "mnemonic": "call",
+          "operands": "0x44c9a6"
+        },
+        {
+          "address": "0x918f02",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918f05",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918f07",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f08",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918efd",
+          "target": "0x44c9a6",
+          "resolved": "0x91c210",
+          "jump_chain": [
+            "0x44c9a6",
+            "0x91c210"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c210",
+      "resolved": "0x91c210",
+      "jump_chain": [
+        "0x91c210"
+      ],
+      "code": [
+        {
+          "address": "0x91c210",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c211",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x91c213",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x91c216",
+          "mnemonic": "add",
+          "operands": "eax, 8"
+        },
+        {
+          "address": "0x91c219",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c21a",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "PrimaryNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x9252e0",
+      "resolved": "0x9252e0",
+      "jump_chain": [
+        "0x9252e0"
+      ],
+      "code": [
+        {
+          "address": "0x9252e0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x9252e1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x9252e3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x9252e6",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x9252e7",
+          "mnemonic": "call",
+          "operands": "0x44f2ff"
+        },
+        {
+          "address": "0x9252ec",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x9252ef",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x9252f0",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x9252e7",
+          "target": "0x44f2ff",
+          "resolved": "0x915af0",
+          "jump_chain": [
+            "0x44f2ff",
+            "0x915af0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryPairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915af0",
+      "resolved": "0x915af0",
+      "jump_chain": [
+        "0x915af0"
+      ],
+      "code": [
+        {
+          "address": "0x915af0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915af1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x915af3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x915af6",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915af7",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "PrimaryPairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918ec0",
+      "resolved": "0x918ec0",
+      "jump_chain": [
+        "0x918ec0"
+      ],
+      "code": [
+        {
+          "address": "0x918ec0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918ec1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918ec3",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918ec4",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918ec7",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918eca",
+          "mnemonic": "call",
+          "operands": "0x43112e"
+        },
+        {
+          "address": "0x918ecf",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x918ed0",
+          "mnemonic": "call",
+          "operands": "0x43abde"
+        },
+        {
+          "address": "0x918ed5",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918ed8",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918eda",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918edb",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918eca",
+          "target": "0x43112e",
+          "resolved": "0x918f90",
+          "jump_chain": [
+            "0x43112e",
+            "0x918f90"
+          ]
+        },
+        {
+          "at": "0x918ed0",
+          "target": "0x43abde",
+          "resolved": "0x925320",
+          "jump_chain": [
+            "0x43abde",
+            "0x925320"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f90",
+      "resolved": "0x918f90",
+      "jump_chain": [
+        "0x918f90"
+      ],
+      "code": [
+        {
+          "address": "0x918f90",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f91",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918f93",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f94",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918f97",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918f9a",
+          "mnemonic": "call",
+          "operands": "0x41e7b3"
+        },
+        {
+          "address": "0x918f9f",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918fa1",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918fa2",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918f9a",
+          "target": "0x41e7b3",
+          "resolved": "0x918f30",
+          "jump_chain": [
+            "0x41e7b3",
+            "0x918f30"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f30",
+      "resolved": "0x918f30",
+      "jump_chain": [
+        "0x918f30"
+      ],
+      "code": [
+        {
+          "address": "0x918f30",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f31",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918f33",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f34",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918f37",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918f3a",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x918f3c",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f3d",
+          "mnemonic": "call",
+          "operands": "0x446943"
+        },
+        {
+          "address": "0x918f42",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918f45",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918f47",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f48",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918f3d",
+          "target": "0x446943",
+          "resolved": "0x91c230",
+          "jump_chain": [
+            "0x446943",
+            "0x91c230"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c230",
+      "resolved": "0x91c230",
+      "jump_chain": [
+        "0x91c230"
+      ],
+      "code": [
+        {
+          "address": "0x91c230",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c231",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x91c233",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x91c236",
+          "mnemonic": "add",
+          "operands": "eax, 8"
+        },
+        {
+          "address": "0x91c239",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c23a",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "EnumNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x925320",
+      "resolved": "0x925320",
+      "jump_chain": [
+        "0x925320"
+      ],
+      "code": [
+        {
+          "address": "0x925320",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x925321",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x925323",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x925326",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x925327",
+          "mnemonic": "call",
+          "operands": "0x450c13"
+        },
+        {
+          "address": "0x92532c",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92532f",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x925330",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x925327",
+          "target": "0x450c13",
+          "resolved": "0x915b10",
+          "jump_chain": [
+            "0x450c13",
+            "0x915b10"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "EnumPairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915b10",
+      "resolved": "0x915b10",
+      "jump_chain": [
+        "0x915b10"
+      ],
+      "code": [
+        {
+          "address": "0x915b10",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915b11",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x915b13",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x915b16",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915b17",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "EnumPairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918e90",
+      "resolved": "0x918e90",
+      "jump_chain": [
+        "0x918e90"
+      ],
+      "code": [
+        {
+          "address": "0x918e90",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918e91",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918e93",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918e94",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918e97",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918e9a",
+          "mnemonic": "call",
+          "operands": "0x40fdda"
+        },
+        {
+          "address": "0x918e9f",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x918ea0",
+          "mnemonic": "call",
+          "operands": "0x425a95"
+        },
+        {
+          "address": "0x918ea5",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918ea8",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918eaa",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918eab",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918e9a",
+          "target": "0x40fdda",
+          "resolved": "0x918f70",
+          "jump_chain": [
+            "0x40fdda",
+            "0x918f70"
+          ]
+        },
+        {
+          "at": "0x918ea0",
+          "target": "0x425a95",
+          "resolved": "0x925300",
+          "jump_chain": [
+            "0x425a95",
+            "0x925300"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f70",
+      "resolved": "0x918f70",
+      "jump_chain": [
+        "0x918f70"
+      ],
+      "code": [
+        {
+          "address": "0x918f70",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f71",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918f73",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f74",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918f77",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918f7a",
+          "mnemonic": "call",
+          "operands": "0x4029dc"
+        },
+        {
+          "address": "0x918f7f",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918f81",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f82",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918f7a",
+          "target": "0x4029dc",
+          "resolved": "0x918f10",
+          "jump_chain": [
+            "0x4029dc",
+            "0x918f10"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f10",
+      "resolved": "0x918f10",
+      "jump_chain": [
+        "0x918f10"
+      ],
+      "code": [
+        {
+          "address": "0x918f10",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f11",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x918f13",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f14",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x918f17",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x918f1a",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x918f1c",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x918f1d",
+          "mnemonic": "call",
+          "operands": "0x454ead"
+        },
+        {
+          "address": "0x918f22",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x918f25",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x918f27",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x918f28",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x918f1d",
+          "target": "0x454ead",
+          "resolved": "0x91c220",
+          "jump_chain": [
+            "0x454ead",
+            "0x91c220"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c220",
+      "resolved": "0x91c220",
+      "jump_chain": [
+        "0x91c220"
+      ],
+      "code": [
+        {
+          "address": "0x91c220",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c221",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x91c223",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x91c226",
+          "mnemonic": "add",
+          "operands": "eax, 8"
+        },
+        {
+          "address": "0x91c229",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x91c22a",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "TypeNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x925300",
+      "resolved": "0x925300",
+      "jump_chain": [
+        "0x925300"
+      ],
+      "code": [
+        {
+          "address": "0x925300",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x925301",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x925303",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x925306",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x925307",
+          "mnemonic": "call",
+          "operands": "0x403490"
+        },
+        {
+          "address": "0x92530c",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92530f",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x925310",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x925307",
+          "target": "0x403490",
+          "resolved": "0x915b00",
+          "jump_chain": [
+            "0x403490",
+            "0x915b00"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "TypePairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915b00",
+      "resolved": "0x915b00",
+      "jump_chain": [
+        "0x915b00"
+      ],
+      "code": [
+        {
+          "address": "0x915b00",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915b01",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x915b03",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x915b06",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x915b07",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [],
+      "truncated": false,
+      "name": "TypePairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x923670",
+      "resolved": "0x923670",
+      "jump_chain": [
+        "0x923670"
+      ],
+      "code": [
+        {
+          "address": "0x923670",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x923671",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x923673",
+          "mnemonic": "sub",
+          "operands": "esp, 0xc"
+        },
+        {
+          "address": "0x923676",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x923679",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92367c",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x92367e",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x92367f",
+          "mnemonic": "call",
+          "operands": "0x425ec3"
+        },
+        {
+          "address": "0x923684",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x923687",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923689",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], edx"
+        },
+        {
+          "address": "0x92368c",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92368f",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923691",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x923692",
+          "mnemonic": "call",
+          "operands": "0x425ec3"
+        },
+        {
+          "address": "0x923697",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92369a",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92369d",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx]"
+        },
+        {
+          "address": "0x92369f",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], ecx"
+        },
+        {
+          "address": "0x9236a1",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9236a4",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x9236a6",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x9236a7",
+          "mnemonic": "call",
+          "operands": "0x44f421"
+        },
+        {
+          "address": "0x9236ac",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x9236af",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9236b2",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx]"
+        },
+        {
+          "address": "0x9236b4",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], edx"
+        },
+        {
+          "address": "0x9236b6",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9236b9",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax + 4], 0"
+        },
+        {
+          "address": "0x9236c0",
+          "mnemonic": "jmp",
+          "operands": "0x9236c8"
+        },
+        {
+          "address": "0x9236c2",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0x9236c5",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], ecx"
+        },
+        {
+          "address": "0x9236c8",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9236cb",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x9236ce",
+          "mnemonic": "cmp",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x9236d0",
+          "mnemonic": "je",
+          "operands": "0x9236f1"
+        },
+        {
+          "address": "0x9236d2",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x9236d5",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x9236d6",
+          "mnemonic": "call",
+          "operands": "0x425ec3"
+        },
+        {
+          "address": "0x9236db",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x9236de",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x9236e0",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 0xc], edx"
+        },
+        {
+          "address": "0x9236e3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x9236e6",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x9236e7",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9236ea",
+          "mnemonic": "call",
+          "operands": "0x406582"
+        },
+        {
+          "address": "0x9236ef",
+          "mnemonic": "jmp",
+          "operands": "0x9236c2"
+        },
+        {
+          "address": "0x9236f1",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x9236f3",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x9236f4",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x92367f",
+          "target": "0x425ec3",
+          "resolved": "0x91c240",
+          "jump_chain": [
+            "0x425ec3",
+            "0x91c240"
+          ]
+        },
+        {
+          "at": "0x923692",
+          "target": "0x425ec3",
+          "resolved": "0x91c240",
+          "jump_chain": [
+            "0x425ec3",
+            "0x91c240"
+          ]
+        },
+        {
+          "at": "0x9236a7",
+          "target": "0x44f421",
+          "resolved": "0x91c2a0",
+          "jump_chain": [
+            "0x44f421",
+            "0x91c2a0"
+          ]
+        },
+        {
+          "at": "0x9236d6",
+          "target": "0x425ec3",
+          "resolved": "0x91c240",
+          "jump_chain": [
+            "0x425ec3",
+            "0x91c240"
+          ]
+        },
+        {
+          "at": "0x9236ea",
+          "target": "0x406582",
+          "resolved": "0x91a5e0",
+          "jump_chain": [
+            "0x406582",
+            "0x91a5e0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x9237d0",
+      "resolved": "0x9237d0",
+      "jump_chain": [
+        "0x9237d0"
+      ],
+      "code": [
+        {
+          "address": "0x9237d0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x9237d1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x9237d3",
+          "mnemonic": "sub",
+          "operands": "esp, 0xc"
+        },
+        {
+          "address": "0x9237d6",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x9237d9",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9237dc",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x9237de",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x9237df",
+          "mnemonic": "call",
+          "operands": "0x431e3f"
+        },
+        {
+          "address": "0x9237e4",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x9237e7",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x9237e9",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], edx"
+        },
+        {
+          "address": "0x9237ec",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9237ef",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x9237f1",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x9237f2",
+          "mnemonic": "call",
+          "operands": "0x431e3f"
+        },
+        {
+          "address": "0x9237f7",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x9237fa",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x9237fd",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx]"
+        },
+        {
+          "address": "0x9237ff",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], ecx"
+        },
+        {
+          "address": "0x923801",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923804",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x923806",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x923807",
+          "mnemonic": "call",
+          "operands": "0x4243ca"
+        },
+        {
+          "address": "0x92380c",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92380f",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923812",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx]"
+        },
+        {
+          "address": "0x923814",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], edx"
+        },
+        {
+          "address": "0x923816",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923819",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax + 4], 0"
+        },
+        {
+          "address": "0x923820",
+          "mnemonic": "jmp",
+          "operands": "0x923828"
+        },
+        {
+          "address": "0x923822",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0x923825",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], ecx"
+        },
+        {
+          "address": "0x923828",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92382b",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x92382e",
+          "mnemonic": "cmp",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x923830",
+          "mnemonic": "je",
+          "operands": "0x923851"
+        },
+        {
+          "address": "0x923832",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x923835",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x923836",
+          "mnemonic": "call",
+          "operands": "0x431e3f"
+        },
+        {
+          "address": "0x92383b",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92383e",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923840",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 0xc], edx"
+        },
+        {
+          "address": "0x923843",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x923846",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x923847",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92384a",
+          "mnemonic": "call",
+          "operands": "0x403d9b"
+        },
+        {
+          "address": "0x92384f",
+          "mnemonic": "jmp",
+          "operands": "0x923822"
+        },
+        {
+          "address": "0x923851",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x923853",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x923854",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x9237df",
+          "target": "0x431e3f",
+          "resolved": "0x91c260",
+          "jump_chain": [
+            "0x431e3f",
+            "0x91c260"
+          ]
+        },
+        {
+          "at": "0x9237f2",
+          "target": "0x431e3f",
+          "resolved": "0x91c260",
+          "jump_chain": [
+            "0x431e3f",
+            "0x91c260"
+          ]
+        },
+        {
+          "at": "0x923807",
+          "target": "0x4243ca",
+          "resolved": "0x91c2c0",
+          "jump_chain": [
+            "0x4243ca",
+            "0x91c2c0"
+          ]
+        },
+        {
+          "at": "0x923836",
+          "target": "0x431e3f",
+          "resolved": "0x91c260",
+          "jump_chain": [
+            "0x431e3f",
+            "0x91c260"
+          ]
+        },
+        {
+          "at": "0x92384a",
+          "target": "0x403d9b",
+          "resolved": "0x91a780",
+          "jump_chain": [
+            "0x403d9b",
+            "0x91a780"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "EnumMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x923720",
+      "resolved": "0x923720",
+      "jump_chain": [
+        "0x923720"
+      ],
+      "code": [
+        {
+          "address": "0x923720",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x923721",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x923723",
+          "mnemonic": "sub",
+          "operands": "esp, 0xc"
+        },
+        {
+          "address": "0x923726",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], ecx"
+        },
+        {
+          "address": "0x923729",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92372c",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x92372e",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x92372f",
+          "mnemonic": "call",
+          "operands": "0x422084"
+        },
+        {
+          "address": "0x923734",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x923737",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923739",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], edx"
+        },
+        {
+          "address": "0x92373c",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92373f",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923741",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x923742",
+          "mnemonic": "call",
+          "operands": "0x422084"
+        },
+        {
+          "address": "0x923747",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92374a",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92374d",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx]"
+        },
+        {
+          "address": "0x92374f",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], ecx"
+        },
+        {
+          "address": "0x923751",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923754",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x923756",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x923757",
+          "mnemonic": "call",
+          "operands": "0x4237bd"
+        },
+        {
+          "address": "0x92375c",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92375f",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923762",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx]"
+        },
+        {
+          "address": "0x923764",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax], edx"
+        },
+        {
+          "address": "0x923766",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x923769",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax + 4], 0"
+        },
+        {
+          "address": "0x923770",
+          "mnemonic": "jmp",
+          "operands": "0x923778"
+        },
+        {
+          "address": "0x923772",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0x923775",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], ecx"
+        },
+        {
+          "address": "0x923778",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92377b",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x92377e",
+          "mnemonic": "cmp",
+          "operands": "eax, dword ptr [edx]"
+        },
+        {
+          "address": "0x923780",
+          "mnemonic": "je",
+          "operands": "0x9237a1"
+        },
+        {
+          "address": "0x923782",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x923785",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x923786",
+          "mnemonic": "call",
+          "operands": "0x422084"
+        },
+        {
+          "address": "0x92378b",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x92378e",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [eax]"
+        },
+        {
+          "address": "0x923790",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 0xc], edx"
+        },
+        {
+          "address": "0x923793",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x923796",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x923797",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": "0x92379a",
+          "mnemonic": "call",
+          "operands": "0x4278f4"
+        },
+        {
+          "address": "0x92379f",
+          "mnemonic": "jmp",
+          "operands": "0x923772"
+        },
+        {
+          "address": "0x9237a1",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x9237a3",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x9237a4",
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x92372f",
+          "target": "0x422084",
+          "resolved": "0x91c250",
+          "jump_chain": [
+            "0x422084",
+            "0x91c250"
+          ]
+        },
+        {
+          "at": "0x923742",
+          "target": "0x422084",
+          "resolved": "0x91c250",
+          "jump_chain": [
+            "0x422084",
+            "0x91c250"
+          ]
+        },
+        {
+          "at": "0x923757",
+          "target": "0x4237bd",
+          "resolved": "0x91c2b0",
+          "jump_chain": [
+            "0x4237bd",
+            "0x91c2b0"
+          ]
+        },
+        {
+          "at": "0x923786",
+          "target": "0x422084",
+          "resolved": "0x91c250",
+          "jump_chain": [
+            "0x422084",
+            "0x91c250"
+          ]
+        },
+        {
+          "at": "0x92379a",
+          "target": "0x4278f4",
+          "resolved": "0x91a6b0",
+          "jump_chain": [
+            "0x4278f4",
+            "0x91a6b0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "TypeMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x6d16f0",
+      "resolved": "0x6d16f0",
+      "jump_chain": [
+        "0x6d16f0"
+      ],
+      "code": [
+        {
+          "address": "0x6d16f0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x6d16f1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x6d16f3",
+          "mnemonic": "sub",
+          "operands": "esp, 0xc"
+        },
+        {
+          "address": "0x6d16f6",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], ecx"
+        },
+        {
+          "address": "0x6d16f9",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x6d16fc",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d16fd",
+          "mnemonic": "call",
+          "operands": "0x4025b3"
+        },
+        {
+          "address": "0x6d1702",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x6d1705",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d1706",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1709",
+          "mnemonic": "call",
+          "operands": "0x416b9e"
+        },
+        {
+          "address": "0x6d170e",
+          "mnemonic": "movzx",
+          "operands": "ecx, al"
+        },
+        {
+          "address": "0x6d1711",
+          "mnemonic": "test",
+          "operands": "ecx, ecx"
+        },
+        {
+          "address": "0x6d1713",
+          "mnemonic": "je",
+          "operands": "0x6d179e"
+        },
+        {
+          "address": "0x6d1719",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x6d171c",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d171d",
+          "mnemonic": "call",
+          "operands": "0x4025b3"
+        },
+        {
+          "address": "0x6d1722",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x6d1725",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1728",
+          "mnemonic": "sub",
+          "operands": "eax, dword ptr [ecx]"
+        },
+        {
+          "address": "0x6d172a",
+          "mnemonic": "sar",
+          "operands": "eax, 2"
+        },
+        {
+          "address": "0x6d172d",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 0xc], eax"
+        },
+        {
+          "address": "0x6d1730",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1733",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1736",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx + 4]"
+        },
+        {
+          "address": "0x6d1739",
+          "mnemonic": "cmp",
+          "operands": "ecx, dword ptr [eax + 8]"
+        },
+        {
+          "address": "0x6d173c",
+          "mnemonic": "jne",
+          "operands": "0x6d1748"
+        },
+        {
+          "address": "0x6d173e",
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "address": "0x6d1740",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1743",
+          "mnemonic": "call",
+          "operands": "0x41f091"
+        },
+        {
+          "address": "0x6d1748",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d174b",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [edx + 4]"
+        },
+        {
+          "address": "0x6d174e",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d174f",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1752",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x6d1755",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d1756",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1759",
+          "mnemonic": "call",
+          "operands": "0x418890"
+        },
+        {
+          "address": "0x6d175e",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1761",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x6d1763",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0x6d1766",
+          "mnemonic": "lea",
+          "operands": "eax, [ecx + edx*4]"
+        },
+        {
+          "address": "0x6d1769",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d176a",
+          "mnemonic": "call",
+          "operands": "0x42b409"
+        },
+        {
+          "address": "0x6d176f",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x6d1772",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d1773",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1776",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x6d1779",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d177a",
+          "mnemonic": "lea",
+          "operands": "eax, [ebp - 1]"
+        },
+        {
+          "address": "0x6d177d",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d177e",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1781",
+          "mnemonic": "call",
+          "operands": "0x414164"
+        },
+        {
+          "address": "0x6d1786",
+          "mnemonic": "mov",
+          "operands": "ecx, eax"
+        },
+        {
+          "address": "0x6d1788",
+          "mnemonic": "call",
+          "operands": "0x44823e"
+        },
+        {
+          "address": "0x6d178d",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1790",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x6d1793",
+          "mnemonic": "add",
+          "operands": "edx, 4"
+        },
+        {
+          "address": "0x6d1796",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d1799",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax + 4], edx"
+        },
+        {
+          "address": "0x6d179c",
+          "mnemonic": "jmp",
+          "operands": "0x6d1802"
+        },
+        {
+          "address": "0x6d179e",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17a1",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17a4",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x6d17a7",
+          "mnemonic": "cmp",
+          "operands": "eax, dword ptr [edx + 8]"
+        },
+        {
+          "address": "0x6d17aa",
+          "mnemonic": "jne",
+          "operands": "0x6d17b6"
+        },
+        {
+          "address": "0x6d17ac",
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "address": "0x6d17ae",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17b1",
+          "mnemonic": "call",
+          "operands": "0x41f091"
+        },
+        {
+          "address": "0x6d17b6",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17b9",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x6d17bc",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d17bd",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17c0",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x6d17c3",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x6d17c4",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17c7",
+          "mnemonic": "call",
+          "operands": "0x418890"
+        },
+        {
+          "address": "0x6d17cc",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x6d17cf",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d17d0",
+          "mnemonic": "call",
+          "operands": "0x42b409"
+        },
+        {
+          "address": "0x6d17d5",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x6d17d8",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x6d17d9",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17dc",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x6d17df",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x6d17e0",
+          "mnemonic": "lea",
+          "operands": "edx, [ebp - 2]"
+        },
+        {
+          "address": "0x6d17e3",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x6d17e4",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17e7",
+          "mnemonic": "call",
+          "operands": "0x414164"
+        },
+        {
+          "address": "0x6d17ec",
+          "mnemonic": "mov",
+          "operands": "ecx, eax"
+        },
+        {
+          "address": "0x6d17ee",
+          "mnemonic": "call",
+          "operands": "0x44823e"
+        },
+        {
+          "address": "0x6d17f3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17f6",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x6d17f9",
+          "mnemonic": "add",
+          "operands": "ecx, 4"
+        },
+        {
+          "address": "0x6d17fc",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x6d17ff",
+          "mnemonic": "mov",
+          "operands": "dword ptr [edx + 4], ecx"
+        },
+        {
+          "address": "0x6d1802",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x6d1804",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x6d1805",
+          "mnemonic": "ret",
+          "operands": "4"
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x6d16fd",
+          "target": "0x4025b3",
+          "resolved": "0x4fde30",
+          "jump_chain": [
+            "0x4025b3",
+            "0x4fde30"
+          ]
+        },
+        {
+          "at": "0x6d1709",
+          "target": "0x416b9e",
+          "resolved": "0x54caf0",
+          "jump_chain": [
+            "0x416b9e",
+            "0x54caf0"
+          ]
+        },
+        {
+          "at": "0x6d171d",
+          "target": "0x4025b3",
+          "resolved": "0x4fde30",
+          "jump_chain": [
+            "0x4025b3",
+            "0x4fde30"
+          ]
+        },
+        {
+          "at": "0x6d1743",
+          "target": "0x41f091",
+          "resolved": "0x4e89b0",
+          "jump_chain": [
+            "0x41f091",
+            "0x4e89b0"
+          ]
+        },
+        {
+          "at": "0x6d1759",
+          "target": "0x418890",
+          "resolved": "0x4e8800",
+          "jump_chain": [
+            "0x418890",
+            "0x4e8800"
+          ]
+        },
+        {
+          "at": "0x6d176a",
+          "target": "0x42b409",
+          "resolved": "0x4e5de0",
+          "jump_chain": [
+            "0x42b409",
+            "0x4e5de0"
+          ]
+        },
+        {
+          "at": "0x6d1781",
+          "target": "0x414164",
+          "resolved": "0x4da260",
+          "jump_chain": [
+            "0x414164",
+            "0x4da260"
+          ]
+        },
+        {
+          "at": "0x6d1788",
+          "target": "0x44823e",
+          "resolved": "0x4e59c0",
+          "jump_chain": [
+            "0x44823e",
+            "0x4e59c0"
+          ]
+        },
+        {
+          "at": "0x6d17b1",
+          "target": "0x41f091",
+          "resolved": "0x4e89b0",
+          "jump_chain": [
+            "0x41f091",
+            "0x4e89b0"
+          ]
+        },
+        {
+          "at": "0x6d17c7",
+          "target": "0x418890",
+          "resolved": "0x4e8800",
+          "jump_chain": [
+            "0x418890",
+            "0x4e8800"
+          ]
+        },
+        {
+          "at": "0x6d17d0",
+          "target": "0x42b409",
+          "resolved": "0x4e5de0",
+          "jump_chain": [
+            "0x42b409",
+            "0x4e5de0"
+          ]
+        },
+        {
+          "at": "0x6d17e7",
+          "target": "0x414164",
+          "resolved": "0x4da260",
+          "jump_chain": [
+            "0x414164",
+            "0x4da260"
+          ]
+        },
+        {
+          "at": "0x6d17ee",
+          "target": "0x44823e",
+          "resolved": "0x4e59c0",
+          "jump_chain": [
+            "0x44823e",
+            "0x4e59c0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "CStringVectorAppend"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4a30a0",
+      "resolved": "0x4a30a0",
+      "jump_chain": [
+        "0x4a30a0"
+      ],
+      "code": [
+        {
+          "address": "0x4a30a0",
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x4a30a1",
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": "0x4a30a3",
+          "mnemonic": "sub",
+          "operands": "esp, 0xc"
+        },
+        {
+          "address": "0x4a30a6",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], ecx"
+        },
+        {
+          "address": "0x4a30a9",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x4a30ac",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a30ad",
+          "mnemonic": "call",
+          "operands": "0x430891"
+        },
+        {
+          "address": "0x4a30b2",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x4a30b5",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a30b6",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30b9",
+          "mnemonic": "call",
+          "operands": "0x4333ed"
+        },
+        {
+          "address": "0x4a30be",
+          "mnemonic": "movzx",
+          "operands": "ecx, al"
+        },
+        {
+          "address": "0x4a30c1",
+          "mnemonic": "test",
+          "operands": "ecx, ecx"
+        },
+        {
+          "address": "0x4a30c3",
+          "mnemonic": "je",
+          "operands": "0x4a314e"
+        },
+        {
+          "address": "0x4a30c9",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x4a30cc",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a30cd",
+          "mnemonic": "call",
+          "operands": "0x430891"
+        },
+        {
+          "address": "0x4a30d2",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x4a30d5",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30d8",
+          "mnemonic": "sub",
+          "operands": "eax, dword ptr [ecx]"
+        },
+        {
+          "address": "0x4a30da",
+          "mnemonic": "sar",
+          "operands": "eax, 2"
+        },
+        {
+          "address": "0x4a30dd",
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 0xc], eax"
+        },
+        {
+          "address": "0x4a30e0",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30e3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30e6",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edx + 4]"
+        },
+        {
+          "address": "0x4a30e9",
+          "mnemonic": "cmp",
+          "operands": "ecx, dword ptr [eax + 8]"
+        },
+        {
+          "address": "0x4a30ec",
+          "mnemonic": "jne",
+          "operands": "0x4a30f8"
+        },
+        {
+          "address": "0x4a30ee",
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "address": "0x4a30f0",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30f3",
+          "mnemonic": "call",
+          "operands": "0x42c863"
+        },
+        {
+          "address": "0x4a30f8",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a30fb",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [edx + 4]"
+        },
+        {
+          "address": "0x4a30fe",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a30ff",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3102",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x4a3105",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a3106",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3109",
+          "mnemonic": "call",
+          "operands": "0x4043db"
+        },
+        {
+          "address": "0x4a310e",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3111",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax]"
+        },
+        {
+          "address": "0x4a3113",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 0xc]"
+        },
+        {
+          "address": "0x4a3116",
+          "mnemonic": "lea",
+          "operands": "eax, [ecx + edx*4]"
+        },
+        {
+          "address": "0x4a3119",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a311a",
+          "mnemonic": "call",
+          "operands": "0x41d408"
+        },
+        {
+          "address": "0x4a311f",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x4a3122",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a3123",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3126",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x4a3129",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a312a",
+          "mnemonic": "lea",
+          "operands": "eax, [ebp - 1]"
+        },
+        {
+          "address": "0x4a312d",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a312e",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3131",
+          "mnemonic": "call",
+          "operands": "0x451ca3"
+        },
+        {
+          "address": "0x4a3136",
+          "mnemonic": "mov",
+          "operands": "ecx, eax"
+        },
+        {
+          "address": "0x4a3138",
+          "mnemonic": "call",
+          "operands": "0x4343ba"
+        },
+        {
+          "address": "0x4a313d",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3140",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x4a3143",
+          "mnemonic": "add",
+          "operands": "edx, 4"
+        },
+        {
+          "address": "0x4a3146",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3149",
+          "mnemonic": "mov",
+          "operands": "dword ptr [eax + 4], edx"
+        },
+        {
+          "address": "0x4a314c",
+          "mnemonic": "jmp",
+          "operands": "0x4a31b2"
+        },
+        {
+          "address": "0x4a314e",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3151",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3154",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x4a3157",
+          "mnemonic": "cmp",
+          "operands": "eax, dword ptr [edx + 8]"
+        },
+        {
+          "address": "0x4a315a",
+          "mnemonic": "jne",
+          "operands": "0x4a3166"
+        },
+        {
+          "address": "0x4a315c",
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "address": "0x4a315e",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3161",
+          "mnemonic": "call",
+          "operands": "0x42c863"
+        },
+        {
+          "address": "0x4a3166",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3169",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 4]"
+        },
+        {
+          "address": "0x4a316c",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a316d",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3170",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x4a3173",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x4a3174",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3177",
+          "mnemonic": "call",
+          "operands": "0x4043db"
+        },
+        {
+          "address": "0x4a317c",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp + 8]"
+        },
+        {
+          "address": "0x4a317f",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a3180",
+          "mnemonic": "call",
+          "operands": "0x41d408"
+        },
+        {
+          "address": "0x4a3185",
+          "mnemonic": "add",
+          "operands": "esp, 4"
+        },
+        {
+          "address": "0x4a3188",
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": "0x4a3189",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a318c",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x4a318f",
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": "0x4a3190",
+          "mnemonic": "lea",
+          "operands": "edx, [ebp - 2]"
+        },
+        {
+          "address": "0x4a3193",
+          "mnemonic": "push",
+          "operands": "edx"
+        },
+        {
+          "address": "0x4a3194",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a3197",
+          "mnemonic": "call",
+          "operands": "0x451ca3"
+        },
+        {
+          "address": "0x4a319c",
+          "mnemonic": "mov",
+          "operands": "ecx, eax"
+        },
+        {
+          "address": "0x4a319e",
+          "mnemonic": "call",
+          "operands": "0x4343ba"
+        },
+        {
+          "address": "0x4a31a3",
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a31a6",
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [eax + 4]"
+        },
+        {
+          "address": "0x4a31a9",
+          "mnemonic": "add",
+          "operands": "ecx, 4"
+        },
+        {
+          "address": "0x4a31ac",
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 8]"
+        },
+        {
+          "address": "0x4a31af",
+          "mnemonic": "mov",
+          "operands": "dword ptr [edx + 4], ecx"
+        },
+        {
+          "address": "0x4a31b2",
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": "0x4a31b4",
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": "0x4a31b5",
+          "mnemonic": "ret",
+          "operands": "4"
+        }
+      ],
+      "calls": [
+        {
+          "at": "0x4a30ad",
+          "target": "0x430891",
+          "resolved": "0x498fe0",
+          "jump_chain": [
+            "0x430891",
+            "0x498fe0"
+          ]
+        },
+        {
+          "at": "0x4a30b9",
+          "target": "0x4333ed",
+          "resolved": "0x4a0f20",
+          "jump_chain": [
+            "0x4333ed",
+            "0x4a0f20"
+          ]
+        },
+        {
+          "at": "0x4a30cd",
+          "target": "0x430891",
+          "resolved": "0x498fe0",
+          "jump_chain": [
+            "0x430891",
+            "0x498fe0"
+          ]
+        },
+        {
+          "at": "0x4a30f3",
+          "target": "0x42c863",
+          "resolved": "0x4a2450",
+          "jump_chain": [
+            "0x42c863",
+            "0x4a2450"
+          ]
+        },
+        {
+          "at": "0x4a3109",
+          "target": "0x4043db",
+          "resolved": "0x4a22b0",
+          "jump_chain": [
+            "0x4043db",
+            "0x4a22b0"
+          ]
+        },
+        {
+          "at": "0x4a311a",
+          "target": "0x41d408",
+          "resolved": "0x4997f0",
+          "jump_chain": [
+            "0x41d408",
+            "0x4997f0"
+          ]
+        },
+        {
+          "at": "0x4a3131",
+          "target": "0x451ca3",
+          "resolved": "0x4a0e90",
+          "jump_chain": [
+            "0x451ca3",
+            "0x4a0e90"
+          ]
+        },
+        {
+          "at": "0x4a3138",
+          "target": "0x4343ba",
+          "resolved": "0x498ff0",
+          "jump_chain": [
+            "0x4343ba",
+            "0x498ff0"
+          ]
+        },
+        {
+          "at": "0x4a3161",
+          "target": "0x42c863",
+          "resolved": "0x4a2450",
+          "jump_chain": [
+            "0x42c863",
+            "0x4a2450"
+          ]
+        },
+        {
+          "at": "0x4a3177",
+          "target": "0x4043db",
+          "resolved": "0x4a22b0",
+          "jump_chain": [
+            "0x4043db",
+            "0x4a22b0"
+          ]
+        },
+        {
+          "at": "0x4a3180",
+          "target": "0x41d408",
+          "resolved": "0x4997f0",
+          "jump_chain": [
+            "0x41d408",
+            "0x4997f0"
+          ]
+        },
+        {
+          "at": "0x4a3197",
+          "target": "0x451ca3",
+          "resolved": "0x4a0e90",
+          "jump_chain": [
+            "0x451ca3",
+            "0x4a0e90"
+          ]
+        },
+        {
+          "at": "0x4a319e",
+          "target": "0x4343ba",
+          "resolved": "0x498ff0",
+          "jump_chain": [
+            "0x4343ba",
+            "0x498ff0"
+          ]
+        }
+      ],
+      "truncated": false,
+      "name": "Int32VectorAppend"
+    }
+  ],
+  "conclusions": [
+    "Each map iterator ultimately returns node+8 as pair payload; its map operator[] returns payload+4 at918B46/918C74/918DA4, so key=node+8/value=node+C.",
+    "Each map clear resets sentinel.next/sentinel.prev to head, count map+4 to0 and walks node.next, corroborating circular element-list header layout.",
+    "CString/int vector append methods read begin+0/end+4/capacity+8 and advance end by4. The outer map value atnode+C is a12-byte vector header; 4-byte CString storage or int32 elements are selected by the concrete map source."
+  ],
+  "profile_sha256": "c047e66f6ed0661d01c2dad9cfa0ea4cdd9bc50631af1ec7480c0ba774540305",
+  "host_access": false,
+  "native_calls": 0
+}

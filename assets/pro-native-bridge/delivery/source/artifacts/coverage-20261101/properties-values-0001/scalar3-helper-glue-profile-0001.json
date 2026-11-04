@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "purpose": "scalar3-owned-helper-glue-original-entries-and-imports",
+  "base_profile_sha256": "3e752d468d3444b7fd404bbe60f175c35e1c0626c6c259594bac583cf58dc842",
+  "code_guards": [
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PropertyKeyName",
+      "rva": "0x5131d0",
+      "bytes": "558bec51c745fc000000008b450c508b4d0851e8f26ab1ff8bc8e8867fb1ff8b55fc83ca018955fc8b45088be55dc3cc558bec51c745fc000000008b450c508b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ManagerDeletingThunk",
+      "rva": "0x5153c",
+      "bytes": "e95f5a9f00e91a368500e935194e00e970553600e91bd10700e946c12700e971",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "StdStringDtor",
+      "rva": "0x1478d0",
+      "bytes": "558bec51894dfc6a006a018b4dfce88e55eeff8be55dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ArchivePenBrushLoad",
+      "rva": "0x421f51",
+      "bytes": "8b45f00580000000508b4d0851e8471ec3ff8d55e8528b4d08e84b74c1ff0fb745e88b4df08941686a108b55f083c26c528b4d08e862cf70008d45e8508b4d08e82474c1ff0fb74de88b55f0894a7c6a0c8b45f00590000000508b4d08e839cf7000",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "BuildNativeMetadataCacheKey",
+      "rva": "0xa18d70",
+      "bytes": "558bec51c745fc000000008b4508508b4d0ce8d2d561ff8b4dfc83c901894dfc8b45088be55dc3cccccccccccccccccc558bec6aff688a83030164a100000000",
+      "reloc_offsets": [
+        54
+      ]
+    }
+  ],
+  "extra_IAT_bindings": [
+    {
+      "iat_rva": "0xfc9178",
+      "module": "mfc110u.dll",
+      "export": null,
+      "ordinal": 1504,
+      "export_rva": "0xec92a"
+    },
+    {
+      "iat_rva": "0xfc6e3c",
+      "module": "MSVCR110.dll",
+      "export": "memcpy",
+      "ordinal": null,
+      "export_rva": "0xe2b0"
+    },
+    {
+      "iat_rva": "0xfc69b8",
+      "module": "MSVCP110.dll",
+      "export": "?_Orphan_all@_Container_base0@std@@QAEXXZ",
+      "ordinal": null,
+      "export_rva": "0x81d5"
+    }
+  ],
+  "host_access": false,
+  "native_calls": 0
+}

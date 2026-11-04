@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "GetMainDocument",
+      "rva": "0x78db50",
+      "bytes": "558bec51894dfc8b45fc8b40388be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr0(manager) ->manager+38"
+    },
+    {
+      "name": "MainServiceSave",
+      "rva": "0x78db10",
+      "bytes": "558bec51894dfc8b45fc0fb6481085c974288b55fc837a0400741f6a008b45fc",
+      "reloc_offsets": [],
+      "abi": "thiscall bool AL(service) ret0; gate service+10 then doc83(0), returns1 even skip"
+    },
+    {
+      "name": "MainDocSave",
+      "rva": "0x6e7780",
+      "bytes": "558bec6aff68474cff0064a100000000505181ec48030000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ],
+      "abi": "thiscall int(doc,CDaoDatabase* or0) ret4;0success/1error;reject preview doc154"
+    }
+  ],
+  "manager_vtable_rva": "0xDDB24C",
+  "service_offset": "0x34",
+  "service_vtable_rva": "0xDDB304",
+  "service_slot2_entry_rva": "0x2F144",
+  "service_saveflag_offset_from_manager": "0x44",
+  "doc_pointer_offset": "0x38",
+  "doc_vtable_rva": "0xDC4F8C",
+  "doc_slot83_entry_rva": "0x118B",
+  "doc_preview_byte_offset": "0x154",
+  "scope": "Exactly one native C0DocCtrl slot83(DBnull) persistence of already-restored MainCtrl contents; serviceFlag0/dirty0/preview0, original two-renames proof and RootSave-no-flush proof required; never force dirty/flags.",
+  "executed": false,
+  "mode": "direct_doc_slot83",
+  "native_return_success": 0,
+  "native_call_limit": 1,
+  "dao": {
+    "recordset_ctor": "0x4D1CF0",
+    "recordset_vtable": "0x10FA05C",
+    "default_SQL_getter_slot28": "0x4D1E50",
+    "default_SQL": "[WndControl]",
+    "field_exchange_slot32": "0x4D1E80",
+    "fields": [
+      "iID",
+      "strName",
+      "strNote",
+      "lbObjects",
+      "iDeleteFlag",
+      "iCompileFlag"
+    ],
+    "ordinary_save": "AE78EA..AE7B1D; DBnull→rootAD1B90, nativeC0RecCtrl Open/MoveFirst/Edit/serialize7234B0/fields/Update/Close/dtor; returns0success/1error; preview path rejected",
+    "full_doc_save_proof": {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\mainctrl-doc-save83-full.json",
+      "sha256": "e497f5e2b86045f40d2d366b3d50af16fdbd64220ab4b8457a07069fe7929ddf"
+    },
+    "recordset_proof": {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\mainctrl-recordset-specific-methods.json",
+      "sha256": "570aa091817337ffef560195758149591ff7aaa88705912bfdca91f814214c58"
+    }
+  }
+}

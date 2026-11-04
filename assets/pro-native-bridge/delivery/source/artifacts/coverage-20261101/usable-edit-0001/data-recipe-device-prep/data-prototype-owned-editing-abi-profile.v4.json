@@ -1,0 +1,375 @@
+{
+  "schema": 1,
+  "purpose": "original owned CObjData complete assignment for legal scalar/group type edits and native flat group create/composition",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_data_recipe_abi_sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939",
+  "base_group_profile_sha256": "adffdc9553847960449e9574df5679e98520cbe746768ee4f1ccab0763a32004",
+  "mfc_path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "name": "GroupMemberNamesSet",
+      "module": "McgsSetPro.exe",
+      "rva": 910656,
+      "bytes": "558bec83ec0c894dfc8d45f8508b4d08e8080df4ff8b08518d55f4528b4d08e8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GroupMemberNamesAssignRange",
+      "module": "McgsSetPro.exe",
+      "rva": 939760,
+      "bytes": "558bec83ec24894dfc8d45ec508b4dfce86481f2ff8b08894df88d55e8528b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GroupRebuildMemberIds",
+      "module": "McgsSetPro.exe",
+      "rva": 923056,
+      "bytes": "558bec6aff68420ff70064a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataCopyCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 910960,
+      "bytes": "558bec6aff68b70bf70064a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataSetName",
+      "module": "McgsSetPro.exe",
+      "rva": 916304,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c108ff15708e3c01b0018be55dc20400cc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "DataDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 947072,
+      "bytes": "558bec51894dfc8b4dfce8a635f6ff8b450883e001740c8b4dfc51e81876a400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataAddPrototype",
+      "module": "McgsSetPro.exe",
+      "rva": 8024448,
+      "bytes": "558bec83ec08894dfc8b45088b4dfc8b51048990a40000008b45fc8b480483c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataRegisterReferences",
+      "module": "McgsSetPro.exe",
+      "rva": 916336,
+      "bytes": "558bec6aff68fa0cf70064a1000000005083ec18a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ValidateVariableName",
+      "module": "McgsSetPro.exe",
+      "rva": 910800,
+      "bytes": "558bec6aff68090bf70064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataObjectBaseCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8678736,
+      "bytes": "558bec6aff68f800010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "DataObjectBaseDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8678848,
+      "bytes": "558bec51894dfc8b45fcc70014a31e018b4dfce850b17bff8be55dc3cccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "DataObjectAncestorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8177408,
+      "bytes": "558bec51894dfc8b45fcc70044480e018b4dfce83bdb84ff8be55dc3cccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "InterfaceAncestorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 432032,
+      "bytes": "558bec51894dfc8b45fcc70014480e018be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "GenerateArrayNames",
+      "module": "McgsSetPro.exe",
+      "rva": 8028832,
+      "bytes": "558bec6aff685a4f000164a1000000005081ecec000000a1600b3b0133c58945",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "StringVectorCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 943856,
+      "bytes": "558bec83ec08894df88d4dffe89f44f2ff508b4df8e851b6f2ff8b45f88be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringVectorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 889520,
+      "bytes": "558bec51894dfc8b4dfce88eaef6ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringVectorAssign",
+      "module": "McgsSetPro.exe",
+      "rva": 961648,
+      "bytes": "558bec6aff68281ff70064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "New",
+      "module": "mfc110u.dll",
+      "ordinal": 1502,
+      "rva": 35353,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ]
+    },
+    {
+      "name": "DataDefaultCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 943952,
+      "bytes": "558bec6aff68a817f70064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "DataCompleteAssign",
+      "module": "McgsSetPro.exe",
+      "rva": 912272,
+      "bytes": "558bec6aff68800cf70064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b45f03b450875088b45f0e9c80200008b4d0883c108518b4df083c108ff15708e3c018b550883c20c528b4df083c10cff15708e3c018b450883c010508b4df083c110ff15708e3c018b4df08b55088b42148941148b4df08b55088b421c89411c8b4df08b55088b42208941208b4df08b55088b42248941248b4df08b55088b42288941288b4df08b55088b422c89412c8b4df08b55088b42308941308b4df08b55088b42348941348b4df08b55088b42388941388b4d0883c13c518b4df083c13cff15708e3c018b55f08b45088b4854894a548b55f08b45088b4858894a588b55f08b45088b485c894a5c8b55f08b45088b4860894a608b55f08b45088b4864894a648b55f08b45088b4868894a688b55f08b45088b486c894a6c8b550883c270528b4df083c170ff15708e3c018b45f08b4d088b51748950748b45f08b4d088b51788950788b45f08b4d088b517c89507c8b45f08b4d088b91a40000008990a40000008b45f08b4d088b91a80000008990a80000008b45f08b4d088b91ac0000008990ac0000008b45080580000000508b4df081c180000000e881e9f2ff8b4d0881c194000000518b4df081c194000000e8a32df2ff8b550881c2b4000000528b4df081c1b4000000e88b2df2ff8b450883c040508b4df083c140e86008a5008b4d0881c1a0000000518b4df081c1a0000000ff15708e3c018b55f083bab00000000074638b450883b8b000000000753d8b4df08b91b00000008955e08b45e08945ec837dec00740f6a018b4dece86c99f4ff8945dceb07c745dc000000008b4df0c781b000000000000000eb188b55088b82b0000000508b4df08b89b0000000e8cd04f5ffeb6b8b550883bab000000000745f6a0ce889fba40083c4048945e8c745fc00000000837de800740d8b4de8e83be0f3ff8945e4eb07c745e4000000008b45e48945d8c745fcffffffff8b4df08b55d88991b00000008b45088b88b0000000518b55f08b8ab0000000e86004f5ff8b45f08b4df464890d00000000598be55dc2",
+      "reloc_offsets": [
+        6,
+        21,
+        71,
+        90,
+        109,
+        236,
+        339,
+        543
+      ]
+    },
+    {
+      "name": "DataNativeValidate",
+      "module": "McgsSetPro.exe",
+      "rva": 917712,
+      "bytes": "558bec6aff68960ef70064a1000000005081ec90010000a1600b3b0133c5508d45f464a300000000894df08b45f08378140475748b4df05168bf5700008d559052e802fcf6ff83c408898578feffff8b8578feffff898500ffffffc745fc000000008b8d00ffffffff156c913c01508b4df083c108ff156c913c0150e85d16f6ff8b8820050000e806fdf6ffc745fcffffffff8d4d90ff1548913c0133c0e98d100000e9ae0e00008b4df0837914ff0f85c20300006828b10f018d4ddcff15548b3c01c745fc010000008d55dc528b4df083c108ff156c913c0150e8ee1df4ff83c40883f8400f8e810000008b45f05068c05700008d8df8feffff51e847fbf6ff83c408898590feffff8b9590feffff895588c645fc028b4d88ff156c913c01508b4df083c108ff156c913c0150e8ab15f6ff8b8820050000e854fcf6ffc645fc018d8df8feffffff1548913c01c7458000000000c745fcffffffff8d4ddcff154c8b3c018b4580e9c30f00008d4de0ff1588903c01c645fc038d45e05068000200008b4df083c10851e88348f3ff83c40c0fb6d085d2755d8b45f0508d4de0ff156c913c01508b4df083c108ff156c913c0150e82515f6ff8b8820050000e8cefbf6ffc785b0feffff00000000c645fc018d4de0ff1548913c01c745fcffffffff8d4ddcff154c8b3c018b85b0feffffe93a0f00008b4df083795c0075348b55f0837a2c01750c8b45f0c74060d0070000eb1f8b4df083792c027c0c8b55f0c7426000040000eb0a8b45f0c74060000000008b4df083792c020f85b60000008b55f0817a60000100007c108b45f0817860000400000f8e9a0000008b4df05168c15700008d9570ffffff52e8d7f9f6ff83c408898578ffffff8b8578ffffff8985f0feffffc645fc048b8df0feffffff156c913c01508b4df083c108ff156c913c0150e83514f6ff8b8820050000e8defaf6ffc645fc038d8d70ffffffff1548913c01c78570feffff00000000c645fc018d4de0ff1548913c01c745fcffffffff8d4ddcff154c8b3c018b8570feffffe93a0e00008b4df0e87d42f3ff0fb6c885c90f85c10000008d4dc8ff1588903c01c645fc05687da500008d9560ffffff52e821f9f6ff83c408898568ffffff8b8568ffffff8985e8feffffc645fc068b8de8feffff518d4dc8ff15708e3c01c645fc058d8d60ffffffff1548913c018b55f0528d4dc8ff156c913c01508b4df083c108ff156c913c0150e85e13f6ff8b8820050000e807faf6ffc785a8feffff00000000c645fc038d4dc8ff1548913c01c645fc018d4de0ff1548913c01c745fcffffffff8d4ddcff154c8b3c018b85a8feffffe9660d00008b45f083b8b00000000074478b4df08b91b0000000899558ffffff8b8558ffffff8945a4837da40074126a018b4da4e88b82f4ff8985e0feffffeb0ac785e0feffff000000008b4df0c781b0000000000000008b55f0c74230000000008b45f0c74038000000006a008b4df081c194000000e8deeaf5ff6894b10f018b4df081c1a0000000ff1584903c01c645fc018d4de0ff1548913c01c745fcffffffff8d4ddcff154c8b3c01e9df0a00008d4decff1588903c01c745fc070000008d4dec5168000200008b55f083c20852e87645f3ff83c40c0fb6c085c075508b4df0518d4decff156c913c01508b4df083c108ff156c913c0150e81812f6ff8b8820050000e8c1f8f6ffc78550ffffff00000000c745fcffffffff8d4decff1548913c018b8550ffffffe93a0c00006aff6a008b4df081c180000000e80d1bf7ff8d8d64feffffe8fc0cf7ff898588feffff8b9588feffff899548ffffffc645fc088b8548ffffff508b4df081c1b4000000e8182ff7ffc645fc078d8d64feffffe872d5f6ff8b4df0837930010f85a70800008b55f083c208528b45f005a000000050e85e9bf5ff83c4080fb6c885c90f848d0000008b55f05268c25700008d85a0feffff50e8b6f6f6ff83c4088985d8feffff8b8dd8feffff898d40ffffffc645fc098b8d40ffffffff156c913c01508b4df083c108ff156c913c0150e81411f6ff8b8820050000e8bdf7f6ffc645fc078d8da0feffffff1548913c01c78538ffffff00000000c745fcffffffff8d4decff1548913c018b8538ffffffe9260b00008b4df081c1a0000000ff15c88b3c010fb6d085d20f850b0200008b45f08b108b4df08b423cffd08945ac8b4df081c1a0000000518b55ac8b028b4dac8b5040ffd28945d8837dd8000f85870000008b45f05068cc5700008d4d9c51e8def5f6ff83c4088985d0feffff8b95d0feffff899530ffffffc645fc0a8b8d30ffffffff156c913c01508b4df083c108ff156c913c0150e83c10f6ff8b8820050000e8e5f6f6ffc645fc078d4d9cff1548913c01c78528ffffff00000000c745fcffffffff8d4decff1548913c018b8528ffffffe9510a00008b45d8837830010f858d0000008b4df05168c35700008d9598feffff52e847f5f6ff83c4088985c8feffff8b85c8feffff898520ffffffc645fc0b8b8d20ffffffff156c913c01508b4df083c108ff156c913c0150e8a50ff6ff8b8820050000e84ef6f6ffc645fc078d8d98feffffff1548913c01c78518ffffff00000000c745fcffffffff8d4decff1548913c018b8518ffffffe9b70900008b4dd8837914030f84a70000008b55d8837a14020f849a0000008b45d8837814010f848d0000008b4df05168c45700008d9580feffff52e893f4f6ff83c4088985c0feffff8b85c0feffff898510ffffffc645fc0c8b8d10ffffffff156c913c01508b4df083c108ff156c913c0150e8f10ef6ff8b8820050000e89af5f6ffc645fc078d8d80feffffff1548913c01c78508ffffff00000000c745fcffffffff8d4decff1548913c018b8508ffffffe903090000eb7b8b4df05168c55700008d559452e807f4f6ff83c4088985b8feffff8b85b8feffff894598c645fc0d8b4d98ff156c913c01508b4df083c108ff156c913c0150e86b0ef6ff8b8820050000e814f5f6ffc645fc078d4d94ff1548913c01c7458c00000000c745fcffffffff8d4decff1548913c018b458ce9860800006808b20f018d4de8ff1550913c01c645fc0e8b4df081c194000000e8853ef5ff8945c0c745e400000000eb098b4de483c101894de48b55e43b55c00f8da40400008b45e4508b4df081c194000000e84339f5ff8bc8ff15c88b3c010fb6c885c90f84940000008b55f05268c65700008d8574ffffff50e823f3f6ff83c4088945848b4d84898d7cffffffc645fc0f8b8d7cffffffff156c913c01508b4df083c108ff156c913c0150e8870df6ff8b8820050000e830f4f6ffc645fc0e8d8d74ffffffff1548913c01c7856cffffff00000000c645fc078d4de8ff1548913c01c745fcffffffff8d4decff1548913c018b856cffffffe98c0700008b4df083c108ff156c913c01508b55e4528b4df081c194000000e87d38f5ff8bc8ff150c8e3c0185c00f85c60000008b45e4508b4df081c194000000e85b38f5ff8b085168c75700008d9554ffffff52e84ff2f6ff83c408898564ffffff8b8564ffffff89855cffffffc645fc108b8d5cffffffff156c913c01508d4de851ff1580903c0183c40cc645fc0e8d8d54ffffffff1548913c018b55f0528d4de8ff156c913c01508b4df083c108ff156c913c0150e8820cf6ff8b8820050000e82bf3f6ffc7854cffffff00000000c645fc078d4de8ff1548913c01c745fcffffffff8d4decff1548913c018b854cffffffe9970600008b45f08b108b4df08b423cffd08945b48b4de4518b4df081c194000000e88537f5ff508b55b48b028b4db48b5040ffd28945cc837dcc000f850901000068f15500008d851cffffff50e861f1f6ff83c408898544ffffff8b8d44ffffff898d3cffffffc645fc118b953cffffff8b02508b4de4518b4df081c194000000e82537f5ff8b105268c85700008d8524ffffff50e819f1f6ff83c408898534ffffff8b8d34ffffff898d2cffffffc645fc128b8d2cffffffff156c913c01508d55e852ff1580903c0183c410c645fc118d8d24ffffffff1548913c01c645fc0e8d8d1cffffffff1548913c018b45f0508d4de8ff156c913c01508b4df083c108ff156c913c0150e83c0bf6ff8b8820050000e8e5f1f6ffc78514ffffff00000000c645fc078d4de8ff1548913c01c745fcffffffff8d4decff1548913c018b8514ffffffe9510500008b4dcc837930010f85c60000008b55e4528b4df081c194000000e84236f5ff8b005068c95700008d8dfcfeffff51e836f0f6ff83c40889850cffffff8b950cffffff899504ffffffc645fc138b8d04ffffffff156c913c01508d45e850ff1580903c0183c40cc645fc0e8d8dfcfeffffff1548913c018b4df0518d4de8ff156c913c01508b4df083c108ff156c913c0150e8690af6ff8b8820050000e812f1f6ffc785f4feffff00000000c645fc078d4de8ff1548913c01c745fcffffffff8d4decff1548913c018b85f4feffffe97e0400008b55f08b45cc8b4a143b48140f84c60000008b55e4528b4df081c194000000e86a35f5ff8b005068ca5700008d8ddcfeffff51e85eeff6ff83c4088985ecfeffff8b95ecfeffff8995e4feffffc645fc148b8de4feffffff156c913c01508d45e850ff1580903c0183c40cc645fc0e8d8ddcfeffffff1548913c018b4df0518d4de8ff156c913c01508b4df083c108ff156c913c0150e89109f6ff8b8820050000e83af0f6ffc785d4feffff00000000c645fc078d4de8ff1548913c01c745fcffffffff8d4decff1548913c018b85d4feffffe9a6030000e947fbffff837dc000750a8b55f0c74238000000008b45f083b8b00000000074478b4df08b91b00000008995ccfeffff8b85ccfeffff8945bc837dbc0074126a018b4dbce8b678f4ff8985c4feffffeb0ac785c4feffff000000008b4df0c781b000000000000000c645fc078d4de8ff1548913c01eb388b55f0c74234ffffffff6a008b4df081c194000000e804e1f5ff8b45f0c7403800000000680cb20f018b4df081c1a0000000ff1584903c018b4df08379140375558b55f083bab00000000074478b45f08b88b0000000898dbcfeffff8b95bcfeffff8955b8837db80074126a018b4db8e81378f4ff8985b4feffffeb0ac785b4feffff000000008b45f0c780b000000000000000eb658b4df083b9b00000000074598b55f08b8ab0000000e80dd3f5ff85c075478b45f08b88b0000000898dacfeffff8b95acfeffff8955b0837db00074126a018b4db0e8ac77f4ff8985a4feffffeb0ac785a4feffff000000008b45f0c780b0000000000000008b4df083b9b000000000743e8b55f08b4214508b4df08b89b0000000e8a33ff5ff85c07525c7859cfeffff00000000c745fcffffffff8d4decff1548913c018b859cfeffffe9ea010000c745fcffffffff8d4decff1548913c016aff6a008b4df083c140e869dea4006810b20f018b4df083c13cff1584903c018b55f0837a14ff0f85880000008b45f005b40000008945a88d4dc4518b4da8e85eb6f5ff8d9594feffff528b4da8e8f0c7f2ffeb088d4dc4e83100f2ff8d8594feffff508d4dc4e8405ef3ff0fb6c885c9743d8d4dc4e8dc50f6ff508d4da0ff1554913c01c745fc150000006a028d55a0528b45f050e8d34af4ff83c40cc745fcffffffff8d4da0ff1548913c01eba5e9200100008b4df0837930010f85130100008d8d8cfeffffe86737f6ffc745fc160000006a028b55f081c2a0000000528b45f050e8854af4ff83c40cc745fcffffffff8d8d8cfeffffe822f8f3ff8b4df083793801757a8d8d7cfeffffe82237f6ffc745fc170000008b4df081c194000000e8d236f5ff898584feffffc745d400000000eb098b55d483c2018955d48b45d43b8584feffff7d236a028b4dd4518b4df081c194000000e88c31f5ff508b55f052e8064af4ff83c40cebc9c745fcffffffff8d8d7cfeffffe8a1f7f3ffeb548b4df081c194000000e86a36f5ff898574feffffc745d000000000eb098b45d083c0018945d08b4dd03b8d74feffff7d236a028b55d0528b4df081c194000000e82431f5ff508b45f050e89e49f4ff83c40cebc9b8010000008b4df464890d00000000598be55dc3cc",
+      "reloc_offsets": [
+        6,
+        24,
+        106,
+        119,
+        152,
+        182,
+        191,
+        214,
+        284,
+        297,
+        330,
+        353,
+        370,
+        418,
+        431,
+        471,
+        487,
+        658,
+        671,
+        704,
+        727,
+        743,
+        782,
+        844,
+        860,
+        873,
+        886,
+        926,
+        939,
+        955,
+        1090,
+        1105,
+        1118,
+        1134,
+        1148,
+        1199,
+        1212,
+        1255,
+        1459,
+        1472,
+        1505,
+        1531,
+        1557,
+        1675,
+        1688,
+        1718,
+        1744,
+        1826,
+        1839,
+        1872,
+        1898,
+        2006,
+        2019,
+        2052,
+        2078,
+        2140,
+        2153,
+        2183,
+        2206,
+        2219,
+        2228,
+        2305,
+        2368,
+        2381,
+        2414,
+        2437,
+        2453,
+        2476,
+        2503,
+        2586,
+        2597,
+        2616,
+        2629,
+        2642,
+        2682,
+        2698,
+        2896,
+        2907,
+        2926,
+        2942,
+        2955,
+        2968,
+        3008,
+        3024,
+        3123,
+        3134,
+        3153,
+        3166,
+        3179,
+        3219,
+        3235,
+        3339,
+        3350,
+        3369,
+        3382,
+        3395,
+        3435,
+        3451,
+        3579,
+        3622,
+        3637,
+        3895,
+        3922,
+        3942,
+        3954,
+        4055,
+        4096
+      ]
+    },
+    {
+      "name": "NativeFlatGroupValidate",
+      "module": "McgsSetPro.exe",
+      "rva": 922704,
+      "bytes": "558bec6aff681e0ff70064a1000000005083ec20a1600b3b0133c5508d45f464a300000000894de88b45e88b108b4de88b423cffd08945d88b4de881c1b4000000894ddc8d55e0528b4ddce828b2f5ff8d45d4508b4ddce8bdc3f2ffeb088d4de0e8fefbf1ff8d4dd4518d4de0e8105af3ff0fb6d085d20f84c80000008d4de0e8a84cf6ff508d4decff1554913c01c745fc000000008b45e883c008508d4dec51e8a78cf5ff83c4080fb6d085d27419c645f300c745fcffffffff8d4decff1548913c018a45f3eb7e8d45ec508b4dd88b118b4dd88b4240ffd08945e4837de4007519c645f200c745fcffffffff8d4decff1548913c018a45f2eb4b8b4de483791401742b8b55e4837a140274228b45e4837814037419c645f100c745fcffffffff8d4decff1548913c018a45f1eb17c745fcffffffff8d4decff1548913c01e919ffffffb0018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        139,
+        192,
+        243,
+        295,
+        316
+      ]
+    },
+    {
+      "name": "NativeCreateLegalTypes",
+      "module": "McgsSetPro.exe",
+      "rva": 8022448,
+      "bytes": "558bec6aff68ce4c000164a1000000005081ec70010000a1600b3b0133c5508d45f464a300000000894dec837d0cff741b837d0c017415837d0c02740f837d0c037409c745c800000000eb07",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "AlarmVectorDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 946880,
+      "bytes": "558bec51894dfc8b4dfce85277f6ff8b450883e001740c8b4dfc51e8d876a40083c4048b45fc8be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "legitimate_native_types": [
+    -1,
+    1,
+    2,
+    3
+  ],
+  "direct_native_group_member_types": [
+    1,
+    2,
+    3
+  ],
+  "native_direct_nested_groups_supported": false,
+  "native_empty_group_members_supported": true,
+  "composition_contract": "Expand explicitly named existing native groups to their current scalar leaves and store a real flat native group; do not claim nested native groups.",
+  "native_execution_performed": false,
+  "alarm_profile_sha256": "b08d1b8188ab24f77bce26ed5b9a1218b4b6b52f8ae414e9366ce247d7daa817",
+  "reference_aware_type_change": {
+    "native_gui_confirm_assign_va": "0xABCEFB ->403350->4DEB90 same complete identity",
+    "registration_va": "0x4DFB70 IObject21",
+    "same_identity_scalar_types": [
+      -1,
+      1,
+      2,
+      3
+    ],
+    "defer_final_compile_required_when_referenced": true,
+    "consumer_capture": "PreparedObjectRename.Read; no RenameWorker invoked",
+    "native_registered_graph": "explicit after.expected_reference_edges for group/scalar topology; only target-owned outgoing edges may differ; all incoming/unrelated edges exact unchanged",
+    "consumer_sources": "complete pages/main-control/strategy/control-properties and related non-data modules exact unchanged",
+    "writer_does_not_mark_compile_valid": true,
+    "native_group_rule": "original4E1450 only accepts -1 group of scalar1/2/3 leaves; direct nested-group rejection unchanged",
+    "CObjData_child_count_method": "IObject19 thunk444A2B->C46E20 exact xor eax,eax; group membership is not an IObject child hierarchy"
+  }
+}

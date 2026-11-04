@@ -1,0 +1,264 @@
+{
+  "format": "mcgs-pro-strategy-write-private-abi-v1",
+  "version_gate": false,
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "path": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "preferred_base": "0x400000",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+    },
+    {
+      "name": "common.dll",
+      "path": "C:\\unbound-install-root\\Program\\common.dll",
+      "preferred_base": "0x10000000",
+      "sha256": "06384d2a706352a4d54875ee679cb34882bfb2a3c42730d5484eae8ffe4159c8"
+    },
+    {
+      "name": "mfc110u.dll",
+      "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+      "preferred_base": "0x10000000",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da"
+    }
+  ],
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6c060",
+      "expected_first_32_bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "StartupName",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ba00",
+      "expected_first_32_bytes": "558bec83ec08894df8c745fc000000008b45f883c014508b4d08ff1554913c01",
+      "relocatable_dword_offsets_in_first32": [
+        28
+      ]
+    },
+    {
+      "name": "StartupId",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bbf0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40308be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "StrategyModule",
+      "module": "McgsSetPro.exe",
+      "rva": "0x824f50",
+      "expected_first_32_bytes": "558bec51894dfcb8030000008be55dc3558bec6aff687fd4000164a100000000",
+      "relocatable_dword_offsets_in_first32": [
+        22
+      ]
+    },
+    {
+      "name": "BlockReplaceText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bca0",
+      "expected_first_32_bytes": "558bec83ec0c894df4c745fc00000000c745f800000000eb098b45f883c00189",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "BlockFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bd30",
+      "expected_first_32_bytes": "558bec83ec08894df8c745fc00000000eb098b45fc83c0018945fc8b4df883c1",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "RootIsModified",
+      "module": "McgsSetPro.exe",
+      "rva": "0x341110",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40488be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "RootSetModified",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3416d0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b4d088948488be55dc20400cccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "CStringDefaultCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x452b4",
+      "expected_first_32_bytes": "566848082a108bf1e8373afcff8bc65ec3558bec8b450c53578bfa8bd983f8ff",
+      "relocatable_dword_offsets_in_first32": [
+        2
+      ],
+      "ordinal": 296
+    },
+    {
+      "name": "CStringAssignWide",
+      "module": "mfc110u.dll",
+      "rva": "0xa0d73",
+      "expected_first_32_bytes": "558bec56ff75088bf1e8297bfaff8bc65e5dc20400558bec660fbe45080fb7c0",
+      "relocatable_dword_offsets_in_first32": [],
+      "ordinal": 1516
+    },
+    {
+      "name": "CStringDtor",
+      "module": "mfc110u.dll",
+      "rva": "0x466d4",
+      "expected_first_32_bytes": "8b0983e910e9bb2bfcff558bec568bf1e8396000008b068bceff90ec0200005e",
+      "relocatable_dword_offsets_in_first32": [],
+      "ordinal": 1039
+    },
+    {
+      "name": "CStringAssignCopy",
+      "module": "mfc110u.dll",
+      "rva": "0xa0e07",
+      "expected_first_32_bytes": "558bec56ff75088bf1e8ee85faff8bc65e5dc204006a04b8ae5c2610e8b879f6",
+      "relocatable_dword_offsets_in_first32": [
+        24
+      ],
+      "ordinal": 1514
+    },
+    {
+      "name": "CStringGetWide",
+      "module": "mfc110u.dll",
+      "rva": "0xa0dd0",
+      "expected_first_32_bytes": "8b01c3558bec817d080e0007807505e849651600ff7508e819be1800cc680e00",
+      "relocatable_dword_offsets_in_first32": [],
+      "ordinal": 1654
+    },
+    {
+      "name": "MatcherCtor",
+      "module": "common.dll",
+      "rva": "0xe7f0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8a4d0888088b55fc8a450c8842018b45fc8be55dc208",
+      "relocatable_dword_offsets_in_first32": [],
+      "export_name": "??0ObjectMatcher@@QAE@W4MatchedPatternFlag@@_N@Z"
+    },
+    {
+      "name": "MatcherDtor",
+      "module": "common.dll",
+      "rva": "0xe820",
+      "expected_first_32_bytes": "558bec51894dfc8be55dc3cccccccccc558bec51894dfc8b4508668b088b55fc",
+      "relocatable_dword_offsets_in_first32": [],
+      "export_name": "??1ObjectMatcher@@QAE@XZ"
+    },
+    {
+      "name": "LabelSetPropertyEntry",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3b895",
+      "expected_first_32_bytes": "e9f6703f00e9410a2b00e9fcb55e00e957672700e9b23ba900e94d2e9c00e968",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "LabelNameEntry",
+      "module": "McgsSetPro.exe",
+      "rva": "0x4d324",
+      "expected_first_32_bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "LabelIdEntry",
+      "module": "McgsSetPro.exe",
+      "rva": "0x54dbd",
+      "expected_first_32_bytes": "e91e9c7f00e9b9fe8e00e934455c00e9afaf5200e9caef4600e925dc0400e940",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "PageNameEntry",
+      "module": "McgsSetPro.exe",
+      "rva": "0x10825",
+      "expected_first_32_bytes": "e9d6068400e9717b0d00e9cc340700e9c7047d00e9620c3400e95d931c00e968",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "PageIdEntry",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1bb62",
+      "expected_first_32_bytes": "e9396f8300e9b47d7900e98f8d7200e97a4a9d00e9c5749500e9c0f63200e9fb",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "PropertyKeyName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x5131d0",
+      "expected_first_32_bytes": "558bec51c745fc000000008b450c508b4d0851e8f26ab1ff8bc8e8867fb1ff8b",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "PageArchiveId",
+      "module": "McgsSetPro.exe",
+      "rva": "0x850800",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "StrategyPreloadSaveData",
+      "module": "McgsSetPro.exe",
+      "rva": "0x824c20",
+      "expected_first_32_bytes": "558bec6aff685bd4000164a1000000005083ec54a1600b3b0133c5508d45f464",
+      "relocatable_dword_offsets_in_first32": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "StrategyPreloadSetDirty",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bdb0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8a4d0888485c8be55dc20400cccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    },
+    {
+      "name": "StrategyDataDirtyGetter",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bdd0",
+      "expected_first_32_bytes": "558bec51894dfc8b45fc8a40608be55dc3cccccccccccccccccccccccccccccc",
+      "relocatable_dword_offsets_in_first32": []
+    }
+  ],
+  "object_guards": {
+    "root_doc_vtable_rva": "0xd57684",
+    "strategy_manager_vtable_rva": "0xddd094",
+    "strategy_block_iobject_vtable_rva": "0xe3b4dc",
+    "strategy_block_complete_offset": 4,
+    "startup_id": 0,
+    "startup_name": "启动策略",
+    "module_id": 3
+  },
+  "offsets": {
+    "root_compile_valid": 276,
+    "name_vslot": 9,
+    "id_vslot": 14,
+    "module_vslot": 20,
+    "replaceText_vslot": 23,
+    "findText_vslot": 24,
+    "root_modified_get_vslot": 26,
+    "root_modified_set_vslot": 27
+  },
+  "warning": "Private internal ABI proven for these file hashes; versions are metadata only. Re-derive actual structure for another binary rather than denying by version.",
+  "label_guard": {
+    "page_vtable_rva": "0xded294",
+    "label_iobject_vtable_rva": "0xd72ec4",
+    "caption_iobject_offset": 224,
+    "set_property_vslot": 5,
+    "property_id": 45,
+    "dispatcher_string_vslot": 9,
+    "dispatcher_slot_stack_bytes": [
+      4,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      8,
+      12,
+      8,
+      12,
+      8,
+      8
+    ],
+    "archive_page_id_getter": "PageArchiveId",
+    "warning": "IObject virtual ID is the project identity-registry ID, not the WndUser table archive iID; page selection uses the proven PageArchiveId getter."
+  }
+}

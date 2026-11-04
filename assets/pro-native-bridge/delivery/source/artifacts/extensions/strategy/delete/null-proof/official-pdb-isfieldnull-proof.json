@@ -1,0 +1,56 @@
+{
+  "schema": 1,
+  "ok": true,
+  "official_symbol_url": "https://msdl.microsoft.com/download/symbols/mfc110u.i386.pdb/5EB9065F5F724C41902329E27F41ED3A2/mfc110u.i386.pdb",
+  "pdb_sha256": "ae075036d7610c1a1c3092925e49e1608b399764ba4793d43ecc68aaf4e54228",
+  "DLL_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "guid": "5eb9065f-5f72-4c41-9023-29e27f41ed3a",
+  "PE_RSDS_age": 2,
+  "DBI_age": 2,
+  "PDB_info_age": 3,
+  "age_note": "Info stream reports3, while DBI reports2 matching the image RSDS. No assumption of info-age equality is made. GUID, five current section addresses and four independent OMAP-to-export calibrations are validated.",
+  "current_section_headers_match": true,
+  "symbols": [
+    {
+      "decorated_name": "??0CByteArray@@QAE@XZ",
+      "PDB_record_kind": "S_PUB32",
+      "original_RVA": "0x1aa5c0",
+      "OMAP_current_RVA": "0x1c21ce",
+      "export_ordinal": 359,
+      "export_RVA_exact": true
+    },
+    {
+      "decorated_name": "??0CLongBinary@@QAE@XZ",
+      "PDB_record_kind": "S_PUB32",
+      "original_RVA": "0x1d33ce",
+      "OMAP_current_RVA": "0x1ebeb3",
+      "export_ordinal": 549,
+      "export_RVA_exact": true
+    },
+    {
+      "decorated_name": "?Delete@CDaoRecordset@@UAEXXZ",
+      "PDB_record_kind": "S_PUB32",
+      "original_RVA": "0x1ca452",
+      "OMAP_current_RVA": "0x1e2b6f",
+      "export_ordinal": 3790,
+      "export_RVA_exact": true
+    },
+    {
+      "decorated_name": "?IsFieldNull@CDaoRecordset@@QAEHPAX@Z",
+      "PDB_record_kind": "S_PUB32",
+      "original_RVA": "0x1c94be",
+      "OMAP_current_RVA": "0x1e1bdb",
+      "export_ordinal": 8039,
+      "export_RVA_exact": true
+    }
+  ],
+  "method": {
+    "signature": "BOOL CDaoRecordset::IsFieldNull(void* boundFieldMemberAddress)",
+    "calling_convention": "x86 thiscall, int return, ret4",
+    "ordinal": 8039,
+    "rva": "0x1e1bdb",
+    "semantic_code": "self+14 bound field count; bound field pointer -> native FieldIndex1E3590; reads self+5C flags[index], returns(flags>>1)&1. No comparison to pseudo-null numeric values.",
+    "documentation": "https://learn.microsoft.com/en-us/cpp/mfc/reference/cdaorecordset-class?view=msvc-170#isfieldnull"
+  },
+  "native_execution": false
+}

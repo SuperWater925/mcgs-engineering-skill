@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "scope": "Static layout proof; no native getter execution",
+  "complete_object_size": 1080,
+  "button_native_type": 20519,
+  "iobject_offset": 4,
+  "constructor": {
+    "entry": "0x768fa0",
+    "ecx_field_construction_pairs": [
+      {
+        "field_offset": "0x1a8",
+        "field_instruction": "0x769014",
+        "call_instruction": "0x76901a",
+        "entry": "0x40f231",
+        "body": "0xb32d00",
+        "jump_chain": [
+          "0x40f231",
+          "0xb32d00"
+        ]
+      },
+      {
+        "field_offset": "0x1bc",
+        "field_instruction": "0x769026",
+        "call_instruction": "0x76902c",
+        "entry": "0x42d08d",
+        "body": "0x49a3c0",
+        "jump_chain": [
+          "0x42d08d",
+          "0x49a3c0"
+        ]
+      },
+      {
+        "field_offset": "0x1d0",
+        "field_instruction": "0x769038",
+        "call_instruction": "0x76903e",
+        "entry": "0x42d08d",
+        "body": "0x49a3c0",
+        "jump_chain": [
+          "0x42d08d",
+          "0x49a3c0"
+        ]
+      },
+      {
+        "field_offset": "0x1e4",
+        "field_instruction": "0x76904a",
+        "call_instruction": "0x769050",
+        "entry": "0x404d95",
+        "body": "0x49a480",
+        "jump_chain": [
+          "0x404d95",
+          "0x49a480"
+        ]
+      }
+    ]
+  },
+  "action_layout": {
+    "action_modes": {
+      "offset": "0x1bc",
+      "class_name": "CArray<int,int>",
+      "vtable": "0x10eafa8"
+    },
+    "action_ids": {
+      "offset": "0x1d0",
+      "class_name": "CArray<int,int>",
+      "vtable": "0x10eafa8"
+    },
+    "action_texts": {
+      "offset": "0x1e4",
+      "class_name": "CArray<CString,CString>",
+      "vtable": "0x10eb058"
+    }
+  },
+  "array_structure": {
+    "bytes": 20,
+    "data_offset": 4,
+    "count_offset": 8,
+    "max_offset": 12,
+    "grow_offset": 16,
+    "element_bytes": 4
+  },
+  "serialize_evidence": {
+    "wrapper": "0x76cd30",
+    "legacy": "0x76cd70",
+    "versioned": "0x76d550",
+    "legacy_order": [
+      "0x210 CByteArray",
+      "0x1e4 action_texts",
+      "0x1d0 action_ids",
+      "0x1bc action_modes"
+    ]
+  },
+  "semantics_source": "ButtonArchive parser fields, independently compared to all53 safe-export instances by parent before rename",
+  "correction": "CMString is +1A8; +1D0 is CArray<int,int>. No earlier ambiguous inferred field pairing is used.",
+  "function_or_constructor_calls": 0
+}

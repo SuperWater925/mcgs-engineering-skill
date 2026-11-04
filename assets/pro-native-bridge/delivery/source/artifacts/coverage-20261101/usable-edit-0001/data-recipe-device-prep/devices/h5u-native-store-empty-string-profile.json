@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "purpose": "Exact H5U native STORE empty-narrow-string projection supplement; no native call",
+  "driver_key": "H5U_MODBUSTCP",
+  "driver_path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\H5U_MODBUSTCP\\H5U_MODBUSTCP.ui",
+  "driver_sha256": "b61665a50f428d1bc7d7fa1a7aa98b7c86a5795bee5d2d77db57f00f52fe1c8f",
+  "preferred_base": 268435456,
+  "base_driver_profile_sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6",
+  "guards": [
+    {
+      "name": "AutoACPToWide_complete",
+      "rva": 12896,
+      "bytes": "558bec83ec08c745fc000000006a006a006aff8b4d08e855210000506a006a00ff150cb004108945f8837df800750733c0e9830000008b45f8d1e0506a00ff1508b0041050ff1530b004108945fc837dfc00750433c0eb618b4df8518b55fc526aff8b4d08e806210000506a006a00ff150cb004103945f874178b45fc506a00ff1508b0041050ff1504b0041033c0eb288b4dfc518b4d0cff15e4b304108b55fc526a00ff1508b0041050ff1504b004108b4d08e8272600008be55dc3",
+      "reloc_offsets": [
+        34,
+        64,
+        71,
+        113,
+        130,
+        137,
+        154,
+        166,
+        173
+      ]
+    },
+    {
+      "name": "AutoWideToUtf8_complete",
+      "rva": 13088,
+      "bytes": "558bec516a006a006a006a006aff6a008b4d08ff15f8b30410506a0068e9fd0000ff1510b004108945fc837dfc007d0583c8ffeb558b45fc508b4d0ce8cf2d00006a006a008b4dfc518b4d0ce8af210000506aff6a008b4d08ff15f8b30410506a0068e9fd0000ff1510b004108945fc837dfc007d0583c8ffeb0f8b55fc528b4d0ce8892d00008b45fc8be55dc3",
+      "reloc_offsets": [
+        21,
+        35,
+        91,
+        105
+      ]
+    },
+    {
+      "name": "AutoNarrowStringToUtf8_complete",
+      "rva": 13232,
+      "bytes": "558bec6aff689924031064a1000000005083ec10a15c15061033c5508d45f464a3000000008d4decff15f4b30410c745fc000000008d45ec508b4d0851e86efeffff83c4088945f0837df0007f238b4d0ce8ca2000008b55f08955e8c745fcffffffff8d4decff15e8b304108b45e8eb2c8b450c508d4dec51e8f2feffff83c4088945f08b55f08955e4c745fcffffffff8d4decff15e8b304108b45e48b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        42,
+        104,
+        150
+      ]
+    },
+    {
+      "name": "StoreInt4_complete",
+      "rva": 133808,
+      "bytes": "558bec51894dfc6a048d4508508b4dfce82bfdffff8b45fc8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StoreWordNamedButDword_complete",
+      "rva": 133872,
+      "bytes": "558bec51894dfc6a048d4508508b4dfce8ebfcffff8b45fc8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StoreDouble8_complete",
+      "rva": 134192,
+      "bytes": "558bec51894dfc6a088d4508508b4dfce8abfbffff8b45fc8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StreamRawWrite_complete",
+      "rva": 133104,
+      "bytes": "558bec83ec08894dfc8b45fc83781c00750a6a018b4dfce8e4feffff8b4d0c518b4dfce8380700000fb6d085d2750432c0eb4cc745f800000000eb098b45f883c0018945f88b4df83b4d0c7d218b55fc8b42180345f8508b4dfc83c104e8ce0700008b4d08034df88a118810ebce8b45fc8b4818034d0c8b55fc894a18b0018be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StreamSetMode_complete",
+      "rva": 132848,
+      "bytes": "558bec51894dfc8b45fc8b481c3b4d0874118b55fc8b450889421c8b4dfce83d0000008be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StreamFlush_complete",
+      "rva": 132944,
+      "bytes": "558bec51894dfc8b45fc8378180076146aff8b4dfc8b5118528b4dfc83c104e8c80701008b45fcc74018000000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "AutoRecordStore_complete",
+      "rva": 11056,
+      "bytes": "558bec6aff686b24031064a1000000005083ec30a15c15061033c58945f0508d45f464a300000000894dd48d4dd8e8cd160000c745fc000000008d45d8508b4dd451e83908000083c4088d4dd8e8be2d0000508b55088b4a0ce822df01008d4dd8e8aa2d0000508d4dd8e831280000508b45088b480ce845dc01008d4dd8518b55d483c21852e8f507000083c4088d4dd8e87a2d0000508b45088b480ce8dede01008d4dd8e8662d0000508d4dd8e8ed270000508b4d088b490ce801dc01008d55d8528b45d483c03050e8b107000083c4088d4dd8e8362d0000508b4d088b490ce89ade01008d4dd8e8222d0000508d4dd8e8a9270000508b55088b4a0ce8bddb01008d45d8508b4dd483c14851e86d07000083c4088d4dd8e8f22c0000508b55088b4a0ce856de01008d4dd8e8de2c0000508d4dd8e865270000508b45088b480ce879db01008b4dd483c168e8be3500008945d08b4dd0518b55088b4a0ce81cde0100c745cc00000000eb098b45cc83c0018945cc8b4dcc3b4dd07d1c8b5508528b45cc508b4dd483c168e8bf1900008bc8e818ecffffebd38b4dd483c174e84b3500008945d08b4dd0518b55088b4a0ce8c9dd0100c745c800000000eb098b45c883c0018945c88b4dc83b4dd07d1c8b5508528b45c8508b4dd483c174e82c1900008bc8e8d5e6ffffebd38b4dd48b5164528b45088b480ce8c1dd01008b4dd48b5160528b45088b480ce8afdd01008b4dd48b9180000000528b45088b480ce85add01008b4dd48b9184000000528b45088b480ce885dd0100c745c400000000c745fcffffffff8d4dd8e88f1500008b45c48b4df464890d00000000598b4df033cde859e702008be55dc2",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    }
+  ],
+  "projection": {
+    "source_std_string_size_zero": "ACPToWide returns source size0 after conversion; wrapper clears destination; native wire length0 and no payload",
+    "source_std_string_size_positive": "UTF8 conversion uses -1 input count and retains terminal NUL in output std::string.size; raw exact bytes written",
+    "native_word_named_helper_width_bytes": 4,
+    "native_double_helper_width_bytes": 8,
+    "mode_0_first_write_sets_1_before_payload": true,
+    "no_blob_mask_or_equality_relaxation": true
+  },
+  "actual_failure_attribution_proven": false,
+  "actual_original_failed_wire_available": false
+}

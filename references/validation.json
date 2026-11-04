@@ -1,149 +1,196 @@
 {
   "schema": 2,
   "skill": "mcgs-offline-edit",
-  "historical_public_validation": {
+  "historical_validation": {
     "schema": 1,
+    "date": "2026-10-22",
     "skill": "mcgs-offline-edit",
-    "edition": "分享版",
-    "date": "2026-10-24",
-    "base_package_validation": {
-      "date": "2026-10-22",
-      "powershell_tested": "7.6.6 x64",
-      "ace_tested": "Microsoft.ACE.OLEDB.16.0; 12.0 also enumerated",
-      "python_tested": "3.12.14",
-      "isolated_behavior_checks": [
-        {
-          "name": "default_apply_is_read_only",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "wrong_input_sha256",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "wrong_field_before_fingerprint",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "wrong_blob_sha256",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "account_table_write_rejected",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "single_strategy_container_rejected",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "blob_path_escape_rejected",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "copy_commit_two_blob_transaction",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "after_fingerprints",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "compare_reports_exactly_two_changed_fields",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "in_place_backs_up_before_transaction",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "stable_snapshot_with_recipe_files",
-          "passed": true,
-          "expected_success": true
-        },
-        {
-          "name": "existing_report_refused_before_mutation",
-          "passed": true,
-          "expected_success": false
-        },
-        {
-          "name": "mcp_extension_rejected_with_Pro_route",
-          "passed": true,
-          "expected_success": false
-        }
-      ],
-      "codec_checks": {
-        "unsupported": [],
-        "all_attempted_roundtrips_pass": true
-      },
-      "pro_original_cli_doctor_passed": true,
-      "pro_create_edit_inspect_reverification": false,
-      "note": "原包在一个实际 McgsStu 3.5.3 工程上做的隔离验证；该工程不随包提供"
-    },
-    "share_edition_checks": [
+    "quick_validate_passed": true,
+    "quick_validate_tool": "skill-creator/scripts/quick_validate.py",
+    "validator_only_dependency": "PyYAML6.0.3 installed into isolated test directory; not required or bundled at runtime",
+    "powershell_tested": "7.6.6 x64",
+    "ace_tested": "Microsoft.ACE.OLEDB.16.0; 12.0 also enumerated",
+    "python_tested": "3.12.14",
+    "baseline_sha256": "4d95c9a8fdbbd727797e9e4047a7fc0635e755b8490a2c64eb2a37f25926123e",
+    "source_user_project_written": false,
+    "shared_input_unchanged": true,
+    "safe_export_rows": 277,
+    "all_tables_fingerprinted": 12,
+    "safe_export_omits_security_and_sensitive_system_rows": true,
+    "isolated_behavior_checks": [
       {
-        "name": "preview_path_port_pixel_identical",
+        "name": "default_apply_is_read_only",
         "passed": true,
-        "scope": "39 个窗口与缩略总览，与原工具逐像素相同"
+        "expected_success": true
       },
       {
-        "name": "preview_final_differs_only_in_5028_pen_and_footer",
-        "passed": true
-      },
-      {
-        "name": "text_fit_port_output_identical",
-        "passed": true
-      },
-      {
-        "name": "style_spec_tool_reproduces_original_18_window_blobs",
-        "passed": true
-      },
-      {
-        "name": "ui_library_reproduces_original_blobs",
+        "name": "wrong_input_sha256",
         "passed": true,
-        "scope": "导航边线窗口；设备页两张卡片 133 个控件"
+        "expected_success": false
       },
       {
-        "name": "inspect_exports_MCGSLINGUIST",
-        "passed": true
-      },
-      {
-        "name": "new_window_transaction_commit_on_copy",
+        "name": "wrong_field_before_fingerprint",
         "passed": true,
-        "scope": "新增 1 个窗口并改 1 个窗口；复读一致；native audit 通过；输入快照未变"
+        "expected_success": false
       },
       {
-        "name": "new_window_transaction_rejects",
+        "name": "wrong_blob_sha256",
         "passed": true,
-        "scope": "清单哈希不符、底稿 SHA 不符、输出已存在、前指纹不符、BLOB 哈希不符、BLOB 路径越界、System 行越界、策略容器不成对、插入已有窗口号/重名/非 WndUser/缺列/flag 非 0；均未生成输出"
+        "expected_success": false
       },
       {
-        "name": "examples_run",
-        "passed": true
-      },
-      {
-        "name": "relocated_package_smoke",
+        "name": "account_table_write_rejected",
         "passed": true,
-        "scope": "复制到新目录、在其他工作目录下运行：doctor、snapshot、inspect、native audit、离线预览（含 --active-map）、文字检查、两个示例、新增窗口事务 -Commit、run.ps1 apply -Commit；底稿快照未变"
+        "expected_success": false
+      },
+      {
+        "name": "single_strategy_container_rejected",
+        "passed": true,
+        "expected_success": false
+      },
+      {
+        "name": "blob_path_escape_rejected",
+        "passed": true,
+        "expected_success": false
+      },
+      {
+        "name": "copy_commit_two_blob_transaction",
+        "passed": true,
+        "expected_success": true
+      },
+      {
+        "name": "after_fingerprints",
+        "passed": true,
+        "expected_success": true
+      },
+      {
+        "name": "compare_reports_exactly_two_changed_fields",
+        "passed": true,
+        "expected_success": true
+      },
+      {
+        "name": "in_place_backs_up_before_transaction",
+        "passed": true,
+        "expected_success": true
+      },
+      {
+        "name": "stable_snapshot_with_recipe_files",
+        "passed": true,
+        "expected_success": true
+      },
+      {
+        "name": "existing_report_refused_before_mutation",
+        "passed": true,
+        "expected_success": false
+      },
+      {
+        "name": "mcp_extension_rejected_with_Pro_route",
+        "passed": true,
+        "expected_success": false
       }
     ],
+    "codec_checks": {
+      "counts": {
+        "common_envelope": 390,
+        "0x5009": 4,
+        "fill_inverse_exact": 384,
+        "0x5028": 34,
+        "multi_roundtrip": 34,
+        "0x5008": 167,
+        "label_roundtrip": 167,
+        "0x5002": 6,
+        "0x503d": 9,
+        "alarm_roundtrip": 3,
+        "0x502a": 19,
+        "0x503a": 3,
+        "group_roundtrip": 3,
+        "0x5005": 5,
+        "0x5004": 21,
+        "0x502e": 2,
+        "0x5027": 70,
+        "button_roundtrip": 70,
+        "0x5025": 49,
+        "input_roundtrip": 49,
+        "0x5033": 1,
+        "save_data_roundtrip": 1,
+        "xy_core_roundtrip": 1,
+        "recipe_core_roundtrip": 5,
+        "additional_multi_display_roundtrip": 19,
+        "history_curve_roundtrip": 2
+      },
+      "unsupported": [],
+      "all_attempted_roundtrips_pass": true,
+      "current_project_written": false
+    },
+    "relocation": {
+      "ran_from_different_working_directory": true,
+      "native_audit_passed": true,
+      "doctor_passed": true,
+      "no_original_workspace_runtime_dependency_in_python": true,
+      "source_project_written": false
+    },
+    "pro_original_cli_doctor_passed": true,
+    "pro_create_edit_inspect_reverification": false,
     "native_compile_verified": false,
     "native_runtime_verified": false,
     "physically_tested": false,
-    "test_inputs_or_project_data_bundled": false,
+    "test_inputs_or_current_project_accounts_bundled": false,
     "vendor_binaries_bundled": false,
+    "doc_updates": [
+      {
+        "date": "2026-10-24",
+        "scope": "references/*.md and SKILL.md only; scripts/, run.ps1, assets/ unchanged",
+        "added": [
+          "native-ui: 原厂运行时实测, 窗口与对象",
+          "plc-handoff: 精简v3合同, EVOs FreeTag驱动与iFA实测",
+          "project-profile: 2026-10-23主线截面、界面结构、项目工具、用户约定",
+          "database-and-transactions: WndUser insert 受限事务说明",
+          "pitfalls: 4条回归",
+          "environment: Claude Code安装位置与清单重算方法"
+        ],
+        "scripts_reverified": false,
+        "native_compile_verified": false
+      }
+    ],
     "former_name": "mcgs-stu-offline-edit"
+  },
+  "historical_unification_20261029": {
+    "date": "2026-10-29",
+    "software_release_gates": false,
+    "common_numeric_header_gates": false,
+    "one_registered_skill": true,
+    "one_run_ps1_entrypoint": true,
+    "shared_runtime": "PowerShell 7.6.6 x64 / ACE16.0; ACE12.0 read also verified / Python3.14.7",
+    "pro_32bit_powershell_or_jet_provider_required": false,
+    "pro_input_count": 6,
+    "all_original_inputs_unchanged": true,
+    "tables_per_input": 12,
+    "pro_windows": 82,
+    "pro_controls_including_group_children": 4503,
+    "pro_objects": 9065,
+    "runtime_checks": 131,
+    "runtime_checks_passed": true,
+    "json_edit_and_relocation_checks": 32,
+    "json_edit_and_relocation_checks_passed": true,
+    "final_checks": 17,
+    "final_checks_passed": true,
+    "known_feature_gaps": [
+      "49 animation-bearing common envelopes",
+      "714 legacy picture 0x2 multi-state controls",
+      "17 reverse-direction rectangles for current editing API",
+      "CTriggerEvent",
+      "two nonempty Pro recipe definitions"
+    ],
+    "stu_existing_archive_audit_passed": true,
+    "python_runtime_pip_dependencies": [],
+    "validator_only_dependency": "Existing isolated PyYAML directory, not installed into runtime or bundled",
+    "native_compile_verified": false,
+    "native_runtime_verified": false,
+    "physically_tested": false,
+    "native_ui_blocker": "Native file dialog ownership mismatch persisted after activation/refresh and one retry",
+    "current_project_accounts_bundled": false,
+    "vendor_binaries_bundled": false,
+    "replaces_historical_pro_cli_environment_and_mcp_extension_rejection": true
   },
   "current_validation": {
     "date": "2026-10-30",
@@ -472,79 +519,11 @@
       "native_file_audit_checks": 6
     }
   },
-  "repository_integration_20261030": {
-    "checks": [
-      {
-        "name": "doctor",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "pro-demo",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "stu-inspect",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "stu-audit",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "overlay-example",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "new-page-example",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "insert-preflight",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "insert-wrong-manifest-sha",
-        "passed": true,
-        "exit_code": 1
-      },
-      {
-        "name": "insert-commit",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "insert-reread",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "insert-audit",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "newpage-preview",
-        "passed": true,
-        "exit_code": 0
-      },
-      {
-        "name": "newpage-text-check",
-        "passed": true,
-        "exit_code": 0
-      }
-    ],
-    "count": 13,
-    "passed": true,
-    "source_unchanged": true,
-    "native_vendor_compile_for_new_page_tested": false,
-    "python_tested": "3.12.14",
-    "pillow_tested": "12.3.0"
+  "latest_native_ui_validation": {
+    "date": "2026-11-03",
+    "actual_case_date": "2026-11-02",
+    "record": "references/native-ui-validation.json",
+    "historical_validation_retained": true,
+    "new_entire_feature_matrix_or_reopen_acceptance_claimed": false
   }
 }

@@ -1,0 +1,23 @@
+{
+  "schema": "generic-reference-rename-prog-compiler-contract-v1",
+  "native_generation_abi_sha256": "2c84a97fa0adc5d65f27f8d4ceef29442fd908d64911b711897d95b8b3826cec",
+  "node_abi_sha256": "7198f12224c7bd209dddf74c3597f93e96b9994c11877cce1b71d53f2c527fcd",
+  "action_after_key": "reference_prog_compilation",
+  "required_fields": [
+    "allow_original_compile_and_fixed_point",
+    "targets"
+  ],
+  "derived_member": "CStgyFuncProg.serialized_fields.byte_arrays@0xC",
+  "expected_member_marker": {
+    "original_reference_rename_prog_compiler_result": true
+  },
+  "scope": "Declared actual canonical consumer block ID/name/native row index, complete requested final source; no open working model for these blocks",
+  "sequence": [
+    "original reference-aware rename worker",
+    "complete business/foreign/module/graph compare with only declared cache markers",
+    "original per-block compile then register+compile full archive fixed point",
+    "recapture and exact validation of actual generated cache descriptors"
+  ],
+  "unknown_or_other_serialized_members_projected": false,
+  "host_invoked": false
+}

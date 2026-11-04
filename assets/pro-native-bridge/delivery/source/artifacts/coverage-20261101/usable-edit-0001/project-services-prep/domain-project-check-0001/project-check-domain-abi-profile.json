@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "utc": "2026-11-02T08:42:21.542133+00:00",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "worker": {
+    "rva": 3302224,
+    "root_virtual_slot": 85,
+    "slot_entry_rva": 233671,
+    "calling_convention": "ThisCall",
+    "arguments": [],
+    "returns": "int32 (0 normal success; 1 failure/cancellation/native exception path)"
+  },
+  "main_window_getter_rva": 499120,
+  "tables": {
+    "app": {
+      "vtable_rva": 14455980,
+      "col_rva": 15232968,
+      "type_descriptor_rva": 16398360,
+      "rtti": ".?AVC0McgsApp@@"
+    },
+    "root": {
+      "vtable_rva": 13989508,
+      "col_rva": 15171048,
+      "type_descriptor_rva": 16323500,
+      "rtti": ".?AVC0DocManage@@"
+    },
+    "main_window": {
+      "vtable_rva": 14395308,
+      "col_rva": 15227908,
+      "type_descriptor_rva": 16299644,
+      "rtti": ".?AVC0FrmMain@@"
+    }
+  },
+  "guards": [
+    {
+      "name": "RootCheck85FullBody",
+      "rva": 3302224,
+      "bytes": "558bec6aff689149fa0064a100000000505181eca8000000a1600b3b0133c58945ec535657508d45f464a3000000008965f0894dc468a4a500008d45b450e88599d2ff83c4088945948b4d94898d64ffffffc745fc000000008b8d64ffffffff156c913c01508d4dd3e8bfd0d1ffc645fc028d4db4ff1548913c018d4dd2e8104acfffc645fc038b4dc4e8a7e9d2ff8b55c4c7821401000000000000c78554ffffff00000000c745ac00000000c645fc048d4dd1e8fbaacfff898548ffffffc645fc0533c08845cd8d4dcd518d4dd4e8e918d1ff89854cffffffc645fc068d55d4528d4dd1e890e6cdff8845ce8a45ce8845d0c645fc058d4dd4e808d1ceff0fb64dd085c9753cc7857cffffff01000000c645fc048d4dd1e82febceffc645fc028d4dd2e8a343ceffc745fcffffffff8d4dd3e8dd54ceff8b857cffffffe9d7020000c645fc048d4dd1e8fdeaceff837dac000f85490100008b55c4c7821401000001000000e8f3b2d1ff89855cffffff8b855cffffff8b884002000083c110e82b41ceff8945a48b4da4894dc8837dc8ff0f84d20000008b55c883c2048955c88b4dc4e8a230d0ff898574ffffff8b8574ffffff3b45c80f8eac0000008d4dc0ff1588903c01c645fc07683ba700008d4dbc51e8ef97d2ff83c40889459c8b559c899568ffffffc645fc088b45c883e804508b8d68ffffffff156c913c01508d4dc051ff1580903c0183c40cc645fc078d4dbcff1548913c016a006a408d4dc0ff156c913c0150e867888000c7856cffffff00000000c645fc048d4dc0ff1548913c01c645fc028d4dd2e87c42ceffc745fcffffffff8d4dd3e8b653ceff8b856cffffffe9b0010000e81359cfff89458c6a00687cb6380168ac8838016a008b558c52e899ab800083c414898560ffffff8b8d60ffffffe893fbceff8845cfeb446820f000008d4db851e81897d2ff83c4088945848b5584899558ffffffc645fc096a006a408b8d58ffffffff156c913c0150e8bb878000c645fc048d4db8ff1548913c01e9b00000008b8d50ffffffe8f287800068a6a500008d45a050e8c496d2ff83c4088945b08b4db0894da8c645fc0b6a006a108b4da8ff156c913c0150e86d878000c645fc0a8d4da0ff1548913c01c78578ffffff01000000b819677200c3b8eb667200c368a6a500008d558852e87096d2ff83c4088945988b4598894590c645fc0c6a006a108b4d90ff156c913c0150e819878000c645fc0a8d4d88ff1548913c01c7458001000000b8f4667200c3b8eb667200c3c745fc03000000eb23c745fc020000008d4dd2e81941ceffc745fcffffffff8d4dd3e85352ceff8b4580eb53eb26c745fc020000008d4dd2e8f440ceffc745fcffffffff8d4dd3e82e52ceff8b8578ffffffeb2bc78570ffffff00000000c645fc028d4dd2e8c740ceffc745fcffffffff8d4dd3e80152ceff8b8570ffffff8b4df464890d00000000595f5e5b8b4dec33cde87ca880008be55dc3",
+      "reloc_offsets": [
+        6,
+        25,
+        97,
+        119,
+        451,
+        507,
+        518,
+        534,
+        547,
+        576,
+        629,
+        634,
+        719,
+        738,
+        797,
+        816,
+        831,
+        837,
+        881,
+        900,
+        912,
+        918
+      ]
+    },
+    {
+      "name": "WholeModuleCompilePipeline",
+      "rva": 8543120,
+      "bytes": "558bec6aff680cd7000164a100000000505181eccc000000a1600b3b0133c58945ec535657508d45f464a3000000008965f0898d4cffffff68f8871e018d8d7cffffffff1550913c01c745fc000000006820881e018d4d90ff1550913c01c645fc01e809e57eff898578ffffff8d45905068bd020000680c871e016840881e016a018d8d24ffffffe8c06e81ff898554ffffff8b8d54ffffff898d74ffffffc645fc028d957cffffff528b8574ffffff508b8d78ffffff8b118b8d78ffffff8b420cffd0c645fc018d8d24ffffffe8c5947effc645fc008d4d90ff1548913c01c745fcffffffff8d8d7cffffffff1548913c0168e65600008d8d5cffffff51e884a082ff83c408898550ffffff8b9550ffffff899568ffffffc745fc030000008b8d68ffffffff156c913c01508d4d9be8b8d781ffc645fc058d8d5cffffffff1548913c018d4d80e8a1ce7fffc645fc066a018d4d9ce8d9d181ffc645fc07c645fc08c7459400000000eb098b459483c001894594837d940c7d128b4d08518b5594528d4d9ce8de277effebdfeb06b82e5dc200c3c745fc07000000eb07c745fc070000008d4d9ce8fd777eff0fb6c085c00f842601000068e75600008d8d70ffffff51e8bf9f82ff83c408898560ffffff8b9560ffffff899558ffffffc645fc0a6a008b8558ffffff508b4d08e854b481ffc645fc078d8d70ffffffff1548913c0168ac881e018d4d88ff1550913c01c645fc0b685c891e018d4d8cff1550913c01c645fc0ce844e37eff8945848d4d8c5168d1020000687c891e016898891e016a018d8d38ffffffe8fe6c81ff89856cffffff8b956cffffff899564ffffffc645fc0d8d4588508b8d64ffffff518b55848b028b4d848b500cffd2c645fc0c8d8d38ffffffe80c937effc645fc0b8d4d8cff1548913c01c645fc078d4d88ff1548913c018d4d9ce8fe007fffc6459900c645fc068d4d9ce8fa3e80ffc645fc058d4d80e81d1882ffc745fcffffffff8d4d9be8fc5a7eff8a4599eb368d4d9ce8c6007fffc6459a01c645fc068d4d9ce8c23e80ffc645fc058d4d80e8e51782ffc745fcffffffff8d4d9be8c45a7eff8a459a8b4df464890d00000000595f5e5b8b4dec33cde842b130008be55dc2",
+      "reloc_offsets": [
+        6,
+        25,
+        57,
+        69,
+        81,
+        90,
+        119,
+        124,
+        220,
+        239,
+        296,
+        321,
+        400,
+        511,
+        516,
+        525,
+        534,
+        543,
+        569,
+        574,
+        661,
+        674
+      ]
+    },
+    {
+      "name": "AfxMainWindow",
+      "rva": 499120,
+      "bytes": "558bec83ec08e8c151ab008945fc837dfc0074128b45fc8b108b4dfc8b427cffd08945f8eb07c745f8000000008b45f88be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootCheckStateReset",
+      "rva": 7132352,
+      "bytes": "558bec51894dfc8b45fcc7801401000001000000e8d54297ff8b8820050000e8e37497ff33c08be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootClearErrorJournal",
+      "rva": 3293136,
+      "bytes": "558bec51894dfc8b45fcc780000300000000000068545c15018b4dfc81c1c8010000ff1584903c0168585c15018b4dfc81c1cc010000ff1584903c018b4dfcc781d00100000000000033c08be55dc3cc558bec51894dfc837d1000740e8b45108b4dfc8b91d001000089108b45fc05c8010000508b4d08ff15708e3c018b4dfc81c1cc010000518b4d0cff15708e3c0133c08be55dc20c00cccccccccccccccc",
+      "reloc_offsets": [
+        21,
+        36,
+        41,
+        56,
+        121,
+        140
+      ]
+    },
+    {
+      "name": "RootAppendDiagnostic",
+      "rva": 3293296,
+      "bytes": "558bec6aff682c45fa0064a1000000005083ec08a1600b3b0133c5508d45f464a300000000894df068045c15018b45f005c801000050e851c4d2ff83c4080fb6c885c9741768085c15018b55f081c2cc01000052e833c4d2ff83c4088b4d08518b4df081c1c8010000ff1584903c018b550c528b4df081c1cc010000ff1584903c018b45f083b8d001000000750c8b4df08b55108991d00100008b450c508d4decff1550913c01c745fc000000008d4dec518b55f081c2c801000052e86289d0ff83c408c745fcffffffff8d4decff1548913c0133c08b4df464890d00000000598be55dc20c00cccccccccccccccccc558bec6aff68b145fa0064a100000000",
+      "reloc_offsets": [
+        6,
+        21,
+        41,
+        70,
+        107,
+        126,
+        163,
+        208,
+        246
+      ]
+    }
+  ],
+  "raw": {
+    "app_rva": 16495992,
+    "root_pointer_offset": 1312,
+    "project_path_offset": 36,
+    "root_modified_offset": 72,
+    "compile_valid_offset": 276,
+    "root_object_model_offset": 724,
+    "last_error_owner_offset": 456,
+    "last_error_text_offset": 460,
+    "first_error_code_offset": 464
+  },
+  "freshness_contract": "One explicitly permitted original Root85 call; its own entry resets compile-valid/error journal and runs whole-module pipeline. Old compile flag alone is never accepted.",
+  "ui_contract": {
+    "headless": false,
+    "menu_handler_or_save_confirm_called": false,
+    "original_worker_modal_branches_preserved": [
+      "0x726578 TPC resource/quantity warning",
+      "0x726624 original failure message",
+      "0x726672/0x7266c6 original exception messages"
+    ],
+    "frame_and_progress_services_may_run": true,
+    "no_SendMessage_or_key_simulation": true
+  },
+  "counts_contract": {
+    "complete_error_warning_owner_lifetime_closed": false,
+    "error_count": null,
+    "warning_count": null,
+    "last_root_diagnostic_is_not_an_all_errors_list": true,
+    "no_fake_zero": true
+  },
+  "evidence": [
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\project-services-prep\\project-check-worker-static-source.json",
+      "sha256": "01504a2c8b5f2c86b3ed5f0966635c663df3ab488febfaa7c98dafac001f1afe"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\native-project-check-prep-0001\\native-full-project-check-static-entry-evidence-0001.json",
+      "sha256": "3814a073e3555e1b52b737630b8c06e6fa2f57b64003c44e731c7156b6a70226"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\project-services-prep\\project-compile-diagnostics-abi-profile.json",
+      "sha256": "387b158d0cdb5cb525c02609c64058e0c5f2a933481ac3c8e1a73e7c30647b5c"
+    }
+  ],
+  "host_invoked": false,
+  "native_calls": 0
+}

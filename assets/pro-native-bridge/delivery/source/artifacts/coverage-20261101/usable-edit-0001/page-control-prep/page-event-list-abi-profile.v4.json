@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "EventFactory",
+      "rva": 8746864,
+      "bytes": "558bec6aff683f1f010164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "EventDeepCopy",
+      "rva": 8747184,
+      "bytes": "558bec83ec0856894dfc8b45fc8b4d088b51048950048b450883c008508b4dfc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventScalarDelete",
+      "rva": 8764672,
+      "bytes": "558bec51894dfc8b4dfce80c0e7cff8b450883e00174098b4dfc51e8bce37bff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventIsEmpty",
+      "rva": 8751984,
+      "bytes": "558bec83ec08894df88b4df883c110ff1564913c0185c0740433c0eb5cc745fc",
+      "reloc_offsets": [
+        17
+      ]
+    },
+    {
+      "name": "EventArrayAdd",
+      "rva": 8764864,
+      "bytes": "558bec51894dfc8b4508508b4dfce857527dff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PointerArrayAdd",
+      "rva": 732560,
+      "bytes": "558bec83ec08894dfc8b45fc8b4808894df88b5508528b45f8508b4dfce8eac5",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PointerArraySetSizeThunk",
+      "rva": 11727766,
+      "bytes": "ff25e08a3c01ff25dc8a3c01ff25d88a3c01ff25d48a3c01ff25d08a3c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "OriginalOwningListCommit",
+      "rva": 8754918,
+      "bytes": "c745e000000000eb098b4de083c101894de08b55f08b8ab4000000e844117fff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalFactoryAndDefaultInfo",
+      "rva": 8753328,
+      "bytes": "558bec6aff682622010164a1000000005083ec5856a1600b3b0133c5508d45f4",
+      "reloc_offsets": [
+        6,
+        22
+      ]
+    },
+    {
+      "name": "EventArgumentStringGetAtEntry",
+      "rva": 154711,
+      "bytes": "e9248e0400e99f8aaa00e9fae55300e975802800e9a0a72200e9abbd8000e926",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringGetAt",
+      "rva": 453248,
+      "bytes": "558bec51894dfc8b4508508b4dfce84443faff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringElement",
+      "rva": 453856,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e83501ac008b55fc",
+      "reloc_offsets": []
+    }
+  ],
+  "page_document_properties_profile_sha256": "d383ce0d2595b4d08efc6526d1f940caca5aadb7fc405020af247f3d38313965",
+  "mfc": {
+    "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "imports": [
+      {
+        "name": "MFCOrdinal13783",
+        "rva": 336947,
+        "bytes": "558bec53578b7d088bd985ff0f88253f00008b450c85c00f89123f000085ff0f",
+        "reloc_offsets": [],
+        "iat_rva": 16550624,
+        "ordinal": 13783
+      },
+      {
+        "name": "MFCOrdinal13075",
+        "rva": 287412,
+        "bytes": "558bec568b7508578bf985f60f88163804003b77087c0b6aff8d460150e85dc1",
+        "reloc_offsets": [],
+        "iat_rva": 16550620,
+        "ordinal": 13075
+      }
+    ]
+  },
+  "static_proof_sha256": "4f611dd5243dd97b360effcdb164c42e134643a6f47164b9865e6d31ffe84463",
+  "candidate_host_verified": false,
+  "definitions_profile_sha256": "ce0eea49c948eea9bf99d6ece908a4cce74630bdd1b38828412fde80a2dc5429",
+  "normal_metadata_query": "Original Page IObject11 may initialize own immutable type metadata/resource cache before permit; guarded existing UI resource language, project/current-language preserved.",
+  "capability": "Event owning list from existing templates or original native event definitions; original UI excludes new IDs1/2.",
+  "argument_text_proof_file": "event-argument-text-copy-and-derived-bindings-static-proof.json",
+  "argument_text_proof_sha256": "49492b6440b9593542fab4f62af275f33bae60b328d112d27e68cabae7ca9a32"
+}

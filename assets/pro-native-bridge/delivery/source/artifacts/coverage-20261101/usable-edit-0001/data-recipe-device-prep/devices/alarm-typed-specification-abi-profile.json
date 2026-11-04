@@ -1,0 +1,291 @@
+{
+  "schema": 1,
+  "purpose": "typed literal alarm definition specification adapted to original selector9 owned deep-copy submission",
+  "base_alarm_sha256": "b08d1b8188ab24f77bce26ed5b9a1218b4b6b52f8ae414e9366ce247d7daa817",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "guards": [
+    {
+      "name": "ItemConstructor",
+      "rva": 528912,
+      "bytes": "558bec6aff68b866f60064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e82881faffc745fc000000008b45f0c700e8a20e018b4df0c74104000000008b55f0c74208000000008b45f0c7400c000000008b4df0c74110ffffffff8b55f0c74218ffffffff8b45f0c74020ffffffff8b4df0c741280000000068f4a00e018b4df083c12cff1550913c018b55f0f30f1005f8990e01f30f1142148b45f0f30f1005f8990e01f30f11401c8b4df0f30f1005f8990e01f30f114124c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        58,
+        133,
+        145,
+        156,
+        172,
+        188
+      ]
+    },
+    {
+      "name": "ItemArchiveSerialize",
+      "rva": 529184,
+      "bytes": "558bec83ec0c894dfc8b4d08e875d9fcff85c00f84c50000008b45fc8b4804518b4d08e8f511fbff8b55fc8b4208508b4d08e8e611fbff8b4dfc8b510c8955f48b45f4508b4d08e8d111fbff8b4dfc8b5110528b4d08e8c211fbff8b45fc51f30f104014f30f1104248b4d08e85c11fbff8b4dfc8b5118528b4d08e89d11fbff8b45fc51f30f10401cf30f1104248b4d08e83711fbff8b4dfc8b5120528b4d08e87811fbff8b45fc51f30f104024f30f1104248b4d08e81211fbff8b4dfc8b5128528b4d08e85311fbff8b45fc83c02c508b4d08e8504ef8ffe9b20000008b4dfc83c104518b4d08e8b77ffbff8b55fc83c208528b4d08e8a87ffbffc745f8000000008d45f8508b4d08e8957ffbff8b4dfc8b55f889510c8b45fc83c010508b4d08e87d7ffbff8b4dfc83c114518b4d08e81e7ffbff8b55fc83c218528b4d08e85f7ffbff8b45fc83c01c508b4d08e8007ffbff8b4dfc83c120518b4d08e8417ffbff8b55fc83c224528b4d08e8e27efbff8b45fc83c028508b4d08e8237ffbff8b4dfc83c12c518b4d08e851fbfbff8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PackedGroupGet",
+      "rva": 531136,
+      "bytes": "558bec83ec08894dfc8b45fc8b480481e10000ffff894df88b45f8c1f8108be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PackedGroupSet",
+      "rva": 531184,
+      "bytes": "558bec83ec08894dfc8b4508c1e0108945f88b4dfc8b510481e2ffff00000b55f88b45fc8950048be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PackedPriorityGet",
+      "rva": 531232,
+      "bytes": "558bec51894dfc8b45fc8b400425ffff00008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PackedPrioritySet",
+      "rva": 531264,
+      "bytes": "558bec83ec08894dfc8b450825ffff00008945f88b4dfc8b510481e20000ffff0b55f88b45fc8950048be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "AlarmDialogOriginalConfirmAndSwitch",
+      "rva": 512768,
+      "bytes": "558bec6aff68d061f60064a1000000005081ec10010000a1600b3b0133c5508d45f464a300000000894df08b4df081c1c0010000e82188f8ff898550ffffff8d4dbce802e5fcffc745fc000000006888880e018d4decff1550913c01c645fc018b8550ffffff508b4df081c1c0010000e8a845faff8945c88b4df081c188040000e80057f8ff8945c48d4dec518b4df081c14c010000e8d91dab006a008d55ec52e89d99f8ff83c4080fb6c085c00f858d0000006a006a1068625700008d4d9851e85229fdff83c4088985e4feffff8b95e4feffff899540ffffffc645fc028b8d40ffffffff156c913c0150e8f319ab00c645fc018d4d98ff1548913c016a006aff6aff8b4df081c14c010000e87d9efcff8b4df081c14c010000e8561bab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce88205fdffe99a0d00006a016a0068f60400008b4df0e82e1dab00508d4dbce86ff3f8ff8d4dbce8942cfcff85c07c138d4dbce8882cfcff3dff0000000f8e8d0000006a006a10680f5c00008d8538ffffff50e88928fdff83c408898510ffffff8b8d10ffffff894d90c645fc038b4d90ff156c913c0150e83019ab00c645fc018d8d38ffffffff1548913c016a006aff6aff8b4df081c15c060000e8b79dfcff8b4df081c15c060000e8901aab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8bc04fdffe9d40c00006a016a0068ea0400008b4df0e8681cab00508d4dbce87b74faff8d4dbce8247afdff85c07c118d4dbce8187afdff83f8640f8e870000006a006a1068635700008d558052e8c827fdff83c4088945888b45888985f8feffffc645fc048b8df8feffffff156c913c0150e86f18ab00c645fc018d4d80ff1548913c016a006aff6aff8b4df081c14c010000e8f99cfcff8b4df081c14c010000e8d219ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8fe03fdffe9160c00006a018b4df0e8b71bab00e8da41fcff8b88200500008b910c0200008955ac6a008b45f00570050000508b4dac8b118b4dac8b82ac000000ffd00fb6c885c90f85f80000008d4db0ff1588903c01c645fc058d4db8ff1588903c01c645fc066a008d55b8528d45b050e87c41fcff8b8820050000e8ef53f8ff8d4db4ff1588903c01c645fc078b4db8518b55b05268a85800008d8508ffffff50e8b526fdff83c408898530ffffff8b8d30ffffff898d78ffffffc645fc088b8d78ffffffff156c913c01508d55b452ff1580903c0183c410c645fc078d8d08ffffffff1548913c016a006a108d4db4ff156c913c0150e82b17ab00c645fc068d4db4ff1548913c01c645fc058d4db8ff1548913c01c645fc018d4db0ff1548913c01c645fc008d4decff1548913c01c745fcffffffff8d4dbce8c202fdffe9da0a00008b45f00570050000508d4de8ff15708e3c018b4df08b91bc0000008955e48b45c88945a8837da8110f876e0a00008b4da80fb69108e24700ff2495ece147008d45ec508b4df081c134020000e8221aab006a018d4dec51e8e695f8ff83c4080fb6d085d20f85930000006a006a1068645700008d8568ffffff50e89825fdff83c408898570ffffff8b8d70ffffff898d28ffffffc645fc098b8d28ffffffff156c913c0150e83916ab00c645fc018d8d68ffffffff1548913c016a006aff6aff8b4df081c1a8020000e8c09afcff8b4df081c1a8020000e89917ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8c501fdffe9dd0900008d4decff156c913c0150ff158c6e3c0183c404d95dd08b55f0f30f1082b0000000f30f1145d88b45f0f30f1080b8000000f30f1145e0e9640900008d4dec518b4df081c134020000e82919ab006a018d55ec52e8ed94f8ff83c4080fb6c085c00f85930000006a006a1068655700008d8d20ffffff51e89f24fdff83c4088985e8feffff8b95e8feffff899560ffffffc645fc0a8b8d60ffffffff156c913c0150e84015ab00c645fc018d8d20ffffffff1548913c016a006aff6aff8b4df081c134020000e8c799fcff8b4df081c134020000e8a016ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8cc00fdffe9e40800008d4decff156c913c0150ff158c6e3c0183c404d95dd08d45ec508b4df081c1a8020000e85518ab006a018d4dec51e81994f8ff83c4080fb6d085d20f858d0000006a006a1068665700008d45a450e8ce23fdff83c408898558ffffff8b8d58ffffff898d00ffffffc645fc0b8b8d00ffffffff156c913c0150e86f14ab00c645fc018d4da4ff1548913c016a006aff6aff8b4df081c1a8020000e8f998fcff8b4df081c1a8020000e8d215ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8fefffcffe9160800008d4decff156c913c0150ff158c6e3c0183c404d95dd88b55f0f30f1082b8000000f30f1145e0e9ad0700008d45ec508b4df081c134020000e87217ab006814890e018d4dec51e86e03fdff83c4080fb6d085d20f84af0000006818890e018d45ec50e85203fdff83c4080fb6c885c90f84930000006a006a1068675700008d95f0feffff52e8c922fdff83c408898518ffffff8b8518ffffff898548ffffffc645fc0c8b8d48ffffffff156c913c0150e86a13ab00c645fc018d8df0feffffff1548913c016a006aff6aff8b4df081c1a8020000e8f197fcff8b4df081c1a8020000e8ca14ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8f6fefcffe90e0700008d4decff156c913c0150ff158c6e3c0183c404d95dd08b4df0f30f1081b0000000f30f1145d88b55f0f30f1082b8000000f30f1145e0e995060000e9900600008d45ec508b4df081c134020000e85516ab006a008d4dec51e81992f8ff83c4080fb6d085d20f85810000006a006a1068685700008d459450e8ce21fdff83c4088945a08b4da0894d9cc645fc0d8b4d9cff156c913c0150e87b12ab00c645fc018d4d94ff1548913c016a006aff6aff8b4df081c134020000e80597fcff8b4df081c134020000e8de13ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce80afefcffe9220600008d4decff156c913c0150ff158c6e3c0183c404d95dd0f30f1005f8990e010f2f45d07712f30f1045d00f2f05fc990e010f86870000006a006a1068695700008d957cffffff52e81421fdff83c40889458c8b458c894584c645fc0e8b4d84ff156c913c0150e8c111ab00c645fc018d8d7cffffffff1548913c016a006aff6aff8b4df081c134020000e84896fcff8b4df081c134020000e82113ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce84dfdfcffe9650500008d4dec518b4df081c1a8020000e8ec14ab00681c890e018d55ec52e8e800fdff83c4080fb6c085c00f84af0000006820890e018d4dec51e8cc00fdff83c4080fb6d085d20f84930000006a006a10686a5700008d8564ffffff50e84320fdff83c408898574ffffff8b8d74ffffff898d6cffffffc645fc0f8b8d6cffffffff156c913c0150e8e410ab00c645fc018d8d64ffffffff1548913c016a006aff6aff8b4df081c1a8020000e86b95fcff8b4df081c1a8020000e84412ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce870fcfcffe9880400008d4decff156c913c0150ff158c6e3c0183c404d95de0f30f1045e0f30f1145d8e9250400008d55ec528b4df081c134020000e8ea13ab006a008d45ec50e8ae8ff8ff83c4080fb6c885c90f85930000006a006a1068685700008d954cffffff52e8601ffdff83c40889855cffffff8b855cffffff898554ffffffc645fc108b8d54ffffffff156c913c0150e80110ab00c645fc018d8d4cffffffff1548913c016a006aff6aff8b4df081c134020000e88894fcff8b4df081c134020000e86111ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce88dfbfcffe9a50300008d4decff156c913c0150ff158c6e3c0183c404d95dd0f30f1005f8990e010f2f45d07712f30f1045d00f2f05fc990e010f86930000006a006a1068695700008d8d34ffffff51e8971efdff83c408898544ffffff8b9544ffffff89953cffffffc645fc118b8d3cffffffff156c913c0150e8380fab00c645fc018d8d34ffffffff1548913c016a006aff6aff8b4df081c134020000e8bf93fcff8b4df081c134020000e89810ab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8c4fafcffe9dc0200008b45f0f30f1080b0000000f30f1145d88b4df0f30f1081b8000000f30f1145e0e9790200008d55ec528b4df081c134020000e83e12ab006a018d45ec50e8028ef8ff83c4080fb6c885c90f85930000006a006a10686b5700008d951cffffff52e8b41dfdff83c40889852cffffff8b852cffffff898524ffffffc645fc128b8d24ffffffff156c913c0150e8550eab00c645fc018d8d1cffffffff1548913c016a006aff6aff8b4df081c134020000e8dc92fcff8b4df081c134020000e8b50fab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce8e1f9fcffe9f90100008d4decff156c913c0150ff158c6e3c0183c404d95dd08d4dec518b4df081c1a8020000e86a11ab006a018d55ec52e82e8df8ff83c4080fb6c085c00f85930000006a006a10686c5700008d8d04ffffff51e8e01cfdff83c408898514ffffff8b9514ffffff89950cffffffc645fc138b8d0cffffffff156c913c0150e8810dab00c645fc018d8d04ffffffff1548913c016a006aff6aff8b4df081c1a8020000e80892fcff8b4df081c1a8020000e8e10eab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce80df9fcffe9250100008d4decff156c913c0150ff158c6e3c0183c404d95dd88d45ec508b4df081c11c030000e89610ab006a018d4dec51e85a8cf8ff83c4080fb6d085d20f85900000006a006a10686d5700008d85ecfeffff50e80c1cfdff83c4088985fcfeffff8b8dfcfeffff898df4feffffc645fc148b8df4feffffff156c913c0150e8ad0cab00c645fc018d8decfeffffff1548913c016a006aff6aff8b4df081c11c030000e83491fcff8b4df081c11c030000e80d0eab00c645fc008d4decff1548913c01c745fcffffffff8d4dbce839f8fcffeb548d4decff156c913c0150ff158c6e3c0183c404d95de08d55bc528b4df081c194000000e8e7c2faff8b45f08b108b4df08b8284010000ffd0c645fc008d4decff1548913c01c745fcffffffff8d4dbce8e3f7fcff8b4df464890d00000000598be55dc38bff40d7470039d84700f0d947000ddb470078dd470024df47009de14700000000000101020606030404050505050505",
+      "reloc_offsets": [
+        6,
+        24,
+        79,
+        88,
+        231,
+        250,
+        297,
+        426,
+        448,
+        495,
+        619,
+        638,
+        685,
+        782,
+        795,
+        834,
+        900,
+        911,
+        930,
+        943,
+        962,
+        975,
+        988,
+        1001,
+        1039,
+        1077,
+        1084,
+        1185,
+        1207,
+        1254,
+        1283,
+        1290,
+        1434,
+        1456,
+        1503,
+        1532,
+        1539,
+        1643,
+        1662,
+        1709,
+        1738,
+        1745,
+        1795,
+        1823,
+        1904,
+        1926,
+        1973,
+        2002,
+        2009,
+        2143,
+        2162,
+        2209,
+        2238,
+        2245,
+        2259,
+        2277,
+        2329,
+        2351,
+        2398,
+        2441,
+        2469,
+        2550,
+        2572,
+        2619,
+        2648,
+        2655,
+        2777,
+        2799,
+        2846,
+        2875,
+        2882,
+        2896,
+        2914,
+        2978,
+        3000,
+        3047,
+        3205,
+        3227,
+        3274,
+        3303,
+        3310,
+        3417,
+        3439,
+        3486,
+        3515,
+        3522,
+        3629,
+        3651,
+        3698,
+        3724,
+        3731,
+        3784,
+        3820,
+        3824,
+        3828,
+        3832,
+        3836,
+        3840,
+        3844
+      ]
+    }
+  ],
+  "alarm_types": [
+    {
+      "native_value": 0,
+      "name": "lower_lower_limit",
+      "resource_id": 22384
+    },
+    {
+      "native_value": 1,
+      "name": "lower_limit",
+      "resource_id": 22385
+    },
+    {
+      "native_value": 2,
+      "name": "upper_limit",
+      "resource_id": 22386
+    },
+    {
+      "native_value": 3,
+      "name": "upper_upper_limit",
+      "resource_id": 22387
+    },
+    {
+      "native_value": 4,
+      "name": "lower_deviation",
+      "resource_id": 22388
+    },
+    {
+      "native_value": 5,
+      "name": "upper_deviation",
+      "resource_id": 22389
+    },
+    {
+      "native_value": 6,
+      "name": "switch_equals",
+      "resource_id": 22390
+    },
+    {
+      "native_value": 7,
+      "name": "negative_transition",
+      "resource_id": 22391
+    },
+    {
+      "native_value": 8,
+      "name": "positive_transition",
+      "resource_id": 22392
+    },
+    {
+      "native_value": 9,
+      "name": "bit_equals",
+      "resource_id": 22393
+    },
+    {
+      "native_value": 10,
+      "name": "bit_off_to_on",
+      "resource_id": 22394
+    },
+    {
+      "native_value": 11,
+      "name": "bit_on_to_off",
+      "resource_id": 22395
+    },
+    {
+      "native_value": 12,
+      "name": "value_equals",
+      "resource_id": 22396
+    },
+    {
+      "native_value": 13,
+      "name": "value_not_equals",
+      "resource_id": 22397
+    },
+    {
+      "native_value": 14,
+      "name": "value_greater",
+      "resource_id": 22398
+    },
+    {
+      "native_value": 15,
+      "name": "value_greater_or_equal",
+      "resource_id": 22399
+    },
+    {
+      "native_value": 16,
+      "name": "value_less",
+      "resource_id": 22400
+    },
+    {
+      "native_value": 17,
+      "name": "value_less_or_equal",
+      "resource_id": 22401
+    }
+  ],
+  "field_mapping": {
+    "4": "uint32: group high16, priority low16",
+    "8": "int32 immediate enable checkbox",
+    "12": "int32 alarm kind 0..17",
+    "16": "opaque serialized source word1; current UI constructor default FFFFFFFF",
+    "20": "IEEE754 float32 alarm/base/bit value",
+    "24": "opaque serialized source word2; current UI constructor default FFFFFFFF",
+    "28": "IEEE754 float32 trigger error/deviation value",
+    "32": "opaque serialized source word3; current UI constructor default FFFFFFFF",
+    "36": "IEEE754 float32 clear error/deadband value",
+    "40": "int32 automatically save generated alarm information, copied uniformly across items by native list page",
+    "44": "CString complete description, may contain original multilingual expression syntax"
+  },
+  "native_ui_limits": {
+    "group": [
+      0,
+      255
+    ],
+    "priority": [
+      0,
+      100
+    ],
+    "bit_index": [
+      0,
+      31
+    ],
+    "switch_and_bit_equals_values": [
+      0,
+      1
+    ]
+  },
+  "scope_limitations": [
+    "Opaque parameter source words are copied in full; their reference semantics are not claimed.",
+    "No GUI dialog/validator is invoked. Numeric predicates are translated from the exact original confirmation body; original selector9 deep-copy and reference registration remain the commit path.",
+    "Alarm delay is not inferred from any field. It remains uncovered rather than being assigned to an unrelated word.",
+    "Stored float32 is exposed directly; full raw uint32 interface remains available for unusual/nonfinite/legacy values.",
+    "Description expression validation still follows original project reference registration at submission; this helper does not invent a different expression grammar."
+  ],
+  "native_execution_performed": false,
+  "actual_acceptance_performed": false
+}

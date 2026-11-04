@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "scope": "Exact opt-in original history serializer projection: before full native property13 uint32 retained; original serializer writes document28C0, serialized property13 becomes100; no arbitrary replacement or ignore.",
+  "callsite": [
+    {
+      "va": "0xaddfed",
+      "bytes": "6a01",
+      "op": "push 1"
+    },
+    {
+      "va": "0xaddfef",
+      "bytes": "6a01",
+      "op": "push 1"
+    },
+    {
+      "va": "0xaddff1",
+      "bytes": "6a00",
+      "op": "push 0"
+    },
+    {
+      "va": "0xaddff3",
+      "bytes": "8b9568f9ffff",
+      "op": "mov edx, dword ptr [ebp - 0x698]"
+    },
+    {
+      "va": "0xaddff9",
+      "bytes": "8b02",
+      "op": "mov eax, dword ptr [edx]"
+    },
+    {
+      "va": "0xaddffb",
+      "bytes": "8b8d68f9ffff",
+      "op": "mov ecx, dword ptr [ebp - 0x698]"
+    },
+    {
+      "va": "0xade001",
+      "bytes": "8b9080010000",
+      "op": "mov edx, dword ptr [eax + 0x180]"
+    },
+    {
+      "va": "0xade007",
+      "bytes": "ffd2",
+      "op": "call edx"
+    },
+    {
+      "va": "0xade009",
+      "bytes": "8d859cf2ffff",
+      "op": "lea eax, [ebp - 0xd64]"
+    }
+  ],
+  "store": [
+    {
+      "va": "0xae34f5",
+      "bytes": "8b45d0",
+      "op": "mov eax, dword ptr [ebp - 0x30]"
+    },
+    {
+      "va": "0xae34f8",
+      "bytes": "c7808c02000000000000",
+      "op": "mov dword ptr [eax + 0x28c], 0"
+    },
+    {
+      "va": "0xae3502",
+      "bytes": "8b4dd0",
+      "op": "mov ecx, dword ptr [ebp - 0x30]"
+    },
+    {
+      "va": "0xae3505",
+      "bytes": "8b918c020000",
+      "op": "mov edx, dword ptr [ecx + 0x28c]"
+    },
+    {
+      "va": "0xae350b",
+      "bytes": "81ca00010000",
+      "op": "or edx, 0x100"
+    },
+    {
+      "va": "0xae3511",
+      "bytes": "899504ffffff",
+      "op": "mov dword ptr [ebp - 0xfc], edx"
+    },
+    {
+      "va": "0xae3517",
+      "bytes": "6a0d",
+      "op": "push 0xd"
+    },
+    {
+      "va": "0xae3519",
+      "bytes": "8d4db8",
+      "op": "lea ecx, [ebp - 0x48]"
+    },
+    {
+      "va": "0xae351c",
+      "bytes": "e8cbd695ff",
+      "op": "call 0x440bec"
+    },
+    {
+      "va": "0xae3521",
+      "bytes": "898548ffffff",
+      "op": "mov dword ptr [ebp - 0xb8], eax"
+    },
+    {
+      "va": "0xae3527",
+      "bytes": "8b8504ffffff",
+      "op": "mov eax, dword ptr [ebp - 0xfc]"
+    },
+    {
+      "va": "0xae352d",
+      "bytes": "50",
+      "op": "push eax"
+    },
+    {
+      "va": "0xae352e",
+      "bytes": "8b8d48ffffff",
+      "op": "mov ecx, dword ptr [ebp - 0xb8]"
+    },
+    {
+      "va": "0xae3534",
+      "bytes": "e8edd04400",
+      "op": "call 0xf30626"
+    }
+  ],
+  "required_after_raw_uint32": 0,
+  "user_parameter": "history_property13_projection:{before_raw_uint32:<exact before>,after_raw_uint32:0}",
+  "normalization_not_applied_by_adapter": true
+}

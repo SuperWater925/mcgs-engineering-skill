@@ -57,7 +57,7 @@ function ReadDatabase($Conn,$Transaction=$null,[string]$ExportDirectory=''){
   try{
    $columns=@(for($i=0;$i -lt $reader.FieldCount;$i++){[ordered]@{name=$reader.GetName($i);type=$reader.GetDataTypeName($i)}})
    while($reader.Read()){
-    $count++;$rawKey=if($table -eq 'System'){[string]$reader['strName']}else{[string]$reader.GetValue(0)}
+    $count++;$rawKey=if($table -eq 'System'){if($reader['strName'] -is [DBNull] -or [string]::IsNullOrEmpty([string]$reader['strName'])){if($reader['iID'] -is [DBNull]){throw 'Unnamed System row has no native iID.'};'system-unnamed-iID:'+([string]$reader['iID'])}else{[string]$reader['strName']}}else{[string]$reader.GetValue(0)}
     $key=SafeKey $table $rawKey
     if($rows.ContainsKey($key)){throw "Duplicate row key in $table"}
     $fp=[ordered]@{};$export=[ordered]@{table=$table;row_key=$key}

@@ -1,0 +1,470 @@
+{
+  "schema": 1,
+  "purpose": "native-engineering-device-full-archive-read-and-existing-device-rename",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": 4194304
+    },
+    {
+      "name": "mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": 268435456
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "static/native-page-duplicate-abi-profile.json",
+      "sha256": "3c55566a34cea3b5754a6060a9d84f9ac825f17189f76ab7569e2bee8967c065"
+    },
+    {
+      "file": "strategy-properties/strategy-write-guard-profile.json",
+      "sha256": "b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7"
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "DeviceNameGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 1415200,
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c024508b4d08ff1554913c018b4dfc83c901894dfc8b45088be55dc20400cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "DeviceNameSetter",
+      "module": "McgsSetPro.exe",
+      "rva": 1415264,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c124ff15708e3c01b0018be55dc20400cc558bec83ec08",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "DeviceSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 1467392,
+      "bytes": "558bec83ec10894dfc8b4d08e89588eeff85c074328b45fc0fb6881401000085c974138b55fc8b42180d000000018b4dfc894118eb118b55fc8b421825fffffff08b4dfc8941188b4d08e85788eeff85c00f840c0100008b5508528b4dfce8e243eeff8b45088945f08b4dfc81c118010000518b4df0e8fc75eeff8b55fc8b4240508b4d08e8b3c0ecff8b4dfc0fb69114010000528b4d08e8af03ebff8b45fc8b8834010000518b4d08e88ec0ecff8b5508528b4dfc81c1d8000000e8ced8ebff8b4dfc81c1cc000000e8ac00ecff508b4d08e867c3ecffc745f800000000eb098b45f883c0018945f88b4dfc81c1cc000000e88300ecff3945f8731f8b4d08518b55f8528b4dfc81c1cc000000e869cae9ff8bc8e875d8ebffebc58b4dfce88a68ecff8b4dfc81c100010000e8abbee9ff508b4d08e802c0ecff8b4dfc81c100010000e894bee9ff508b4dfc81c100010000e85186ecff508b4d08e891899c00eb3aa055dd38018845f4807df4007408807df4017415eb248b4d08518b55fc8b028b4dfc8b5058ffd2eb118b4508508b4dfc8b118b4dfc8b425cffd08be55dc20400cccccccccccccccccccccccccc558bec6aff68f0d3f70064a1000000005083ec6c56a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e86042eeff8b4d08894de48b55f08b42182500000001740c8b4df0c6811401000001eb0a8b55f0c68214010000008b45f00518010000508b4de4e8ea50eeff8b4df081c118010000518b4df0e861c7eeffc745ec000000008d55ec528b4d08e8802dedff6aff8b45ec508b4df081c100010000e846889c008b4df081c100010000e877bde9ff508b4df081c100010000e83485ecff508b4d08e86e889c008d4dec518b4d08e83a2dedff68e89311018d4dd8ff1550913c01c745fc00000000c7",
+      "reloc_offsets": [
+        356,
+        438,
+        454,
+        651,
+        660
+      ]
+    },
+    {
+      "name": "DeviceBaseSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 1414688,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce885efecff8b4d08e86956efff85c074138b4d08518b55fc8b028b4dfc8b5040ffd2eb638b45fc8b0df03f3b018948148b15f03f3b0183c2018915f03f3b01a055dd38018845f8807df8007408807df8017415eb248b4d08518b55fc8b028b4dfc8b5044ffd2eb118b4508508b4dfc8b118b4dfc8b4248ffd08b4dfc8b55088b0289819c0000008be55dc20400cc",
+      "reloc_offsets": [
+        57,
+        66,
+        75,
+        80
+      ]
+    },
+    {
+      "name": "DeviceBaseStore",
+      "module": "McgsSetPro.exe",
+      "rva": 1416816,
+      "bytes": "558bec83ec08894dfc8b45088945f88b4dfc83c128518b4df8e8e93befff8b55fc83c22c528b4df8e8da3befff8b45fc8b4848518b4d08e89186edff8b55fc8b4238508b4d08e88286edff8b4dfc8b513c528b4d08e87386edff8b4508508b4dfc83c1608b55fc8b42608b5008ffd28b4508508b4dfc83c1748b55fc8b42748b5008ffd28b4508508b4dfc81c1880000008b55fc8b82880000008b5008ffd28b4508508b4dfc83c14c8b55fc8b424c8b5008ffd28be55dc20400cc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceFactory",
+      "module": "McgsSetPro.exe",
+      "rva": 1462160,
+      "bytes": "558bec6aff68d9d1f70064a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006840010000e890fdeeff8945f0c745fc00000000837df000740d8b4df0e8000ceaff8945eceb07c745ec000000008b45ec8945e8c745fcffffffff8b45e88b4df464890d00",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DeviceConstructor",
+      "module": "McgsSetPro.exe",
+      "rva": 1462320,
+      "bytes": "558bec6aff685ad2f70064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DeviceClone",
+      "module": "McgsSetPro.exe",
+      "rva": 1466704,
+      "bytes": "558bec6aff6880d3f70064a1000000005081ecc8000000a1600b3b0133c5508d45f464a300000000894df068000400008d4dbce8e68c9c00c745fc000000006a0068000040006a008d45bc508d8d74ffffffe8ca67ecffc645fc018b4df083b99c00000000750e8b55088b829c0000008945e8eb0c8b4df08b919c0000008955e88b45e8898574ffffff8d8d74ffffff518b55088b028b4d088b5008ffd2c645fc008d8d74ffffffe8c2c7edff8d4dbce839e3e9ff6a0068000040006a018d45bc508d8d2cffffffe85467ecffc645fc028b4df083b99c00000000750e8b55088b829c0000008945eceb0c8b4df08b919c0000008955ec8b45ec89852cffffff8d8d2cffffff518b55f08b028b4df08b5008ffd2c645fc008d8d2cffffffe84cc7edffc745fcffffffff8d4dbce8f28b9c008b4df464890d000000",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "DeviceParentSetter",
+      "module": "McgsSetPro.exe",
+      "rva": 7709952,
+      "bytes": "558bec83ec08894dfc8b45fc8b4d088948088b55fc528d4df8e8a2020000508b45fc50e8d3c68dff83c4088be55dc20400cccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceDocListGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 7260288,
+      "bytes": "558bec51894dfc8b45fc05640100008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceDocSaveData",
+      "module": "McgsSetPro.exe",
+      "rva": 7255120,
+      "bytes": "558bec6aff68c251ff0064a100000000505181ece0000000535657a1600b3b0133c5508d45f464a3000000008965f0894dec8b45088945e8837de8007513e81b6395ff8b8820050000e8c87d95ff8945e8c745fc000000008b4de8518d8d10ffffffe894e791ff8945ccc645fc016a006a006aff8d8d10ffffffe8b48b92ff8d8d10ffffffe8136095ff8945d0837dd000741ec745d401000000c645fc008d8d10ffffffe8df8f93ff8b45d4e9340100008d8d10ffffffe8bcb294ff8d8d10ffffffe8d74293ff8b55ec81c284010000528d4dacff15708e3c018b45ec0588010000508d4db0ff15708e3c018b4dec8b91140100008955c46a008b45ec508d4db451e8164896ff83c40c8945d8837dd801751ec745e401000000c645fc008d8d10ffffffe85f8f93ff8b45e4e9b40000006a008d55b4528d8d10ffffffe8c05292ff6a018d45b4508d8d10ffffffe8fd2594ff8d8d10ffffffe8592795ff8945e0837de000740b8d8d10ffffffe8027d96ff8d8d10ffffffe8d27c93ff6a016a006a008b4dec8b118b4dec8b8280010000ffd0c645fc008d8d10ffffffe8e68e93ffeb218b4dc8e83c384400c745dc01000000b827b6ae00c3b825b6ae00c3b81eb6ae00c3c745fcffffffffeb07c745fcffffffffeb0cc745fcffffffff8b45dceb0233c08b4df464890d00000000595f5e5b8be55dc20400",
+      "reloc_offsets": [
+        6,
+        28,
+        214,
+        232,
+        436,
+        442,
+        448
+      ]
+    },
+    {
+      "name": "DeviceManagerSetModified",
+      "module": "McgsSetPro.exe",
+      "rva": 7879792,
+      "bytes": "558bec83ec0c894dfc8b4dfc83e9348b45fc8b50cc8b4204ffd08b4dfc83790c0074350fb6550885d27409c745f801000000eb07c745f8000000008b45f88945f48b4df4518b55fc8b420c8b4dfc8b108b490c8b426cffd08be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Native_CArchive_Ctor",
+      "module": "McgsSetPro.exe",
+      "rva": 686528,
+      "bytes": "558bec51894dfc8b4514508b4d10518b550c528b4508508b4dfce83379a8008b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Native_CArchive_Dtor",
+      "module": "McgsSetPro.exe",
+      "rva": 686576,
+      "bytes": "558bec51894dfc8b4dfce81979a8008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CMemFile_Ctor_ordinal566",
+      "module": "mfc110u.dll",
+      "rva": 2135289,
+      "bytes": "558bec568bf1e8f5deffff8b450889461433c089461889461c894620894624c7",
+      "reloc_offsets": [],
+      "ordinal": 566
+    },
+    {
+      "name": "CMemFile_Dtor_ordinal1187",
+      "module": "mfc110u.dll",
+      "rva": 2135510,
+      "bytes": "6a04b8348e2810e8fef1dfff8bf18975f0c7066c8a031033ff897dfc397e2474",
+      "reloc_offsets": [
+        3,
+        19
+      ],
+      "ordinal": 1187
+    }
+  ],
+  "tables": [
+    {
+      "name": "DeviceManagerIObject",
+      "rva": 14521284,
+      "col_rva": 15239880,
+      "offset": 0,
+      "rtti": ".?AVDeviceObjectManager@@",
+      "entries": [
+        235401,
+        43516,
+        243901,
+        214541,
+        296866,
+        244276,
+        163121,
+        184411,
+        206626,
+        34931,
+        252081,
+        126881,
+        336751,
+        27836,
+        292411,
+        183131,
+        348186,
+        53341,
+        33261,
+        186566,
+        181751,
+        161716,
+        170291,
+        90816,
+        181226,
+        301401,
+        344071,
+        137111
+      ]
+    },
+    {
+      "name": "DeviceService",
+      "rva": 14521456,
+      "col_rva": 15240168,
+      "offset": 52,
+      "rtti": ".?AVDeviceObjectManager@@",
+      "entries": [
+        110981,
+        100321,
+        54841,
+        101406,
+        172886,
+        207816,
+        209971,
+        245811,
+        287581
+      ]
+    },
+    {
+      "name": "DeviceManagerModifiable",
+      "rva": 14521504,
+      "col_rva": 15240192,
+      "offset": 56,
+      "rtti": ".?AVDeviceObjectManager@@",
+      "entries": [
+        198961,
+        331611,
+        191021,
+        19391
+      ]
+    },
+    {
+      "name": "DeviceComplete",
+      "rva": 13737724,
+      "col_rva": 15152712,
+      "offset": 0,
+      "rtti": ".?AVCDevDll@@",
+      "entries": [
+        265221,
+        307406,
+        74961,
+        4401,
+        130021,
+        328711,
+        74186,
+        348151,
+        165471,
+        182796,
+        332581,
+        42946,
+        202851,
+        184841,
+        273286,
+        326521,
+        145606,
+        29171,
+        32086,
+        255241,
+        99976,
+        131191,
+        38581,
+        131066
+      ]
+    },
+    {
+      "name": "DeviceIObject",
+      "rva": 13737844,
+      "col_rva": 15152828,
+      "offset": 4,
+      "rtti": ".?AVCDevDll@@",
+      "entries": [
+        304911,
+        43516,
+        243901,
+        214541,
+        296866,
+        244276,
+        163121,
+        184411,
+        206626,
+        80646,
+        345226,
+        109016,
+        336751,
+        109881,
+        129131,
+        79266,
+        321086,
+        30671,
+        214026,
+        49186,
+        219301,
+        76316,
+        220586,
+        90816,
+        39096,
+        215321,
+        344071,
+        278306,
+        312181
+      ]
+    },
+    {
+      "name": "DeviceModifiable",
+      "rva": 13737988,
+      "col_rva": 15152852,
+      "offset": 8,
+      "rtti": ".?AVCDevDll@@",
+      "entries": [
+        347321,
+        287031,
+        210461,
+        89406
+      ]
+    },
+    {
+      "name": "DeviceDocument",
+      "rva": 14438780,
+      "col_rva": 15230852,
+      "offset": 0,
+      "rtti": ".?AVC0DocDev@@",
+      "entries": [
+        173146,
+        13601,
+        118136,
+        4401,
+        130021,
+        11730328,
+        11730178,
+        11725696,
+        11725702,
+        11725708,
+        11725714,
+        11725720,
+        83386,
+        11725726,
+        11725732,
+        11725738,
+        11732452,
+        11725744,
+        11725750,
+        11725756,
+        11725762,
+        11725768,
+        100066,
+        11730040,
+        11730274,
+        11730046,
+        217226,
+        38501,
+        11730052,
+        11730058,
+        11730064,
+        11732542,
+        11732560,
+        11732566,
+        11732572,
+        11732578,
+        11730070,
+        11730076,
+        11730082,
+        94391,
+        87096,
+        55276,
+        341011,
+        37656,
+        11730088,
+        11730094,
+        11730100,
+        269196,
+        11730106,
+        11730112,
+        11730118,
+        11730124,
+        11730130,
+        11730136,
+        11730142,
+        11730148,
+        121116,
+        11730280,
+        11730286,
+        11730154,
+        11730160,
+        11730166,
+        11730172,
+        11730292,
+        11730322,
+        11730184,
+        11730190,
+        11730196,
+        11730202,
+        11730208,
+        11730226,
+        11730232,
+        11730238,
+        11730244,
+        11730250,
+        11730256,
+        11730262,
+        11730268,
+        11730298,
+        11730304,
+        11730310,
+        11730316,
+        26031,
+        36691,
+        76776,
+        252551,
+        137231,
+        160226,
+        247921,
+        111786,
+        209821,
+        207861,
+        271921,
+        103726,
+        248546,
+        235741,
+        208771,
+        280796,
+        163911,
+        182196,
+        272896,
+        244911,
+        67451
+      ]
+    }
+  ],
+  "manager_module_id": 1,
+  "loaded_document_offset": 68,
+  "CDevDll_size": 320,
+  "device_name_complete_offset": 40,
+  "device_document_complete_offset": 156,
+  "serializer_flags_complete_offset": 24,
+  "serializer_authoritative_flag_byte_offset": 276,
+  "store_precondition": "Existing raw flags must equal the exact native store projection, otherwise do not invoke Serialize; no flag mask/normalization is applied.",
+  "archive": {
+    "CMemFile_bytes": 44,
+    "CArchive_bytes": 72,
+    "mode_store": 0,
+    "buffer_size": 4194304,
+    "m_pDocument_offset": 0,
+    "memfile_position_offset": 24,
+    "memfile_capacity_offset": 28,
+    "memfile_length_offset": 32,
+    "memfile_buffer_offset": 36,
+    "field_basis": "Exact MFC ordinal566 ctor writes grow+14, position+18, capacity+1C, length+20, buffer+24, autoDelete+28."
+  },
+  "read_scope": "Full native CDevDll::Serialize STORE bytes, only when canonical raw flag projection leaves complete object bytes unchanged; root dirty/compile checked before/after. No LOAD branch or driver runtime call is used by reader.",
+  "native_name_setter": "IObject slot10 45448A ->559860 uses CStringAssignCopy on IObject+24 (complete+28), ret4, true.",
+  "clone_scope": "Original owned factory140 and primary slot20 native CMemFile/CArchive clone identified; registration into C0DocDev own list and object-model/delete ownership still require closure before a project clone route is exposed.",
+  "device_configuration_setter_slots4_5_6_are_empty": true,
+  "runtime_IO_or_PLC_connection_allowed": false,
+  "native_execution_performed": false,
+  "actual_acceptance_performed": false
+}

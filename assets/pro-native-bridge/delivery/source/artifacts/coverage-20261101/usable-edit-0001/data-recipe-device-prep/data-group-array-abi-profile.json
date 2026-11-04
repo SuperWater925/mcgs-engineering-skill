@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_data_recipe_abi_sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939",
+  "mfc_path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "name": "GroupMemberNamesSet",
+      "module": "McgsSetPro.exe",
+      "rva": 910656,
+      "bytes": "558bec83ec0c894dfc8d45f8508b4d08e8080df4ff8b08518d55f4528b4d08e8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GroupMemberNamesAssignRange",
+      "module": "McgsSetPro.exe",
+      "rva": 939760,
+      "bytes": "558bec83ec24894dfc8d45ec508b4dfce86481f2ff8b08894df88d55e8528b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GroupRebuildMemberIds",
+      "module": "McgsSetPro.exe",
+      "rva": 923056,
+      "bytes": "558bec6aff68420ff70064a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataCopyCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 910960,
+      "bytes": "558bec6aff68b70bf70064a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataSetName",
+      "module": "McgsSetPro.exe",
+      "rva": 916304,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c108ff15708e3c01b0018be55dc20400cc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "DataDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 947072,
+      "bytes": "558bec51894dfc8b4dfce8a635f6ff8b450883e001740c8b4dfc51e81876a400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataAddPrototype",
+      "module": "McgsSetPro.exe",
+      "rva": 8024448,
+      "bytes": "558bec83ec08894dfc8b45088b4dfc8b51048990a40000008b45fc8b480483c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataRegisterReferences",
+      "module": "McgsSetPro.exe",
+      "rva": 916336,
+      "bytes": "558bec6aff68fa0cf70064a1000000005083ec18a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ValidateVariableName",
+      "module": "McgsSetPro.exe",
+      "rva": 910800,
+      "bytes": "558bec6aff68090bf70064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DataObjectBaseCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8678736,
+      "bytes": "558bec6aff68f800010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "DataObjectBaseDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8678848,
+      "bytes": "558bec51894dfc8b45fcc70014a31e018b4dfce850b17bff8be55dc3cccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "DataObjectAncestorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 8177408,
+      "bytes": "558bec51894dfc8b45fcc70044480e018b4dfce83bdb84ff8be55dc3cccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "InterfaceAncestorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 432032,
+      "bytes": "558bec51894dfc8b45fcc70014480e018be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "GenerateArrayNames",
+      "module": "McgsSetPro.exe",
+      "rva": 8028832,
+      "bytes": "558bec6aff685a4f000164a1000000005081ecec000000a1600b3b0133c58945",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "StringVectorCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 943856,
+      "bytes": "558bec83ec08894df88d4dffe89f44f2ff508b4df8e851b6f2ff8b45f88be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringVectorDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 889520,
+      "bytes": "558bec51894dfc8b4dfce88eaef6ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StringVectorAssign",
+      "module": "McgsSetPro.exe",
+      "rva": 961648,
+      "bytes": "558bec6aff68281ff70064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "New",
+      "module": "mfc110u.dll",
+      "ordinal": 1502,
+      "rva": 35353,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ]
+    }
+  ],
+  "static_proof_file": "data-group-array-static-proof.json",
+  "static_proof_sha256": "167d50a8c97ed60fbc2216e5b7d437b5b436cfefac14417b3aadaa7fb44887f4",
+  "array_generator_proof_file": "data-array-name-generator-static-0001.json",
+  "array_generator_proof_sha256": "0b4a9e706d5fa8bc1f824b82f9b4b722f94290fb6303b52b66de0015ba456fef",
+  "group_native_size": 192,
+  "array_descriptor_size": 28,
+  "array_output_size": 12,
+  "candidate_not_host_validated": true
+}

@@ -1,0 +1,117 @@
+{
+  "exe_getter": {
+    "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "entry": "0x46c060",
+    "resolved": "0x46c060",
+    "jump_chain": [
+      "0x46c060"
+    ],
+    "code": [
+      {
+        "address": "0x46c060",
+        "mnemonic": "push",
+        "operands": "ebp"
+      },
+      {
+        "address": "0x46c061",
+        "mnemonic": "mov",
+        "operands": "ebp, esp"
+      },
+      {
+        "address": "0x46c063",
+        "mnemonic": "call",
+        "operands": "0xf2eb56"
+      },
+      {
+        "address": "0x46c068",
+        "mnemonic": "mov",
+        "operands": "eax, dword ptr [eax + 4]"
+      },
+      {
+        "address": "0x46c06b",
+        "mnemonic": "pop",
+        "operands": "ebp"
+      },
+      {
+        "address": "0x46c06c",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ],
+    "calls": [
+      {
+        "at": "0x46c063",
+        "target": "0xf2eb56",
+        "resolved": "0xf2eb56",
+        "jump_chain": [
+          "0xf2eb56"
+        ]
+      }
+    ],
+    "truncated": false
+  },
+  "iat": "0x13c9064",
+  "import": {
+    "dll": "mfc110u.dll",
+    "name": null,
+    "ordinal": 2194
+  },
+  "module_state_function": {
+    "source": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "entry": "0x1000809a",
+    "resolved": "0x1000809a",
+    "jump_chain": [
+      "0x1000809a"
+    ],
+    "code": [
+      {
+        "address": "0x1000809a",
+        "mnemonic": "call",
+        "operands": "0x10008082"
+      },
+      {
+        "address": "0x1000809f",
+        "mnemonic": "test",
+        "operands": "eax, eax"
+      },
+      {
+        "address": "0x100080a1",
+        "mnemonic": "je",
+        "operands": "0x10207384"
+      },
+      {
+        "address": "0x100080a7",
+        "mnemonic": "mov",
+        "operands": "eax, dword ptr [eax + 4]"
+      },
+      {
+        "address": "0x100080aa",
+        "mnemonic": "test",
+        "operands": "eax, eax"
+      },
+      {
+        "address": "0x100080ac",
+        "mnemonic": "je",
+        "operands": "0x1000823c"
+      },
+      {
+        "address": "0x100080b2",
+        "mnemonic": "ret",
+        "operands": ""
+      }
+    ],
+    "calls": [
+      {
+        "at": "0x1000809a",
+        "target": "0x10008082",
+        "resolved": "0x10008082",
+        "jump_chain": [
+          "0x10008082"
+        ]
+      }
+    ],
+    "truncated": false
+  }
+}

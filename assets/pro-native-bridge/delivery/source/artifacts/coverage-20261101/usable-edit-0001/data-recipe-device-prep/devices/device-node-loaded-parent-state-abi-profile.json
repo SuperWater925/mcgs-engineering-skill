@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "base_node_profile_sha256": "e827853f68f622be6a3ff9985621025ee0b3d392ed2e86306338f484250cacff",
+  "functions": [
+    {
+      "name": "DeviceBaseCtorPhysicalParentNull",
+      "module": "McgsSetPro.exe",
+      "rva": 1412964,
+      "bytes": "8b55f0c7422400000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NativePastePhysicalParentSet",
+      "module": "McgsSetPro.exe",
+      "rva": 1759427,
+      "bytes": "8b45ec8b4de4894824",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceBaseStoreNoPhysicalParentWire",
+      "module": "McgsSetPro.exe",
+      "rva": 1416816,
+      "bytes": "558bec83ec08894dfc8b45088945f88b4dfc83c128518b4df8e8e93befff8b55fc83c22c528b4df8e8da3befff8b45fc8b4848518b4d08e89186edff8b55fc8b4238508b4d08e88286edff8b4dfc8b513c528b4d08e87386edff8b4508508b4dfc83c1608b55fc8b42608b5008ffd28b4508508b4dfc83c1748b55fc8b42748b5008ffd28b4508508b4dfc81c1880000008b55fc8b82880000008b5008ffd28b4508508b4dfc83c14c8b55fc8b424c8b5008ffd28be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceBaseCurrentLoadNoPhysicalParentWire",
+      "module": "McgsSetPro.exe",
+      "rva": 1417296,
+      "bytes": "558bec83ec0c894dfc8b45088945f48b4dfc83c128518b4df4e89b16efff8b55fc83c22c528b4df4e88c16efff8b45fc83c048508b4d08e838f3edffc745f8000000008d4df8518b4d08e825f3edff8b55fc8b45f88942388d4df8518b4d08e810f3edff8b55fc8b45f889423c8b4d08518b4dfc83c1608b55fc8b42608b5008ffd28b4508508b4dfc83c1748b55fc8b42748b5008ffd28b4508508b4dfc81c1880000008b55fc8b82880000008b5008ffd28b4508508b4dfc83c14c8b55fc8b424c8b5008ffd28be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceCurrentLoadNoPhysicalParent",
+      "module": "McgsSetPro.exe",
+      "rva": 1469408,
+      "bytes": "558bec6aff6813d4f70064a1000000005083ec18a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8313ceeff8b4d08894de48b55f08b42182500000001740c8b4df0c6811401000001eb0a8b55f0c68214010000008b45f00518010000508b4de4e8bb4aeeff8b4df081c118010000518b4df0e832c1eeff8b55f083c240528b4d08e85527edff8b45f00514010000508b4d08e8a344eeff8b4df081c134010000518b4d08e83227edffc745e8000000008b5508528b4df081c1d8000000e8c307eaff8d45e8508b4d08e8d4fee9ff8b4df0e8eea7ecff8b4de8518b4df081c1cc000000e837f2ecff8d4ddce8cc9becffc745fc00000000c745ec00000000eb098b55ec83c2018955ec8b4df081c1cc000000e87bf8ebff3945ec733c8b4508508b4dec518b4df081c1cc000000e861c2e9ff8bc8e84c07eaff8d55dc528b45ec508b4df081c1cc000000e844c2e9ff8bc8e8bc44edffeba88d4de8518b4d08e83efee9ff6aff8b55e8528b4df081c100010000e83d819c008b4df081c100010000e86eb6e9ff508b4df081c100010000e82b7eecff508b4d08e865819c00c745fcffffffff8d4ddce84b32ecff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DeviceManagerBindLogicalRootParents",
+      "module": "McgsSetPro.exe",
+      "rva": 7874432,
+      "bytes": "558bec83ec14894df0837d0800744b8b45088945fc837dfc00743f8b4dfce880d68aff8945f48b4df4e8d2548cff8945f8837df80074238d4df8518b4df4e82ad88cff8945ec8b55f083ea34528b4dec83c104e8633c8affebd78be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GenericLogicalParentSetter",
+      "module": "McgsSetPro.exe",
+      "rva": 7709952,
+      "bytes": "558bec83ec08894dfc8b45fc8b4d088948088b55fc528d4df8e8a2020000508b45fc50e8d3c68dff83c4088be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GenericLogicalParentRecursiveWalk",
+      "module": "McgsSetPro.exe",
+      "rva": 7711056,
+      "bytes": "558bec6aff6818e3ff0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000837d0800746c8b4508508d4de4e8011a8bffc745fc000000008d4de4518b55088b028b4d088b5044ffd20fb6c085c074328b4dec518b4d0ce82efeffff8d55e4528b45088b108b4d088b4248ffd00fb6c885c9740e8b55ec528b4d0ce80afeffffebdac745fcffffffff8d4de4e86e988fff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "GenericLogicalChildParentSetter",
+      "module": "McgsSetPro.exe",
+      "rva": 7710688,
+      "bytes": "558bec83ec08894df8837d0800740b8b450883e8048945fceb07c745fc000000008b4df88b11528b4dfc83c104e829bc8cff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceIObjectChildFirst",
+      "module": "McgsSetPro.exe",
+      "rva": 1416352,
+      "bytes": "558bec83ec18894dfc8b45fc83c0488945f48b4df4e81298eaff85c0740732c0e9820000008b4d088379040075116a04ff15886e3c0183c4048b55088942048b45088b4804894de88b55e8c702000000006a008b4df4e82279efff8945f88b45fc83e80474088b4dfc894df0eb07c745f0000000008b55f0528b4df883c104e817c7ecff837df800740b8b45f883c0048945eceb07c745ec000000008b4d088b55ec895108b0018be55dc20400",
+      "reloc_offsets": [
+        50
+      ]
+    },
+    {
+      "name": "DeviceIObjectChildNext",
+      "module": "McgsSetPro.exe",
+      "rva": 1416528,
+      "bytes": "558bec83ec1c894df48b45f483c0488945f88b4d088b51048955fc8b45088378040074178b4dfc8339007c0f8b4df8e8c60aefff8b55fc39027c0732c0e98b0000008b45fc8b0883c1018b55fc890a8b4df8e8a30aefff8b4dfc39017c0432c0eb6b8b55fc8b02508b4df8e85d78efff8945e48b4df483e90474088b55f48955f0eb07c745f0000000008b45f0508b4de483c104e852c6ecff8b4dfc8b11528b4df8e82678efff8945ec837dec00740b8b45ec83c0048945e8eb07c745e8000000008b4d088b55e8895108b0018be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MfcOwnedChildPointerArraySerialize",
+      "module": "mfc110u.dll",
+      "rva": 1845421,
+      "bytes": "558bec5153568b75088bd98b4618f7d0578bcea8017424ff7308e8625fe9ff33ff397b087e498b43048bceff34b8e83b62e9ff473b7b087d36ebebe82f6ae9ff6aff508bcbe83cfbe8ff33ff897dfc397b087e1b8b4d088b730457e89266e9ff8b4dfc89048e41894dfc3b4b087ce55f5e5bc9c20400",
+      "reloc_offsets": [],
+      "ordinal": 12980
+    }
+  ],
+  "physical_parent_contract": {
+    "complete_offset": 36,
+    "root_allowed": "NULL only",
+    "child_allowed": [
+      "NULL from original factory/current archive LOAD",
+      "exact complete pointer of the already validated owning parent"
+    ],
+    "not_allowed": "Any other non-NULL pointer; logical owner or document mismatch; cycle/alias; wrong owning array",
+    "reader_writes": false,
+    "projected_pre_post_fields": []
+  },
+  "source_basis": [
+    "Base constructor558F67 initializes24=0.",
+    "Base STORE559E70 and current LOAD55A050 omit24; child pointer array serializer stores/loads owned CObjects only.",
+    "CDevDll current LOAD566BE0 calls base LOAD and omits24.",
+    "Module serviceB82780 sets roots viaB5A500; walkerB5A950/IObject17/18/B5A7E0 recursively sets complete+C, not complete+24.",
+    "Native paste5AD8C9 separately assigns24 on a new private pasted node."
+  ],
+  "runtime_calls_added": false,
+  "host_called": false,
+  "actual_reopened_physical_parent_value_observed": false
+}

@@ -1,0 +1,2167 @@
+{
+  "schema": 1,
+  "purpose": "candidate-original-owned-PropertyManager-base-scalar3-only",
+  "modules": {
+    "McgsSetPro.exe": {
+      "path": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "preferred_base": "0x400000",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+    },
+    "Qt5Core.dll": {
+      "path": "C:\\unbound-install-root\\Program\\Qt5Core.dll",
+      "preferred_base": "0x67000000",
+      "sha256": "9feec62826eeeb8604027dc10b8ede66174320c9271571feba582ceff2bdc283"
+    },
+    "common.dll": {
+      "path": "C:\\unbound-install-root\\Program\\common.dll",
+      "preferred_base": "0x10000000",
+      "sha256": "06384d2a706352a4d54875ee679cb34882bfb2a3c42730d5484eae8ffe4159c8"
+    },
+    "mfc110u.dll": {
+      "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": "0x10000000"
+    },
+    "MSVCR110.dll": {
+      "path": "C:\\unbound-install-root\\Program\\MSVCR110.dll",
+      "sha256": "b30160e759115e24425b9bcdf606ef6ebce4657487525ede7f1ac40b90ff7e49",
+      "preferred_base": "0x10000000"
+    },
+    "MSVCP110.dll": {
+      "path": "C:\\unbound-install-root\\Program\\MSVCP110.dll",
+      "sha256": "c8d5572ca8d7624871188f0acabc3ae60d4c5a4f6782d952b9038de3bc28b39a",
+      "preferred_base": "0x10000000"
+    }
+  },
+  "code_guards": [
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ScalarStore",
+      "rva": "0xa3c470",
+      "bytes": "558bec6aff6889b8030164a1000000005083ec30a1600b3b0133c5508d45f464a300000000e8dc455fff8945ec8b4d08ff15f4703c018945f08b4d08ff1504713c010fb6c085c00f84b70000008b4df08b510881e2ffffff3f3955ec741f837dec070f879c0000008b45f08b480881e1ffffff3f83f9070f87870000008b55ec81e2ffffff3f8b45f08b480881e1000000c00bca8b55f0894a088b45f08b480881e1ffffff7f8b55f0894a088b45f08b4808c1e91e83e101740c8b55f08b028b08894de4eb068b55f08955e48b45e48945e08b55e0526a04e8a79d60ff83c4088945e8837de80074128b45e88b4d0c8b1189108b45e88945dceb07c745dc00000000eb406a008b4d0c518b55ec528d4dc4ff1514713c018945d88b45d88945d4c745fc000000008b4dd4518b4d08ff1548733c01c745fcffffffff8d4dc4ff1550733c018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        50,
+        62,
+        275,
+        304,
+        320
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ScalarStoreWrapper",
+      "rva": "0xa3d6a0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e81b9a5eff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "RecordDefaultCtor",
+      "rva": "0xa43c30",
+      "bytes": "558bec51894dfc8b45fcc600008b4dfc83c108ff1554733c018b45fc8be55dc3",
+      "reloc_offsets": [
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "RecordDtor",
+      "rva": "0xa44410",
+      "bytes": "558bec51894dfc8b4dfc83c108ff1550733c018be55dc3cccccccccccccccccc",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "RecordPairDtor",
+      "rva": "0xa44060",
+      "bytes": "558bec6aff6878c6030164a1000000005051a1600b3b0133c5508d45f464a300000000894df0c745fc000000008b4df083c118e842b65effc745fcffffffff8b4df0e842945dff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "OwnedFind",
+      "rva": "0xa51460",
+      "bytes": "558bec6aff6888cf030164a1000000005083ec38a1600b3b0133c58945f0508d45f464a300000000894dd08d4508508d4dd4518b4dd083c10ce8c16a5fff8d55d4528d45bc508b4dd083c10ce8e64e5cff8bc8e85e375eff0fb6c885c90f84840000008b4d0cff156c913c01508d55d852e81b605fff83c4088945c88b45c88945c4c745fc000000008b4dc4518d55cc528d4dd4e803445cff83c0088bc8e81b9e5dffc745fcffffffff8d4dd8e8d7bf5cff8d45cc508d4dc0518d4dd4e8da435cff83c0088bc8e8e4a95fff8bc8e8f90f5bff0fb6d085d2740d8d4dcce891f15eff83c018eb0233c08b4df464890d00000000598b4df033cde8a0fa0d008be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        104
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "OwnedIndex",
+      "rva": "0xa515b0",
+      "bytes": "558bec6aff68c8cf030164a1000000005083ec2ca1600b3b0133c58945f0508d45f464a300000000894dd48b4d0cff156c913c01508d45d850e8035f5fff83c4088945cc8b4dcc894dc8c745fc000000008b55c8528d4508508b4dd483c10ce8e16e5fff83c0048bc8e856c15bff8945d0c745fcffffffff8d4dd8e8b9be5cff8b45d08b4df464890d00000000598b4df033cde8b6f90d008be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        48
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "NativeKeyToAnsiWrapper",
+      "rva": "0xa657f0",
+      "bytes": "558bec51c745fc000000008b450c508b4d0851ff15147a3c0183c4088b55fc83ca018955fc8b45088be55dc3",
+      "reloc_offsets": [
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "MapOwnerPairDtor",
+      "rva": "0xa44140",
+      "bytes": "558bec51894dfc8b4dfc83c104e89f6f60ff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "JsonFormalTypeRead",
+      "rva": "0x9fb630",
+      "bytes": "558bec6aff68fe6a030164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894de8837d0800750432c0eb578b4508508d4dec51e81bd564ff83c408c745fc000000008b5508528d45ec508b4de88b4904e83d3363ff8b5510528b450c508d4dec518b55e88b4a04e8c3df64ff8845f3c745fcffffffff8d4decff1548913c018a45f38b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        130
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ScalarIntMetaTypeWrapper",
+      "rva": "0xa3b4f0",
+      "bytes": "558bece8cefa5fff5dc3cccccccccccc558bece8a22c5eff5dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ScalarIntMetaType",
+      "rva": "0xa53ba0",
+      "bytes": "558becb8020000005dc3cccccccccccc558bece8794c5cff5dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantDefaultCtor",
+      "rva": "0x104a0",
+      "bytes": "c7410800000080c701000000008bc1c356ff74240c8bf1ff74240ce8b09cffff",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantMoveAssignment",
+      "rva": "0x108a0",
+      "bytes": "83ec108b018904248b4104894424048b4108894424088b442414f30f7e00660fd601f30f7e4008660fd64108f30f7e0424660fd600f30f7e442408660fd640088bc183c410c20400",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantTypedCtorComplete",
+      "rva": "0x1cc7b0",
+      "bytes": "837c240c00568bf1b800000080c7460800000080c7060000000074263344240825ffffff3f35000000808946088b44240c8b008906816608ffffff7f8bc65ec20c008b4c240833c125ffffff3f350000008089460883f930770433c0eb1d8d41c083f8167707b801000000eb0e8d418733c93bc81bc0f7d883c0028b0485181e3d67ff74240c8b0056ffd0816608ffffff7f83c4088bc65ec20c00",
+      "reloc_offsets": [
+        126
+      ]
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantDtorComplete",
+      "rva": "0x1ccbe0",
+      "bytes": "568bf1f7460800000040740e8b1683c20483c8fff00fc10274148b4608a900000040756925ffffff3f83f807765f8b4e0881e1ffffff3f83f930771433c0568b0485181e3d678b4004ffd083c4045ec38d41c083f8167717b801000000568b0485181e3d678b4004ffd083c4045ec38d418733c93bc81bc0f7d883c002568b0485181e3d678b4004ffd083c4045ec3",
+      "reloc_offsets": [
+        66,
+        97,
+        129
+      ]
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantConstDataComplete",
+      "rva": "0x1cf2c0",
+      "bytes": "f741080000004074058b018b00c38bc1c3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantUserType",
+      "rva": "0x1d0f10",
+      "bytes": "8b410825ffffff3fc3cccccccccccccc6aff68c50e236764a1000000005081ec",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "QVariantIsDetachedComplete",
+      "rva": "0x215130",
+      "bytes": "f7410800000040740b8b0183780401740332c0c3b001c3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "BuiltinVariantCtorHandler",
+      "rva": "0x1c3020",
+      "bytes": "83ec088b4c240c8b442410894424048b410825ffffff3f6a00508d44240850894c240ce8586b000083c414c3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "Builtin2ConstructBranch",
+      "rva": "0x1c9bd7",
+      "bytes": "ff74240c8b4c2408e8ccb4ffffc3ff74240c8b4c2408e8beb4ffffc3ff74240c",
+      "reloc_offsets": []
+    },
+    {
+      "module": "Qt5Core.dll",
+      "name": "Builtin2CopyInline",
+      "rva": "0x1c50b0",
+      "bytes": "568bf18b460485c0740c8b0e85c974128b008901eb0c8b0685c07406c700000000008b0633c9816008ffffffbf394e048b160f94c18b420825ffffff7f5ec1e11f0bc8894a08c20400",
+      "reloc_offsets": []
+    },
+    {
+      "module": "common.dll",
+      "name": "OriginalWideToAnsi",
+      "rva": "0x2a200",
+      "bytes": "558bec6aff688815031064a1000000005083ec18a16cc7031033c5508d45f464a300000000c745f0000000006a008b450c508d4ddc51e86509000083c40c8945ec8b55ec8955e8c745fc000000008b4de8e83af5fdff508b4d08e82197fdff8b45f083c8018945f0c745fcffffffff8d4ddce87998fdff8b45088b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "common.dll",
+      "name": "WideToAnsiCodePageHelper",
+      "rva": "0x2aba0",
+      "bytes": "558bec6aff688815031064a1000000005083ec18a16cc7031033c5508d45f464a300000000c745e8000000006a006a006a006a006aff8b450c506a008b4d1051ff152c2003108945ecc645f3008d55f3528b45ec83c001508d4ddce840f4ffffc745fc000000006a006a008b4dec518d4ddce879ebfdff506aff8b550c526a008b451050ff152c2003108d4ddc518b4d08e8caf3ffff8b55e883ca018955e8c745fcffffffff8d4ddce8a28efdff8b45088b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        66,
+        134
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_469370",
+      "rva": "0x69370",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec51894dfc8b450c50e8d7b1fdff",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_4694a0",
+      "rva": "0x694a0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e84e9cf9ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_4694d0",
+      "rva": "0x694d0",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08e81bd8fbff5d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_4694e0",
+      "rva": "0x694e0",
+      "bytes": "558bec8b450c508b4d08e81bd8fbff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_469560",
+      "rva": "0x69560",
+      "bytes": "558bec51894dfc8b4dfce8f4effdff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_469580",
+      "rva": "0x69580",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_469f40",
+      "rva": "0x69f40",
+      "bytes": "558bec83ec08894df8c645ff008b45f88b4d088948108d55ff528b4df8e87b54",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_469f90",
+      "rva": "0x69f90",
+      "bytes": "558bec51894dfc8b4d08e8b981f9ff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a0d0",
+      "rva": "0x6a0d0",
+      "bytes": "558bec83ec08894dfc8b45fc8378141072138b4dfc8b1152e853fbfaff83c404",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a150",
+      "rva": "0x6a150",
+      "bytes": "558bec83ec0c894df80fb6450885c07502eb6c8b4df88379141072638b55f88b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a460",
+      "rva": "0x6a460",
+      "bytes": "558bec8b45088b4d0c8a1188105dc3cccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a500",
+      "rva": "0x6a500",
+      "bytes": "558bec51837d100075088b45088945fceb178b4d10518b550c528b450850e8c3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a540",
+      "rva": "0x6a540",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce82d10fdff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_46a570",
+      "rva": "0x6a570",
+      "bytes": "558bec51894dfc8b450850e83844ac0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_5478d0",
+      "rva": "0x1478d0",
+      "bytes": "558bec51894dfc6a006a018b4dfce88e55eeff8be55dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2f990",
+      "rva": "0xa2f990",
+      "bytes": "558bec518b450c508b4d0851e8e3b160ff83c4088845ff0fb655ff528b451050",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2f9e0",
+      "rva": "0xa2f9e0",
+      "bytes": "558beceb098b450883c0048945088b4d083b4d0c740e8b5508528b4d10e8d4b1",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fa10",
+      "rva": "0xa2fa10",
+      "bytes": "558bec518b450c508b4d0851e82c8361ff83c4088845ff0fb655ff528b451050",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fa60",
+      "rva": "0xa2fa60",
+      "bytes": "558beceb098b450883c0048945088b4d083b4d0c740e8b5508528b4d10e87d27",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fa90",
+      "rva": "0xa2fa90",
+      "bytes": "558bec518b450c508b4d0851e804fb5eff83c4088845ff0fb655ff528b451050",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fae0",
+      "rva": "0xa2fae0",
+      "bytes": "558beceb098b450883c0048945088b4d083b4d0c740e8b5508528b4d10e8a9a9",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fb10",
+      "rva": "0xa2fb10",
+      "bytes": "558bec518b450c508b4d0851e81e8760ff83c4088845ff0fb655ff528b451050",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fb60",
+      "rva": "0xa2fb60",
+      "bytes": "558beceb098b450883c0048945088b4d083b4d0c740e8b5508528b4d10e82ef3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fb90",
+      "rva": "0xa2fb90",
+      "bytes": "558bec518b450c508b4d0851e888305eff83c4088845ff0fb655ff528b451050",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fbe0",
+      "rva": "0xa2fbe0",
+      "bytes": "558bec5dc3cccccccccccccccccccccc558bec33c05dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2fee0",
+      "rva": "0xa2fee0",
+      "bytes": "558bec8b4510508b4d0ce8234562ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e2ff70",
+      "rva": "0xa2ff70",
+      "bytes": "558bec8b4510508b4d0ce8b9e55eff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e30000",
+      "rva": "0xa30000",
+      "bytes": "558bec8b4510508b4d0ce8998161ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e30090",
+      "rva": "0xa30090",
+      "bytes": "558bec8b4510508b4d0ce8a1385dff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e31ce0",
+      "rva": "0xa31ce0",
+      "bytes": "558bec518a45ff8be55dc3cccccccccc558bec518a45ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e31cf0",
+      "rva": "0xa31cf0",
+      "bytes": "558bec518a45ff8be55dc3cccccccccc558bec518a45ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e31d00",
+      "rva": "0xa31d00",
+      "bytes": "558bec518a45ff8be55dc3cccccccccc558bec518a45ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e31d10",
+      "rva": "0xa31d10",
+      "bytes": "558bec518a45ff8be55dc3cccccccccc558bec518a45ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e31d20",
+      "rva": "0xa31d20",
+      "bytes": "558bec518a45ff8be55dc3cccccccccc558bec518a45ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335a0",
+      "rva": "0xa335a0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335b0",
+      "rva": "0xa335b0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335c0",
+      "rva": "0xa335c0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335d0",
+      "rva": "0xa335d0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335e0",
+      "rva": "0xa335e0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e335f0",
+      "rva": "0xa335f0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e33600",
+      "rva": "0xa33600",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e33610",
+      "rva": "0xa33610",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e362c0",
+      "rva": "0xa362c0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e84fd55cff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e362f0",
+      "rva": "0xa362f0",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08e8bf8461ff5d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36300",
+      "rva": "0xa36300",
+      "bytes": "558bec8b450c508b4d08e8bf8461ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36320",
+      "rva": "0xa36320",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e86bf85dff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36350",
+      "rva": "0xa36350",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08e87c0a5fff5d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36360",
+      "rva": "0xa36360",
+      "bytes": "558bec8b450c508b4d08e87c0a5fff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36380",
+      "rva": "0xa36380",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e863355fff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e363b0",
+      "rva": "0xa363b0",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08e8fdfc5dff5d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e363c0",
+      "rva": "0xa363c0",
+      "bytes": "558bec8b450c508b4d08e8fdfc5dff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e363e0",
+      "rva": "0xa363e0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e86c645dff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36410",
+      "rva": "0xa36410",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08e8c5065eff5d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36420",
+      "rva": "0xa36420",
+      "bytes": "558bec8b450c508b4d08e8c5065eff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36440",
+      "rva": "0xa36440",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e869ff5fff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36470",
+      "rva": "0xa36470",
+      "bytes": "558bec51894dfc6a008b4d08e83f8261ff8be55dc20400cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36490",
+      "rva": "0xa36490",
+      "bytes": "558bec8b450c508b4d08e8b3ba5fff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e364b0",
+      "rva": "0xa364b0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e84d215dff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e364e0",
+      "rva": "0xa364e0",
+      "bytes": "558bec51894dfc6a008b4d08e8b7d25fff8be55dc20400cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36500",
+      "rva": "0xa36500",
+      "bytes": "558bec8b450c508b4d08e863ed61ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36520",
+      "rva": "0xa36520",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8f6b25cff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36550",
+      "rva": "0xa36550",
+      "bytes": "558bec51894dfc6a008b4d08e80f3c60ff8be55dc20400cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36570",
+      "rva": "0xa36570",
+      "bytes": "558bec8b450c508b4d08e8096560ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36590",
+      "rva": "0xa36590",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e861fe5dff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e365c0",
+      "rva": "0xa365c0",
+      "bytes": "558bec51894dfc6a008b4d08e823d15fff8be55dc20400cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e365e0",
+      "rva": "0xa365e0",
+      "bytes": "558bec8b450c508b4d08e896d961ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36600",
+      "rva": "0xa36600",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8a78f61ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36630",
+      "rva": "0xa36630",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8d1e060ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36660",
+      "rva": "0xa36660",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08516a00e8ff1f",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36670",
+      "rva": "0xa36670",
+      "bytes": "558bec8b450c508b4d08516a00e8ff1f60ff83c40c5dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36690",
+      "rva": "0xa36690",
+      "bytes": "558bec8b450c508b4d08e8be0b61ff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e366b0",
+      "rva": "0xa366b0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e836aa61ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e366e0",
+      "rva": "0xa366e0",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e807e85eff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36710",
+      "rva": "0xa36710",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08516a00e8bd28",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36720",
+      "rva": "0xa36720",
+      "bytes": "558bec8b450c508b4d08516a00e8bd2861ff83c40c5dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36740",
+      "rva": "0xa36740",
+      "bytes": "558bec8b450c508b4d08e84ac95cff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36760",
+      "rva": "0xa36760",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8562c5fff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36790",
+      "rva": "0xa36790",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8ad7a61ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e367c0",
+      "rva": "0xa367c0",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08516a00e8a0e5",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e367d0",
+      "rva": "0xa367d0",
+      "bytes": "558bec8b450c508b4d08516a00e8a0e560ff83c40c5dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e367f0",
+      "rva": "0xa367f0",
+      "bytes": "558bec8b450c508b4d08e8f7455fff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36810",
+      "rva": "0xa36810",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8bd3c5fff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36840",
+      "rva": "0xa36840",
+      "bytes": "558bec51894dfc8b4508508b4dfc51e8bd8d60ff83c4088be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36870",
+      "rva": "0xa36870",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bec8b450c508b4d08516a00e884da",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e36880",
+      "rva": "0xa36880",
+      "bytes": "558bec8b450c508b4d08516a00e884da5eff83c40c5dc3cccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e368a0",
+      "rva": "0xa368a0",
+      "bytes": "558bec8b450c508b4d08e8292c5fff5dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e42fa0",
+      "rva": "0xa42fa0",
+      "bytes": "558bec51894dfc8b4dfce863c15eff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e42fc0",
+      "rva": "0xa42fc0",
+      "bytes": "558bec51894dfc8b4dfce83f975fff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e42fe0",
+      "rva": "0xa42fe0",
+      "bytes": "558bec51894dfc8b4dfce821735eff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43000",
+      "rva": "0xa43000",
+      "bytes": "558bec51894dfc8b4dfce82dc45eff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43020",
+      "rva": "0xa43020",
+      "bytes": "558bec51894dfc8b4dfce8982c5cff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43070",
+      "rva": "0xa43070",
+      "bytes": "558bec51894dfc8b4dfce8601e5cff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43090",
+      "rva": "0xa43090",
+      "bytes": "558bec51894dfc8b4dfce82fcd5eff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e430b0",
+      "rva": "0xa430b0",
+      "bytes": "558bec51894dfc8b4dfce84c085fff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e430d0",
+      "rva": "0xa430d0",
+      "bytes": "558bec51894dfc8b4dfce827775eff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e430f0",
+      "rva": "0xa430f0",
+      "bytes": "558bec51894dfc8b4dfce8abee60ff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43110",
+      "rva": "0xa43110",
+      "bytes": "558bec51894dfc8b4dfce899d45dff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43130",
+      "rva": "0xa43130",
+      "bytes": "558bec51894dfc8b4dfce85cb35fff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43150",
+      "rva": "0xa43150",
+      "bytes": "558bec51894dfc8b4dfce8da065fff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43170",
+      "rva": "0xa43170",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e431b0",
+      "rva": "0xa431b0",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e431f0",
+      "rva": "0xa431f0",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43210",
+      "rva": "0xa43210",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43230",
+      "rva": "0xa43230",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43310",
+      "rva": "0xa43310",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43350",
+      "rva": "0xa43350",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43370",
+      "rva": "0xa43370",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43390",
+      "rva": "0xa43390",
+      "bytes": "558bec51894dfc8b45fc8be55dc3cccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43dc0",
+      "rva": "0xa43dc0",
+      "bytes": "558bec51894dfc8b4dfc83c108e853865fff8b4dfce85e7f5dff8be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43df0",
+      "rva": "0xa43df0",
+      "bytes": "558bec51894dfc8b4dfc83c108e8cee360ff8b4dfce819e45dff8be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43e20",
+      "rva": "0xa43e20",
+      "bytes": "558bec51894dfc8b4dfc83c108e898655dff8b4dfce828415dff8be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43e50",
+      "rva": "0xa43e50",
+      "bytes": "558bec51894dfc8b4dfc83c108e8a9c25fff8b4dfce8d18760ff8be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43e80",
+      "rva": "0xa43e80",
+      "bytes": "558bec51894dfc8b45fc8b08518b4dfce82a445cff8be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43ea0",
+      "rva": "0xa43ea0",
+      "bytes": "558bec51894dfc8b45fc8b08518b4dfce809775cff8be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43ec0",
+      "rva": "0xa43ec0",
+      "bytes": "558bec51894dfc8b45fc8b08518b4dfce811955cff8be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43ee0",
+      "rva": "0xa43ee0",
+      "bytes": "558bec51894dfc8b45fc8b08518b4dfce8ae3360ff8be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43f00",
+      "rva": "0xa43f00",
+      "bytes": "558bec51894dfc8b4dfce8920261ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43f20",
+      "rva": "0xa43f20",
+      "bytes": "558bec51894dfc8b4dfce8b5cc5dff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43f40",
+      "rva": "0xa43f40",
+      "bytes": "558bec51894dfc8b4dfce86c355fff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43f60",
+      "rva": "0xa43f60",
+      "bytes": "558bec51894dfc8b4dfce8d3185eff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43fa0",
+      "rva": "0xa43fa0",
+      "bytes": "558bec51894dfc8b4dfce802e85bff8b4dfce8f80360ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e43fd0",
+      "rva": "0xa43fd0",
+      "bytes": "558bec51894dfc8b4dfce88a3f60ff8b4dfce8310e60ff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44000",
+      "rva": "0xa44000",
+      "bytes": "558bec51894dfc8b4dfce8fbf35fff8b4dfce81ffc5dff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44030",
+      "rva": "0xa44030",
+      "bytes": "558bec51894dfc8b4dfce8cb325dff8b4dfce85def5bff8be55dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44060",
+      "rva": "0xa44060",
+      "bytes": "558bec6aff6878c6030164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e440d0",
+      "rva": "0xa440d0",
+      "bytes": "558bec51894dfc8b4dfc83c118e88fef5bff8b4dfce8ff935dff8be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44100",
+      "rva": "0xa44100",
+      "bytes": "558bec51894dfc8b4dfc83c104e825b25fff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44140",
+      "rva": "0xa44140",
+      "bytes": "558bec51894dfc8b4dfc83c104e89f6f60ff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44240",
+      "rva": "0xa44240",
+      "bytes": "558bec51894dfc8b4dfce87fba5fff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44260",
+      "rva": "0xa44260",
+      "bytes": "558bec51894dfc8b4dfce840665fff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44280",
+      "rva": "0xa44280",
+      "bytes": "558bec51894dfc8b4dfce8c5de5fff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e442a0",
+      "rva": "0xa442a0",
+      "bytes": "558bec51894dfc8b4dfce8139d60ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e442c0",
+      "rva": "0xa442c0",
+      "bytes": "558bec51894dfc8b4dfce87ead60ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e442e0",
+      "rva": "0xa442e0",
+      "bytes": "558bec51894dfc8b4dfce800ba5cff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44300",
+      "rva": "0xa44300",
+      "bytes": "558bec51894dfc8b4dfce898bf5dff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44320",
+      "rva": "0xa44320",
+      "bytes": "558bec51894dfc8b4dfce807ff5cff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44340",
+      "rva": "0xa44340",
+      "bytes": "558bec51894dfc8b4dfce85cee5cff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e443b0",
+      "rva": "0xa443b0",
+      "bytes": "558bec51894dfc8b45fcc700a08f22018be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e443d0",
+      "rva": "0xa443d0",
+      "bytes": "558bec51894dfc8b45fcc700e88f22018be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e443f0",
+      "rva": "0xa443f0",
+      "bytes": "558bec51894dfc8b4dfc83c104e81dd05bff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44410",
+      "rva": "0xa44410",
+      "bytes": "558bec51894dfc8b4dfc83c108ff1550733c018be55dc3cccccccccccccccccc",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e44430",
+      "rva": "0xa44430",
+      "bytes": "558bec6aff68d8c6030164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e46c20",
+      "rva": "0xa46c20",
+      "bytes": "558bec51894dfc8b4dfce852d75bff8b450883e001740c8b4dfc51e8787d0e00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e46c60",
+      "rva": "0xa46c60",
+      "bytes": "558bec51894dfc8b4dfce8de9760ff8b450883e001740c8b4dfc51e8387d0e00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e46ca0",
+      "rva": "0xa46ca0",
+      "bytes": "558bec51894dfc8b4dfce8d51c5eff8b450883e001740c8b4dfc51e8f87c0e00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e46ce0",
+      "rva": "0xa46ce0",
+      "bytes": "558bec51894dfc8b4dfce8da7560ff8b450883e001740c8b4dfc51e8b87c0e00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e48f20",
+      "rva": "0xa48f20",
+      "bytes": "558bec83ec08894df88d45ff508b4df8e8e3645fff8d4dff518b550c528b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e48f60",
+      "rva": "0xa48f60",
+      "bytes": "558bec83ec08894df88d45ff508b4df8e8064c60ff8d4dff518b550c528b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e48fa0",
+      "rva": "0xa48fa0",
+      "bytes": "558bec83ec08894df88d45ff508b4df8e8c0825cff8d4dff518b550c528b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e48fe0",
+      "rva": "0xa48fe0",
+      "bytes": "558bec83ec08894df88d45ff508b4df8e8980260ff8d4dff518b550c528b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49020",
+      "rva": "0xa49020",
+      "bytes": "558bec83ec08894df88d45ff508b4df8e8c5665cff8d4dff518b550c528b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49630",
+      "rva": "0xa49630",
+      "bytes": "558bec83ec08894df88b450850e8d9a55fff83c40450e8b6bb5eff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e496d0",
+      "rva": "0xa496d0",
+      "bytes": "558bec83ec08894df88b450850e8f8045fff83c40450e87b5460ff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49770",
+      "rva": "0xa49770",
+      "bytes": "558bec83ec08894df88b450850e8ed015eff83c40450e8d04a60ff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49810",
+      "rva": "0xa49810",
+      "bytes": "558bec83ec08894df88b450850e8cf665dff83c40450e891965dff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e498b0",
+      "rva": "0xa498b0",
+      "bytes": "558bec83ec08894df88b450850e859a35fff83c40450e836b95eff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49980",
+      "rva": "0xa49980",
+      "bytes": "558bec83ec08894df88b450850e848025fff83c40450e8cb5160ff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49a50",
+      "rva": "0xa49a50",
+      "bytes": "558bec83ec08894df88b450850e80dff5dff83c40450e8f04760ff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49b20",
+      "rva": "0xa49b20",
+      "bytes": "558bec83ec08894df88b450850e8bf635dff83c40450e881935dff83c404508d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49bf0",
+      "rva": "0xa49bf0",
+      "bytes": "558bec51894dfc8b4d08e8f4fd5bff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49c10",
+      "rva": "0xa49c10",
+      "bytes": "558bec51894dfc8b4d08e8bcc75eff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49c30",
+      "rva": "0xa49c30",
+      "bytes": "558bec51894dfc8b4d08e839f35eff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49c50",
+      "rva": "0xa49c50",
+      "bytes": "558bec51894dfc8b4d08e825cf5dff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49c70",
+      "rva": "0xa49c70",
+      "bytes": "558bec51894dfc8b4d08e8329b5fff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49c90",
+      "rva": "0xa49c90",
+      "bytes": "558bec51894dfc8b4d08e8285760ff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49cb0",
+      "rva": "0xa49cb0",
+      "bytes": "558bec51894dfc8b4d08e873a85dff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49cd0",
+      "rva": "0xa49cd0",
+      "bytes": "558bec51894dfc8b4d08e854d55cff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e49cf0",
+      "rva": "0xa49cf0",
+      "bytes": "558bec51894dfc8b4d08e8e2ad5dff8b45088be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4bfc0",
+      "rva": "0xa4bfc0",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4bfd0",
+      "rva": "0xa4bfd0",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4bfe0",
+      "rva": "0xa4bfe0",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4bff0",
+      "rva": "0xa4bff0",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c000",
+      "rva": "0xa4c000",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c010",
+      "rva": "0xa4c010",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c020",
+      "rva": "0xa4c020",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c030",
+      "rva": "0xa4c030",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec51894dfc8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c0a0",
+      "rva": "0xa4c0a0",
+      "bytes": "558bec8b450883c0045dc3cccccccccc558bec8b450883c0045dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c0b0",
+      "rva": "0xa4c0b0",
+      "bytes": "558bec8b450883c0045dc3cccccccccc558bec8b450883c0045dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c0c0",
+      "rva": "0xa4c0c0",
+      "bytes": "558bec8b450883c0045dc3cccccccccc558bec8b450883c0045dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4c0d0",
+      "rva": "0xa4c0d0",
+      "bytes": "558bec8b450883c0045dc3cccccccccc558bec6aff6890cd030164a100000000",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cce0",
+      "rva": "0xa4cce0",
+      "bytes": "558bec51894dfc8b4dfce8dde95bff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cd00",
+      "rva": "0xa4cd00",
+      "bytes": "558bec51894dfc8b4dfce83a815bff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cd20",
+      "rva": "0xa4cd20",
+      "bytes": "558bec51894dfc8b4dfce858845bff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cd40",
+      "rva": "0xa4cd40",
+      "bytes": "558bec51894dfc8b4dfce876445dff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cd60",
+      "rva": "0xa4cd60",
+      "bytes": "558bec83ec08894df88b45f883380074638b4df8ff15b8693c018b4df88b5104",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4ce00",
+      "rva": "0xa4ce00",
+      "bytes": "558bec83ec08894df88b45f883380074638b4df8ff15b8693c018b4df88b5104",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cea0",
+      "rva": "0xa4cea0",
+      "bytes": "558bec83ec08894df88b45f883380074638b4df8ff15b8693c018b4df88b5104",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cf40",
+      "rva": "0xa4cf40",
+      "bytes": "558bec83ec08894df88b45f883380074638b4df8ff15b8693c018b4df88b5104",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4cfe0",
+      "rva": "0xa4cfe0",
+      "bytes": "558bec83ec08894df88b45f883380074638b4df8ff15b8693c018b4df88b5104",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f360",
+      "rva": "0xa4f360",
+      "bytes": "558bec83ec0c894dfc8b45fc8b0851e8a7485fff83c4048b108955f88b45fc8b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f410",
+      "rva": "0xa4f410",
+      "bytes": "558bec83ec0c894dfc8b45fc8b0851e8b6a75eff83c4048b108955f88b45fc8b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f4c0",
+      "rva": "0xa4f4c0",
+      "bytes": "558bec83ec0c894dfc8b45fc8b0851e89ba45dff83c4048b108955f88b45fc8b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f570",
+      "rva": "0xa4f570",
+      "bytes": "558bec83ec0c894dfc8b45fc8b0851e86d095dff83c4048b108955f88b45fc8b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f960",
+      "rva": "0xa4f960",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8f3b85dff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f990",
+      "rva": "0xa4f990",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce838795fff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f9c0",
+      "rva": "0xa4f9c0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce80c055cff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4f9f0",
+      "rva": "0xa4f9f0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce821375dff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fa20",
+      "rva": "0xa4fa20",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8335c5fff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fa50",
+      "rva": "0xa4fa50",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce859d65cff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fa80",
+      "rva": "0xa4fa80",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce87f845dff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fab0",
+      "rva": "0xa4fab0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8e0ad5cff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fae0",
+      "rva": "0xa4fae0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8c6d95bff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fb10",
+      "rva": "0xa4fb10",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8e0105dff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fb40",
+      "rva": "0xa4fb40",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8936a5cff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fb70",
+      "rva": "0xa4fb70",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8116a5eff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fba0",
+      "rva": "0xa4fba0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8af1c5bff8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fbd0",
+      "rva": "0xa4fbd0",
+      "bytes": "558bec51894dfc8b450850e8d8ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fbf0",
+      "rva": "0xa4fbf0",
+      "bytes": "558bec51894dfc8b450850e8b8ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fc10",
+      "rva": "0xa4fc10",
+      "bytes": "558bec51894dfc8b450850e898ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fc30",
+      "rva": "0xa4fc30",
+      "bytes": "558bec51894dfc8b450850e878ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fc50",
+      "rva": "0xa4fc50",
+      "bytes": "558bec51894dfc8b450850e858ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fc70",
+      "rva": "0xa4fc70",
+      "bytes": "558bec51894dfc8b450850e838ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fc90",
+      "rva": "0xa4fc90",
+      "bytes": "558bec51894dfc8b450850e818ed0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fcb0",
+      "rva": "0xa4fcb0",
+      "bytes": "558bec51894dfc8b450850e8f8ec0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "DtorCFG_e4fcd0",
+      "rva": "0xa4fcd0",
+      "bytes": "558bec51894dfc8b450850e8d8ec0d0083c4048be55dc20800cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ObjectPropertyServiceAllocationCaller",
+      "rva": "0xa2c310",
+      "bytes": "558bec6aff687e9b030164a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b4df0e8be7662ffc745fc000000008b45f0c700ec8e22016a50e86726100083c4048945ecc645fc01837dec00740d8b4dece870935fff8945e8eb07c745e8000000008b4de8894ddcc645fc008b55f08b45dc8942046a0ce82926100083c4048945e4c645fc02837de400740d8b4de4e80a035eff8945e0eb07c745e0000000008b4de0894dd8c645fc008b55f08b45d8894208c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PropertyManagerCtor",
+      "rva": "0xa43ca0",
+      "bytes": "558bec6aff683ec6030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e808975dffc745fc000000008b4df083c104e838625fffc645fc018b45f0c7002c9022018b4df0c74104749022018b55f0c64208008b4df083c10ce8de2860ffc645fc028b4df083c12ce8316a5dff8b45f0c7404c00000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        73,
+        83
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PropertyManagerDtor",
+      "rva": "0xa44430",
+      "bytes": "558bec6aff68d8c6030164a1000000005051a1600b3b0133c5508d45f464a300000000894df0c745fc000000008b4df083c12ce82f565dff8b4df083c10ce8a10761ff8b4df083c104e87d685fffc745fcffffffff8b4df0e8fea25dff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PropertyManagerDeletingDtor",
+      "rva": "0xa46fa0",
+      "bytes": "558bec51894dfc8b4dfce8426c5dff8b450883e001740c8b4dfc51e8f8790e0083c4048b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "BaseDrawGetProperty",
+      "rva": "0x7468f0",
+      "bytes": "558bec6aff6898ceff0064a1000000005083ec2ca1600b3b0133c5508d45f464a300000000894df0837d08000f845d0100008b45f083e80474088b4df0894de8eb07c745e8000000008b55f08b4278508b4df08b9190000000526a038b45e8508b4d0851e8169290ff83c4148b55f083ea0474088b45f08945e4eb07c745e4000000008b4df08b5164528b45f08b4874516a028b55e4528b450850e8df9190ff83c4148b4df083e90474088b55f08955e0eb07c745e0000000008b45f08b486c516a008b55e0528b450850e809f78fff83c410c745ec00000000eb098b4dec83c101894dec8b4df081c198000000e8673e90ff3945ec0f8d930000008b55ec528b4df081c198000000e8321290ff8945dc837ddc00740b8b45dc83c0048945d8eb07c745d8000000008b4df083e90474088b55f08955d4eb07c745d4000000008b45d85068dd5a00008d4dc851e8d69290ff83c4088945d08b55d08955ccc745fc000000008b45cc508b4dd4518b55088b028b4d088b5004ffd2c745fcffffffff8d4dc8ff1548913c01e94dffffff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        390
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "AnimationArraySize",
+      "rva": "0xb3340",
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "CollectPackedColor",
+      "rva": "0x527170",
+      "bytes": "558bec6aff687d55fd0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000837d08007406837d0c007502eb64c745f0000000008d45f0508b4d18518b551452e8dfe6b1ff83c40c8b45f0508b4d10518d55e452e86dd5b2ff83c4088945ec8b45ec8945e8c745fc000000008b4de8518b550c528b45088b108b4d088b4208ffd0c745fcffffffff8d4de4ff1548913c018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        147
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PackColorAlpha",
+      "rva": "0x512da0",
+      "bytes": "558bec837d0c007c09817d0cff0000007e07c7450cff0000008b450825ffffff008945088b4d0cc1e1180b4d088b5510890a5dc3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "ColorCollectorSlot2",
+      "rva": "0xa54150",
+      "bytes": "558bec51894dfc6a008d4510508b4d0c518b5508528b4dfce85bde5aff8be55dc20c00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "IntegerCollectorSlot4",
+      "rva": "0xa54640",
+      "bytes": "558bec51894dfc6a028d4510508b4d0c518b5508528b4dfce86bd95aff8be55dc20c00",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "CollectScalarInternal",
+      "rva": "0xa3d630",
+      "bytes": "558bec83ec08894dfc837d0800743f8b4514508b4d0c518b5508528b4dfce8c28e60ff8b450c508b4d08518b4dfce8a7ed5cff8945f88b55f88b45148942048b4d10518b4df883c108e86ee960ff8be55dc21000",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "PropertyNativeTypeCheck",
+      "rva": "0xa55680",
+      "bytes": "558bec6aff688bd4030164a1000000005083ec2ca1600b3b0133c5508d45f464a300000000894dc88d4df0ff1588903c01c745fc00000000e80fc35cff8945ec8d45e8508b4d0c518b5508528b45ec8b108b4dec8b4210ffd00fb6c885c974638b55103b55e87515c745fcffffffff8d4df0ff1548913c01e9b40000008b450c8b08518d55dc528b4d08e84a0c5eff8945e48b45e48945e0c645fc018b4de08b115268909322018d45f050ff1580903c0183c410c645fc008d4ddcff1548913c01eb448b4d0c8b11528d45d0508b4d08e8040c5eff8945d88b4dd8894dd4c645fc028b55d48b025068f89322018d4df051ff1580903c0183c410c645fc008d4dd0ff1548913c018d55f0528d4dcce8a7715dff686c2136018d45cc50e86db80d00c745fcffffffff8d4df0ff1548913c018b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        116,
+        163,
+        173,
+        189,
+        233,
+        243,
+        259,
+        276,
+        301
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "OwnedPropertyEntryIndex",
+      "rva": "0xa515b0",
+      "bytes": "558bec6aff68c8cf030164a1000000005083ec2ca1600b3b0133c58945f0508d45f464a300000000894dd48b4d0cff156c913c01508d45d850e8035f5fff83c4088945cc8b4dcc894dc8c745fc000000008b55c8528d4508508b4dd483c10ce8e16e5fff83c0048bc8e856c15bff8945d0c745fcffffffff8d4dd8e8b9be5cff8b45d08b4df464890d00000000598b4df033cde8b6f90d008be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        48
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "OwnedPropertyEntryFind",
+      "rva": "0xa51460",
+      "bytes": "558bec6aff6888cf030164a1000000005083ec38a1600b3b0133c58945f0508d45f464a300000000894dd08d4508508d4dd4518b4dd083c10ce8c16a5fff8d55d4528d45bc508b4dd083c10ce8e64e5cff8bc8e85e375eff0fb6c885c90f84840000008b4d0cff156c913c01508d55d852e81b605fff83c4088945c88b45c88945c4c745fc000000008b4dc4518d55cc528d4dd4e803445cff83c0088bc8e81b9e5dffc745fcffffffff8d4dd8e8d7bf5cff8d45cc508d4dc0518d4dd4e8da435cff83c0088bc8e8e4a95fff8bc8e8f90f5bff0fb6d085d2740d8d4dcce891f15eff83c018eb0233c08b4df464890d00000000598b4df033cde8a0fa0d008be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        104
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "name": "QtIntegerTypeId",
+      "rva": "0xa53ba0",
+      "bytes": "558becb8020000005dc3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "MfcOrdinal1039",
+      "rva": "0x466d4",
+      "ordinal": 1039,
+      "bytes": "8b0983e910e9bb2bfcff558bec568bf1e8396000008b068bceff90ec0200005e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "MfcOrdinal1502",
+      "rva": "0x8a19",
+      "ordinal": 1502,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "name": "MfcOrdinal1504",
+      "rva": "0xec92a",
+      "ordinal": 1504,
+      "bytes": "ff2594f42a10558bec5de9e0c0f1ff8b81b400000085c07501c38b4020c38b81",
+      "reloc_offsets": [
+        2
+      ]
+    }
+  ],
+  "object_tables": [
+    {
+      "name": "PropertyManagerCollector",
+      "vtable_rva": "0xe2902c",
+      "col_rva": "0xe9002c",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfaae24",
+      "hierarchy_descriptor_rva": "0xe90044",
+      "rtti_ascii_NUL_hex": "2e3f415650726f70657274794d616e61676572404f626a65637454726565404000",
+      "entries": [
+        "0x5153c",
+        "0x4a9bc",
+        "0x3c3a8",
+        "0x174ae",
+        "0x126b6",
+        "0x4c113",
+        "0x506a",
+        "0x255d6",
+        "0x18d9f",
+        "0x354f4",
+        "0x288ad",
+        "0x3ec11",
+        "0x524f",
+        "0x1f2da"
+      ]
+    },
+    {
+      "name": "PropertyManagerDispatcher",
+      "vtable_rva": "0xe29074",
+      "col_rva": "0xe90130",
+      "complete_offset": 4,
+      "type_descriptor_rva": "0xfaae24",
+      "hierarchy_descriptor_rva": "0xe90044",
+      "rtti_ascii_NUL_hex": "2e3f415650726f70657274794d616e61676572404f626a65637454726565404000",
+      "entries": [
+        "0x350f8",
+        "0x2c93",
+        "0x4ccfd",
+        "0x272eb",
+        "0x1a488",
+        "0x303fa",
+        "0x31d1d",
+        "0x48a36",
+        "0x4610",
+        "0x4173b",
+        "0x4f98a",
+        "0x21ea9",
+        "0x6bcc"
+      ]
+    }
+  ],
+  "exact_Qt_and_common_IAT_bindings": [
+    {
+      "iat_rva": "0xfc70f4",
+      "module": "Qt5Core.dll",
+      "export": "?data_ptr@QVariant@@QAEAAUPrivate@1@XZ",
+      "export_rva": "0xf2000"
+    },
+    {
+      "iat_rva": "0xfc70fc",
+      "module": "Qt5Core.dll",
+      "export": "?constData@QVariant@@QBEPBXXZ",
+      "export_rva": "0x1cf2c0"
+    },
+    {
+      "iat_rva": "0xfc7104",
+      "module": "Qt5Core.dll",
+      "export": "?isDetached@QVariant@@QBE_NXZ",
+      "export_rva": "0x215130"
+    },
+    {
+      "iat_rva": "0xfc710c",
+      "module": "Qt5Core.dll",
+      "export": "?userType@QVariant@@QBEHXZ",
+      "export_rva": "0x1d0f10"
+    },
+    {
+      "iat_rva": "0xfc7114",
+      "module": "Qt5Core.dll",
+      "export": "??0QVariant@@QAE@HPBXI@Z",
+      "export_rva": "0x1cc7b0"
+    },
+    {
+      "iat_rva": "0xfc7348",
+      "module": "Qt5Core.dll",
+      "export": "??4QVariant@@QAEAAV0@$$QAV0@@Z",
+      "export_rva": "0x108a0"
+    },
+    {
+      "iat_rva": "0xfc7350",
+      "module": "Qt5Core.dll",
+      "export": "??1QVariant@@QAE@XZ",
+      "export_rva": "0x1ccbe0"
+    },
+    {
+      "iat_rva": "0xfc7354",
+      "module": "Qt5Core.dll",
+      "export": "??0QVariant@@QAE@XZ",
+      "export_rva": "0x104a0"
+    },
+    {
+      "iat_rva": "0xfc7a14",
+      "module": "common.dll",
+      "export": "?FromWideToAnsi@StringOpt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PB_W@Z",
+      "export_rva": "0x2a200"
+    }
+  ],
+  "dependency_profiles": [
+    {
+      "file": "../properties-metadata-0001/label-metadata-native-profile.json",
+      "sha256": "3ed3a5b1bb0d06fc7fa7f90bb810c4f8f085d0861a148c4e3c156a7dd8f737b2"
+    },
+    {
+      "file": "../properties-metadata-0001/cached-schema-output/label-metadata-cached-schema-profile.json",
+      "sha256": "4ee8958e79dc40e51f0d41671bcd9941d4f2a321cdeee948a2c4f2d9bdc7b6a0"
+    },
+    {
+      "file": "json-service-raw-read-profile.json",
+      "sha256": "b825e823e7e6a9d5b3c5cc8a7e898d017a08391470d66c0b87153c574af45ab7"
+    }
+  ],
+  "typed_expectation": {
+    "file": "scalar3-typed-expectation-and-buffer-tests-0001.json",
+    "sha256": "fa1d684fd61ecab18ef11aa1b78610db137c1ddb6842cf1eead3fa69aa3d8bd9"
+  },
+  "owned_receiver": {
+    "bytes": 80,
+    "constructor_rva": "0xa43ca0",
+    "deleting_body_rva": "0xa46fa0",
+    "deleting_entry_rva": "0x5153c",
+    "deleting_flags": 1
+  },
+  "calls": {
+    "base_getter": {
+      "rva": "0x7468f0",
+      "ABI": "x86ThisCall void(targetIObject,originalCollector),ret4",
+      "expected_calls": 1
+    },
+    "owned_find": {
+      "rva": "0xa51460",
+      "ABI": "x86ThisCall record*(manager,ownerIObject,CStringKey&),ret8",
+      "expected_calls": 3
+    }
+  },
+  "target": {
+    "page_id": 31,
+    "name": "控件0",
+    "type_id": 20488,
+    "IObject_complete_offset": 4,
+    "owner_complete_offset": 100,
+    "required_animation_count_IObject_A0": 0,
+    "expected_values": [
+      {
+        "property_id": 3,
+        "original_resource_name": "FillColor",
+        "native_tag": 0,
+        "expected_uint32": 12632256,
+        "archived_color_uint32": 12632256,
+        "archived_leading_word": 0,
+        "native_color_offset_IObject": "0x90",
+        "native_parameter_offset_IObject": "0x78"
+      },
+      {
+        "property_id": 2,
+        "original_resource_name": "BorderColor",
+        "native_tag": 0,
+        "expected_uint32": 0,
+        "archived_color_uint32": 0,
+        "archived_leading_word": 0,
+        "native_color_offset_IObject": "0x74",
+        "native_parameter_offset_IObject": "0x64"
+      },
+      {
+        "property_id": 0,
+        "original_resource_name": "SideLineType",
+        "native_tag": 2,
+        "expected_uint32": 1,
+        "archived_LOGPEN_field": "width_x (second DWORD)",
+        "native_value_offset_IObject": "0x6c",
+        "warning": "Preserve original property name; do not confuse with LOGPEN.style first DWORD"
+      }
+    ]
+  },
+  "ownership_contract": [
+    "Allocate50 through already-loaded original MFC1502; call original ctor; never zero/patch manager allocation.",
+    "No target setter, completeLabel.slot6, Font, animations or component collector calls.",
+    "One inherited base getter call emits exactly3 scalar records; native PropertyKeyName then original OwnedFind resolves each owner/key.",
+    "Own manager main map+C must have one owner, auxiliary+2C remains empty; original nativeRecord belongs to manager, never free record/value/target.",
+    "Require native_tag0/2 and exact QVariant typeword2(nonshared/nonNULL), copy4-byte value before manager deletion; keep opaque recordbyte0 distinct from validity.",
+    "Actual guarded virtualdeleting dtor(flags1) alone destroys owned maps/records and releases allocation; never independently free constructed manager.",
+    "Unknown native failure does not imply recovery; no automatic retry or globaldtor/flag patch."
+  ],
+  "required_pre_and_post": [
+    "Explicit new op+SessionSHA must be added and independently reviewed before compile/activation.",
+    "Exact UIthread/PID/creation/path/installed-module hashes/currentroot/model and raw all13-loaded precondition before Children/Inspector.",
+    "Current known623-field baseline/index/fingerprints+physicalSHA, all241geometry/53actions/MainCtrl/full6blocks10programs/raw3 editor-state DWORDs remain exact.",
+    "Existing Json service bit1 and exact owned register tables; capture all globalmetadata headers/contents actually inspected without interpreting fresh opaque44/F4.",
+    "FirstLabel schema miss may populate original globalcache; use formalcachedschema lookup/provedrawnode+C10 declarations and complete type map, not temp+48 residency.",
+    "No implicit Json coldinit or property-key warmup; no view/history/save/RootSave/propertysetter."
+  ],
+  "normal_dtor_proof": {
+    "file": "generic-map-destruction-normal-cfg-0002.json",
+    "sha256": "194055355fff1a0ca237b5f2587fcb00af8615bdf98de54d78bfd091a34ff0c5",
+    "normal_CFG_functions": 215,
+    "unresolved": []
+  },
+  "source_sha256": "2dc2b5339baa9db41882b9abf003267512332d0ca8f64418edc99ddfd7a2d426",
+  "helper_implemented": false,
+  "ready_to_invoke": false,
+  "compiled": false,
+  "activated": false,
+  "native_calls": 0,
+  "host_access": false
+}

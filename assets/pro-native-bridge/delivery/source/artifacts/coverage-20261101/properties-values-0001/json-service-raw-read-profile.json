@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "purpose": "pureRPM-original-JsonProtocolService-construction-state-only",
+  "binary": {
+    "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": "0x400000"
+  },
+  "global_root_profile": {
+    "file": "../native-trace-preparation/native-root-global-read-profile.json",
+    "sha256": "33a08f65da63a0315a7f74909c664428a71fdff76116fa665dec07297bc2b105"
+  },
+  "globals": {
+    "service_object_rva": "0xfbfffc",
+    "init_flag_rva": "0xfc0008",
+    "init_mask": 1,
+    "owned_registry_pointer_offset": 4
+  },
+  "registry_map_headers": [
+    {
+      "name": "schema_cache",
+      "offset": 4
+    },
+    {
+      "name": "type_cache",
+      "offset": 36
+    },
+    {
+      "name": "last_temporary_primary_map",
+      "offset": 72
+    }
+  ],
+  "registry_fields": {
+    "counter44_offset": 68,
+    "borrowed_target_F4_offset": 244,
+    "warning": "CtorE0C5D0 does not initialize44/F4. Ifschema_cache count0, both are opaque uninitialized fields and F4!=0 is not a busy proof. Only after a schema cache entry exists does completedE1FDE0 guarantee F4 cleared on normalreturn."
+  },
+  "tables": [
+    {
+      "name": "JsonProtocolService",
+      "vtable_rva": "0xe22e18",
+      "col_rva": "0xe8fc58",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfaab60",
+      "hierarchy_descriptor_rva": "0xe8fc70",
+      "rtti": ".?AVJsonProtocolService@ServiceCenter@@",
+      "rtti_with_NUL_hex": "2e3f41564a736f6e50726f746f636f6c53657276696365405365727669636543656e746572404000",
+      "vtable_entries": [
+        "0x44341",
+        "0x23213",
+        "0x2590",
+        "0x34090",
+        "0x13e49",
+        "0x4642a",
+        "0x2603a"
+      ]
+    },
+    {
+      "name": "PropertyRegister",
+      "vtable_rva": "0xe232b8",
+      "col_rva": "0xe8fbbc",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfaaaf8",
+      "hierarchy_descriptor_rva": "0xe8fbd4",
+      "rtti": ".?AVPropertyRegister@ObjectTree@@",
+      "rtti_with_NUL_hex": "2e3f415650726f70657274795265676973746572404f626a65637454726565404000",
+      "vtable_entries": [
+        "0xe49e",
+        "0x29e1f",
+        "0x367c3",
+        "0x2da4c",
+        "0x42082",
+        "0x3cc90",
+        "0x4ed9b",
+        "0x4a2f5"
+      ]
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "JsonServiceGetter1",
+      "rva": "0xa25550",
+      "bytes": "558bece859a95eff5dc3cccccccccccc558bece8660e5fff5dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "JsonServiceGetter2",
+      "rva": "0xa25560",
+      "bytes": "558bece8660e5fff5dc3cccccccccccc558bec8b45088b088b550c8d04d18b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "JsonServiceSingleton",
+      "rva": "0xa56df0",
+      "bytes": "558bec6aff68e9d6030164a10000000050a1600b3b0133c5508d45f464a300000000a108003c0183e00175348b0d08003c0183c901890d08003c01c745fc00000000b9fcff3b01e87a805cff68302c0d01e88ba10d0083c404c745fcffffffffb8fcff3b018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        18,
+        35,
+        46,
+        55,
+        67,
+        77,
+        97
+      ]
+    },
+    {
+      "name": "JsonServiceCtor",
+      "rva": "0x9fb460",
+      "bytes": "558bec6aff68936a030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4df0e81f6863ffc745fc000000008b45f0c700182e220168f8000000e81435130083c4048945ecc645fc01837dec00740d8b4dece8746561ff8945e8eb07c745e8000000008b4de8894de4c645fc008b55f08b45e4894204c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "name": "JsonServiceDtor",
+      "rva": "0x9fb500",
+      "bytes": "558bec6aff68b66a030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894dec8b45ecc700182e2201c745fc000000008b4dec8b51048955e88b45e88945f0837df00074136a018b4df08b118b4df08b02ffd08945e4eb07c745e400000000c745fcffffffff8b4dece88b6d60ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45
+      ]
+    },
+    {
+      "name": "JsonServiceAtexit",
+      "rva": "0xcd2c30",
+      "bytes": "558becb9fcff3b01e8972135ff5dc3cccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        4
+      ]
+    },
+    {
+      "name": "InterfaceBase1",
+      "rva": "0xa0c470",
+      "bytes": "558bec51894dfc8b4dfce8196f62ff8b45fcc700f02d22018b45fc8be55dc3cc",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "InterfaceBase2",
+      "rva": "0xa0a420",
+      "bytes": "558bec51894dfc8b4dfce84e5562ff8b45fcc700dc2d22018b45fc8be55dc3cc",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "IServiceBase",
+      "rva": "0x57f9c0",
+      "bytes": "558bec51894dfc8b45fcc700a4d418018b45fc8be55dc3cccccccccccccccccc",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "PropertyRegisterCtor",
+      "rva": "0xa0c5d0",
+      "bytes": "558bec6aff687e7e030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e847ac62ffc745fc000000008b45f0c700b83222018b4df083c104e8b08a5fffc645fc018b4df083c124e87d1a62ffc645fc028b4df083c148e8c99a63ffc745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        58
+      ]
+    },
+    {
+      "name": "PropertyRegisterDtor",
+      "rva": "0xa0d0f0",
+      "bytes": "558bec6aff68897f030164a1000000005083ec14a1600b3b0133c5508d45f464a300000000894df08b45f0c700b8322201c745fc030000008b4df083c148e82e8260ff8b4df083c104894de88d55ec528b4de8e8cfeb63ff8d45e4508b4de8e8c29f60ffeb088d4dece81aac60ff8d4de4518d4dece8001961ff0fb6d085d274188d4dece8a2b063ff8945e08b4de083c104e8da8160ffebcdc645fc028b4df083c148e8cd2964ffc645fc018b4df083c124e8ea2064ffc645fc008b4df083c104e8cbaf62ffc745fcffffffff8b4df0e8f0dd5fff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45
+      ]
+    },
+    {
+      "name": "PropertyRegisterDeletingDtor",
+      "rva": "0xa101a0",
+      "bytes": "558bec51894dfc8b4dfce8d52f64ff8b450883e001740c8b4dfc51e8f8e7110083c4048b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "AggregateCtor",
+      "rva": "0xa0c7f0",
+      "bytes": "558bec6aff682e7f030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e8fed361ffc745fc000000008b4df083c120e839b15fffc645fc018b4df083c140e82af25fffc645fc028b4df081c1a0000000e892aa5fffc745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "JsonGetterUnwindAndHandler",
+      "rva": "0xc3d6db",
+      "bytes": "a108003c0183e0fea308003c01c38b5424088d420c8b4afc33c8e80439efffb8bc233601e91039efff",
+      "reloc_offsets": [
+        1,
+        9,
+        32
+      ]
+    }
+  ],
+  "static_evidence": {
+    "file": "json-service-cold-static-functions.json",
+    "sha256": "fd61137d99a61dccf636b64421f159fdb24b9fc3405488c795a31c551bc4cdea"
+  },
+  "if_cold_dependencies": [
+    "No native call by raw reader. OriginalE56DF0 alone would set bit, callDFB460, allocateF8 via already-loadedMFC1502, construct originalPropertyRegister maps, then register CRTatexit.",
+    "IService/interface bases only set own vtables. No target IObject callback/resource load/project/DB/settings/GUI calls occur in this cold ctor body; allocator/runtime failure boundaries remain.",
+    "LaterPropertyManager scalar callbackE55680 queries this service and may register Label schema on a cache miss (targetslots1/3/4), separately from service construction and42 key initialization.",
+    "Do not initialize implicitly, patchflag, callglobaldtor or infer successful construction from bit alone."
+  ],
+  "aslr_tests": 42,
+  "native_calls": 0,
+  "host_access": false,
+  "writer_ready": false
+}

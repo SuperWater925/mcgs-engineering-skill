@@ -1,0 +1,542 @@
+{
+  "schema": "mcgs-pro-pure-rpm-page-controls/v1",
+  "status": "static_preparation_only_not_live_validated",
+  "created_utc": "2026-11-01T11:49:41.171267+00:00",
+  "binary": {
+    "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": "0x400000",
+    "pointer_size": 4
+  },
+  "global_root_profile": {
+    "file": "../native-trace-preparation/native-root-global-read-profile.json",
+    "sha256": "33a08f65da63a0315a7f74909c664428a71fdff76116fa665dec07297bc2b105"
+  },
+  "chain": [
+    {
+      "from_object": "embedded C0McgsApp at imageBase+0xFBB578",
+      "offset": "0x520",
+      "dereference": true,
+      "to": "C0DocManage"
+    },
+    {
+      "from_object": "C0DocManage",
+      "offset": "0x2D4",
+      "dereference": true,
+      "to": "ObjectModel"
+    },
+    {
+      "from_object": "ObjectModel",
+      "offset": "0x68",
+      "dereference": true,
+      "to": "ObjectRoot"
+    },
+    {
+      "from_object": "ObjectRoot",
+      "offset": "0x10",
+      "dereference": true,
+      "to": "module pointer table; only module index0 is in scope; no vector header/capacity inferred"
+    },
+    {
+      "from_object": "module pointer table",
+      "offset": "0x0",
+      "dereference": true,
+      "to": "UserWindowObjectManager.IObject complete offset0"
+    }
+  ],
+  "page_container": {
+    "kind": "Native list-like circular doubly linked sequence of 4-byte key/4-byte page value pairs; not a13-element contiguous array",
+    "manager_member_offset": "0xC",
+    "header": {
+      "sentinel_pointer": "0x0",
+      "count_u32": "0x4"
+    },
+    "node": {
+      "next_pointer": "0x0",
+      "previous_pointer": "0x4",
+      "pair_key_opaque4": "0x8",
+      "page_complete_pointer": "0xC"
+    },
+    "end": "sentinel pointer; never treat sentinel pair bytes as a page",
+    "page_fields": {
+      "name_CString": "0xC",
+      "archive_id_i32": "0x10",
+      "loaded_C0DocUser_pointer": "0x14"
+    },
+    "bounds": {
+      "maximum_pages": 512,
+      "expected_count": "Use exact fresh baseline catalog,13 for the current controlled fixture; not version dependent"
+    }
+  },
+  "control_container": {
+    "kind": "CTypedPtrList<CObList,CDrawObj*> member",
+    "document_member_offset": "0x2BC",
+    "header": {
+      "vtable": "0x0",
+      "head_node": "0x4",
+      "tail_node": "0x8",
+      "count_i32": "0xC"
+    },
+    "node": {
+      "next_pointer": "0x0",
+      "previous_pointer": "0x4",
+      "CDrawObj_complete_pointer": "0x8"
+    },
+    "end": "NULL node pointer; not sentinel",
+    "control_fields": {
+      "IObject_subobject": "complete+0x4",
+      "name_CString": "complete+0x4C",
+      "selection_handle_state_DWORD": "complete+0x60",
+      "owner_document_pointer": "complete+0x64",
+      "raw_RECT_4i32": "complete+0x80"
+    },
+    "target_scope": {
+      "page_archive_id": 31,
+      "expected_name": "Codex控件接口试验",
+      "top_level_controls": [
+        "CDrawLabel/控件0",
+        "CDrawButton/控件4",
+        "CDrawEdit/控件5"
+      ],
+      "expected_count": 3,
+      "nested_groups": "Out of scope for minimal field60 sampler; reject unexpected group/nesting instead of invoking IObject.Children."
+    },
+    "bounds": {
+      "maximum_controls": 512
+    }
+  },
+  "lazy_rule": {
+    "field": "page+0x14",
+    "if_NULL": "Report unloaded; do not invoke loader or infer live field values from stored wire values.",
+    "if_nonNULL": "Require C0DocUser exact vtable/COL/RTTI; then read existing+2BC only.",
+    "prohibited_native_paths": [
+      "NativeEngine.Attach",
+      "NativeEngine.Describe",
+      "NativeEngine.Children",
+      "Page ChildCount",
+      "C537D0/GetDocument",
+      "any native iterator/getter/allocator"
+    ]
+  },
+  "read_only_consistency_contract": [
+    "Only OpenProcess QUERY_LIMITED_INFORMATION|VM_READ + ReadProcessMemory, no remote execution/Frida/suspend/context changes.",
+    "Pin exact PID creation FILETIME, canonical process image and full EXE SHA, module PE ranges; read all complete HIGHLOW-aware code guards and exact table COL/RTTI ASCII+NUL.",
+    "Read global app/root/path before and after each sample; fixture identity must be exact; no prior-PID constants reused.",
+    "Validate page circular list count, sentinel, forward/back links, unique nodes/page pointers/archive IDs; terminate after exact count and require return to sentinel.",
+    "Validate control list count, first.prev=NULL, last.next=NULL, forward/back links, unique nodes/complete pointers, final node==tail and owner complete+64==doc.",
+    "Read only known control name metadata, state+60 and optional raw rect; do not call generic getObjectID or read account/password/business text.",
+    "Read complete bounded snapshot twice and require exact equality, including headers and path; this detects many races but is not a global atomic snapshot guarantee. If different, mark unstable and stop; no automatic mutation/retry."
+  ],
+  "code_guards": [
+    {
+      "name": "DocManage_ObjectModel",
+      "rva": "0x327730",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b80d40200008be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ObjectModel_ObjectRoot",
+      "rva": "0x7d61e0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b40688be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ObjectRoot_ModuleIndex",
+      "rva": "0x7eed30",
+      "length": 32,
+      "bytes": "558bec51894dfc837d080c750433c0eb118b4508508b4dfc83c110e819e082ff",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PointerTable_Index",
+      "rva": "0x246430",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b088b55088d04918be55dc20400cccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "WindowManager_First",
+      "rva": "0x7749d0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10c51e8d8ce89ff83c4088be55dc20400",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "WindowManager_Next",
+      "rva": "0x7749f0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10c51e8f6118bff83c4088be55dc20400",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "WindowManager_Count",
+      "rva": "0x774790",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4dfc83c10ce8448e8cff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_First",
+      "rva": "0x779340",
+      "length": 32,
+      "bytes": "558bec6aff687b00000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_Next",
+      "rva": "0x779750",
+      "length": 32,
+      "bytes": "558bec83ec088b450c8b4804894dfc837dfc00741e8b55fc528d45f8508b4d08",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_CountOuter",
+      "rva": "0x7797f0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4dfce809578dff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_CountRaw",
+      "rva": "0x779810",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b40048be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_BeginOuter",
+      "rva": "0x778b50",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfce83f1989ff8b45088be55dc20400cccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_BeginRaw",
+      "rva": "0x778b80",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b1152e85fae8cff83c4048b00508b4d08e8",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_EndOuter",
+      "rva": "0x778fb0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfce84a2d8dff8b45088be55dc20400cccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_EndRaw",
+      "rva": "0x778fe0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e8e7818dff8b45088be55dc2",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_DereferenceOuter",
+      "rva": "0x777430",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4dfce87a228aff50e85cd98bff83c4048be55dc3cccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_DereferenceMiddle",
+      "rva": "0x777480",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4dfce8721d8dff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_DereferenceRaw",
+      "rva": "0x777460",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b0851e847cb8bff83c4048be55dc3cccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_NodeValue",
+      "rva": "0x778540",
+      "length": 32,
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_IncrementOuter",
+      "rva": "0x7775c0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4dfce8f76f8dff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_IncrementRaw",
+      "rva": "0x777590",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b0851e853c48cff83c4048b55fc8b0089028b45fc8b",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "PageList_NodeLinkIdentity",
+      "rva": "0x778550",
+      "length": 32,
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec51894dfc8be55dc20800cccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_ID",
+      "rva": "0x850800",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_Name",
+      "rva": "0x850f00",
+      "length": 32,
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c00c508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_GetLoadedDocument_OR_LAZY_LOAD",
+      "rva": "0x8537d0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8378140074088b4dfc8b4114eb148b4dfce82d887bff",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_FirstChild_OR_LAZY_LOAD",
+      "rva": "0x852d40",
+      "length": 32,
+      "bytes": "558bec6aff685214010164a1000000005083ec28a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_NextChild_OR_LAZY_LOAD",
+      "rva": "0x852e70",
+      "length": 32,
+      "bytes": "558bec83ec2c894df0b80100000085c00f84940100008b4df08b5110528b45f0",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Page_ChildCount_OR_LAZY_VISITOR",
+      "rva": "0x852b30",
+      "length": 32,
+      "bytes": "558bec83ec0c894df8c745fc000000008d45fc508d4df4e864130000508b4df8",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "DocUser_ControlListAddress",
+      "rva": "0x246c10",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc05bc0200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_Head",
+      "rva": "0x1b03e0",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b40048be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_NextOuter",
+      "rva": "0x246a00",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfce8e9aadfff8be55dc20400cccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_NextRaw",
+      "rva": "0x1b0450",
+      "length": 32,
+      "bytes": "558bec83ec08894df88b45088b08894dfc837dfc007505e8c6e997008b55088b",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_Count",
+      "rva": "0x1c3610",
+      "length": 32,
+      "bytes": "558bec51894dfc8b45fc8b400c8be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_TypedConstructor",
+      "rva": "0x261240",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfce85226dfff8b4dfcc70170fd13018b45fc8b",
+      "reloc_offsets": [
+        24
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "ControlList_BaseConstructor",
+      "rva": "0x261270",
+      "length": 32,
+      "bytes": "558bec51894dfc8b4508508b4dfce8a7e68c008b4dfcc70154fd13018b45fc8b",
+      "reloc_offsets": [
+        24
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    },
+    {
+      "name": "Control_Name",
+      "rva": "0x746270",
+      "length": 32,
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ],
+      "purpose": "Static provenance guard only; this routine must not be invoked by raw reader."
+    }
+  ],
+  "tables": [
+    {
+      "name": "C0DocManage",
+      "vtable_rva": "0xd57684",
+      "col_rva": "0xe77de8",
+      "complete_offset": 0,
+      "rtti": ".?AVC0DocManage@@",
+      "rtti_with_NUL_hex": "2e3f41564330446f634d616e616765404000"
+    },
+    {
+      "name": "ObjectModel",
+      "vtable_rva": "0xde4860",
+      "col_rva": "0xe8a588",
+      "complete_offset": 0,
+      "rtti": ".?AVObjectModel@@",
+      "rtti_with_NUL_hex": "2e3f41564f626a6563744d6f64656c404000"
+    },
+    {
+      "name": "ObjectRoot",
+      "vtable_rva": "0xde5bcc",
+      "col_rva": "0xe8a6a0",
+      "complete_offset": 0,
+      "rtti": ".?AVObjectRoot@@",
+      "rtti_with_NUL_hex": "2e3f41564f626a656374526f6f74404000"
+    },
+    {
+      "name": "UserWindowObjectManager",
+      "vtable_rva": "0xddf7ec",
+      "col_rva": "0xe89cf0",
+      "complete_offset": 0,
+      "rtti": ".?AVUserWindowObjectManager@@",
+      "rtti_with_NUL_hex": "2e3f41565573657257696e646f774f626a6563744d616e61676572404000"
+    },
+    {
+      "name": "UserWindowObject",
+      "vtable_rva": "0xded294",
+      "col_rva": "0xe8af4c",
+      "complete_offset": 0,
+      "rtti": ".?AVUserWindowObject@@",
+      "rtti_with_NUL_hex": "2e3f41565573657257696e646f774f626a656374404000"
+    },
+    {
+      "name": "C0DocUser",
+      "vtable_rva": "0xdc4d94",
+      "col_rva": "0xe866a0",
+      "complete_offset": 0,
+      "rtti": ".?AVC0DocUser@@",
+      "rtti_with_NUL_hex": "2e3f41564330446f6355736572404000"
+    },
+    {
+      "name": "TypedCDrawObjList",
+      "vtable_rva": "0xd3fd70",
+      "col_rva": "0xe76488",
+      "complete_offset": 0,
+      "rtti": ".?AV?$CTypedPtrList@VCObList@@PAVCDrawObj@@@@",
+      "rtti_with_NUL_hex": "2e3f41563f244354797065645074724c6973744056434f624c697374404050415643447261774f626a4040404000"
+    },
+    {
+      "name": "CDrawLabel.primary",
+      "vtable_rva": "0xd72d8c",
+      "col_rva": "0xe7c570",
+      "complete_offset": 0,
+      "rtti": ".?AVCDrawLabel@@",
+      "rtti_with_NUL_hex": "2e3f415643447261774c6162656c404000"
+    },
+    {
+      "name": "CDrawLabel.IObject",
+      "vtable_rva": "0xd72ec4",
+      "col_rva": "0xe7c5e0",
+      "complete_offset": 4,
+      "rtti": ".?AVCDrawLabel@@",
+      "rtti_with_NUL_hex": "2e3f415643447261774c6162656c404000"
+    },
+    {
+      "name": "CDrawButton.primary",
+      "vtable_rva": "0xd5de6c",
+      "col_rva": "0xe78c18",
+      "complete_offset": 0,
+      "rtti": ".?AVCDrawButton@@",
+      "rtti_with_NUL_hex": "2e3f41564344726177427574746f6e404000"
+    },
+    {
+      "name": "CDrawButton.IObject",
+      "vtable_rva": "0xd5dfb4",
+      "col_rva": "0xe78c8c",
+      "complete_offset": 4,
+      "rtti": ".?AVCDrawButton@@",
+      "rtti_with_NUL_hex": "2e3f41564344726177427574746f6e404000"
+    },
+    {
+      "name": "CDrawEdit.primary",
+      "vtable_rva": "0xd63cb4",
+      "col_rva": "0xe7a26c",
+      "complete_offset": 0,
+      "rtti": ".?AVCDrawEdit@@",
+      "rtti_with_NUL_hex": "2e3f4156434472617745646974404000"
+    },
+    {
+      "name": "CDrawEdit.IObject",
+      "vtable_rva": "0xd63dfc",
+      "col_rva": "0xe7a2e0",
+      "complete_offset": 4,
+      "rtti": ".?AVCDrawEdit@@",
+      "rtti_with_NUL_hex": "2e3f4156434472617745646974404000"
+    }
+  ],
+  "live_execution_performed": false,
+  "GUI_queue_DB_registry_Frida_operations": 0
+}

@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_data_recipe_abi_sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939",
+  "mfc_path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "name": "ColumnsSetSize",
+      "module": "McgsSetPro.exe",
+      "rva": 9474544,
+      "bytes": "558bec6aff6853e5010164a1000000005083ec645657a1600b3b0133c5508d45",
+      "reloc_offsets": [
+        6,
+        23
+      ]
+    },
+    {
+      "name": "RowPointersSetSize",
+      "module": "McgsSetPro.exe",
+      "rva": 1352032,
+      "bytes": "558bec83ec4c894dfc837d08007d05e8be4c9e00837d0c007c098b45fc8b4d0c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RowPointerSet",
+      "module": "McgsSetPro.exe",
+      "rva": 9474304,
+      "bytes": "558bec51894dfc837d08007c1c8b45fc8b4d083b48087d118b55fc8b42048b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ColumnPairConsumer",
+      "module": "McgsSetPro.exe",
+      "rva": 5317968,
+      "bytes": "558bec6aff68ba3efd0064a1000000005083ec40a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ColumnCaptionConsumer",
+      "module": "McgsSetPro.exe",
+      "rva": 5316832,
+      "bytes": "558bec6aff680a3efd0064a1000000005083ec40a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "New",
+      "ordinal": 1502,
+      "module": "mfc110u.dll",
+      "rva": 35353,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ]
+    },
+    {
+      "name": "CStringArrayCtor",
+      "ordinal": 968,
+      "module": "mfc110u.dll",
+      "rva": 1845675,
+      "bytes": "33c089410489411089410c894108c701486403108bc1c36810040000b8dc362810",
+      "reloc_offsets": [
+        16,
+        29
+      ]
+    },
+    {
+      "name": "CStringArraySetSize",
+      "ordinal": 13785,
+      "module": "mfc110u.dll",
+      "rva": 1846028,
+      "bytes": "558bec53568b75088bd985f60f881f0100008b450c85c078038943108b4b0485",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStringArrayDeletingDtor",
+      "module": "mfc110u.dll",
+      "rva": 2495421,
+      "bytes": "558becf6450802568bf174265768c2291c108d7efcff376a1456e8a748e1fff6",
+      "reloc_offsets": [
+        14
+      ]
+    }
+  ],
+  "mfc_preferred_base": 268435456,
+  "CStringArray_size": 20,
+  "scope": "Owned original CRecipe clone; original CArray size/setters and original owned CStringArray lifetime. No host/native/tests in derivation.",
+  "constraints": [
+    "Old columns retain raw kind. New columns must keep original ctor kind3; no guessed raw enum setter.",
+    "Old and new variable bindings must resolve to already-existing CObjData; native auto-create is excluded.",
+    "Only after complete private matrix readback, original deep assignment replaces the registered recipe and original registerReferences rebuilds graph.",
+    "Private temp is destroyed only after its original methods returned and target postimage has been verified. Unknown native result does not trigger guessed cleanup or retry."
+  ]
+}

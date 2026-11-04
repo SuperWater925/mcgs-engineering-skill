@@ -1,0 +1,227 @@
+{
+  "schema": 3,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "ButtonFactory",
+      "rva": "0x368f00",
+      "verified_entry_rva": "0x36363",
+      "resolution_chain": [
+        "0x36363",
+        "0x368f00"
+      ],
+      "first32": "558bec6aff681db6fa0064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "relocations": [
+        6,
+        21
+      ],
+      "calling_convention": "cdecl",
+      "returns": "pointer",
+      "stack_args": []
+    },
+    {
+      "name": "EditFactory",
+      "rva": "0x3b76d0",
+      "verified_entry_rva": "0x2066c",
+      "resolution_chain": [
+        "0x2066c",
+        "0x3b76d0"
+      ],
+      "first32": "558bec6aff688439fb0064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "relocations": [
+        6,
+        21
+      ],
+      "calling_convention": "cdecl",
+      "returns": "pointer",
+      "stack_args": []
+    },
+    {
+      "name": "NativeClone",
+      "rva": "0x420410",
+      "verified_entry_rva": "0x46ccc",
+      "resolution_chain": [
+        "0x46ccc",
+        "0x420410"
+      ],
+      "first32": "558bec6aff6893c7fb0064a1000000005081ecd0000000a1600b3b0133c5508d",
+      "relocations": [
+        6,
+        24
+      ],
+      "calling_convention": "thiscall",
+      "returns": "pointer",
+      "stack_args": [
+        "C0DocUser*"
+      ]
+    },
+    {
+      "name": "NativeSetRect",
+      "rva": "0x746e20",
+      "verified_entry_rva": "0x24b63",
+      "resolution_chain": [
+        "0x24b63",
+        "0x746e20"
+      ],
+      "first32": "558bec51894dfc8b450c508b4d08518b4dfce840658dff837d0c00752c8b4d08",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "void",
+      "stack_args": [
+        "RECT*",
+        "null"
+      ]
+    },
+    {
+      "name": "NativeDelete",
+      "rva": "0x4208b0",
+      "verified_entry_rva": "0x1acd",
+      "resolution_chain": [
+        "0x1acd",
+        "0x4208b0"
+      ],
+      "first32": "558bec83ec10894df88b45f88945f48b4df4894dfc837dfc0074146a018b55fc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "void",
+      "stack_args": []
+    },
+    {
+      "name": "DocAdd",
+      "rva": "0x6d8f20",
+      "verified_entry_rva": "0x12184",
+      "resolution_chain": [
+        "0x12184",
+        "0x6d8f20"
+      ],
+      "first32": "558bec83ec08894dfc8b4508508b4dfc81c1bc020000e8270593ff8b4d088b55",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "void",
+      "stack_args": [
+        "CDrawObj*"
+      ]
+    },
+    {
+      "name": "DocRemove",
+      "rva": "0x6d8fe0",
+      "verified_entry_rva": "0x347e8",
+      "resolution_chain": [
+        "0x347e8",
+        "0x6d8fe0"
+      ],
+      "first32": "558bec83ec10894dfce8c08796ff83b82005000000742e837d0800740b8b4508",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "void",
+      "stack_args": [
+        "CDrawObj*"
+      ]
+    },
+    {
+      "name": "DocSetModified",
+      "rva": "0x6da7c0",
+      "verified_entry_rva": "0x3a3c8",
+      "resolution_chain": [
+        "0x3a3c8",
+        "0x6da7c0"
+      ],
+      "first32": "558bec51894dfc8b4508508b4dfce892ee92ff8be55dc20400cccccccccccccc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "void",
+      "stack_args": [
+        "int32"
+      ]
+    },
+    {
+      "name": "WindowSaveData",
+      "rva": "0x7a25c0",
+      "verified_entry_rva": "0x21733",
+      "resolution_chain": [
+        "0x21733",
+        "0x7a25c0"
+      ],
+      "first32": "558bec6aff688c43000164a1000000005083ec38a1600b3b0133c5508d45f464",
+      "relocations": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "returns": "bool8",
+      "stack_args": [
+        "IObject*page"
+      ]
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "verified_entry_rva": "0x850800",
+      "resolution_chain": [
+        "0x850800"
+      ],
+      "first32": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "returns": "int32",
+      "stack_args": []
+    },
+    {
+      "name": "IdentityGetAfxApp",
+      "rva": "0x6c060",
+      "first32": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "relocations": [],
+      "calling_convention": "cdecl",
+      "returns": "pointer",
+      "stack_args": [],
+      "purpose": "Recheck exact called identity getter bytes before each project validation"
+    }
+  ],
+  "classes": [
+    {
+      "name": "CDrawButton",
+      "primary": "0xd5de6c",
+      "iobject": "0xd5dfb4",
+      "size": 1080,
+      "type_id": 20519,
+      "runtime_class_rva": "0xf91d10",
+      "runtime_class_schema": 0,
+      "factory_name": "ButtonFactory",
+      "factory_entry_rva": "0x36363",
+      "factory_body_rva": "0x368f00",
+      "delete_entry_rva": "0x50e93",
+      "geometry_entry_rva": "0x24b63",
+      "clone_entry_rva": "0x46ccc",
+      "destroy_entry_rva": "0x1acd"
+    },
+    {
+      "name": "CDrawEdit",
+      "primary": "0xd63cb4",
+      "iobject": "0xd63dfc",
+      "size": 496,
+      "type_id": 20517,
+      "runtime_class_rva": "0xf94c64",
+      "runtime_class_schema": 0,
+      "factory_name": "EditFactory",
+      "factory_entry_rva": "0x2066c",
+      "factory_body_rva": "0x3b76d0",
+      "delete_entry_rva": "0x4b73b",
+      "geometry_entry_rva": "0x24b63",
+      "clone_entry_rva": "0x46ccc",
+      "destroy_entry_rva": "0x1acd"
+    }
+  ],
+  "factory_binding": "Live CRuntimeClass+0xC pfn, guarded entry/E9 resolution/body/name/size; call actual pfn",
+  "transient_lifecycle": "Factory -> DocAdd -> verify owner -> RECT -> DocRemove -> delete; no defaults/property/native binding validation",
+  "native_code_invoked": false,
+  "identity_optimization": {
+    "schema": 1,
+    "reuse_scope": "single Api instance, single request",
+    "current_path_source": "Shared.RootDoc verified C0DocManage; borrowed CDocument CString+0x24",
+    "additional_getter_bytes_verified_every_project_call": true,
+    "cross_request_cache": false,
+    "mutation_sequence_changed": false,
+    "shared_profile_source_sha256": "b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7"
+  }
+}

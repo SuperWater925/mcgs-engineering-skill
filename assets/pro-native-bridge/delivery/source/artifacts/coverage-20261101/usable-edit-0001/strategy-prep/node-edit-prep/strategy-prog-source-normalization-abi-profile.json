@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "scope": "Exact Prog7 original MFC Trim on independently owned CString; no .NET trim table",
+  "editor_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "proof_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\performance-prep\\prog-original-generate-trim-static-proof-0001.json",
+  "proof_sha256": "28b76a267147b745ed19bdcff8bfd49d027f460fefdb0cc49c3dbcd08bd81577",
+  "mfc_ordinal": 14226,
+  "mfc_rva": 689134,
+  "editor_trim_iat_rva": 16551000,
+  "mfc_classifier_iat_rva": 2815132,
+  "guards": [
+    {
+      "module": "McgsSetPro.exe",
+      "rva": 11022304,
+      "bytes": "558bec51894dfc8b4dfc83c120ff15588c3c018b45fc83c00c508b4d08518b55fc83c22052e8cdb659ff83c40c0fb6c085c0750433c0eb05b8010000008be55dc20400",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": 689134,
+      "bytes": "e8210000008bc8eb70",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": 689172,
+      "bytes": "5356578bf933f68b1f0fb7036685c0743c0fb7c050ff159cf42a105985c0740885f675068bf3eb0233f683c3020fb7036685c075dc85f674142b378bcfd1fe56e8fb15f6ff568bcfe89b16f6ff8bc75f5e5bc3",
+      "reloc_offsets": [
+        23
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": 689255,
+      "bytes": "53568b359cf42a108bd9578b3beb0383c7020fb70750ffd65985c075f28b033bf8743eff70f42bf88bcbd1ffe8bc15f6ff8b0b8bd08b41f48bf02bf78d0445020000008d0c7502000000518d0c7a515052e8090efbff83c4108bcb56e83416f6ff5f5e8bc35bc3",
+      "reloc_offsets": [
+        4
+      ]
+    }
+  ],
+  "crt_sha256": "b30160e759115e24425b9bcdf606ef6ebce4657487525ede7f1ac40b90ff7e49"
+}

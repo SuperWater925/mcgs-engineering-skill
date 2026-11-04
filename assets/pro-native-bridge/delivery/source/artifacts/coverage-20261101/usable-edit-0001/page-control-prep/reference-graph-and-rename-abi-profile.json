@@ -1,0 +1,721 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "layout": {
+    "model_forward_map_offset": 4,
+    "model_reverse_map_offset": 36,
+    "model_root_offset": 104,
+    "map_object_size": 32,
+    "list_head_offset": 0,
+    "list_count_offset": 4,
+    "node_next_offset": 0,
+    "node_previous_offset": 4,
+    "map_node_key_offset": 8,
+    "map_node_value_set_offset": 12,
+    "set_node_string_offset": 8,
+    "list_is_null_ended": false,
+    "reference_presence_is_count": false,
+    "main_document_size": 600,
+    "main_runtime_class_rva": "0xdc4804",
+    "main_string_offsets": [
+      348,
+      352,
+      356,
+      360,
+      364,
+      456
+    ],
+    "main_settings_scalar_offsets": [
+      336,
+      344,
+      368,
+      372,
+      376,
+      380,
+      384,
+      388,
+      392,
+      396,
+      400,
+      404,
+      408,
+      412,
+      416,
+      420,
+      424,
+      428,
+      432,
+      436,
+      440
+    ],
+    "main_arrays": [
+      {
+        "name": "StartNames",
+        "offset": 480,
+        "kind": "strings"
+      },
+      {
+        "name": "StartIds",
+        "offset": 500,
+        "kind": "ints"
+      },
+      {
+        "name": "MemNames",
+        "offset": 520,
+        "kind": "strings"
+      },
+      {
+        "name": "MemIds",
+        "offset": 540,
+        "kind": "ints"
+      },
+      {
+        "name": "Menus",
+        "offset": 560,
+        "kind": "menus"
+      },
+      {
+        "name": "AuxIds",
+        "offset": 580,
+        "kind": "ints"
+      }
+    ],
+    "menu_size": 148,
+    "menu_string_offsets": [
+      56,
+      132,
+      136
+    ],
+    "menu_caption_object_offset": 52,
+    "menu_arrays": [
+      {
+        "name": "ActionIds",
+        "offset": 24,
+        "kind": "ints"
+      },
+      {
+        "name": "Children",
+        "offset": 60,
+        "kind": "menus"
+      },
+      {
+        "name": "ActionTexts",
+        "offset": 80,
+        "kind": "strings"
+      },
+      {
+        "name": "ActionModes",
+        "offset": 100,
+        "kind": "ints"
+      }
+    ]
+  },
+  "tables": {
+    "MainDocument": {
+      "vtable_rva": "0xdc4f8c",
+      "col_rva": "0xe867f8",
+      "offset": 0,
+      "type_descriptor_rva": "0xfa2794",
+      "rtti": ".?AVC0DocCtrl@@",
+      "entries": [
+        "0x4dc7a",
+        "0x2b6b6",
+        "0x4d919"
+      ]
+    },
+    "StringArray": {
+      "vtable_rva": "0xceb058",
+      "col_rva": "0xe6eb30",
+      "offset": 0,
+      "type_descriptor_rva": "0xf89b80",
+      "rtti": ".?AV?$CArray@V?$CStringT@_WV?$StrTraitMFC_DLL@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@V12@@@",
+      "entries": [
+        "0xb2f22e",
+        "0x15af0",
+        "0x3986f"
+      ]
+    },
+    "IntArray": {
+      "vtable_rva": "0xceafa8",
+      "col_rva": "0xe6ea78",
+      "offset": 0,
+      "type_descriptor_rva": "0xf89b40",
+      "rtti": ".?AV?$CArray@HH@@",
+      "entries": [
+        "0xb2f22e",
+        "0x1e09c",
+        "0x2f220"
+      ]
+    },
+    "MenuArray": {
+      "vtable_rva": "0xdc48a4",
+      "col_rva": "0xe868c8",
+      "offset": 0,
+      "type_descriptor_rva": "0xfa33a4",
+      "rtti": ".?AV?$CArray@VCMenuObj@@AAV1@@@",
+      "entries": [
+        "0xb2f22e",
+        "0x40ef3",
+        "0x38ded"
+      ]
+    },
+    "Menu": {
+      "vtable_rva": "0xdc48c0",
+      "col_rva": "0xe8686c",
+      "offset": 0,
+      "type_descriptor_rva": "0xfa3388",
+      "rtti": ".?AVCMenuObj@@",
+      "entries": [
+        "0x4aca5",
+        "0x280d8",
+        "0x4eaf3"
+      ]
+    },
+    "MenuCaption": {
+      "vtable_rva": "0xdccc88",
+      "col_rva": "0xe87a28",
+      "offset": 0,
+      "type_descriptor_rva": "0xfa3cd4",
+      "rtti": ".?AVCMString@@",
+      "entries": [
+        "0x74f5",
+        "0x2a653",
+        "0x37088"
+      ]
+    }
+  },
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": [],
+      "abi": "cdecl ptr0"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self)ret0"
+    },
+    {
+      "name": "FindWindowByName",
+      "rva": "0x7747f0",
+      "bytes": "558bec6aff6825fdff0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(manager,CString const&)ret4; namecache may rebuild"
+    },
+    {
+      "name": "WindowNameToId",
+      "rva": "0x7a2260",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfc83e9348b55fc8b42cc8b5040ffd28945",
+      "reloc_offsets": [],
+      "abi": "thiscall int(windowService,CString const&)ret4"
+    },
+    {
+      "name": "ObjectPath",
+      "rva": "0x7ccce0",
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(IObject,outLinker4*)ret4"
+    },
+    {
+      "name": "ReferencePresence",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": [],
+      "abi": "thiscall int(model,targetLinker4*,outFirstReference4*)ret8;0/1/2 notcount"
+    },
+    {
+      "name": "MainCtrlGetDocument",
+      "rva": "0x78db50",
+      "bytes": "558bec51894dfc8b45fc8b40388be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(MainCtrlManager)ret0;manager+38"
+    },
+    {
+      "name": "StartNamesGetter",
+      "rva": "0x6e7e00",
+      "bytes": "558bec51894dfc8b45fc05e00100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1E0"
+    },
+    {
+      "name": "StartIdsGetter",
+      "rva": "0x6e7e40",
+      "bytes": "558bec51894dfc8b45fc05f40100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1F4"
+    },
+    {
+      "name": "MemNamesGetter",
+      "rva": "0x6e7e20",
+      "bytes": "558bec51894dfc8b45fc05080200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+208"
+    },
+    {
+      "name": "MemIdsGetter",
+      "rva": "0x6e7e60",
+      "bytes": "558bec51894dfc8b45fc051c0200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+21C"
+    },
+    {
+      "name": "ModelRenameEntry",
+      "rva": "0x17355",
+      "bytes": "e996f57b00e9c1943200e9dccb9e00e927c68b00e9029a4700e9dd6c1300e9d8",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> complete worker BD68F0"
+    },
+    {
+      "name": "ModelRenameWorker",
+      "rva": "0x7d68f0",
+      "bytes": "558bec6aff686787000164a1000000005081ecf8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "abi": "thiscall boolAL(model,targetIObject,newCString&,int confirm0,errorCString&,int checkDuplicate1)ret14"
+    },
+    {
+      "name": "UserDocSaveEntry",
+      "rva": "0x23308",
+      "bytes": "e993b56b00e98edb0500e9e9879500e99cda7700e9bf4b5c00e9da625900e9c5",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> C0DocUser slot83 ADE8A0"
+    },
+    {
+      "name": "UserDocSave",
+      "rva": "0x6de8a0",
+      "bytes": "558bec6aff689f3fff0064a100000000505181ec0c010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "abi": "thiscall int(doc,CDaoDatabase*orNULL)ret4;0success,1failure;no IsModified gate"
+    },
+    {
+      "name": "MainDocSaveEntry",
+      "rva": "0x118b",
+      "bytes": "e9f0656e00e9fb3b0b00e9668d7b00e9d13ccc00e9bcd54000e9a76e4f00e9b2",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> C0DocCtrl slot83 AE7780"
+    },
+    {
+      "name": "MainDocSave",
+      "rva": "0x6e7780",
+      "bytes": "558bec6aff68474cff0064a100000000505181ec48030000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ],
+      "abi": "thiscall int(doc,CDaoDatabase*orNULL)ret4;0success,1failure;preview0"
+    },
+    {
+      "name": "PasswordStoreGateEvidence",
+      "rva": "0x6e3163",
+      "bytes": "8b45d083b8b0020000000f8e45010000e836e695ff89854cffffff8b8d4cffff",
+      "reloc_offsets": [],
+      "abi": "read-only code evidence region; doc2B0 gate and doc2B4 GetLength; never called"
+    },
+    {
+      "name": "PasswordLoadTargetEvidence",
+      "rva": "0x6e3f75",
+      "bytes": "ff1548913c018d4db0e826ac94ff508d4dcc51ff15287a3c0183c4088945d48b55d48955d0c645fc038b45d0508b4de881c1b4020000ff15708e3c01c645fc01",
+      "reloc_offsets": [
+        2,
+        21,
+        56
+      ],
+      "abi": "read-only opcode-aligned code region covering FromAnsi call and doc2B4 assignment; never called"
+    },
+    {
+      "name": "ObjectModelCtor",
+      "rva": "0x7d5f70",
+      "bytes": "558bec6aff68a485000164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4df0e8457d85ffc745fc000000008b45f0c70060481e01",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "name": "ObjectModelAddReference",
+      "rva": "0x7d6220",
+      "bytes": "558bec6aff683d86000164a1000000005083ec44a1600b3b0133c5508d45f464a300000000894df0a1b4d63b0183e00175348b0db4d63b0183c901890db4d63b01",
+      "reloc_offsets": [
+        6,
+        21,
+        41,
+        52,
+        61
+      ]
+    },
+    {
+      "name": "ObjectModelReferencePresence",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f4528d45e4508b4dfc83c124e8c87c85ff8bc8e82b6385ff0fb6c885c9742d8b550c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapBegin.thunk0",
+      "rva": "0x25f18",
+      "bytes": "e9334f7c00e95e966d00e949d13700e9d40e6300e91ffe1b00e9ea381c00e9e53d9e00e9a0e29500e9abe12200e9560e1800e9c14aa600e91c942400e957bc07",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapBegin",
+      "rva": "0x7eae50",
+      "bytes": "558bec51894dfc8b4508508b4dfce89d0682ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce87b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapEnd.thunk0",
+      "rva": "0x303d7",
+      "bytes": "e9a4ba7b00e9bf640500e93aa00600e9153e8100e9609c6900e94bdf5800e9c6451d00e9310fa200e9ecfa1800e947330900e9826f9100e90db16400e948a850",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapEnd",
+      "rva": "0x7ebe80",
+      "bytes": "558bec51894dfc8b4508508b4dfce88d1282ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce817",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapIteratorIncrement.thunk0",
+      "rva": "0x169f5",
+      "bytes": "e936df7c00e9c1da7b00e9bc7b9c00e9f7a33900e912d17f00e94d978900e918ab7d00e9f3278500e97ef05200e919522d00e954a37700e9efbf5200e9cafd9b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapIteratorIncrement",
+      "rva": "0x7e4930",
+      "bytes": "558bec51894dfc8b4dfce8ae2c84ff8b45fc8be55dc3cccccccccccccccccccc558bec51894dfc8b4dfce83aaf82ff8b45fc8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapIteratorNode.thunk0",
+      "rva": "0x47b59",
+      "bytes": "e9c2ca7900e9dd5e3100e978262600e943457200e92e296600e989f36300e914f13100e9dfa91b00e90ab99400e9351f7700e960977000e97b8b1700e9d6de10",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapIteratorNode",
+      "rva": "0x7e4620",
+      "bytes": "558bec51894dfc8b4dfce8714d86ff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b4dfce89dd881ff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapNodeValue.thunk0",
+      "rva": "0x18d1d",
+      "bytes": "e94e067d00e979fa7000e9d42e9200e92ffd7500e9da302d00e95513ab00e9b04b4700e9db743000e9c69c1a00e9f1eea200e93cccad00e937a57700e99296a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapNodeValue",
+      "rva": "0x7e9370",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapFind.thunk0",
+      "rva": "0x2cd86",
+      "bytes": "e9b5017c00e970967b00e99b082d00e9f62f0800e931741c00e97c3d3a00e927273800e972327700e9ad881300e9e865aa00e9d3ec3100e9ae1b2c00e9c9744e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapFind",
+      "rva": "0x7ecf40",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8b01983ff8b45088be55dc20800cccccccccccccccccccccccccccccccc558bec83ec08894dfc8d45f8508b4dfc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapCtor.thunk0",
+      "rva": "0x42afa",
+      "bytes": "e9b1047a00e93c2d5400e9479d2000e9f2f1a800e95dc8a700e908019500e9c3687800e9ae547800e9b9568400e924fc4600e9efcd4300e99abb9b00e9b5d538",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapCtor",
+      "rva": "0x7e2fb0",
+      "bytes": "558bec83ec08894df833c08845ff8d4dfee86d0782ff500fb64dfd510fb655ff528d4dfce88dd085ff508b4df8e8bffd86ff8b45f88be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListCtor.thunk0",
+      "rva": "0x19d44",
+      "bytes": "e947817c00e9129d5600e92d024b00e94894a300e9f3cc9f00e90e671e00e9599b9600e9f4565300e9df1e9c00e9aa913700e955c3a200e900ba2e00e90bd81b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListCtor",
+      "rva": "0x7e1e90",
+      "bytes": "558bec51894dfc8b4dfce83cc285ff8b4dfce87ed285ff8b4dfc89018b45fc8be55dc20400cccccccccccccccccccccc558bec51894dfc8b4dfce82fef85ff8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListZeroHeadCount.thunk0",
+      "rva": "0x3e0db",
+      "bytes": "e950437a00e9bb2e6600e9d6ae5700e9d1fe1500e91cd57800e987615700e9524b3200e95d3d2200e988fd0b00e9e3f12600e9be4b8f00e989849e00e944de68",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListZeroHeadCount",
+      "rva": "0x7e2430",
+      "bytes": "558bec51894dfc8b45fcc700000000008b4dfcc74104000000008b45fc8be55dc3cccccccccccccccccccccccccccccc558bec51894dfc8b45fcc70000000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapListHeadNext.thunk0",
+      "rva": "0x31a2",
+      "bytes": "e909627e00e974d47000e91f784a00e90afd0900e9659a9700e930ba3000e91bc98e00e996af7100e9c1c12100e91cac9000e917464c00e952239300e91de288",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MapListHeadNext",
+      "rva": "0x7e93b0",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc558bec51894dfc8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetBegin.thunk0",
+      "rva": "0x26008",
+      "bytes": "e9334f7c00e93ea07700e9f9a77600e9342f5100e9cf230c00e98aa19500e975bc7500e9c0c24800e9dbe34500e946121d00e931579d00e99ca59c00e9b7aa65",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetBegin",
+      "rva": "0x7eaf40",
+      "bytes": "558bec51894dfc8b4508508b4dfce8fd6b85ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b11",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetEnd.thunk0",
+      "rva": "0x100d7",
+      "bytes": "e904ba7b00e9ff3b4500e94a6e3300e935b00a00e930a10600e92b8e5600e9e6894e00e9d19d3300e9bc345500e9777c2e00e952879200e93d219100e998208a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetEnd",
+      "rva": "0x7cbae0",
+      "bytes": "558bec51894dfc8b4508508b4dfce89e8b84ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b11",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetIteratorIncrement.thunk0",
+      "rva": "0x90b1",
+      "bytes": "e9aa207b00e965477700e980eb4b00e9bb573300e96643a300e9210e9900e9dc987200e917de4e00e9b216a000e94d411400e908d33900e993da0900e9ee7a34",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetIteratorIncrement",
+      "rva": "0x7bb160",
+      "bytes": "558bec51894dfc8b45fc8b0851e86b6889ff83c4048b55fc8b0089028b45fc8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b45fc8b0851e83e24",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetNodeValue.thunk0",
+      "rva": "0x25e8c",
+      "bytes": "e96fa67900e94a4c4400e9a5192a00e920472800e9eb500800e9a637a700e971889500e92ce29400e9078e9400e962768200e9ed0b7400e978634f00e993cc27",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetNodeValue",
+      "rva": "0x7c0500",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0105dc3cccccccccc558bec8b450883c0105dc3cccccccccc558bec8b45085dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetNodeNext.thunk0",
+      "rva": "0x519dd",
+      "bytes": "e96eeb7600e9f9800b00e9c4e14d00e93f615f00e97a442a00e965ce7b00e9c0a82500e9db6ea700e916c46900e921493400e9dc247e00e9179d7000e9720e56",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetNodeNext",
+      "rva": "0x7c0550",
+      "bytes": "558bec8b45085dc3cccccccccccccccc558bec51894dfc8be55dc3cccccccccc558bec51894dfc8be55dc20800cccccc558bec51894dfc8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ReferenceIsDescendant.thunk0",
+      "rva": "0x29b31",
+      "bytes": "e92aee7a00e9750d7400e9e0ca6600e9cbc35300e956d4a000e9312c5100e9ac965000e9c77d1400e932cca400e92d65a300e9c8216f00e9e3661800e92eb290",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ReferenceIsDescendant",
+      "rva": "0x7d8960",
+      "bytes": "558bec6aff683f8a000164a1000000005083ec1456a1600b3b0133c5508d45f464a3000000006874431e018b450c508d4de451e864a283ff83c40cc745fc0000",
+      "reloc_offsets": [
+        6,
+        22,
+        39
+      ]
+    },
+    {
+      "name": "MainDocRuntimeClass",
+      "rva": "0x6e5a30",
+      "bytes": "558bec51894dfcb804481c018be55dc3558bec6aff68924aff0064a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006858020000e8e0f296ff89",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "name": "MainDocSerialize",
+      "rva": "0x6e8230",
+      "bytes": "558bec6aff68e74dff0064a1000000005083ec2ca1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8bc4b95ff8b4d08518b4df081c1300200",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "MainDocConstructor",
+      "rva": "0x6e8050",
+      "bytes": "5051a1600b3b0133c5508d45f464a300000000894df08b4df0e8890796ffc745fc000000008b45f0c7008c4f1c018b4df081c158010000e875f192ffc645fc01",
+      "reloc_offsets": [
+        3,
+        42
+      ]
+    },
+    {
+      "name": "MainSettingsCtor.thunk0",
+      "rva": "0x17201",
+      "bytes": "e94a466e00e9e5426000e900bb3900e91b7d1d00e926374a00e9c10c7a00e91cd55500e977e82c00e922780e00e99d45a500e9a8bda200e9d39b9500e92eb094",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MainSettingsCtor",
+      "rva": "0x6fb850",
+      "bytes": "558bec51894dfc8b4dfc83c104ff1588903c018b4dfc83c108ff1588903c018b4dfc83c10cff1588903c018b4dfc83c110ff1588903c018b4dfc83c114ff1588903c01",
+      "reloc_offsets": [
+        15,
+        27,
+        39,
+        51,
+        63
+      ]
+    },
+    {
+      "name": "MainAuxCtor.thunk0",
+      "rva": "0x30de6",
+      "bytes": "e9c5aa6c00e9801e9300e9fbef9100e946778b00e9d1068000e9aca56f00e997966900e9922c5400e9bda23900e9d8285900e953889d00e94eba5000e989fe1d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MainAuxCtor",
+      "rva": "0x6fb8b0",
+      "bytes": "558bec51894dfc8b4dfc83c10cff1588903c018b45fc8be55dc3cccccccccccc558bec51894dfc8b4dfce80dca90ff8b45fcc700605e1c018b45fc8be55dc3cc",
+      "reloc_offsets": [
+        15,
+        52
+      ]
+    },
+    {
+      "name": "MenuArrayCtor.thunk0",
+      "rva": "0x2115c",
+      "bytes": "e93fa26d00e99a7d3200e9f5cd5200e970d23f00e90b3a9500e976d32400e9e1427700e99cc15200e9576c4600e9a26d9f00e93dba9000e948a17b00e963d490",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuArrayCtor",
+      "rva": "0x6fb3a0",
+      "bytes": "558bec51894dfc8b4dfce889ca94ff8b45fcc700a4481c018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc7410800000000",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "MenuCtor.thunk0",
+      "rva": "0x42e2e",
+      "bytes": "e9dd6bab00e968c32f00e9c34e3800e9ce2e2c00e969179f00e9c4ae8400e9df9c6100e94a3b4900e995980b00e9a0dd3f00e91bba0e00e9d6bcaa00e9613723",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuCtor",
+      "rva": "0xaf9a10",
+      "bytes": "558bec6aff68fdd4040164a1000000005083ec08a1600b3b0133c5508d45f464a300000000894df08b4df0e8f8e354ffc745fc000000008b45f0c700c0481c01",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "name": "MenuSerializeElements.thunk0",
+      "rva": "0x47451",
+      "bytes": "e90a3aab00e9e50d5500e910763d00e95b672700e9f6074800e951f37500e96caa1e00e9f7a0a100e9e2ef0900e94d618e00e9c8918100e9433e1300e94ed194",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuSerializeElements",
+      "rva": "0xafae60",
+      "bytes": "558bec51c745fc00000000eb158b45fc83c0018945fc8b4d0c81c194000000894d0c8b55fc3b55107d138b4508508b4d0c8b118b4d0c8b4208ffd0ebd08be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuArraySerialize.thunk0",
+      "rva": "0x38ded",
+      "bytes": "e96e436c00e9891e5500e9241c7400e98f074500e90a884d00e935e63100e9e0cca400e98be07300e996f49900e901ab8800e96cc57f00e927dd2900e916f98c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuArraySerialize",
+      "rva": "0x6fd160",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce845b492ff8b4d08e8291b95ff85c074118b4dfc8b5108528b4d08e8d4204300eb198b4d08e8c42043008945f86aff8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuCaptionCtor.thunk0",
+      "rva": "0xf231",
+      "bytes": "e9ca3a7200e9454e8200e950385800e96b831100e9761d1400e9f1af8700e90c404d00e9a7d02e00e9c2761800e9bd804700e958714500e9b33cad00e99e5e13",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuCaptionCtor",
+      "rva": "0x732d00",
+      "bytes": "558bec6aff68c0b5ff0064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e80a5191ffc745fc000000008b45f0c70088cc1c01680cc81c01",
+      "reloc_offsets": [
+        6,
+        19,
+        58,
+        63
+      ]
+    },
+    {
+      "name": "MenuCaptionAssign.thunk0",
+      "rva": "0x2aedc",
+      "bytes": "e91f827000e95aa19c00e965577b00e9c0e64700e9fb4a9f00e986d82400e9b1e0aa00e99c0d6a00e9e77d3500e9f2781600e9adf26e00e948c45600e9f30f51",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MenuCaptionAssign",
+      "rva": "0x733100",
+      "bytes": "558bec51894dfc8b4508508b4dfc83c104ff1584903c018b45fc8be55dc20400558bec51894dfc8b4508508b4dfc83c104ff15708e3c018b45fc8be55dc20400",
+      "reloc_offsets": [
+        19,
+        51
+      ]
+    }
+  ],
+  "source_abi": {
+    "file": "D:\\unbound-task-root\\coverage-20261101\\state-reproduction-run-0001\\headless-reference-rename-abi-profile.json",
+    "sha256": "e4272b26d594b705feb0692f7db995e295f5effb37a7f9de7c1dbab6d59d380f"
+  },
+  "scope": "Complete registered native forward/reverse graph; parameterized original model worker and explicit consumer persistence; no old fixed trial replay.",
+  "native_invocations": 0,
+  "process_handles_opened": 0,
+  "project_writes": 0
+}

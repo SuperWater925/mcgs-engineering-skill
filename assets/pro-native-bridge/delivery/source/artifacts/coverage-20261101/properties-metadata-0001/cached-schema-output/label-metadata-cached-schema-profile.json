@@ -1,0 +1,502 @@
+{
+  "schema": 1,
+  "capability": "Label-only owned collector class-cache output after prepare; static correction",
+  "module_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "base_metadata_profile_sha256": "3ed3a5b1bb0d06fc7fa7f90bb810c4f8f085d0861a148c4e3c156a7dd8f737b2",
+  "old_profile_not_modified": true,
+  "runtime_verified": false,
+  "code_guards": [
+    {
+      "name": "Prepare",
+      "rva": "0xa1fde0",
+      "preferred_va": "0xe1fde0",
+      "bytes_hex": "558bec83ec14894dfc8b4508508d4df8518b4dfc83c104e84e1a61ff8d55f8528d45f4508b4dfc83c104e807735fff8bc8e8b7575fff0fb6c885c90f84920000",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrepareRvalueIdentity",
+      "rva": "0xa09cc0",
+      "preferred_va": "0xe09cc0",
+      "bytes_hex": "558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc558bec8b45085dc3cccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "CacheEmplaceWrapper",
+      "rva": "0xa08e30",
+      "preferred_va": "0xe08e30",
+      "bytes_hex": "558bec83ec10894dfc8b451050e8d67f62ff83c404508b4d0c51e82a5063ff83c404508b4dfce8583963ff6a008d55f8528b4dfce884aa62ff8b00508b4dfce8",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "CacheEmplaceForward",
+      "rva": "0xa09200",
+      "preferred_va": "0xe09200",
+      "bytes_hex": "558bec83ec0c894dfc8d45f4508b4dfce8712064ff8b08894df88b550c52e8f57b62ff83c404508b450850e8494c63ff83c404508b4df8518b4dfce81eac5fff",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "CacheEmplaceNodeLink",
+      "rva": "0xa00120",
+      "preferred_va": "0xe00120",
+      "bytes_hex": "558bec83ec0c894df48d4d08e8606663ff8945fc8b451050e8db0c63ff83c404508b4d0c51e82fdd63ff83c404508b55fc52e8044b64ff83c4048b00508b4dfc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "CacheNodeAllocateAndPairConstruct",
+      "rva": "0x9fd6f0",
+      "preferred_va": "0xdfd6f0",
+      "bytes_hex": "558bec6aff68a06e030164a100000000505183ec1c535657a1600b3b0133c5508d45f464a3000000008965f0894de88b450c508b4d08518b4de8e87b0265ff89",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        25
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PairAllocatorConstruct",
+      "rva": "0xa06860",
+      "preferred_va": "0xe06860",
+      "bytes_hex": "558bec51894dfc8b451050e8a8a562ff83c404508b4d0c51e8fc7563ff83c404508b5508528b45fc50e8f73060ff83c4108be55dc20c00cccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PairPlacementForward",
+      "rva": "0xa06970",
+      "preferred_va": "0xe06970",
+      "bytes_hex": "558bec8b451450e89ca462ff83c404508b4d1051e8f07463ff83c404508b550c528b4d08e834cd61ff5dc3cccccccccccccccccccccccccccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PairPlacementCtor",
+      "rva": "0xa068b0",
+      "preferred_va": "0xe068b0",
+      "bytes_hex": "558bec6aff681178030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894de88b45085068b0000000e80efa63ff83c4088945f0c745fc00",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PairKeyCopyAndSchemaMoveCtor",
+      "rva": "0x9fbdd0",
+      "preferred_va": "0xdfbdd0",
+      "bytes_hex": "558bec6aff68f96c030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b450850e87a2064ff83c404508b4df0ff1554913c01c745fc00",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        19,
+        56
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "SchemaAggregateMoveCtor",
+      "rva": "0xa0c670",
+      "preferred_va": "0xe0c670",
+      "bytes_hex": "558bec6aff68dc7e030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e87ed561ffc745fc000000008b4df083c120e8b9b25fff",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        19
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryMapMoveForward1",
+      "rva": "0xa0d320",
+      "preferred_va": "0xe0d320",
+      "bytes_hex": "558bec51894dfc8b450850e8068c61ff83c404508b4dfce8277d61ff8b45fc8be55dc20400cccccccccccccccccccccc558bec51894dfc8b450850e8a3ac5fff",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryMapMoveForward2",
+      "rva": "0xa0d260",
+      "preferred_va": "0xe0d260",
+      "bytes_hex": "558bec51894dfc8b45fc3b450874158b4d0851e8f15862ff83c404508b4dfce8294a5fff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryMapMoveSwapThenClear",
+      "rva": "0xa10500",
+      "preferred_va": "0xe10500",
+      "bytes_hex": "558bec51894dfc8b45fc508b4d08e891f363ff8b4d08e87fa363ff8be55dc20400cccccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4d08e838",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryMapSwap",
+      "rva": "0xa20700",
+      "preferred_va": "0xe20700",
+      "bytes_hex": "558bec51894dfc8b45fc3b450874708b4d08518b55fc52e80ef560ff83c4088b4508508b4dfce8810b5fff8b4d0883c108518b4dfc83c108e8101960ff8b5508",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryListSwap",
+      "rva": "0xa20910",
+      "preferred_va": "0xe20910",
+      "bytes_hex": "558bec83ec24894df88b45f83b45087505e9fb0000008d4dff518b4d08e8d7065fff508d55fe528b4df8e8ca065fff50e8928260ff83c4080fb6c085c074388b",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimarySourceClear",
+      "rva": "0xa1a420",
+      "preferred_va": "0xe1a420",
+      "bytes_hex": "558bec51894dfc8b4dfce8d60d62ff6a088b4dfce8426062ff8be55dc3cccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4dfce8632f60ff6a",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryListClear",
+      "rva": "0xa1a520",
+      "preferred_va": "0xe1a520",
+      "bytes_hex": "558bec83ec0c894dfc8b45fc8b0851e8c47263ff83c4048b108955f88b45fc8b0851e8b17263ff83c4048b55fc8b0a89088b55fc8b0250e8ed3c61ff83c4048b",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "StatelessAllocatorAlwaysEqual",
+      "rva": "0x9fc990",
+      "preferred_va": "0xdfc990",
+      "bytes_hex": "558becb0015dc3cccccccccccccccccc558becb0015dc3cccccccccccccccccc558becb0015dc3cccccccccccccccccc558bec518b450c508d4dffe84a0564ff",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryHeadPointerSwap",
+      "rva": "0xa09fe0",
+      "preferred_va": "0xe09fe0",
+      "bytes_hex": "558bec518b450850e8e75d61ff83c4048b08894dfc8b550c52e8d65d61ff83c4048b4d088b1089118d45fc50e8c35d61ff83c4048b4d0c8b1089118be55dc3cc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "PrimaryCountDwordSwap",
+      "rva": "0x23a500",
+      "preferred_va": "0x63a500",
+      "bytes_hex": "558bec518b450850e845dde0ff83c4048b08894dfc8b550c52e834dde0ff83c4048b4d088b1089118d45fc50e821dde0ff83c4048b4d0c8b1089118be55dc3cc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheFind",
+      "rva": "0xa1d2f0",
+      "preferred_va": "0xe1d2f0",
+      "bytes_hex": "558bec51894dfc8b450c508b4d08518b4dfce8bf3b62ff8b45088be55dc20800cccccccccccccccccccccccccccccccc558bec51894dfc8b450c508b4d08518b",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheFindBody",
+      "rva": "0xa1e8e0",
+      "preferred_va": "0xe1e8e0",
+      "bytes_hex": "558bec83ec24894dfc8b450c508b4dfce8458a61ff8945f48b4df4518d55f8528b4dfce84ea660ffeb088d4df8e8ee445eff8b45f4508d4de4518b4dfce84de4",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheEnd",
+      "rva": "0xa1b4d0",
+      "preferred_va": "0xe1b4d0",
+      "bytes_hex": "558bec51894dfc8b4508508b4dfce87cc062ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce87b",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheDeref",
+      "rva": "0xa0e850",
+      "preferred_va": "0xe0e850",
+      "bytes_hex": "558bec51894dfc8b4dfce8bc9963ff50e8eaea60ff83c4048be55dc3cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4dfce8f2c661ff50",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheDerefForward",
+      "rva": "0xa0ea60",
+      "preferred_va": "0xe0ea60",
+      "bytes_hex": "558bec51894dfc8b4dfce892c063ff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b4dfce8090060ff8be55dc3cccccccccccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheDerefNode",
+      "rva": "0xa0e9c0",
+      "preferred_va": "0xe0e9c0",
+      "bytes_hex": "558bec51894dfc8b45fc8b0851e8dce262ff83c4048be55dc3cccccccccccccc558bec51894dfc8b45fc8b0851e8abbb63ff83c4048be55dc3cccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheNodePairLeaf",
+      "rva": "0xa15f10",
+      "preferred_va": "0xe15f10",
+      "bytes_hex": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ClassCacheConstPairIdentity",
+      "rva": "0xa1fce0",
+      "preferred_va": "0xe1fce0",
+      "bytes_hex": "558bec8b450850e853885eff83c4045dc3cccccccccccccccccccccccccccccc558bec8b450850e8586e62ff83c4045dc3cccccccccccccccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "OfficialMetadataListAccessor",
+      "rva": "0xa1d3e0",
+      "preferred_va": "0xe1d3e0",
+      "bytes_hex": "558bec83ec1c894df88b4508508d4df4518b4df883c104e84e4461ff8d55f4528d45e4508b4df883c104e8079d5fff8bc8e8541660ff0fb6c885c974678d4df4",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "OfficialMetadataTagAccessor",
+      "rva": "0xa1d580",
+      "preferred_va": "0xe1d580",
+      "bytes_hex": "558bec83ec18894dfc8b4508508d4df8518b4dfc83c104e8ae4261ff8d55f8528d45ec508b4dfc83c104e8679b5fff8bc8e8b41460ff0fb6c885c974508d4df8",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "OriginalServiceMetadataListCaller",
+      "rva": "0x9fb590",
+      "preferred_va": "0xdfb590",
+      "bytes_hex": "558bec6aff68da6a030164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894de8837d0800750432c0eb538b4508508d4dec51e8bbd564ff83",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "OriginalServiceMetadataTagCaller",
+      "rva": "0x9fb630",
+      "preferred_va": "0xdfb630",
+      "bytes_hex": "558bec6aff68fe6a030164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894de8837d0800750432c0eb578b4508508d4dec51e81bd564ff83",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ListOutputAppendRecord",
+      "rva": "0xa09100",
+      "preferred_va": "0xe09100",
+      "bytes_hex": "558bec83ec08894df88b45f88b4df88b50043b5108750a6a018b4df8e84ad25fff8b45f88b4804518b55f88b4204508b4df8e8d5d362ff8b4d0c51e851e161ff",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ListOutputPairConstructForward",
+      "rva": "0xa071f0",
+      "preferred_va": "0xe071f0",
+      "bytes_hex": "558bec51894dfc8b451050e8910062ff83c404508b4d0c51e86c6c63ff83c404508b5508528b45fc50e8e03862ff83c4108be55dc20c00cccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ListOutputPairPlacementForward",
+      "rva": "0xa07300",
+      "preferred_va": "0xe07300",
+      "bytes_hex": "558bec8b451450e885ff61ff83c404508b4d1051e8606b63ff83c404508b550c528b4d08e819c662ff5dc3cccccccccccccccccccccccccccccccccccccccccc",
+      "length": 64,
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ListOutputPairCtor",
+      "rva": "0xa07240",
+      "preferred_va": "0xe07240",
+      "bytes_hex": "558bec6aff68117a030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894de88b4508506a08e881f063ff83c4088945f0c745fc00000000",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "ListOutputPairFinalCtor",
+      "rva": "0x9fbca0",
+      "preferred_va": "0xdfbca0",
+      "bytes_hex": "558bec6aff68996c030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b450850e8aa2164ff83c404508b4df0ff1554913c01c745fc00",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        19,
+        56
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "LabelRegister",
+      "rva": "0x4328a0",
+      "preferred_va": "0x8328a0",
+      "bytes_hex": "558bec6aff68e0ddfb0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e89e56bdff837d08000f84920000006a00",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "BaseDrawRegister",
+      "rva": "0x746730",
+      "preferred_va": "0xb46730",
+      "bytes_hex": "558bec6aff6874ceff0064a1000000005083ec34a1600b3b0133c5508d45f464a300000000894dc0837d08000f84050100006a006a038d45e850e8cddf90ff83",
+      "length": 64,
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    }
+  ],
+  "correction": {
+    "wrong_assumption": "collector+48 remains the output map after Prepare returns",
+    "native_behavior": "Prepare passes its +48 aggregate as an rvalue into a class-cache pair. E0C670 constructs a new aggregate and move-assigns all components; primary E10500 swaps source into destination and clears source. Allocator comparison DFC990 returnsAL1, so E20910 takes the native head/count swap branch. +48 can normally be empty.",
+    "actual_failed_read_did_not_record_count": true,
+    "exact_old_actual_count_not_inferred": true
+  },
+  "cached_schema_layout": {
+    "class_cache_header_offset_in_collector": 4,
+    "class_cache_count_offset_in_collector": 8,
+    "class_node_next": 0,
+    "class_node_prev": 4,
+    "class_node_pair": 8,
+    "class_node_key_CString": 8,
+    "class_node_value_schema": 12,
+    "pair_key_bytes": 4,
+    "pair_total_bytes": 176,
+    "schema_bytes": 172,
+    "schema_primary_map_offset": 0,
+    "schema_primary_head": 0,
+    "schema_primary_count": 4,
+    "primary_node_next": 0,
+    "primary_node_prev": 4,
+    "primary_node_key_CString": 8,
+    "primary_node_typeTag": 12,
+    "primary_node_order": 16,
+    "proof": "E1D3E0 and E1D580 dereference class iterator to node+8 then add4. DFBDD0 copies pair key and calls schema move ctor at pair+4; placement-new sizeB0 corroborates pair4+schemaAC."
+  },
+  "official_accessors": [
+    {
+      "entry": "0xe1d3e0",
+      "calling_convention": "thiscall",
+      "this": "PropertyRegister*",
+      "arguments": [
+        "const CString& native class metadata key",
+        "original native output vector&"
+      ],
+      "return": "bool AL / I1",
+      "ret_bytes": 8,
+      "output": "12-byte begin/end/cap vector, records8 bytes: owning CString4 then int32 tag4; appends physical primary-map traversal order, does not include declaration_order",
+      "target_callback": false,
+      "invocation_ready": false,
+      "remaining_gap": "Output vector construction/destruction and exact allocator lifecycle not prepared. Never pass a primary map as this output."
+    },
+    {
+      "entry": "0xe1d580",
+      "calling_convention": "thiscall",
+      "this": "PropertyRegister*",
+      "arguments": [
+        "const CString& native class metadata key",
+        "const CString& declaration key",
+        "int32* output_tag"
+      ],
+      "return": "bool AL / I1",
+      "ret_bytes": 12,
+      "hidden_sret": false,
+      "output": "writes tag only on found; no registration-order output",
+      "target_callback": false,
+      "native_invoked": false
+    },
+    {
+      "entry": "0xe1d2f0",
+      "calling_convention": "thiscall",
+      "this": "class cache map at collector+4",
+      "arguments": [
+        "native iterator output storage",
+        "const CString& class key"
+      ],
+      "return": "iterator output pointer",
+      "ret_bytes": 8,
+      "invocation_ready": false,
+      "remaining_gap": "Do not manufacture iterator lifecycle; narrower raw lookup is sufficient."
+    }
+  ],
+  "minimal_candidate_plan": {
+    "native_prepare_calls": 1,
+    "no_extra_value_API": true,
+    "no_new_accessor_invocation": true,
+    "raw_lookup": "while collector remains alive, read class_cache count/head, traverse bounded own nodes, match key exact buildKey UTF16, select node+C schema primary map; then copy exactly10 key/tag/order records and sort unique order0..9.",
+    "fresh_single_target_expected_class_cache_count": 1,
+    "expected_primary_count": 10,
+    "diagnostics_before_any_count_guard": [
+      "actual buildKey text and UTF16",
+      "collector table and owned allocation scope",
+      "class-cache head/count/sentinel before and after prepare",
+      "temp+48 head/count/sentinel before and after prepare",
+      "matched cache node/key/schema pointer",
+      "cached-primary actual head/count before requiring10"
+    ],
+    "failure_result": "Keep all successfully captured bounded headers and actual count on error; do not return only a count assertion.",
+    "ownership": "All schema nodes/strings are borrowed from own original collector and copied before its one deleting destructor. Never read the freed43 collector or free nodes manually.",
+    "root_core": "Do not replace core44/quarantine or old41-v2 profile; new supplemental profile and separate45 helper only after review."
+  },
+  "Label_registration": "8328A0 plus B46730 unconditionally declare3 typed+1 component then5 typed+1 component. No object-field-dependent branch in these bounded functions. Sink can still reject malformed/duplicate resource keys; strict10 and exact language/tag/order remain required.",
+  "static_checks": {
+    "guard_count": 40,
+    "aslr_roundtrips": 120,
+    "native_calls": 0,
+    "host_access": false
+  }
+}

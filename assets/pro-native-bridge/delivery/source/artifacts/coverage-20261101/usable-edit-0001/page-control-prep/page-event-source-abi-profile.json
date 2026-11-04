@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "functions": [
+    {
+      "name": "OriginalEventEdit",
+      "rva": 8747024,
+      "bytes": "558bec6aff68651f010164a1000000005081ecac010000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "OriginalEventDeepCopy",
+      "rva": 8747184,
+      "bytes": "558bec83ec0856894dfc8b45fc8b4d088b51048950048b450883c008508b4dfc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventFactory",
+      "rva": 8746864,
+      "bytes": "558bec6aff683f1f010164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "EventCtor",
+      "rva": 8751408,
+      "bytes": "558bec6aff687520010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventDtor",
+      "rva": 8751776,
+      "bytes": "558bec6aff68e820010164a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "EventScalarDelete",
+      "rva": 8764672,
+      "bytes": "558bec51894dfc8b4dfce80c0e7cff8b450883e00174098b4dfc51e8bce37bff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventSerialize",
+      "rva": 8750016,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e5017dff8b4d08518b4dfc83c1748b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocBeforeModify",
+      "rva": 7190736,
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b4dfce8987695ff8be55dc20c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalHistoryGenerated13Store",
+      "rva": 7222517,
+      "bytes": "8b45d0c7808c020000000000008b4dd08b918c02000081ca00010000899504ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocSave",
+      "rva": 7202976,
+      "bytes": "558bec6aff689f3fff0064a100000000505181ec0c010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    }
+  ],
+  "page_document_properties_profile_sha256": "d383ce0d2595b4d08efc6526d1f940caca5aadb7fc405020af247f3d38313965",
+  "event_size": 140,
+  "editable_source_offsets": [
+    16,
+    112
+  ],
+  "static_proof_sha256": "509f3588dad83807bc11bccde5125216b30a873e10c35e5ba8c785514e4c4d5a",
+  "candidate_host_verified": false
+}

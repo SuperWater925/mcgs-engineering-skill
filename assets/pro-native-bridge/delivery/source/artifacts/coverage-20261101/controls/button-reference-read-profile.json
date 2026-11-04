@@ -1,0 +1,436 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "scope": "Read-only fresh native enumeration and guarded direct CArray reads; no write/Serialize/refresh/save",
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": [],
+      "abi": "cdecl ptr0, existing shared API"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(selfPage) ret0 -> page+10"
+    },
+    {
+      "name": "ButtonConstructorProof",
+      "rva": "0x368fa0",
+      "bytes": "558bec6aff68dcb6fa0064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ],
+      "abi": "metadata only; NOT called"
+    },
+    {
+      "name": "IntArrayConstructorProof",
+      "rva": "0x9a3c0",
+      "bytes": "558bec51894dfc8b4dfce869dafaff8b45fcc700a8af0e018b4dfcc741040000",
+      "reloc_offsets": [
+        20
+      ],
+      "abi": "metadata only; NOT called"
+    },
+    {
+      "name": "CStringArrayConstructorProof",
+      "rva": "0x9a480",
+      "bytes": "558bec51894dfc8b4dfce8a9d9faff8b45fcc70058b00e018b4dfcc741040000",
+      "reloc_offsets": [
+        20
+      ],
+      "abi": "metadata only; NOT called"
+    },
+    {
+      "name": "PageNameEntry",
+      "rva": "0x10825",
+      "bytes": "e9d6068400e9717b0d00e9cc340700e9c7047d00e9620c3400e95d931c00e968",
+      "reloc_offsets": [],
+      "abi": "thiscall CString sret(self,out4*) ret4"
+    },
+    {
+      "name": "PageNameBody",
+      "rva": "0x850f00",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c00c508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ],
+      "abi": "thiscall CString sret(self,out4*) ret4"
+    },
+    {
+      "name": "ButtonNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": [],
+      "abi": "thiscall CString sret(self,out4*) ret4"
+    },
+    {
+      "name": "ButtonNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ],
+      "abi": "thiscall CString sret(self,out4*) ret4"
+    }
+  ],
+  "tables": [
+    {
+      "name": "UserWindowObject.IObject",
+      "rva": "0xded294",
+      "col_rva": "0xe8af4c",
+      "complete_offset": 0,
+      "rtti": ".?AVUserWindowObject@@",
+      "slot_entry_rvas": [
+        "0x9b65",
+        "0x41858",
+        "0x3b8bd",
+        "0x3460d",
+        "0x538be",
+        "0x432a2",
+        "0x3bf61",
+        "0x18921",
+        "0x32722",
+        "0x10825",
+        "0xcebe",
+        "0x3fc1",
+        "0x5236f",
+        "0x33dc5",
+        "0x1bb62",
+        "0x3cd26",
+        "0x1fa46",
+        "0x46830",
+        "0x3f89b",
+        "0x36610",
+        "0x47528"
+      ]
+    },
+    {
+      "name": "CDrawButton.IObject",
+      "rva": "0xd5dfb4",
+      "col_rva": "0xe78c8c",
+      "complete_offset": 4,
+      "rtti": ".?AVCDrawButton@@",
+      "slot_entry_rvas": [
+        "0x3798e",
+        "0x18106",
+        "0x3b8bd",
+        "0x3460d",
+        "0x20b12",
+        "0x53a71",
+        "0x317c3",
+        "0x4ff98",
+        "0x32722",
+        "0x4d324",
+        "0x547cd",
+        "0x4a23c",
+        "0x5236f",
+        "0x4abd3",
+        "0x54dbd",
+        "0x1573",
+        "0x46853",
+        "0x14f56",
+        "0x26ac6",
+        "0x2faf4",
+        "0xad80"
+      ]
+    },
+    {
+      "name": "CDrawButton.primary",
+      "rva": "0xd5de6c",
+      "col_rva": "0xe78c18",
+      "complete_offset": 0,
+      "rtti": ".?AVCDrawButton@@",
+      "slot_entry_rvas": [
+        "0x41353",
+        "0x50e93"
+      ]
+    },
+    {
+      "name": "C0DocUser.primary",
+      "rva": "0xdc4d94",
+      "col_rva": "0xe866a0",
+      "complete_offset": 0,
+      "rtti": ".?AVC0DocUser@@",
+      "slot_entry_rvas": [
+        "0x2a252",
+        "0x4602e",
+        "0x3d523",
+        "0x1131",
+        "0x1fbe5",
+        "0xb2fd98",
+        "0xb2fd02",
+        "0xb2eb80",
+        "0x12747",
+        "0x53f44",
+        "0x41db7",
+        "0xbdb1",
+        "0x31444",
+        "0xb2eb9e",
+        "0x1f9ab",
+        "0x2acf2",
+        "0x314bc",
+        "0xb2ebb0",
+        "0xb2ebb6",
+        "0xb2ebbc",
+        "0xb2ebc2",
+        "0xb2ebc8",
+        "0x186e2",
+        "0xb2fc78",
+        "0xb2fd62",
+        "0xb2fc7e",
+        "0x3508a",
+        "0x3a3c8"
+      ]
+    },
+    {
+      "name": "CArray.int",
+      "rva": "0xceafa8",
+      "col_rva": "0xe6ea78",
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@HH@@",
+      "slot_entry_rvas": [
+        "0xb2f22e",
+        "0x1e09c",
+        "0x2f220"
+      ]
+    },
+    {
+      "name": "CArray.CString",
+      "rva": "0xceb058",
+      "col_rva": "0xe6eb30",
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@V?$CStringT@_WV?$StrTraitMFC_DLL@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@V12@@@",
+      "slot_entry_rvas": [
+        "0xb2f22e",
+        "0x15af0",
+        "0x3986f"
+      ]
+    }
+  ],
+  "layout_proof_sha256": "fd9c51516a33dd6208bc6fbff3424faaecd8e5903968c6efd451fa7f09872b5a",
+  "inventory_file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\button-reference-offline-inventory.json",
+  "inventory_sha256": "dbc19ec343838dd99cb6c096700a24a9d93b7fd152d8a0a409cb2263762a8d4b",
+  "expected_pages": 13,
+  "expected_buttons": 53,
+  "button_structure_keys": [
+    {
+      "page_id": 3,
+      "control_name": "控件6"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件10"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件4"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件5"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件7"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件8"
+    },
+    {
+      "page_id": 7,
+      "control_name": "控件9"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件14"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件15"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件16"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件17"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件20"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件21"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件24"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件4"
+    },
+    {
+      "page_id": 8,
+      "control_name": "控件8"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件0"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件1"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件24"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件25"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件26"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件27"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件4"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件5"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件6"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件7"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件8"
+    },
+    {
+      "page_id": 9,
+      "control_name": "控件9"
+    },
+    {
+      "page_id": 10,
+      "control_name": "控件10"
+    },
+    {
+      "page_id": 10,
+      "control_name": "控件11"
+    },
+    {
+      "page_id": 10,
+      "control_name": "控件2"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件2"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件23"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件24"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件25"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件26"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件27"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件28"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件29"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件31"
+    },
+    {
+      "page_id": 11,
+      "control_name": "控件6"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件0"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件1"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件15"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件2"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件29"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件3"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件4"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件7"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件8"
+    },
+    {
+      "page_id": 12,
+      "control_name": "控件9"
+    },
+    {
+      "page_id": 24,
+      "control_name": "控件0"
+    },
+    {
+      "page_id": 31,
+      "control_name": "控件4"
+    }
+  ],
+  "value_policy": "Values are captured, not pinned to baseline, so authorised rename intermediate names can be observed"
+}

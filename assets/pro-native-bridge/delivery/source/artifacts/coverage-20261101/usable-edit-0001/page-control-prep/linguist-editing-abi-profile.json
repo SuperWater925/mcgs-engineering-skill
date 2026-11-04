@@ -1,0 +1,300 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "functions": [
+    {
+      "name": "LinguistCtor",
+      "rva": 6623344,
+      "bytes": "558bec6aff68939afe0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SetText",
+      "rva": 6624544,
+      "bytes": "558bec6aff685c9bfe0064a1000000005083ec44a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CommitWorkingText",
+      "rva": 6639104,
+      "bytes": "558bec51894dfc8b45fcc64014018b4dfc83c10c518b4dfc83c104e8cb3b9fff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CopyPersistentToWorking",
+      "rva": 6639152,
+      "bytes": "558bec51894dfc8b45fc83c004508b4dfc83c10ce8a23b9fff8be55dc3cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetModified",
+      "rva": 6639184,
+      "bytes": "558bec51894dfc8b45fc8a4d088848148be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Save",
+      "rva": 6634528,
+      "bytes": "558bec6aff68449dfe0064a100000000505181ec40010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "OuterDereference",
+      "rva": 6675920,
+      "bytes": "558bec51894dfc8b4dfce88a459bff50e892c99aff83c4048be55dc3cccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OuterPairOffset",
+      "rva": 6681888,
+      "bytes": "558bec8b450883c0105dc3cccccccccc558bec51894dfc8be55dc20800cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OuterBegin",
+      "rva": 6683408,
+      "bytes": "558bec51894dfc8b45fc508b4dfce816fa9eff8b08518b4d08e8134f9cff8b45",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OuterHead",
+      "rva": 6681232,
+      "bytes": "558bec51894dfc8b45fc8b0851e8fff69cff83c4048be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OuterCount",
+      "rva": 6689168,
+      "bytes": "558bec51894dfc8b45fc8b40048be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "InnerCount",
+      "rva": 6689200,
+      "bytes": "558bec51894dfc8b45fc8b4dfc8b40042b01c1f8038be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "InnerBegin",
+      "rva": 6683504,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e89a489dff8b45088be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "InnerEnd",
+      "rva": 6684432,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b5104528b4d08e8f9449dff8b45088be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "InnerDereference",
+      "rva": 6676080,
+      "bytes": "558bec51894dfc8b45fc8b008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TextMapAssign",
+      "rva": 6673664,
+      "bytes": "558bec51894dfc8b4508508b4dfce8ff959bff8b45fc8be55dc20400cccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LanguageInfoCtor",
+      "rva": 2028576,
+      "bytes": "558bec6aff68119df80064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "LanguageInfoCopy",
+      "rva": 2415968,
+      "bytes": "558bec6aff685129f90064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "LanguageInfoPairCopy",
+      "rva": 2415904,
+      "bytes": "558bec51894dfc8b45fc8b4d088b1189108b450883c004508b4dfc83c104e88f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LanguageInfoDtor",
+      "rva": 2030368,
+      "bytes": "558bec51894dfc8b4dfc83c11cff1548913c018b4dfc83c110ff1548913c018b",
+      "reloc_offsets": [
+        15,
+        27
+      ]
+    },
+    {
+      "name": "DefinitionPairOffset",
+      "rva": 2421376,
+      "bytes": "558bec8b450883c0105dc3cccccccccc558bec8b450883c0045dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DefinitionBegin",
+      "rva": 2422208,
+      "bytes": "558bec51894dfc8b45fc508b4dfce8ca27e0ff8b08518b4d08e846d5ddff8b45",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LanguageIdVectorBegin",
+      "rva": 1857392,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e8d1c8e7ff8b45088be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LanguageIdVectorEnd",
+      "rva": 1859216,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b5104528b4d08e8b0c1e7ff8b45088be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LanguageIdDereference",
+      "rva": 1846416,
+      "bytes": "558bec51894dfc8b45fc8b008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontManagerAllocationCtor",
+      "rva": 6715344,
+      "bytes": "558bec6aff68dbacfe0064a1000000005083ec08a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TreeNilByteOffset",
+      "rva": 6680736,
+      "bytes": "558bec8b450883c00d5dc3cccccccccc558bec51894dfc8b450850e8cf339cff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TreeRightOffset",
+      "rva": 6682448,
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec51894dfc8b45fc8b0851e8b7df",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TreeParentOffset",
+      "rva": 6681920,
+      "bytes": "558bec8b450883c0045dc3cccccccccc558bec6aff68c0a8fe0064a100000000",
+      "reloc_offsets": [
+        22
+      ]
+    },
+    {
+      "name": "TreeIncrement",
+      "rva": 6676272,
+      "bytes": "558bec83ec08894dfc8b45fc8b0851e811819aff83c4040fbe1085d27405e98d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TreeDeepAssign",
+      "rva": 6673472,
+      "bytes": "558bec83ec0c894df48b45f43b450874758b4df4e843c69bff8d4dfe518b4d08",
+      "reloc_offsets": []
+    }
+  ],
+  "table": {
+    "rva": 14366172,
+    "col_rva": 15225136,
+    "type_rva": 16392596,
+    "complete_offset": 0,
+    "rtti": ".?AVCLinguist@@",
+    "slots": [
+      159181,
+      191006,
+      281421,
+      91601,
+      281766,
+      182301,
+      97156,
+      275051,
+      16796,
+      9746,
+      142831,
+      74691,
+      39351,
+      29691,
+      263776,
+      26376,
+      312536,
+      109596,
+      279821,
+      96396,
+      153536,
+      186271,
+      303276,
+      292351,
+      154886,
+      309281,
+      346946,
+      347416,
+      235781,
+      315521,
+      132886,
+      276296,
+      119191,
+      270576,
+      197561,
+      60526,
+      61076,
+      37456,
+      277436,
+      58086,
+      123171,
+      26401,
+      253876,
+      103606,
+      154296,
+      208281,
+      313521,
+      226661
+    ]
+  },
+  "layout": {
+    "root_pointer_offset": 524,
+    "modified_byte": 20,
+    "text_maps": [
+      4,
+      12,
+      24
+    ],
+    "definition_maps": [
+      32,
+      52,
+      60,
+      84
+    ],
+    "language_ids_vector": 40,
+    "current_index": 68,
+    "preview_index": 72,
+    "tail": 76,
+    "font_manager_pointer": 92,
+    "tree_header_size": 8,
+    "tree_node_value_offset": 16,
+    "tree_node_nil_byte": 13,
+    "inner_vector_stride": 8,
+    "definition_value_size": 32
+  },
+  "static_proof_sha256": "4c24c3fdc13e0bd9b0c3dd20ed2da54a87bd4a034eef8ece4b7e61f788b514cc",
+  "candidate_host_verified": false
+}

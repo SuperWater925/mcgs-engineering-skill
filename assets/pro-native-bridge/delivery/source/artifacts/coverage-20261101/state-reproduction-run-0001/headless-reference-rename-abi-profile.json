@@ -1,0 +1,445 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": [],
+      "abi": "cdecl ptr0"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self)ret0"
+    },
+    {
+      "name": "FindWindowByName",
+      "rva": "0x7747f0",
+      "bytes": "558bec6aff6825fdff0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(manager,CString const&)ret4; namecache may rebuild"
+    },
+    {
+      "name": "WindowNameToId",
+      "rva": "0x7a2260",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfc83e9348b55fc8b42cc8b5040ffd28945",
+      "reloc_offsets": [],
+      "abi": "thiscall int(windowService,CString const&)ret4"
+    },
+    {
+      "name": "ObjectPath",
+      "rva": "0x7ccce0",
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(IObject,outLinker4*)ret4"
+    },
+    {
+      "name": "ReferencePresence",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": [],
+      "abi": "thiscall int(model,targetLinker4*,outFirstReference4*)ret8;0/1/2 notcount"
+    },
+    {
+      "name": "MainCtrlGetDocument",
+      "rva": "0x78db50",
+      "bytes": "558bec51894dfc8b45fc8b40388be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(MainCtrlManager)ret0;manager+38"
+    },
+    {
+      "name": "StartNamesGetter",
+      "rva": "0x6e7e00",
+      "bytes": "558bec51894dfc8b45fc05e00100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1E0"
+    },
+    {
+      "name": "StartIdsGetter",
+      "rva": "0x6e7e40",
+      "bytes": "558bec51894dfc8b45fc05f40100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1F4"
+    },
+    {
+      "name": "MemNamesGetter",
+      "rva": "0x6e7e20",
+      "bytes": "558bec51894dfc8b45fc05080200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+208"
+    },
+    {
+      "name": "MemIdsGetter",
+      "rva": "0x6e7e60",
+      "bytes": "558bec51894dfc8b45fc051c0200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+21C"
+    },
+    {
+      "name": "ModelRenameEntry",
+      "rva": "0x17355",
+      "bytes": "e996f57b00e9c1943200e9dccb9e00e927c68b00e9029a4700e9dd6c1300e9d8",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> complete worker BD68F0"
+    },
+    {
+      "name": "ModelRenameWorker",
+      "rva": "0x7d68f0",
+      "bytes": "558bec6aff686787000164a1000000005081ecf8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "abi": "thiscall boolAL(model,targetIObject,newCString&,int confirm0,errorCString&,int checkDuplicate1)ret14"
+    },
+    {
+      "name": "UserDocSaveEntry",
+      "rva": "0x23308",
+      "bytes": "e993b56b00e98edb0500e9e9879500e99cda7700e9bf4b5c00e9da625900e9c5",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> C0DocUser slot83 ADE8A0"
+    },
+    {
+      "name": "UserDocSave",
+      "rva": "0x6de8a0",
+      "bytes": "558bec6aff689f3fff0064a100000000505181ec0c010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "abi": "thiscall int(doc,CDaoDatabase*orNULL)ret4;0success,1failure;no IsModified gate"
+    },
+    {
+      "name": "MainDocSaveEntry",
+      "rva": "0x118b",
+      "bytes": "e9f0656e00e9fb3b0b00e9668d7b00e9d13ccc00e9bcd54000e9a76e4f00e9b2",
+      "reloc_offsets": [],
+      "abi": "E9 thunk -> C0DocCtrl slot83 AE7780"
+    },
+    {
+      "name": "MainDocSave",
+      "rva": "0x6e7780",
+      "bytes": "558bec6aff68474cff0064a100000000505181ec48030000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ],
+      "abi": "thiscall int(doc,CDaoDatabase*orNULL)ret4;0success,1failure;preview0"
+    },
+    {
+      "name": "PasswordStoreGateEvidence",
+      "rva": "0x6e3163",
+      "bytes": "8b45d083b8b0020000000f8e45010000e836e695ff89854cffffff8b8d4cffff",
+      "reloc_offsets": [],
+      "abi": "read-only code evidence region; doc2B0 gate and doc2B4 GetLength; never called"
+    },
+    {
+      "name": "PasswordLoadTargetEvidence",
+      "rva": "0x6e3f75",
+      "bytes": "ff1548913c018d4db0e826ac94ff508d4dcc51ff15287a3c0183c4088945d48b55d48955d0c645fc038b45d0508b4de881c1b4020000ff15708e3c01c645fc01",
+      "reloc_offsets": [
+        2,
+        21,
+        56
+      ],
+      "abi": "read-only opcode-aligned code region covering FromAnsi call and doc2B4 assignment; never called"
+    },
+    {
+      "name": "Geometry.GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.IsModified",
+      "rva": "0x341110",
+      "bytes": "558bec51894dfc8b45fc8b40488be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawBitmapNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawBitmapNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawButtonNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawButtonNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawCellNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawCellNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawDllNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawDllNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawEditNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawEditNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawHisPicNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawHisPicNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawLabelNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawLabelNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawLineNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawLineNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawMulBtnNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawMulBtnNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawRectNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawRectNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.CDrawSaveDataNameEntry",
+      "rva": "0x4d324",
+      "bytes": "e9478f6f00e912de0300e91d6e3500e928740c00e9c3769f00e9aec93500e919",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.CDrawSaveDataNameBody",
+      "rva": "0x746270",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "Geometry.PageNameEntry",
+      "rva": "0x10825",
+      "bytes": "e9d6068400e9717b0d00e9cc340700e9c7047d00e9620c3400e95d931c00e968",
+      "reloc_offsets": []
+    },
+    {
+      "name": "Geometry.PageNameBody",
+      "rva": "0x850f00",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c00c508b4d08ff1554913c01",
+      "reloc_offsets": [
+        28
+      ]
+    }
+  ],
+  "scope": "Complete ObjectModel rename worker confirm0/checkDuplicate1; exact home2 roundtrip, then exact three UserDoc83 and one MainDoc83 persistence; no raw writes or retries",
+  "old_name": "首页",
+  "temporary_name": "BRIDGE_REF_首页改名验证",
+  "button_count": 53,
+  "offline_buttons_file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\button-reference-offline-inventory.json",
+  "offline_buttons_sha256": "dbc19ec343838dd99cb6c096700a24a9d93b7fd152d8a0a409cb2263762a8d4b",
+  "mainctrl": {
+    "manager_vtable_rva": "0xDDB24C",
+    "document_vtable_rva": "0xDC4F8C",
+    "cstring_array_vtable_rva": "0xCEB058",
+    "i4_array_vtable_rva": "0xCEAFA8",
+    "doc_pointer_offset": "0x38",
+    "names_start": "0x1E0",
+    "ids_start": "0x1F4",
+    "names_mem": "0x208",
+    "ids_mem": "0x21C",
+    "array_data": 4,
+    "array_size": 8,
+    "array_max": 12,
+    "array_grow": 16,
+    "start_rename_callback": "0xB8E690",
+    "mem_rename_callback": "0xB8E020",
+    "invalid_or_unmatched_arrays_fail_before_write": true
+  },
+  "slots": {
+    "model_rename4_entry_rva": "0x17355",
+    "window_manager_find16_entry_rva": "0x52EF",
+    "window_service_nameid9_entry_rva": "0x249D8",
+    "user_doc_save83_entry_rva": "0x23308",
+    "main_doc_save83_entry_rva": "0x118B"
+  },
+  "allow_initial_root_or_page31_dirty": true,
+  "automatic_retry": false,
+  "automatic_rollback": false,
+  "executed": false,
+  "geometry_guard": {
+    "file": "D:\\unbound-task-root\\coverage-20261101\\controls\\geometry-read-profile.json",
+    "sha256": "e70906e72600cc7fbe5a6882103d25a4a04ead2f1b0b7ae40113e44f10d7592b"
+  },
+  "persistence": {
+    "phase": "only after the second rename has restored all in-memory reference semantics",
+    "user_page_ids_in_order": [
+      2,
+      3,
+      31
+    ],
+    "main_document_last": true,
+    "native_doc_save_call_limit": 4,
+    "database_argument": "NULL -> current root native database",
+    "dirty_or_flag_writes": false,
+    "no_forced_undo_clear": true,
+    "note": "Complete native UserDoc83 performs its own original doc96(0,0,1) save/history finalization. UserWindow SaveData and MainCtrl service can skip clean docs; they are not used or counted as persistence."
+  },
+  "empty_password_readonly_guard": {
+    "document_cstring_offset": "0x2B4",
+    "wire_serialization_gate_offset": "0x2B0",
+    "data_pointer_offset": 0,
+    "length_offset_from_data": -12,
+    "capacity_offset_from_data": -8,
+    "required_length": 0,
+    "empty_terminator_check_only_after_length_zero": true,
+    "password_content_read_or_output": false,
+    "expected_wire_lengths": {
+      "2": 2,
+      "3": 2,
+      "31": 0
+    },
+    "required_gate_relation": "page2/3 positive; page31 nonpositive; any mismatch rejects before rename",
+    "does_not_allow_len0_to2_change": true
+  },
+  "proofs": [
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-referenced-rename-static-plan.json",
+      "sha256": "891c2f7458baed240d32c0e0107995c09b97f73b6cf3bcd91dce59fbd7f5578d"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-referenced-rename-plan-independent-review.json",
+      "sha256": "721a110b438fd82c1be558012b05b5bdff76604658c54435ea2244de018f7bce"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-rename-bd83c0.json",
+      "sha256": "7b8176553ed969afecc733052a31c0ece9444661d84cf816457c2b5dafb88da0"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\mainctrl-doc-save83-full.json",
+      "sha256": "e497f5e2b86045f40d2d366b3d50af16fdbd64220ab4b8457a07069fe7929ddf"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\mainctrl-recordset-specific-methods.json",
+      "sha256": "570aa091817337ffef560195758149591ff7aaa88705912bfdca91f814214c58"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\page-doc-save83-linear.json",
+      "sha256": "594dfcd2bcc67c891a5d90633c7d69ab3c4bf2dd4cc97aab2ff56e8a5231a486"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\password-empty-string-and-gate-proof.json",
+      "sha256": "ebd86b50d476af8ebeaa6e1be99b717b7253f367ed7f664ec52de5c2902d34de"
+    }
+  ]
+}

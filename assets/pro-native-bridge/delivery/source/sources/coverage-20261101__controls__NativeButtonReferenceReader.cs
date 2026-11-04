@@ -1,0 +1,68 @@
+// Read-only current-object projection. No cached native object pointers survive this call.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web.Script.Serialization;
+
+namespace McgsInternalBridge {
+ internal static class NativeButtonReferenceReader {
+  const string ProfileSha="5f173c0aa49f6379663c6841bc8f3b88a85f5b8aa358af41f39bd59de4b1828c";
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]delegate int I0(IntPtr self);
+  static string Hex(byte[] bytes){return BitConverter.ToString(bytes).Replace("-","").ToLowerInvariant();}
+  static Dictionary<string,object> Load(string file){return new JavaScriptSerializer{MaxJsonLength=8*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));}
+  static string Digest(object value){byte[] bytes=Encoding.UTF8.GetBytes(new JavaScriptSerializer{MaxJsonLength=8*1024*1024}.Serialize(value));using(var sha=SHA256.Create())return Hex(sha.ComputeHash(bytes));}
+  sealed class Api {
+   internal readonly NativeEngine Engine;internal readonly NativeContext Context;internal readonly NativeStrategyProfile.Api Shared;
+   internal readonly Dictionary<string,object> Profile;internal readonly IntPtr Root;
+   readonly Dictionary<string,IntPtr> methods=new Dictionary<string,IntPtr>();
+   readonly Dictionary<string,byte[]> prefixes=new Dictionary<string,byte[]>();
+   readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();
+   internal readonly HashSet<string> ExpectedKeys=new HashSet<string>(StringComparer.Ordinal);
+   internal Api(NativeEngine engine,NativeContext context){
+    Engine=engine;Context=context;Shared=new NativeStrategyProfile.Api(engine);
+    string file=Path.Combine(NativeOperations.TaskRoot,"coverage-20261101","controls","button-reference-read-profile.json");NativeMemory.Require(NativeMemory.Hash(file)==ProfileSha,"Button reference profile differs.");Profile=Load(file);
+    NativeMemory.Require(Convert.ToInt32(Profile["schema"])==1 && Convert.ToString(Profile["binary_sha256"])==engine.ImageSha256,"Button reference installed image differs.");uint preferred=unchecked((uint)NativeEngine.Number(Profile["preferred_base"]));
+    foreach(object row in (IEnumerable)Profile["functions"]){var f=(Dictionary<string,object>)row;string name=Convert.ToString(f["name"]),h=Convert.ToString(f["bytes"]);byte[] b=new byte[h.Length/2];for(int i=0;i<b.Length;i++)b[i]=Byte.Parse(h.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);foreach(object entry in (IEnumerable)f["reloc_offsets"]){int at=Convert.ToInt32(entry);NativeMemory.Require(at>=0 && at+4<=b.Length,"Button prefix relocation incomplete.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(b,at)+NativeMemory.U(engine.ImageBase)-preferred)),0,b,at,4);}methods.Add(name,engine.Address(NativeEngine.Number(f["rva"])));prefixes.Add(name,b);VerifyMethod(name);}
+    foreach(object row in (IEnumerable)Profile["tables"]){var t=(Dictionary<string,object>)row;tables.Add(Convert.ToString(t["name"]),t);VerifyTable(t);}
+    foreach(object row in (IEnumerable)Profile["button_structure_keys"]){var k=(Dictionary<string,object>)row;NativeMemory.Require(ExpectedKeys.Add(Key(Convert.ToInt32(k["page_id"]),Convert.ToString(k["control_name"]))),"Duplicate button structure key in profile.");}
+    NativeMemory.Require(ExpectedKeys.Count==53 && Convert.ToInt32(Profile["expected_buttons"])==53 && Convert.ToInt32(Profile["expected_pages"])==13,"Button reference sample scope differs.");
+    string inventory=Convert.ToString(Profile["inventory_file"]),proof=Path.Combine(NativeOperations.TaskRoot,"coverage-20261101","controls","button-action-layout-proof.json");
+    string rootPath=Path.GetFullPath(NativeOperations.TaskRoot).TrimEnd('\\')+"\\";NativeMemory.Require(Path.GetFullPath(inventory).StartsWith(rootPath,StringComparison.OrdinalIgnoreCase) && NativeMemory.Hash(inventory)==Convert.ToString(Profile["inventory_sha256"]) && NativeMemory.Hash(proof)==Convert.ToString(Profile["layout_proof_sha256"]),"Button reference offline/layout provenance differs.");
+    Root=Shared.RootDoc();Current();Engine.RequireTable(context.ObjectModel,"ObjectModel");Engine.RequireTable(context.WindowManager,"UserWindowObjectManager.IObject");
+   }
+   internal void VerifyMethod(string name){NativeMemory.Require(Hex(NativeMemory.Bytes(methods[name],prefixes[name].Length))==Hex(prefixes[name]),"Button read native function prefix differs: "+name);}
+   void VerifyTable(Dictionary<string,object> t){IntPtr vt=Engine.Address(NativeEngine.Number(t["rva"])),col=Engine.Address(NativeEngine.Number(t["col_rva"]));NativeMemory.Require(NativeMemory.Ptr(vt,-4)==col && NativeMemory.I32(col,4)==Convert.ToInt32(t["complete_offset"]),"Button read RTTI COL differs: "+t["name"]);IntPtr td=NativeMemory.Ptr(col,12);Engine.Rva(td);NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Add(td,8),256)==Convert.ToString(t["rtti"]),"Button read RTTI class differs: "+t["name"]);int index=0;foreach(object entry in (IEnumerable)t["slot_entry_rvas"]){NativeMemory.Require(NativeMemory.Ptr(vt,index*4)==Engine.Address(NativeEngine.Number(entry)),"Button read vtable slot differs: "+t["name"]+"/"+index);index++;}}
+   internal void RequireTable(IntPtr obj,string name){var t=tables[name];NativeMemory.Require(NativeMemory.Ptr(obj,0)==Engine.Address(NativeEngine.Number(t["rva"])),"Button read object type differs: "+name);}
+   internal void Current(){NativeMemory.Require(IntPtr.Size==4 && EngineEntry.ExpectedUiThreadId>0 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Button reference requires current x86 host UI thread.");VerifyMethod("GetAfxApp");NativeMemory.Require(Shared.AddressOf("GetAfxApp")==methods["GetAfxApp"] && Shared.RootDoc()==Root && NativeMemory.Ptr(Root,0x2D4)==Context.ObjectModel,"Button reference current root/model differs.");string path=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(Root,0x24),2048),fixture=NativeEngineeringProjectScope.ExpectedProjectPath;NativeMemory.Require(!String.IsNullOrEmpty(path) && Path.GetFullPath(path).Equals(fixture,StringComparison.OrdinalIgnoreCase),"Button reference requires isolated current fixture.");}
+   internal int PageId(IntPtr page){Current();RequireTable(page,"UserWindowObject.IObject");VerifyMethod("PageArchiveId");return Engine.Bind<I0>(methods["PageArchiveId"])(page);}
+   internal string Name(IntPtr obj,bool page){Current();RequireTable(obj,page?"UserWindowObject.IObject":"CDrawButton.IObject");string prefix=page?"PageName":"ButtonName";VerifyMethod(prefix+"Entry");VerifyMethod(prefix+"Body");NativeMemory.Require(Engine.Virtual(obj,9)==methods[prefix+"Entry"],"Button reference name virtual differs.");return NativeStrategyProfile.ReadName(Shared,obj);}
+   internal int Dirty(IntPtr doc){Current();NativeMemory.Require(Engine.Virtual(doc,26)==Engine.Address(0x3508A),"Button reference dirty getter virtual differs.");return Shared.Bind<I0>("RootIsModified")(doc);}
+  }
+  static string Key(int page,string name){return page.ToString(CultureInfo.InvariantCulture)+"\0"+name;}
+  static byte[] ArrayHeader(Api api,IntPtr owner,int offset,string table,out IntPtr data){IntPtr a=NativeMemory.Add(owner,offset);api.RequireTable(a,table);byte[] header=NativeMemory.Bytes(a,20);int count=BitConverter.ToInt32(header,8),capacity=BitConverter.ToInt32(header,12),grow=BitConverter.ToInt32(header,16);NativeMemory.Require(count==8 && capacity>=8 && capacity<=65536 && grow>=-1 && grow<=65536,"Button action CArray bounds differ.");data=NativeMemory.Ptr(a,4);NativeMemory.Readable(data,32);return header;}
+  static string CString(IntPtr storage){IntPtr text=NativeMemory.Ptr(storage,0);NativeMemory.Require(text!=IntPtr.Zero,"Button action CString data is null.");int length=NativeMemory.I32(text,-12),capacity=NativeMemory.I32(text,-8);NativeMemory.Require(length>=0 && length<=32768 && capacity>=length && capacity<=1048576,"Button action CString header exceeds bound.");NativeMemory.Readable(text,checked((length+1)*2));NativeMemory.Require(Marshal.ReadInt16(text,length*2)==0,"Button action CString terminator differs.");return Marshal.PtrToStringUni(text,length);}
+  static Dictionary<string,object> ReadButton(Api api,IntPtr page,IntPtr doc,int pageId,string pageName,IntPtr obj){
+   api.Current();api.RequireTable(obj,"CDrawButton.IObject");var describe=api.Engine.Describe(obj);NativeMemory.Require(Convert.ToString(describe["rtti"])==".?AVCDrawButton@@" && Convert.ToInt32(describe["complete_offset"])==4,"Button reference complete-object RTTI differs.");IntPtr complete=NativeMemory.Add(obj,-4);api.RequireTable(complete,"CDrawButton.primary");NativeMemory.Readable(complete,0x438);NativeMemory.Require(NativeMemory.I32(complete,0xC)==0x5027 && NativeMemory.Ptr(complete,0x64)==doc,"Button reference native type/owner document differs.");
+   string name=api.Name(obj,false);IntPtr modesData,idsData,textsData;byte[] modesHeader=ArrayHeader(api,complete,0x1BC,"CArray.int",out modesData),idsHeader=ArrayHeader(api,complete,0x1D0,"CArray.int",out idsData),textsHeader=ArrayHeader(api,complete,0x1E4,"CArray.CString",out textsData);var ids=new int[8];var modes=new int[8];var texts=new string[8];
+   for(int i=0;i<8;i++){ids[i]=NativeMemory.I32(idsData,4*i);modes[i]=NativeMemory.I32(modesData,4*i);texts[i]=CString(NativeMemory.Add(textsData,4*i));}
+   NativeMemory.Require(Hex(modesHeader)==Hex(NativeMemory.Bytes(NativeMemory.Add(complete,0x1BC),20)) && Hex(idsHeader)==Hex(NativeMemory.Bytes(NativeMemory.Add(complete,0x1D0),20)) && Hex(textsHeader)==Hex(NativeMemory.Bytes(NativeMemory.Add(complete,0x1E4),20)),"Button action CArray changed during read.");
+   return new Dictionary<string,object>{{"page_id",pageId},{"page_name",pageName},{"control_name",name},{"object",NativeMemory.Hex(obj)},{"complete",NativeMemory.Hex(complete)},{"action_ids",ids},{"action_modes",modes},{"action_texts",texts}};
+  }
+  internal static Dictionary<string,object> Inspect(NativeEngine engine,NativeContext context){
+   var api=new Api(engine,context);int rootBefore=api.Dirty(api.Root),compileBefore=NativeMemory.I32(api.Root,0x114);var buttons=new List<Dictionary<string,object>>();var observed=new HashSet<string>(StringComparer.Ordinal);var pageIds=new HashSet<int>();var docs=new Dictionary<IntPtr,int>();var pages=engine.Children(context.WindowManager);NativeMemory.Require(pages.Count==13,"Button reference native page count differs.");
+   foreach(IntPtr page in pages){api.Current();api.RequireTable(page,"UserWindowObject.IObject");int id=api.PageId(page);NativeMemory.Require(id>=0 && pageIds.Add(id),"Button reference archive page ID duplicated/invalid.");string pageName=api.Name(page,true);IntPtr doc=NativeMemory.Ptr(page,0x14);api.RequireTable(doc,"C0DocUser.primary");NativeMemory.Require(NativeMemory.I32(doc,0x258)==id && NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(doc,0x25C),256)==pageName,"Button reference current loaded document ID/name differs.");docs.Add(doc,api.Dirty(doc));
+    foreach(IntPtr child in engine.Children(page)){if(NativeMemory.Ptr(child,0)!=engine.Address(0xD5DFB4))continue;var row=ReadButton(api,page,doc,id,pageName,child);string key=Key(id,Convert.ToString(row["control_name"]));NativeMemory.Require(api.ExpectedKeys.Contains(key) && observed.Add(key),"Button reference sample membership/name differs.");buttons.Add(row);}
+   }
+   NativeMemory.Require(buttons.Count==53 && observed.SetEquals(api.ExpectedKeys),"Button reference complete sample membership differs.");buttons.Sort(delegate(Dictionary<string,object> a,Dictionary<string,object> b){int d=Convert.ToInt32(a["page_id"]).CompareTo(Convert.ToInt32(b["page_id"]));return d!=0?d:StringComparer.Ordinal.Compare(Convert.ToString(a["control_name"]),Convert.ToString(b["control_name"]));});
+   var semantics=new List<object>();foreach(var row in buttons)semantics.Add(new Dictionary<string,object>{{"page_id",row["page_id"]},{"control_name",row["control_name"]},{"action_ids",row["action_ids"]},{"action_modes",row["action_modes"]},{"action_texts",row["action_texts"]}});
+   foreach(var pair in docs)NativeMemory.Require(api.Dirty(pair.Key)==pair.Value,"Read-only button reference inspection changed a page dirty flag.");int rootAfter=api.Dirty(api.Root),compileAfter=NativeMemory.I32(api.Root,0x114);NativeMemory.Require(rootBefore==rootAfter && compileBefore==compileAfter,"Read-only button reference inspection changed root dirty/compile flags.");
+   return new Dictionary<string,object>{{"ok",true},{"write_attempted",false},{"process_id",Process.GetCurrentProcess().Id},{"native_thread_id",NativeMemory.GetCurrentThreadId()},{"button_count",buttons.Count},{"page_count",pages.Count},{"buttons",buttons},{"semantic_snapshot_sha256",Digest(semantics)},{"semantic_snapshot_excludes",new string[]{"object","complete","page_name"}},{"id_encoding","signed Int32; -1 corresponds to archive UInt32 0xFFFFFFFF"},{"baseline_action_values_enforced",false},{"structure_membership_enforced",true},{"current_objects_reenumerated",true},{"dirty_compile_state_unchanged",true},{"root_modified_before",rootBefore},{"root_modified_after",rootAfter},{"compile_valid_before",compileBefore},{"compile_valid_after",compileAfter},{"abi_guard_sha256",ProfileSha},{"refresh_save_or_mutation_called",false}};
+  }
+ }
+}

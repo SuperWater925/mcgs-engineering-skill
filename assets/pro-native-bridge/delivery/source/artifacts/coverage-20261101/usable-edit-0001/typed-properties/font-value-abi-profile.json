@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "FontValueCtor",
+      "entry_rva": "0xdcdd",
+      "rva": "0x245930",
+      "bytes": "558bec51894dfc8b45fcc600008b4dfc83c104e82d25dfff8b45fc8be55dc3cc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontValueDtor",
+      "entry_rva": "0x9f11",
+      "rva": "0x245e90",
+      "bytes": "558bec51894dfc8b4dfc83c104e8409edfff8be55dc3cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontRowCtor",
+      "entry_rva": "0xfc18",
+      "rva": "0x526cc0",
+      "bytes": "558bec51894dfc8b45fcc700ffffffff8b4dfcc74104ffffffff8b55fcc74208",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontRowDtor",
+      "entry_rva": "0x237cc",
+      "rva": "0x245eb0",
+      "bytes": "558bec51894dfc8b4dfc83c110ff1548913c018be55dc3cccccccccccccccccc",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "name": "FontVectorPush",
+      "entry_rva": "0x15320",
+      "rva": "0x526b50",
+      "bytes": "558bec83ec08894df88b45f88b4df88b50043b5108750a6a018b4df8e8a686af",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontValueAssign",
+      "entry_rva": "0x3d9a6",
+      "rva": "0xa44a40",
+      "bytes": "558bec51894dfc8b45fc8b4d088a1188108b450883c004508b4dfc83c104e881",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FontPropertyApply",
+      "entry_rva": "0x2100d",
+      "rva": "0x525cf0",
+      "bytes": "558bec6aff68bb52fd0064a1000000005083ec7ca1600b3b0133c58945f0508d",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "LabelFontProviderCtor",
+      "entry_rva": "0x508d5",
+      "rva": "0x6622b0",
+      "bytes": "558bec6aff6883a9fe0064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    }
+  ],
+  "owned_value_size": 16,
+  "owned_row_size": 20,
+  "layout_derivation": "FontFlattenHelper925EA0 builds FontValue16: bool+0,vector+4; rows20:language+0,italic+4,weight+8,height+12,CString+16. Original ctor/push/assign/dtor; no project field write.",
+  "runtime_verified": false
+}

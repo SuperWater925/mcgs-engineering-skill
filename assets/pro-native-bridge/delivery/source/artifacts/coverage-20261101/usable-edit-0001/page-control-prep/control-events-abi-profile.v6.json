@@ -1,0 +1,3710 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "DrawingTypeGetter",
+      "rva": 7624544,
+      "bytes": "558bec6aff68b8cdff0064a1000000005083ec58a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SharedMetadataPopulate",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SharedMetadataDeclarations",
+      "rva": 7615888,
+      "bytes": "558bec6aff680bccff0064a1000000005081ec34030000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "TypeCacheLookup",
+      "rva": 5779536,
+      "bytes": "558bec8b450850e8c336aaff83c4045dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TypeCacheLookupInner",
+      "rva": 5810000,
+      "bytes": "558bec83ec088d4508508d4dfc51b9608b3b01e8910fa8ff8d55fc528d45f850",
+      "reloc_offsets": [
+        15
+      ]
+    },
+    {
+      "name": "TypeCacheInsert",
+      "rva": 5779568,
+      "bytes": "558bec837d0c00750432c0eb108b450c508b4d0851e8defea7ff83c4085dc3cc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TypeCacheInsertInner",
+      "rva": 5812336,
+      "bytes": "558bec83ec148d450c508d4d08518d55ec52b9608b3b01e8c75aa9ff0fb64004",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "EventSetInfo",
+      "rva": 8747632,
+      "bytes": "558bec83ec08894dfc8b45fc8b4d0c8948048b5508528b4dfc83c108ff15708e3c01",
+      "reloc_offsets": [
+        30
+      ]
+    },
+    {
+      "name": "TypeInfoCtor",
+      "rva": 8746304,
+      "bytes": "558bec6aff681a1f010164a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "TypeInfoDelete",
+      "rva": 756048,
+      "bytes": "558bec51894dfc8b4dfce82c58f7ff8b450883e001740c8b4dfc51e84860a700",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot43Entry",
+      "rva": 87651,
+      "bytes": "e958e73600e933746b00e9bebc7700e9e9937200e9e43c8800e92f447b00e95a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot43Body",
+      "rva": 3685824,
+      "bytes": "558bec6aff6869dbfa0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawButtonSlot46Entry",
+      "rva": 36611,
+      "bytes": "e988af3700e9e3750900e9aee63000e9e9ea0b00e9f4e88200e9ef6e7400e92a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonSlot46Body",
+      "rva": 3686032,
+      "bytes": "558bec51894dfcb8010100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot43Entry",
+      "rva": 158286,
+      "bytes": "e9ad174700e9283a3100e9634aa600e93e66a300e9791f7900e914fd7800e9ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot43Body",
+      "rva": 4817408,
+      "bytes": "558bec6aff68d988fc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawCellSlot46Entry",
+      "rva": 154821,
+      "bytes": "e9c63f4700e9b12a4400e9cc8a9600e957ea3700e91259a000e9bd5d2000e918",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellSlot46Body",
+      "rva": 4824208,
+      "bytes": "558bec51894dfcb8140100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawCellTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot43Entry",
+      "rva": 154486,
+      "bytes": "e9652d4700e960172d00e9bbf61c00e976427e00e9b1336f00e98c125100e9c7",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot43Body",
+      "rva": 4819168,
+      "bytes": "558bec6aff68e98afc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLineSlot46Entry",
+      "rva": 86176,
+      "bytes": "e94b4d4800e906f1ab00e9e1af8700e99c2b5a00e9b7298400e9a2d35c00e91d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineSlot46Body",
+      "rva": 4824560,
+      "bytes": "558bec51894dfcb8120100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLineTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot43Entry",
+      "rva": 179876,
+      "bytes": "e9b7d14600e902612b00e9ddc12300e9d8ac9c00e9b3b96500e93e224500e9b9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot43Body",
+      "rva": 4821088,
+      "bytes": "558bec6aff68298dfc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRectSlot46Entry",
+      "rva": 42791,
+      "bytes": "e944f84800e97f940700e97a6d8200e9d5018200e960c31200e97b494800e9e6",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectSlot46Body",
+      "rva": 4824944,
+      "bytes": "558bec51894dfcb8130100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRectTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot43Entry",
+      "rva": 237716,
+      "bytes": "e987f34500e972e36d00e9dd705c00e908674500e973867a00e98ee07100e9d9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot43Body",
+      "rva": 4822048,
+      "bytes": "558bec6aff68498efc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawUnitSlot46Entry",
+      "rva": 82576,
+      "bytes": "e99b5d4800e946ed0800e9f1f5a600e94c0c4700e9874f1300e9625b8f00e90d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitSlot46Body",
+      "rva": 4825136,
+      "bytes": "558bec51894dfcb8150100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot12Entry",
+      "rva": 75996,
+      "bytes": "e98fb04100e91a2aa400e9a5588000e9609f6400e9dbf92f00e9a6342600e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot12Body",
+      "rva": 4381040,
+      "bytes": "558bec6aff6899d7fb0064a1000000005081ece8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot43Entry",
+      "rva": 188396,
+      "bytes": "e94fa84600e9da26a300e905587b00e980353e00e97bdf3600e9166d9c00e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot43Body",
+      "rva": 4819008,
+      "bytes": "558bec6aff68b98afc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawLabelSlot46Entry",
+      "rva": 212706,
+      "bytes": "e9e95e4600e984103300e96f8d4400e99a6a4800e9b5c50800e940097600e99b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelSlot46Body",
+      "rva": 4824528,
+      "bytes": "558bec51894dfcb81a0100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot12Entry",
+      "rva": 38631,
+      "bytes": "e9d4e53a00e97f7d6300e9cafd3300e925f53300e9c00c1700e9eb159000e916",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot12Body",
+      "rva": 3898560,
+      "bytes": "558bec6aff680a3bfb0064a1000000005081ec24010000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawEditSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot43Entry",
+      "rva": 107966,
+      "bytes": "e95de03a00e998636c00e9638b5700e91e03a200e989c87a00e9c4a44c00e93f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot43Body",
+      "rva": 3966496,
+      "bytes": "558bec6aff68b952fb0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditSlot46Entry",
+      "rva": 193706,
+      "bytes": "e941923900e9dcb93700e907ac3400e9a2e41a00e9fdb00600e948967e00e963",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditSlot46Body",
+      "rva": 3966704,
+      "bytes": "558bec51894dfcb8100100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringGetAtEntry",
+      "rva": 154711,
+      "bytes": "e9248e0400e99f8aaa00e9fae55300e975802800e9a0a72200e9abbd8000e926",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringGetAt",
+      "rva": 453248,
+      "bytes": "558bec51894dfc8b4508508b4dfce84443faff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventArgumentStringElement",
+      "rva": 453856,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e83501ac008b55fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot41Entry",
+      "rva": 146176,
+      "bytes": "e99b854000e9b6922e00e951e7a400e95cc08f00e9f73b7b00e9c2e67200e97d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot41Body",
+      "rva": 4374688,
+      "bytes": "558bec6aff68f3d4fb0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot43Entry",
+      "rva": 108301,
+      "bytes": "e94eda4700e9b9eb8b00e994318700e93f893b00e93abf2200e925740f00e920",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot43Body",
+      "rva": 4817248,
+      "bytes": "558bec6aff68a988fc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapSlot46Entry",
+      "rva": 228286,
+      "bytes": "e9ad204600e9d8933700e973ba0c00e98e276900e9c9064500e914cb0400e90f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapSlot46Body",
+      "rva": 4824176,
+      "bytes": "558bec51894dfcb8190100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot41Entry",
+      "rva": 40316,
+      "bytes": "e96fb87300e97afd7100e965457100e9e0916300e92b234e00e986519200e9a1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot41Body",
+      "rva": 7624176,
+      "bytes": "558bec6aff6878cdff0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot43Entry",
+      "rva": 54391,
+      "bytes": "e9e4184000e96f654f00e97ab82d00e9a58e9d00e910d97500e99bb58000e946",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot43Body",
+      "rva": 4255072,
+      "bytes": "558bec6aff68b9affb0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulBtnSlot46Entry",
+      "rva": 342096,
+      "bytes": "e9dbb53b00e9a69a0200e911339200e97c4d9d00e9d72d7800e912242200e9dd",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnSlot46Body",
+      "rva": 4255280,
+      "bytes": "558bec51894dfcb8060100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalEventSetInfoOwnerTypeCallsite",
+      "rva": 8753896,
+      "bytes": "8b4dec8b91b00000008b4208508b4de8518b55ec8b8ab000000083c148e8b3c27cff508b4dec81c194000000e831157fff83e801508b4dec81c194000000e8de477eff8b08e882bd7bff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot41Entry",
+      "rva": 64831,
+      "bytes": "e91cb53d00e9e7eca300e9b2046a00e97de85300e9688f9700e993cc9500e93e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot41Body",
+      "rva": 4108896,
+      "bytes": "558bec6aff684780fb0064a1000000005081ec64070000a1600b3b0133c5508d45f464a300000000894dec6aff6a008b4d0c83c120e8b767c5ff6aff6a008b4d0c83c134e8bc60c2ff6aff6a008b4d0c83c148e82353c3ff8b450c83c048508b4d0c83c134518b550c83c220528b4dece8a868c5ff8d8dc8fcffffe88c19c6ffc745fc00000000680c9b16018d8dc8fcffffff1584903c0168dfa500008d8570feffff50e80f4ac6ff83c408898580feffff8b8d80feffff894de0c645fc018b55e0528d8dccfcffffff15708e3c01c645fc008d8d70feffffff1548913c01b804000000668985d4fcffffc785d8fcffff020000006aff6a018d8ddcfcffffe81af2c1ff6a008d8ddcfcffffe8a45ec3ffb90800000066890883ec288bcc89a50cfeffff8d95c8fcffff52e85071c2ff898594fdffff8b4d0c83c134e8dda3c4ffc745fcffffffff8d8dc8fcffffe8ef51c5ff8d8d08f9ffffe8ae18c6ffc745fc0200000068209b16018d8d08f9ffffff1584903c0168dfa500008d45d050e83449c6ff83c4088945d88b4dd8898d68feffffc645fc038b9568feffff528d8d0cf9ffffff15708e3c01c645fc028d4dd0ff1548913c01b80800000066898514f9ffffc78518f9ffff020000006aff6a008d8d1cf9ffffe842f1c1ff83ec288bcc89a58cfdffff8d9508f9ffff52e88d70c2ff8985f4fcffff8b4d0c83c134e81aa3c4ffc745fcffffffff8d8d08f9ffffe82c51c5ff8d8d00fcffffe8eb17c6ffc745fc0400000068349b16018d8d00fcffffff1584903c0168f1a500008d45c450e87148c6ff83c408898560feffff8b8d60feffff898d74feffffc645fc058b9574feffff528d8d04fcffffff15708e3c01c645fc048d4dc4ff1548913c01b8040000006689850cfcffffc78510fcffff020000006aff6a018d8d14fcffffe879f0c1ff6a008d8d14fcffffe8035dc3ffb90400000066890883ec288bcc89a500feffff8d9500fcffff52e8af6fc2ff89852cfdffff8b4d0c83c134e83ca2c4ffc745fcffffffff8d8d00fcffffe84e50c5ff8d8db8f8ffffe80d17c6ffc745fc06000000684c9b16018d8db8f8ffffff1584903c0168f2a500008d85b0feffff50e89047c6ff83c40889850cffffff8b8d0cffffff894dbcc645fc078b55bc528d8dbcf8ffffff15708e3c01c645fc068d8db0feffffff1548913c01b804000000668985c4f8ffffc785c8f8ffff020000006aff6a008d8dccf8ffffe89befc1ff83ec288bcc89a5f8fdffff8d95b8f8ffff52e8e66ec2ff89850cfdffff8b4d0c83c134e873a1c4ffc745fcffffffff8d8db8f8ffffe8854fc5ff8d8d50fcffffe84416c6ffc745fc0800000068649b16018d8d50fcffffff1584903c0168f3a500008d45ac50e8ca46c6ff83c4088945b48b4db4898d04ffffffc645fc098b9504ffffff528d8d54fcffffff15708e3c01c645fc088d4dacff1548913c01b8040000006689855cfcffffc78560fcffff020000006aff6a018d8d64fcffffe8d8eec1ff6a008d8d64fcffffe8625bc3ffb90800000066890883ec288bcc89a5f0fdffff8d9550fcffff52e80e6ec2ff898524fdffff8b4d0c83c134e89ba0c4ffc745fcffffffff8d8d50fcffffe8ad4ec5ff8d8de8faffffe86c15c6ffc745fc0a00000068789b16018d8de8faffffff1584903c0168de3a00008d85fcfeffff50e8ef45c6ff83c4088985acfeffff8b8dacfeffff894da4c645fc0b8b55a4528d8decfaffffff15708e3c01c645fc0a8d8dfcfeffffff1548913c01b808000000668985f4faffffc785f8faffff020000006aff6a008d8dfcfaffffe8faedc1ff83ec288bcc89a5e8fdffff8d95e8faffff52e8456dc2ff898558fdffff8b4d0c83c134e8d29fc4ffc745fcffffffff8d8de8faffffe8e44dc5ff8d8db0fbffffe8a314c6ffc745fc0c000000688c9b16018d8db0fbffffff1584903c0168f4a500008d459450e82945c6ff83c40889459c8b4d9c898d84feffffc645fc0d8b9584feffff528d8db4fbffffff15708e3c01c645fc0c8d4d94ff1548913c01b804000000668985bcfbffffc785c0fbffff020000006aff6a018d8dc4fbffffe837edc1ff6a008d8dc4fbffffe8c159c3ffb90400000066890883ec288bcc89a5e0fdffff8d95b0fbffff52e86d6cc2ff898550fdffff8b4d0c83c134e8fa9ec4ffc745fcffffffff8d8db0fbffffe80c4dc5ff8d8da8f9ffffe8cb13c6ffc745fc0e00000068ac9b16018d8da8f9ffffff1584903c0168f5a500008d85a4feffff50e84e44c6ff83c4088985f4feffff8b8df4feffff894d8cc645fc0f8b558c528d8dacf9ffffff15708e3c01c645fc0e8d8da4feffffff1548913c01b804000000668985b4f9ffffc785b8f9ffff020000006aff6a008d8dbcf9ffffe859ecc1ff83ec288bcc89a5d8fdffff8d95a8f9ffff52e8a46bc2ff898548fdffff8b4d0c83c134e8319ec4ffc745fcffffffff8d8da8f9ffffe8434cc5ff8d8da0fcffffe80213c6ffc745fc1000000068cc9b16018d8da0fcffffff1584903c0168f6a500008d857cffffff50e88543c6ff83c4088945848b4d84898decfeffffc645fc118b95ecfeffff528d8da4fcffffff15708e3c01c645fc108d8d7cffffffff1548913c01b804000000668985acfcffffc785b0fcffff020000006aff6a018d8db4fcffffe890ebc1ff6a008d8db4fcffffe81a58c3ffb90400000066890883ec288bcc89a5d0fdffff8d95a0fcffff52e8c66ac2ff898540fdffff8b4d0c83c134e8539dc4ffc745fcffffffff8d8da0fcffffe8654bc5ff8d8d98faffffe82412c6ffc745fc1200000068ec9b16018d8d98faffffff1584903c0168f8a500008d85e4feffff50e8a742c6ff83c408898564feffff8b8d64feffff898d74ffffffc645fc138b9574ffffff528d8d9cfaffffff15708e3c01c645fc128d8de4feffffff1548913c01b804000000668985a4faffffc785a8faffff020000006aff6a008d8dacfaffffe8aceac1ff83ec288bcc89a5c8fdffff8d9598faffff52e8f769c2ff898538fdffff8b4d0c83c134e8849cc4ffc745fcffffffff8d8d98faffffe8964ac5ff8d8d78fcffffe85511c6ffc745fc14000000680c9c16018d8d78fcffffff1584903c0168fda500008d8564ffffff50e8d841c6ff83c40889856cffffff8b8d6cffffff898d9cfeffffc645fc158b959cfeffff528d8d7cfcffffff15708e3c01c645fc148d8d64ffffffff1548913c01b80400000066898584fcffffc78588fcffff020000006aff6a018d8d8cfcffffe8dde9c1ff6a008d8d8cfcffffe86756c3ffb90400000066890883ec288bcc89a5c0fdffff8d9578fcffff52e81369c2ff898530fdffff8b4d0c83c134e8a09bc4ffc745fcffffffff8d8d78fcffffe8b249c5ff8d8d60fbffffe87110c6ffc745fc1600000068309c16018d8d60fbffffff1584903c0168fea500008d857cfeffff50e8f440c6ff83c4088985dcfeffff8b8ddcfeffff898d5cffffffc645fc178b955cffffff528d8d64fbffffff15708e3c01c645fc168d8d7cfeffffff1548913c01b8040000006689856cfbffffc78570fbffff020000006aff6a008d8d74fbffffe8f9e8c1ff83ec288bcc89a5b8fdffff8d9560fbffff52e84468c2ff898528fdffff8b4d0c83c134e8d19ac4ffc745fcffffffff8d8d60fbffffe8e348c5ff8d8d28fcffffe8a20fc6ffc745fc1800000068549c16018d8d28fcffffff1584903c0168ffa500008d854cffffff50e82540c6ff83c408898554ffffff8b8d54ffffff898dd4feffffc645fc198b95d4feffff528d8d2cfcffffff15708e3c01c645fc188d8d4cffffffff1548913c01b80400000066898534fcffffc78538fcffff020000006aff6a018d8d3cfcffffe82ae8c1ff6a008d8d3cfcffffe8b454c3ffb90400000066890883ec288bcc89a5b0fdffff8d9528fcffff52e86067c2ff898520fdffff8b4d0c83c134e8ed99c4ffc745fcffffffff8d8d28fcffffe8ff47c5ff8d8d48faffffe8be0ec6ffc745fc1a00000068809c16018d8d48faffffff1584903c016800a600008d85ccfeffff50e8413fc6ff83c408898594feffff8b8d94feffff898d44ffffffc645fc1b8b9544ffffff528d8d4cfaffffff15708e3c01c645fc1a8d8dccfeffffff1548913c01b80400000066898554faffffc78558faffff020000006aff6a008d8d5cfaffffe846e7c1ff83ec288bcc89a5a8fdffff8d9548faffff52e89166c2ff898518fdffff8b4d0c83c134e81e99c4ffc745fcffffffff8d8d48faffffe83047c5ff8d8d60fdffffe8ef0dc6ffc745fc1c00000068ac9c16018d8d60fdffffff1584903c016801a600008d8534ffffff50e8723ec6ff83c40889853cffffff8b8d3cffffff898d6cfeffffc645fc1d8b956cfeffff528d8d64fdffffff15708e3c01c645fc1c8d8d34ffffffff1548913c01b8040000006689856cfdffffc78570fdffff020000006aff6a028d8d74fdffffe877e6c1ff6a008d8d74fdffffe80153c3ffb9040000006689086a018d8d74fdffffe8ec52c3ffba0400000066891083ec288bcc89a5a0fdffff8d8560fdffff50e89865c2ff898510fdffff8b4d0c83c134e82598c4ffc745fcffffffff8d8d60fdffffe83746c5ff8d8dd8fbffffe8f60cc6ffc745fc1e00000068cc9c16018d8dd8fbffffff1584903c016802a600008d8d8cfeffff51e8793dc6ff83c4088985c4feffff8b95c4feffff89952cffffffc645fc1f8b852cffffff508d8ddcfbffffff15708e3c01c645fc1e8d8d8cfeffffff1548913c01b90400000066898de4fbffffc785e8fbffff020000006aff6a018d8decfbffffe87ee5c1ff6a008d8decfbffffe80852c3ffba0400000066891083ec288bcc89a598fdffff8d85d8fbffff50e8b464c2ff898508fdffff8b4d0c83c134e84197c4ffc745fcffffffff8d8dd8fbffffe85345c5ff8d8d10feffffe8120cc6ffc745fc2000000068ec9c16018d8d10feffffff1584903c016803a600008d8d1cffffff51e8953cc6ff83c408898524ffffff8b9524ffffff8995bcfeffffc645fc218b85bcfeffff508d8d14feffffff15708e3c01c645fc208d8d1cffffffff1548913c01b90400000066898d1cfeffffc78520feffff020000006aff6a038d8d24feffffe89ae4c1ff6a008d8d24feffffe82451c3ffba040000006689106a018d8d24feffffe80f51c3ffb9040000006689086a028d8d24feffffe8fa50c3ffba0400000066891083ec288bcc89a590fdffff8d8510feffff50e8a663c2ff898500fdffff8b4d0c83c134e83396c4ffc745fcffffffff8d8d10feffffe84544c5ff8d8d38feffffe8040bc6ffc745fc2200000068089d16018d8d38feffffff1584903c0168e43a00008d4dcc51e88a3bc6ff83c4088985b4feffff8b95b4feffff899514ffffffc645fc238b8514ffffff508d8d3cfeffffff15708e3c01c645fc228d4dccff1548913c01b90400000066898d44feffffc78548feffff020000006aff6a038d8d4cfeffffe892e3c1ff6a008d8d4cfeffffe81c50c3ffba040000006689106a018d8d4cfeffffe80750c3ffb9044000006689086a028d8d4cfeffffe8f24fc3ffba0440000066891083ec288bcc89a588fdffff8d8538feffff50e89e62c2ff8985f8fcffff8b4d0c83c134e82b95c4ffc745fcffffffff8d8d38feffffe83d43c5ff8d8d58f9ffffe8fc09c6ffc745fc2400000068249d16018d8d58f9ffffff1584903c016805a600008d4db851e8823ac6ff83c4088945c88b55c88955c0c645fc258b45c0508d8d5cf9ffffff15708e3c01c645fc248d4db8ff1548913c01b90400000066898d64f9ffffc78568f9ffff020000006aff6a008d8d6cf9ffffe896e2c1ff83ec288bcc89a55cfdffff8d9558f9ffff52e8e161c2ff8985f0fcffff8b4d0c83c134e86e94c4ffc745fcffffffff8d8d58f9ffffe88042c5ff8d8df8f9ffffe83f09c6ffc745fc2600000068449d16018d8df8f9ffffff1584903c016806a600008d45a050e8c539c6ff83c4088945b08b4db0894da8c645fc278b55a8528d8dfcf9ffffff15708e3c01c645fc268d4da0ff1548913c01b80400000066898504faffffc78508faffff020000006aff6a008d8d0cfaffffe8d9e1c1ff83ec288bcc89a554fdffff8d95f8f9ffff52e82461c2ff8985fcfcffff8b4d0c83c134e8b193c4ffc745fcffffffff8d8df8f9ffffe8c341c5ff8d8d38fbffffe88208c6ffc745fc2800000068589d16018d8d38fbffffff1584903c016807a600008d458850e80839c6ff83c4088945988b4d98894d90c645fc298b5590528d8d3cfbffffff15708e3c01c645fc288d4d88ff1548913c01b80400000066898544fbffffc78548fbffff020000006aff6a008d8d4cfbffffe81ce1c1ff83ec288bcc89a54cfdffff8d9538fbffff52e86760c2ff89851cfdffff8b4d0c83c134e8f492c4ffc745fcffffffff8d8d38fbffffe80641c5ff8d8d10fbffffe8c507c6ffc745fc2a000000686c9d16018d8d10fbffffff1584903c016808a600008d8570ffffff50e84838c6ff83c4088945808b4d80898d78ffffffc645fc2b8b9578ffffff528d8d14fbffffff15708e3c01c645fc2a8d8d70ffffffff1548913c01b8040000006689851cfbffffc78520fbffff020000006aff6a008d8d24fbffffe853e0c1ff83ec288bcc89a544fdffff8d9510fbffff52e89e5fc2ff898504fdffff8b4d0c83c134e82b92c4ffc745fcffffffff8d8d10fbffffe83d40c5ff8d8dc0faffffe8fc06c6ffc745fc2c000000687c9d16018d8dc0faffffff1584903c016809a600008d8558ffffff50e87f37c6ff83c408898568ffffff8b8d68ffffff898d60ffffffc645fc2d8b9560ffffff528d8dc4faffffff15708e3c01c645fc2c8d8d58ffffffff1548913c01b804000000668985ccfaffffc785d0faffff020000006aff6a008d8dd4faffffe884dfc1ff83ec288bcc89a53cfdffff8d95c0faffff52e8cf5ec2ff898514fdffff8b4d0c83c134e85c91c4ffc745fcffffffff8d8dc0faffffe86e3fc5ff8d8d70faffffe82d06c6ffc745fc2e00000068909d16018d8d70faffffff1584903c01680aa600008d8540ffffff50e8b036c6ff83c408898550ffffff8b8d50ffffff898d48ffffffc645fc2f8b9548ffffff528d8d74faffffff15708e3c01c645fc2e8d8d40ffffffff1548913c01b8040000006689857cfaffffc78580faffff020000006aff6a008d8d84faffffe8b5dec1ff83ec288bcc89a534fdffff8d9570faffff52e8005ec2ff898508feffff8b4d0c83c134e88d90c4ffc745fcffffffff8d8d70faffffe89f3ec5ff8d8d20faffffe85e05c6ffc745fc3000000068ac9d16018d8d20faffffff1584903c01680ba600008d8528ffffff50e8e135c6ff83c408898538ffffff8b8d38ffffff898d30ffffffc645fc318b9530ffffff528d8d24faffffff15708e3c01c645fc308d8d28ffffffff1548913c01b8040000006689852cfaffffc78530faffff020000006aff6a008d8d34faffffe8e6ddc1ff83ec288bcc89a504feffff8d9520faffff52e8315dc2ff8985fcfdffff8b4d0c83c134e8be8fc4ffc745fcffffffff8d8d20faffffe8d03dc5ff8d8dd0f9ffffe88f04c6ffc745fc3200000068c49d16018d8dd0f9ffffff1584903c01680ca600008d8510ffffff50e81235c6ff83c408898520ffffff8b8d20ffffff898d18ffffffc645fc338b9518ffffff528d8dd4f9ffffff15708e3c01c645fc328d8d10ffffffff1548913c01b804000000668985dcf9ffffc785e0f9ffff020000006aff6a008d8de4f9ffffe817ddc1ff83ec288bcc89a5f4fdffff8d95d0f9ffff52e8625cc2ff8985ecfdffff8b4d0c83c134e8ef8ec4ffc745fcffffffff8d8dd0f9ffffe8013dc5ff8d8d80f9ffffe8c003c6ffc745fc3400000068d49d16018d8d80f9ffffff1584903c01680da600008d85f8feffff50e84334c6ff83c408898508ffffff8b8d08ffffff898d00ffffffc645fc358b9500ffffff528d8d84f9ffffff15708e3c01c645fc348d8df8feffffff1548913c01b8040000006689858cf9ffffc78590f9ffff020000006aff6a008d8d94f9ffffe848dcc1ff83ec288bcc89a5e4fdffff8d9580f9ffff52e8935bc2ff8985dcfdffff8b4d0c83c134e8208ec4ffc745fcffffffff8d8d80f9ffffe8323cc5ff8d8d30f9ffffe8f102c6ffc745fc3600000068e89d16018d8d30f9ffffff1584903c01680ea600008d85e0feffff50e87433c6ff83c4088985f0feffff8b8df0feffff898de8feffffc645fc378b95e8feffff528d8d34f9ffffff15708e3c01c645fc368d8de0feffffff1548913c01b8040000006689853cf9ffffc78540f9ffff020000006aff6a008d8d44f9ffffe879dbc1ff83ec288bcc89a5d4fdffff8d9530f9ffff52e8c45ac2ff8985ccfdffff8b4d0c83c134e8518dc4ffc745fcffffffff8d8d30f9ffffe8633bc5ff8d8de0f8ffffe82202c6ffc745fc3800000068f89d16018d8de0f8ffffff1584903c0168e53a00008d85c8feffff50e8a532c6ff83c4088985d8feffff8b8dd8feffff898dd0feffffc645fc398b95d0feffff528d8de4f8ffffff15708e3c01c645fc388d8dc8feffffff1548913c01b804000000668985ecf8ffffc785f0f8ffff020000006aff6a008d8df4f8ffffe8aadac1ff83ec288bcc89a5c4fdffff8d95e0f8ffff52e8f559c2ff8985bcfdffff8b4d0c83c134e8828cc4ffc745fcffffffff8d8de0f8ffffe8943ac5ff8d8d88fbffffe85301c6ffc745fc3a000000680c9e16018d8d88fbffffff1584903c016810a600008d85a8feffff50e8d631c6ff83c4088985c0feffff8b8dc0feffff898db8feffffc645fc3b8b95b8feffff528d8d8cfbffffff15708e3c01c645fc3a8d8da8feffffff1548913c01b80400000066898594fbffffc78598fbffff020000006aff6a018d8d9cfbffffe8dbd9c1ff6a008d8d9cfbffffe86546c3ffb90400000066890883ec288bcc89a5b4fdffff8d9588fbffff52e81159c2ff8985acfdffff8b4d0c83c134e89e8bc4ffc745fcffffffff8d8d88fbffffe8b039c5ff8d8d90f8ffffe86f00c6ffc745fc3c000000682c9e16018d8d90f8ffffff1584903c016811a600008d8590feffff50e8f230c6ff83c4088985a0feffff8b8da0feffff898d98feffffc645fc3d8b9598feffff528d8d94f8ffffff15708e3c01c645fc3c8d8d90feffffff1548913c01b8040000006689859cf8ffffc785a0f8ffff020000006aff6a008d8da4f8ffffe8f7d8c1ff83ec288bcc89a5a4fdffff8d9590f8ffff52e84258c2ff89859cfdffff8b4d0c83c134e8cf8ac4ffc745fcffffffff8d8d90f8ffffe8e138c5ffc745f000000000eb098b45f083c0018945f08b4d0c83c134e8d4f9c1ff3945f07d178b4df0518b4d0c83c134e81ca6c3ff8b55f0895008ebd06812a600008d8578feffff50e80d30c6ff83c408898588feffff8b8d88feffff894de8c745fc3e0000008b55e8528b4d0cff15708e3c01c745fcffffffff8d8d78feffffff1548913c016812a600008d45d450e8c62fc6ff83c4088945e48b4de4894ddcc745fc3f0000008b55dc528b4d0c83c104ff15708e3c01c745fcffffffff8d4dd4ff1548913c018b45ec8b108b4dec8b82b8000000ffd08b4d0c8941088b550cc7420c010000008b450cc7401001000000684c9e16018b4d0c83c114ff1584903c018b4d0cc74118000000008b550cc7421c000000008b450c8b481c83c1018b550c894a1c6aff6a008b4d0c83c15ce81741c3ffb001eb108b450c508b4d08518b4dece876cfc1ff8b4df464890d00000000598be55dc20800cc",
+      "reloc_offsets": [
+        6,
+        24,
+        136,
+        148,
+        203,
+        219,
+        358,
+        370,
+        422,
+        435,
+        553,
+        565,
+        623,
+        636,
+        775,
+        787,
+        842,
+        858,
+        976,
+        988,
+        1040,
+        1053,
+        1192,
+        1204,
+        1259,
+        1275,
+        1393,
+        1405,
+        1457,
+        1470,
+        1609,
+        1621,
+        1676,
+        1692,
+        1810,
+        1822,
+        1877,
+        1893,
+        2032,
+        2044,
+        2105,
+        2121,
+        2239,
+        2251,
+        2312,
+        2328,
+        2467,
+        2479,
+        2540,
+        2556,
+        2674,
+        2686,
+        2747,
+        2763,
+        2902,
+        2914,
+        2975,
+        2991,
+        3109,
+        3121,
+        3182,
+        3198,
+        3358,
+        3370,
+        3431,
+        3447,
+        3586,
+        3598,
+        3659,
+        3675,
+        3856,
+        3868,
+        3926,
+        3939,
+        4120,
+        4132,
+        4178,
+        4191,
+        4309,
+        4321,
+        4367,
+        4380,
+        4498,
+        4510,
+        4556,
+        4569,
+        4687,
+        4699,
+        4754,
+        4770,
+        4888,
+        4900,
+        4961,
+        4977,
+        5095,
+        5107,
+        5168,
+        5184,
+        5302,
+        5314,
+        5375,
+        5391,
+        5509,
+        5521,
+        5582,
+        5598,
+        5716,
+        5728,
+        5789,
+        5805,
+        5923,
+        5935,
+        5996,
+        6012,
+        6130,
+        6142,
+        6203,
+        6219,
+        6337,
+        6349,
+        6410,
+        6426,
+        6565,
+        6577,
+        6638,
+        6654,
+        6861,
+        6880,
+        6929,
+        6945,
+        6992,
+        7004
+      ]
+    },
+    {
+      "name": "CDrawHisPicSlot43Entry",
+      "rva": 106346,
+      "bytes": "e961643e00e95c163900e987972500e9623b1500e9fd8d4f00e9b8871a00e9f3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot43Body",
+      "rva": 4195280,
+      "bytes": "558bec6aff68f99cfb0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawHisPicSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawHisPicSlot46Entry",
+      "rva": 140551,
+      "bytes": "e994df3d00e90fed3600e94adb9000e905656700e9c0825200e9cbd85500e956",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicSlot46Body",
+      "rva": 4195488,
+      "bytes": "558bec51894dfcb8050100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot12Entry",
+      "rva": 100156,
+      "bytes": "e93f240a00e97a727900e955838200e9a0dba400e90b138300e916c97f00e971",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot12Body",
+      "rva": 764800,
+      "bytes": "558bec51894dfc8be55dc20c00cccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot41Entry",
+      "rva": 105806,
+      "bytes": "e92d024b00e94894a300e9f3cc9f00e90e671e00e9599b9600e9f4565300e9df",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot41Body",
+      "rva": 5021568,
+      "bytes": "558bec6aff6841e3fc0064a1000000005081ecd0060000a1600b3b0133c5508d45f464a300000000894df06aff6a008b4d0c83c120e8977ab7ff6aff6a008b4d0c83c134e89c73b4ff6aff6a008b4d0c83c148e80366b5ff8b450c83c048508b4d0c83c134518b550c83c220528b4df0e8887bb7ff8d8dc8fdffffe8debbb6ffc745fc0000000068b4d117018d8dc8fdffffff1584903c016881a300008d8580feffff50e8ef5cb8ff83c408898588feffff8b8d88feffff894de4c645fc018b55e4528d8dccfdffffff15708e3c01c645fc008d8d80feffffff1548913c01c785d0fdffff070000008b85d0fdffff8985d4fdffffb90300000066898dd8fdffffc785dcfdffff00000000c785e0fdffff0000000083ec1c8bcc89a590fcffff8d95c8fdffff52e81b40b7ff89854cfcffff8b4d0c83c120e84aafb7ffc745fcffffffff8d8dc8fdffffe837fdb5ff8d8d00feffffe804bbb6ffc745fc0200000068e8d117018d8d00feffffff1584903c016882a300008d45d450e8185cb8ff83c4088945dc8b4ddc898d78feffffc645fc038b9578feffff528d8d04feffffff15708e3c01c645fc028d4dd4ff1548913c01c78508feffff080000008b8508feffff89850cfeffffb90300000066898d10feffffc78514feffff00000000c78518feffff0000000083ec1c8bcc89a544fcffff8d9500feffff52e8473fb7ff89853cfcffff8b4d0c83c120e876aeb7ffc745fcffffffff8d8d00feffffe863fcb5ff8d8d38feffffe830bab6ffc745fc0400000068f0d117018d8d38feffffff1584903c016884a300008d459850e8445bb8ff83c408898570feffff8b8d70feffff894dc4c645fc058b55c4528d8d3cfeffffff15708e3c01c645fc048d4d98ff1548913c01c78540feffff090000008b8540feffff898544feffffb90300000066898d48feffffc7854cfeffff01000000c78550feffff0000000083ec1c8bcc89a534fcffff8d9538feffff52e8733eb7ff89852cfcffff8b4d0c83c120e8a2adb7ffc745fcffffffff8d8d38feffffe88ffbb5ff8d8d1cfeffffe85cb9b6ffc745fc0600000068fcd117018d8d1cfeffffff1584903c016885a300008d45bc50e8705ab8ff83c4088945b08b4db0898dc4feffffc645fc078b95c4feffff528d8d20feffffff15708e3c01c645fc068d4dbcff1548913c01c78524feffff0a0000008b8524feffff898528feffffb90300000066898d2cfeffffc78530feffff01000000c78534feffff0000000083ec1c8bcc89a524fcffff8d951cfeffff52e89f3db7ff89851cfcffff8b4d0c83c120e8ceacb7ffc745fcffffffff8d8d1cfeffffe8bbfab5ff8d8de4fdffffe888b8b6ffc745fc080000006810d217018d8de4fdffffff1584903c016886a300008d8584feffff50e89959b8ff83c408898514ffffff8b8d14ffffff894db4c645fc098b55b4528d8de8fdffffff15708e3c01c645fc088d8d84feffffff1548913c01c785ecfdffff0b0000008b85ecfdffff8985f0fdffffb90300000066898df4fdffffc785f8fdffff00000000c785fcfdffff0000000083ec1c8bcc89a514fcffff8d95e4fdffff52e8c53cb7ff89850cfcffff8b4d0c83c120e8f4abb7ffc745fcffffffff8d8de4fdffffe8e1f9b5ff8d8dacfdffffe8aeb7b6ffc745fc0a0000006820d217018d8dacfdffffff1584903c016887a300008d45a450e8c258b8ff83c4088945ac8b4dac898d0cffffffc645fc0b8b950cffffff528d8db0fdffffff15708e3c01c645fc0a8d4da4ff1548913c01c785b4fdffff0c0000008b85b4fdffff8985b8fdffffb90300000066898dbcfdffffc785c0fdffff00000000c785c4fdffff0000000083ec1c8bcc89a504fcffff8d95acfdffff52e8f13bb7ff8985fcfbffff8b4d0c83c120e820abb7ffc745fcffffffff8d8dacfdffffe80df9b5ff8d8d54feffffe8dab6b6ffc745fc0c0000006848d217018d8d54feffffff1584903c016888a300008d8504ffffff50e8eb57b8ff83c4088985bcfeffff8b8dbcfeffff894d9cc645fc0d8b559c528d8d58feffffff15708e3c01c645fc0c8d8d04ffffffff1548913c01c7855cfeffff0d0000008b855cfeffff898560feffffb90300000066898d64feffffc78568feffff01000000c7856cfeffff0000000083ec1c8bcc89a5f4fbffff8d9554feffff52e8173bb7ff8985ecfbffff8b4d0c83c120e846aab7ffc745fcffffffff8d8d54feffffe833f8b5ff8d8db8fbffffe88e26b8ffc745fc0e0000006860d217018d8db8fbffffff1584903c016889a300008d458c50e81457b8ff83c4088945948b4d94898d94feffffc645fc0f8b9594feffff528d8dbcfbffffff15708e3c01c645fc0e8d4d8cff1548913c01b803000000668985c4fbffffc785c8fbffff02000000c785c0fbffff000000006aff6a018d8dccfbffffe818ffb3ff6a008d8dccfbffffe8a26bb5ffb90300000066890883ec288bcc89a5e4fbffff8d95b8fbffff52e84e7eb4ff898588fcffff8b4d0c83c134e8dbb0b6ffc745fcffffffff8d8db8fbffffe8ed5eb7ff8d8dbcfcffffe8ac25b8ffc745fc10000000687cd217018d8dbcfcffffff1584903c01688aa300008d85b4feffff50e82f56b8ff83c4088985fcfeffff8b8dfcfeffff894d84c645fc118b5584528d8dc0fcffffff15708e3c01c645fc108d8db4feffffff1548913c01b804000000668985c8fcffffc785ccfcffff02000000c785c4fcffff010000006aff6a028d8dd0fcffffe830feb3ff6a008d8dd0fcffffe8ba6ab5ffb9030000006689086a018d8dd0fcffffe8a56ab5ffba0300000066891083ec288bcc89a5b4faffff8d85bcfcffff50e8517db4ff898580fcffff8b4d0c83c134e8deafb6ffc745fcffffffff8d8dbcfcffffe8f05db7ff8d8d8cfbffffe8af24b8ffc745fc120000006898d217018d8d8cfbffffff1584903c01688ba300008d8d74ffffff51e83255b8ff83c40889857cffffff8b957cffffff8995f4feffffc645fc138b85f4feffff508d8d90fbffffff15708e3c01c645fc128d8d74ffffffff1548913c01b90300000066898d98fbffffc7859cfbffff02000000c78594fbffff020000006aff6a018d8da0fbffffe82dfdb3ff6a008d8da0fbffffe8b769b5ffba0300000066891083ec288bcc89a5f0fbffff8d858cfbffff50e8637cb4ff898578fcffff8b4d0c83c134e8f0aeb6ffc745fcffffffff8d8d8cfbffffe8025db7ff8d8d0cfdffffe8c123b8ffc745fc1400000068b4d217018d8d0cfdffffff1584903c01688ca300008d8decfeffff51e84454b8ff83c408898574feffff8b9574feffff89956cffffffc645fc158b856cffffff508d8d10fdffffff15708e3c01c645fc148d8decfeffffff1548913c01b90400000066898d18fdffffc7851cfdffff02000000c78514fdffff030000006aff6a028d8d20fdffffe83ffcb3ff6a008d8d20fdffffe8c968b5ffba030000006689106a018d8d20fdffffe8b468b5ffb90300000066890883ec288bcc89a5d0faffff8d950cfdffff52e8607bb4ff898570fcffff8b4d0c83c134e8edadb6ffc745fcffffffff8d8d0cfdffffe8ff5bb7ff8d8d5cfdffffe8be22b8ffc745fc1600000068d0d217018d8d5cfdffffff1584903c01688da300008d855cffffff50e84153b8ff83c408898564ffffff8b8d64ffffff898dacfeffffc645fc178b95acfeffff528d8d60fdffffff15708e3c01c645fc168d8d5cffffffff1548913c01b80800000066898568fdffffc7856cfdffff02000000c78564fdffff040000006aff6a028d8d70fdffffe83cfbb3ff6a008d8d70fdffffe8c667b5ffb9030000006689086a018d8d70fdffffe8b167b5ffba0300000066891083ec288bcc89a5e8fbffff8d855cfdffff50e85d7ab4ff898568fcffff8b4d0c83c134e8eaacb6ffc745fcffffffff8d8d5cfdffffe8fc5ab7ff8d8d8cfaffffe8bb21b8ffc745fc1800000068ecd217018d8d8cfaffffff1584903c01688fa300008d8d8cfeffff51e83e52b8ff83c4088985e4feffff8b95e4feffff899554ffffffc645fc198b8554ffffff508d8d90faffffff15708e3c01c645fc188d8d8cfeffffff1548913c01b90400000066898d98faffffc7859cfaffff02000000c78594faffff050000006aff6a008d8da0faffffe839fab3ff83ec288bcc89a5c0faffff8d958cfaffff52e88479b4ff898560fcffff8b4d0c83c134e811acb6ffc745fcffffffff8d8d8cfaffffe8235ab7ff8d8d3cfaffffe8e220b8ffc745fc1a00000068fcd217018d8d3cfaffffff1584903c016890a300008d8544ffffff50e86551b8ff83c40889854cffffff8b8d4cffffff898ddcfeffffc645fc1b8b95dcfeffff528d8d40faffffff15708e3c01c645fc1a8d8d44ffffffff1548913c01b80400000066898548faffffc7854cfaffff02000000c78544faffff060000006aff6a008d8d50faffffe860f9b3ff83ec288bcc89a5e0fbffff8d953cfaffff52e8ab78b4ff898558fcffff8b4d0c83c134e838abb6ffc745fcffffffff8d8d3cfaffffe84a59b7ff8d8d9cf9ffffe80920b8ffc745fc1c0000006814d317018d8d9cf9ffffff1584903c016891a300008d85d4feffff50e88c50b8ff83c4088985a4feffff8b8da4feffff898d3cffffffc645fc1d8b953cffffff528d8da0f9ffffff15708e3c01c645fc1c8d8dd4feffffff1548913c01b804000000668985a8f9ffffc785acf9ffff02000000c785a4f9ffff070000006aff6a008d8db0f9ffffe887f8b3ff83ec288bcc89a5c8faffff8d959cf9ffff52e8d277b4ff898550fcffff8b4d0c83c134e85faab6ffc745fcffffffff8d8d9cf9ffffe87158b7ff8d8decf9ffffe8301fb8ffc745fc1e0000006820d317018d8decf9ffffff1584903c016892a300008d852cffffff50e8b34fb8ff83c408898534ffffff8b8d34ffffff898d7cfeffffc645fc1f8b957cfeffff528d8df0f9ffffff15708e3c01c645fc1e8d8d2cffffffff1548913c01b804000000668985f8f9ffffc785fcf9ffff02000000c785f4f9ffff080000006aff6a008d8d00faffffe8aef7b3ff83ec288bcc89a5b4fbffff8d95ecf9ffff52e8f976b4ff898548fcffff8b4d0c83c134e886a9b6ffc745fcffffffff8d8decf9ffffe89857b7ff8d8d4cf9ffffe8571eb8ffc745fc200000006828d317018d8d4cf9ffffff1584903c016893a300008d859cfeffff50e8da4eb8ff83c4088985ccfeffff8b8dccfeffff898d24ffffffc645fc218b9524ffffff528d8d50f9ffffff15708e3c01c645fc208d8d9cfeffffff1548913c01b80400000066898558f9ffffc7855cf9ffff02000000c78554f9ffff090000006aff6a008d8d60f9ffffe8d5f6b3ff83ec288bcc89a5b8faffff8d954cf9ffff52e82076b4ff898540fcffff8b4d0c83c134e8ada8b6ffc745fcffffffff8d8d4cf9ffffe8bf56b7ff8d8d64faffffe87e1db8ffc745fc220000006838d317018d8d64faffffff1584903c016895a300008d45c050e8044eb8ff83c40889851cffffff8b8d1cffffff894dc8c645fc238b55c8528d8d68faffffff15708e3c01c645fc228d4dc0ff1548913c01b80400000066898570faffffc78574faffff02000000c7856cfaffff0a0000006aff6a008d8d78faffffe808f6b3ff83ec288bcc89a588fbffff8d9564faffff52e85375b4ff898538fcffff8b4d0c83c134e8e0a7b6ffc745fcffffffff8d8d64faffffe8f255b7ff8d8d14faffffe8b11cb8ffc745fc24000000684cd317018d8d14faffffff1584903c016896a300008d45a850e8374db8ff83c4088945b88b4db8894dccc645fc258b55cc528d8d18faffffff15708e3c01c645fc248d4da8ff1548913c01b80400000066898520faffffc78524faffff02000000c7851cfaffff0b0000006aff6a008d8d28faffffe841f5b3ff83ec288bcc89a5d4faffff8d9514faffff52e88c74b4ff898530fcffff8b4d0c83c134e819a7b6ffc745fcffffffff8d8d14faffffe82b55b7ff8d8dc4f9ffffe8ea1bb8ffc745fc260000006860d317018d8dc4f9ffffff1584903c016897a300008d459050e8704cb8ff83c4088945a08b4da0894dd0c645fc278b55d0528d8dc8f9ffffff15708e3c01c645fc268d4d90ff1548913c01b804000000668985d0f9ffffc785d4f9ffff02000000c785ccf9ffff0c0000006aff6a008d8dd8f9ffffe87af4b3ff83ec288bcc89a55cfbffff8d95c4f9ffff52e8c573b4ff898528fcffff8b4d0c83c134e852a6b6ffc745fcffffffff8d8dc4f9ffffe86454b7ff8d8d60fbffffe8231bb8ffc745fc280000006874d317018d8d60fbffffff1584903c016898a300008d8578ffffff50e8a64bb8ff83c4088945888b4d88894d80c645fc298b5580528d8d64fbffffff15708e3c01c645fc288d8d78ffffffff1548913c01b8040000006689856cfbffffc78570fbffff02000000c78568fbffff0d0000006aff6a018d8d74fbffffe8adf3b3ff6a008d8d74fbffffe83760b5ffb90300000066890883ec288bcc89a5ccfaffff8d9560fbffff52e8e372b4ff898520fcffff8b4d0c83c134e870a5b6ffc745fcffffffff8d8d60fbffffe88253b7ff8d8d74f9ffffe8411ab8ffc745fc2a0000006894d317018d8d74f9ffffff1584903c016899a300008d8560ffffff50e8c44ab8ff83c408898570ffffff8b8d70ffffff898d68ffffffc645fc2b8b9568ffffff528d8d78f9ffffff15708e3c01c645fc2a8d8d60ffffffff1548913c01b80400000066898580f9ffffc78584f9ffff02000000c7857cf9ffff0e0000006aff6a008d8d88f9ffffe8bff2b3ff83ec288bcc89a530fbffff8d9574f9ffff52e80a72b4ff898518fcffff8b4d0c83c134e897a4b6ffc745fcffffffff8d8d74f9ffffe8a952b7ff8d8d34fbffffe86819b8ffc745fc2c00000068b0d317018d8d34fbffffff1584903c01689ea300008d8548ffffff50e8eb49b8ff83c408898558ffffff8b8d58ffffff898d50ffffffc645fc2d8b9550ffffff528d8d38fbffffff15708e3c01c645fc2c8d8d48ffffffff1548913c01b80300000066898540fbffffc78544fbffff02000000c7853cfbffff0f0000006aff6a018d8d48fbffffe8e6f1b3ff6a008d8d48fbffffe8705eb5ffb90300000066890883ec288bcc89a5c4faffff8d9534fbffff52e81c71b4ff898510fcffff8b4d0c83c134e8a9a3b6ffc745fcffffffff8d8d34fbffffe8bb51b7ff8d8d34fdffffe87a18b8ffc745fc2e00000068c8d317018d8d34fdffffff1584903c01689fa300008d8530ffffff50e8fd48b8ff83c408898540ffffff8b8d40ffffff898d38ffffffc645fc2f8b9538ffffff528d8d38fdffffff15708e3c01c645fc2e8d8d30ffffffff1548913c01b80400000066898540fdffffc78544fdffff02000000c7853cfdffff100000006aff6a028d8d48fdffffe8f8f0b3ff6a008d8d48fdffffe8825db5ffb9030000006689086a018d8d48fdffffe86d5db5ffba0300000066891083ec288bcc89a504fbffff8d8534fdffff50e81970b4ff898508fcffff8b4d0c83c134e8a6a2b6ffc745fcffffffff8d8d34fdffffe8b850b7ff8d8d24f9ffffe87717b8ffc745fc3000000068e0d317018d8d24f9ffffff15488b3c0168513b00008d8d18ffffff51e8fa47b8ff83c408898528ffffff8b9528ffffff899520ffffffc645fc318b8520ffffff508d8d28f9ffffff15708e3c01c645fc308d8d18ffffffff1548913c01b90300000066898d30f9ffffc78534f9ffff02000000c7852cf9ffff110000006aff6a008d8d38f9ffffe8f5efb3ff83ec288bcc89a5bcfaffff8d9524f9ffff52e8406fb4ff898500fcffff8b4d0c83c134e8cda1b6ffc745fcffffffff8d8d24f9ffffe8df4fb7ff8d8de4fcffffe89e16b8ffc745fc3200000068e8d317018d8de4fcffffff15488b3c0168c53b00008d8500ffffff50e82147b8ff83c408898510ffffff8b8d10ffffff898d08ffffffc645fc338b9508ffffff528d8de8fcffffff15708e3c01c645fc328d8d00ffffffff1548913c01b803000000668985f0fcffffc785f4fcffff02000000c785ecfcffff120000006aff6a028d8df8fcffffe81cefb3ff6a008d8df8fcffffe8a65bb5ffb9080000006689086a018d8df8fcffffe8915bb5ffba0300000066891083ec288bcc89a5d8faffff8d85e4fcffff50e83d6eb4ff8985f8fbffff8b4d0c83c134e8caa0b6ffc745fcffffffff8d8de4fcffffe8dc4eb7ff8d8d08fbffffe89b15b8ffc745fc3400000068f8d317018d8d08fbffffff1584903c0168a2a300008d8de8feffff51e81e46b8ff83c4088985f8feffff8b95f8feffff8995f0feffffc645fc358b85f0feffff508d8d0cfbffffff15708e3c01c645fc348d8de8feffffff1548913c01b90800000066898d14fbffffc78518fbffff02000000c78510fbffff130000006aff6a018d8d1cfbffffe819eeb3ff6a008d8d1cfbffffe8a35ab5ffba0300000066891083ec288bcc89a58cfcffff8d8508fbffff50e84f6db4ff898584fcffff8b4d0c83c134e8dc9fb6ffc745fcffffffff8d8d08fbffffe8ee4db7ff8d8d94fcffffe8ad14b8ffc745fc360000006810d417018d8d94fcffffff1584903c0168a3a300008d8dd0feffff51e83045b8ff83c4088985e0feffff8b95e0feffff8995d8feffffc645fc378b85d8feffff508d8d98fcffffff15708e3c01c645fc368d8dd0feffffff1548913c01b90400000066898da0fcffffc785a4fcffff02000000c7859cfcffff140000006aff6a028d8da8fcffffe82bedb3ff6a008d8da8fcffffe8b559b5ffba030000006689106a018d8da8fcffffe8a059b5ffb90800000066890883ec288bcc89a57cfcffff8d9594fcffff52e84c6cb4ff898574fcffff8b4d0c83c134e8d99eb6ffc745fcffffffff8d8d94fcffffe8eb4cb7ff8d8ddcfaffffe8aa13b8ffc745fc380000006828d417018d8ddcfaffffff1584903c0168a4a300008d85b8feffff50e82d44b8ff83c4088985c8feffff8b8dc8feffff898dc0feffffc645fc398b95c0feffff528d8de0faffffff15708e3c01c645fc388d8db8feffffff1548913c01b808000000668985e8faffffc785ecfaffff02000000c785e4faffff150000006aff6a018d8df0faffffe828ecb3ff6a008d8df0faffffe8b258b5ffb90300000066890883ec288bcc89a56cfcffff8d95dcfaffff52e85e6bb4ff898564fcffff8b4d0c83c134e8eb9db6ffc745fcffffffff8d8ddcfaffffe8fd4bb7ff8d8d84fdffffe8bc12b8ffc745fc3a0000006840d417018d8d84fdffffff1584903c0168a5a300008d85a0feffff50e83f43b8ff83c4088985b0feffff8b8db0feffff898da8feffffc645fc3b8b95a8feffff528d8d88fdffffff15708e3c01c645fc3a8d8da0feffffff1548913c01b80400000066898590fdffffc78594fdffff02000000c7858cfdffff160000006aff6a028d8d98fdffffe83aebb3ff6a008d8d98fdffffe8c457b5ffb9030000006689086a018d8d98fdffffe8af57b5ffba0800000066891083ec288bcc89a55cfcffff8d8584fdffff50e85b6ab4ff898554fcffff8b4d0c83c134e8e89cb6ffc745fcffffffff8d8d84fdffffe8fa4ab7ff68a6a300008d4dec51e86242b8ff83c408898598feffff8b9598feffff899590feffffc745fc3c0000008b8590feffff508b4d0cff15708e3c01c745fcffffffff8d4decff1548913c0168a6a300008d4dd851e81842b8ff83c4088945e88b55e88955e0c745fc3d0000008b45e0508b4d0c83c104ff15708e3c01c745fcffffffff8d4dd8ff1548913c018b4df08b118b4df08b82b8000000ffd08b4d0c8941088b550cc7420c010000008b450cc74010010000006858d417018b4d0c83c114ff1584903c018b4d0cc74118000000008b550cc7421c000000008b450c8b481c83c1018b550c894a1c6aff6a008b4d0c83c15ce86953b5ffb0018b4df464890d00000000598be55dc20800cc",
+      "reloc_offsets": [
+        6,
+        24,
+        136,
+        148,
+        203,
+        219,
+        354,
+        366,
+        418,
+        431,
+        566,
+        578,
+        630,
+        643,
+        778,
+        790,
+        842,
+        855,
+        990,
+        1002,
+        1057,
+        1073,
+        1208,
+        1220,
+        1272,
+        1285,
+        1420,
+        1432,
+        1487,
+        1503,
+        1638,
+        1650,
+        1702,
+        1715,
+        1864,
+        1876,
+        1931,
+        1947,
+        2117,
+        2129,
+        2190,
+        2206,
+        2355,
+        2367,
+        2428,
+        2444,
+        2614,
+        2626,
+        2687,
+        2703,
+        2873,
+        2885,
+        2946,
+        2962,
+        3090,
+        3102,
+        3163,
+        3179,
+        3307,
+        3319,
+        3380,
+        3396,
+        3524,
+        3536,
+        3597,
+        3613,
+        3741,
+        3753,
+        3814,
+        3830,
+        3958,
+        3970,
+        4022,
+        4035,
+        4163,
+        4175,
+        4221,
+        4234,
+        4362,
+        4374,
+        4420,
+        4433,
+        4561,
+        4573,
+        4622,
+        4638,
+        4787,
+        4799,
+        4860,
+        4876,
+        5004,
+        5016,
+        5077,
+        5093,
+        5242,
+        5254,
+        5315,
+        5331,
+        5501,
+        5513,
+        5574,
+        5590,
+        5718,
+        5730,
+        5791,
+        5807,
+        5977,
+        5989,
+        6050,
+        6066,
+        6215,
+        6227,
+        6288,
+        6304,
+        6474,
+        6486,
+        6547,
+        6563,
+        6712,
+        6724,
+        6785,
+        6801,
+        7006,
+        7022,
+        7071,
+        7087,
+        7134,
+        7146
+      ]
+    },
+    {
+      "name": "CDrawSaveDataSlot43Entry",
+      "rva": 335911,
+      "bytes": "e9047e4900e9ef7f7a00e96ad30b00e9d5900600e9d0680600e9bbb99b00e9f6",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot43Body",
+      "rva": 5152304,
+      "bytes": "558bec6aff68190ffd0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawSaveDataSlot44Entry",
+      "rva": 13271,
+      "bytes": "e984790b00e90f845200e97af42600e9e5d49f00e960532e00e9cbf06500e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot44Body",
+      "rva": 765280,
+      "bytes": "558bec6aff68c9c7f60064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawSaveDataSlot46Entry",
+      "rva": 194766,
+      "bytes": "e92da64b00e9781c6800e9230b5700e94efe4c00e989d34100e984b13f00e9ef",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataSlot46Body",
+      "rva": 5152512,
+      "bytes": "558bec51894dfcb80b0100008be55dc3cccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataTypeEntry",
+      "rva": 303676,
+      "bytes": "e91fb56f00e95aae5100e925885100e9304f3200e96ba62600e9d6db1c00e9e1",
+      "reloc_offsets": []
+    }
+  ],
+  "classes": [
+    {
+      "name": "CDrawButton",
+      "archive_type_id": 20519,
+      "metadata_type_id": 257,
+      "primary": {
+        "rva": 14016108,
+        "col_rva": 15174680,
+        "type_rva": 16325940,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawButton@@",
+        "slots": [
+          267091,
+          331411,
+          347651,
+          4401,
+          130021,
+          164516,
+          18551,
+          338696,
+          249176,
+          306636,
+          329936,
+          228566,
+          100156,
+          31541,
+          216281,
+          238691,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          150371,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          307036,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14016436,
+        "col_rva": 15174796,
+        "type_rva": 16325940,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawButton@@",
+        "slots": [
+          227726,
+          98566,
+          243901,
+          214541,
+          133906,
+          342641,
+          202691,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          23811,
+          130646,
+          334876,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 87651,
+        "44": 13271,
+        "46": 36611
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawCell",
+      "archive_type_id": 20537,
+      "metadata_type_id": 276,
+      "primary": {
+        "rva": 14099020,
+        "col_rva": 15188380,
+        "type_rva": 16325972,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawCell@@",
+        "slots": [
+          311051,
+          123541,
+          140921,
+          4401,
+          130021,
+          28971,
+          145656,
+          13096,
+          213556,
+          86996,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          14161,
+          188846,
+          160551,
+          53506,
+          339816,
+          202801,
+          156006,
+          87036,
+          36396,
+          153556,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14099348,
+        "col_rva": 15188492,
+        "type_rva": 16325972,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawCell@@",
+        "slots": [
+          175696,
+          333166,
+          243901,
+          214541,
+          263346,
+          88876,
+          48756,
+          337776,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 158286,
+        "44": 13271,
+        "46": 154821
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawLine",
+      "archive_type_id": 20482,
+      "metadata_type_id": 274,
+      "primary": {
+        "rva": 14098076,
+        "col_rva": 15188108,
+        "type_rva": 16351704,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawLine@@",
+        "slots": [
+          36246,
+          325576,
+          208446,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          186596,
+          283071,
+          214111,
+          39791,
+          214996,
+          164586,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14098388,
+        "col_rva": 15188220,
+        "type_rva": 16351704,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawLine@@",
+        "slots": [
+          328891,
+          292431,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 154486,
+        "44": 13271,
+        "46": 86176
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawRect",
+      "archive_type_id": 20484,
+      "metadata_type_id": 275,
+      "primary": {
+        "rva": 14098548,
+        "col_rva": 15188244,
+        "type_rva": 16351732,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawRect@@",
+        "slots": [
+          48681,
+          22546,
+          208446,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          297911,
+          156006,
+          87036,
+          36396,
+          224266,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14098860,
+        "col_rva": 15188356,
+        "type_rva": 16351732,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawRect@@",
+        "slots": [
+          271836,
+          325396,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 179876,
+        "44": 13271,
+        "46": 42791
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawUnit",
+      "archive_type_id": 20538,
+      "metadata_type_id": 277,
+      "primary": {
+        "rva": 14099508,
+        "col_rva": 15188516,
+        "type_rva": 16351760,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawUnit@@",
+        "slots": [
+          84431,
+          16381,
+          236851,
+          4401,
+          130021,
+          14086,
+          305271,
+          173941,
+          126746,
+          288066,
+          329936,
+          228566,
+          100156,
+          211776,
+          312726,
+          117666,
+          179761,
+          188846,
+          160551,
+          53506,
+          339816,
+          254451,
+          156006,
+          87036,
+          36396,
+          39041,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14099828,
+        "col_rva": 15188628,
+        "type_rva": 16351760,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawUnit@@",
+        "slots": [
+          147106,
+          48826,
+          243901,
+          214541,
+          140671,
+          281426,
+          223786,
+          306431,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          57736,
+          5491,
+          48196,
+          345906,
+          100291,
+          96026,
+          44416,
+          166206,
+          326876,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 237716,
+        "44": 13271,
+        "46": 82576
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawLabel",
+      "archive_type_id": 20488,
+      "metadata_type_id": 282,
+      "primary": {
+        "rva": 14101900,
+        "col_rva": 15189360,
+        "type_rva": 16290752,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawLabel@@",
+        "slots": [
+          257831,
+          344516,
+          100796,
+          4401,
+          130021,
+          164516,
+          18551,
+          115581,
+          34456,
+          142111,
+          115121,
+          202046,
+          75996,
+          40931,
+          312726,
+          346861,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          285176,
+          156006,
+          233181,
+          36396,
+          343651,
+          11966,
+          289996,
+          211501,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14102212,
+        "col_rva": 15189472,
+        "type_rva": 16290752,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawLabel@@",
+        "slots": [
+          257791,
+          31906,
+          243901,
+          214541,
+          311931,
+          243861,
+          319536,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          324711,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 75996,
+        "41": 40316,
+        "43": 188396,
+        "44": 13271,
+        "46": 212706
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        },
+        {
+          "stack_base": -204,
+          "declaration_ctor_va": "0x82db00",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x82db9b"
+        },
+        {
+          "stack_base": -244,
+          "declaration_ctor_va": "0x82dbb8",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x82dc53"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawEdit",
+      "archive_type_id": 20517,
+      "metadata_type_id": 272,
+      "primary": {
+        "rva": 14040244,
+        "col_rva": 15180396,
+        "type_rva": 16338056,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawEdit@@",
+        "slots": [
+          39601,
+          309051,
+          292436,
+          4401,
+          130021,
+          164516,
+          18551,
+          36126,
+          136341,
+          35571,
+          329936,
+          228566,
+          38631,
+          315596,
+          77961,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          150371,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          131746,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14040572,
+        "col_rva": 15180512,
+        "type_rva": 16338056,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawEdit@@",
+        "slots": [
+          204356,
+          219876,
+          243901,
+          214541,
+          69901,
+          315746,
+          225031,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          120356,
+          35326,
+          23306,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 38631,
+        "41": 40316,
+        "43": 107966,
+        "44": 13271,
+        "46": 193706
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        },
+        {
+          "stack_base": -184,
+          "declaration_ctor_va": "0x7b7d98",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x7b7e36"
+        },
+        {
+          "stack_base": -264,
+          "declaration_ctor_va": "0x7b7e53",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x7b7ef1"
+        },
+        {
+          "stack_base": -224,
+          "declaration_ctor_va": "0x7b7f0e",
+          "argument_descriptors": [],
+          "native_name": "Change",
+          "description_resource_id": 23098,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 8,
+          "argument_count": 0,
+          "append_va": "0x7b7faf"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawBitmap",
+      "archive_type_id": 20489,
+      "metadata_type_id": 281,
+      "primary": {
+        "rva": 14101404,
+        "col_rva": 15189060,
+        "type_rva": 16351888,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawBitmap@@",
+        "slots": [
+          289326,
+          133961,
+          341346,
+          4401,
+          130021,
+          164516,
+          18551,
+          179386,
+          307136,
+          100221,
+          329936,
+          228566,
+          100156,
+          345766,
+          312726,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          80771,
+          249581,
+          87036,
+          36396,
+          141756,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14101716,
+        "col_rva": 15189172,
+        "type_rva": 16351888,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawBitmap@@",
+        "slots": [
+          226651,
+          139941,
+          243901,
+          214541,
+          32626,
+          102866,
+          44026,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          186866,
+          242201,
+          107186,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 146176,
+        "43": 108301,
+        "44": 13271,
+        "46": 228286
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 0
+    },
+    {
+      "name": "CDrawMulBtn",
+      "archive_type_id": 20520,
+      "metadata_type_id": 262,
+      "primary": {
+        "rva": 14075788,
+        "col_rva": 15185648,
+        "type_rva": 16343000,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawMulBtn@@",
+        "slots": [
+          185171,
+          203196,
+          272386,
+          4401,
+          130021,
+          38511,
+          10916,
+          206461,
+          229986,
+          100221,
+          329936,
+          228566,
+          100156,
+          310986,
+          60751,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          34531,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14076148,
+        "col_rva": 15185860,
+        "type_rva": 16343000,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawMulBtn@@",
+        "slots": [
+          155626,
+          10121,
+          243901,
+          214541,
+          132836,
+          231656,
+          95686,
+          211156,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          62191,
+          273601,
+          133211,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 40316,
+        "43": 54391,
+        "44": 13271,
+        "46": 342096
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 2
+    },
+    {
+      "name": "CDrawHisPic",
+      "archive_type_id": 20526,
+      "metadata_type_id": 261,
+      "primary": {
+        "rva": 14066068,
+        "col_rva": 15184004,
+        "type_rva": 16341232,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawHisPic@@",
+        "slots": [
+          171386,
+          118126,
+          84796,
+          4401,
+          130021,
+          164516,
+          18551,
+          99946,
+          309681,
+          143436,
+          329936,
+          228566,
+          100156,
+          211776,
+          261996,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          150371,
+          156501,
+          87036,
+          36396,
+          201831,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14066396,
+        "col_rva": 15184120,
+        "type_rva": 16341232,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawHisPic@@",
+        "slots": [
+          175726,
+          83111,
+          243901,
+          214541,
+          136266,
+          180906,
+          104251,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          225956,
+          349126,
+          270776,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 64831,
+        "43": 106346,
+        "44": 13271,
+        "46": 140551
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 0
+    },
+    {
+      "name": "CDrawSaveData",
+      "archive_type_id": 20531,
+      "metadata_type_id": 267,
+      "primary": {
+        "rva": 14145860,
+        "col_rva": 15204856,
+        "type_rva": 16379912,
+        "complete_offset": 0,
+        "rtti": ".?AVCDrawSaveData@@",
+        "slots": [
+          95321,
+          127566,
+          262311,
+          4401,
+          130021,
+          40966,
+          183801,
+          54696,
+          161676,
+          247431,
+          329936,
+          228566,
+          100156,
+          211776,
+          186441,
+          117666,
+          77041,
+          188846,
+          160551,
+          53506,
+          339816,
+          326596,
+          42391,
+          336236,
+          35011,
+          333416,
+          11966,
+          289996,
+          57466,
+          6861
+        ]
+      },
+      "iobject": {
+        "rva": 14146188,
+        "col_rva": 15204972,
+        "type_rva": 16379912,
+        "complete_offset": 4,
+        "rtti": ".?AVCDrawSaveData@@",
+        "slots": [
+          138861,
+          25141,
+          243901,
+          214541,
+          246061,
+          8606,
+          331986,
+          327576,
+          206626,
+          316196,
+          346061,
+          303676,
+          336751,
+          306131,
+          347581,
+          5491,
+          288851,
+          85846,
+          158406,
+          195316,
+          44416,
+          166206,
+          37786,
+          306751,
+          247771,
+          268056,
+          344071,
+          63621
+        ]
+      },
+      "metadata_slots": {
+        "12": 100156,
+        "41": 105806,
+        "43": 335911,
+        "44": 13271,
+        "46": 194766
+      },
+      "definitions": [
+        {
+          "stack_base": -752,
+          "declaration_ctor_va": "0xb43bb5",
+          "argument_descriptors": [],
+          "native_name": "Click",
+          "description_resource_id": 42582,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 0,
+          "argument_count": 0,
+          "append_va": "0xb43c65"
+        },
+        {
+          "stack_base": -792,
+          "declaration_ctor_va": "0xb43c82",
+          "argument_descriptors": [],
+          "native_name": "DBLClick",
+          "description_resource_id": 42583,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 1,
+          "argument_count": 0,
+          "append_va": "0xb43d2c"
+        },
+        {
+          "stack_base": -832,
+          "declaration_ctor_va": "0xb43d49",
+          "argument_descriptors": [],
+          "native_name": "DBRClick",
+          "description_resource_id": 42584,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 2,
+          "argument_count": 0,
+          "append_va": "0xb43ded"
+        },
+        {
+          "stack_base": -468,
+          "declaration_ctor_va": "0xb43e0a",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseDown",
+          "description_resource_id": 42585,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 3,
+          "argument_count": 4,
+          "append_va": "0xb43f02"
+        },
+        {
+          "stack_base": -508,
+          "declaration_ctor_va": "0xb43f1f",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseMove",
+          "description_resource_id": 42586,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 4,
+          "argument_count": 4,
+          "append_va": "0xb44017"
+        },
+        {
+          "stack_base": -428,
+          "declaration_ctor_va": "0xb44034",
+          "argument_descriptors": [
+            3,
+            3,
+            3,
+            3
+          ],
+          "native_name": "MouseUp",
+          "description_resource_id": 42587,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 5,
+          "argument_count": 4,
+          "append_va": "0xb4412c"
+        },
+        {
+          "stack_base": -588,
+          "declaration_ctor_va": "0xb44149",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyDown",
+          "description_resource_id": 42588,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 6,
+          "argument_count": 2,
+          "append_va": "0xb44217"
+        },
+        {
+          "stack_base": -548,
+          "declaration_ctor_va": "0xb44234",
+          "argument_descriptors": [
+            3,
+            3
+          ],
+          "native_name": "KeyUp",
+          "description_resource_id": 42589,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 7,
+          "argument_count": 2,
+          "append_va": "0xb44314"
+        }
+      ],
+      "raw_metadata_field18": 0
+    }
+  ],
+  "definitions": [
+    {
+      "stack_base": -752,
+      "declaration_ctor_va": "0xb43bb5",
+      "argument_descriptors": [],
+      "native_name": "Click",
+      "description_resource_id": 42582,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 0,
+      "argument_count": 0,
+      "append_va": "0xb43c65"
+    },
+    {
+      "stack_base": -792,
+      "declaration_ctor_va": "0xb43c82",
+      "argument_descriptors": [],
+      "native_name": "DBLClick",
+      "description_resource_id": 42583,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 1,
+      "argument_count": 0,
+      "append_va": "0xb43d2c"
+    },
+    {
+      "stack_base": -832,
+      "declaration_ctor_va": "0xb43d49",
+      "argument_descriptors": [],
+      "native_name": "DBRClick",
+      "description_resource_id": 42584,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 2,
+      "argument_count": 0,
+      "append_va": "0xb43ded"
+    },
+    {
+      "stack_base": -468,
+      "declaration_ctor_va": "0xb43e0a",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseDown",
+      "description_resource_id": 42585,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 3,
+      "argument_count": 4,
+      "append_va": "0xb43f02"
+    },
+    {
+      "stack_base": -508,
+      "declaration_ctor_va": "0xb43f1f",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseMove",
+      "description_resource_id": 42586,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 4,
+      "argument_count": 4,
+      "append_va": "0xb44017"
+    },
+    {
+      "stack_base": -428,
+      "declaration_ctor_va": "0xb44034",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseUp",
+      "description_resource_id": 42587,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 5,
+      "argument_count": 4,
+      "append_va": "0xb4412c"
+    },
+    {
+      "stack_base": -588,
+      "declaration_ctor_va": "0xb44149",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyDown",
+      "description_resource_id": 42588,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 6,
+      "argument_count": 2,
+      "append_va": "0xb44217"
+    },
+    {
+      "stack_base": -548,
+      "declaration_ctor_va": "0xb44234",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyUp",
+      "description_resource_id": 42589,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 7,
+      "argument_count": 2,
+      "append_va": "0xb44314"
+    }
+  ],
+  "event_info_array": {
+    "rva": 13575428,
+    "col_rva": 15139228,
+    "type_rva": 16300068,
+    "complete_offset": 0,
+    "rtti": ".?AV?$CArray@VCObjEventInfo@@V1@@@",
+    "slots": [
+      11727406,
+      274291,
+      307416,
+      4401,
+      130021
+    ]
+  },
+  "argument_word_array": {
+    "rva": 13575944,
+    "col_rva": 15138952,
+    "type_rva": 16299932,
+    "complete_offset": 0,
+    "rtti": ".?AV?$CArray@GG@@",
+    "slots": [
+      11727406,
+      118441,
+      108241,
+      4401,
+      130021
+    ]
+  },
+  "metadata_event_array_offset": 72,
+  "control_event_array_offset": 48,
+  "static_proof_file": "control-events-native-static-proof.json",
+  "static_proof_sha256": "2c86987eb840df21c6bfccac16f6644be43c5c8adb0b3856802865ce18dd9dec",
+  "candidate_host_verified": false,
+  "label_edit_extension_proof_file": "control-events-label-edit-extension-static-proof.json",
+  "label_edit_extension_proof_sha256": "3990e24eb6201244da1caacae80807096bda01a892b6f3ecc46ab09c972ad0ca",
+  "argument_text_proof_file": "event-argument-text-copy-and-derived-bindings-static-proof.json",
+  "argument_text_proof_sha256": "49492b6440b9593542fab4f62af275f33bae60b328d112d27e68cabae7ca9a32",
+  "bitmap_multibutton_proof_file": "control-events-bitmap-multibutton-static-proof.json",
+  "bitmap_multibutton_proof_sha256": "b08d418d595ea3e81d7882b66f65f20d104f07728bf9924d34a4e9169a952b89",
+  "event_owner_type_offset": 8,
+  "raw_metadata_field18_offset": 24,
+  "event_owner_type_erratum_file": "control-event-owner-type-native-caller-erratum.json",
+  "event_owner_type_erratum_sha256": "26482ad086d02ea9f6e3d6145dd5842307904b804c371a7cedbcbd37778a5a3b",
+  "collection_event_extension_file": "complex-control-prep\\curve-table-event-declarations-native-source.json",
+  "collection_event_extension_sha256": "0f7d91a5f50495bc5728320944679e46c9aa42cd41ec0c94ecf20a9f3dcae88c",
+  "derived_from_profile_sha256": "67767834f8920e6637a0be085b47d7b6e036f350da7063f8d70b94242c4b6ae8"
+}

@@ -1,0 +1,178 @@
+{
+  "schema": 1,
+  "module_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_json_profile_sha256": "b825e823e7e6a9d5b3c5cc8a7e898d017a08391470d66c0b87153c574af45ab7",
+  "metadata_profile_sha256": "3ed3a5b1bb0d06fc7fa7f90bb810c4f8f085d0861a148c4e3c156a7dd8f737b2",
+  "cached_schema_profile_sha256": "4ee8958e79dc40e51f0d41671bcd9941d4f2a321cdeee948a2c4f2d9bdc7b6a0",
+  "key_composition_proof_sha256": "0d9aae5d722f27fb59fe8078e0944a75af3ae2d4f379f22c5967276ac053e23b",
+  "code_guards": [
+    {
+      "name": "RegisterGlobalTypeCache",
+      "rva": "0xa21ce0",
+      "length": 450,
+      "bytes_hex": "558bec6aff684b87030164a1000000005083ec34a1600b3b0133c5508d45f464a300000000894decc745e4000000008b45ec83c0488945d88d4de8518b4dd8e85a1f63ff8d55d0528b4dd8e8ed8661ffeb088d4de8e8d3d55eff8d45d0508d4de8e82ae262ff0fb6c885c90f84400100008d4de8e8c0735fff8945f08b55f0837a040b0f85a00000008b45e483c0018945e4837de4010f8e8d0000008d4de0ff1588903c01c745fc000000008d4dc4518b4d08e8c14561ff8945cc8b55cc8955c8c645fc018b45c88b085168003622018d55e052ff1580903c0183c40cc645fc008d4dc4ff1548913c0168a83622018d4dd4ff1550913c01c645fc028d45e0508d4dd4518b4dece8833b5fffc645fc008d4dd4ff1548913c01c745fcffffffff8d4de0ff1548913c018b55f0528d45dc508b4dec83c124e89a0463ff8d4ddc518d55c0528b4dec83c124e8517b5eff8bc8e8e16460ff0fb6c085c074388d4ddce80c9762ff8b4df08b50043b510474238d4ddce8f99662ff8b4004508b4df08b5104528b45f0508b4d08518b4dece8a98161ffeb178b55f0528b4dec83c124e81f7762ff8b4df08b51048910e9a1feffff8b4df464890d00000000598be55dc20400",
+      "highlow_offsets": [
+        6,
+        21,
+        161,
+        204,
+        214,
+        230,
+        235,
+        244,
+        277,
+        293
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypeCacheFind",
+      "rva": "0xa1d3b0",
+      "length": 32,
+      "bytes_hex": "558bec51894dfc8b450c508b4d08518b4dfce8658c5fff8b45088be55dc20800",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypeCacheIndex",
+      "rva": "0xa0e610",
+      "length": 189,
+      "bytes_hex": "558bec6aff687880030164a1000000005083ec28a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df0e8e47960ff8d55dc528b4df0e82cb35fff508d4dece851a760ff0fb6c085c0744dc745e8000000006a008d4de8518b5508528d4dd4e8fd3e61ff8945e48b45e48945e0c745fc000000008b4de0518d55cc528b4df0e8b92963ff8b008945ecc745fcffffffff8d4dd4e8891b60ff8d4dece898ce63ff83c0048b4df464890d00000000598be55dc20400",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "DeclaredPairIteratorWrapper",
+      "rva": "0xa0ea40",
+      "length": 19,
+      "bytes_hex": "558bec51894dfc8b4dfce8d81160ff8be55dc3",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypeCachePairIteratorWrapper",
+      "rva": "0xa0e8b0",
+      "length": 28,
+      "bytes_hex": "558bec51894dfc8b4dfce8a90564ff50e86ee063ff83c4048be55dc3",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "FormalClassPropertyTagLookup",
+      "rva": "0xa1d580",
+      "length": 149,
+      "bytes_hex": "558bec83ec18894dfc8b4508508d4df8518b4dfc83c104e8ae4261ff8d55f8528d45ec508b4dfc83c104e8679b5fff8bc8e8b41460ff0fb6c885c974508d4df8e82a4361ff83c0048945f48b550c528d45f0508b4df4e8f1fd5fff8d4df0518d55e8528b4df4e87a3f62ff8bc8e87e2963ff0fb6c085c074148d4df0e8ebc761ff8b4d108b50048911b001eb0232c08be55dc20c00",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "DeclaredPairIteratorWrapperChild0xe0ea4a",
+      "rva": "0xa0e9a0",
+      "length": 25,
+      "bytes_hex": "558bec51894dfc8b45fc8b0851e8e06961ff83c4048be55dc3",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypeCachePairIteratorWrapperChild0xe0e8ba",
+      "rva": "0xa0eac0",
+      "length": 19,
+      "bytes_hex": "558bec51894dfc8b4dfce8b76561ff8be55dc3",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypeCachePairIteratorWrapperChild0xe0e8c0",
+      "rva": "0xa1fd20",
+      "length": 17,
+      "bytes_hex": "558bec8b450850e838e662ff83c4045dc3",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true
+    }
+  ],
+  "class_key_utf16_hex": "07687e7b",
+  "class_key": "标签",
+  "language_value": 2052,
+  "language_once": 1,
+  "schema_count": 1,
+  "type_count": 10,
+  "declared_count": 10,
+  "temp_count": 0,
+  "class_node_key_offset": 8,
+  "class_node_schema_offset": 12,
+  "declaration_node_key_offset": 8,
+  "declaration_node_tag_offset": 12,
+  "declaration_node_order_offset": 16,
+  "type_node_key_offset": 8,
+  "type_node_tag_offset": 12,
+  "type_key_has_class_prefix": false,
+  "expected_declarations_in_order": [
+    {
+      "order": 0,
+      "key": "填充颜色",
+      "utf16_hex": "6b5845519c987282",
+      "native_tag": 0
+    },
+    {
+      "order": 1,
+      "key": "边线颜色",
+      "utf16_hex": "b98fbf7e9c987282",
+      "native_tag": 0
+    },
+    {
+      "order": 2,
+      "key": "边线线型",
+      "utf16_hex": "b98fbf7ebf7e8b57",
+      "native_tag": 2
+    },
+    {
+      "order": 3,
+      "key": "动画属性",
+      "utf16_hex": "a8523b755e5c2760",
+      "native_tag": 9
+    },
+    {
+      "order": 4,
+      "key": "字符颜色",
+      "utf16_hex": "575b267b9c987282",
+      "native_tag": 0
+    },
+    {
+      "order": 5,
+      "key": "字体",
+      "utf16_hex": "575b534f",
+      "native_tag": 1
+    },
+    {
+      "order": 6,
+      "key": "显示文本",
+      "utf16_hex": "3e663a7987652c67",
+      "native_tag": 8
+    },
+    {
+      "order": 7,
+      "key": "水平对齐",
+      "utf16_hex": "346c735ef95b509f",
+      "native_tag": 5
+    },
+    {
+      "order": 8,
+      "key": "垂直对齐",
+      "utf16_hex": "8257f476f95b509f",
+      "native_tag": 5
+    },
+    {
+      "order": 9,
+      "key": "背景图",
+      "utf16_hex": "cc806f66fe56",
+      "native_tag": 9
+    }
+  ],
+  "native_calls": 0,
+  "host_access": false,
+  "property_value_getter_or_PManager_not_in_scope": true,
+  "static_ASLR_checks": 27
+}

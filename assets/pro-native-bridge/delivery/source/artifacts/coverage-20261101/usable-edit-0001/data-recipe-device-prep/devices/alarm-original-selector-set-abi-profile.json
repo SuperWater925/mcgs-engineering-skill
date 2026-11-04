@@ -1,0 +1,304 @@
+{
+  "schema": 1,
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_alarm_abi_profile_sha256": "b08d1b8188ab24f77bce26ed5b9a1218b4b6b52f8ae414e9366ce247d7daa817",
+  "scope": "Original UI-owned std::set<int> selector construction/insert/destruction for one9; all storage is private and unrelated to the currently suspended attempt.",
+  "container_bytes": 8,
+  "native_node_bytes": 20,
+  "head_pointer_offset": 0,
+  "size_offset": 4,
+  "node_offsets": {
+    "left": 0,
+    "parent": 4,
+    "right": 8,
+    "color": 12,
+    "is_nil": 13,
+    "value": 16
+  },
+  "entries": {
+    "ctor": "AlarmSelectorSetCtor",
+    "insert": "AlarmSelectorSetInsert",
+    "dtor": "AlarmSelectorSetDtor"
+  },
+  "signatures": {
+    "ctor": "ThisCall IntPtr(IntPtr self), no stack args, returns self",
+    "insert": "ThisCall IntPtr(IntPtr self,IntPtr out_pair8,IntPtr const_value4), ret8, returns out_pair8",
+    "dtor": "ThisCall void(IntPtr self), no stack args; deletes native tree nodes/head, not placement storage"
+  },
+  "functions": [
+    {
+      "rva": 1043856,
+      "bytes": "558bec83ec08894df88d4dffe8f06bf2ff508d45fe508b4df8e8d349f2ff8b45f88be55dc3",
+      "reloc_offsets": [],
+      "name": "AlarmSelectorSetCtor",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1061792,
+      "bytes": "558bec83ec0c894dfc6a008b450c508d4df4518b4dfce870c8f1ff508b4d08e8de44f4ff8b45088be55dc20800",
+      "reloc_offsets": [],
+      "name": "AlarmSelectorSetInsert",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 889392,
+      "bytes": "558bec51894dfc8b4dfce824e0f5ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "AlarmSelectorSetDtor",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1042560,
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8a6aef4ff8b45fc8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorCtorLayer1",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1043072,
+      "bytes": "558bec51894dfc8b450c508b4dfce802bff3ff8b45fc8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorCtorLayer2",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1042976,
+      "bytes": "558bec51894dfc8b4508508b4dfce8310ff3ff8b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorCtorLayer3",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1042880,
+      "bytes": "558bec51894dfc8b4dfce8bb9ff1ff8b4dfce8b88bf1ff8b4dfc89018b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorCtorBody",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1043264,
+      "bytes": "558bec51894dfc8b45fcc700000000008b4dfcc74104000000008b45fc8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorHeaderZeroCtor",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1061632,
+      "bytes": "558bec83ec0c894dfc6a000fb605182e3b01508b4d0c516a008d55f4528b4dfce8c587f1ff508b4d08e87445f4ff8b45088be55dc20800",
+      "reloc_offsets": [
+        14
+      ],
+      "name": "SelectorInsertPair",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1031280,
+      "bytes": "558bec51894dfc8b450850e82d5bf5ff83c4048b088b55fc890a8b450883c00450e81e6ef4ff83c4048b4dfc8a108851048b45fc8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorPairCopy",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 889248,
+      "bytes": "558bec51894dfc8b4dfce8f85ff6ff8b4dfce87b6ef3ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorDtorTree",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 897008,
+      "bytes": "558bec83ec10894dfc8d45f8508b4dfce8d18ef2ff8b08518d55f4528b4dfce8f298f4ff8b00508d4df0518b4dfce8c1a0f5ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorClear",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 899392,
+      "bytes": "558bec83ec14894dfc8d45f8508b4dfce8b18ff4ff508d4d0ce8ee95f3ff0fb6c885c974378d55f4528b4dfce86585f2ff508d4d10e8d295f3ff0fb6c085c0741b8b4dfce88464f5ff8b4d08518b4dfce8718ff4ff8b4508eb47eb458d5510528d4d0ce895def5ff0fb6c085c0741f6a008d4df0518d4d0ce8157bf6ff8b10528d45ec508b4dfce842e6f4ffebce8b4dfc518b550c528b4d08e8c83ef5ff8b45088be55dc20c00",
+      "reloc_offsets": [],
+      "name": "SelectorClearRange",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 898448,
+      "bytes": "558bec51894dfc8b4dfce8fad1f5ff8b00508b4dfce88ef9f2ff8b4dfce8e7d1f5ff8b4dfc8b1189108b4dfce8199af6ff8b4dfc8b1189108b4dfce8507af3ff8b4dfc8b1189108b45fcc74004000000008be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorClearAll",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 892992,
+      "bytes": "558bec83ec0c894df48b45088945f8eb068b4df8894d088b55f852e8f819f5ff83c4040fbe0085c0756f8b4df851e8a96ef5ff83c4048b10528b4df4e8b70ef3ff8b45f850e8a366f6ff83c4048b08894df88b550852e8b667f4ff83c40450e8ed67f5ff83c404508d45ff508b4df4e87a02f5ff8bc8e805f7f5ff6a018b4d08518d55fe528b4df4e86102f5ff8bc8e83c62f4ffe978ffffff8be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorRecursiveNodeErase",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 889360,
+      "bytes": "558bec51894dfc8b4dfce8e0d1f4ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorDtorBase1",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 889328,
+      "bytes": "558bec51894dfc8b4dfce84fdcf5ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorDtorBase2",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 889296,
+      "bytes": "558bec51894dfc8b45fc8b08518b4dfce8a68df3ff8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorHeadRelease",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 893200,
+      "bytes": "558bec83ec08894df88b450850e80b66f6ff83c40450e8ba6ef4ff83c404508d4dff518b4df8e8f301f5ff8bc8e856f0f6ff8b550852e84efbf4ff83c40450e8916ef4ff83c404508d45fe508b4df8e8ca01f5ff8bc8e82df0f6ff8b4d0851e8a86df5ff83c40450e8686ef4ff83c404508d55fd528b4df8e8a101f5ff8bc8e804f0f6ff6a018b4508508d4dfc518b4df8e88801f5ff8bc8e86361f4ff8be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorHeadDeallocator",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 898944,
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8d33bf5ff8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorNodeFree1",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 899136,
+      "bytes": "558bec51894dfc8b450850e86831a50083c4048be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorNodeFree2",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 898160,
+      "bytes": "558bec51894dfc8b45fc508b4dfce8579bf6ff8b08518b4d08e81844f5ff8b45088be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorBegin",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 899200,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e80d40f5ff8b45088be55dc20400",
+      "reloc_offsets": [],
+      "name": "SelectorEnd",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 888112,
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce89d21f7ff8b45fc8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorIteratorCtor",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 888160,
+      "bytes": "558bec51894dfc8b45fc8b4d0889088b550c528b4dfce8a210f7ff8b45fc8be55dc20800",
+      "reloc_offsets": [],
+      "name": "SelectorIteratorBaseCtor",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 945904,
+      "bytes": "558bec51894dfc8b45fc8b0851e84f99f3ff83c4048be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorIteratorValue",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 894928,
+      "bytes": "558bec8b450883c0105dc3",
+      "reloc_offsets": [],
+      "name": "SelectorNodeValue",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 891296,
+      "bytes": "558bec51894dfc8b4dfce8ce74f4ff8b45fc8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorIteratorNext",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 891328,
+      "bytes": "558bec83ec08894dfc8b45fc8b0851e88420f5ff83c4040fbe1085d27405e98d0000008b45fc8b0851e82e75f5ff83c4048b1052e85f20f5ff83c4040fbe0085c075208b4dfc8b1152e80e75f5ff83c4048b0050e845dff3ff83c4048b4dfc8901eb4d8b55fc8b0250e86b02f5ff83c4048b08894df88b55f852e81920f5ff83c4040fbe0085c0751f8b4df851e8ca74f5ff83c4048b55fc8b0a3b08750a8b55fc8b45f88902ebbb8b4dfc8b55f889118b45fc8be55dc3",
+      "reloc_offsets": [],
+      "name": "SelectorIteratorNextTree",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 894144,
+      "bytes": "558bec8b450883c00d5dc3",
+      "reloc_offsets": [],
+      "name": "SelectorNodeIsNil",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1051104,
+      "bytes": "558bec6aff689039f70064a100000000505183ec28535657a1600b3b0133c5508d45f464a3000000008965f0894de06a018d45ef508b4de0e81199f2ff8bc8e8c3faf0ff8945e4c745fc000000008b4de451e8f6fcf3ff83c4048945dc8d55ee528b4de0e8e598f2ff8945d88d45e4508b4ddc51e88c05f2ff83c404508b4dd8e895c0f4ff8b55e452e82b92f2ff83c4048945d48d45ed508b4de0e8ae98f2ff8945d08d4de4518b55d452e85505f2ff83c404508b4dd0e85ec0f4ff8b45e450e87704f3ff83c4048945cc8d4dec518b4de0e87798f2ff8945c88d55e4528b45cc50e81e05f2ff83c404508b4dc8e827c0f4ffeb286a018b4de4518d55eb528b4de0e84798f2ff8bc8e822f8f1ff6a006a00e81705a300b8060b5000c3c745fcffffffffeb07c745fcffffffff8b45e450e8ec72f3ff83c404c600018b4de451e833aff2ff83c404c600018b45e48b4d",
+      "reloc_offsets": [
+        6,
+        25,
+        280
+      ],
+      "name": "SelectorHeadAllocate",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1036624,
+      "bytes": "558bec6aff68e035f70064a100000000505181ecb8000000535657a1600b3b0133c5508d45f464a3000000008965f0894de8c745fc000000008b4de8e808b6f3ff89856cffffff8b856cffffff8b08894ddc8b55e88b028945d8c645ef018b4ddc51e8a1e8f2ff83c4048945bc8b55bc0fbe0285c00f85090100008b4ddc894dd80fb6550c85d2746c8b4510508b4de8e823c5f2ff898568ffffff8b4ddc518b4de8e88b20f5ff8945b48d55d1528b4de8e812faf3ff89857cffffff8b8568ffffff508b4db4518b8d7cffffffe8103af4ff8845e50fb655e585d27509c745cc01000000eb07c745cc000000008a45cc8845efeb468b4ddc518b4de8e83120f5ff8945ac8b5510528b4de8e8a8c4f2ff8945c48d45d3508b4de8e8a9f9f3ff8945a48b4dac518b55c4528b4da4e8b039f4ff8845e18a45e18845ef0fb64def85c9741f8b55dc52e89134f4ff83c404898574ffffff8b8574ffffff8b08894dc8eb178b55dc52e8613cf3ff83c40489459c8b459c8b08894dc88b55c88955dce9dafeffff33c07470c645e3018b4d1051e8bae1f2ff83c4048945800fb65514528b4580508b4dd8510fb655ef528d8564ffffff508b4de8e84a5bf4ff8945946a008d4de3518b5594528d8d50ffffffe8c702f4ff898578ffffff6a008b8578ffffff508b4d08e867a5f4ff8b4508e9d8010000e9a50100008b4de8518b55d8528d4dd4e84e25f3ff0fb645ef85c07505e9950000008d8d5cffffff518b4de8e89275f2ff508d4dd4e8cf7bf1ff8845e40fb655e485d2746ac645e0018b451050e80ae1f2ff83c40489458c0fb64d14518b558c528b45d8506a018d8d60ffffff518b4de8e89d5af4ff898570ffffff6a008d55e0528b8570ffffff508d8d40ffffffe81402f4ff8945846a008b4d84518b4d08e8baa4f4ff8b4508e92b010000eb088d4dd4e8aa75f4ff8b5510528b4de8e802c3f2ff8945b88d4dd4e8d5a0f0ff8945c08b45c0508b4de8e8621ef5ff8945b08d4dd2518b4de8e8e9f7f3ff8945a88b55b8528b45b0508b4da8e8f037f4ff8845e20fb64de285c97464c645e6018b551052e845e0f2ff83c4048945a00fb64514508b4da0518b55d8520fb645ef508d8d58ffffff518b4de8e8d559f4ff8945986a008d55e6528b4598508d8d48ffffffe85201f4ff8945906a008b4d90518b4d08e8f8a3f4ff8b4508eb6ceb3c0fb65514528b4de8e8b441f5ffc645e7006a008d45e7508d4dd4518d8d38ffffffe8cde2f4ff8945886a008b5588528b4d08e8baa3f4ff8b4508eb2eeb1c0fb64514508b4de8e87641f5ff6a006a00e8093ba300b814d54f00c3c745fcffffffffeb07c745fcffffffff8b4df464890d00000000595f5e5b8be55dc21000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        6,
+        28,
+        950
+      ],
+      "name": "SelectorInsertTreeBody",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1033968,
+      "bytes": "558bec83ec0c56894df88b4df8e8244ff1ff83e8018b4df83b410477180fb65518528b4df8e8584ff5ff6820e50f01ff15a4693c018b451450e871edf2ff83c404500fb64d18518b4df8e8b883f0ff8945f48b55f88b420483c0018b4df88941048b55f48b45108942048b4df88b55103b1175298b4df8e82dc0f3ff8b4df489088b4df8e86188f4ff8b55f489108b4df8e89a68f1ff8b4df48908eb640fb6550c85d2742f8b451050e88f3ff4ff83c4048b4df489088b4df8e82c88f4ff8b55103b10750d8b4df8e81d88f4ff8b4df48908eb2d8b551052e84f47f3ff83c4048b4df489088b4df8e84368f1ff8b55103b10750d8b4df8e83468f1ff8b4df489088b55f48955fc8b45fc50e899d4f2ff83c4048b0851e8f7b5f3ff83c4040fbe1085d20f85ce0200008b45fc50e877d4f2ff83c4048bf08b4dfc51e869d4f2ff83c4048b1052e85ed4f2ff83c4048b0050e8e73ef4ff83c4048b0e3b080f854a0100008b55fc52e83dd4f2ff83c4048b0050e832d4f2ff83c4048b0851e8aa46f3ff83c4048b108955108b451050e87fb5f3ff83c4040fbe0885c9756f8b55fc52e803d4f2ff83c4048b0050e861b5f3ff83c404c600018b4d1051e852b5f3ff83c404c600018b55fc52e8dad3f2ff83c4048b0050e8cfd3f2ff83c4048b0851e82db5f3ff83c404c600008b55fc52e8b5d3f2ff83c4048b0050e8aad3f2ff83c4048b08894dfce99c0000008b55fc52e894d3f2ff83c4048b0050e80c46f3ff83c4048b4dfc3b08751d8b55fc52e876d3f2ff83c4048b008945fc8b4dfc518b4df8e82986f1ff8b55fc52e859d3f2ff83c4048b0050e8b7b4f3ff83c404c600018b4dfc51e83fd3f2ff83c4048b1052e834d3f2ff83c4048b0050e892b4f3ff83c404c600008b4dfc51e81ad3f2ff83c4048b1052e80fd3f2ff83c4048b00508b4df8e80bbbf1ffe9450100008b4dfc51e8f3d2f2ff83c4048b1052e8e8d2f2ff83c4048b0050e8713df4ff83c4048b08894d108b551052e835b4f3ff83c4040fbe0085c0756f8b4dfc51e8b9d2f2ff83c4048b1052e817b4f3ff83c404c600018b451050e808b4f3ff83c404c600018b4dfc51e890d2f2ff83c4048b1052e885d2f2ff83c4048b0050e8e3b3f3ff83c404c600008b4dfc51e86bd2f2ff83c4048b1052e860d2f2ff83c4048b008945fce99c0000008b4dfc51e84ad2f2ff83c4048b1052e8d33cf4ff83c4048b4dfc3b08751d8b55fc52e82cd2f2ff83c4048b008945fc8b4dfc518b4df8e822baf1ff8b55fc52e80fd2f2ff83c4048b0050e86db3f3ff83c404c600018b4dfc51e8f5d1f2ff83c4048b1052e8ead1f2ff83c4048b0050e848b3f3ff83c404c600008b4dfc51e8d0d1f2ff83c4048b1052e8c5d1f2ff83c4048b00508b4df8e87e84f1ffe910fdffff8b4df8e8aabcf3ff8b0851e80bb3f3ff83c404c600018b55f8528b45f4508b4d08e8992df3ff8b45085e8be55dc2",
+      "reloc_offsets": [
+        43,
+        49
+      ],
+      "name": "SelectorInsertFixup",
+      "module": "McgsSetPro.exe"
+    },
+    {
+      "rva": 1032192,
+      "bytes": "558bec6aff685035f70064a100000000505183ec18535657a1600b3b0133c5508d45f464a3000000008965f0894de48b4de4e8983ff5ff8945e88b45e850e8bfbdf3ff83c404c600008b4de851e806faf2ff83c404c60000c745fc000000008b550852e837f4f2ff83c4048945e08b45e850e8da47f2ff83c4048945dc8d4def518b4de4e8a5e2f2ff8945d88b55e0528b45dc50e8f847f3ff83c404508b4dd8e84c90f0ffeb1b8b4de8518b4de4e84fcbf4ff6a006a00e8524fa300b8cbc04f00c3c745fcffffffffeb07c745fcffffffff8b45e88b4df464890d00000000595f5e5b8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        6,
+        25,
+        189
+      ],
+      "name": "SelectorNewNode",
+      "module": "McgsSetPro.exe"
+    }
+  ],
+  "data_guards": [
+    {
+      "name": "OriginalSetInsertCompileTimeBool",
+      "module": "McgsSetPro.exe",
+      "rva": 16461336,
+      "bytes": "00",
+      "reloc_offsets": [],
+      "initial_value_source": {
+        "source": "loader-zero-initialized virtual-only .data tail; not an invented on-disk payload",
+        "section": ".data",
+        "section_virtual_rva": 16285696,
+        "section_virtual_size": 238389,
+        "section_raw_size": 169984,
+        "runtime_exact_zero_required": true
+      }
+    }
+  ],
+  "current_failed_claim_reused_or_repaired": false,
+  "actual_new_selector_execution_performed": false
+}

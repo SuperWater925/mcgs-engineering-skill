@@ -1,0 +1,128 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "OpenPage",
+      "rva": 129201,
+      "bytes": "e9aa346800e945145900e9e0021700e92b7fa700e9266e4c00e951c32800e9bc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OpenPageBody",
+      "rva": 6958432,
+      "bytes": "558bec6aff68fce0fe0064a1000000005081ec78030000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "ProbeDrawingFrame",
+      "rva": 6999408,
+      "bytes": "558bec8b450c508b4d085133c9e85effffff5dc3cccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MaxOpenViews",
+      "rva": 241341,
+      "bytes": "e91e3f8100e939af9800e964095000e9bff71600e99ad75b00e9e5303c00e920",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MaxOpenViewsBody",
+      "rva": 8711648,
+      "bytes": "558bec51894dfcb8140000008be55dc3558bec51894dfc0fb64508508b4dfc8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TemplateFirstDoc",
+      "rva": 11732206,
+      "bytes": "ff25b8813c01ff25bc813c01ff25c0813c01ff25c4813c01ff25c8813c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "TemplateNextDoc",
+      "rva": 11732212,
+      "bytes": "ff25bc813c01ff25c0813c01ff25c4813c01ff25c8813c01ff25cc813c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "PageShow",
+      "rva": 86886,
+      "bytes": "e975e18300e970cd7a00e9ab5b8000e936927f00e9f1b0a700e92c117600e937",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PageShowBody",
+      "rva": 8729824,
+      "bytes": "558bec6aff687015010164a1000000005083ec6ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    }
+  ],
+  "main_frame": {
+    "vtable_rva": 14395308,
+    "col_rva": 15227908,
+    "type_descriptor_rva": 16299644,
+    "rtti": ".?AVC0FrmMain@@",
+    "offset": 0
+  },
+  "template": {
+    "vtable_rva": 14396356,
+    "col_rva": 15228304,
+    "type_descriptor_rva": 16394500,
+    "rtti": ".?AVC0FrmMultiDocTemplate@@",
+    "offset": 0
+  },
+  "template_frame_offset": 992,
+  "mfc": {
+    "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "imports": [
+      {
+        "name": "TemplateFirstDoc",
+        "iat_rva": 16548280,
+        "ordinal": 5475,
+        "target_rva": 281942,
+        "bytes": "8b8194000000c38bcfffd6e92340fcff85c00f8531b4ffffe93d37fcff85c00f",
+        "reloc_offsets": []
+      },
+      {
+        "name": "TemplateNextDoc",
+        "iat_rva": 16548284,
+        "ordinal": 6057,
+        "target_rva": 253094,
+        "bytes": "558bec5de97937fcff558bec5151568bf1837e04000f8416620000b8ffff0000",
+        "reloc_offsets": []
+      }
+    ]
+  },
+  "max_open_views": 20,
+  "source_evidence": "page-control-prep/page-view-open-static-supplement.json",
+  "source_evidence_sha256": "2801077cb4843ae76ec5051993b7594aaa708c5b4660d56772d55093fd3f4feb",
+  "open_abi": "int __thiscall(C0FrmMain*, int archivePageID); 0 is success; original reuses the service-owned C0DocUser then adds it to the native template",
+  "frame_probe_abi": "bool(AL) __cdecl(CDocument*, C0FrmDraw**); AACD70 wrapper supplies unused ECX=0; no project mutation",
+  "preconditions": [
+    "password-free target; credential dialog is not bypassed",
+    "already-open target or current frame count strictly below native limit20",
+    "no other frames may be closed",
+    "preserve all existing native documents/controls/raw states/dirty flags"
+  ],
+  "host_invoked": false,
+  "functional_acceptance_pending": true
+}

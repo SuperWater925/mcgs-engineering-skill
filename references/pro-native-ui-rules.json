@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "purpose": "Pure-file, explicitly scoped UI preservation rules; no engineering or runtime acceptance implied.",
+  "native_profile_contract": {
+    "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "mfc110u_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "code_guards": {
+      "password-store-empty-ANSI-copy": "40795f6d6d82eb71fe9225e45f272242adfc98427c51bafc27f6b46eec7c64a8",
+      "password-load-ANSI-conversion": "42928e302250e185e35dd4b8026240e55898a534928e5194739010472d3182ee",
+      "Cell-full-property-getter": "c5e7fa4af939960cee434f62d6f2f98c5e3102f73fdc85d353dd358478b06545",
+      "Picture-content-hash-wrapper": "7ed1670cf569cf9c11c94399ba64be5815e1318da86b0b012ccd8651198ee3d1",
+      "Image-hash-producer": "38019cc5f6d7fab4ba71ca8ee564da31d6d47aeea01608bd60f27f680d7cb676"
+    }
+  },
+  "native_code_evidence": [
+    {
+      "name": "password-store-empty-ANSI-copy",
+      "module": "McgsSetPro.exe",
+      "rva": 7221603,
+      "length": 169,
+      "sha256": "40795f6d6d82eb71fe9225e45f272242adfc98427c51bafc27f6b46eec7c64a8"
+    },
+    {
+      "name": "password-load-ANSI-conversion",
+      "module": "McgsSetPro.exe",
+      "rva": 7225211,
+      "length": 54,
+      "sha256": "42928e302250e185e35dd4b8026240e55898a534928e5194739010472d3182ee"
+    },
+    {
+      "name": "Cell-full-property-getter",
+      "module": "McgsSetPro.exe",
+      "rva": 4358304,
+      "length": 1515,
+      "sha256": "c5e7fa4af939960cee434f62d6f2f98c5e3102f73fdc85d353dd358478b06545"
+    },
+    {
+      "name": "Picture-content-hash-wrapper",
+      "module": "McgsSetPro.exe",
+      "rva": 8923136,
+      "length": 31,
+      "sha256": "7ed1670cf569cf9c11c94399ba64be5815e1318da86b0b012ccd8651198ee3d1"
+    },
+    {
+      "name": "Image-hash-producer",
+      "module": "McgsSetPro.exe",
+      "rva": 8791936,
+      "length": 349,
+      "sha256": "38019cc5f6d7fab4ba71ca8ee564da31d6d47aeea01608bd60f27f680d7cb676"
+    }
+  ],
+  "profile_input_note": "native_profile is evidence copied from an already verified binary/ABI capture. This helper matches those declarations; it does not attach to a process or attest input provenance. Unknown binary or missing/mismatched code profile cannot pass password/Cell exceptions. Software release numbers are not used.",
+  "contracts": {
+    "pictures": {
+      "native_image_wire_definition": "Complete native image serialization stream after the CPicture name/content_hash CString fields, retaining its mode/dimensions/length and every payload byte. Extract using an independently verified archive reader.",
+      "old_rows": "Names, name order and complete native_image_wire must stay exact. content_hash is a distinct metadata field, never omitted from comparison.",
+      "mode2": "Only when little-endian first DWORD is2, after content_hash may be independently checked against MD5 of the entire native_image_wire.",
+      "other_modes": "Changed content_hash requires a SHA-bound original native-save receipt containing that exact name/content_hash. Missing receipt => REVIEW, conflicting receipt => DIFFERENCE. Algorithm reproduction is not claimed.",
+      "additions": "Only declared appended names, mode2 PNG exact source bytes/SHA, native and PNG dimensions, complete PNG chunks/CRCs and content_hash=MD5(image wire)."
+    },
+    "empty_ANSI_password": {
+      "required_profile_guards": [
+        "password-store-empty-ANSI-copy",
+        "password-load-ANSI-conversion"
+      ],
+      "required_metadata": {
+        "gate": 2,
+        "utf16_length": 0,
+        "utf16_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "wire": "Both exactly2 bytes, first byte NUL, only offset1 may differ. Native before/after metadata must be exact. No nonempty password, other length/offset or unknown profile exception.",
+      "producer": "AE319A GetLength L; AE31A0 allocates2L+2; AE31CC converts to ANSI; AE3204 copies2L+2. For empty ANSI text byte0 terminates the string; byte1 is the oversized-copy tail. LOAD AE3F88 uses ANSI-to-wide. The original STORE does not assign doc+2B4. CByteArray SetSize zero-fills, so no uninitialized destination explanation.",
+      "privacy": "Report only wire lengths/SHA and metadata-match flags. Never print wire hex, decoded text or arbitrary input values."
+    },
+    "Cell_uniform_fill": {
+      "required_profile_guards": [
+        "Cell-full-property-getter"
+      ],
+      "actual_class": "CDrawCell",
+      "actual_type_id": 20537,
+      "native_key": "填充颜色",
+      "native_type_tag": 0,
+      "rule": "Original getter8280A0 aggregates property3 over its actual complete+E4 child list. Exact actual child-ID set must equal approved plan child-ID set, every approved fill must be identical, and each actual child fill must match its approved value. Expected parent fill is computed only from those approved values, then compared to actual parent. No key/byte masks and no parent raw-storage preservation claim."
+    }
+  },
+  "input_schema": {
+    "schema": 1,
+    "native_profile": "Optional evidence object matching native_profile_contract; mandatory for special password/Cell rules. Copy verified declarations, not a software version.",
+    "pictures": {
+      "before": "array of {name,content_hash,native_image_wire: blob}",
+      "after": "same shape; old names plus declared additions",
+      "before_names": "exact original list of names",
+      "after_names": "expected old order plus approved additions",
+      "approved_additions": "array of {name,source: blob with sha256,dimensions:[width,height]}",
+      "native_save_receipt": "optional {file,sha256,records_pointer}; default pointer /actions/0/apply/resource_catalog_after/records; records contain name and content_hash"
+    },
+    "passwords": "array of {id,before_wire:blob,after_wire:blob,before_native:{gate,utf16_length,utf16_sha256},after_native:same}; id is a nonsecret caller identifier",
+    "cells": "array of {id,actual_class,actual_type_id,children:[{id,actual_fill}],approved_child_fills:[{id,value}],actual_parent_fill}; explicit plan inputs, no actual-derived expected",
+    "blob": "Exactly {hex} or {file,sha256}; relative file paths resolve against input JSON. No source project/database opening or serialization is performed."
+  },
+  "CLI": {
+    "command": "python -B scripts/native_ui_rules.py --input extracted-ui-evidence.json --out new-rule-report.json",
+    "exit_codes": {
+      "0": "All supplied checks PASS",
+      "2": "DIFFERENCE",
+      "3": "REVIEW remains, including BMP metadata without native receipt",
+      "1": "Invalid input or I/O error; values are not echoed"
+    },
+    "report": "New file only; raw input, password bytes and image bytes are never included."
+  },
+  "examples": {
+    "password_shape": {
+      "schema": 1,
+      "native_profile": "copy already verified native_profile_contract evidence",
+      "passwords": [
+        {
+          "id": "example-page",
+          "before_wire": {
+            "hex": "0011"
+          },
+          "after_wire": {
+            "hex": "0022"
+          },
+          "before_native": {
+            "gate": 2,
+            "utf16_length": 0,
+            "utf16_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "after_native": {
+            "gate": 2,
+            "utf16_length": 0,
+            "utf16_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      ]
+    },
+    "note": "Example byte blocks are synthetic logical-shape examples only; never write them into an engineering project."
+  }
+}

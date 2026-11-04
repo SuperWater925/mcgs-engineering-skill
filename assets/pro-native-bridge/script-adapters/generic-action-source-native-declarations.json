@@ -1,0 +1,445 @@
+{
+  "schema": 1,
+  "scope": "Installed exact script declaration metadata; source generation only",
+  "modules": {
+    "script_window_func.dll": {
+      "path": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "preferred_base": "0x64300000",
+      "argument_and_return_declarations": {
+        "0x64304a40": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+          "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+          "entry": "0x64304a40",
+          "resolved": "0x64304a40",
+          "jump_chain": [
+            "0x64304a40"
+          ],
+          "code": [
+            {
+              "address": "0x64304a40",
+              "mnemonic": "push",
+              "operands": "esi"
+            },
+            {
+              "address": "0x64304a41",
+              "mnemonic": "push",
+              "operands": "ebx"
+            },
+            {
+              "address": "0x64304a42",
+              "mnemonic": "mov",
+              "operands": "ebx, ecx"
+            },
+            {
+              "address": "0x64304a44",
+              "mnemonic": "sub",
+              "operands": "esp, 0x14"
+            },
+            {
+              "address": "0x64304a47",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx], 0"
+            },
+            {
+              "address": "0x64304a4d",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 4], 0"
+            },
+            {
+              "address": "0x64304a54",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 8], 0"
+            },
+            {
+              "address": "0x64304a5b",
+              "mnemonic": "mov",
+              "operands": "dword ptr [esp], 8"
+            },
+            {
+              "address": "0x64304a62",
+              "mnemonic": "call",
+              "operands": "0x64301920"
+            },
+            {
+              "address": "0x64304a67",
+              "mnemonic": "mov",
+              "operands": "ecx, dword ptr [0x643075b0]"
+            },
+            {
+              "address": "0x64304a6d",
+              "mnemonic": "lea",
+              "operands": "edx, [eax + 8]"
+            },
+            {
+              "address": "0x64304a70",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx], eax"
+            },
+            {
+              "address": "0x64304a72",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx + 8], edx"
+            },
+            {
+              "address": "0x64304a75",
+              "mnemonic": "mov",
+              "operands": "dword ptr [eax], ecx"
+            },
+            {
+              "address": "0x64304a77",
+              "mnemonic": "mov",
+              "operands": "ecx, dword ptr [0x643075b4]"
+            },
+            {
+              "address": "0x64304a7d",
+              "mnemonic": "mov",
+              "operands": "dword ptr [eax + 4], ecx"
+            },
+            {
+              "address": "0x64304a80",
+              "mnemonic": "mov",
+              "operands": "eax, ebx"
+            },
+            {
+              "address": "0x64304a82",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx + 4], edx"
+            },
+            {
+              "address": "0x64304a85",
+              "mnemonic": "add",
+              "operands": "esp, 0x14"
+            },
+            {
+              "address": "0x64304a88",
+              "mnemonic": "pop",
+              "operands": "ebx"
+            },
+            {
+              "address": "0x64304a89",
+              "mnemonic": "pop",
+              "operands": "esi"
+            },
+            {
+              "address": "0x64304a8a",
+              "mnemonic": "ret",
+              "operands": "4"
+            }
+          ],
+          "calls": [
+            {
+              "at": "0x64304a62",
+              "target": "0x64301920",
+              "resolved": "0x64301920",
+              "jump_chain": [
+                "0x64301920"
+              ]
+            }
+          ],
+          "truncated": false
+        },
+        "0x64304ab0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+          "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+          "entry": "0x64304ab0",
+          "resolved": "0x64304ab0",
+          "jump_chain": [
+            "0x64304ab0"
+          ],
+          "code": [
+            {
+              "address": "0x64304ab0",
+              "mnemonic": "mov",
+              "operands": "eax, 4"
+            },
+            {
+              "address": "0x64304ab5",
+              "mnemonic": "ret",
+              "operands": ""
+            }
+          ],
+          "calls": [],
+          "truncated": false
+        }
+      }
+    },
+    "script_tool_func.dll": {
+      "path": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+      "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+      "preferred_base": "0x62a00000",
+      "argument_and_return_declarations": {
+        "0x62a100b0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a100b0",
+          "resolved": "0x62a100b0",
+          "jump_chain": [
+            "0x62a100b0"
+          ],
+          "code": [
+            {
+              "address": "0x62a100b0",
+              "mnemonic": "push",
+              "operands": "esi"
+            },
+            {
+              "address": "0x62a100b1",
+              "mnemonic": "push",
+              "operands": "ebx"
+            },
+            {
+              "address": "0x62a100b2",
+              "mnemonic": "mov",
+              "operands": "ebx, ecx"
+            },
+            {
+              "address": "0x62a100b4",
+              "mnemonic": "sub",
+              "operands": "esp, 0x14"
+            },
+            {
+              "address": "0x62a100b7",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx], 0"
+            },
+            {
+              "address": "0x62a100bd",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 4], 0"
+            },
+            {
+              "address": "0x62a100c4",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 8], 0"
+            },
+            {
+              "address": "0x62a100cb",
+              "mnemonic": "mov",
+              "operands": "dword ptr [esp], 0xc"
+            },
+            {
+              "address": "0x62a100d2",
+              "mnemonic": "call",
+              "operands": "0x62a02158"
+            },
+            {
+              "address": "0x62a100d7",
+              "mnemonic": "mov",
+              "operands": "ecx, dword ptr [0x62a14c2c]"
+            },
+            {
+              "address": "0x62a100dd",
+              "mnemonic": "lea",
+              "operands": "edx, [eax + 0xc]"
+            },
+            {
+              "address": "0x62a100e0",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx], eax"
+            },
+            {
+              "address": "0x62a100e2",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx + 8], edx"
+            },
+            {
+              "address": "0x62a100e5",
+              "mnemonic": "mov",
+              "operands": "dword ptr [eax], ecx"
+            },
+            {
+              "address": "0x62a100e7",
+              "mnemonic": "mov",
+              "operands": "ecx, dword ptr [0x62a14c30]"
+            },
+            {
+              "address": "0x62a100ed",
+              "mnemonic": "mov",
+              "operands": "dword ptr [eax + 4], ecx"
+            },
+            {
+              "address": "0x62a100f0",
+              "mnemonic": "mov",
+              "operands": "ecx, dword ptr [0x62a14c34]"
+            },
+            {
+              "address": "0x62a100f6",
+              "mnemonic": "mov",
+              "operands": "dword ptr [eax + 8], ecx"
+            },
+            {
+              "address": "0x62a100f9",
+              "mnemonic": "mov",
+              "operands": "eax, ebx"
+            },
+            {
+              "address": "0x62a100fb",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ebx + 4], edx"
+            },
+            {
+              "address": "0x62a100fe",
+              "mnemonic": "add",
+              "operands": "esp, 0x14"
+            },
+            {
+              "address": "0x62a10101",
+              "mnemonic": "pop",
+              "operands": "ebx"
+            },
+            {
+              "address": "0x62a10102",
+              "mnemonic": "pop",
+              "operands": "esi"
+            },
+            {
+              "address": "0x62a10103",
+              "mnemonic": "ret",
+              "operands": "4"
+            }
+          ],
+          "calls": [
+            {
+              "at": "0x62a100d2",
+              "target": "0x62a02158",
+              "resolved": "0x62a02158",
+              "jump_chain": [
+                "0x62a02158"
+              ]
+            }
+          ],
+          "truncated": false
+        },
+        "0x62a10120": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a10120",
+          "resolved": "0x62a10120",
+          "jump_chain": [
+            "0x62a10120"
+          ],
+          "code": [
+            {
+              "address": "0x62a10120",
+              "mnemonic": "mov",
+              "operands": "eax, 4"
+            },
+            {
+              "address": "0x62a10125",
+              "mnemonic": "ret",
+              "operands": ""
+            }
+          ],
+          "calls": [],
+          "truncated": false
+        },
+        "0x62a10080": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a10080",
+          "resolved": "0x62a10080",
+          "jump_chain": [
+            "0x62a10080"
+          ],
+          "code": [
+            {
+              "address": "0x62a10080",
+              "mnemonic": "mov",
+              "operands": "eax, ecx"
+            },
+            {
+              "address": "0x62a10082",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx], 0"
+            },
+            {
+              "address": "0x62a10088",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 4], 0"
+            },
+            {
+              "address": "0x62a1008f",
+              "mnemonic": "mov",
+              "operands": "dword ptr [ecx + 8], 0"
+            },
+            {
+              "address": "0x62a10096",
+              "mnemonic": "ret",
+              "operands": "4"
+            }
+          ],
+          "calls": [],
+          "truncated": false
+        },
+        "0x62a100a0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a100a0",
+          "resolved": "0x62a100a0",
+          "jump_chain": [
+            "0x62a100a0"
+          ],
+          "code": [
+            {
+              "address": "0x62a100a0",
+              "mnemonic": "mov",
+              "operands": "eax, 4"
+            },
+            {
+              "address": "0x62a100a5",
+              "mnemonic": "ret",
+              "operands": ""
+            }
+          ],
+          "calls": [],
+          "truncated": false
+        }
+      }
+    }
+  },
+  "closed_contracts": {
+    "SetWindow": {
+      "argument_codes": [
+        261,
+        4
+      ],
+      "return_code": 4,
+      "modes": {
+        "1": "open visible",
+        "2": "open hidden",
+        "3": "close",
+        "4": "print",
+        "5": "refresh"
+      }
+    },
+    "SetDevice": {
+      "argument_codes": [
+        262,
+        3,
+        8
+      ],
+      "return_code": 4,
+      "modes": {
+        "1": "start",
+        "2": "stop",
+        "3": "query running state",
+        "4": "collect once",
+        "5": "period ms from command string",
+        "6": "exact provider command"
+      }
+    },
+    "Beep": {
+      "argument_codes": [],
+      "return_code": 4,
+      "wav_equivalence": false
+    }
+  },
+  "notes": [
+    "Native CObjData type1/2/3 differs from script declaration argument codes3/4/8.",
+    "SetWindow takes actual typed window reference0x105, SetDevice actual typed device reference0x106, not fabricated ID literals.",
+    "Provided declaration source is Windows engineering-plugin evidence; no Linux runtime or PLC test performed."
+  ],
+  "native_calls_performed": false,
+  "compiler_or_tests_run": false
+}

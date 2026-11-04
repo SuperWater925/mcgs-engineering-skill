@@ -1,0 +1,196 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "PageNew",
+      "rva": "0x6bb580",
+      "va": "0xabb580",
+      "bytes": "558bec6aff686803ff0064a100000000505181ecd8000000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "WindowServiceRename",
+      "rva": "0x7a2080",
+      "va": "0xba2080",
+      "bytes": "558bec6aff68df42000164a1000000005083ec2ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString const& oldName",
+        "CString const& newName"
+      ],
+      "returns": "bool8"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "va": "0xc50800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "PageSetName",
+      "rva": "0x850fb0",
+      "va": "0xc50fb0",
+      "bytes": "558bec6aff685d11010164a1000000005083ec50a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString const& newName"
+      ],
+      "returns": "bool8"
+    },
+    {
+      "name": "NativeAllocateBlankPage",
+      "rva": "0x6e0980",
+      "va": "0xae0980",
+      "bytes": "558bec6aff684a43ff0064a100000000505181ec2c050000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ],
+      "calling_convention": "cdecl",
+      "stack_args": [
+        "CDaoDatabase*",
+        "int32* resultId"
+      ],
+      "returns": "int32"
+    },
+    {
+      "name": "NativeRegisterPage",
+      "rva": "0x6bb8c0",
+      "va": "0xabb8c0",
+      "bytes": "558bec6aff68ce03ff0064a1000000005083ec1ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "C0RecUser*"
+      ],
+      "returns": "int32"
+    },
+    {
+      "name": "ObjectModelRename",
+      "rva": "0x7d68f0",
+      "va": "0xbd68f0",
+      "bytes": "558bec6aff686787000164a1000000005081ecf8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "IObject*",
+        "CString const&",
+        "bool unlockReferences",
+        "CString& error",
+        "bool checkRepeat"
+      ],
+      "returns": "bool8"
+    }
+  ],
+  "baseline": {
+    "index": "D:\\unbound-task-root\\extensions\\run-0001\\before\\export\\index.json",
+    "index_sha256": "c2a74586fe9463ca9ba98bf3c58d6049ce3f69e2d905203a97a24362ff95a211",
+    "project_sha256": "96a8cd5e73c0bec13d9991738b8db505060fa69de8dffa0e5faefb10fd3c9924",
+    "page_count": 12,
+    "all_delete_flags_zero": true,
+    "pages": [
+      {
+        "id": 2,
+        "name": "首页"
+      },
+      {
+        "id": 3,
+        "name": "Title"
+      },
+      {
+        "id": 4,
+        "name": "状态监控"
+      },
+      {
+        "id": 5,
+        "name": "参数设置"
+      },
+      {
+        "id": 7,
+        "name": "实时曲线"
+      },
+      {
+        "id": 8,
+        "name": "历史曲线"
+      },
+      {
+        "id": 9,
+        "name": "XY曲线"
+      },
+      {
+        "id": 10,
+        "name": "报警浏览"
+      },
+      {
+        "id": 11,
+        "name": "存盘浏览"
+      },
+      {
+        "id": 12,
+        "name": "配方管理"
+      },
+      {
+        "id": 24,
+        "name": "提示框"
+      },
+      {
+        "id": 30,
+        "name": "首页_复件1"
+      }
+    ]
+  },
+  "methods": {
+    "new_page": {
+      "owner": "C0ManListUser",
+      "owner_vtable_rva": "0xdbd7e4",
+      "slot": 100,
+      "thunk_rva": "0x4ab6",
+      "body": "0xabb580",
+      "main_return": "ret at0xABB6B9",
+      "no_modal_dialog": true
+    },
+    "rename": {
+      "service_slot": 5,
+      "service_thunk_rva": "0x538af",
+      "body": "0xba2080",
+      "main_return": "ret8 at0xBA2195",
+      "bool_return": "AL"
+    }
+  },
+  "flow_evidence": [
+    "ABB580: obtain current root database, call AE0980(db,&id), open native user row by iID, ABB8C0(row), AB8EE0(selectedRow). This is not archive copy.",
+    "AE0980: generates unique default name; purges iDeleteFlag>0 rows before native record AddNew/Update; precondition pins all12 old flags0.",
+    "ABB8C0: UserWindowService.add(name,id); ObjectModel notification action0; list insertion with original native row attributes.",
+    "BA2080: old/new equal returns true; otherwise resolves old name and forwards BD21C0(object,newName,true).",
+    "BD21C0: forwards ObjectModel virtual4 to BD68F0 with unlockReferences=true, local CString error and checkRepeat=true.",
+    "BD68F0: checks parent duplicate, unlocks references, calls IObject slot10 PageSetName, renames model maps, module manager rename, updates referencing objects, marks and saves IPreLoadable through BD7D70.",
+    "C50FB0: obtains loaded page document via native C537D0, assigns doc+25C name and UserWindowObject+0C name, returns AL1; false if no loaded document."
+  ],
+  "status": "Static ABI only; helper has not executed vendor calls. Root owns deployment, semantic baseline guard, save/readback and durability acceptance."
+}

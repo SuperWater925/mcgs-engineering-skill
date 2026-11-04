@@ -1,0 +1,351 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "kind": "control-mulbutton-visual",
+  "layout": {
+    "complete_size": 508,
+    "type_id": 20520,
+    "levels_array_offset": 272,
+    "image_state_array_offset": 292,
+    "text_state_array_offset": 312,
+    "fill_array_offset": 332,
+    "fill_size": 12,
+    "fill_type_offset": 4,
+    "fill_color_offset": 8,
+    "image_state_size": 28,
+    "state_frames_offset": 8,
+    "image_frame_size": 120,
+    "frame_image_offset": 104
+  },
+  "functions": [
+    {
+      "name": "FillCtor",
+      "rva": 10344560,
+      "bytes": "558bec51894dfc8b4dfce8b9a566ff8b45fcc7000cd421018b4dfcc74104000000008b55fcc74208000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "FillAssign",
+      "rva": 10344656,
+      "bytes": "558bec51894dfc8b45fc3b450875058b45fceb1b8b4dfc8b55088b42048941048b4dfc8b55088b42088941088b45fc8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FillPairSerialize",
+      "rva": 10346576,
+      "bytes": "558bec51894dfc8b4d08e8470c67ff85c074208b45fc8b4804518b4d08e8cb4465ff8b55fc8b4208508b4d08e8bc4465ffeb1e8b4dfc83c104518b4d08e832b365ff8b55fc83c208528b4d08e823b365ff8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ClearAllImages",
+      "rva": 6595072,
+      "bytes": "558bec83ec14894df4c745fc00000000eb098b45fc83c0018945fc8b4df483c108e82406a0ff3945fc7d3d8b4dfc518b4df483c108e81e839cff8b108955f08b45f08945f8837df80074146a018b4df88b118b4df88b4204ffd08945eceb07c745ec00000000ebaa8b4df483c108e8f73d9dff8be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageListDtor",
+      "rva": 6592176,
+      "bytes": "558bec6aff68a78bfe0064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b45f0c700dc031b01c745fc010000008b4df0e881269dffc645fc008b4df083c108e88e739dffc745fcffffffff8b4df0e8c2c69dff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        43
+      ]
+    },
+    {
+      "name": "ImageFrameDtor",
+      "rva": 6585344,
+      "bytes": "558bec6aff68e789fe0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b45f0c70044031b018b4df0c7410490031b01c745fc000000008b55f0837a6800743a8b45f08b4868894de88b55e88955ec837dec0074146a018b45ec8b108b4dec8b4204ffd08945e4eb07c745e4000000008b4df0c7416800000000c745fcffffffff8b4df0e897809cff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        55
+      ]
+    },
+    {
+      "name": "ImageFrameDeletingDtor",
+      "rva": 6601920,
+      "bytes": "558bec51894dfc8b4dfce866ce9fff8b450883e00174098b4dfc51e8fce39cff8b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OwnerBitmapDtor",
+      "rva": 8771184,
+      "bytes": "558bec6aff68042a010164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b45f0c7009c091f018b4df0c741040c0a1f01c745fc060000008b55f081c28800000052e8a6ee7bff83c4048b45f083c02c50e837f47bff83c4048b4df081c18000000051e823c47bff83c4048b55f083c21052e8e0257bff83c4048b45f083c04050e8c4297fff83c4048b4df083797400743a8b55f08b42748945e88b4de8894dec837dec0074146a018b55ec8b028b4dec8b5004ffd28945e4eb07c745e4000000008b45f0c7407400000000c645fc058b4df081c188000000e89c277effc645fc048b4df081c180000000ff1510753c01c645fc038b4df083c140e8b3937effc645fc028b4df083c12ce8e11a2d00c645fc018b4df083c10cff1548913c01c645fc008b4df083c104e8abca7bffc745fcffffffff8b4df0e8fedf7cff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        55,
+        247,
+        293
+      ]
+    },
+    {
+      "name": "OwnerBitmapDeletingDtor",
+      "rva": 8842016,
+      "bytes": "558bec51894dfc8b4dfce8c5fa7cff8b450883e00174098b4dfc51e89cb57aff8b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrameArrayRemoveAll",
+      "rva": 734368,
+      "bytes": "558bec51894dfc6aff6a008b4dfce8e3bea7008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MulButtonCtor",
+      "rva": 4197648,
+      "bytes": "558bec6aff68949efb0064a1000000005051a1600b3b0133c5508d45f464a300000000894df068285000008b4df0e85bc8c0ffc745fc000000008b45f0c7008cc716018b4df0c74104f4c816018b4df081c14c010000e842d2c0ffc645fc018b4df081c160010000ff1588903c01c645fc028b4df081c174010000ff1588903c01c645fc038b4df081c1ac010000ff1588903c01c645fc048b4df081c1b0010000e854e17200c645fc058b4df081c1e0010000e8d3e4c4ffc645fc06689cc216018b4df081c160010000ff1584903c018b55f0c78264010000ffffffff8b45f0c78068010000000000008b4df0c7816c010000ffffffff8b55f0c782700100000000000068a0c216018b4df081c174010000ff1584903c018b45f0c78078010000ffffffff8b4df0c7817c010000000000008b55f0c78280010000ffffffff8b45f0c78084010000000000008b4df0c78188010000010000008b55f0c7828c010000010000008b45f0c78090010000000000008b4df0c78194010000000000008b55f0f30f100528bb0e01f30f1182980100008b45f0f30f100540bb0e01f30f11809c0100008b4df0f30f1005f8990e01f30f1181a00100008b55f0c782a4010000050000008b45f0c780a80100000100000068a4c216018b4df081c1ac010000ff1584903c018b4df0c781c4010000000000008b55f0c782c8010000000000008b45f0c780cc010000000000008b4df0c781d0010000000000008b55f0c782d401000032000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        63,
+        73,
+        106,
+        125,
+        144,
+        189,
+        204,
+        261,
+        276,
+        391,
+        410,
+        429,
+        468,
+        483
+      ]
+    },
+    {
+      "name": "FillArrayCtor",
+      "rva": 4248560,
+      "bytes": "558bec51894dfc8b4dfce8911f72008b45fcc70054c716018b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    }
+  ],
+  "tables": [
+    {
+      "name": "FillArray",
+      "vtable_rva": 14075732,
+      "col_rva": 15185976,
+      "type_rva": 16343100,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCBtnOutline@@@@",
+      "slots": [
+        11728390,
+        106441,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "Fill",
+      "vtable_rva": 14799884,
+      "col_rva": 15267620,
+      "type_rva": 16426656,
+      "complete_offset": 0,
+      "rtti": ".?AVCBtnOutline@@",
+      "slots": [
+        187981,
+        98251,
+        28616,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "Levels",
+      "vtable_rva": 13545588,
+      "col_rva": 15133396,
+      "type_rva": 16292704,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CArray@MM@@",
+      "slots": [
+        11727406,
+        35601,
+        114451,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "OwnerBitmap",
+      "vtable_rva": 14616988,
+      "col_rva": 15250276,
+      "type_rva": 16415740,
+      "complete_offset": 0,
+      "rtti": ".?AVCOwnerBitmap@@",
+      "slots": [
+        338676,
+        219126,
+        206816,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "OwnerBitmapSecondary",
+      "vtable_rva": 14617100,
+      "col_rva": 15250376,
+      "type_rva": 16415740,
+      "complete_offset": 4,
+      "rtti": ".?AVCOwnerBitmap@@",
+      "slots": [
+        68071,
+        63176,
+        243901,
+        214541,
+        13886,
+        268621,
+        244596
+      ]
+    },
+    {
+      "name": "TextStates",
+      "vtable_rva": 14075704,
+      "col_rva": 15185552,
+      "type_rva": 16342924,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCTextListInObj@@@@",
+      "slots": [
+        11728390,
+        87061,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "TextList",
+      "vtable_rva": 14975516,
+      "col_rva": 15278664,
+      "type_rva": 16440488,
+      "complete_offset": 0,
+      "rtti": ".?AVCTextListInObj@@",
+      "slots": [
+        170681,
+        169881,
+        294931,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "TextFrames",
+      "vtable_rva": 14975488,
+      "col_rva": 15278756,
+      "type_rva": 16440524,
+      "complete_offset": 0,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCTextInObj@@@@",
+      "slots": [
+        11728390,
+        265126,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "TextFrame",
+      "vtable_rva": 14975364,
+      "col_rva": 15278540,
+      "type_rva": 16440456,
+      "complete_offset": 0,
+      "rtti": ".?AVCTextInObj@@",
+      "slots": [
+        154181,
+        118701,
+        87976,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "Font",
+      "vtable_rva": 13789844,
+      "col_rva": 15158744,
+      "type_rva": 16313376,
+      "complete_offset": 0,
+      "rtti": ".?AVCMcgsFont@@",
+      "slots": [
+        242486,
+        195376,
+        290871,
+        147846,
+        126396,
+        321196,
+        216681,
+        115671,
+        10786,
+        117846,
+        46571,
+        33916,
+        40086,
+        329786,
+        228521,
+        159991,
+        108291,
+        346521,
+        147231,
+        20441
+      ]
+    }
+  ],
+  "provider": {
+    "relative_file": "plugins/animation/drawmulbtn.dll",
+    "sha256": "e51d5b17534673f203cd84557504f6773bc41fb9f0a26f4b1658d3f923c4fe11",
+    "preferred_base": 1736704000,
+    "functions": [
+      {
+        "name": "Draw",
+        "rva": 5632,
+        "bytes": "5589e5565383ec308b750885f6740b89cbe85a1e010085c074098d65f85b5e5dc204008b8bf800000085c978ed8b436089f18b535c8945ec8b43648955e883e8018945f08b4368c74424040200000083e8018945f48d45e8890424ff1538ba86678b8bf800000083ec083b8bb00100007c4e3b8bb80100000f8cd20000003b8bc00100007c7a8b934401000085d2748a8b45e8893424894424048b45ec894424088b45f08944240c8b45f489442410e80cea0000e961ffffff8db426000000008b83ac0100008d14498934248d0c908b45e8894424048b45ec894424088b45f08944240c8b45f489442410e8305b00008b8bf800000083ec14e974ffffff66908b435cc1e104038bbc0100008904248b4360894424048b4364894424088b43688944240ce8e77200008b8bf8000000c1e104038bbc01000083ec10893424e8cd79000083ec04e93bffffff908d7426008b435cc1e104038bb40100008904248b4360894424048b4364894424088b43688944240ce8f75400008b8bf8000000c1e104038bb401000083ec10893424e83d5400008b8bf800000083ec04e9ddfeff",
+        "reloc_offsets": [
+          93
+        ]
+      },
+      {
+        "name": "FillDraw",
+        "rva": 29216,
+        "bytes": "5589e55789cf565381ecbc0000008b41046685c0744f6683f8010f84c00000006683f802740a8d65f45b5e5f5dc21400c1e8106683f80175ed8b41088d5dd889d9890424ff150cba86678d450c8b4d0883ec04895c2404890424ff1558ba866783ec08ebc18d5dd88b35fcb9866789d9c744240cff000000c7442408c0000000c7442404c0000000c70424c0000000ffd68d450c8b4d0883ec10890424895c2404ff1558ba86678d8d64ffffff83ec08ff15c4b986678b470885c00f84af00000083f8010f842a0200008d8d64ffffffff15c8b986678d65f45b5e5f5dc214008d5dd889d9c744240cff000000c7442408c0000000c7442404c0000000c70424c0000000ff15fcb986678d450c8b4d0883ec10890424895c2404ff1558ba86678b470883ec0885c00f842203000083f8010f85effeffffc7442414070000008b",
+        "reloc_offsets": [
+          70,
+          92,
+          106,
+          163,
+          178,
+          210,
+          262,
+          284
+        ]
+      },
+      {
+        "name": "PairLoad",
+        "rva": 28912,
+        "bytes": "5589e5565383ec108b5d0885db74618b038d510489cec74424040400000089d9c744240800000000891424ff500c83ec0c84c0743b8b038d560889d9c744240404000000c744240800000000891424ff500c83ec0c84c089c374158b46046683f802741c8d65f889d85b5e5dc20400908d65f831db89d85b5e5dc204008d7600c1e8106683f80175db8b4608890424e83c8c0000894608ebcb",
+        "reloc_offsets": []
+      }
+    ]
+  },
+  "contracts": {
+    "fill_types": [
+      2,
+      65538
+    ],
+    "type2": "lowWORD=2 highWORD=0: provider returns without background fill",
+    "type65538": "lowWORD=2 highWORD=1: provider fills COLORREF-converted colour",
+    "assign": "Original FillAssign copies exactly object+4 and object+8, returns self; no other field writes.",
+    "clear": "Original state ClearAll destroys each owning CImageInObj then RemoveAll; state and other arrays survive.",
+    "resource_delete_called": false,
+    "live_raw_project_field_writes_allowed": false,
+    "unknown_private_rest_policy": "Full fixed root and borrowed private arrays remain exact; no generalized mask."
+  },
+  "runtime_verified": false
+}

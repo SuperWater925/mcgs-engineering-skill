@@ -1,0 +1,1378 @@
+{
+  "schema": 2,
+  "purpose": "owned-native-strategy-typed-confirm-fields-before-original-owner-adoption",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "node_abi_profile_sha256": "7198f12224c7bd209dddf74c3597f93e96b9994c11877cce1b71d53f2c527fcd",
+  "dependencies": [
+    {
+      "file": "strategy-node-abi-profile.v2.json",
+      "sha256": "7198f12224c7bd209dddf74c3597f93e96b9994c11877cce1b71d53f2c527fcd"
+    },
+    {
+      "file": "typed-parameters-prep/strategy-original-property-page-resources.json",
+      "sha256": "7e3d16d6efb620f0e05c6f568a8bf0cf41d2d9752ae4c2da75683a83fb46d41f"
+    },
+    {
+      "file": "typed-parameters-prep/original-combo-init-resources.json",
+      "sha256": "909d5c16d7441dd04aeb73ca0b802461a737b30f5b4c41f05482a7f5644eb9c5"
+    },
+    {
+      "file": "typed-parameters-prep/if-ddx-static.json",
+      "sha256": "ffd9677063ce927ec45f133de6f41fc3f23f5c504d5fdc5898d0302b7c681be9"
+    },
+    {
+      "file": "typed-parameters-prep/data-condition-ddx-static.json",
+      "sha256": "b3dad64723fc7b61fee6c9c741ef07b25ceca28cabc82c2d30710dd2d93593d0"
+    },
+    {
+      "file": "typed-parameters-prep/counter-ddx-static.json",
+      "sha256": "a33f47c81f3375ce2c4eb9464624d422f7f8115b289c2ab210185dc4eaa3a528"
+    },
+    {
+      "file": "typed-parameters-prep/timer-ddx-static.json",
+      "sha256": "d0a512a26b4dc8cdf656286c76659dfe3ebb5995f9012e92570a29bb470e00b4"
+    },
+    {
+      "file": "typed-parameters-prep/wnd-dialog-contract-static.json",
+      "sha256": "f9f6f881c86e7ccf2336484bc44cdee35768b50666459f81de81534eb11e403c"
+    },
+    {
+      "file": "typed-parameters-prep/proc-time-dialog-contract-static.json",
+      "sha256": "e7b544988f03a61e117c8f9f485fa4cdf9548cd12e4699e7efd356d0b94ea646"
+    },
+    {
+      "file": "typed-parameters-prep/data-limits-dialog-contract-static.json",
+      "sha256": "edc8d89279ee2e059c7fc0d81333847e050d5d200b6da8e05740eab9cd136dff"
+    }
+  ],
+  "classes": [
+    {
+      "class_name": "CStgyFuncCallStgy",
+      "category": "action",
+      "size": 20,
+      "editor_slot": 9,
+      "editor_entry_rva": 339821,
+      "editor_body_rva": 10981968,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "strategy_name",
+          "offset": 16,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          12
+        ],
+        "strings": [
+          8,
+          16
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncCounter",
+      "category": "action",
+      "size": 96,
+      "editor_slot": 9,
+      "editor_entry_rva": 318606,
+      "editor_body_rva": 10985216,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "event_index",
+          "offset": 72,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 5,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "counter_object",
+          "offset": 76,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "reset_condition",
+          "offset": 80,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "preset_value",
+          "offset": 84,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "current_value",
+          "offset": 88,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "state_variable",
+          "offset": 92,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          12,
+          16,
+          20,
+          64,
+          68,
+          72
+        ],
+        "strings": [
+          8,
+          76,
+          80,
+          84,
+          88,
+          92
+        ],
+        "byte_arrays": [
+          24,
+          44
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncTimer",
+      "category": "action",
+      "size": 104,
+      "editor_slot": 9,
+      "editor_entry_rva": 23141,
+      "editor_body_rva": 11081680,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "preset_seconds",
+          "offset": 84,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "current_seconds",
+          "offset": 88,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "timing_condition",
+          "offset": 92,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "reset_condition",
+          "offset": 96,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "state_variable",
+          "offset": 100,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          72,
+          76,
+          80
+        ],
+        "strings": [
+          8,
+          84,
+          88,
+          92,
+          96,
+          100
+        ],
+        "byte_arrays": [
+          12,
+          32,
+          52
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncDev",
+      "category": "action",
+      "size": 28,
+      "editor_slot": 9,
+      "editor_entry_rva": 131946,
+      "editor_body_rva": 11016432,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "device_name",
+          "offset": 12,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "operation_index",
+          "offset": 16,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 5,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "period_milliseconds",
+          "offset": 20,
+          "kind": "i4",
+          "minimum": -2147483648,
+          "maximum": 2147483647,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "command_argument",
+          "offset": 24,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          16,
+          20
+        ],
+        "strings": [
+          8,
+          12,
+          24
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncExit",
+      "category": "action",
+      "size": 12,
+      "editor_slot": 9,
+      "editor_entry_rva": 42976,
+      "editor_body_rva": 11019200,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4
+        ],
+        "strings": [
+          8
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncProg",
+      "category": "action",
+      "size": 36,
+      "editor_slot": 9,
+      "editor_entry_rva": 253451,
+      "editor_body_rva": 11022576,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "source",
+          "offset": 32,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4
+        ],
+        "strings": [
+          8,
+          32
+        ],
+        "byte_arrays": [
+          12
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncSnd",
+      "category": "action",
+      "size": 60,
+      "editor_slot": 9,
+      "editor_entry_rva": 292526,
+      "editor_body_rva": 11051712,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "sound_file",
+          "offset": 36,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "play_mode_index",
+          "offset": 40,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 3,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "playing_state_variable",
+          "offset": 44,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "finished_variable",
+          "offset": 48,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "delay_seconds",
+          "offset": 52,
+          "kind": "i4",
+          "minimum": -2147483648,
+          "maximum": 2147483647,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "started_variable",
+          "offset": 56,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          12,
+          16,
+          20,
+          24,
+          28,
+          32,
+          40,
+          52
+        ],
+        "strings": [
+          8,
+          36,
+          44,
+          48,
+          56
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncWnd",
+      "category": "action",
+      "size": 72,
+      "editor_slot": 9,
+      "editor_entry_rva": 185396,
+      "editor_body_rva": 11105808,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "window_values",
+          "offset": 32,
+          "kind": "cstring_carray",
+          "count": 6,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "operation_enabled",
+          "offset": 52,
+          "kind": "bool_carray",
+          "count": 6,
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4
+        ],
+        "strings": [
+          8
+        ],
+        "i4_carrays": [
+          12,
+          52
+        ],
+        "cstring_carrays": [
+          32
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncProc",
+      "category": "action",
+      "size": 124,
+      "editor_slot": 9,
+      "editor_entry_rva": 232971,
+      "editor_body_rva": 11033328,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "data_object",
+          "offset": 56,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "associated_object",
+          "offset": 60,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "record_count_expression",
+          "offset": 64,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "time_range_mode_index",
+          "offset": 68,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 2,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "calendar_period_index",
+          "offset": 72,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 5,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "start_time",
+          "offset": 76,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "end_time",
+          "offset": 80,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "result_enabled",
+          "offset": 84,
+          "kind": "bool_carray",
+          "count": 5,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "result_variables",
+          "offset": 104,
+          "kind": "cstring_carray",
+          "count": 5,
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          12,
+          16,
+          20,
+          28,
+          32,
+          68,
+          72
+        ],
+        "strings": [
+          8,
+          24,
+          56,
+          60,
+          64,
+          76,
+          80
+        ],
+        "byte_arrays": [
+          36
+        ],
+        "i4_carrays": [
+          84
+        ],
+        "cstring_carrays": [
+          104
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncData",
+      "category": "action",
+      "size": 292,
+      "editor_slot": 9,
+      "editor_entry_rva": 259201,
+      "editor_body_rva": 10998880,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "data_object",
+          "offset": 204,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "set_value",
+          "offset": 208,
+          "kind": "bool",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "value_expression",
+          "offset": 216,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "save_object_value",
+          "offset": 224,
+          "kind": "bool",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "apply_object_attribute_changes",
+          "offset": 228,
+          "kind": "bool",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "limit_enabled",
+          "offset": 236,
+          "kind": "bool_inline",
+          "count": 7,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "limit_values",
+          "offset": 264,
+          "kind": "cstring_inline",
+          "count": 7,
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          12,
+          16,
+          200,
+          208,
+          212,
+          220,
+          224,
+          228,
+          232,
+          236,
+          240,
+          244,
+          248,
+          252,
+          256,
+          260
+        ],
+        "strings": [
+          8,
+          204,
+          216,
+          264,
+          268,
+          272,
+          276,
+          280,
+          284,
+          288
+        ],
+        "byte_arrays": [
+          20,
+          40,
+          60,
+          80,
+          100,
+          120,
+          140,
+          160,
+          180
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyConnIF",
+      "category": "condition",
+      "size": 52,
+      "editor_slot": 8,
+      "editor_entry_rva": 90786,
+      "editor_body_rva": 11020832,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 20,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "expression",
+          "offset": 48,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "logic_mode_index",
+          "offset": 44,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 3,
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          8,
+          44
+        ],
+        "strings": [
+          20,
+          48
+        ],
+        "byte_arrays": [
+          24
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyConnData",
+      "category": "condition",
+      "size": 84,
+      "editor_slot": 8,
+      "editor_entry_rva": 129196,
+      "editor_body_rva": 10993168,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 20,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "comparison_index",
+          "offset": 52,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 2,
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "data_object",
+          "offset": 56,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "comparison_value",
+          "offset": 60,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "value_condition_enabled",
+          "offset": 64,
+          "kind": "bool",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "alarm_condition_enabled",
+          "offset": 72,
+          "kind": "bool",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "alarm_condition_index",
+          "offset": 80,
+          "kind": "i4",
+          "minimum": 0,
+          "maximum": 9,
+          "native_enum_domain_guessed": false
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          8,
+          24,
+          48,
+          52,
+          64,
+          68,
+          72,
+          76,
+          80
+        ],
+        "strings": [
+          20,
+          56,
+          60
+        ],
+        "byte_arrays": [
+          28
+        ]
+      },
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    },
+    {
+      "class_name": "CStgyFuncSvr",
+      "category": "action",
+      "size": 68,
+      "editor_slot": 9,
+      "editor_entry_rva": 64456,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false
+        },
+        {
+          "name": "command_parameter",
+          "offset": 32,
+          "kind": "i4",
+          "minimum": -2147483648,
+          "maximum": 2147483647,
+          "native_enum_domain_guessed": false,
+          "original_confirm": "E8BCC0 stores OnOK DDX_Text signed-I4 local -40; resource66D/3FA command parameter"
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          32,
+          36,
+          48,
+          52,
+          64
+        ],
+        "strings": [
+          8,
+          40,
+          44,
+          56,
+          60
+        ],
+        "byte_arrays": [
+          12
+        ]
+      },
+      "configuration_mode": "same-project-native-configuration-template-only",
+      "new_factory_without_legal_configuration_template_allowed": false,
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true,
+      "serialized_external_layout": {
+        "global_string_va": 20711612,
+        "global_dword_vas": [
+          20711616,
+          20711620,
+          20711624,
+          20711628
+        ],
+        "loaded_archive_read_uses_temporaries": true
+      }
+    },
+    {
+      "class_name": "CStgyFuncAddin",
+      "category": "action",
+      "size": 56,
+      "editor_slot": 9,
+      "editor_entry_rva": 227476,
+      "fields": [
+        {
+          "name": "comment",
+          "offset": 8,
+          "kind": "cstring",
+          "native_enum_domain_guessed": false,
+          "original_confirm": "E78474..E7847E copies returned BSTR comment to CString+8"
+        }
+      ],
+      "serialized_layout": {
+        "dwords": [
+          4,
+          40,
+          44,
+          48,
+          52
+        ],
+        "strings": [
+          8,
+          36
+        ],
+        "byte_arrays": [
+          12
+        ]
+      },
+      "configuration_mode": "same-project-native-configuration-template-only",
+      "new_factory_without_legal_configuration_template_allowed": false,
+      "unexposed_compiled_and_derived_fields_preserved_from_template_or_original_factory": true
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "CStgyFuncCallStgyOriginalEditor",
+      "rva": 10981968,
+      "bytes": "558bec6aff68e815040164a1000000005081ec30020000a1600b3b0133c5508d45f464a300000000894df068b8a600008d45e850e88f6a5dff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8dc4fdffffe8c18259ffc645fc028d4de8ff1548913c016a008d8d44ffffffe828b05affc645fc038b55f083c210528d4de0ff15708e3c018b45f083c008508d4ddcff15708e3c018d8d44ffffff5168660600008d8dc4fdffffe86e465cff8d8dc4fdffffe8735a0b0083f80175366a016a016a008b55088b028b4d088b9080010000ffd28d45e0508b4df083c110ff15708e3c018d4ddc518b4df083c108ff15708e3c01c645fc028d8d44ffffffe83da259ffc745fcffffffff8d8dc4fdffffe81f4f59ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        139,
+        155,
+        232,
+        248
+      ]
+    },
+    {
+      "name": "CStgyFuncCallStgyOriginalSerializer",
+      "rva": 10982848,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8364d5cff8b4d08894df88b4d08e8c3565dff85c074208b55fc8b420c508b4d08e8478f5bff8b4dfc83c110518b4df8e872445dffeb1e8b55fc83c20c528b4d08e8aefd5bff8b45fc83c010508b4df8e8e4205dff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncCounterOriginalEditor",
+      "rva": 10985216,
+      "bytes": "558bec6aff68f417040164a1000000005081ec48030000a1600b3b0133c5508d45f464a300000000894df068baa600008d45e850e8df5d5dff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8dacfcffffe8117659ffc645fc028d4de8ff1548913c016a008d8d2cfeffffe83e695bffc645fc038d952cfeffff5268460600008d8dacfcffffe8de395cff8b45f083c04c508d4dccff15708e3c018b4df08b51488955c88b45f083c050508d4dd0ff15708e3c018b4df083c154518d4dd4ff15708e3c018b55f083c258528d4dd8ff15708e3c018b45f083c008508d4ddcff15708e3c018b4df083c15c518d4de0ff15708e3c018d8dacfcffffe87a4d0b0083f801757f6a016a016a008b55088b028b4d088b9080010000ffd28d45e0508b4df083c15cff15708e3c018d4dcc518b4df083c14cff15708e3c018b55f08b45c88942488d4dd0518b4df083c150ff15708e3c018d55d4528b4df083c154ff15708e3c018d45d8508b4df083c158ff15708e3c018d4ddc518b4df083c108ff15708e3c01c645fc028d8d2cfeffffe881205cffc745fcffffffff8d8dacfcffffe8dd4159ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        162,
+        187,
+        203,
+        219,
+        235,
+        251,
+        305,
+        321,
+        346,
+        362,
+        378,
+        394
+      ]
+    },
+    {
+      "name": "CStgyFuncCounterOriginalSerializer",
+      "rva": 10987280,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e63b5cff8b4d08518b4dfc83c1188b55fc8b42188b5008ffd28b4508508b4dfc83c12c8b55fc8b422c8b5008ffd28b45088945f88b4d08e849455dff85c00f84aa0000008b4dfc8b510c528b4d08e8c97d5bff8b45fc8b4810518b4d08e8ba7d5bff8b55fc8b4214508b4d08e8ab7d5bff8b4dfc8b5148528b4d08e89c7d5bff8b45fc83c04c508b4df8e8c7325dff8b4dfc83c150518b4df8e8b8325dff8b55fc83c254528b4df8e8a9325dff8b45fc83c058508b4df8e89a325dff8b4dfc8b5140528b4d08e8517d5bff8b45fc8b4844518b4d08e8427d5bff8b55fc83c25c528b4df8e86d325dffe9a50000008b45fc83c00c508b4d08e8a6eb5bff8b4dfc83c110518b4d08e897eb5bff8b55fc83c214528b4d08e888eb5bff8b45fc83c048508b4d08e879eb5bff8b4dfc83c14c518b4df8e8af0e5dff8b55fc83c250528b4df8e8a00e5dff8b45fc83c054508b4df8e8910e5dff8b4dfc83c158518b4df8e8820e5dff8b55fc83c240528b4d08e82eeb5bff8b45fc83c044508b4d08e81feb5bff8b4dfc83c15c518b4df8e8550e5dff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncTimerOriginalEditor",
+      "rva": 11081680,
+      "bytes": "558bec6aff684442040164a1000000005081ecc8030000a1600b3b0133c5508d45f464a300000000894df068dda600008d45e850e80fe55bff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8d2cfcffffe841fd57ffc645fc028d4de8ff1548913c016a008d8dacfdffffe8379857ffc645fc038d95acfdffff5268450600008d8d2cfcffffe80ec15aff8b45f083c008508d4ddcff15708e3c018b4df083c154518d4dd0ff15708e3c018b55f083c258528d4dccff15708e3c018b45f083c05c508d4dd8ff15708e3c018b4df083c160518d4dd4ff15708e3c018b55f083c264528d4de0ff15708e3c018d8d2cfcffffe8b3d4090083f80175766a016a016a008b45088b108b4d088b8280010000ffd08d4de0518b4df083c164ff15708e3c018d55d0528b4df083c154ff15708e3c018d45cc508b4df083c158ff15708e3c018d4dd8518b4df083c15cff15708e3c018d55d4528b4df083c160ff15708e3c018d45dc508b4df083c108ff15708e3c01c645fc028d8dacfdffffe8281d58ffc745fcffffffff8d8d2cfcffffe81fc957ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        162,
+        178,
+        194,
+        210,
+        226,
+        242,
+        296,
+        312,
+        328,
+        344,
+        360,
+        376
+      ]
+    },
+    {
+      "name": "CStgyFuncTimerOriginalSerializer",
+      "rva": 11083280,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e6c45aff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b4508508b4dfc83c1208b55fc8b42208b5008ffd28b4508508b4dfc83c1348b55fc8b42348b5008ffd28b45088945f88b4d08e834ce5bff85c0747a8b4dfc8b5148528b4d08e8b8065aff8b45fc83c054508b4df8e8e3bb5bff8b4dfc83c158518b4df8e8d4bb5bff8b55fc83c25c528b4df8e8c5bb5bff8b45fc83c060508b4df8e8b6bb5bff8b4dfc8b514c528b4d08e86d065aff8b45fc8b4850518b4d08e85e065aff8b55fc83c264528b4df8e889bb5bffeb788b45fc83c048508b4d08e8c5745aff8b4dfc83c154518b4df8e8fb975bff8b55fc83c258528b4df8e8ec975bff8b45fc83c05c508b4df8e8dd975bff8b4dfc83c160518b4df8e8ce975bff8b55fc83c24c528b4d08e87a745aff8b45fc83c050508b4d08e86b745aff8b4dfc83c164518b4df8e8a1975bff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncDevOriginalEditor",
+      "rva": 11016432,
+      "bytes": "558bec6aff689425040164a1000000005081ec38020000a1600b3b0133c5508d45f464a300000000894df068c5a600008d45e850e8efe35cff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8dbcfdffffe821fc58ffc645fc028d4de8ff1548913c016a008d8d3cffffffe857945cffc645fc038b55f083c20c528d4dd0ff15708e3c018b45f08b4810894dd88b55f083c208528d4dd4ff15708e3c018b45f08b4814894ddc8b55f083c218528d4de0ff15708e3c018d853cffffff5068530600008d8dbcfdffffe8acbf5bff8d8dbcfdffffe8b1d30a0083f80175586a016a016a008b4d088b118b4d088b8280010000ffd08d4dd0518b4df083c10cff15708e3c018b55f08b45d88942108d4dd4518b4df083c108ff15708e3c018b55f08b45dc8942148d4de0518b4df083c118ff15708e3c01c645fc028d8d3cffffffe876915cffc745fcffffffff8d8dbcfdffffe83bc858ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        139,
+        164,
+        189,
+        266,
+        291,
+        316
+      ]
+    },
+    {
+      "name": "CStgyFuncDevOriginalSerializer",
+      "rva": 11016144,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce826cb5bff8b4d08894df88b4d08e8b3d45cff85c0743e8b55fc83c20c528b4df8e871c25cff8b45fc8b4810518b4d08e8280d5bff8b55fc8b4214508b4d08e8190d5bff8b4dfc83c118518b4df8e844c25cffeb3c8b55fc83c20c528b4df8e8c59e5cff8b45fc83c010508b4d08e8717b5bff8b4dfc83c114518b4d08e8627b5bff8b55fc83c218528b4df8e8989e5cff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncExitOriginalEditor",
+      "rva": 11019200,
+      "bytes": "558bec6aff68a427040164a1000000005081ec28020000a1600b3b0133c5508d45f464a300000000894df0682aa400008d45e850e81fd95cff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8dccfdffffe851f158ffc645fc028d4de8ff1548913c016a008d8d4cffffffe86f8f5affc645fc038b55f083c208528d4de0ff15708e3c018d854cffffff5068810600008d8dccfdffffe80eb55bff8d8dccfdffffe813c90a0083f80175266a016a016a008b4d088b118b4d088b8280010000ffd08d4de0518b4df083c108ff15708e3c01c645fc028d8d4cffffffe8815e59ffc745fcffffffff8d8dccfdffffe8cfbd58ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        139,
+        216
+      ]
+    },
+    {
+      "name": "CStgyFuncExitOriginalSerializer",
+      "rva": 11108928,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8650359ff8b4d08894df88b4d08e8436a5bff85c074208b55fc8b4204508b4d08e8c7a259ff8b4dfc83c108518b4df8e8f2575bffeb1e8b55fc83c204528b4d08e82e115aff8b45fc83c008508b4df8e864345bff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncProgOriginalEditor",
+      "rva": 11022576,
+      "bytes": "558bec6aff68c329040164a1000000005081ec58020000a1600b3b0133c5508d45f464a300000000894df0e8b28d59ff508d8d9cfdffffe8484159ffc745fc00000000c745bc010000008b45f083c020508d4dc0ff15708e3c018b4df083c108518d4dc4ff15708e3c018b4d08e82e0259ff8945ec837dec00740b8b55ec83c2048955e8eb07c745e8000000008b45e88945c88d8d9cfdffffe8f6bb0a0083f801756a8d4dc0518b55f083c22052e849d05bff83c4080fb6c085c0751a8d4dc4518b55f083c20852e82fd05bff83c4080fb6c085c074366a016a016a008b4d088b118b4d088b8280010000ffd08d4dc0518b4df083c120ff15708e3c018d55c4528b4df083c108ff15708e3c01c745fcffffffff8d8d9cfdffffe8ee545cff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        86,
+        102,
+        249,
+        265
+      ]
+    },
+    {
+      "name": "CStgyFuncProgOriginalSerializer",
+      "rva": 11022464,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b45088945f88b4d08e8eebb5cff85c074118b4dfc83c120518b4df8e8aca95cffeb0f8b55fc83c220528b4df8e82d865cff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncSndOriginalEditor",
+      "rva": 11051712,
+      "bytes": "558bec6aff682837040164a1000000005081ec40020000a1600b3b0133c5508d45f464a300000000894df0685fa500008d45e850e81f5a5cff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8db4fdffffe8517258ffc645fc028d4de8ff1548913c016a008d8d34ffffffe8025159ffc645fc038b55f083c224528d4dc8ff15708e3c018b45f08b4828894dcc8b55f083c22c528d4dd0ff15708e3c018b45f083c030508d4dd4ff15708e3c018b4df083c108518d4dd8ff15708e3c018b55f08b42348945dc8b4df083c138518d4de0ff15708e3c018d9534ffffff52686e0600008d8db4fdffffe8bc355bff8d8db4fdffffe8c1490a0083f80175786a016a016a008b45088b108b4d088b8280010000ffd08d4dc8518b4df083c124ff15708e3c018b55f08b45cc8942288d4dd0518b4df083c12cff15708e3c018d55d4528b4df083c130ff15708e3c018d45d8508b4df083c108ff15708e3c018b4df08b55dc8951348d45e0508b4df083c138ff15708e3c01c645fc028d8d34ffffffe8de3c59ffc745fcffffffff8d8db4fdffffe82b3e58ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        139,
+        164,
+        180,
+        196,
+        221,
+        298,
+        323,
+        339,
+        355,
+        380
+      ]
+    },
+    {
+      "name": "CStgyFuncSndOriginalSerializer",
+      "rva": 11051264,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8f6415bff8b4d08894df88b4d08e8834b5cff85c00f84b90000008b55fc8b420c508b4d08e803845aff8b4dfc8b5110528b4d08e8f4835aff8b45fc8b4814518b4d08e8e5835aff8b55fc8b4218508b4d08e8d6835aff8b4dfc83c124518b4df8e801395cff8b55fc8b4228508b4d08e8b8835aff8b4dfc83c12c518b4df8e8e3385cff8b55fc83c230528b4df8e8d4385cff8b45fc8b4834518b4d08e88b835aff8b55fc83c238528b4df8e8b6385cff8b45fc8b481c518b4d08e86d835aff8b55fc8b4220508b4d08e85e835affe9cc0000008b4dfc83c10c518b4d08e8d1f15aff8b55fc83c210528b4d08e8c2f15aff8b45fc83c014508b4d08e8b3f15aff8b4dfc83c118518b4d08e8a4f15aff8b55fc83c224528b4df8e8da145cff8b45fc83c028508b4d08e886f15aff8b4dfc83c12c518b4df8e8bc145cff8b55fc83c230528b4df8e8ad145cff8b45fc83c034508b4d08e859f15aff8b4dfc83c138518b4df8e88f145cff8b55fc83c21c528b4d08e83bf15aff8b45fc83c020508b4d08e82cf15aff8b4dfc83c124ff15608e3c018b4dfc83c124ff15648e3c018be55dc20400",
+      "reloc_offsets": [
+        416,
+        428
+      ]
+    },
+    {
+      "name": "CStgyFuncWndOriginalEditor",
+      "rva": 11105808,
+      "bytes": "558bec6aff68214a040164a1000000005081ec5802000056a1600b3b0133c5508d45f464a300000000894de868dea600008d45e050e8ce865bff83c4088945e48b4de4894ddcc745fc000000008b4ddcff156c913c01508d8d9cfdffffe8009f57ffc645fc028d4de0ff1548913c016a008d8d1cffffffe8348258ffc645fc03c745ec00000000eb098b55ec83c2018955ec837dec067d478b45ec508b4de883c120e818d45bff508b4dec518d4db0e80bd45bff8bc8ff15708e3c018b55ec528b4de883c134e81fff5aff8bf08b45ec508d4dc4e811ff5aff8b0e8908ebaa8b55e883c208528d4dd8ff15708e3c018d851cffffff50682d0600008d8d9cfdffffe85e625aff8d8d9cfdffffe86376090083f8010f85850000006a016a016a008b4d088b118b4d088b8280010000ffd0c745f000000000eb098b4df083c101894df0837df0067d478b55f0528d4db0e86bd35bff508b45f0508b4de883c120e85bd35bff8bc8ff15708e3c018b4df0518d4dc4e872fe5aff8bf08b55f0528b4de883c134e861fe5aff8b0e8908ebaa8d55d8528b4de883c108ff15708e3c01c645fc028d8d1cffffffe8aa3a5bffc745fcffffffff8d8d9cfdffffe8bc6a57ff8b4df464890d00000000595e8be55dc20400",
+      "reloc_offsets": [
+        6,
+        25,
+        82,
+        107,
+        184,
+        235,
+        360,
+        411
+      ]
+    },
+    {
+      "name": "CStgyFuncWndOriginalSerializer",
+      "rva": 11105712,
+      "bytes": "558bec51894dfc8b4508508b4dfce8486d5aff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b4508508b4dfc83c1208b55fc8b42208b5008ffd28b4508508b4dfc83c1348b55fc8b42348b5008ffd28be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncProcOriginalEditor",
+      "rva": 11033328,
+      "bytes": "558bec6aff684d2f040164a1000000005081ec2c040000a1600b3b0133c58945f0508d45f464a300000000898d30ffffff68cea600008d851cffffff50e8e6a15cff83c408898520ffffff8b8d20ffffff898d24ffffffc745fc000000008b8d24ffffffff156c913c01508d8dc8fbffffe80cba58ffc645fc028d8d1cffffffff1548913c016a008d8d78feffffe897405cffc645fc036a008d8d48fdffffe830375cffc645fc046a008d8d34ffffffe8ac7658ffc645fc058b9530ffffff83c238528d8d10ffffffff15708e3c018b8530ffffff83c03c508d8d14ffffffff15708e3c018b8d30ffffff83c108518d8d18ffffffff15708e3c018b9530ffffff83c240528d8d64feffffff15708e3c018b8530ffffff8b4844898d68feffff8b9530ffffff8b424889856cfeffff8b8d30ffffff83c14c518d8d70feffffff15708e3c018b9530ffffff83c250528d8d74feffffff15708e3c018d850cffffff898560feffffc7852cffffff00000000eb0f8b8d2cffffff83c101898d2cffffff83bd2cffffff057d498b952cffffff528b8d30ffffff83c154e86a195cff8b8d2cffffff8b1089548dc88b852cffffff508b8d30ffffff83c168e8a6ff59ff508b8d2cffffff8d4c8ddcff15708e3c01eb9f8d9578feffff5268670600008d8dc8fbffffe8997c5bff8d8548fdffff5068680600008d8dc8fbffffe8827c5bff8d8d34ffffff5168690600008d8dc8fbffffe86b7c5bff8d8dc8fbffffe870900a0083f8010f85270100006a016a016a008b55088b028b4d088b9080010000ffd28d8510ffffff508b8d30ffffff83c138ff15708e3c018d8d14ffffff518b8d30ffffff83c13cff15708e3c018d9518ffffff528b8d30ffffff83c108ff15708e3c018d8564feffff508b8d30ffffff83c140ff15708e3c018b8d30ffffff8b9568feffff8951448b8530ffffff8b8d6cfeffff8948488d9570feffff528b8d30ffffff83c14cff15708e3c018d8574feffff508b8d30ffffff83c150ff15708e3c01c78528ffffff00000000eb0f8b8d28ffffff83c101898d28ffffff83bd28ffffff057d4b8b9528ffffff528b8d30ffffff83c154e8ec175cff8b8d28ffffff8b548dc889108b8528ffffff8d4c85dc518b9528ffffff528b8d30ffffff83c168e81dfe59ff8bc8ff15708e3c01eb9dc645fc048d8d34ffffffe86dda5affc645fc038d8d48fdffffe88f865affc645fc028d8d78feffffe8b4c05affc745fcffffffff8d8dc8fbffffe8098458ff8b4df464890d00000000598b4df033cde866b10a008be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        102,
+        130,
+        203,
+        225,
+        247,
+        269,
+        321,
+        343,
+        462,
+        597,
+        619,
+        641,
+        663,
+        715,
+        737,
+        846
+      ]
+    },
+    {
+      "name": "CStgyFuncProcOriginalSerializer",
+      "rva": 11032816,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8068a5bff8b4d08518b4dfc83c1248b55fc8b42248b5008ffd28b4508508b4dfc83c1548b55fc8b42548b5008ffd28b4508508b4dfc83c1688b55fc8b42688b5008ffd28b45088945f88b4d08e854935cff85c00f84c80000008b4dfc83c118518b4df8e80e815cff8b55fc8b420c508b4d08e8c5cb5aff8b4dfc8b5110528b4d08e8b6cb5aff8b45fc8b4814518b4d08e8a7cb5aff8b55fc8b421c508b4d08e898cb5aff8b4dfc8b5120528b4d08e889cb5aff8b45fc83c038508b4df8e8b4805cff8b4dfc83c13c518b4df8e8a5805cff8b55fc83c240528b4df8e896805cff8b45fc8b4844518b4d08e84dcb5aff8b55fc8b4248508b4d08e83ecb5aff8b4dfc83c14c518b4df8e869805cff8b55fc83c250528b4df8e85a805cffe9c30000008b45fc83c018508b4df8e8d85c5cff8b4dfc83c10c518b4d08e884395bff8b55fc83c210528b4d08e875395bff8b45fc83c014508b4d08e866395bff8b4dfc83c11c518b4d08e857395bff8b55fc83c220528b4d08e848395bff8b45fc83c038508b4df8e87e5c5cff8b4dfc83c13c518b4df8e86f5c5cff8b55fc83c240528b4df8e8605c5cff8b45fc83c044508b4d08e80c395bff8b4dfc83c148518b4d08e8fd385bff8b55fc83c24c528b4df8e8335c5cff8b45fc83c050508b4df8e8245c5cff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncDataOriginalEditor",
+      "rva": 10998880,
+      "bytes": "558bec6aff68fc1d040164a1000000005081ec60080000a1600b3b0133c58945f0508d45f464a300000000898d7cfbffff686ea600008d8568fbffff50e876285dff83c40889856cfbffff8b8d6cfbffff898d70fbffffc745fc000000008b8d70fbffffff156c913c01508d8d94f7ffffe89c4059ffc645fc028d8d68fbffffff1548913c016a008d8d38faffffe89c935cffc645fc036a008d8d14f9ffffe8742159ffc645fc046a008d8d80fbffffe842bc5cffc645fc058b957cfbffff8b82c8000000898550fbffff8b8d7cfbffff81c1cc000000518d8d58fbffffff15708e3c018b957cfbffff8b82d000000089855cfbffff8b8d7cfbffff81c1d8000000518d8d60fbffffff15708e3c018b957cfbffff83c208528d8d64fbffffff15708e3c018b857cfbffff8b88e0000000898d30faffff8b957cfbffff8b82e4000000898534faffff8b8d7cfbffff8b91e80000008955b48d8554fbffff89852cfaffff8d8d54fbffff894db0c78578fbffff00000000eb0f8b9578fbffff83c201899578fbffff83bd78fbffff077d438b8578fbffff8b8d78fbffff8b957cfbffff8b8c8aec000000894c85b88b9578fbffff8b857cfbffff8d8c9008010000518b9578fbffff8d4c95d4ff15708e3c01eba58d8538faffff50682c0600008d8d94f7ffffe829035cff8d8d14f9ffff51682f0600008d8d94f7ffffe812035cff8d9580fbffff52682b0600008d8d94f7ffffe8fb025cff8d8d94f7ffffe800170b0083f8010f851c0100006a016a016a008b45088b108b4d088b8280010000ffd08b8d7cfbffff8b9550fbffff8991c80000008d8558fbffff508b8d7cfbffff81c1cc000000ff15708e3c018b8d7cfbffff8b955cfbffff8991d00000008d8560fbffff508b8d7cfbffff81c1d8000000ff15708e3c018d8d64fbffff518b8d7cfbffff83c108ff15708e3c018b957cfbffff8b8530faffff8982e00000008b8d7cfbffff8b9534faffff8991e40000008b857cfbffff8b4db48988e8000000c78574fbffff00000000eb0f8b9574fbffff83c201899574fbffff83bd74fbffff077d438b8574fbffff8b8d7cfbffff8b9574fbffff8b5495b8899481ec0000008b8574fbffff8d4c85d4518b9574fbffff8b857cfbffff8d8c9008010000ff15708e3c01eba5c645fc048d8d80fbffffe8bfa758ffc645fc038d8d14f9ffffe8619a5affc645fc028d8d38faffffe8664f5affc745fcffffffff8d8d94f7ffffe8a40a59ff8b4df464890d00000000598b4df033cde801380b008be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        102,
+        130,
+        224,
+        267,
+        289,
+        462,
+        618,
+        661,
+        683,
+        835
+      ]
+    },
+    {
+      "name": "CStgyFuncDataOriginalSerializer",
+      "rva": 10997952,
+      "bytes": "558bec83ec24894dfc8b4508508b4dfce836125cff8b4d08518b4dfc83c1148b55fc8b42148b5008ffd28b4508508b4dfc83c1288b55fc8b42288b5008ffd2c745f400000000eb098b45f483c0018945f4837df4077d258b4d08518b55f46bd2148b45f46bc0148b4dfc8d4c013c8b45fc8b54103c8b4208ffd0ebcc8b4d08894df88b4d08e85c1b5dff85c00f84100100008b55fc8b82c80000008945e88b4de8518b55fc8b4210508b4dfc8b510c528b4d08e8c5535bff8bc8e8be535bff8bc8e8b7535bff8b45fc05cc000000508b4df8e8e0085dff8b4dfc8b91d4000000528b45fc8b88d0000000518b4d08e88a535bff8bc8e883535bff8b55fc81c2d8000000528b4df8e8ab085dff8b45fc05dc000000508b4df8e89a085dff8b4dfc8b91e8000000528b45fc8b88e4000000518b55fc8b82e0000000508b4d08e83a535bff8bc8e833535bff8bc8e82c535bffc745f000000000eb098b4df083c101894df0837df0077d348b55f08b45fc8b8c90ec000000894de48b55e4528b4d08e8f8525bff8b45f08b4dfc8d948108010000528b4df8e81c085dffebbde90a0100008d45e0508b4dfc83c110518b55fc83c20c528b4d08e848c15bff8bc8e841c15bff8bc8e83ac15bff8b45fc05cc000000508b4df8e86ee45cff8b4dfc81c1d4000000518b55fc81c2d0000000528b4d08e80dc15bff8bc8e806c15bff8b45fc05d8000000508b4df8e83ae45cff8b4dfc81c1dc000000518b4df8e828e45cff8b55fc81c2e8000000528b45fc05e4000000508b4dfc81c1e0000000518b4d08e8bec05bff8bc8e8b7c05bff8bc8e8b0c05bff8b55fc8b45e08982c8000000c745ec00000000eb098b4dec83c101894dec837dec077d348d55dc528b4d08e880c05bff8b45ec8b4dfc8d948108010000528b4df8e8afe35cff8b45ec8b4dfc8b55dc899481ec000000ebbd8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyConnIFOriginalEditor",
+      "rva": 11020832,
+      "bytes": "558bec6aff682429040164a1000000005081ecbc020000a1600b3b0133c5508d45f464a300000000894df068c3a600008d45e850e8bfd25cff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8d38fdffffe8f1ea58ffc645fc028d4de8ff1548913c016a008b550c528d8db8feffffe8a39259ffc645fc038b45f083c030508d4dd4ff15708e3c018b4df083c114518d4dd8ff15708e3c018b55f08b422c8945dc8d8db8feffff5168130600008d8d38fdffffe891ae5bff8d8d38fdffffe896c20a0083f801753f6a016a016a008b55088b028b4d088b9080010000ffd28b45f08b4ddc89482c8d55d4528b4df083c130ff15708e3c018d45d8508b4df083c114ff15708e3c018b4d0c8b118b4d0c8b4254ffd0c645fc028d8db8feffffe8ed8558ffc745fcffffffff8d8d38fdffffe82cb758ff8b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        143,
+        159,
+        254,
+        270
+      ]
+    },
+    {
+      "name": "CStgyConnIFOriginalSerializer",
+      "rva": 11021360,
+      "bytes": "558bec6aff687829040164a1000000005083ec34a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8eeda59ff8b4d08518b4df083c1188b55f08b42188b5008ffd28b45088945d88b4d08e81fc05cff85c00f848c0000008d4de8ff1588903c01c745fc000000008d4de4ff1588903c01c645fc018b4df08b512c5268904823018d45e450ff1580903c0183c40c8b4df083c130518d4de8ff15708e3c016a018d4de8ff15c08b3c018d55e4528d4de8ff156c8e3c018d45e8508b4dd8e87ead5cffc645fc008d4de4ff1548913c01c745fcffffffff8d4de8ff1548913c01e9110100008d4decff1588903c01c745fc020000008d4dec518b4dd8e8d2895cff68984823018d55cc528d4decff15588e3c018945d48b45d48945d0c645fc038b4dd0518b4df083c130ff15708e3c01c645fc028d4dccff1548913c016a006a018d4decff15c4873c018945e08b55f0c7422c00000000837de0000f8c850000008d4decff1564913c013945e07d778d4ddcff1588903c01c645fc048d4decff1564913c012b45e083e801508d45c0508d4decff155c8e3c018945c88b4dc8894dc4c645fc058b55c4528d4ddcff15708e3c01c645fc048d4dc0ff1548913c018d4ddcff15a4873c0150ff156c6d3c0183c4048b4df089412cc645fc028d4ddcff1548913c01c745fcffffffff8d4decff1548913c018b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        100,
+        116,
+        132,
+        142,
+        161,
+        172,
+        185,
+        210,
+        226,
+        240,
+        264,
+        277,
+        306,
+        319,
+        332,
+        364,
+        378,
+        391,
+        411,
+        437,
+        450,
+        459,
+        466,
+        488,
+        504
+      ]
+    },
+    {
+      "name": "CStgyConnDataOriginalEditor",
+      "rva": 10993168,
+      "bytes": "558bec6aff683a1c040164a1000000005081ecc8020000a1600b3b0133c5508d45f464a300000000894df068bba600008d45e850e8cf3e5dff83c4088945e48b4de4894decc745fc000000008b4decff156c913c01508d8d2cfdffffe8015759ffc645fc028d4de8ff1548913c016a008d8dacfeffffe831f65bffc645fc038b55f08b42348945c48b4df083c138518d4dccff15708e3c018b55f083c23c528d4dd4ff15708e3c018b45f08b4840894dd08b55f08b42488945d88b4df08b51508955dc8b45f083c014508d4de0ff15708e3c018d8dacfeffff51682e0600008d8d2cfdffffe87a1a5cff8d8d2cfdffffe87f2e0b0083f801756a6a016a016a008b55088b028b4d088b9080010000ffd28b45f08b4dc48948348d55cc528b4df083c138ff15708e3c018d45d4508b4df083c13cff15708e3c018b4df08b55d08951408b45f08b4dd88948488b55f08b45dc8942508d4de0518b4df083c114ff15708e3c01c645fc028d8dacfeffffe8bbde59ffc745fcffffffff8d8d2cfdffffe8f72259ff8b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        148,
+        164,
+        207,
+        293,
+        309,
+        352
+      ]
+    },
+    {
+      "name": "CStgyConnDataOriginalSerializer",
+      "rva": 10994384,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce86d445aff8b4d08518b4dfc83c11c8b55fc8b421c8b5008ffd28b45088945f88b4d08e89e295dff85c00f84950000008b4dfc8b5134528b45fc8b4830518b55fc8b4218508b4d08e810625bff8bc8e809625bff8bc8e802625bff8b4dfc83c138518b4df8e82d175dff8b55fc83c23c528b4df8e81e175dff8b45fc8b4850518b55fc8b424c508b4dfc8b5148528b45fc8b4844518b55fc8b4240508b4d08e8b9615bff8bc8e8b2615bff8bc8e8ab615bff8bc8e8a4615bff8bc8e89d615bffe9900000008b4dfc83c134518b55fc83c230528b45fc83c018508b4d08e802d05bff8bc8e8fbcf5bff8bc8e8f4cf5bff8b4dfc83c138518b4df8e82af35cff8b55fc83c23c528b4df8e81bf35cff8b45fc83c050508b4dfc83c14c518b55fc83c248528b45fc83c044508b4dfc83c140518b4d08e8abcf5bff8bc8e8a4cf5bff8bc8e89dcf5bff8bc8e896cf5bff8bc8e88fcf5bff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStgyFuncSvrOriginalSerializer",
+      "rva": 11057376,
+      "bytes": "558bec6aff68e539040164a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8f7295bff8b4d08518b4df083c10c8b55f08b420c8b5008ffd28b45088945ec8b4d08e86f335cff85c00f84d40000008b4df08b5120528b4d08e8ef6b5aff8b45f08b4824518b4d08e8e06b5aff68bc083c018b4dece80d215cff8b15c0083c01528b4d08e8c46b5affa1c4083c01508b4d08e8b66b5aff8b0dc8083c01518b4d08e8a76b5aff8b15cc083c01528b4d08e8986b5aff8b45f083c028508b4dece8c3205cff8b4df083c12c518b4dece8b4205cff8b55f08b4230508b4d08e86b6b5aff8b4df08b5134528b4d08e85c6b5aff8b45f083c038508b4dece887205cff8b4df083c13c518b4dece878205cff8b55f08b4240508b4d08e82f6b5affe9e10000008d4dd8e890915cffc745fc000000008b4df083c120518b4d08e893d95aff8b55f083c224528b4d08e884d95aff8d45d8508b4dece8bdfc5bff8d4ddc518b4d08e86cd95aff8d55e0528b4d08e860d95aff8d45e4508b4d08e854d95aff8d4de8518b4d08e848d95aff8b55f083c228528b4dece87efc5bff8b45f083c02c508b4dece86ffc5bff8b4df083c130518b4d08e81bd95aff8b55f083c234528b4d08e80cd95aff8b45f083c038508b4dece842fc5bff8b4df083c13c518b4dece833fc5bff8b55f083c240528b4d08e8dfd85affc745fcffffffff8d4dd8e8215b5aff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        126,
+        140,
+        154,
+        169,
+        184
+      ]
+    },
+    {
+      "name": "CStgyFuncAddinOriginalSerializer",
+      "rva": 10979376,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8c65a5cff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b45088945f88b4d08e83e645dff85c074508b4dfc83c124518b4df8e8fc515dff8b55fc8b4228508b4d08e8b39c5bff8b4dfc8b512c528b4d08e8a49c5bff8b45fc8b4830518b4d08e8959c5bff8b55fc8b4234508b4d08e8869c5bffe9810000008b4dfc83c124518b4df8e83e2e5dff8b55fc83c228528b4d08e8ea0a5cff8b45fc83c02c508b4d08e8db0a5cff8b4dfc83c130518b4d08e8cc0a5cff8b55fc83c234528b4d08e8bd0a5cff8b4dfc83c124ff156c913c01506a00687cb6380168ac883801e8ad355aff6a0050e845880b0083c4148bc8e8aff15cff8b4dfc8941208be55dc20400",
+      "reloc_offsets": [
+        223,
+        231,
+        236
+      ]
+    },
+    {
+      "name": "SvrOriginalConfirmAndRegistrySelection",
+      "rva": 11057936,
+      "bytes": "558bec6aff681f3a040164a1000000005081ec84020000a1600b3b0133c5508d45f464a300000000894df068cfa600008d45dc50e8cf415cff83c4088945e08b4de0894dd8c745fc000000008b4dd8ff156c913c01508d8d70fdffffe8015a58ffc645fc028d4ddcff1548913c016a008d8df0feffffe852bd57ffc645fc0368e0083c018d4dd4ff15708e3c018b55f08b42208945c08b4df083c108518d4dc4ff15708e3c018b55f08b42248945c88b4df083c128518d4dccff15708e3c018b55f083c238528d4dd0ff15708e3c018b45f08b4824894de8837de801740b837de8027446e9800000006aff8b4df083c10ce8d76757ff508d4d98e88f320a008b4df083c10ce8c36757ff508b4df083c10ce8832f5aff508d4d98e87a2f5aff50e8b1530a0083c40ceb3f6aff8b4df083c10ce8966757ff508d4dace84e320a008b4df083c10ce8826757ff508b4df083c10ce8422f5aff508d4dace8392f5aff50e870530a0083c40c8d95f0feffff52686d0600008d8d70fdffffe8e41c5bff8d8d70fdffffe8e9300a0083f8010f85920100006a016a016a008b45088b108b4d088b8280010000ffd08b4df08b55c08951208d45c4508b4df083c108ff15708e3c018b4df08b55c8895124c745ec00000000c745ec00000000eb098b45ec83c0018945ecb998083c01e840a15bff3945ec7d408d4dccff156c913c01508b4dec51b998083c01e8258958ff8bc8ff150c8e3c0185c0751a8b55ec52b998083c01e80b8958ff508b4df083c128e835a858ffeba8c745ec00000000eb098b45ec83c0018945ecb9e4083c01e8dd835cff3945ec7d408d4dd0ff156c913c01508b4dec51b9e4083c01e8855958ff8bc8ff150c8e3c0185c0751a8b55ec52b9e4083c01e86b5958ff508b4df083c138e8dd6857ffeba88b45f08b4824894de4837de4017408837de4027440eb7a6aff8d4d98e8176657ff508b4df083c10ce8cc300a008d4d98e8036657ff508d4d98e8c62d5aff508b4df083c10ce8ba2d5aff50e8f1510a0083c40ceb3c6aff8d4dace8d96557ff508b4df083c10ce88e300a008d4dace8c56557ff508d4dace8882d5aff508b4df083c10ce87c2d5aff50e8b3510a0083c40cc645fc028d8df0feffffe800905bffc745fcffffffff8d8d70fdffffe8352458ff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        128,
+        137,
+        162,
+        187,
+        203,
+        447,
+        486,
+        505,
+        515,
+        528,
+        541,
+        583,
+        602,
+        612,
+        625,
+        638
+      ]
+    },
+    {
+      "name": "SvrRegistry16GetAt",
+      "rva": 11077328,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b4508c1e0048b55fc034204eb05e837e709008be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SvrRegistry12GetAt",
+      "rva": 11077392,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b45086bc00c8b55fc034204eb05e8f7e609008be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SvrRegistry16Copy",
+      "rva": 11076352,
+      "bytes": "558bec51894dfc8b4508508b4dfcff15708e3c018b4d0883c104518b4dfc83c104ff15708e3c018b55fc8b45088b480c894a0c8b55fc8b45088b4808894a088be55dc20400",
+      "reloc_offsets": [
+        16,
+        35
+      ]
+    },
+    {
+      "name": "SvrRegistry12Copy",
+      "rva": 11076448,
+      "bytes": "558bec51894dfc8b4508508b4dfcff15708e3c018b4d0883c104518b4dfc83c104ff15708e3c018b55fc8b45088b4808894a088be55dc20400",
+      "reloc_offsets": [
+        16,
+        35
+      ]
+    },
+    {
+      "name": "SvrRegistry16Ctor",
+      "rva": 11074544,
+      "bytes": "558bec51894dfc8b4dfce839825bff8b45fcc700987f23018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "SvrRegistry12Ctor",
+      "rva": 11074640,
+      "bytes": "558bec51894dfc8b4dfce8d9815bff8b45fcc700b47f23018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "SvrOriginalDDX",
+      "rva": 11068112,
+      "bytes": "558bec83ec14894dfc8b4508508b4dfce8e46659ff8b4dfc81c1d00000005168fa0300008b550852e811140a008b45fc05d40000005068fb0300008b4d0851e8120b0a008b55fc81c2d800000052682b0400008b450850e8ee130a008b4dfc81c1dc00000051687a0400008b550852e8a2170a008b45fc05e000000050687b0400008b4d0851e88b170a008b55fc81c2e40000005268490400008b450850e873170a008b4d088339007405e954010000b998083c01e8b57a5bff85c07e158b55fc83bad8000000017509c745f801000000eb07c745f8000000008b45f850687a0400008b4dfce8b30d0a008bc8e8b80d0a00b9e4083c01e8715d5cff85c07e158b4dfc83b9d8000000027509c745f401000000eb07c745f4000000008b55f452687b0400008b4dfce8710d0a008bc8e8760d0a008b45fc83b8d8000000007512b9bc083c01ff15c88b3c010fb6c885c9742b8b55fc83bad80000000275168b4dfc81c1e0000000ff15c88b3c010fb6c085c07409c745f000000000eb07c745f0010000008b4df05168fa0300008b4dfce8090d0a008bc8e80e0d0a008b55fc83bad8000000007512b9bc083c01ff15c88b3c010fb6c085c0742b8b4dfc83b9d80000000175168b4dfc81c1dc000000ff15c88b3c010fb6d085d27409c745ec00000000eb07c745ec010000008b45ec5068100400008b4dfce8a10c0a008bc8e8a60c0a008be55dc20400",
+      "reloc_offsets": [
+        177,
+        243,
+        321,
+        327,
+        361,
+        425,
+        431,
+        465
+      ]
+    },
+    {
+      "name": "AddinOriginalReturnedCommentStore",
+      "rva": 10978420,
+      "bytes": "8b55e8528b4dec83c108ff1584903c01",
+      "reloc_offsets": [
+        12
+      ]
+    }
+  ],
+  "enum_evidence": {
+    "IF": "four resource radio controls in original DDX_Radio order",
+    "Counter": "RT_DLGINIT 0x646/0x47A six entries, DDX_CBIndex",
+    "Sound": "RT_DLGINIT 0x66E/0x47A four entries",
+    "Proc": "resource0x668 radio3 and RT_DLGINIT combo6",
+    "DataCondition": "original InitDialog comparison switch0/1/2; RT_DLGINIT0x62E alarm combo10",
+    "Device": "resource0x653 six original radio controls"
+  },
+  "not_exposed_as_guessed_fields": [
+    "Data internal derived type/cache DWORD C8/E8",
+    "Addin COM/provider arbitrary configuration and raw pointer",
+    "Svr arbitrary private configuration byte array and registry cold loader"
+  ],
+  "host_invoked": false,
+  "native_acceptance_pending": true,
+  "provider_scope": {
+    "Svr": "Raw complete persisted member projection; current legal native configuration template cloning, original comment and signed-I4 command_parameter confirmation fields. Loaded registry raw-read only; no cold LoadTypeLib during Claim.",
+    "Addin": "Raw complete persisted member projection and whole legal native template cloning; original returned comment CString confirmation supported. Arbitrary provider COM configuration remains explicit pending feature. No provider pointer/DISPID/private payload setters."
+  },
+  "svr_registry": {
+    "registry16_rva": 16517272,
+    "registry12_rva": 16517348,
+    "globals": {
+      "strings": [
+        16517308,
+        16517344,
+        16517372
+      ],
+      "dwords": [
+        16517312,
+        16517316,
+        16517320,
+        16517324
+      ]
+    },
+    "read_only_raw": true,
+    "cold_initialization_allowed": false,
+    "registry16_stride": 16,
+    "registry12_stride": 12,
+    "registry16_vtable_rva": 14909336,
+    "registry12_vtable_rva": 14909364
+  }
+}

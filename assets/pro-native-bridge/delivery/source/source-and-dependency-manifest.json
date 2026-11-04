@@ -1,0 +1,1416 @@
+{
+  "schema": 1,
+  "kind": "unbound selected internal API source delivery",
+  "original_task_root": "D:\\unbound-task-root",
+  "original_install_root": "C:\\unbound-install-root",
+  "original_engineering_relative_root": "coverage-20261101/usable-edit-0001",
+  "source_count": 156,
+  "sources": [
+    {
+      "name": "bootstrap__NativeTrialActions.cs",
+      "sha256": "f4375e73836880624e90ef8aed956a724b0a211eac23e9754088e76051bd9cbe"
+    },
+    {
+      "name": "coverage-20261101__controls__NativeButtonReferenceReader.cs",
+      "sha256": "b9fca442f42a77ad4a3ee6663d9e608ebcfdaf89b0a5fcf6806351ef3bcae04c"
+    },
+    {
+      "name": "coverage-20261101__controls__NativeControlGeometryReadonlyProfile.cs",
+      "sha256": "d7565d6e5be4ce90b12e8c5673e6a614e7f71f3b60c864bd0e6f026eb230cec7"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeLiveLabelTrialProfile.cs",
+      "sha256": "06c9b4cbc6f19949444f85bc7c7b73863745e50a65a9f9a5f76c261e0606cd2b"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeLivePage31FlushProfile.cs",
+      "sha256": "97151c4ab3d4148de226560fed5a127195b4412225df31b0d7b3ba49099191da"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeMainCtrlPersistenceProfile.cs",
+      "sha256": "f4bf1901776e1330a8095ca29624089b47cc0846c1b87089651a615ad16aeea8"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeMainCtrlRestorationTrialProfile.cs",
+      "sha256": "82ec72f1ccddb5933933fd7888c3a94df7578cb5479cace4052319c6e8c858b0"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeReferenceRenameTrialProfile.cs",
+      "sha256": "e9af991fe4cad19a59df9797d751d8280b0723abfd0c0df8c9bda91f0df40453"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeReferencesViewProfile.cs",
+      "sha256": "1a546edde8104bcf2490799f19a11d6a35be696b42e8a145b7263622d56fe578"
+    },
+    {
+      "name": "coverage-20261101__references-view__NativeReferencesViewProfileV2.cs",
+      "sha256": "c1e3a9922e14a5a856a951a14213de1088554031e952fc807a7c499235d8c28e"
+    },
+    {
+      "name": "extensions__control__NativeControlExtensionProfile.v2.cs",
+      "sha256": "cecdc7574da766e577717abccb036a2aaae71f04bf11e69fddf40f022c1f2064"
+    },
+    {
+      "name": "extensions__control__NativeStandardControlsExtensionProfile.v3.cs",
+      "sha256": "c87f3819efc2108a087a8619e900850f4b3e832d0e06f0ccd0936b87fe9cca08"
+    },
+    {
+      "name": "extensions__page__NativePageDeleteExtensionProfile.cs",
+      "sha256": "29bfb6c7ee640613a02d81f41c0b218aceb2f568655ea6bc0da33c0ccad80388"
+    },
+    {
+      "name": "extensions__page__NativePageExtensionProfile.cs",
+      "sha256": "ce6fa6545a648e0315888d12fc29b0b6c21087ddff9242827121b16ca010a365"
+    },
+    {
+      "name": "extensions__page__NativePageSizeExtensionProfile.cs",
+      "sha256": "59be62483fd99e8e740d80babc1e016ef3e79087efd79c480513656f47f136d0"
+    },
+    {
+      "name": "extensions__strategy__delete__NativeTemporaryStrategyCreator.cs",
+      "sha256": "caf8d741a2d5af4510011598dcd1c05abe8e64be9f9ed5963c8b34a408d906fa"
+    },
+    {
+      "name": "extensions__strategy__NativeStrategyExtensionProfile.cs",
+      "sha256": "566ef1627e139a64ca18c5ecb75bdc6d7121383ce79d2c142545d9de30994088"
+    },
+    {
+      "name": "extensions__strategy__NativeStrategyTriggerCursorProbe.cs",
+      "sha256": "6153874cbff81360bde70dc839d81a91b0c8c5f781a203fccd0e3525175fba68"
+    },
+    {
+      "name": "extensions__strategy__registration__NativeStrategyRegistrationRepair.cs",
+      "sha256": "ea99668c51bcc31b4046107ec10f21df1575994ea1384707f2d019da75ea1deb"
+    },
+    {
+      "name": "NativeAlarmDefinitionEditing.v4.cs",
+      "sha256": "c7e955457451a0c614add58c1a23c4c2de2e9b6793766e32d047a2c9a3e62b39"
+    },
+    {
+      "name": "NativeAlarmRawCapture.cs",
+      "sha256": "18bed69076b3956b7d2e086067541740614e43ddec8dca3d6587287cb22e61cd"
+    },
+    {
+      "name": "NativeAlarmTypedSpecification.cs",
+      "sha256": "ceb0d5801dd9c97396d0d93f999a20f97b4747c8379c2977b1719ed44a23edd8"
+    },
+    {
+      "name": "NativeAnimationListEditing.cs",
+      "sha256": "be8de1a369e6f5a463d6318eb0c2db0962eb6e388b4892d87bce9cfa30986295"
+    },
+    {
+      "name": "NativeAnimationOwnedValues.cs",
+      "sha256": "363a1908f9074a02a09b5dec26e99975fce4d34403f7a85688b9b0988d4e3041"
+    },
+    {
+      "name": "NativeAnimationOwnerIndex.cs",
+      "sha256": "c60a7da7ddc4d81b985a5c444703a01c4cf7ee814ba68aa453a499e6734a369e"
+    },
+    {
+      "name": "NativeButtonActionEditing.cs",
+      "sha256": "796b22c75e8380962cce18fb4decd2fb5aed2971d135db13089e548a2705d937"
+    },
+    {
+      "name": "NativeChunkedRawMemory.cs",
+      "sha256": "e6488103c8eb7c9cf346677aa56bc07f8b1226ef063a08378a552c04d44dcaad"
+    },
+    {
+      "name": "NativeContainedBitmapNodes.cs",
+      "sha256": "71293eb99d5a26b4d6ade6c735e3f885091eb8ab3c83583126cc6fd6a26d47ec"
+    },
+    {
+      "name": "NativeContainedImageMembers.cs",
+      "sha256": "43038fe07d61adfabb3fc70b832b91cc27fe9f8d04b6f7de44ba048c80e87c36"
+    },
+    {
+      "name": "NativeControlAnimationEditing.cs",
+      "sha256": "0c8ff38272de26b2153878eaae72ec08cfdbd5f9ce0edd288c4a922ed3fd5fce"
+    },
+    {
+      "name": "NativeControlComponentSelection.cs",
+      "sha256": "5f95e203b502131167d96d1e6f0f66c338928ac22129a9e5093672b738757bc9"
+    },
+    {
+      "name": "NativeControlEventEditing.v9.cs",
+      "sha256": "32353ed74e32b0d6fd222036eb024bd564cd0b47c6ed2024b4e5b39a4c3aa99a"
+    },
+    {
+      "name": "NativeControlGeometryBatch.cs",
+      "sha256": "749c232d02a42c7cd441b22760f167d3f1cd5555e96a538d5f08a3da78a674f3",
+      "portable_update_origin": "Actually executed engine94 source; code bytes copied exactly, no request/project/configuration data"
+    },
+    {
+      "name": "NativeControlHistoryContext.cs",
+      "sha256": "3b53c0cb7753a0a8da8b74506952f4dfaf320b02c7e8ac9e2a1c1bd75ff13a3e"
+    },
+    {
+      "name": "NativeControlPropertyBatch.cs",
+      "sha256": "53f164fad582404366fef230575e5d03eae7a409df8a0fb464da7bc9d3539933",
+      "portable_update_origin": "Actually executed engine94 source; code bytes copied exactly, no request/project/configuration data"
+    },
+    {
+      "name": "NativeControlPropertyEditing.cs",
+      "sha256": "623586fe3fa8795e587e7e4d95601ea6864bafccd913090f2badb192d807d329"
+    },
+    {
+      "name": "NativeControlReferencedRename.cs",
+      "sha256": "172cb7b2162d6c6053577e43068a90691b117ffcc91898eadad52794fe009d26"
+    },
+    {
+      "name": "NativeControlSliderFillVisual.v2.cs",
+      "sha256": "1f1376d19dcd9341a18e5845861833dc0501dfdefce96c38099baf3f7ef602fb"
+    },
+    {
+      "name": "NativeCurrentTemplateControlFactories.cs",
+      "sha256": "d3bf4659d9e85c67d63045de7b6d704531972d951ee2ed80a80f123953d2c397"
+    },
+    {
+      "name": "NativeCurrentTemplateControlOperations.cs",
+      "sha256": "1363e15d852bd293ce05bbe3e3f3846ffbc93d196ad0a08d5e407b07d3bf4751"
+    },
+    {
+      "name": "NativeCurveTableCollectionEditing.cs",
+      "sha256": "f25df8d03ddd90be6772ec22e6b2a702bbbfd75ad3f034cd6e2e3f078cda6251"
+    },
+    {
+      "name": "NativeCurveTableCollectionReadonly.cs",
+      "sha256": "a1e56eb3ae300b6acc1fc1b59a0d90ebe5188e5388ec08e5fbd963cf13bf9af1"
+    },
+    {
+      "name": "NativeDataBatchEditing.cs",
+      "sha256": "1b3b0d470df7e0f5b2d7b0beaf924de220b54be957d7d5a22dc9dd5b6571e018"
+    },
+    {
+      "name": "NativeDataEngineering.cs",
+      "sha256": "9b7efc11c57110dcb29c4bc357b8b3ff61dc329150c94669ad1847ef86c04658"
+    },
+    {
+      "name": "NativeDataGroupDeleting.cs",
+      "sha256": "361c1d8a4d70f689a95cd5a56af6ce0ff644da44d307677da73ef92cde578d95"
+    },
+    {
+      "name": "NativeDataGroupsAndArrays.cs",
+      "sha256": "5a0ca62920fa04fe550421e2b0456a2776def699751231094d37836c19d72bb4"
+    },
+    {
+      "name": "NativeDataLogicalCatalog.cs",
+      "sha256": "d6e75e72590a822e3d506471172d653bf4e896e4d044d8710411f5db49cd4b3b"
+    },
+    {
+      "name": "NativeDataPrototypeEditing.v3.cs",
+      "sha256": "399eaf8e7a784bf952014002da8597789bd2b998d9e3618528c686d5d92c195f"
+    },
+    {
+      "name": "NativeDataReferencedRename.cs",
+      "sha256": "db7e12507fe960bd6ac11211694ccced30e9ad10fd3c8544860db432f8353c31"
+    },
+    {
+      "name": "NativeDesignerPreviewContext.cs",
+      "sha256": "ccde3ec3ddf65829d86f9a37d0f666a5aafcf34f69260cb0ba112462644eecab"
+    },
+    {
+      "name": "NativeDomainProjectCheck.cs",
+      "sha256": "fa8dcc309da4bcd6f123cccf00624a764c805faadabac221cae2ce1484a0fa6d"
+    },
+    {
+      "name": "NativeEngineeringBatch.cs",
+      "sha256": "04159fd78194cee453908ace0ecaa0afb500e5ae5ac2e658bbb93334025453ad",
+      "portable_update_origin": "Actually executed engine94 source; code bytes copied exactly, no request/project/configuration data"
+    },
+    {
+      "name": "NativeEngineeringComparisonEvidence.cs",
+      "sha256": "96ac72683caf1240890ea681ae20aec152222dff50b26ddf290b378538c3be68"
+    },
+    {
+      "name": "NativeEngineeringDirectExecution.cs",
+      "original_file": "__SOURCE_TEMPLATE__/sources/NativeEngineeringDirectExecution.cs",
+      "sha256": "f661a107ed82351dab24100208486578fbfd86c5f60123beb4396ab5b019ebd0"
+    },
+    {
+      "name": "NativeEngineeringFileHashes.cs",
+      "sha256": "93447631ee2b68a989b13f404b8dc21b6482cd32fadc274bc588e34e8a187487"
+    },
+    {
+      "name": "NativeEngineeringLargeReceipt.cs",
+      "sha256": "4fbed0c6115502f092532eac81cf264e5b603519d4f3ba6e8ac5e7bec0e37024"
+    },
+    {
+      "name": "NativeEngineeringNewModules.cs",
+      "sha256": "47d969e6314ad209c0fb1478ae65c8597d51156ea70f1b75924dec8d91626d04"
+    },
+    {
+      "name": "NativeEngineeringProjectScope.cs",
+      "sha256": "26cd31aa4761b8f4a6afb28a9432f67ad65d7528c5273020a07b56aa6db1d086"
+    },
+    {
+      "name": "NativeEventSpecificationContract.cs",
+      "sha256": "35f0839ed40fcb3eafc054bf2a7963ccfa701a26726dd9483775512fb48afad6"
+    },
+    {
+      "name": "NativeExtensionDispatch.functional.cs",
+      "sha256": "81426db28c11c02eac5473bb348f36d2dc8bb76eecc8d20406a6d8523e0b855b"
+    },
+    {
+      "name": "NativeHeadlessReferenceRenameProfile.cs",
+      "sha256": "2baad92f551d760332c76541e3bb283723ae9d9b842d98131f46267efd8f473d"
+    },
+    {
+      "name": "NativeHistoryStoreProjection.cs",
+      "sha256": "535be1840d9ba2afbbce6e4e9222ba9a89716d0882ddcb1472db8a5bbb8dd002"
+    },
+    {
+      "name": "NativeLabelMetadataReadonlyProfile.cs",
+      "sha256": "3666f7afa2fd5ce16395b3b1fe594e16d2c020a2368501346c6c807cefbf5c6e"
+    },
+    {
+      "name": "NativeLabelScalarCachedReadonlyProfile.cs",
+      "sha256": "f28c9173662e8e882e61165538c567d5cf238361c97935e075ce95eedb1bdf50"
+    },
+    {
+      "name": "NativeLabelScalarReadonlyProfile.cs",
+      "sha256": "08be940e92920a8d0cbb718e1561e7c096f7d9244fa72e5ca6897fbae2189d1a"
+    },
+    {
+      "name": "NativeLinguistEditing.v2.cs",
+      "sha256": "5d14847eaa406d20bf7859bfca47145646304f3c4b112a153dad5c3081854e01"
+    },
+    {
+      "name": "NativeLinguistManagementEditing.v3.cs",
+      "sha256": "4b7450d5a9f2e2b6e5d79e289979c4134e729ffbabb2c4ee3e9a6e4df9dfb946"
+    },
+    {
+      "name": "NativeLinguistOpenViewsRefresh.cs",
+      "sha256": "845c1eb5705e0aaa7b95fd50044128651739b8f3330a773ba778c3a9c67d108f"
+    },
+    {
+      "name": "NativeMulButtonVisualEditing.v2.cs",
+      "sha256": "2c2029a9e9cd5bddd96c4cba4cf30da1df9eec211e6a5534d3187ab3e617a584"
+    },
+    {
+      "name": "NativeOperations.functional.cs",
+      "sha256": "7dca92b6e87f6748773ea8d89d38bee2e15d8fa31bf50168f9dc77466b64ac7b"
+    },
+    {
+      "name": "NativeOriginalFontValue.cs",
+      "sha256": "d3ecbdd47233b69daaf9324ef5111fafb7eba3501c17fa26c4ba98e90a34efc4"
+    },
+    {
+      "name": "NativePageControlPreparation.cs",
+      "sha256": "8f479e84507e4a82a0a4bcd91753fa8e62a39792cd0c9b7a15ad78d2cf200b94"
+    },
+    {
+      "name": "NativePageDocumentProperties.v3.cs",
+      "sha256": "36d8c4456300d447323000afae8ecb43cdabd704ebd4dec1cf498fc79adecab7"
+    },
+    {
+      "name": "NativePageDuplicateProfile.reusable.cs",
+      "sha256": "95a3c389fabe344d7d4c2cf1f5edd6d9f8dffde43237ec5eb0cad58bdc412a31"
+    },
+    {
+      "name": "NativePageEventDefinitionCatalog.v2.cs",
+      "sha256": "c6df82a9c05890daf8ea0414af0875f70eaea19f61049b15be9c1def6eb572fb"
+    },
+    {
+      "name": "NativePageEventListEditing.v4.cs",
+      "sha256": "074cf10243acfa9f90aff3f01ff737ce6b578fc6c0a8d753c92d8f3fb1076667"
+    },
+    {
+      "name": "NativePageEventSourceEditing.v2.cs",
+      "sha256": "4cf8b7bb2314fd98f64a4bbb08fd0c7341986972280906ac61d8dbe8dcd72ea2"
+    },
+    {
+      "name": "NativePageHistoryEditing.cs",
+      "sha256": "394e37e5ff38e5fc5d5600303920eb691771ab66654851d0c9d2bd138bd42461"
+    },
+    {
+      "name": "NativePageViewOperations.cs",
+      "sha256": "de0688deab9be86e39bab52def912d8875466946ca274e733debb52a33e4fff3"
+    },
+    {
+      "name": "NativePersistenceEditing.cs",
+      "sha256": "4493866802c4694ba3b92975ae49ffba59a20b54b58482f7f888dd4e263d0ac1"
+    },
+    {
+      "name": "NativePictureContainedReferences.v2.cs",
+      "sha256": "78d1337bf3399f3fc5461a83b550fa928f89c4b5df1608eae972d784c7beb725"
+    },
+    {
+      "name": "NativePicturePrivateRasterReplacement.cs",
+      "sha256": "f67bf468f582885cbd26daff6b24befeda768f3b8f139429062fcb0913776642"
+    },
+    {
+      "name": "NativePictureResourceEditing.v5.cs",
+      "sha256": "ae4af0385ce712d11b15ac05a3b43c1f148657d4b63d8365c11b9cb4b0c5acb7"
+    },
+    {
+      "name": "NativePictureResources.ReferencePersistence.cs",
+      "sha256": "f123bf482e53f473be762ae534b064abea1083a06990e04e434bdd297b116d4c"
+    },
+    {
+      "name": "NativePictureResources.v3.cs",
+      "sha256": "83a252e0771314b59419520dccc3c3abfaae11014d5e1ca7a9c2bd21f30a8389"
+    },
+    {
+      "name": "NativePictureVectorCreation.cs",
+      "sha256": "114d52cf42d688da5dd23f0f804ecc94059e168c32cac7c59e97b0f8059dad3f"
+    },
+    {
+      "name": "NativePreparedDrawingCommands.cs",
+      "sha256": "d4c560de7a9254704090256d3b32bf936a28b05478621fa03384ac6ccc8a20ac"
+    },
+    {
+      "name": "NativePreparedPageCopy.v2.cs",
+      "sha256": "599ecd5b822cb2a0f1dab3ce6dd3984384039acb1ec21bb4e6e7997bdfeed2d8"
+    },
+    {
+      "name": "NativePreparedPageOperations.NameCache.cs",
+      "sha256": "4a50154a991cf30c4f398bd17805de89338c4b00fbb9293941009366067909e5"
+    },
+    {
+      "name": "NativePreparedPageOperations.v2.cs",
+      "sha256": "d9eafe2b4b64cf3723c7bd674b43d3960246d07aa3c5394472fc755fe536bce8"
+    },
+    {
+      "name": "NativePreparedRootSave.cs",
+      "sha256": "c5085a1426dc5cae6517bbfcaba18caad1b70dceb791539324c62277652cc150"
+    },
+    {
+      "name": "NativePreparedStandardControlOperations.cs",
+      "sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e"
+    },
+    {
+      "name": "NativeProjectCompileDiagnostics.cs",
+      "sha256": "a313773ba5b52702134b3a44001c587d29eeecec1fe6d5f55ec110ebf230adfc"
+    },
+    {
+      "name": "NativeProjectLifecycle.cs",
+      "sha256": "d6c20705c85df8fc8121b8d93a002b87d7b7418804cfc97871e8e12cc7583346"
+    },
+    {
+      "name": "NativePropertyKeyWarmupProfile.cs",
+      "sha256": "89b28be381f7c7f677da2fea1e5a20e585b7d13d5e6de4f7e6bb60cf8da2e5ab"
+    },
+    {
+      "name": "NativePropertyTarget.cs",
+      "sha256": "4a26df1086470f69023c910817875f3685b1167cf9dac6891bd011d0a3751d4e"
+    },
+    {
+      "name": "NativeRawPictureDrawTree.v2.cs",
+      "sha256": "46119604789317186da1f7d2555aed69a9289d2e457680ae187f90e5b3fd0ae4"
+    },
+    {
+      "name": "NativeRecipeMatrixEditing.cs",
+      "sha256": "6e832a98ef7adf240d372bf8ce790f2e9aaf5fea35055fe1e8f9560f030e9dbc"
+    },
+    {
+      "name": "NativeRecipePersistenceContract.cs",
+      "sha256": "7b40ffef9a07a3e64ee9c92a392f98efaf917c2e7f960f6b4a7913f9f05b1a91"
+    },
+    {
+      "name": "NativeRecipeStoreProjection.cs",
+      "sha256": "927cbfd2422b90ede2649859c03ee001fb16af4732834df9dc9ca5e182365807"
+    },
+    {
+      "name": "NativeReferencedObjectRename.cs",
+      "sha256": "7b32979c1ec17699b0cecf077b4802f21bee800bf3913b7b8a0a1a8c0c998de9"
+    },
+    {
+      "name": "NativeReferencedPageEditing.cs",
+      "sha256": "40f101132699a9287c4f63e72a425e79f407e693a2eee4b102f68d8e32ad2809"
+    },
+    {
+      "name": "NativeReferenceModulePersistence.cs",
+      "sha256": "d7b5ea73df4820cc4939d9b061f822082281d674fd5d75f50cd71c4e309098a8"
+    },
+    {
+      "name": "NativeReferenceProgCompiler.cs",
+      "sha256": "cea726dfa8736116d7d7cd6e6514a719d1bf4f7d905678f1d0c8832a3c0dccd8"
+    },
+    {
+      "name": "NativeReferenceRedirection.cs",
+      "sha256": "f52d7d471f3b16f8fb3c076e2c26e5e88f9254f4734cdbd07707326b156da511"
+    },
+    {
+      "name": "NativeReferenceSynchronization.cs",
+      "sha256": "4194db13abed0f85381a29b678559b62bba5a97199b20d35cf04f1573ce95d47"
+    },
+    {
+      "name": "NativeRequestPipeline.cs",
+      "sha256": "1155e688d60babd23fdf074c1c13af64e1218dfaef5bf804fab901942b29308c"
+    },
+    {
+      "name": "NativeStrategyAdoptionCompletion.cs",
+      "sha256": "5184a139dc2e0ec36f91b367de9a363ce872a9949dcbd146793c64f65ab8fbc0"
+    },
+    {
+      "name": "NativeStrategyAdoptionDiagnostic.cs",
+      "sha256": "658f0edc1614f2d4ac806ed6ca0f1b2aa86abb0b81c4ea4164c924211ac36ad6"
+    },
+    {
+      "name": "NativeStrategyCanonicalOwnership.cs",
+      "sha256": "86a3602697dc969da045cff73357e625a4347b551b037a88f1eb83cffcf3c6d0"
+    },
+    {
+      "name": "NativeStrategyCanonicalSourceEditing.cs",
+      "sha256": "32bbf87531ab87f0ceea9f3283e366b70100f5d4e75dbc306ba4b6d874c27779"
+    },
+    {
+      "name": "NativeStrategyConditionSemantics.cs",
+      "sha256": "3adfdf5eedec1e121e8acc2317d823188b5e2a1e3e8b8b81fd4410c122dee4eb"
+    },
+    {
+      "name": "NativeStrategyDeleteExtensionProfile.reusable.cs",
+      "sha256": "81fe0e379f3b38175aa7158ad0cc88b033026981bbfb600c3b1f46fbdf8a777d"
+    },
+    {
+      "name": "NativeStrategyDocumentClosing.v4.cs",
+      "sha256": "211bc92f4361fd415ffd2d2765c22c45c735fac6026fee304462333402b0bfc9"
+    },
+    {
+      "name": "NativeStrategyLifecycleCatalog.cs",
+      "sha256": "bd9caa63a486bbaaf828b9b877ecd1949d570c922fb467ee3a8f949f5b880d4b"
+    },
+    {
+      "name": "NativeStrategyLifecycleEditing.v2.cs",
+      "sha256": "8da7e941c46582a1af4eac72b85f4518e61a8ded38d2707ccca4f9917f6b1dcd"
+    },
+    {
+      "name": "NativeStrategyLifecyclePrepared.v3.cs",
+      "sha256": "2242abf5eba861a4b4d2e3c66334e50c8f535de5027c497994f82681796f1475"
+    },
+    {
+      "name": "NativeStrategyLifecycleProfile.reusable.v3.cs",
+      "sha256": "e62f8e0f56c2f1c6160a979429b61a4042192260a07f9b164e7551a78e85dcf4"
+    },
+    {
+      "name": "NativeStrategyLifecycleStorage.v2.cs",
+      "sha256": "67639db58c385c5c0a724a3c87a9e828d6667eff52d76e6e1788bcfbce5880a3"
+    },
+    {
+      "name": "NativeStrategyNodeEditing.cs",
+      "sha256": "e261d005e018f01aa10cda1eb4630a4b4cf310427ed76561b8e7ea4efa087a7a"
+    },
+    {
+      "name": "NativeStrategyOwnedGeneration.cs",
+      "sha256": "cd91efffd29f9ff7cff4220e17e2ceee16797e8c86a2fcdd760dd08bb5e4fe55"
+    },
+    {
+      "name": "NativeStrategyProductCapabilities.cs",
+      "sha256": "bf7097ee43433890f1a2eee1ffb35889c76bb9c5f10e1ec6904e2ae58551a1a9"
+    },
+    {
+      "name": "NativeStrategyProgSourceNormalization.cs",
+      "sha256": "9051e0df63071c9aa647c7026ea10f50b962c029544f8ee4c930cda1183ae27f"
+    },
+    {
+      "name": "NativeStrategyProtectedCopy.cs",
+      "sha256": "641e5a0eba9c8d5bc636a24389a9f5296f495e0f43232456e6cd74f644f061a8"
+    },
+    {
+      "name": "NativeStrategyProviderTemplates.cs",
+      "sha256": "85579e725e3714199c79937028b9d6ba2a1cdc5e834b7548b22fbf244b3ef876"
+    },
+    {
+      "name": "NativeStrategyRootAddGeneration.cs",
+      "sha256": "1fe4eec97f261bb2f94f8d8fce485c509273352c8d74d60eb59922dd8c50e0df"
+    },
+    {
+      "name": "NativeStrategySourceBatchEditing.cs",
+      "sha256": "9b7e939ed018d2037f2a2e91eb01f97e74c05f32614594eb24cf88c3935337ab"
+    },
+    {
+      "name": "NativeStrategyStandardSvrEditing.cs",
+      "sha256": "62c37450b9cc69feb157c9b1b01bf6868acf814624d94d3b83aa9bcfa6ba1fbf"
+    },
+    {
+      "name": "NativeStrategyTriggerContextEditing.cs",
+      "sha256": "471299be67d788e19568acfc3e6cdd20b344281d78f993b4833e01e96978a3ff"
+    },
+    {
+      "name": "NativeStrategyTriggerProperties.cs",
+      "sha256": "34ebdf34b4b99acacebb5c2d9f79493fc819e23289e9117809693a6986d540c2"
+    },
+    {
+      "name": "NativeStrategyTypedParameterEditing.v5.cs",
+      "sha256": "e3da17f20c87658f3015ee610528d633ea5412f28e69fc480fb14a6664e44e9b"
+    },
+    {
+      "name": "NativeStrategyTypedParameterFields.v3.cs",
+      "sha256": "b5ff368a66cf11a9882a7c5cdcbe817f74a16098b8516ea95f9aabb402c49571"
+    },
+    {
+      "name": "NativeStrategyWorkingContextEditing.v2.cs",
+      "sha256": "dcab119d1bd74883033b5b915f554d1bf59a6e5f00dc76d98b2ff8ad0d5f7d57"
+    },
+    {
+      "name": "NativeStrategyWorkingModelEditing.cs",
+      "sha256": "8583c9cca7543ae4a6b63b4461d0ea929191d08277cb6dc92e0c5d81b38f5b99"
+    },
+    {
+      "name": "NativeStrategyWorkingSynchronization.cs",
+      "sha256": "23980abd9ccf1c20da4ae544eff8ee4cbef55d5b28a6b337e934b11461915fcc"
+    },
+    {
+      "name": "NativeTypedPropertyCollector.cs",
+      "sha256": "87597d59dd26c827cf0ba70f750c5bf306e0af09442ab45f11a0c6a0916b5c1e"
+    },
+    {
+      "name": "NativeTypedPropertyDispatcher.cs",
+      "sha256": "5d1e305ce7d806efec4235c819324ac90d5f6fa7d724abb81989bd431a0a40cc"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.ConfiguredPersistence.v4.cs",
+      "sha256": "07203ef6b41338c9cdb691c137402e230a76effb263ef8434164075d1e4ae577"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.DeviceTree.v3.cs",
+      "sha256": "0ac325de719aa678a10614ece401f2d9c91db327ec6e9aadd9fff958d2676cfd"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.DriverCache.v7.cs",
+      "sha256": "c146ddd48fcc003d007bceff7552e75ec37411b14b06aa86d7bd87d1085c47fc"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.DriverCatalog.v3.cs",
+      "sha256": "9ea5f2cd9f551cb58e522de4e928b75c2af36ee265b6a87eb72574896f237572"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+      "sha256": "f9bc7f3abf3c47edabb8995abf17b9a313c6b2d98e27fb005b596804f1bff304"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.DriverProperties.v6.cs",
+      "sha256": "676e73d24f3b797a08de0f8edcbe179cee1c797ad655459cdcb87a32d490b84c"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.InPlaceProperties.v2.cs",
+      "sha256": "c1c0a7d34a7813dcd35b39c34beadca778d3c19470cf346005c459753d9dd19a"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.InstalledDriverAdd.v4.cs",
+      "sha256": "2e57d49dc1751ac06d394a166a8dd3e1980d072e3d5aa3be37bafca88d1c9847"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.MemoryDriverCache.cs",
+      "sha256": "5fbc828cd1dd4837fe3963e1ae2e495c6ff8046c3a7234a78898d1403806d7f0"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.ReferencedRename.v2.cs",
+      "sha256": "60709b1da910067fa92acf942d02566a35995591f11a3c3befd2d28d9dda745b"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.ReferencePersistence.cs",
+      "sha256": "c7affe4a19dcc333fa1ccbafa46342f35eaa3b7be222bf22a1172dfe1c3fccbf"
+    },
+    {
+      "name": "NativeUsableDeviceBatch.v10.cs",
+      "sha256": "dd08e7a042e2ddc8f4afdf2d61e45ad19fe55606cf36146ef5aac643091b8c63"
+    },
+    {
+      "name": "NativeUsableEditPermit.cs",
+      "sha256": "29187a08fdcd54ea1870872118c1b53d2819d13774d375dc3dacd6e6b40d9d75"
+    },
+    {
+      "name": "NativeUsableEditSnapshot.cs",
+      "sha256": "7cc8cf5658489b7a281af7da2710eaa45f72ad996b2a3d3dabc2487c1cd43f3b"
+    },
+    {
+      "name": "NativeUsableLabelEditor.cs",
+      "sha256": "42c298486abdd62d3c15576002e7f64d0529d10e0e90392b1743b78567103526"
+    },
+    {
+      "name": "NativeUsableStrategyDeleteBatch.cs",
+      "sha256": "3a2a7a8d6ff37fee995c39730853c3e58b733f610c90131d8d76212515378ba8"
+    },
+    {
+      "name": "NativeUsableStrategySourceBatch.cs",
+      "sha256": "c471e3e8531377d23a4d4c6b1f87a14914f9347dd4132b07dc90b671173fe04e"
+    },
+    {
+      "name": "strategy-properties__NativeLabelProfile.cs",
+      "sha256": "2190d1d89d5b408d77cca1d1a8adf8ece56f72a6a18c6293fb8a49a0d51be715"
+    },
+    {
+      "name": "strategy-properties__NativeStrategyProfile.cs",
+      "sha256": "df432e02317a78369718bd784bcee5c981b024604b935616351dd5c8aaaa088b"
+    }
+  ],
+  "owned_artifacts": [
+    {
+      "task_relative_file": "coverage-20261101/controls/button-action-layout-proof.json",
+      "sha256": "fd9c51516a33dd6208bc6fbff3424faaecd8e5903968c6efd451fa7f09872b5a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/controls/button-edit-metadata-static-0001/button-edit-metadata-condition-data-guards.json",
+      "sha256": "bc09e6aa0cbf94c2637e338d705f8f787f46e9f28dc4b7a1a22dd69734fa62e8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/controls/button-edit-metadata-static-0001/button-edit-metadata-profile-candidate.json",
+      "sha256": "d7eb4c24d9beb3b419b31e01226971bc2dc2073d797e3faa8c9121b2526ff0a8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/controls/button-edit-metadata-static-0001/register-typed-helper-sink-eh-independent-supplement-0001.json",
+      "sha256": "2bc69dea4027c6291ac4a350a86b15d348a1a7d254c66d6fac2cc0bbe0f39047"
+    },
+    {
+      "task_relative_file": "coverage-20261101/controls/button-reference-read-profile.json",
+      "sha256": "5f173c0aa49f6379663c6841bc8f3b88a85f5b8aa358af41f39bd59de4b1828c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/controls/installed-control-abi-inventory.json",
+      "sha256": "29690b2352b2a6fd1381b827ad60bc059de017cb83c2ddfe69fca3b3ae4a8ee3"
+    },
+    {
+      "task_relative_file": "coverage-20261101/headless-run-0001/field60-raw-rpm-profile.json",
+      "sha256": "f48f3433c3a8edc8d61ad6395601c5814b84574fff0f36464f3a7dba6b4f2c39"
+    },
+    {
+      "task_relative_file": "coverage-20261101/headless-run-0001/headless-reference-rename-abi-profile.json",
+      "sha256": "e4272b26d594b705feb0692f7db995e295f5effb37a7f9de7c1dbab6d59d380f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-current-app-global-instance-initializer.json",
+      "sha256": "becdfb6963b524b1c5fc94284f4a439dc96d413f2d66883b1c4c6c71a3638c0b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-current-app-static-vtables.json",
+      "sha256": "c38040bb52718fe265c38ec86340c80b5d6dbe805e1ba9569f9667f0632f79bd"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-module-state-first-return-static.json",
+      "sha256": "710212724acd0152b66fcde22a253b8b4f0b73d835addf544e3184fe1dcd577a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-module-state-global-fallback-static.json",
+      "sha256": "65a16f6c1c59b40187e27f57971fe9afa91ec811d7aa849387d9879b92e84662"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-module-state-nonlazy-branches-static.json",
+      "sha256": "27c24770f285515831febf4f0646c285b8ddaf15e2835b911f5774446a1e6833"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/afx-module-state-storage-static.json",
+      "sha256": "00013b452b0da1c4e8c54b5ddb23291f4d30ba896f3c433dd917b05917d4d251"
+    },
+    {
+      "task_relative_file": "coverage-20261101/native-trace-preparation/native-root-global-read-profile.json",
+      "sha256": "33a08f65da63a0315a7f74909c664428a71fdff76116fa665dec07297bc2b105"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cached-schema-output/label-metadata-cached-schema-profile.json",
+      "sha256": "4ee8958e79dc40e51f0d41671bcd9941d4f2a321cdeee948a2c4f2d9bdc7b6a0"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cold-init/cold-key-complete-functions.json",
+      "sha256": "239313b70fff9509949a3d2356a18738b1368ea138e1675e6c983fd4aa990495"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cold-init/cold-key-exact-constructor-data.json",
+      "sha256": "b41fae26f8ba350feae872eb27d3479ddff828cea0872531fc586c3bd3c652b0"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cold-init/cold-key-initialization-profile.json",
+      "sha256": "c047e66f6ed0661d01c2dad9cfa0ea4cdd9bc50631af1ec7480c0ba774540305"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cold-init/cold-key-map-layout-supplement.json",
+      "sha256": "349abf11f912a730f99d7f3f45cc3f97644eb9a2c330a86c1399b33131cf0992"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/cold-init/engine0042-import-and-component-guards.json",
+      "sha256": "7574fd914a65966abe2d496cf5a6a8708e51579967318ab9228a30cc62ce5b58"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-metadata-0001/label-metadata-native-profile.json",
+      "sha256": "3ed3a5b1bb0d06fc7fa7f90bb810c4f8f085d0861a148c4e3c156a7dd8f737b2"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/generic-map-destruction-normal-cfg-0002.json",
+      "sha256": "194055355fff1a0ca237b5f2587fcb00af8615bdf98de54d78bfd091a34ff0c5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/global-json-cached-label-read-profile.json",
+      "sha256": "97277375d7531ec4106856f654bf7185d8e56b740310a5241a688ba260bee802"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/json-service-cold-static-functions.json",
+      "sha256": "fd61137d99a61dccf636b64421f159fdb24b9fc3405488c795a31c551bc4cdea"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/json-service-raw-read-profile.json",
+      "sha256": "b825e823e7e6a9d5b3c5cc8a7e898d017a08391470d66c0b87153c574af45ab7"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/review/global-json-type-cache-key-composition-static-0001.json",
+      "sha256": "0d9aae5d722f27fb59fe8078e0944a75af3ae2d4f379f22c5967276ac053e23b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/review/pm-aux-map-static-closure-0001.json",
+      "sha256": "9c587970142a3ad229c495a6ed29b62082b96c2bd11dc22fc969b75e73986f7e"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/review/pm-owner-inner-map-layout-static-erratum-0001.json",
+      "sha256": "20ea558491b82b5973ec02877fc370302ed421ad27213104e87dad7de5db4d67"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/review/prepare_pm_aux_map_closure_0001.py",
+      "sha256": "5dfdf0a227f217b7df6b38df9a874f7e28f5c93b0cd0efcc118253a84a5f44a0"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/scalar3-helper-glue-profile-0001.json",
+      "sha256": "dd20143a27742198a7c32d3588ec3b339679de4ad5551a2812db21103f9e883a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/properties-values-0001/scalar3-native-owned-candidate-profile-0001.json",
+      "sha256": "3e752d468d3444b7fd404bbe60f175c35e1c0626c6c259594bac583cf58dc842"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/audit_reference_rename_persistence.py",
+      "sha256": "2bf3f11222775ca4a0015ce14654d2064fb389fec9fc7566e300f1232b2b3339",
+      "byte_length": 8127
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/headless-referenced-rename-plan-independent-review.json",
+      "sha256": "721a110b438fd82c1be558012b05b5bdff76604658c54435ea2244de018f7bce"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/headless-referenced-rename-static-plan.json",
+      "sha256": "891c2f7458baed240d32c0e0107995c09b97f73b6cf3bcd91dce59fbd7f5578d"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/headless-rename-bd83c0.json",
+      "sha256": "7b8176553ed969afecc733052a31c0ece9444661d84cf816457c2b5dafb88da0"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/headless-rename-mfc-ordinals.json",
+      "sha256": "9f15411bb0ea863241baf04dfc2c5d820399074564b1c14841ec9b49634dcd57"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/live-label-abi-profile.json",
+      "sha256": "385f059a4d99a091413d97cff3ce7fdce196a8da221ce264cdf26a481da0eea8",
+      "origin_sha256_aliases": [
+        "9ab9fef153e982c0a53e7a758dcf9eedd2c8797747acf393a85ce47eeb858d3a"
+      ]
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/live-page31-flush-abi-profile.json",
+      "sha256": "0c146979f36cafe17c5d74e0b4f7876e75b7f114479c003a24a5c10428761df4",
+      "origin_sha256_aliases": [
+        "2faf2d98ec515fca1b1896c0de5b53b59904f2e46d8937399a41a4205b7200ba"
+      ]
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/mainctrl-doc-save83-full.json",
+      "sha256": "e497f5e2b86045f40d2d366b3d50af16fdbd64220ab4b8457a07069fe7929ddf"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/mainctrl-persistence-abi-profile.json",
+      "sha256": "79905517a2f4d2cafd2e2d3c767bc4ff98a71828a6c966c00f9a0514c47fc842"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/mainctrl-recordset-specific-methods.json",
+      "sha256": "570aa091817337ffef560195758149591ff7aaa88705912bfdca91f814214c58"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/mainctrl-restoration-guard.json",
+      "sha256": "ff9109b8534e7345b2a1f8ed5ab70218379dd9b62cf44baafdcd7ba34527b66a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/page-doc-save83-linear.json",
+      "sha256": "594dfcd2bcc67c891a5d90633c7d69ab3c4bf2dd4cc97aab2ff56e8a5231a486"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/password-empty-string-and-gate-proof.json",
+      "sha256": "ebd86b50d476af8ebeaa6e1be99b717b7253f367ed7f664ec52de5c2902d34de"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/reference-rename-abi-profile.json",
+      "sha256": "6949c59ae9399ed4f2e13cec06019bc5a294fe635bb75af800cefd135afafddc"
+    },
+    {
+      "task_relative_file": "coverage-20261101/references-view/verify_referenced_rename_restoration.py",
+      "sha256": "2de803ae89d5378b21076ca64435ac836121aef6c15153eb44b7eedb97fdd25d"
+    },
+    {
+      "task_relative_file": "coverage-20261101/state-reproduction-run-0001/headless-reference-rename-abi-profile.json",
+      "sha256": "e4272b26d594b705feb0692f7db995e295f5effb37a7f9de7c1dbab6d59d380f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-array-name-generator-static-0001.json",
+      "sha256": "0b4a9e706d5fa8bc1f824b82f9b4b722f94290fb6303b52b66de0015ba456fef"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-batch-scope.json",
+      "sha256": "290ad70afbb80686313c0921e7b35f91ce1c681aa7ed2a4d120c26c4921aa6f9"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-array-abi-profile.json",
+      "sha256": "adffdc9553847960449e9574df5679e98520cbe746768ee4f1ccab0763a32004"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-array-static-proof.json",
+      "sha256": "167d50a8c97ed60fbc2216e5b7d437b5b436cfefac14417b3aadaa7fb44887f4"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-delete-abi-profile.json",
+      "sha256": "a27414f31ef574b0fb1de51516642cf7a89a99583ee64393781dcb569d1bd454"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-delete-static-source.json",
+      "sha256": "6dea1f8a393f34bcf4c15e73a38a076de9170c240387eb5deba660cd77af3e03"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-prototype-owned-editing-abi-profile.v4.json",
+      "sha256": "b4534db22b2c1cb0417996d593001c048bf9369e848c3fbb4da2b02805ba1f4a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-native-abi-profile.json",
+      "sha256": "6193799757fed8e1de80f1318c15a6c87e0c495bc795f99c0bf6c01b2eb0d939"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-referenced-rename-scope.json",
+      "sha256": "d7e795173fc35dd57be42d2fa7a2c69bb7878eac90c8f1d3349500f1916a1f00"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/add-driver-prep/device-installed-driver-add-abi-profile.json",
+      "sha256": "44a7bf21fe51561250329044b6301a6c4485dc0fd96eed1e044b66a0e3385441"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/add-driver-prep/device-installed-driver-add-abi-profile.v2.json",
+      "sha256": "d713229c98e3880c28868e211c116fae2479ff7d27b9232cbe80c90bd99a0507"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-native-owned-list-abi-profile.json",
+      "sha256": "b08d1b8188ab24f77bce26ed5b9a1218b4b6b52f8ae414e9366ce247d7daa817"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-original-selector-set-abi-profile.json",
+      "sha256": "92e59262a72f09138e4493b75dda6f0d870d42ff2bd3e5ccc90d5a9bed4d200d"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-typed-specification-abi-profile.json",
+      "sha256": "d9805423783b249868b7de536ceb8a8db136f51adf8986f05b40b76b695bf98a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-driver-properties-abi-profile.json",
+      "sha256": "6d2c19d30195b2796d47a2e14bf02a324e4187f4bf9cdf10723033675080c806"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-driver-properties-abi-profile.v4.json",
+      "sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-native-original-profile.json",
+      "sha256": "f7630e22c96b86691e909973d30062ee8a2f52067c8c143bde053dc0d0e995fc"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-native-raw-preimage-profile.v8.json",
+      "sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-node-loaded-parent-state-abi-profile.json",
+      "sha256": "914aaa00c19386a4a00346c868c514d0e51864e1b352df528395f0aec757553d"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-node-owned-abi-profile.json",
+      "sha256": "e827853f68f622be6a3ff9985621025ee0b3d392ed2e86306338f484250cacff"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-node-rename-original-persistence-profile.json",
+      "sha256": "b0183e1e9ff6be9828b462f7005d2a7893f69b32622234e4b0e7c12d84d6a73f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-protocol-in-place-abi-profile.v2.json",
+      "sha256": "678013325859b681f7ef5eb0a9efa843a70dc89791f75f943231451716e4c795"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-reference-aware-rename-scope.json",
+      "sha256": "9713ad33d226b43c5ab84b7561cfa7cb125f67cc96fd6aaf37d87fcaa3e593e3"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/h5u-native-store-empty-string-profile.json",
+      "sha256": "3467ea7763bbe666b7685dca54e89baf6935df4df6390b085a50a60136a2ee44"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/iot-native-store-framing-profile.json",
+      "sha256": "4cd9bd6d564d7f43ac2676d79573c99a357afb5e75b459298c504f0418efbf1e"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/memory-driver-prep/memory-driver-conditional-store-abi-profile.json",
+      "sha256": "32524d8aa6df3428dac4290d9af5303a9bc56811d8c58a47eafe2e4b7b959702"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/recipe-matrix-abi-profile.json",
+      "sha256": "07a69457237d94504e54b6f389a06a441371e204ee47bc9d1944018a033a244b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/recipe-persistence-fix-0001/recipe-native-named-persistence-profile.v2.json",
+      "sha256": "475dbd71c1288a74690ee80c767f3eeb1af2a9df7d43446270bc784390286171"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/native-project-check-prep-0001/native-full-project-check-static-entry-evidence-0001.json",
+      "sha256": "3814a073e3555e1b52b737630b8c06e6fa2f57b64003c44e731c7156b6a70226"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/button-actions-abi-profile.json",
+      "sha256": "b4072dd8e224009ed4888093c99bd5a286f824bf160b7e4fd933a6a60f018ef4"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/button-actions-abi-profile.v2.json",
+      "sha256": "eb4685c0ac2c611a8ca0acba7a4e3e197fdd5fff44e16aa5853ef02e8b48bdad"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/button-actions-native-static-proof.json",
+      "sha256": "e09026e2e34b4f9df31853b275ea265a7651b7784ba08e66ba8d4d042c4510ea"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/button-string-array-fix/button-string-array-static-proof-0001.json",
+      "sha256": "80c61c6c41d7440332424051f42676abe042e01dac0606e9a0109b2d42bbea84"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/contained-control-image-members-abi-profile.json",
+      "sha256": "e484b72d2ef79314ec620422121bfff2eff54b03d6c867e40f9b9ea4848e8060"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/curve-table-collections-abi-profile.json",
+      "sha256": "375a6bc289163784671ce5d346a15fa7e81e15f3ffbbc024f7d887ae79ae8b37"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/curve-table-event-declarations-native-source.json",
+      "sha256": "0f7d91a5f50495bc5728320944679e46c9aa42cd41ec0c94ecf20a9f3dcae88c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/native-animation-list-abi-profile.json",
+      "sha256": "8a5cfe13b43cb6a971a84cdcb3055708d75abd3b2bb9e8aac69e4cd093aa5548"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/native-animation-list-owned-abi-profile.json",
+      "sha256": "6b255d120981401e189d2cb87d32bb40e6ac23a950d0b1774b786a85e64a4f01"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/reference-redirection-abi-profile.json",
+      "sha256": "30a53c81bc92bc5db9db9ac07c9369963b772ea0bab9104970bfbd7f17552325"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/reference-sync-abi-profile.json",
+      "sha256": "84b9bbc5a227f8101537bd259aed944c42c7f068a46ffd0a7271c46cba2a9fe8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-event-owner-type-native-caller-erratum.json",
+      "sha256": "26482ad086d02ea9f6e3d6145dd5842307904b804c371a7cedbcbd37778a5a3b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-abi-profile.v5.json",
+      "sha256": "67767834f8920e6637a0be085b47d7b6e036f350da7063f8d70b94242c4b6ae8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-abi-profile.v6.json",
+      "sha256": "3655dad1ac62f0953554e87ccebff87e724da5440b8a322241bbcdff63ff1ade"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-abi-profile.v7.json",
+      "sha256": "94690b6c61e2a2b7510a7a128bd963f1ef1844ff1e1ad86f7d05b581e6c9f42d"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-bitmap-multibutton-static-proof.json",
+      "sha256": "b08d418d595ea3e81d7882b66f65f20d104f07728bf9924d34a4e9169a952b89"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-label-edit-extension-static-proof.json",
+      "sha256": "3990e24eb6201244da1caacae80807096bda01a892b6f3ecc46ab09c972ad0ca"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/control-events-native-static-proof.json",
+      "sha256": "2c86987eb840df21c6bfccac16f6644be43c5c8adb0b3856802865ce18dd9dec"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/current-template-control-abi-profile.v2.json",
+      "sha256": "18a4f65f987d18fa2e43a998f50e36d1e269db1563b41bc3ecd63554fb52a82b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/drawing-command-abi-profile.v2.json",
+      "sha256": "bf27146170e0597942064eec574ffcec0d9ca5e95789ca8ea79d083fd4880a0f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/event-argument-text-copy-and-derived-bindings-static-proof.json",
+      "sha256": "49492b6440b9593542fab4f62af275f33bae60b328d112d27e68cabae7ca9a32"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/event-parameter-semantics-0001/compiler-derived-cache-0001/event-compiler-cache-contract.v2.json",
+      "sha256": "46eb22b202751b98ef7b9570a9d37ea8b1828ca42f7d3b12a146159a8a3e612d",
+      "origin_sha256_aliases": [
+        "328ca66411fec5e43e573c2cac08dd10cccaaabbed57fbc5ca7ace071a2cfe5c"
+      ]
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/history-property13-projection-static-supplement.json",
+      "sha256": "ac668008139e2194dbdc1079dcd9c2e19c25193b9e797dae25a01d48e81ce76b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/history-store-selection-projection-abi-profile.json",
+      "sha256": "b22e679312aaa5d506c474caf4bbb5209eb6be938305961e02eaa228b70ef5f9"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/language-management-prep/language-management-abi-profile.v2.json",
+      "sha256": "2b0748a40640416b3b69a3e489fef2e6353a4e8ef91f4ce4566ad17caada5596"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/linguist-editing-abi-profile.json",
+      "sha256": "e7f62d3c3f1891c0f5bcd95c86c4cef95273f64bf9b0ccdee805159b87dc8174"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/linguist-editing-static-proof.json",
+      "sha256": "4c24c3fdc13e0bd9b0c3dd20ed2da54a87bd4a034eef8ece4b7e61f788b514cc"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/linguist-open-view-refresh-abi-profile.json",
+      "sha256": "4f5f403111548179b37b0c851d81c08ce33231e65193c620b45d1168811ac925"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/linguist-open-view-refresh-static-proof.json",
+      "sha256": "d74dfd933ad6d64e2b5edd8158f82bf86e38d5776e88e8402ada5e805e127080"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/native-control-placement-factory-abi-profile.v3.json",
+      "sha256": "85708fdbb8d537dfc8f3e4f1e16aff0d9000074012a644e072e96f5da8691dbf"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-abi-profile.json",
+      "sha256": "66159c66b8cd05febcf5e7f03539123c2a9a86490c2f552a94253bf305f00ab8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-abi-profile.v2.json",
+      "sha256": "d383ce0d2595b4d08efc6526d1f940caca5aadb7fc405020af247f3d38313965"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-static-proof.json",
+      "sha256": "287897580b17f4ded8d3fdd34ca69ef9ede87de38680023f9b78f92e87ad58f5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-definitions-abi-profile.json",
+      "sha256": "ce0eea49c948eea9bf99d6ece908a4cce74630bdd1b38828412fde80a2dc5429"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-definitions-installed-declarations.json",
+      "sha256": "d9fe3d4ecdfc02dd52540f7967314270c6c929ddec176f6e859c50c254267725"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-definitions-native-static-proof.json",
+      "sha256": "d963380520fc42b0be0380df22ca6361d7fcb5bcc44e0b5e26408bc5b32abaf5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-list-abi-profile.v4.json",
+      "sha256": "bcac04671380217cb84145f44b4ce9cb1522e451eea14137b0f5e573a9a90825"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-list-static-proof.json",
+      "sha256": "4f611dd5243dd97b360effcdb164c42e134643a6f47164b9865e6d31ffe84463"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-source-abi-profile.json",
+      "sha256": "f5a7e311ebd2db96a95ee3179f7df765e1f50f37cce14f37648c3bdab22d834c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-event-source-static-proof.json",
+      "sha256": "509f3588dad83807bc11bccde5125216b30a873e10c35e5ba8c785514e4c4d5a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-name-cache-abi-profile.v3.json",
+      "sha256": "10063b9e97180f958558f7159c0f141893198e9b5d78082eac112800f17ea777"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/page-view-open-static-supplement.json",
+      "sha256": "2801077cb4843ae76ec5051993b7594aaa708c5b4660d56772d55093fd3f4feb"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/reference-graph-and-rename-abi-profile.json",
+      "sha256": "99ca0c2c5cd43baac791b86cebdfdf85367ea6a21cc9c6534dbf1ebeafa9ab08"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/reference-prog-compiler-prep/reference-prog-compiler-contract.json",
+      "sha256": "be8c3dba3d581edf0cdc7357a9428f4d5f9e2ca6cc9152b846585d2918316913"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/performance-prep/prog-original-generate-trim-static-proof-0001.json",
+      "sha256": "28b76a267147b745ed19bdcff8bfd49d027f460fefdb0cc49c3dbcd08bd81577"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/performance-prep/rootadd-prog-empty-compile-static-0001.json",
+      "sha256": "7513c8d78d3dd0c89b47926c840c85ec15baacb0aba67da7dc0918e0b7dc56f5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/project-services-prep/domain-project-check-0001/project-check-domain-abi-profile.json",
+      "sha256": "c676217196abd99737c961f6f46b9803e0c4ee37852d965cf1a580d611e1a4a5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/project-services-prep/page-view-open-abi-profile.v2.json",
+      "sha256": "50579ca3e72de9fe6511465eee806ead747f98e56ea5aaa05f819f8968a85d62"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/project-services-prep/project-check-worker-static-source.json",
+      "sha256": "01504a2c8b5f2c86b3ed5f0966635c663df3ab488febfaa7c98dafac001f1afe"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/project-services-prep/project-compile-diagnostics-abi-profile.json",
+      "sha256": "387b158d0cdb5cb525c02609c64058e0c5f2a933481ac3c8e1a73e7c30647b5c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/project-services-prep/project-lifecycle-0001/project-lifecycle-abi-profile.json",
+      "sha256": "8510962665c0c33733749e997a3c2f5919a558bfdc5acde1d36f22fdc3f2e0b6"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-contained-reference-abi-profile.v2.json",
+      "sha256": "109bcaa00d8383fac3102aecc06a4e332b3a89659a4ecdb10dad6d24ba74cc80"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-contained-reference-abi-profile.v3.json",
+      "sha256": "b8d1bad78f93642fb11d4b809dde9be1c3ca6dee33d9b024ef9404841b5d8581"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-edit-abi-profile.json",
+      "sha256": "753a7e367ee7ae8500e142098d0a598bf3284b14e571883ade5791cbd063fed2"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-edit-abi-profile.v3.json",
+      "sha256": "15791093cd613363e9c49fab752c318e873d89587de113da15989dd1d9a425ad"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-make-reference-hash-index-miss-static-0001.json",
+      "sha256": "87111058b2ac71014a282ebbfaaa69203ee5df5ed3eea3a9165cf26dd09253a9",
+      "origin_sha256_aliases": [
+        "c13ce0e9db1cdf6be1ea6293ec35ac57b740941090a919a7c4bd774d775e35d9"
+      ]
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-raw-catalog-abi-profile.json",
+      "sha256": "88b03c0ea5faa1a47abfa2e8f371529e96f39a932970db9726cb70d50e026c9c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-standalone-contained-persistence-0001/picture-standalone-named-expansion-static-proof.json",
+      "sha256": "db57fbf12930ad0d5d54e8c8502f648f2eee103794f1d614416c690538237091"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/resources-prep/picture-vector-create-abi-profile.v2.json",
+      "sha256": "ae946ee4eda9fdcf985ce603f8bfd558407cc04c2a32a0a3ebb280459305b676"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-document-close-abi-profile.json",
+      "sha256": "b23816c46a644cabf04c29cf4ad5846146841bcff4322567dec38160913412ec"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-lifecycle-abi-profile.json",
+      "sha256": "196b87fe84290adb8ca1712ce6a5e059ee479c45c696ec9264c68346a7da1a26"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-protected-copy-abi-profile.json",
+      "sha256": "8f92d4d50a1ad813ebb7a853baed59ca82078289162c731294f8462261973e8b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-rootadd-generation-abi-profile.json",
+      "sha256": "f40e60924c1a020e180f9eb5a467d144121867262ff5b4e8739087d2d4f0dba4"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/product-capability-prep/strategy-product-capability-abi-profile.json",
+      "sha256": "5c44d1dc605c0a0b4bc26886b9586bf5b13fdeb7ab02ff8d0d30f72dee5cdec8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/product-capability-prep/strategy-product-capability-static-proof-0001.json",
+      "sha256": "80f79d7f37eb69c231dff7588b5ec23ca2ad9689aa7c643c827479135112b60b"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-native-primary7-derived-static-source.json",
+      "sha256": "eab1983f15a0a03581d87d6b3b9fc5c4febdc8bc7ac2c4f8dfabfd33f815eab6"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json",
+      "sha256": "7198f12224c7bd209dddf74c3597f93e96b9994c11877cce1b71d53f2c527fcd"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-owned-generation-abi-profile.json",
+      "sha256": "2c84a97fa0adc5d65f27f8d4ceef29442fd908d64911b711897d95b8b3826cec"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-prog-source-normalization-abi-profile.json",
+      "sha256": "cfe1cd1b86539a6bfabbdbd616538a1a627f4861865f6a15cfdb25e38c54eb37"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/counter-ddx-static.json",
+      "sha256": "a33f47c81f3375ce2c4eb9464624d422f7f8115b289c2ab210185dc4eaa3a528"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/data-condition-ddx-static.json",
+      "sha256": "b3dad64723fc7b61fee6c9c741ef07b25ceca28cabc82c2d30710dd2d93593d0"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/data-limits-dialog-contract-static.json",
+      "sha256": "edc8d89279ee2e059c7fc0d81333847e050d5d200b6da8e05740eab9cd136dff"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/if-ddx-static.json",
+      "sha256": "ffd9677063ce927ec45f133de6f41fc3f23f5c504d5fdc5898d0302b7c681be9"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/original-combo-init-resources.json",
+      "sha256": "909d5c16d7441dd04aeb73ca0b802461a737b30f5b4c41f05482a7f5644eb9c5"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/proc-time-dialog-contract-static.json",
+      "sha256": "e7b544988f03a61e117c8f9f485fa4cdf9548cd12e4699e7efd356d0b94ea646"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-original-property-page-resources.json",
+      "sha256": "7e3d16d6efb620f0e05c6f568a8bf0cf41d2d9752ae4c2da75683a83fb46d41f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-standard-svr-abi-profile.json",
+      "sha256": "46e05aaf70494feaa2844503a74b2e86a9328453b5f571421d1c55508e7c1cb1"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-typed-parameters-abi-profile.v2.json",
+      "sha256": "e25ac3386b546225392cec382ad157fd1cb574c1ee8b3244d7d161cdbe0df8a9"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/timer-ddx-static.json",
+      "sha256": "d0a512a26b4dc8cdf656286c76659dfe3ebb5995f9012e92570a29bb470e00b4"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/wnd-dialog-contract-static.json",
+      "sha256": "f9f6f881c86e7ccf2336484bc44cdee35768b50666459f81de81534eb11e403c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/working-sync-prefix-prep/strategy-working-sync-prefix-abi-profile.v2.json",
+      "sha256": "6d3b3d4819e7987d428f5a0ef9adb7b7507b4b9c0aff118e2087cc067c1bf892"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/strategy-prog-replace-profile.v3.json",
+      "sha256": "88d5b78255c602627185fe3fa3439b2bb21f41aec907d821359c11a722495c6f"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/strategy-trigger-context-abi-profile.json",
+      "sha256": "44f7ddb25aeccffa6ffecb7683ea97bbe35e77fa5dfa5d7423f56fca8b5b6b82"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/strategy-trigger-context-abi-profile.v2.json",
+      "sha256": "e212e2eaa5d368e2ebd5efa266fdd1c48f434e39d1adbb338c864aef1fe46e9a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/strategy-trigger-context-abi-profile.v3.json",
+      "sha256": "c6cf61e9fe94c1c150a2eb30743a7bcf0e7becb7ce6d287c9e4929c63865f2f8"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/typed-ui-prep/strategy-trigger-properties-abi-profile.json",
+      "sha256": "ffcca747a9bed6292f3a8880c9b039404443b93dec33b7cc5fe7e3142f8605f3"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/typed-properties/control-properties-abi-profile.json",
+      "sha256": "1944705fe9b567dd96e1e4e1ebee5542a58a3cf0f1f364f19c18f2c4830d558a"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/typed-properties/control-rename-scope.json",
+      "sha256": "dbc0f929f80f4ea9e2db8175958b79f9f4ba5416e39ac65899a349289891b3b4"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/typed-properties/font-value-abi-profile.json",
+      "sha256": "461045f97202c033a85191b1c1615883f5662ba53f67f4e1a76084f2c0b449e2"
+    },
+    {
+      "task_relative_file": "extensions/control/control-abi-guard-v2.json",
+      "sha256": "bc31ad4f4bd1b925996dfa6d4d1a1b659699759e114b8effade0d4074640de05",
+      "origin_sha256_aliases": [
+        "ddb36d9e4734ebbe2cdb7365f3aaaa6a0122571994233332b7e98fd3e870df01"
+      ]
+    },
+    {
+      "task_relative_file": "extensions/control/standard-controls-abi-guard-v3.json",
+      "sha256": "73090bee820bcec329947c2ba458fed5a327ac2263743ea70dc1cf892d0c3170",
+      "origin_sha256_aliases": [
+        "3b38a7bafd4d49cc93be51a2b14529c95c8f57924072e42db04f45582a5fc18a"
+      ]
+    },
+    {
+      "task_relative_file": "extensions/page/function-00bd68e0.json",
+      "sha256": "5c05cefc403e7820a05172d87ec640018f8024d1d8477e39ef13af437db8e773"
+    },
+    {
+      "task_relative_file": "extensions/page/page-delete-abi-profile.json",
+      "sha256": "3b274cb3965bcd0ad4265787aacc2792d1de97fa6eafba74007bc17a53af1520"
+    },
+    {
+      "task_relative_file": "extensions/page/page-extension-abi-profile.json",
+      "sha256": "88d83926092d6ec0271bb2750643066d38d29d87964d01d99dffb85be3552a31"
+    },
+    {
+      "task_relative_file": "extensions/page/page-size-abi-profile.json",
+      "sha256": "a115caacc9131e3808325d5e51f67ac4ec7aac759f6fb611af2eda8fdbc07c9c",
+      "origin_sha256_aliases": [
+        "f796de7910b332cde37cfe5ed5bd325063f96600b59dff861a4fc91de612df7f"
+      ]
+    },
+    {
+      "task_relative_file": "extensions/strategy/delete/null-proof/official-pdb-isfieldnull-proof.json",
+      "sha256": "2cacf412a847f80f33a6a7717bb3bc1620555c82d0eab163e617dd22898f8c52"
+    },
+    {
+      "task_relative_file": "extensions/strategy/delete/strategy-delete-abi-profile.json",
+      "sha256": "b03866d74291d74f13427e529d6a49e70da41f2e672c2beb602b10a8fe99dbd4"
+    },
+    {
+      "task_relative_file": "extensions/strategy/delete/temp-create-abi-scope.json",
+      "sha256": "45ca3120e3e03f1910f8f04bbb1fa5e455563d26501f83145f1f8ae1c8443aec"
+    },
+    {
+      "task_relative_file": "extensions/strategy/NativeStrategyLifecycleProfile.cs",
+      "sha256": "c230afe72f7ca4f9c8db440a0fb499876895af0ecfd791cab5b8747a49bddeea"
+    },
+    {
+      "task_relative_file": "extensions/strategy/registration/registration-abi-guard.json",
+      "sha256": "31479a50b9ee412815f30791be6610b05ecc50d868e23ad292f41be6eb99f403"
+    },
+    {
+      "task_relative_file": "extensions/strategy/strategy-extension-read-guard.json",
+      "sha256": "f2f48e10cbed6217ac968af7e2c94ef668ebe9650cf8300a7d4c350af83c51f7"
+    },
+    {
+      "task_relative_file": "extensions/strategy/strategy-extension-write-guard.json",
+      "sha256": "8dc56512ffa3340e2c210ba7eab0db1d36995a3390a535844a9a6319324e8ea6"
+    },
+    {
+      "task_relative_file": "static/docmanage-current-vtable.json",
+      "sha256": "c2ff1512211eca7fe6a3e86492d5b201996ea6118e1cc12f4289e841160db980"
+    },
+    {
+      "task_relative_file": "static/document-dirty-save-abi-profile.json",
+      "sha256": "42f97c2a89b4e3ed6526c205b9f1306f6837640b7862c69245e09f66f762efe4"
+    },
+    {
+      "task_relative_file": "static/native-page-duplicate-abi-profile.json",
+      "sha256": "9070009a8273a2d443d34e0f086ddda824b6d2cfb98d239343747447f83a029f",
+      "origin_sha256_aliases": [
+        "3c55566a34cea3b5754a6060a9d84f9ac825f17189f76ab7569e2bee8967c065"
+      ]
+    },
+    {
+      "task_relative_file": "static/read-tree-guard-profile.json",
+      "sha256": "088abacc4c94aa1ca7b456ce03bef7229cd945a8d93b459fc0c38a59f6ed9a3e"
+    },
+    {
+      "task_relative_file": "strategy-properties/property-key-resource-map.json",
+      "sha256": "da401fbc053c2e592cffb513fcbf1037df7ded18bfd57641b85f982a749179df"
+    },
+    {
+      "task_relative_file": "strategy-properties/strategy-write-guard-profile.json",
+      "sha256": "cbf353eac5361873ff47179bf2ddd8e6a0b383864d91c109a98135880d804eea",
+      "origin_sha256_aliases": [
+        "b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7"
+      ]
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/slider-fill-visual-abi-profile.v4.json",
+      "sha256": "70fb8a90007e333b12adbe6a6877ea43f14b60d8f40dad75a4f9b6a2e42d3a9c"
+    },
+    {
+      "task_relative_file": "coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/mulbutton-visual-abi-profile.json",
+      "sha256": "d5592d3bbf6eb0a544d6c1a46eda84d48d25a3ee772a765a7a29958e08e43792"
+    }
+  ]
+}

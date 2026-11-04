@@ -1,0 +1,161 @@
+{
+  "schema": "mcgs-pro-control-extension-abi/v2",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "LabelFactory",
+      "rva": "0x42c9d0",
+      "first32": "558bec6aff68cbd5fb0064a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "relocations": [
+        6,
+        21
+      ],
+      "calling_convention": "cdecl",
+      "return": "CDrawLabel*",
+      "stack_args": []
+    },
+    {
+      "name": "LabelClone",
+      "rva": "0x420410",
+      "first32": "558bec6aff6893c7fb0064a1000000005081ecd0000000a1600b3b0133c5508d",
+      "relocations": [
+        6,
+        24
+      ],
+      "calling_convention": "thiscall",
+      "return": "CDrawObj*",
+      "stack_args": [
+        "C0DocUser*"
+      ]
+    },
+    {
+      "name": "LabelSetRect",
+      "rva": "0x42ee40",
+      "first32": "558bec51894dfc8b450c508b4d08518b4dfce820e5beff837d0c00752c8b4d08",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "RECT*",
+        "null auxiliary pointer"
+      ]
+    },
+    {
+      "name": "LabelDelete",
+      "rva": "0x4208b0",
+      "first32": "558bec83ec10894df88b45f88945f48b4df4894dfc837dfc0074146a018b55fc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": []
+    },
+    {
+      "name": "DocAddControl",
+      "rva": "0x6d8f20",
+      "first32": "558bec83ec08894dfc8b4508508b4dfc81c1bc020000e8270593ff8b4d088b55",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "CDrawObj*"
+      ]
+    },
+    {
+      "name": "DocRemoveControl",
+      "rva": "0x6d8fe0",
+      "first32": "558bec83ec10894dfce8c08796ff83b82005000000742e837d0800740b8b4508",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "CDrawObj*"
+      ]
+    },
+    {
+      "name": "DocSetModified",
+      "rva": "0x6da7c0",
+      "first32": "558bec51894dfc8b4508508b4dfce892ee92ff8be55dc20400cccccccccccccc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "int32"
+      ]
+    },
+    {
+      "name": "WindowSaveData",
+      "rva": "0x7a25c0",
+      "first32": "558bec6aff688c43000164a1000000005083ec38a1600b3b0133c5508d45f464",
+      "relocations": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "return": "bool8",
+      "stack_args": [
+        "IObject*page"
+      ]
+    },
+    {
+      "name": "LabelApplyDefaults",
+      "rva": "0x42eea0",
+      "first32": "558bec83ec08894dfc8b4508508b4dfce8c5f1bdff8b4d08894df8837df80274",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "int32=6"
+      ]
+    },
+    {
+      "name": "LabelSetProperty",
+      "rva": "0x432990",
+      "first32": "558bec51894dfc8b4508508b4dfce82f68beff837d08000f84a10000008b4dfc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "IPropertyDispatcher*"
+      ]
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "first32": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "relocations": [],
+      "calling_convention": "thiscall",
+      "return": "int32",
+      "stack_args": []
+    },
+    {
+      "name": "DrawApplyDefaultsBase",
+      "rva": "0x420680",
+      "first32": "558bec83ec34a1600b3b0133c58945fc894de88b45088945d8837dd800741183",
+      "relocations": [
+        7
+      ],
+      "calling_convention": "thiscall",
+      "return": "void",
+      "stack_args": [
+        "int32"
+      ],
+      "required_owner": "complete+64 must equal verified live C0DocUser before use; base tail unconditionally dereferences it"
+    }
+  ],
+  "trial_scope": {
+    "supported_type": "CDrawLabel"
+  },
+  "classes": {
+    "label_primary_vtable_rva": "0xd72d8c",
+    "label_iobject_vtable_rva": "0xd72ec4",
+    "label_primary_col_rva": "0xe7c570",
+    "label_iobject_col_rva": "0xe7c5e0",
+    "label_size": 392,
+    "label_runtime_class_rva": "0xf9699c",
+    "page_vtable_rva": "0xded294",
+    "doc_vtable_rva": "0xdc4d94"
+  },
+  "native_code_invoked": false,
+  "lifecycle_contract": "Factory returns unattached owner0. Native DocAdd must complete and owner64==targetDoc before ApplyDefaults, property setter or geometry. No retry after exception."
+}

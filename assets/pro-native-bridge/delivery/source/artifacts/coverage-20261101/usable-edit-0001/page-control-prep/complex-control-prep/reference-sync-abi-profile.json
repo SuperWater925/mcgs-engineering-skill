@@ -1,0 +1,893 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "template_profile_sha256": "18a4f65f987d18fa2e43a998f50e36d1e269db1563b41bc3ecd63554fb52a82b",
+  "functions": [
+    {
+      "name": "PageGenerateEntry",
+      "rva": 52771,
+      "bytes": "e9f8618400e9c37a8200e90ed87000e979ed6b00e944d39800e9cfe18200e90a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PageGenerateBody",
+      "rva": 8728608,
+      "bytes": "558bec6aff68e014010164a1000000005081ecb4000000a1600b3b0133c5508d45f464a300000000894df06804c31e018d4de0ff1550913c01c745fc00000000e89b107cff8945c88b45f08b480c5168ccc21e018d55e05268e70200006828c31e016844c31e016a018d8d7cffffffe8499a7eff8945b88b45b8894590c645fc018b4d90518b55c8528b45c88b088b5110ffd283c410c645fc008d8d7cffffffe863c07bffc745fcffffffff8d4de0ff1548913c01e8ae267eff8945c08d45a4508b4df0e8a2c27fff8945ac8b4dac894d94c745fc020000008b5594528b45c08b108b4dc08b4208ffd0c745fcffffffff8d4da4e8fcbb7eff8b4df08b5110528b45f083c00c508b4df0e8945d7fff8945ec837dec000f85a400000068b8c31e018d4dd0ff1550913c01c745fc030000006820c41e018d4de8ff1550913c01c645fc04e8980f7cff8945d88d4dd0518d55e85268ec0200006844c41e016860c41e016a038d8d54ffffffe84e997eff8945988b459889459cc645fc058b4d9c518b55d88b028b4dd88b500cffd2c645fc048d8d54ffffffe86cbf7bffc645fc038d4de8ff1548913c01c745fcffffffff8d4dd0ff1548913c0132c0e95b0100008b45ec8b108b4dec8b8254010000ffd085c00f84a400000068a8c41e018d4dd4ff1550913c01c745fc060000006884c41e018d4ddcff1550913c01c645fc07e8dc0e7cff8945e48d4dd4518d55dc5268f10200006810c51e01682cc51e016a018d8d68ffffffe892987eff8945b48b45b48945b0c645fc088b4db0518b55e48b028b4de48b500cffd2c645fc078d8d68ffffffe8b0be7bffc645fc068d4ddcff1548913c01c745fcffffffff8d4dd4ff1548913c0132c0e99f0000006850c51e018d4dbcff1550913c01c745fc090000006888c51e018d4dc4ff1550913c01c645fc0ae8380e7cff8945cc8d45bc508d4dc45168f702000068acc51e0168c8c51e016a018d8d40ffffffe8ee977eff8945a88b55a88955a0c645fc0b8b45a0508b4dcc8b118b4dcc8b420cffd0c645fc0a8d8d40ffffffe80cbe7bffc645fc098d4dc4ff1548913c01c745fcffffffff8d4dbcff1548913c01b0018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        44,
+        53,
+        80,
+        94,
+        99,
+        177,
+        285,
+        294,
+        306,
+        315,
+        345,
+        350,
+        421,
+        437,
+        473,
+        482,
+        494,
+        503,
+        533,
+        538,
+        609,
+        625,
+        637,
+        646,
+        658,
+        667,
+        697,
+        702,
+        773,
+        789
+      ]
+    },
+    {
+      "name": "UserDocCompile85Entry",
+      "rva": 16371,
+      "bytes": "e948ac6d00e993946600e99e4e4800e959c04600e9243d1d00e96fd1a400e95a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocCompile85Body",
+      "rva": 7203904,
+      "bytes": "558bec6aff68ea3fff0064a1000000005083ec78a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawActiveXGenerateEntry",
+      "rva": 166206,
+      "bytes": "e98dd97100e948f29200e923657500e94ec95100e9a97a4400e9a4202d00e90f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawActiveXGenerateBody",
+      "rva": 7627472,
+      "bytes": "558bec83ec08894dfc8b4dfc83e9048b45fc8b50fc8b82ec000000ffd0e8e232",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawActiveXCompile31Entry",
+      "rva": 294136,
+      "bytes": "e9e3e70600e96e0c2e00e939b62500e904ada800e9cf21a800e91ae14300e9a5",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawActiveXCompile31Body",
+      "rva": 746720,
+      "bytes": "558bec6aff68b1c1f60064a1000000005083ec3456a1600b3b0133c5508d45f4",
+      "reloc_offsets": [
+        6,
+        22
+      ]
+    },
+    {
+      "name": "CDrawAlmCompile31Entry",
+      "rva": 157566,
+      "bytes": "e9bdfb3300e978e72300e983ce0500e91ec59600e9294e0900e914cc9d00e9ef",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawAlmCompile31Body",
+      "rva": 3564352,
+      "bytes": "558bec6aff68cab0fa0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawArcCompile31Entry",
+      "rva": 35241,
+      "bytes": "e942814100e97dc2a600e9782b9700e903a27b00e97e2f7b00e9e96f0f00e9b4",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawArcCompile31Body",
+      "rva": 4328176,
+      "bytes": "558bec6aff68bac7fb0064a1000000005083ec24a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawBitmapCompile31Entry",
+      "rva": 234761,
+      "bytes": "e932323f00e92d521100e98871a300e9d36a9f00e9be078a00e969fa5200e9c4",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawBitmapCompile31Body",
+      "rva": 4376384,
+      "bytes": "558bec83ec08894dfc8b4dfce858c2bdff85c0750433c0eb3e837dfc00740b8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonCompile31Entry",
+      "rva": 272826,
+      "bytes": "e9019b3200e92c500600e9a7cc8e00e9d2fe7500e93dbe5c00e998e24600e963",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawButtonCompile31Body",
+      "rva": 3589312,
+      "bytes": "558bec6aff686abafa0064a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawComboBoxCompile31Entry",
+      "rva": 265071,
+      "bytes": "e9bc5a3400e9974b0600e982a29800e93d0a7600e968724f00e9c3ed4b00e91e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawComboBoxCompile31Body",
+      "rva": 3696176,
+      "bytes": "558bec6aff6827e0fa0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawDllCompile31Entry",
+      "rva": 27966,
+      "bytes": "e9ed423900e928910700e993a85e00e9feef0d00e9c96d9300e9d4625c00e98f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawDllCompile31Body",
+      "rva": 3780656,
+      "bytes": "558bec6aff680102fb0064a1000000005083ec58a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawEditCompile31Entry",
+      "rva": 112146,
+      "bytes": "e9a9df3900e9740b3000e96fad0d00e9ca885700e985e92c00e9d0359f00e98b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawEditCompile31Body",
+      "rva": 3904960,
+      "bytes": "558bec83ec1c894dfc8b45fcc7800c010000010000008b4dfcc78110010000ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawFilePlayCompile31Entry",
+      "rva": 170026,
+      "bytes": "e9c1f63900e9ac842c00e907cb2100e9d2000e00e92d588a00e9580d6a00e943",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawFilePlayCompile31Body",
+      "rva": 3968752,
+      "bytes": "558bec6aff682d55fb0064a1000000005083ec2ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawFlowCompile31Entry",
+      "rva": 346791,
+      "bytes": "e934833700e96f336500e9dab74f00e9258b6c00e9b0774f00e98b7d2900e9f6",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawFlowCompile31Body",
+      "rva": 3984864,
+      "bytes": "558bec83ec0c894dfc837dfc00740b8b45fc83c0048945f8eb07c745f8000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawGridCompile31Entry",
+      "rva": 16946,
+      "bytes": "e959003e00e9d46d7b00e9ff394b00e9ba784700e9052a9700e9d03b6400e92b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawGridCompile31Body",
+      "rva": 4080272,
+      "bytes": "558bec6aff68be74fb0064a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawHisGridCompile31Entry",
+      "rva": 285071,
+      "bytes": "e91c815d00e9671f2000e9e252a200e9fd059300e978163400e933d5a000e9fe",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisGridCompile31Body",
+      "rva": 6412976,
+      "bytes": "558bec6aff68374ffe0064a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawHisPicCompile31Entry",
+      "rva": 344521,
+      "bytes": "e9c2a13900e96d831b00e9b8d17900e973457c00e9aeb24e00e9e9a62400e994",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawHisPicCompile31Body",
+      "rva": 4121488,
+      "bytes": "558bec6aff687a82fb0064a1000000005081ecd0000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawLabelCompile31Entry",
+      "rva": 275186,
+      "bytes": "e9c9e63e00e9d4ffa700e90fc03600e9da4e0b00e9e5cf7b00e930871000e91b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawLabelCompile31Body",
+      "rva": 4397504,
+      "bytes": "558bec83ec10894dfc8b45fc05e4000000508b4dfce8f973c1ff0fb6c885c975",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnCompile31Entry",
+      "rva": 234901,
+      "bytes": "e956953c00e951d9a100e9fcd38900e96753ac00e972dc8c00e9fd173f00e988",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulBtnCompile31Body",
+      "rva": 4205296,
+      "bytes": "558bec6aff68d0a0fb0064a1000000005083ec38a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawMulDisCompile31Entry",
+      "rva": 62251,
+      "bytes": "e920954000e9cb381800e9d67e9700e911439700e9fce53200e9d7ca9f00e932",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawMulDisCompile31Body",
+      "rva": 4294736,
+      "bytes": "558bec6aff6830bcfb0064a1000000005083ec30a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawPicCompile31Entry",
+      "rva": 182711,
+      "bytes": "e964384700e97f6a2f00e91a0e2c00e925262a00e940be2300e90be88500e9f6",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawPicCompile31Body",
+      "rva": 4850208,
+      "bytes": "558bec6aff686198fc0064a1000000005083ec30a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawPlanPicCompile31Entry",
+      "rva": 157191,
+      "bytes": "e9f4928700e90f5b6200e93ac45000e9056d5000e9601b0500e91bbfab00e996",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawPlanPicCompile31Body",
+      "rva": 9042176,
+      "bytes": "558bec6aff68557d010164a1000000005083ec24a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRotateBtnCompile31Entry",
+      "rva": 115681,
+      "bytes": "e97a8f4900e955f78300e990fa0600e92b564e00e946153f00e9b1f46700e9ec",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRotateBtnCompile31Body",
+      "rva": 4936544,
+      "bytes": "558bec6aff68b5c2fc0064a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "CDrawRotateTblCompile31Entry",
+      "rva": 267776,
+      "bytes": "e9dbac4700e936b4a800e9d1774b00e97c775400e997797a00e9526d5300e9fd",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawRotateTblCompile31Body",
+      "rva": 4965088,
+      "bytes": "558bec83ec20894dfc837dfc00740b8b45fc83c0048945f8eb07c745f8000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataCompile31Entry",
+      "rva": 44846,
+      "bytes": "e96d224c00e958523700e903f10c00e93ea59700e939867c00e974610f00e98f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSaveDataCompile31Body",
+      "rva": 5034400,
+      "bytes": "558bec6aff6820e7fc0064a1000000005081ecec000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "CDrawSliderCompile31Entry",
+      "rva": 267231,
+      "bytes": "e99ccd4a00e9e71c2000e952fa5600e95d994300e928419500e9a3c54200e99e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSliderCompile31Body",
+      "rva": 5169536,
+      "bytes": "558bec83ec0c894dfc837dfc00740b8b45fc83c0048945f8eb07c745f8000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSliderFillCompile31Entry",
+      "rva": 251146,
+      "bytes": "e961c54b00e94c530500e9b7089c00e9d2d00200e90d039300e9983f6a00e943",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawSliderFillCompile31Body",
+      "rva": 5216880,
+      "bytes": "558bec83ec14894dfc837dfc00740b8b45fc83c0048945f8eb07c745f8000000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitCompile31Entry",
+      "rva": 42851,
+      "bytes": "e958f44100e9f37e5b00e9ee14a000e9f9049900e9d4676500e9bf3f0b00e96a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CDrawUnitCompile31Body",
+      "rva": 4365248,
+      "bytes": "558bec83ec0c894df48b4df481c1e4000000e8a9e0c1ff8945f8837df800743b",
+      "reloc_offsets": []
+    }
+  ],
+  "control_classes": [
+    {
+      "class_name": "CDrawActiveX",
+      "type_id": 20535,
+      "primary_rva": 13576028,
+      "iobject_rva": 13576356,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 294136
+    },
+    {
+      "class_name": "CDrawAlm",
+      "type_id": 20524,
+      "primary_rva": 14009964,
+      "iobject_rva": 14010292,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 157566
+    },
+    {
+      "class_name": "CDrawArc",
+      "type_id": 20483,
+      "primary_rva": 14102372,
+      "iobject_rva": 14102684,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawArrow1",
+      "type_id": 20505,
+      "primary_rva": 14110396,
+      "iobject_rva": 14110708,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawArrow2",
+      "type_id": 20506,
+      "primary_rva": 14110868,
+      "iobject_rva": 14111180,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawArrow3",
+      "type_id": 20507,
+      "primary_rva": 14111340,
+      "iobject_rva": 14111652,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawBall3D",
+      "type_id": 20515,
+      "primary_rva": 14107092,
+      "iobject_rva": 14107404,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawBalloon",
+      "type_id": 20494,
+      "primary_rva": 14104732,
+      "iobject_rva": 14105044,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawBitmap",
+      "type_id": 20489,
+      "primary_rva": 14101404,
+      "iobject_rva": 14101716,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 234761
+    },
+    {
+      "class_name": "CDrawButton",
+      "type_id": 20519,
+      "primary_rva": 14016108,
+      "iobject_rva": 14016436,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 272826
+    },
+    {
+      "class_name": "CDrawCell",
+      "type_id": 20537,
+      "primary_rva": 14099020,
+      "iobject_rva": 14099348,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawCircle3D",
+      "type_id": 20516,
+      "primary_rva": 14107564,
+      "iobject_rva": 14107876,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawComboBox",
+      "type_id": 20540,
+      "primary_rva": 14024012,
+      "iobject_rva": 14024340,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 265071
+    },
+    {
+      "class_name": "CDrawCross",
+      "type_id": 20495,
+      "primary_rva": 14105204,
+      "iobject_rva": 14105516,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawCube",
+      "type_id": 20496,
+      "primary_rva": 14105676,
+      "iobject_rva": 14105988,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawDiamond",
+      "type_id": 20492,
+      "primary_rva": 14103788,
+      "iobject_rva": 14104100,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawDll",
+      "type_id": 20541,
+      "primary_rva": 14033444,
+      "iobject_rva": 14033772,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 27966
+    },
+    {
+      "class_name": "CDrawEdit",
+      "type_id": 20517,
+      "primary_rva": 14040244,
+      "iobject_rva": 14040572,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 112146
+    },
+    {
+      "class_name": "CDrawEllipse",
+      "type_id": 20486,
+      "primary_rva": 14100932,
+      "iobject_rva": 14101244,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawFilePlay",
+      "type_id": 20532,
+      "primary_rva": 14047972,
+      "iobject_rva": 14048300,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 170026
+    },
+    {
+      "class_name": "CDrawFlow",
+      "type_id": 20518,
+      "primary_rva": 14052156,
+      "iobject_rva": 14052516,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 346791
+    },
+    {
+      "class_name": "CDrawGrid",
+      "type_id": 20527,
+      "primary_rva": 14060676,
+      "iobject_rva": 14060996,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 16946
+    },
+    {
+      "class_name": "CDrawGuan",
+      "type_id": 20503,
+      "primary_rva": 14114644,
+      "iobject_rva": 14114956,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawHalfBox",
+      "type_id": 20504,
+      "primary_rva": 14100460,
+      "iobject_rva": 14100772,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawHexagon",
+      "type_id": 20498,
+      "primary_rva": 14108036,
+      "iobject_rva": 14108348,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawHisGrid",
+      "type_id": 20528,
+      "primary_rva": 14337516,
+      "iobject_rva": 14337828,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 285071
+    },
+    {
+      "class_name": "CDrawHisPic",
+      "type_id": 20526,
+      "primary_rva": 14066068,
+      "iobject_rva": 14066396,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 344521
+    },
+    {
+      "class_name": "CDrawIsoscelestriangle",
+      "type_id": 20499,
+      "primary_rva": 14108508,
+      "iobject_rva": 14108820,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawLabel",
+      "type_id": 20488,
+      "primary_rva": 14101900,
+      "iobject_rva": 14102212,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 275186
+    },
+    {
+      "class_name": "CDrawLine",
+      "type_id": 20482,
+      "primary_rva": 14098076,
+      "iobject_rva": 14098388,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawMulBtn",
+      "type_id": 20520,
+      "primary_rva": 14075788,
+      "iobject_rva": 14076148,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 234901
+    },
+    {
+      "class_name": "CDrawMulDis",
+      "type_id": 20522,
+      "primary_rva": 14090436,
+      "iobject_rva": 14090780,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 62251
+    },
+    {
+      "class_name": "CDrawObj",
+      "type_id": 20480,
+      "primary_rva": 14097132,
+      "iobject_rva": 14097444,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawOctagon",
+      "type_id": 20493,
+      "primary_rva": 14104260,
+      "iobject_rva": 14104572,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawParallelogram",
+      "type_id": 20490,
+      "primary_rva": 14102844,
+      "iobject_rva": 14103156,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPentagon",
+      "type_id": 20497,
+      "primary_rva": 14106148,
+      "iobject_rva": 14106460,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPentagon3D",
+      "type_id": 20514,
+      "primary_rva": 14106620,
+      "iobject_rva": 14106932,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPic",
+      "type_id": 20525,
+      "primary_rva": 14124708,
+      "iobject_rva": 14125036,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 182711
+    },
+    {
+      "class_name": "CDrawPipe1",
+      "type_id": 20511,
+      "primary_rva": 14113228,
+      "iobject_rva": 14113540,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPipe2",
+      "type_id": 20512,
+      "primary_rva": 14113700,
+      "iobject_rva": 14114012,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPipe3",
+      "type_id": 20513,
+      "primary_rva": 14114172,
+      "iobject_rva": 14114484,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPlanPic",
+      "type_id": 20539,
+      "primary_rva": 14662948,
+      "iobject_rva": 14663276,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 157191
+    },
+    {
+      "class_name": "CDrawPlane1",
+      "type_id": 20508,
+      "primary_rva": 14111812,
+      "iobject_rva": 14112124,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPlane2",
+      "type_id": 20509,
+      "primary_rva": 14112284,
+      "iobject_rva": 14112596,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPlane3",
+      "type_id": 20510,
+      "primary_rva": 14112756,
+      "iobject_rva": 14113068,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawPoly",
+      "type_id": 20487,
+      "primary_rva": 14097604,
+      "iobject_rva": 14097916,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawRect",
+      "type_id": 20484,
+      "primary_rva": 14098548,
+      "iobject_rva": 14098860,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawRighttrigngle",
+      "type_id": 20500,
+      "primary_rva": 14108980,
+      "iobject_rva": 14109292,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawRotateBtn",
+      "type_id": 20523,
+      "primary_rva": 14131060,
+      "iobject_rva": 14131388,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 115681
+    },
+    {
+      "class_name": "CDrawRotateTbl",
+      "type_id": 20530,
+      "primary_rva": 14136620,
+      "iobject_rva": 14136948,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 267776
+    },
+    {
+      "class_name": "CDrawRoundRect",
+      "type_id": 20485,
+      "primary_rva": 14099988,
+      "iobject_rva": 14100300,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawSaveData",
+      "type_id": 20531,
+      "primary_rva": 14145860,
+      "iobject_rva": 14146188,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 44846
+    },
+    {
+      "class_name": "CDrawSeal",
+      "type_id": 20502,
+      "primary_rva": 14109924,
+      "iobject_rva": 14110236,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawSlider",
+      "type_id": 20521,
+      "primary_rva": 14155580,
+      "iobject_rva": 14155908,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 267231
+    },
+    {
+      "class_name": "CDrawSliderFill",
+      "type_id": 20529,
+      "primary_rva": 14160988,
+      "iobject_rva": 14161316,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 251146
+    },
+    {
+      "class_name": "CDrawStar",
+      "type_id": 20501,
+      "primary_rva": 14109452,
+      "iobject_rva": 14109764,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawTrapezoid",
+      "type_id": 20491,
+      "primary_rva": 14103316,
+      "iobject_rva": 14103628,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 35241
+    },
+    {
+      "class_name": "CDrawUnit",
+      "type_id": 20538,
+      "primary_rva": 14099508,
+      "iobject_rva": 14099828,
+      "generate_entry_rva": 166206,
+      "compile31_entry_rva": 42851
+    }
+  ],
+  "page_generate_entry_rva": 52771,
+  "page_compile85_entry_rva": 16371,
+  "page_iobject_vtable_rva": 14602900,
+  "doc_vtable_rva": 14437780,
+  "contracts": [
+    "Page IObject21 C53020 returns boolAL after the original document slot85 full compile. It is not a partial graph-clear helper.",
+    "Strategy uses the existing guarded StrategyBlockUpdateReferences void ABI. No Boolean is read from its undefined return register.",
+    "Only the supplied actual page/strategy owners count toward the synchronization receipt; the operation never claims all_project_owners.",
+    "Input text/typed properties/known persistent members compare to the explicit expected semantic; native cache differences remain in full before/after evidence.",
+    "The only automatic strategy projection is byte-array payload for known expression compiler classes, never Svr/Addin provider configuration. All other fields stay exact.",
+    "Button resolved action ID arrays and event compiled payload/argument ID/mode arrays require an explicit derived-cache contract and remain fully reported."
+  ]
+}

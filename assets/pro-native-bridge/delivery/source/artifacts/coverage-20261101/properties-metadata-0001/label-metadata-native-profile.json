@@ -1,0 +1,1744 @@
+{
+  "schema": 1,
+  "capability": "label-only-native-property-declaration-metadata-candidate",
+  "state": "static-prepared-not-invoked",
+  "runtime_verified": false,
+  "module": {
+    "path": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": "0x400000",
+    "machine": "x86",
+    "compatibility_rule": "exact ABI/hash/structure, no software-version whitelist"
+  },
+  "dependency": {
+    "name": "mfc110u.dll",
+    "file_path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "preferred_base": "0x10000000",
+    "export_guards": [
+      {
+        "ordinal": 1039,
+        "rva": "0x466d4",
+        "bytes_hex": "8b0983e910e9bb2bfcff558bec568bf1e8396000008b068bceff90ec0200005e",
+        "length": 32,
+        "highlow_offsets": [],
+        "all_intersecting_highlow_fully_contained": true,
+        "aslr_tests": [
+          {
+            "base": "0x10000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x70000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x51000000",
+            "roundtrip_exact": true
+          }
+        ]
+      },
+      {
+        "ordinal": 1502,
+        "rva": "0x8a19",
+        "bytes_hex": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+        "length": 32,
+        "highlow_offsets": [
+          13
+        ],
+        "all_intersecting_highlow_fully_contained": true,
+        "aslr_tests": [
+          {
+            "base": "0x10000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x70000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x51000000",
+            "roundtrip_exact": true
+          }
+        ]
+      },
+      {
+        "ordinal": 1504,
+        "rva": "0xec92a",
+        "bytes_hex": "ff2594f42a10558bec5de9e0c0f1ff8b81b400000085c07501c38b4020c38b81",
+        "length": 32,
+        "highlow_offsets": [
+          2
+        ],
+        "all_intersecting_highlow_fully_contained": true,
+        "aslr_tests": [
+          {
+            "base": "0x10000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x70000000",
+            "roundtrip_exact": true
+          },
+          {
+            "base": "0x51000000",
+            "roundtrip_exact": true
+          }
+        ]
+      }
+    ],
+    "runtime_binding": "Require actually loaded module hash, then exact imports/ordinals1502/1504/1039. Do not load a new DLL to resolve them.",
+    "cstring": {
+      "storage_bytes": 4,
+      "kind": "native MFC Unicode CString, not BSTR",
+      "reader": "Read bounded CStringData length/allocation and terminating UTF16 NUL; copy into managed string before owner destruction.",
+      "destroy_ordinal": 1039
+    }
+  },
+  "source_provenance": {
+    "function_evidence": "label-metadata-native-functions.json",
+    "property_key_map_relative_to_task": "strategy-properties/property-key-resource-map.json",
+    "property_key_map_sha256": "da401fbc053c2e592cffb513fcbf1037df7ded18bfd57641b85f982a749179df"
+  },
+  "code_guards": [
+    {
+      "name": "JsonServiceCtorOwnershipCaller",
+      "preferred_va": "0xdfb460",
+      "rva": "0x9fb460",
+      "length": 64,
+      "bytes_hex": "558bec6aff68936a030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4df0e81f6863ffc745fc000000008b45f0c700182e2201",
+      "highlow_offsets": [
+        6,
+        21,
+        60
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "JsonServiceDtorOwnershipCaller",
+      "preferred_va": "0xdfb500",
+      "rva": "0x9fb500",
+      "length": 64,
+      "bytes_hex": "558bec6aff68b66a030164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894dec8b45ecc700182e2201c745fc000000008b4dec8b51048955",
+      "highlow_offsets": [
+        6,
+        21,
+        45
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "JsonServiceGetMetadataCallShape",
+      "preferred_va": "0xdfb590",
+      "rva": "0x9fb590",
+      "length": 64,
+      "bytes_hex": "558bec6aff68da6a030164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894de8837d0800750432c0eb538b4508508d4dec51e8bbd564ff83",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterCtor",
+      "preferred_va": "0xe0c5d0",
+      "rva": "0xa0c5d0",
+      "length": 64,
+      "bytes_hex": "558bec6aff687e7e030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e847ac62ffc745fc000000008b45f0c700b83222018b4d",
+      "highlow_offsets": [
+        6,
+        19,
+        58
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterNonDeletingDtor",
+      "preferred_va": "0xe0d0f0",
+      "rva": "0xa0d0f0",
+      "length": 64,
+      "bytes_hex": "558bec6aff68897f030164a1000000005083ec14a1600b3b0133c5508d45f464a300000000894df08b45f0c700b8322201c745fc030000008b4df083c148e82e",
+      "highlow_offsets": [
+        6,
+        21,
+        45
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterDeletingDtor",
+      "preferred_va": "0xe101a0",
+      "rva": "0xa101a0",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce8d52f64ff8b450883e001740c8b4dfc51e8f8e7110083c4048b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterPrepareOneTarget",
+      "preferred_va": "0xe1fde0",
+      "rva": "0xa1fde0",
+      "length": 64,
+      "bytes_hex": "558bec83ec14894dfc8b4508508d4df8518b4dfc83c104e84e1a61ff8d55f8528d45f4508b4dfc83c104e807735fff8bc8e8b7575fff0fb6c885c90f84920000",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterAddTyped",
+      "preferred_va": "0xe18da0",
+      "rva": "0xa18da0",
+      "length": 64,
+      "bytes_hex": "558bec6aff688a83030164a1000000005083ec44a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e88ea961ff0fb6c885c9750732c0e94101",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterBindComponent",
+      "preferred_va": "0xe18fa0",
+      "rva": "0xa18fa0",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc6a098b4508508b4dfc8b118b4dfc8b4204ffd08be55dc20400cccccccccccccccccccccccccccccccc558bec83ec28894dfc8b4508508b4dfc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegisterCheckKey",
+      "preferred_va": "0xe1a2d0",
+      "rva": "0xa1a2d0",
+      "length": 65,
+      "bytes_hex": "558bec6aff682a84030164a1000000005083ec34a1600b3b0133c5508d45f464a300000000894de88b4d08ff15c88b3c010fb6c085c00f84b3000000684c332201",
+      "highlow_offsets": [
+        6,
+        21,
+        45,
+        61
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "LabelRegisterProperty",
+      "preferred_va": "0x8328a0",
+      "rva": "0x4328a0",
+      "length": 64,
+      "bytes_hex": "558bec6aff68e0ddfb0064a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e89e56bdff837d08000f84920000006a00",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "BaseDrawRegisterProperty",
+      "preferred_va": "0xb46730",
+      "rva": "0x746730",
+      "length": 64,
+      "bytes_hex": "558bec6aff6874ceff0064a1000000005083ec34a1600b3b0133c5508d45f464a300000000894dc0837d08000f84050100006a006a038d45e850e8cddf90ff83",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "RegisterTypedHelper",
+      "preferred_va": "0x9119b0",
+      "rva": "0x5119b0",
+      "length": 64,
+      "bytes_hex": "558bec6aff68a93cfd0064a1000000005083ec0ca1600b3b0133c5508d45f464a300000000837d08007502eb458b4510508b4d0c518d55e852e84e2db4ff83c4",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyKeyFactory",
+      "preferred_va": "0x9131d0",
+      "rva": "0x5131d0",
+      "length": 64,
+      "bytes_hex": "558bec51c745fc000000008b450c508b4d0851e8f26ab1ff8bc8e8867fb1ff8b55fc83ca018955fc8b45088be55dc3cc558bec51c745fc000000008b450c508b",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyKeySingleton",
+      "preferred_va": "0x924640",
+      "rva": "0x524640",
+      "length": 64,
+      "bytes_hex": "558bec6aff684e52fd0064a10000000050a1600b3b0133c5508d45f464a300000000a1fc823b0183e00175348b0dfc823b0183c901890dfc823b01c745fc0000",
+      "highlow_offsets": [
+        6,
+        18,
+        35,
+        46,
+        55
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PropertyKeyLookupCopy",
+      "preferred_va": "0x9246e0",
+      "rva": "0x5246e0",
+      "length": 64,
+      "bytes_hex": "558bec83ec10894df8c745fc000000008d450c508d4df4518b4df8e88128afff8d55f4528d45f0508b4df8e807bdb1ff8bc8e800d0adff0fb6c885c974238d4d",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "LocalizedResourceString",
+      "preferred_va": "0xb03340",
+      "rva": "0x703340",
+      "length": 64,
+      "bytes_hex": "558bec6aff681975ff0064a1000000005083ec08a1600b3b0133c5508d45f464a300000000c745ec0000000068ac7a1c018d4df0ff1550913c01c745fc000000",
+      "highlow_offsets": [
+        6,
+        21,
+        45,
+        54
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "BuildNativeMetadataCacheKey",
+      "preferred_va": "0xe18d70",
+      "rva": "0xa18d70",
+      "length": 64,
+      "bytes_hex": "558bec51c745fc000000008b4508508b4d0ce8d2d561ff8b4dfc83c901894dfc8b45088be55dc3cccccccccccccccccc558bec6aff688a83030164a100000000",
+      "highlow_offsets": [
+        54
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "NativeMetadataCacheKeyWorker",
+      "preferred_va": "0x64ad80",
+      "rva": "0x24ad80",
+      "length": 64,
+      "bytes_hex": "558bec6aff686424f90064a1000000005083ec30a1600b3b0133c5508d45f464a300000000894df0c745ec000000008d45e8508b4df08b118b4df08b420cffd0",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "LabelMetadataTypeString",
+      "preferred_va": "0x82c960",
+      "rva": "0x42c960",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df8c745fc00000000681ea600008b450850e89a33c2ff83c4088b4dfc83c901894dfc8b45088be55dc20400cccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "LabelMetadataNamespaceString",
+      "preferred_va": "0x46a8c0",
+      "rva": "0x6a8c0",
+      "length": 64,
+      "bytes_hex": "558bec83ec08894df8c745fc000000006830470e018b4d08ff1550913c018b45fc83c8018945fc8b45088be55dc20400cccccccccccccccccccccccccccccccc",
+      "highlow_offsets": [
+        17,
+        26
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ValidatorGroupBindings",
+      "preferred_va": "0xe21270",
+      "rva": "0xa21270",
+      "length": 64,
+      "bytes_hex": "558bec6aff68db85030164a1000000005083ec30a1600b3b0133c5508d45f464a300000000894df08b45f083c0688945e48d4dec518b4de4e89f5a5fff8d55d4",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ValidatorTypeCache",
+      "preferred_va": "0xe21ce0",
+      "rva": "0xa21ce0",
+      "length": 64,
+      "bytes_hex": "558bec6aff684b87030164a1000000005083ec34a1600b3b0133c5508d45f464a300000000894decc745e4000000008b45ec83c0488945d88d4de8518b4dd8e8",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ValidatorGroups",
+      "preferred_va": "0xe21670",
+      "rva": "0xa21670",
+      "length": 64,
+      "bytes_hex": "558bec6aff689686030164a1000000005083ec78a1600b3b0133c5508d45f464a300000000894df08b45f005880000008945cc8b4df081c1a8000000894de48b",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ValidatorCheckBox",
+      "preferred_va": "0xe21430",
+      "rva": "0xa21430",
+      "length": 64,
+      "bytes_hex": "558bec6aff682b86030164a1000000005083ec48a1600b3b0133c5508d45f464a300000000894de88b45e805c80000008945e08b4de883c148894dd48b4de0e8",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "ValidatorTypeConflictDiagnostic",
+      "preferred_va": "0xe21a50",
+      "rva": "0xa21a50",
+      "length": 64,
+      "bytes_hex": "558bec6aff68fd86030164a1000000005083ec50a1600b3b0133c5508d45f464a300000000894dd48b45d483c0048945e08d4df0518b4de0e88aa262ff8d55cc",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "RegistrationDiagnosticLogger",
+      "preferred_va": "0xe1e170",
+      "rva": "0xa1e170",
+      "length": 66,
+      "bytes_hex": "558bec6aff680085030164a1000000005083ec44a1600b3b0133c5508d45f464a300000000894dd8e8635f5fff8945f08b450c508b4d0851680b01000068ec342201",
+      "highlow_offsets": [
+        6,
+        21,
+        62
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "AggregateClear",
+      "preferred_va": "0xe1aa70",
+      "rva": "0xa1aa70",
+      "length": 64,
+      "bytes_hex": "558bec83ec3c894dfc8b4dfce819fe62ff8b45fc83c0208945ec8d4df8518b4dece8b6c25fff8d55dc528b4dece84a9263ffeb088d4df8e8113b62ff8d45dc50",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryMapBegin",
+      "preferred_va": "0xe19810",
+      "rva": "0xa19810",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4508508b4dfce8f77262ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce855",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryMapBeginWorker",
+      "preferred_va": "0xe19940",
+      "rva": "0xa19940",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b45fc508b4dfc8b1152e8f16262ff83c4048b00508b4d08e81bc360ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryMapEnd",
+      "preferred_va": "0xe1b470",
+      "rva": "0xa1b470",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4508508b4dfce8afc562ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce871",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryMapEndWorker",
+      "preferred_va": "0xe1b650",
+      "rva": "0xa1b650",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e8283461ff8b45088be55dc20400cccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b11",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryIteratorIncrement",
+      "preferred_va": "0xe0f070",
+      "rva": "0xa0f070",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce8267a5fff8b45fc8be55dc3cccccccccccccccccccc558bec51894dfc8b4dfce85df762ff8b45fc8be55dc3cccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryIteratorIncrementWorker",
+      "preferred_va": "0xe0eed0",
+      "rva": "0xa0eed0",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b45fc8b0851e8650d63ff83c4048b55fc8b0089028b45fc8be55dc3cccccccccccccccccccccccccc558bec83ec08894dfc8b45fc8b08894d",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryIteratorDereference",
+      "preferred_va": "0xe0e820",
+      "rva": "0xa0e820",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce8eaa860ff50e8c14564ff83c4048be55dc3cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4dfce8bc9963ff50",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryIteratorDereferenceWorker",
+      "preferred_va": "0xe0ea40",
+      "rva": "0xa0ea40",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b4dfce8d81160ff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b4dfce892c063ff8be55dc3cccccccccccccccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryPairAccessor",
+      "preferred_va": "0xe0e9a0",
+      "rva": "0xa0e9a0",
+      "length": 64,
+      "bytes_hex": "558bec51894dfc8b45fc8b0851e8e06961ff83c4048be55dc3cccccccccccccc558bec51894dfc8b45fc8b0851e8dce262ff83c4048be55dc3cccccccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryPairAccessorLeaf",
+      "preferred_va": "0xe15f00",
+      "rva": "0xa15f00",
+      "length": 64,
+      "bytes_hex": "558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc558bec8b450883c0085dc3cccccccccc",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrimaryMapSubscript",
+      "preferred_va": "0xe0e410",
+      "rva": "0xa0e410",
+      "length": 64,
+      "bytes_hex": "558bec6aff680880030164a1000000005083ec30a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df0e8baab5fff8d55e0528b4df0e8",
+      "highlow_offsets": [
+        6,
+        21
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "NativeOperatorNewIatThunk",
+      "preferred_va": "0xf2e9be",
+      "rva": "0xb2e9be",
+      "length": 6,
+      "bytes_hex": "ff2574913c01",
+      "highlow_offsets": [
+        2
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "NativeOperatorDeleteIatThunk",
+      "preferred_va": "0xf2e9b8",
+      "rva": "0xb2e9b8",
+      "length": 6,
+      "bytes_hex": "ff2578913c01",
+      "highlow_offsets": [
+        2
+      ],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "LabelRegisterThunk",
+      "preferred_va": "0x44c27b",
+      "rva": "0x4c27b",
+      "length": 5,
+      "bytes_hex": "e920663e00",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "CollectorDeletingDtorThunk",
+      "preferred_va": "0x40e49e",
+      "rva": "0xe49e",
+      "length": 5,
+      "bytes_hex": "e9fd1ca000",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "PrepareThunk",
+      "preferred_va": "0x42e9c9",
+      "rva": "0x2e9c9",
+      "length": 5,
+      "bytes_hex": "e912149f00",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    },
+    {
+      "name": "MetadataKeyThunk",
+      "preferred_va": "0x448b8a",
+      "rva": "0x48b8a",
+      "length": 5,
+      "bytes_hex": "e9e1019d00",
+      "highlow_offsets": [],
+      "all_intersecting_highlow_fully_contained": true,
+      "aslr_tests": [
+        {
+          "base": "0x400000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0xce0000",
+          "roundtrip_exact": true
+        },
+        {
+          "base": "0x51000000",
+          "roundtrip_exact": true
+        }
+      ]
+    }
+  ],
+  "object_tables": [
+    {
+      "name": "LabelIObject",
+      "vtable_va": "0x1172ec4",
+      "vtable_rva": "0xd72ec4",
+      "col_va": "0x127c5e0",
+      "col_rva": "0xe7c5e0",
+      "complete_offset": 4,
+      "col_fields": [
+        "0x0",
+        "0x4",
+        "0x0",
+        "0x13893c0",
+        "0x127c588"
+      ],
+      "type_descriptor_rva": "0xf893c0",
+      "rtti_ascii": ".?AVCDrawLabel@@",
+      "rtti_ascii_nul_hex": "2e3f415643447261774c6162656c404000",
+      "slots": [
+        {
+          "slot": 0,
+          "entry_va": "0x43eeff",
+          "entry_rva": "0x3eeff",
+          "body_va": "0x887080",
+          "body_rva": "0x487080"
+        },
+        {
+          "slot": 1,
+          "entry_va": "0x407ca2",
+          "entry_rva": "0x7ca2",
+          "body_va": "0x82c960",
+          "body_rva": "0x42c960"
+        },
+        {
+          "slot": 2,
+          "entry_va": "0x43b8bd",
+          "entry_rva": "0x3b8bd",
+          "body_va": "0x46acc0",
+          "body_rva": "0x6acc0"
+        },
+        {
+          "slot": 3,
+          "entry_va": "0x43460d",
+          "entry_rva": "0x3460d",
+          "body_va": "0x46a8c0",
+          "body_rva": "0x6a8c0"
+        },
+        {
+          "slot": 4,
+          "entry_va": "0x44c27b",
+          "entry_rva": "0x4c27b",
+          "body_va": "0x8328a0",
+          "body_rva": "0x4328a0"
+        },
+        {
+          "slot": 5,
+          "entry_va": "0x43b895",
+          "entry_rva": "0x3b895",
+          "body_va": "0x832990",
+          "body_rva": "0x432990"
+        },
+        {
+          "slot": 6,
+          "entry_va": "0x44e030",
+          "entry_rva": "0x4e030",
+          "body_va": "0x832a60",
+          "body_rva": "0x432a60"
+        }
+      ]
+    },
+    {
+      "name": "PropertyRegister",
+      "vtable_va": "0x12232b8",
+      "vtable_rva": "0xe232b8",
+      "col_va": "0x128fbbc",
+      "col_rva": "0xe8fbbc",
+      "complete_offset": 0,
+      "col_fields": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x13aaaf8",
+        "0x128fbd4"
+      ],
+      "type_descriptor_rva": "0xfaaaf8",
+      "rtti_ascii": ".?AVPropertyRegister@ObjectTree@@",
+      "rtti_ascii_nul_hex": "2e3f415650726f70657274795265676973746572404f626a65637454726565404000",
+      "slots": [
+        {
+          "slot": 0,
+          "entry_va": "0x40e49e",
+          "entry_rva": "0xe49e",
+          "body_va": "0xe101a0",
+          "body_rva": "0xa101a0"
+        },
+        {
+          "slot": 1,
+          "entry_va": "0x429e1f",
+          "entry_rva": "0x29e1f",
+          "body_va": "0xe18da0",
+          "body_rva": "0xa18da0"
+        },
+        {
+          "slot": 2,
+          "entry_va": "0x4367c3",
+          "entry_rva": "0x367c3",
+          "body_va": "0xe18fa0",
+          "body_rva": "0xa18fa0"
+        },
+        {
+          "slot": 3,
+          "entry_va": "0x42da4c",
+          "entry_rva": "0x2da4c",
+          "body_va": "0xe19d10",
+          "body_rva": "0xa19d10"
+        },
+        {
+          "slot": 4,
+          "entry_va": "0x442082",
+          "entry_rva": "0x42082",
+          "body_va": "0xe18fd0",
+          "body_rva": "0xa18fd0"
+        },
+        {
+          "slot": 5,
+          "entry_va": "0x43cc90",
+          "entry_rva": "0x3cc90",
+          "body_va": "0xe19fb0",
+          "body_rva": "0xa19fb0"
+        },
+        {
+          "slot": 6,
+          "entry_va": "0x44ed9b",
+          "entry_rva": "0x4ed9b",
+          "body_va": "0xe19140",
+          "body_rva": "0xa19140"
+        },
+        {
+          "slot": 7,
+          "entry_va": "0x44a2f5",
+          "entry_rva": "0x4a2f5",
+          "body_va": "0xe19ba0",
+          "body_rva": "0xa19ba0"
+        }
+      ]
+    },
+    {
+      "name": "JsonProtocolServiceOwnershipEvidenceOnly",
+      "vtable_va": "0x1222e18",
+      "vtable_rva": "0xe22e18",
+      "col_va": "0x128fc58",
+      "col_rva": "0xe8fc58",
+      "complete_offset": 0,
+      "col_fields": [
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x13aab60",
+        "0x128fc70"
+      ],
+      "type_descriptor_rva": "0xfaab60",
+      "rtti_ascii": ".?AVJsonProtocolService@ServiceCenter@@",
+      "rtti_ascii_nul_hex": "2e3f41564a736f6e50726f746f636f6c53657276696365405365727669636543656e746572404000",
+      "slots": [
+        {
+          "slot": 0,
+          "entry_va": "0x444341",
+          "entry_rva": "0x44341",
+          "body_va": "0xe100e0",
+          "body_rva": "0xa100e0"
+        },
+        {
+          "slot": 1,
+          "entry_va": "0x423213",
+          "entry_rva": "0x23213",
+          "body_va": "0xe1deb0",
+          "body_rva": "0xa1deb0"
+        },
+        {
+          "slot": 2,
+          "entry_va": "0x402590",
+          "entry_rva": "0x2590",
+          "body_va": "0xe1fef0",
+          "body_rva": "0xa1fef0"
+        },
+        {
+          "slot": 3,
+          "entry_va": "0x434090",
+          "entry_rva": "0x34090",
+          "body_va": "0xdfb590",
+          "body_rva": "0x9fb590"
+        },
+        {
+          "slot": 4,
+          "entry_va": "0x413e49",
+          "entry_rva": "0x13e49",
+          "body_va": "0xdfb630",
+          "body_rva": "0x9fb630"
+        },
+        {
+          "slot": 5,
+          "entry_va": "0x44642a",
+          "entry_rva": "0x4642a",
+          "body_va": "0xdfb6d0",
+          "body_rva": "0x9fb6d0"
+        },
+        {
+          "slot": 6,
+          "entry_va": "0x42603a",
+          "entry_rva": "0x2603a",
+          "body_va": "0xdfb770",
+          "body_rva": "0x9fb770"
+        }
+      ]
+    }
+  ],
+  "label": {
+    "complete_to_iobject": 4,
+    "native_type_id_offset": 12,
+    "native_type_id": 20488,
+    "registration_slot": 4,
+    "registration_body_va": "0x8328a0",
+    "metadata_key_target_slots": [
+      3,
+      1
+    ],
+    "expected_declaration_count": 10,
+    "expected_declarations_in_order": [
+      {
+        "order": 0,
+        "kind": "addTyped_slot1",
+        "property_id": 3,
+        "resource_id": 22004,
+        "native_type_tag": 0,
+        "key_names": {
+          "1033": "FillColor",
+          "2052": "填充颜色"
+        }
+      },
+      {
+        "order": 1,
+        "kind": "addTyped_slot1",
+        "property_id": 2,
+        "resource_id": 22003,
+        "native_type_tag": 0,
+        "key_names": {
+          "1033": "BorderColor",
+          "2052": "边线颜色"
+        }
+      },
+      {
+        "order": 2,
+        "kind": "addTyped_slot1",
+        "property_id": 0,
+        "resource_id": 22002,
+        "native_type_tag": 2,
+        "key_names": {
+          "1033": "SideLineType",
+          "2052": "边线线型"
+        }
+      },
+      {
+        "order": 3,
+        "kind": "bindComponent_slot2",
+        "property_id": null,
+        "resource_id": 23261,
+        "native_type_tag": 9,
+        "key_names": {
+          "1033": "Animation properties",
+          "2052": "动画属性"
+        }
+      },
+      {
+        "order": 4,
+        "kind": "addTyped_slot1",
+        "property_id": 4,
+        "resource_id": 22005,
+        "native_type_tag": 0,
+        "key_names": {
+          "1033": "FontColor",
+          "2052": "字符颜色"
+        }
+      },
+      {
+        "order": 5,
+        "kind": "addTyped_slot1",
+        "property_id": 13,
+        "resource_id": 22011,
+        "native_type_tag": 1,
+        "key_names": {
+          "1033": "Font",
+          "2052": "字体"
+        }
+      },
+      {
+        "order": 6,
+        "kind": "addTyped_slot1",
+        "property_id": 45,
+        "resource_id": 22035,
+        "native_type_tag": 8,
+        "key_names": {
+          "1033": "TextDisplay",
+          "2052": "显示文本"
+        }
+      },
+      {
+        "order": 7,
+        "kind": "addTyped_slot1",
+        "property_id": 21,
+        "resource_id": 22017,
+        "native_type_tag": 5,
+        "key_names": {
+          "1033": "AlignHorizontal",
+          "2052": "水平对齐"
+        }
+      },
+      {
+        "order": 8,
+        "kind": "addTyped_slot1",
+        "property_id": 22,
+        "resource_id": 22018,
+        "native_type_tag": 5,
+        "key_names": {
+          "1033": "AlignVertical",
+          "2052": "垂直对齐"
+        }
+      },
+      {
+        "order": 9,
+        "kind": "bindComponent_slot2",
+        "property_id": null,
+        "resource_id": 23466,
+        "native_type_tag": 9,
+        "key_names": {
+          "1033": "Background image",
+          "2052": "背景图"
+        }
+      }
+    ]
+  },
+  "abis": [
+    {
+      "name": "allocate",
+      "entry_va": "0xf2e9be",
+      "calling_convention": "cdecl",
+      "parameters": [
+        "uint32 bytes=0xf8"
+      ],
+      "return": "void*; NULL is failure",
+      "stack_cleanup": "caller 4",
+      "import": "mfc110u.dll ordinal 1502; exact IAT destination must match live loaded pinned MFC module"
+    },
+    {
+      "name": "collector_ctor",
+      "entry_va": "0xe0c5d0",
+      "calling_convention": "thiscall",
+      "ecx": "owned allocation",
+      "parameters": [],
+      "return": "same this pointer",
+      "stack_cleanup": "ret0"
+    },
+    {
+      "name": "metadata_cache_key",
+      "entry_va": "0xe18d70",
+      "calling_convention": "cdecl",
+      "parameters": [
+        "CString* hidden_sret (4-byte uninitialized storage)",
+        "const Label IObject*"
+      ],
+      "return": "hidden_sret pointer",
+      "stack_cleanup": "caller 8",
+      "ownership": "native function constructs CString; destroy once with MFC110u ordinal1039"
+    },
+    {
+      "name": "prepare_one_target",
+      "entry_va": "0xe1fde0",
+      "calling_convention": "thiscall",
+      "ecx": "fresh original PropertyRegister",
+      "parameters": [
+        "const CString& metadata_cache_key",
+        "const Label IObject*"
+      ],
+      "return": "no usable return status; caller must bind void and verify output",
+      "stack_cleanup": "ret8",
+      "formal_cpp_return_type_available": false,
+      "reason": "Native caller DFB5E7 ignores EAX/AL, both cache-hit and fill paths leave no common defined return value."
+    },
+    {
+      "name": "target_register",
+      "entry_va": "0x44c27b",
+      "body_va": "0x8328a0",
+      "calling_convention": "thiscall",
+      "ecx": "Label complete+4",
+      "parameters": [
+        "ObjectTree::IPropertyRegister*"
+      ],
+      "return": "void",
+      "stack_cleanup": "ret4",
+      "hidden_sret": false,
+      "exported_base_form": "?registerProperty@IObject@@UBEXPAVIPropertyRegister@ObjectTree@@@Z"
+    },
+    {
+      "name": "sink_add",
+      "entry_va": "0xe18da0",
+      "calling_convention": "thiscall",
+      "ecx": "PropertyRegister complete",
+      "parameters": [
+        "const CString& key (borrowed for call)",
+        "int32 native_type_tag"
+      ],
+      "return": "bool in AL (I1)",
+      "stack_cleanup": "ret8",
+      "slot": 1
+    },
+    {
+      "name": "sink_bind_component",
+      "entry_va": "0xe18fa0",
+      "calling_convention": "thiscall",
+      "ecx": "PropertyRegister complete",
+      "parameters": [
+        "const CString& key (borrowed for call)"
+      ],
+      "return": "bool in AL, propagated from slot1",
+      "stack_cleanup": "ret4",
+      "slot": 2,
+      "effect_on_own_metadata": "calls own slot1(key,9); it is not merely a category heading"
+    },
+    {
+      "name": "collector_destroy_delete",
+      "entry_va": "0x40e49e",
+      "body_va": "0xe101a0",
+      "calling_convention": "thiscall",
+      "ecx": "same owned collector",
+      "parameters": [
+        "uint32 flags=1"
+      ],
+      "return": "ignored",
+      "stack_cleanup": "ret4",
+      "invoke": "through verified real vtable slot0, not a fabricated callback table",
+      "ownership": "calls nondeleting dtor E0D0F0 then same-module native delete1504; never separately free inner maps, CString data or target"
+    }
+  ],
+  "own_primary_map": {
+    "registrar_compound_aggregate_offset": 72,
+    "primary_map_relative_to_aggregate": 0,
+    "header_head_sentinel_offset": 0,
+    "header_count_offset": 4,
+    "node_next_offset": 0,
+    "node_prev_offset": 4,
+    "node_key_cstring_offset": 8,
+    "node_native_type_tag_offset": 12,
+    "node_order_offset": 16,
+    "list_kind": "circular doubly linked, sentinel end",
+    "read_limit": 16,
+    "expected_count": 10,
+    "validation": [
+      "sentinel not NULL",
+      "count exactly10",
+      "next/prev symmetry including sentinel",
+      "no repeated nodes",
+      "exactly count nodes then sentinel",
+      "10 unique nonempty bounded CString keys",
+      "unique order0..9",
+      "ordered key/tag exact expected language-consistent declaration sequence"
+    ],
+    "copy_before_destroy": true,
+    "free_nodes_manually": false
+  },
+  "lifecycle": {
+    "native_allocation_size": 248,
+    "fresh_collector_per_target": true,
+    "constructor_alone_ready_for_registration": false,
+    "prepare_initializes": {
+      "order_counter_offset": 68,
+      "temporary_compound_offset": 72,
+      "borrowed_target_offset": 244
+    },
+    "borrowed_target_cleared_on_normal_return": true,
+    "target_owned_or_deleted_by_collector": false,
+    "cached_schema_copy": "prepare copies own temporary aggregate into own +4 cache; native destructor handles both copies/refcounts",
+    "cleanup_order": [
+      "copy all bounded output strings/scalars",
+      "destroy metadata-key CString exactly once",
+      "real collector deleting destructor(flags1) exactly once"
+    ],
+    "constructor_failed": "Do not call destructor on an unconstructed object. Allocation cleanup must use matching original native delete; preserve failure phase.",
+    "native_exception": "No automatic retry or replay. Do not assume managed catch recovers a corrupted native process. Root owns failure observation and shutdown."
+  },
+  "target_callback_scope": {
+    "normal_metadata_key": "Label IObject.slot3 -> empty CString; Label IObject.slot1 -> resource A61E type display string. No caption value access.",
+    "prepare": "Exactly one target IObject.slot4 call on fresh cache miss.",
+    "label_register": "Base and Label call sink slots1/2 only. No Label getProperty(slot6), setProperty(slot5), primary20 or other target value getter is called in these bounded methods.",
+    "validators": "Four top-level validators traverse only owned metadata maps. Type cache uses owned +24 map; Label declarations contain no tag11 and no declared auxiliary groups/bind tables.",
+    "diagnostic_paths": "Invalid key, duplicate incompatible type, group/binding conflict can call metadata-key helper and E1E170 diagnostic logger with further service virtual calls. No global no-UI/no-side-effects claim is made for these error paths.",
+    "unknown_value_abis": [
+      "IObject.slot6 collector",
+      "remaining PropertyRegister slots3..7 full semantics",
+      "JsonProtocolService schema-output/value-output APIs",
+      "Button/Edit conditional registration"
+    ],
+    "project_mutation_claim": "None intended; temporary native heap/maps/CString refcounts and possibly metadata-key singleton cache initialization change process memory. Must prove project/dirty/geometry/source/storage invariants in a separate actual trial."
+  },
+  "key_singleton": {
+    "init_flag_rva": "0xfb82fc",
+    "registry_rva": "0xfb8288",
+    "flag_mask": 1,
+    "cold_path": "924640 sets bit before constructing original global key registry. Do not call this initialization-free.",
+    "minimum_trial_guard": "Require preexisting initialized bit and UI-thread serialized request; all returned known keys nonempty/exact. This is not proof that an arbitrary foreign thread completed a failed constructor."
+  },
+  "not_implemented_or_executed": [
+    "native helper",
+    "host invocation",
+    "metadata runtime enumeration",
+    "property values",
+    "property write",
+    "Button/Edit metadata"
+  ],
+  "historical_corrections": [
+    "Previous slot1/2 void descriptions are superseded by concrete AL bool/ret8 andret4 evidence.",
+    "slot2 is bindComponent key registered with raw tag9; not a category-only signal.",
+    "Native metadata cache key is derived from type/namespace string slots; do not label it an instance name/full path.",
+    "+48 is a compound schema aggregate whose first member is the primary map; do not treat all following bytes as one map."
+  ]
+}

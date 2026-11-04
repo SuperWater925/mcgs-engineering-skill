@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "state": "own_CSharp_templates_offline_compiled",
+  "current_CSharp_template_bytes_equal_compiled_templates": true,
+  "template_sources": [
+    {
+      "name": "Bootstrap.cs",
+      "sha256": "b0e90c0a6668a5808539dfec09fb329f8458a7c837a9f1b4d508243af60ea2a4"
+    },
+    {
+      "name": "BootstrapLayout.cs",
+      "sha256": "5663c4ff5811f14f8e6e11eefcdf952c7a43d750f91df11381224331382ab8b6"
+    },
+    {
+      "name": "BridgeSessionLauncher.cs",
+      "sha256": "0d808a9d6bd3c4931fbc0c7ced9fc7d1253bfe6452f66f3c01b971fab53dc465"
+    },
+    {
+      "name": "DurableQueuePump.cs",
+      "sha256": "2724a5571efe1c49c52eeb66e8020891163c9f47321e77719456c4cf5ae84b27"
+    },
+    {
+      "name": "EmbedTypeLib.cs",
+      "sha256": "21a040cb104d6585ba5c900f73ac15b08d2713c2fe2bccbe354c13ae3505cd97"
+    },
+    {
+      "name": "EngineLoader.cs",
+      "sha256": "3ca8ad4d0ec9cf314772d3fb49722e100ef1405518fe513197125d0f0d919d6e"
+    },
+    {
+      "name": "ExportHostTypeLib.cs",
+      "sha256": "fb48611a8b04926214a078ffeb43d933924bc536e9184a8c3978ef38cf1c5c50"
+    },
+    {
+      "name": "NullSafeDispatch.cs",
+      "sha256": "e56f2f7547300dd740a038803eff4ba65c0ed829c5e1a2c7ede0a7b081a47bf7"
+    },
+    {
+      "name": "TypeLibDump.cs",
+      "sha256": "bc944c882cd6b53747441668a205f8c20f47fa4816baac71b5afedfc98e199e0"
+    }
+  ],
+  "bound_config_sha256": "4282c7824a05232b004071b259160791f0811841268e756e778354c6c2b3c58b",
+  "compiled_own_files": [
+    {
+      "relative_path": "McgsInternalBridge.dll",
+      "sha256": "0f5dbd630e6029858416be4c5d9e6d96289aed9c8e2d01cf056d53f278a36c08",
+      "bytes": 44544
+    },
+    {
+      "relative_path": "McgsInternalBridge.tlb",
+      "sha256": "4ad1026cde5a153dd574fedd4bcabe7a6e384b7a0d744f17c58d9e9011cd58e2",
+      "bytes": 2328
+    },
+    {
+      "relative_path": "McgsBridgeSession.exe",
+      "sha256": "5fb20eea643af34ffdb901ee951415d35b81da0f50913247849629bb1f9ff6b9",
+      "bytes": 17920
+    },
+    {
+      "relative_path": "native-wrapper\\McgsInternalLoader.dll",
+      "sha256": "bbfb2b379645ddad656e611063c4446d7f469d3a7443b1a68166c3212c590288",
+      "bytes": 18432
+    }
+  ],
+  "typelib_callback_shapes_verified": true,
+  "Python_preparation_source_parse": true,
+  "PowerShell_preparation_source_parse": true,
+  "registry_written": false,
+  "vendor_code_loaded": false,
+  "bridge_callback_executed": false,
+  "installed": false,
+  "host_started": false,
+  "new_machine_compatibility_verified": false,
+  "local_evidence_only_not_in_source_package": "offline-compile-0001"
+}

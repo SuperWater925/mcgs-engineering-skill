@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "status": "static_candidate_plan_only_not_executed",
+  "installed_editor_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "correction": "For this exact body the third business boolean confirms referenced rename; earlier unlockRefs wording is superseded. Its only read gates the confirmation worker, not reference rewriting.",
+  "complete_worker": {
+    "entry": "BD68F0",
+    "vtable": "ObjectModel11E4860 slot4 entry417355",
+    "abi": "thiscall boolAL(model,IObject*,CString&new,int confirmReferencedLowByte,CString&error,int checkDuplicateLowByte) ret14",
+    "candidate": "Known home2 and previously accepted temporary name; confirm0/error real empty nativeCString/checkDuplicate1. Actual UIthread/model/fixture remains required.",
+    "wrapper_limitation": "BA2080->BD21C0 always passes confirm1."
+  },
+  "decision": {
+    "sole_argument_read": [
+      {
+        "address": "0xbd6b76",
+        "mnemonic": "movzx",
+        "operands": "edx, byte ptr [ebp + 0x10]"
+      }
+    ],
+    "zero_branch": "BD6B7C jeBD6C64 bypasses onlyBD83C0",
+    "confirmation_worker": "BD83C0 checks exactmodel+24 refs; if found calls resource56C7/AfxMessageBox(style21), IDOKtrue; no save here.",
+    "common_downstream": [
+      "BD6C76 targetvirtual10 setName",
+      "BD6D74 newlinker",
+      "BD6D96/BD6DAD BD7860 rekeys model+4/+24",
+      "BD6DDE..BD6E0E module rename service",
+      "BD6E29 BD7D70 notifications/modified/save hooks",
+      "BD6E52 BD7E40 external reference callbacks"
+    ],
+    "none_of_these_downstream_updates_gated_by_confirm_boolean": true
+  },
+  "MFC_OMAP_export_confirmed_symbols": [
+    {
+      "ordinal": 4416,
+      "rva": "0x515c9",
+      "name": "?EnableWindow@CWnd@@QAEHH@Z"
+    },
+    {
+      "ordinal": 2251,
+      "rva": "0x1c0d09",
+      "name": "?AfxMessageBox@@YGHPB_WII@Z"
+    },
+    {
+      "ordinal": 4825,
+      "rva": "0x88a3",
+      "name": "?FromHandle@CWnd@@SGPAV1@PAUHWND__@@@Z"
+    },
+    {
+      "ordinal": 8190,
+      "rva": "0x6f827",
+      "name": "?IsWindowEnabled@CWnd@@QBEHXZ"
+    }
+  ],
+  "next_bounded_plan": [
+    "Fresh fulltyped baseline plus actual53arrays/MainCtrl namesIDs/oldnew graph/known unique accepted name; retain duplicate check1",
+    "Completeworker confirm0 once totemporary then once restoring; inspect every native reference postcondition; no naked field or callback writes",
+    "Explicit native affected-doc persistence, especially MainCtrl whose formalservice flag0 returns1 without saving; any directdoc83 requires separate fresh scope",
+    "Independent exact originalMainCtrl BLOB/alltypedfields inclNULL/Compile, only two already-proved specific NULtail bytes allowed; finalF4/close/reopen once",
+    "Record actual lack of operator interaction before calling this headlessPASS; do not repeat currently completed rename now"
+  ],
+  "false_claims": [
+    "Not executed",
+    "No generic all-object guarantee",
+    "No bypass of reference updating",
+    "RootSave doesnot automatically persistMainCtrl",
+    "Native unexpected error branches are not claimed interaction-free"
+  ],
+  "evidence": [
+    {
+      "file": "D:\\unbound-task-root\\extensions\\page\\function-00bd68e0.json",
+      "sha256": "5c05cefc403e7820a05172d87ec640018f8024d1d8477e39ef13af437db8e773"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-rename-bd83c0.json",
+      "sha256": "7b8176553ed969afecc733052a31c0ece9444661d84cf816457c2b5dafb88da0"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-rename-mfc-ordinals.json",
+      "sha256": "9f15411bb0ea863241baf04dfc2c5d820399074564b1c14841ec9b49634dcd57"
+    },
+    {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\reference-rename-success-amendment-0001.json",
+      "sha256": "3e7ee1b19ad8a78ddf752c2913b7739c82f8388c276c5cb70aa16fb351a0fac6"
+    }
+  ]
+}
