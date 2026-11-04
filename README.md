@@ -1,12 +1,14 @@
 # 昆仑通态 MCGS 工程编辑技能（Stu / Pro）
 
-给 Claude Code / Codex 使用的技能，离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程，也可通过 Pro 内部原生接口在线编辑已打开的工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及同一套 PowerShell 7 / ACE / Python 环境。** Stu 当前使用离线流程，Pro 可选择离线或在线。
+给 Claude Code / Codex 使用的技能，离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程，也可通过 Pro 内部原生接口在线编辑已打开的工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及 PowerShell 7 / Python 环境，离线数据库层使用 ACE。** Stu 当前使用离线流程，Pro 可选择离线或在线。
 
 **不限定软件大版本或小版本。** 版本号只记录，按实际数据库、归档结构、引用、完整回环与有限修改边界判断能力。保留原版本字段和未知字节，未知结构明确报告。
 
 在线连接与业务入口不再用作者 EXE/DLL/驱动的整文件指纹作准入白名单。厂商文件 SHA 差异作为观测信息返回；函数、RTTI、虚表和对象布局仍按实际接口核对。连接成功与业务适配分别记录，离线模板版本不构成升级要求。详见[构建与接口匹配](references/pro-native-binary-compatibility.md)。
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
+
+本次可迁移性补丁移除了控件、策略和批次的样本数量配额，补齐显式安装路径与编辑器路径绑定、ACE 创建失败回退及在线独立预检。仍需适配的真实 ABI、控件和驱动，以及本轮实际验证范围见[可迁移性复查](references/portability-review.md)。
 
 ## 功能范围
 
@@ -28,7 +30,7 @@
 
 重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu 预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
 
-历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。此前发布的 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。本版 `v2026.11.04-engineering` 将仓库与技能统一更名，不改变这些接口和验证范围。
+历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。此前发布的 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。统一更名版 `v2026.11.04-engineering` 保留这些历史结果；当前可迁移性补丁的隔离证据另列，不视作真实工程重新验收。
 
 ## 选择离线或在线
 
@@ -63,12 +65,12 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 
 从旧版迁移时，先保全并比较本地修改，将旧 `mcgs-offline-edit` 安装目录备份移到 `skills` 目录之外，再安装新包唯一根目录 `mcgs-engineering`；不要同时保留两个技能。本版不保留旧调用别名，改用 `$mcgs-engineering`。已有在线运行资料不自动搬动，也无需因技能更名重建运行 scope。
 
-安装后可先执行 `pwsh -NoProfile -File .\run.ps1 native-engineering --help` 和 `pwsh -NoProfile -File .\run.ps1 doctor`。首次在线接入需本机的 .NET Framework x86 编译器及实际 Pro 安装；按[首次在线准备](references/pro-native-deployment.md#首次热接的文件准备)生成并编译自有桥和业务引擎，仅复制技能目录不会自动建立连接。便携安装与隔离连接的实际范围见[安装验证记录](references/installation-validation.json)。
+安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线用 `pwsh -NoProfile -File .\run.ps1 native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。`native-engineering --help` 仅表示命令入口可读，`native-doctor` 通过只表示选定文件与构建前提通过，不代表已经连接或业务接口全部适配。首次在线接入需本机的 .NET Framework x86 编译器及实际 Pro 安装；按[首次在线准备](references/pro-native-deployment.md#首次热接的文件准备)生成并编译自有桥和业务引擎，仅复制技能目录不会自动建立连接。便携安装与隔离连接的实际范围见[安装验证记录](references/installation-validation.json)。
 
 ## 共用环境
 
 - Windows、PowerShell 7、Python 3.11+。
-- 与 PowerShell 位数匹配的 Microsoft ACE OLEDB 16.0 或 12.0；优先 16.0，再试 12.0。
+- 离线数据库读写需要与 PowerShell 位数匹配的 Microsoft ACE OLEDB 16.0 或 12.0；优先 16.0，实际失败再试 12.0。纯在线组态无需先安装 ACE。
 - Pro 新建数据库另需同位数 `ADOX.Catalog`，不再使用独立 32 位 PowerShell 5.1 / Jet OLEDB 环境。
 - 核心命令无 pip 依赖；Stu 预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
 - 原厂 McgsStu / McgsPro、驱动、控件和字体用于最终验证，由使用者安装。
@@ -91,7 +93,11 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-### 本版 Pro 在线集成
+### 当前可迁移性补丁
+
+本轮使用自有容器、managed 夹具、文件绑定与自有消息环宿主验证，不启动 Pro、不访问用户工程。生产源码统一绑定编译及分项证据见[复查记录](references/pro-native-portability-validation.json)。安装目录可显式指定；某个未知版本的函数字节或对象布局不符，仍需实现对应适配，不能靠删除检查得到有效接口。
+
+### 历史 Pro 在线集成
 
 - 完整目录绑定及 x86 编译通过：156 份原生源码加绑定 Layout，共 157 份；另核对 187 份自有 ABI 资料。
 - 生产客户端的 14 项假 transport 测试、实际 managed 准备/回执/比较证据代码的隔离验证通过；覆盖预备与 RPC 重叠、文件输出完成与错误传播、依赖边界和超时不重放。
@@ -117,7 +123,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.11.04-engineering --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.04-portability --out local-artifacts/release
 ```
 
 静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。

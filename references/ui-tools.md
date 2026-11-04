@@ -16,8 +16,8 @@
 4. 改：写脚本调用`tools/mcgs_ui.py`，或写规格文件交给`tools/样式规格应用.py`。两者都输出`<新目录>/manifest.json`和`<新目录>/候选导出`。
 5. 看候选：对`候选导出`再跑离线预览和文字检查，与第3步比较。
 6. 写入新文件：
-   - 只改已有行：`run.ps1 apply -Project <快照.MCS> -Manifest <新目录>/manifest.json -Out <新工程.MCS>`先预检，确认后加`-Commit`。
-   - 含新建窗口：`pwsh -File tools/新增窗口事务.ps1 -输入快照 <快照.MCS> -事务清单 <manifest.json> -预期清单哈希 <manifest的SHA256> -输出工程 <新工程.MCS> -报告路径 <报告.json>`先预检，确认后加`-Commit`。
+   - 只改已有行：`run.ps1 apply -Project <快照.MCS> -Manifest <新目录>/manifest.json -Out <新工程.MCS>`先预检；已在用户授权范围内时加`-Commit`直接提交，不额外逐项询问。
+   - 含新建窗口：`pwsh -File tools/新增窗口事务.ps1 -输入快照 <快照.MCS> -事务清单 <manifest.json> -预期清单哈希 <manifest的SHA256> -输出工程 <新工程.MCS> -报告路径 <报告.json>`先预检；提交同样沿用已有授权加`-Commit`。
 7. 复读：已有行提交时加 `-ExportAfter <新导出>`，复用完整提交后回读；新增窗口事务仍对新工程独立 `inspect`。跑`scripts/native_tool.py audit --export <新导出>`，再预览本次修改页。
 8. 原厂McgsStu打开新工程、组态检查、编译；离线检查通过不等于原厂编译通过。
 

@@ -6,7 +6,7 @@
 
 inspection 的 `compiled_kinds` 是本次编译入口清单，`action_preimages` 给出所选目标完整前像和 ABI SHA；编译存在不等于当前工程/产品一定允许。对应 kind 的实现源位于 `delivery/source/sources`，字段合同以当前 Read/Prepare 校验为准，不用历史例子补默认参数。
 
-当前界面施工补充了 `control-geometry-batch` 与标准按钮的显式 paired visual 预期；各页最多64个不同目标、组/组件选择、Flow包络、单位拆分和最终回读规则集中在[在线界面施工](pro-native-ui-workflow.md)。它们复用当前工程和原生接口，不建立第二套版本环境。
+当前界面施工包含 `control-geometry-batch` 与标准按钮的显式 paired visual 预期；不同目标集合、组/组件选择、Flow包络、单位拆分和最终回读规则集中在[在线界面施工](pro-native-ui-workflow.md)。批次不再按样本写死64项，实际消息容量仍须满足。它们复用当前工程和原生接口，不建立第二套版本环境。
 
 | 功能 | 选择与实际合同 |
 | --- | --- |
@@ -21,28 +21,29 @@ inspection 的 `compiled_kinds` 是本次编译入口清单，`action_preimages`
 
 ## 首次热接的文件准备
 
-已有桥直接按下节更新；首次部署按以下顺序执行。使用 PowerShell 7，把前三个占位路径替换为接收电脑的实际绝对路径；SkillRoot 可为 Codex 或 Claude 的实际安装目录，TaskRoot 选择本次尚不存在的新目录。InstallRoot 是含 `Program\McgsSetPro.exe` 的安装根。需要本机 `%WINDIR%\Microsoft.NET\Framework\v4.0.30319\csc.exe`（x86）存在。所有工具用绝对路径调用，不依赖当前工作目录；SHA 均从本次文件计算，不复制作者路径、PID、历史 claim 或哈希。BootstrapRoot 留给 prepare 创建，不预先手工建它。
+已有桥直接按下节更新；首次部署按以下顺序执行。使用 PowerShell 7，把占位路径替换为接收电脑的实际绝对路径；SkillRoot 可为 Codex 或 Claude 的实际安装目录，TaskRoot 可使用现有任务目录。InstallRoot 包含明确选择的真实 EXE，不再要求固定 `Program` 子目录。需要本机 `%WINDIR%\Microsoft.NET\Framework\v4.0.30319\csc.exe`（x86）存在。所有工具用绝对路径调用，不依赖当前工作目录；SHA 均从本次文件计算，不复制作者路径、PID、历史 claim 或哈希。下面为首次输出生成独立子目录；已有桥不要重复首次部署。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
 $SkillRoot = (Resolve-Path -LiteralPath '<已解压的mcgs-engineering完整目录>').Path
 $InstallRoot = (Resolve-Path -LiteralPath '<本机Pro安装根目录>').Path
-$TaskRoot = '<本次全新任务目录的绝对路径>'
+$TaskRoot = '<本次任务目录的绝对路径>'
 $Native = Join-Path $SkillRoot 'assets\pro-native-bridge'
-$PythonExecutable = (Get-Command python -ErrorAction Stop).Source
+$PythonExecutable = if ($env:MCGS_PYTHON) { (Get-Command $env:MCGS_PYTHON -ErrorAction Stop).Source } else { (Get-Command python -ErrorAction Stop).Source }
+$env:MCGS_PYTHON = $PythonExecutable
 $DotNetFrameworkX86Csc = Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319\csc.exe'
-$ActualProExecutable = Join-Path $InstallRoot 'Program\McgsSetPro.exe'
+$ActualProExecutable = (Resolve-Path -LiteralPath '<本机Pro真实EXE的完整路径>').Path
 if (-not (Test-Path -LiteralPath $DotNetFrameworkX86Csc -PathType Leaf)) { throw '缺少.NET Framework x86 csc.exe，先补齐本机编译环境。' }
 if (-not (Test-Path -LiteralPath $ActualProExecutable -PathType Leaf)) { throw '安装根目录中未找到原Pro程序。' }
-$RuntimeRoot = Join-Path $TaskRoot 'runtime'
-$FreshBootstrapRoot = Join-Path $TaskRoot 'bootstrap'
-$EngineeringRoot = Join-Path $TaskRoot 'engineering-payload'
+$ConnectionStamp = [DateTime]::UtcNow.ToString('yyyyMMddHHmmssfff')
+$RuntimeRoot = Join-Path $TaskRoot ('runtime-' + $ConnectionStamp)
+$FreshBootstrapRoot = Join-Path $TaskRoot ('bootstrap-' + $ConnectionStamp)
+$EngineeringRoot = Join-Path $TaskRoot ('engineering-payload-' + $ConnectionStamp)
 $NewLayoutDirectory = Join-Path $RuntimeRoot 'binding'
 $NewBoundDirectory = Join-Path $RuntimeRoot 'bound'
 $NewEngineFileName = 'McgsInternalEngine_' + [DateTime]::UtcNow.ToString('yyyyMMddHHmmssfff') + '.dll'
 $NewEngineScopeFileName = [IO.Path]::ChangeExtension($NewEngineFileName, '.scope.json')
-if (Test-Path -LiteralPath $TaskRoot) { throw '请保留现有目录，另选全新TaskRoot。' }
-New-Item -ItemType Directory -Path $TaskRoot | Out-Null
+New-Item -ItemType Directory -Path $TaskRoot -Force | Out-Null
 
 # 1. 生产桥准备/编译；不加 --ping-only，不注册、不接入、不启动Pro。
 & $PythonExecutable "$Native\hot-attach\prepare_hot_attach.py" `
@@ -61,9 +62,10 @@ $LayoutSha = (Get-FileHash -LiteralPath $Layout -Algorithm SHA256).Hash.ToLowerI
 & $PythonExecutable "$Native\delivery\device-entry-v2\prepare_delivery_binding.py" `
   --task-root $TaskRoot --engineering-root $EngineeringRoot --runtime-root $RuntimeRoot `
   --install-root $InstallRoot --transport-client-file $TransportClientFile `
+  --editor-executable $ActualProExecutable `
   --engine-file-name $NewEngineFileName --layout-source $Layout --layout-source-sha256 $LayoutSha `
   --output-directory $NewLayoutDirectory
-if ($LASTEXITCODE -ne 0) { throw '七键binding失败；保留输出。' }
+if ($LASTEXITCODE -ne 0) { throw 'binding失败；保留输出。' }
 
 # 3. 绑定本版源码/ABI资料，再编译x86自有engine。
 $NewScopeJson = Join-Path $NewLayoutDirectory $NewEngineScopeFileName
@@ -99,9 +101,11 @@ $ScopeSha = (Get-FileHash -LiteralPath $DeployedScopeJson -Algorithm SHA256).Has
 if ($LASTEXITCODE -ne 0) { throw 'layout核对失败。' }
 ```
 
-七个配置键为 schema、task_root、engineering_root、runtime_root、install_root、transport_client_file、transport_client_sha256。生成器从当前 transport 合同填写最后一项。EngineeringRoot 与 RuntimeRoot 分离，前者保存部署的只读 profiles / task-evidence，后者保存队列、claim 与 `engineering` 输出。未绑定 Layout 的 PENDING 不能部署。上述流程完成后，按[热接入的目标身份与连接步骤](../assets/pro-native-bridge/hot-attach/README.md#选择目标并连接)继续；只有接入成功后才使用当前工程的 inspect/编辑入口。
+七项基本配置仍兼容：schema、task_root、engineering_root、runtime_root、install_root、transport_client_file、transport_client_sha256。新增可选 `editor_executable` 指定真实程序，ProgramRoot 从其父目录取得；旧七键沿用历史默认路径。生成器从当前 transport 合同填写指纹项。EngineeringRoot 与 RuntimeRoot 分离，前者保存只读 profiles / task-evidence，后者保存队列、claim 与 `engineering` 输出。未绑定 Layout 的 PENDING 不能部署。上述流程完成后，按[热接入的目标身份与连接步骤](../assets/pro-native-bridge/hot-attach/README.md#选择目标并连接)继续；只有接入成功后才使用当前工程的 inspect/编辑入口。
 
 2026-11-04 从发布 ZIP 新解压到含中文及空格的独立目录，已完成本节生产 prepare、157源编译、307份自有ABI资料promotion、stage与新scope layout核对；均未注册或接入Pro、未调用业务engine。独立自有宿主另完成3次ping与清理。这是可搬移文件链证据，不代表新电脑环境或原厂业务验收。
+
+新增 `editor_executable` 需要用本版 Layout 重新编译对应 engine；复制技能不会改变进程中已加载的程序集。上述示例使用数字引擎名，兼容旧 Bootstrap；本版 EngineLoader 才支持相同规则下的描述性 DLL 名。已有旧 Bootstrap 时继续用数字名，或按当前连接状态明确更新桥，不能只换引擎名就宣称旧代码已更新。显式 EXE 的路径绑定/部署已验证，改名 EXE 的完整厂商业务尚未验证，部分业务入口仍按原模块名找主模块。
 
 ## 已有桥的同任务更新
 
@@ -125,7 +129,7 @@ FreshReceipt 使用 runtime 内的新文件。未知/超时结果保留 claim，
 
 ## 可选冷启动部署
 
-仅在选择原厂 Addins/桥接启动器兼容路线时，按 `bootstrap\README.md` 的 prepare、build、安装计划、Commit、launcher 和精确移除顺序操作。普通进程热接不要求这些 Addins/Startup 配置或重新启动。冷启动路线按真实安装资料指定原 EXE、Addins 目录/INI、Startup registry path、task/runtime/bootstrap 根。原 loader ABI 未匹配就拒绝，不能按产品版本猜入口。prepare/build 只处理自有源码，不注册、启动或打开工程；install 的 Commit 和 launcher 的 start 是独立明确操作。
+仅在选择原厂 Addins/桥接启动器兼容路线时，按 `bootstrap\README.md` 的 prepare、build、安装计划、Commit、launcher 和精确移除顺序操作。普通进程热接不要求这些 Addins/Startup 配置或重新启动。冷启动路线按真实安装资料指定原 EXE、Addins 目录/INI、Startup registry path、task/runtime/bootstrap 根。冷接按显式 Addin、TYPELIB 和四回调协议配置，不要求作者 EXE 指纹相等；实际加载与业务结果另行核实，不能按产品版本猜入口。prepare/build 只处理自有源码，不注册、启动或打开工程；install 的 Commit 和 launcher 的 start 是独立明确操作。
 
 冷启动 bootstrap prepare 要求新的 RuntimeRoot/BootstrapRoot，之后才建 RuntimeRoot 供 engine 绑定；原队列不能这样重建。该路线首次 stage_engine 后正常启动原应用，由原生回调建立 UI 线程队列。冷启动部署工具已做自有离线编译与 TYPELIB 检查，未据此声称任意电脑原厂加载、UAC/COM 环境均已验收。
 

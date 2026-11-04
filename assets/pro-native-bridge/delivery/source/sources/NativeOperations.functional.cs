@@ -215,35 +215,14 @@ namespace McgsInternalBridge {
             return new NativeContext{WindowService=service,WindowManager=manager,Root=root,ObjectModel=model};
         }
         internal Dictionary<string,object> Describe(IntPtr instance) {
-            IntPtr table=NativeMemory.Ptr(instance,0);Rva(table);
-            IntPtr col=NativeMemory.Ptr(table,-4);Rva(col);
-            int completeOffset=NativeMemory.I32(col,4);NativeMemory.Require(completeOffset>=0 && completeOffset<4096,"Invalid object RTTI offset.");
-            IntPtr type=NativeMemory.Ptr(col,12);Rva(type);string typeName=NativeMemory.Ascii(NativeMemory.Add(type,8),256);
-            IntPtr hierarchy=NativeMemory.Ptr(col,16);Rva(hierarchy);int count=NativeMemory.I32(hierarchy,8);NativeMemory.Require(count>0 && count<=128,"Invalid RTTI hierarchy.");
-            IntPtr array=NativeMemory.Ptr(hierarchy,12);Rva(array);bool isObject=false;
-            for(int i=0;i<count;i++) {
-                IntPtr descriptor=NativeMemory.Ptr(array,4*i);Rva(descriptor);IntPtr baseType=NativeMemory.Ptr(descriptor,0);Rva(baseType);
-                string name=NativeMemory.Ascii(NativeMemory.Add(baseType,8),256);
-                if(name==".?AVIObject@@" && NativeMemory.I32(descriptor,8)==completeOffset && NativeMemory.I32(descriptor,12)==-1)isObject=true;
-            }
-            NativeMemory.Require(isObject,"Returned object is not the verified nonvirtual IObject base: "+typeName);
-            int children=Bind<ThisInt>(Virtual(instance,19))(instance);NativeMemory.Require(children>=0 && children<=512,"Object child count exceeds trial bound.");
-            int module=Bind<ThisInt>(Virtual(instance,20))(instance);
-            return new Dictionary<string,object>{{"address",NativeMemory.Hex(instance)},{"rtti",typeName},{"vtable_rva","0x"+Rva(table).ToString("X")},{"complete_offset",completeOffset},{"module",module},{"child_count",children}};
+            return NativeObjectTraversal.Describe(instance,Rva,delegate(IntPtr value,int slot){return Bind<ThisInt>(Virtual(value,slot))(value);});
         }
         internal List<IntPtr> Children(IntPtr owner) {
-            Describe(owner);IntPtr iter=Marshal.AllocHGlobal(16);bool constructed=false;var children=new List<IntPtr>();
-            try {
-                for(int i=0;i<16;i++)Marshal.WriteByte(iter,i,0);
-                Call<ThisPointerPointer>("IObjectIter_ctor")(iter,owner);constructed=true;
-                NativeMemory.Require(NativeMemory.Ptr(iter,12)==owner,"Iterator owner differs.");
-                bool has=Bind<ThisBoolPointer>(Virtual(owner,17))(owner,iter);
-                while(has) {
-                    NativeMemory.Require(children.Count<512,"Native child iterator exceeded bound.");IntPtr child=NativeMemory.Ptr(iter,8);NativeMemory.Require(child!=IntPtr.Zero,"Iterator returned an empty object.");
-                    Describe(child);children.Add(child);has=Bind<ThisBoolPointer>(Virtual(owner,18))(owner,iter);
-                }
-            }finally{try{if(constructed)Call<ThisVoid>("IObjectIter_dtor")(iter);}finally{Marshal.FreeHGlobal(iter);}}
-            return children;
+            return NativeObjectTraversal.Children(owner,Describe,
+                delegate(IntPtr iter,IntPtr value){Call<ThisPointerPointer>("IObjectIter_ctor")(iter,value);},
+                delegate(IntPtr value,IntPtr iter){return Bind<ThisBoolPointer>(Virtual(value,17))(value,iter);},
+                delegate(IntPtr value,IntPtr iter){return Bind<ThisBoolPointer>(Virtual(value,18))(value,iter);},
+                delegate(IntPtr iter){Call<ThisVoid>("IObjectIter_dtor")(iter);});
         }
         internal List<object> ReadTree(IntPtr root) {
             var output=new List<object>();var visited=new HashSet<uint>();ReadTreeNode(root,0,"",output,visited);return output;

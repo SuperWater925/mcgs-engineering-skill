@@ -1,4 +1,4 @@
-// Raw-only existing error state. Never compiles, clears errors or invokes a vendor getter.
+﻿// Raw-only existing error state. Never compiles, clears errors or invokes a vendor getter.
 using System;using System.Collections;using System.Collections.Generic;using System.Globalization;using System.IO;using System.Runtime.InteropServices;using System.Web.Script.Serialization;
 namespace McgsInternalBridge {
  internal static class NativeProjectCompileDiagnostics {
@@ -19,7 +19,7 @@ namespace McgsInternalBridge {
    var tables=M(profile["tables"]);IntPtr app=e.Address(0xFBB578);Primary(e,app,M(tables["app"]));IntPtr root=NativeMemory.Ptr(app,0x520);Primary(e,root,M(tables["root"]));
    NativeMemory.Require(NativeMemory.Ptr(root,0x2D4)==context.ObjectModel&&Path.GetFullPath(C(NativeMemory.Add(root,0x24))).Equals(Path.GetFullPath(project),StringComparison.OrdinalIgnoreCase)&&Path.GetFullPath(project).Equals(NativeUsableEditPermit.Fixture,StringComparison.OrdinalIgnoreCase),"Compile diagnostic current project/root/model identity differs.");
    e.RequireTable(context.WindowManager,"UserWindowObjectManager.IObject");e.RequireTable(context.WindowService,"UserWindowObjectManager.IUserWindowService");NativeMemory.Require(NativeMemory.Add(context.WindowManager,0x34)==context.WindowService,"Compile diagnostic window service/manager ownership differs.");
-   IntPtr map=NativeMemory.Add(context.WindowManager,12),head=NativeMemory.Ptr(map,0);int count=NativeMemory.I32(map,4);string header=H(NativeMemory.Bytes(map,8));NativeMemory.Require(head!=IntPtr.Zero&&count>=0&&count<=4096,"Compile diagnostic raw page map head/count differs.");
+   IntPtr map=NativeMemory.Add(context.WindowManager,12),head=NativeMemory.Ptr(map,0);int count=NativeMemory.I32(map,4);string header=H(NativeMemory.Bytes(map,8));NativeMemory.Require(head!=IntPtr.Zero&&count>=0,"Compile diagnostic raw page map head/count differs.");
    IntPtr previous=head,node=NativeMemory.Ptr(head,0),page=IntPtr.Zero;var nodes=new HashSet<uint>();var ids=new HashSet<int>();
    for(int i=0;i<count;i++){NativeMemory.Require(node!=IntPtr.Zero&&node!=head&&nodes.Add(NativeMemory.U(node))&&NativeMemory.Ptr(node,4)==previous,"Compile diagnostic raw page map cycle/link differs.");IntPtr candidate=NativeMemory.Ptr(node,12);Primary(e,candidate,M(tables["page"]));int current=NativeMemory.I32(candidate,16);NativeMemory.Require(ids.Add(current),"Compile diagnostic raw page IDs repeat.");if(current==id)page=candidate;previous=node;node=NativeMemory.Ptr(node,0);}
    NativeMemory.Require(node==head&&NativeMemory.Ptr(head,4)==previous&&header==H(NativeMemory.Bytes(map,8))&&page!=IntPtr.Zero,"Compile diagnostic page map changed or target is absent.");

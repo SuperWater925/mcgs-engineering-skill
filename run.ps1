@@ -1,4 +1,12 @@
 $ErrorActionPreference = 'Stop'
+if($args.Count -gt 0 -and $args[0] -eq 'native-doctor'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $doctorArgs=@()
+ if($args.Count -gt 1){$doctorArgs=@($args[1..($args.Count-1)])}
+ $env:MCGS_PWSH=(Get-Process -Id $PID).Path
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_native_doctor.py') @doctorArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-engineering'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $nativeArgs=@()

@@ -40,7 +40,7 @@ namespace McgsInternalBridge {
             if(data==null||!data.ContainsKey("assembly")||!data.ContainsKey("sha256"))throw new InvalidOperationException("Engine manifest requires assembly and sha256.");
             string path=BootstrapLayout.Regular(Convert.ToString(data["assembly"])),expected=Convert.ToString(data["sha256"]);
             object scope;if(!data.TryGetValue("bootstrap_scope_sha256",out scope)||Convert.ToString(scope)!=BootstrapLayout.ConfigurationSha256)throw new InvalidOperationException("Active engine belongs to another bootstrap configuration.");
-            if(!String.Equals(Path.GetDirectoryName(path),EngineRoot,StringComparison.OrdinalIgnoreCase)||!Regex.IsMatch(Path.GetFileName(path),@"\AMcgsInternalEngine_[0-9]{4,}\.dll\z"))throw new InvalidOperationException("Engine path is outside the fixed versioned engine directory.");
+            if(!String.Equals(Path.GetDirectoryName(path),EngineRoot,StringComparison.OrdinalIgnoreCase)||!Regex.IsMatch(Path.GetFileName(path),@"\A[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll\z"))throw new InvalidOperationException("Engine path must be a single DLL basename inside the configured engine directory.");
             if(!Regex.IsMatch(expected??"",@"\A[0-9a-fA-F]{64}\z"))throw new InvalidOperationException("Expected an engine SHA256.");
             string actual;using(var algorithm=SHA256.Create())using(var stream=File.OpenRead(path))actual=BitConverter.ToString(algorithm.ComputeHash(stream)).Replace("-","").ToLowerInvariant();
             if(!String.Equals(actual,expected,StringComparison.OrdinalIgnoreCase))throw new InvalidOperationException("Engine SHA256 differs from manifest.");

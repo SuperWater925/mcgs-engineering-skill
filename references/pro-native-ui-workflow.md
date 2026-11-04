@@ -22,8 +22,8 @@
 
 ## 几何与样式批次
 
-- `control-geometry-batch` 每页1至64个不同控件，目标含当前完整 path/name/class；拒绝同批父子、祖孙或重复子树。组使用已证的归一化子矩形合同，核完整森林，不能只验证外框。当前入口要求原绘图 view 已存在，原 page property13 满足其前置守卫；按实际 Read/Prepare 拒绝结果处理，不暗改该字段。
-- `control-properties-batch` 每页最多64个不同 full control；同一 full 的 root、抬起/按下或多个状态组件分到不同批。只写确实变化的、由 getter 声明的 native_key/tag/value。不能按 collector slot 猜数据类型，不能用整个控件可写来推断所有嵌套成员都可写。
+- `control-geometry-batch` 每页接受非空的不同控件集合，不再按样本写死64项；目标含当前完整 path/name/class，仍拒绝同批父子、祖孙或重复子树。组使用已证的归一化子矩形合同，核完整森林，不能只验证外框。当前入口要求原绘图 view 已存在，原 page property13 满足其前置守卫；按实际 Read/Prepare 拒绝结果处理，不暗改该字段。实际消息容量仍须满足。
+- `control-properties-batch` 同样不再写死64个 full control；同一 full 的 root、抬起/按下或多个状态组件分到不同批。只写确实变化的、由 getter 声明的 native_key/tag/value。不能按 collector slot 猜数据类型，不能用整个控件可写来推断所有嵌套成员都可写。
 - 字体保留原 `native_flag`、全部 language rows 和原 language ID；大小、字重及字体面按明确设计调整。动态文字按最长真实值、负号、小数位、状态文本和单位留宽，不用“12.3”或空预览证明不会裁切。
 - 颜色低24位为 BGR。普通颜色修改保留原高字节；原 common FillColor/BorderColor 的高字节是独立 enable 整数，不是可随意清位的 flags。仅在已证 common 字段上，禁用用高字节整体0、启用实心用01，并保留或明确设置RGB。字符颜色的FF等高字节不能据此改成 enable。Label 需要露出白卡时关闭其真实 common 填充/边线门控，不改可见/使能/安全表达式。
 
@@ -81,9 +81,9 @@ python -B scripts/native_ui_rules.py --input extracted-evidence.json --out NEW-r
 
 ## 部分结果、集中保存与最终验收
 
-`commit=false` 仅控制 bridge 显式保存，原厂自身保存/计时保存/编译转换仍可能改变 storage。磁盘SHA漂移先保留旧请求与 claim，取新只读事实；只在全部差异已闭合为原厂边界、业务语义与当前批准期望精确一致时，使用新ID、新前像、新permit继续未执行部分。不能自动hash rebase、删claim或重发原请求；timeout须先确认原请求状态。
+`commit=false` 仅控制 bridge 显式保存，原厂自身保存/计时保存/编译转换仍可能改变 storage。磁盘SHA漂移先保留旧请求与 claim，取新只读事实；只在全部差异已闭合为原厂边界、业务语义与当前批准期望精确一致时，使用新ID和新事实继续未执行部分，direct 在调用中取得当前前像，无需新 permit 文件。不能自动hash rebase、删claim或重发原请求；timeout须先确认原请求状态。
 
-最终一次收尾：同步必要引用（包括完整 expected edges）→按各页/模块 fresh permit 保存→单独一次 RootSave→必要的一次原 Root85→保存检查后的统一只读 typed/forest/graph及业务比较。已有策略私有工作文档先用真正 pure-sync/close，历史 Doc83 可能内嵌全RootSave，不能叫child-only。不要为每个小步骤导出、保存、关闭重开或重跑全部功能；需要持久重载验收时再集中一次正常 Close/Open。
+最终一次收尾：同步必要引用（包括完整 expected edges）→以当前事实 direct 保存各页/模块→单独一次 RootSave→必要的一次原 Root85→保存检查后的统一只读 typed/forest/graph及业务比较。已有策略私有工作文档先用真正 pure-sync/close，历史 Doc83 可能内嵌全RootSave，不能叫child-only。不要为每个小步骤导出、保存、关闭重开或重跑全部功能；需要持久重载验收时再集中一次正常 Close/Open。
 
 Root85 的 `ok=true` 只说明调用正常返回。通过须同时满足 `native_check_passed=true`、`original_worker_call_entered=true`、`original_worker_returned=true`、`original_worker_return_int32==0` 和 `state_after.root_compile_valid_raw==1`。错误/警告计数未取得时保留 unknown/null，不伪造0，不用调用前的旧 compile1 代替检查。保留原厂UI、异常和自身持久化语义；需要提示处理时遵循已有授权，不隐藏确认。
 

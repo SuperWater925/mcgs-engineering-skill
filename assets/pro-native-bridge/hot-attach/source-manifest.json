@@ -1,13 +1,13 @@
 {
   "schema": 1,
-  "status": "SOURCE_READY_NO_AUTHOR_BUILD_WHITELIST_OWN_NATIVE_CONNECTION_TESTED",
+  "status": "SOURCE_READY_PORTABILITY_BOUND_COMPILE_AND_OWN_HOST_TESTED",
   "install_relative_root": "assets/pro-native-bridge/hot-attach",
   "default_bootstrap_dependency": "../bootstrap",
   "allowlist": [
     {
       "file": "prepare_hot_attach.py",
-      "sha256": "82bb52aa97125ae5592ea4213c469c8a49e3f74510c73525f488f7448b4da1a2",
-      "bytes": 9633
+      "sha256": "49f3819d0ad098c0e86610212798d4d3cccc0786580c98b6915ad615684c1449",
+      "bytes": 11659
     },
     {
       "file": "build_hook_pe.py",
@@ -41,8 +41,8 @@
     },
     {
       "file": "README.md",
-      "sha256": "321c59402f744ec49603d7ade838628d640a24db003bc939dfdbfc7408ec195a",
-      "bytes": 10164
+      "sha256": "bacd346667b5798ad588dd463482de85ae489e5249f4a449bdff960d58c5ee20",
+      "bytes": 10449
     },
     {
       "file": "validation-summary.json",
@@ -61,7 +61,7 @@
     },
     {
       "file": "../bootstrap/source/EngineLoader.cs",
-      "sha256": "ad7291b60d486ffe80ca0c63d23f519917041d7baafc3e2b5842e8d1d5ce463b"
+      "sha256": "4bc453be2a8200c83213f291b61ed94ece7ed0a6895aef3e23010c4aa79ab46e"
     },
     {
       "file": "../bootstrap/source/DurableQueuePump.cs",
@@ -81,7 +81,7 @@
     },
     {
       "file": "../bootstrap/stage_engine.py",
-      "sha256": "266e7f040bb2fcdd438b8ab656d8c4be9102b6c9906222d6391ce9e20fbbc224"
+      "sha256": "63068fe303e4bbbf10f2a21b84c1fc1a4b5ff971127cfcade41b105dfc6b2d80"
     },
     {
       "file": "../bootstrap/pe_image.py",
@@ -111,6 +111,6 @@
   "no_current_user_project_operated": true,
   "real_Pro_verification_scope": "Ping-only connection layer, same original UI thread, no native project object read or manufacturer business method; not project or new-machine acceptance.",
   "Medium_HKCU_registration_verified": false,
-  "current_revision": "0103-no-author-build-whitelist",
-  "current_revision_verification": "../../../references/pro-native-build-admission-validation.json"
+  "current_revision": "0104-portability",
+  "current_revision_verification": "../../../references/pro-native-portability-validation.json"
 }

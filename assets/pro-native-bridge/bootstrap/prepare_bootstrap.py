@@ -103,8 +103,9 @@ def main():
         raise ValueError('Addins.ini must be in the exact Addins directory')
     for key in ['editor_executable', 'loader_contract_file', 'addins_ini_file']:
         regular(paths[key])
-    if boot.exists() or runtime.exists():
-        raise ValueError('Fresh BootstrapRoot and RuntimeRoot are required; do not overwrite prior task state/claims')
+    for label, output in (('BootstrapRoot', boot), ('RuntimeRoot', runtime)):
+        if output.exists() and (not output.is_dir() or any(output.iterdir())):
+            raise ValueError(label + ' is not empty; preserve existing files/claims and use the existing bridge or a fresh preparation subdirectory')
     startup = a.startup_registry_path
     if not startup.casefold().startswith('software\\') or not startup.casefold().endswith('\\startup') or '\0' in startup:
         raise ValueError('Supply the exact original existing per-user Startup key from loader evidence')
@@ -129,7 +130,9 @@ def main():
     capability['reference_scope'] = capability.get('scope')
     capability['scope'] = 'Current explicit PE32/I386 identity and configured Addin/TYPELIB/IAddInObj four-callback protocol. Manufacturer loader execution on this target has not been verified.'
     editor_sha = image['binary_sha256']
-    boot.mkdir(parents=True, exist_ok=False)
+    boot.mkdir(parents=True, exist_ok=True)
+    if any(boot.iterdir()):
+        raise ValueError('BootstrapRoot gained existing files before writing; preserve them')
     (boot / 'engines').mkdir()
     (boot / 'bound-source').mkdir()
     contract_copy = boot / 'loader-capability.json'

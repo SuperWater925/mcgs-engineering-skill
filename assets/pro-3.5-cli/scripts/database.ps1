@@ -73,9 +73,8 @@ if($request.action -eq 'doctor') {
 }
 if($request.action -eq 'create') {
     if(Test-Path -LiteralPath $request.path) {throw 'Output already exists'}
-    $cat=New-Object -ComObject ADOX.Catalog
-    $cat.Create((Connection-String $request.path $false)) | Out-Null
-    $cat.ActiveConnection.Close()
+    $created=New-McgsAceDatabase $request.path
+    $script:DbProvider=$created.Provider
     $c=Open-Database $request.path $false
     try {
         foreach($table in $request.seed.PSObject.Properties) {

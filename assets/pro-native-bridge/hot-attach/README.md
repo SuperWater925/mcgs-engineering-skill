@@ -8,9 +8,9 @@
 
 目录放在 `assets/pro-native-bridge/hot-attach`，其兄弟 `bootstrap` 提供既有自有 Bootstrap/EngineLoader/DurableQueuePump/NullSafeDispatch 与 PE assembler。默认按包内相对目录查找，不依赖 Codex/Claude 安装目录或本机用户目录；也可显式给 `--bootstrap-template`。
 
-首次生产使用先完成[首次热接的文件准备](../../../references/pro-native-deployment.md#首次热接的文件准备)。该段从实际技能/任务/安装绝对路径开始，依次执行生产 prepare → 七键 binding → compile → promotion → stage → layout，定义本页使用的 `$Native`、`$PythonExecutable`、`$FreshBootstrapRoot`、`$ActualProExecutable` 和 `$DeployedScopeJson`。命令都使用工具完整路径，不依赖当前目录。已有桥直接复用；不要重复首次部署或复制旧scope。
+首次生产使用先完成[首次热接的文件准备](../../../references/pro-native-deployment.md#首次热接的文件准备)。该段从实际技能/任务/安装绝对路径开始，依次执行生产 prepare → binding → compile → promotion → stage → layout，定义本页使用的 `$Native`、`$PythonExecutable`、`$FreshBootstrapRoot`、`$ActualProExecutable` 和 `$DeployedScopeJson`。命令都使用工具完整路径，不依赖当前目录。已有桥直接复用；不要重复首次部署或复制旧scope。
 
-准备器只生成/编译自有代码，不注册、不加载到目标、不启动 Pro、不修改 Addins/Startup/厂商文件。BootstrapRoot 必须全新；RuntimeRoot 与它分开且都在显式 TaskRoot 下。热接按本次显式 PE32/I386 目标生成 Windows hook / COM / UI-STA 机制合同，不再复用冷 scanner 的作者 EXE 指纹门槛。实际 EXE SHA 只绑定本次选定文件，准备后换文件需重新读取身份。业务接口按实际函数和对象结构处理，连接通过不表示其全部相同。
+准备器只生成/编译自有代码，不注册、不加载到目标、不启动 Pro、不修改 Addins/Startup/厂商文件。BootstrapRoot 使用不存在或空目录；已有非空输出不会被覆盖。RuntimeRoot 与它分开且都在显式 TaskRoot 下，可复用本次任务运行目录，旧 claim 保留。热接按本次显式 PE32/I386 目标生成 Windows hook / COM / UI-STA 机制合同，不再复用冷 scanner 的作者 EXE 指纹门槛。实际 EXE SHA 只绑定本次选定文件，准备后换文件需重新读取身份。业务接口按实际函数和对象结构处理，连接通过不表示其全部相同。
 
 每个配置使用独立随机 CLSID、接口和程序集 GUID、唯一 `McgsHotBridge_*` 程序集名，并剥掉未用的冷 AddIn COM 壳。不会复用旧冷桥的程序集身份、52119C44 类或类型库注册。
 
@@ -21,7 +21,8 @@
 指定用户要接入的实际 Pro PID，读取其主窗口所属线程，不能用线程顺序猜 UI。以下采集与 `--plan` 都只读，不注册、不接入，也不打开或修改工程。`--plan` 无需预先传 creation FILETIME，返回后再用于 `--connect`：
 
 ```powershell
-Get-Process -Name McgsSetPro -ErrorAction SilentlyContinue | Select-Object Id, MainWindowTitle, Path
+$TargetProcessName = [IO.Path]::GetFileNameWithoutExtension($ActualProExecutable)
+Get-Process -Name $TargetProcessName -ErrorAction SilentlyContinue | Select-Object Id, MainWindowTitle, Path
 $TargetPid = 0  # 替换为上方已确认的本次实际PID，不自动取第一项。
 if ($TargetPid -le 0) { throw '先只读确认目标进程，再填写实际TargetPid。' }
 $Target = Get-Process -Id $TargetPid -ErrorAction Stop

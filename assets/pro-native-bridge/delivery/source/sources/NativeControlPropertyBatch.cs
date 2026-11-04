@@ -66,7 +66,6 @@ namespace McgsInternalBridge {
     Doc=api.Common.Document(page,Convert.ToInt32(parent["page_id"]))};
    var fullObjects=new HashSet<uint>();var rows=new List<object>();
    foreach(object raw in(IEnumerable)Map(action["after"])["controls"]){
-    NativeMemory.Require(batch.Controls.Count<64,"Property batch exceeds64 controls.");
     var item=Map(raw);var target=new Dictionary<string,object>(parent);
     foreach(var pair in Map(item["target"])){
      NativeMemory.Require(pair.Key=="control_name"||pair.Key=="rtti"||pair.Key=="control_path"||pair.Key=="component_path","Property batch control target contains unsupported fields.");target.Add(pair.Key,pair.Value);

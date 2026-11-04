@@ -1,7 +1,7 @@
 """Bind staged sources/profiles to an explicit portable layout; never run Pro.
 
 Use the sibling configuration and bound Layout source produced by device-entry/
-prepare_delivery_binding.py.  All output directories must be new.  The optional
+prepare_delivery_binding.py.  Output directories must be absent or empty; existing nonempty outputs are preserved.  The optional
 compile entry is a separate PowerShell file and is never executed here.
 """
 import argparse
@@ -143,32 +143,50 @@ def patch_common(name, text):
     return text
 
 
-def path_rewriter(old_task, old_install, new_task, new_install):
-    pairs = [(str(PureWindowsPath(old_task)), str(PureWindowsPath(new_task))),
+def path_rewriter(old_task, old_install, new_task, new_install, new_program=None, new_editor=None):
+    # The old Program prefix must move to the explicit editor directory first;
+    # other installation-relative resources still belong to InstallRoot.
+    pairs = [(str(PureWindowsPath(old_install) / "Program"), str(PureWindowsPath(new_program or (PureWindowsPath(new_install) / "Program")))),
+             (str(PureWindowsPath(old_task)), str(PureWindowsPath(new_task))),
              (str(PureWindowsPath(old_install)), str(PureWindowsPath(new_install)))]
+    old_editor = str(PureWindowsPath(old_install) / "Program" / "McgsSetPro.exe")
+    selected_editor = str(PureWindowsPath(new_editor or (PureWindowsPath(pairs[0][1]) / "McgsSetPro.exe")))
 
     def path(text):
         if not isinstance(text, str):
             return text
         windows = text.replace("/", "\\")
+        if windows.casefold() == old_editor.casefold():
+            return selected_editor
         for old, new in pairs:
             if windows.casefold() == old.casefold() or windows.casefold().startswith(old.casefold().rstrip("\\")+"\\"):
                 return new.rstrip("\\") + windows[len(old.rstrip("\\")):]
         return text
 
+    source_pairs, exact_editor_keys = {}, set()
+    for old, new in [(old_editor, selected_editor), *pairs]:
+        for a, b in ((old, new), (old.replace("\\", "\\\\"), new.replace("\\", "\\\\")),
+                     (old.replace("\\", "/"), new.replace("\\", "/"))):
+            source_pairs[a.casefold()] = b
+            if old == old_editor:
+                exact_editor_keys.add(a.casefold())
+    patterns = []
+    for value in sorted(source_pairs, key=len, reverse=True):
+        boundary = r'''(?=(?:\\)?['"]|$)''' if value in exact_editor_keys else r'''(?=[\\/'"]|$)'''
+        patterns.append(re.escape(value) + boundary)
+    prefixes = re.compile("|".join(patterns), re.I)
+
     def source(text):
-        # These are literal path prefixes, not project values or native fields.
-        for old, new in pairs:
-            for a, b in ((old, new), (old.replace("\\", "\\\\"), new.replace("\\", "\\\\")),
-                         (old.replace("\\", "/"), new.replace("\\", "/"))):
-                text = re.sub(re.escape(a), lambda unused: b, text, flags=re.I)
-        return text
+        # Replace longest prefixes once so a new path sharing the old prefix
+        # cannot be rewritten again by the broader InstallRoot mapping.
+        return prefixes.sub(lambda match: source_pairs[match.group(0).casefold()], text)
     return path, source
 
 
 def bind(stage, config_file, layout_source, output, engine_name):
     stage, output = Path(stage).resolve(), Path(output).resolve()
-    need(not output.exists(), "Bound source output exists; never overwrite")
+    need(not output.exists() or (output.is_dir() and not any(output.iterdir())),
+         "Bound source output is not empty; preserve its existing files")
     manifest_file = regular(stage / "source-and-dependency-manifest.json")
     manifest, config = load(manifest_file), load(config_file)
     config_file, layout_source = regular(config_file), regular(layout_source)
@@ -188,7 +206,7 @@ def bind(stage, config_file, layout_source, output, engine_name):
     need(output.is_relative_to(layout.runtime_root) and not output.is_relative_to(layout.engineering_root),
          "Build outputs must be inside the declared runtime, outside immutable engineering payload")
     path, source_paths = path_rewriter(manifest["original_task_root"], manifest["original_install_root"],
-                                     str(layout.engineering_root / "task-evidence"), config["install_root"])
+                                     str(layout.engineering_root / "task-evidence"), config["install_root"], str(layout.program_root), str(layout.editor_executable))
     artifacts, original_by_hash = {}, {}
     for row in manifest["owned_artifacts"]:
         relative = row["task_relative_file"]
@@ -236,7 +254,17 @@ def bind(stage, config_file, layout_source, output, engine_name):
         materialize(relative)
     changed_sha = {alias:digest(resolved[relative]) for alias,relative in original_by_hash.items()}
 
-    output.mkdir(parents=True)
+    prepared_sources = []
+    for row in manifest["sources"]:
+        file = regular(stage / "sources" / row["name"])
+        data = file.read_bytes()
+        need(digest(data) == row["sha256"], "Selected staged C# changed")
+        text = source_paths(patch_common(row["name"], data.decode("utf-8-sig")))
+        text = SHA.sub(lambda m: changed_sha.get(m.group(0), m.group(0)), text)
+        prepared_sources.append((row, text.encode("utf-8")))
+
+    output.mkdir(parents=True, exist_ok=True)
+    need(not any(output.iterdir()), "Bound source output gained existing files before writing; preserve them")
     copied, patched = [], []
     original_engineering = PureWindowsPath(manifest["original_engineering_relative_root"])
     # A separate immutable evidence tree preserves legacy relative ABI paths
@@ -260,15 +288,8 @@ def bind(stage, config_file, layout_source, output, engine_name):
             write_new(staged_file, data)
             copied.append({"planned_file": str(target), "staged_file": str(staged_file),
                            "sha256": digest(data), "original_relative_file": relative})
-    for row in manifest["sources"]:
-        file = regular(stage / "sources" / row["name"])
-        data = file.read_bytes()
-        need(digest(data) == row["sha256"], "Selected staged C# changed")
-        text = patch_common(row["name"], data.decode("utf-8-sig"))
-        text = source_paths(text)
-        text = SHA.sub(lambda m: changed_sha.get(m.group(0),m.group(0)),text)
+    for row, value in prepared_sources:
         destination = output / "sources" / row["name"]
-        value = text.encode("utf-8")
         write_new(destination,value)
         patched.append({"name": row["name"], "original_sha256": row["sha256"], "sha256": digest(value)})
     write_new(output / "sources" / "NativeEngineeringDeliveryLayout.cs", layout_source.read_bytes())
