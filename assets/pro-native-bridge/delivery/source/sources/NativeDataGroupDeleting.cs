@@ -22,7 +22,7 @@ namespace McgsInternalBridge {
    string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"data-recipe-device-prep","data-group-delete-abi-profile.json");
    Need(NativeMemory.Hash(file)==AbiProfileSha,"Native group-delete ABI contract differs.");
    var profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));
-   Need(S(profile,"base_data_recipe_abi_sha256")==NativeDataEngineering.AbiProfileSha&&S(profile,"binary_sha256")==api.Engine.ImageSha256,"Native group-delete base/image differs.");
+   Need(S(profile,"base_data_recipe_abi_sha256")==NativeDataEngineering.AbiProfileSha&&NativeBinaryIdentity.Observe(S(profile,"binary_sha256"),api.Engine.ImageSha256,"NativeDataGroupDeleting:25:editor"),"Native group-delete base/image differs.");
    Need(NativeMemory.Hash(Path.Combine(Path.GetDirectoryName(file),"data-group-delete-static-source.json"))==S(profile,"static_source_sha256"),"Native group-delete source proof differs.");
    api.Current();api.Table(api.DataService,"DataService");api.Check("DataDeleteIndices");
    Need(api.Engine.Virtual(api.DataService,8)==api.Engine.Address(0x45453),"Original group delete is not the exact original selected-index service slot.");

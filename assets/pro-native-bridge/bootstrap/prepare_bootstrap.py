@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import uuid
+from pe_image import pe32_identity
 
 HERE = Path(__file__).resolve().parent
 ROOTS = [r'Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}',
@@ -108,15 +109,32 @@ def main():
     if not startup.casefold().startswith('software\\') or not startup.casefold().endswith('\\startup') or '\0' in startup:
         raise ValueError('Supply the exact original existing per-user Startup key from loader evidence')
     capability = json.loads(paths['loader_contract_file'].read_text(encoding='utf-8-sig'))
-    editor_sha = sha(paths['editor_executable'])
-    if capability.get('schema') != 1 or capability.get('static_loader_contract_supported') is not True or capability.get('binary_sha256') != editor_sha:
-        raise ValueError('Actual executable has no matching derived native loader capability contract')
+    image = pe32_identity(paths['editor_executable'])
+    protocol = capability.get('capabilities', {})
+    required = {'native_scanner_requires_DllRegisterServer': True,
+                'type_library_resource': 'TYPELIB/#1', 'class_interface_count': 1,
+                'dispatch_interface': 'IAddInObj', 'callback_dispatch_ids': [1, 2, 3, 4]}
+    if capability.get('schema') != 1 or not isinstance(protocol, dict) or any(protocol.get(key) != value for key, value in required.items()):
+        raise ValueError('Cold setup requires the declared Addin/TYPELIB/IAddInObj four-callback protocol')
+    reference_sha = capability.get('reference_binary_sha256', capability.get('binary_sha256'))
+    reference_matches = reference_sha == image['binary_sha256']
+    capability['reference_binary_sha256'] = reference_sha
+    capability.update(image)
+    capability['entry_mode'] = 'native_cold_addin'
+    capability['configured_cold_addin_protocol'] = True
+    capability['manufacturer_loader_runtime_verified'] = False
+    capability['static_loader_contract_supported'] = bool(reference_matches and capability.get('static_loader_contract_supported') is True)
+    if not reference_matches and 'native_loader_evidence' in capability:
+        capability['reference_native_loader_evidence'] = capability.pop('native_loader_evidence')
+    capability['reference_scope'] = capability.get('scope')
+    capability['scope'] = 'Current explicit PE32/I386 identity and configured Addin/TYPELIB/IAddInObj four-callback protocol. Manufacturer loader execution on this target has not been verified.'
+    editor_sha = image['binary_sha256']
     boot.mkdir(parents=True, exist_ok=False)
     (boot / 'engines').mkdir()
     (boot / 'bound-source').mkdir()
     contract_copy = boot / 'loader-capability.json'
-    write_new(contract_copy, paths['loader_contract_file'].read_bytes())
-    config = {'schema': 1, **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
+    json_new(contract_copy, capability)
+    config = {'schema': 1, 'entry_mode': 'native_cold_addin', **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
               'loader_contract_file': str(contract_copy), 'loader_contract_sha256': sha(contract_copy),
               'editor_sha256': editor_sha, 'startup_registry_path': startup,
               'addins_ini_sha256': sha(paths['addins_ini_file'])}

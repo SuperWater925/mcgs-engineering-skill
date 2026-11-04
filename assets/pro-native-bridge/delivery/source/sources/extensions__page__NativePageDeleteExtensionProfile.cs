@@ -35,7 +35,7 @@ namespace McgsInternalBridge {
                 Engine=engine;Shared=new NativeStrategyProfile.Api(engine);
                 NativeMemory.Require(IntPtr.Size==4 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Page deletion requires the captured x86 UI thread.");
                 var profile=Read(Path.Combine(NativeOperations.TaskRoot,"extensions","page","page-delete-abi-profile.json"));
-                NativeMemory.Require(Convert.ToInt32(profile["schema"])==1 && Convert.ToString(profile["binary_sha256"])==engine.ImageSha256,"Page deletion image/profile differs.");
+                NativeMemory.Require(Convert.ToInt32(profile["schema"])==1 && NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),engine.ImageSha256,"extensions__page__NativePageDeleteExtensionProfile:38:editor"),"Page deletion image/profile differs.");
                 uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
                 foreach(object value in (IEnumerable)profile["functions"]) {
                     var row=(Dictionary<string,object>)value;string hex=Convert.ToString(row["bytes"]),name=Convert.ToString(row["name"]);byte[] bytes=new byte[hex.Length/2];

@@ -14,7 +14,7 @@ namespace McgsInternalBridge {
     string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"strategy-prep","node-edit-prep","working-sync-prefix-prep","strategy-working-sync-prefix-abi-profile.v2.json");
     NativeMemory.Require(NativeMemory.Hash(file)==WorkingSyncPrefixProfileSha,"Original working synchronization prefix profile changed.");
     profile=new JavaScriptSerializer{MaxJsonLength=8*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));
-    NativeMemory.Require(Convert.ToString(profile["binary_sha256"])==api.Engine.ImageSha256,"Working synchronization belongs to another actual editor ABI.");Current();
+    NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),api.Engine.ImageSha256,"NativeStrategyWorkingSynchronization:17:editor"),"Working synchronization belongs to another actual editor ABI.");Current();
     var methods=M(profile["methods"]);copy=api.Engine.Bind<PrefixCopy>(api.Engine.Address(N(methods["RootCopy"])));setOpen=api.Engine.Bind<PrefixOpen>(api.Engine.Address(N(methods["RootOpen"])));setContext=api.Engine.Bind<PrefixContext>(api.Engine.Address(N(methods["RootContext"])));bookkeeping=api.Engine.Bind<I1>(api.Engine.Address(N(methods["RootBookkeeping"])));documentNotify=api.Engine.Bind<BeforeModify>(api.Engine.Address(N(methods["Doc96"])));
     typed=new TypedContract(api);contexts=new NativeStrategyTriggerContextEditing.Api(api.Engine,api.Context,project);
    }

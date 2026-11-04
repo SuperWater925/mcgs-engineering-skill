@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "revision": "0103-no-author-build-whitelist-20261104",
+  "release_tag": "v2026.11.04-no-build-whitelist",
+  "software_release_number_whitelist": false,
+  "author_vendor_whole_file_SHA_admission": false,
+  "hot_and_cold_preparation": {
+    "cases_passed": 10,
+    "different_author_SHA_valid_x86_accepted": true,
+    "x64_and_malformed_PE_identified_before_outputs": true,
+    "actual_hot_and_cold_BootstrapLayout_code_tested": true,
+    "reference_cold_evidence_not_claimed_for_unknown_target": true,
+    "current_prepared_target_identity_change_still_detected": true
+  },
+  "business_source": {
+    "whole_file_SHA_admission_sites_replaced": 142,
+    "editor_observation_sites": 92,
+    "module_and_driver_observation_sites": 50,
+    "existing_source_files_changed": 92,
+    "all_unrelated_native_code_and_predicates_preserved_by_diff_review": true,
+    "actual_identity_receipt_fields_corrected": 4,
+    "observation_helper_test_passed": true,
+    "actual_and_reference_hash_not_substituted": true,
+    "request_and_thread_isolation_tested": true,
+    "remaining_author_vendor_whole_file_admission_sites": 0,
+    "observation_response_field": "vendor_binary_identity"
+  },
+  "build_and_connection": {
+    "selected_source_files": 157,
+    "compiled_sources_including_layout": 158,
+    "source_manifest_sha256": "7030fb9d9fcc39c7905421afc53626c826fa197430369f26fe0d987c607834ec",
+    "bound_x86_compile_passed": true,
+    "compiled_engine_sha256": "e734902e22effcf5fcb90162885bf8520325f582cac765e7de5d79527203de33",
+    "ABI_payload_files_promoted": 307,
+    "engine_and_scope_staged": true,
+    "new_scope_layout_passed": true,
+    "own_native_host_pings_passed": 3,
+    "original_UI_thread_and_background_worker_separated": true,
+    "own_bridge_stopped_host_exited_and_registration_cleaned": true
+  },
+  "retained_call_requirements": {
+    "actual_function_bytes_relocation_RTTI_vtable_and_layout": true,
+    "current_session_target_identity": true,
+    "own_source_profile_transport_and_scope_integrity": true,
+    "current_project_preimage_and_at_most_once_requests": true
+  },
+  "boundaries": {
+    "real_Pro_business_acceptance_performed": false,
+    "unknown_vendor_binary_business_layout_automatically_adapted": false,
+    "user_project_accessed_or_modified": false,
+    "existing_runtime_scope_or_claim_rewritten": false,
+    "paused_engineering_resumed": false
+  }
+}

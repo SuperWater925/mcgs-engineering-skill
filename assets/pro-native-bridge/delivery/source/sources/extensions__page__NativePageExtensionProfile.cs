@@ -26,7 +26,7 @@ namespace McgsInternalBridge {
                 NativeMemory.Require(IntPtr.Size==4 && EngineEntry.ExpectedUiThreadId>0 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Page extension requires the captured x86 UI thread.");
                 string path=Path.Combine(NativeOperations.TaskRoot,"extensions","page","page-extension-abi-profile.json");
                 Profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(path));
-                NativeMemory.Require(Convert.ToInt32(Profile["schema"])==1 && Convert.ToString(Profile["binary_sha256"])==engine.ImageSha256,"Page extension image/profile differs.");
+                NativeMemory.Require(Convert.ToInt32(Profile["schema"])==1 && NativeBinaryIdentity.Observe(Convert.ToString(Profile["binary_sha256"]),engine.ImageSha256,"extensions__page__NativePageExtensionProfile:29:editor"),"Page extension image/profile differs.");
                 uint preferred=unchecked((uint)NativeEngine.Number(Profile["preferred_base"]));
                 foreach(object value in (IEnumerable)Profile["functions"]) {
                     var row=(Dictionary<string,object>)value;string name=Convert.ToString(row["name"]),hex=Convert.ToString(row["bytes"]);

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 493,
-  "descriptor_sha256": "e22184cd422ba1a788975dea0c36a68708930fc9cfba3cd64be912cac9729188",
+  "file_count": 497,
+  "descriptor_sha256": "f5e7dd7e1d6cd662eb12bce1596d7edc12a5aedbb9e93563d1fa2cd6a6e3a958",
   "files": [
     {
       "file": ".gitattributes",
@@ -46,8 +46,8 @@
     },
     {
       "file": "AGENTS.md",
-      "bytes": 2252,
-      "sha256": "7da0071f0387d4366e27bafe63b49ef36e15ebf9294d9dae1f82c9ed63e7b7dc"
+      "bytes": 2593,
+      "sha256": "e50ee963775baa3a0b2d30eb748285358d7910ed7db56c7047fc291f3f9b3d25"
     },
     {
       "file": "agents/openai.yaml",
@@ -146,18 +146,23 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/package-source-manifest.json",
-      "bytes": 3333,
-      "sha256": "242ddcf4e9aba02a85be3973c65013c239d261d22ce4336c813a129e0204263b"
+      "bytes": 3485,
+      "sha256": "c7826c5ec4f1190c4a3f6ffeeca5c4cbc1ef91927a958aafe3521d5b6e222745"
+    },
+    {
+      "file": "assets/pro-native-bridge/bootstrap/pe_image.py",
+      "bytes": 1802,
+      "sha256": "c4b1f16670f9c1da8cf716c55fc3192ade3f863e5934369997dfe0456af67574"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/prepare_bootstrap.py",
-      "bytes": 8937,
-      "sha256": "cab60c1b3ac5211249ea15d7d45d0efa872da92e0e353bc82cfbbf8ef5573cdb"
+      "bytes": 10302,
+      "sha256": "dd1de8f5b1b21406db7e4af2222977a98d0f9f6e64910be96a88790eb7540035"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/README.md",
-      "bytes": 9423,
-      "sha256": "4227cade05feb3403b870eaf88aef3c6b878beed6d34356cd7c04e8fce92b152"
+      "bytes": 9585,
+      "sha256": "431acb7d8c4a377307bfc3827ead839680ef4ff2de37ed126bd76fe1fdaae0cc"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/remove_bootstrap.ps1",
@@ -171,8 +176,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/BootstrapLayout.cs",
-      "bytes": 7136,
-      "sha256": "5663c4ff5811f14f8e6e11eefcdf952c7a43d750f91df11381224331382ab8b6"
+      "bytes": 8836,
+      "sha256": "1e6cf823dc6906b299e9be4da4fc83a278cfb8b1482333901e545e3dbcdb23af"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/BridgeSessionLauncher.cs",
@@ -1226,8 +1231,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json",
-      "bytes": 68296,
-      "sha256": "9ad1eea01709991d3b63c14568967ccb45c4c66333467158207da9a912c1b98f"
+      "bytes": 67938,
+      "sha256": "7030fb9d9fcc39c7905421afc53626c826fa197430369f26fe0d987c607834ec"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/bootstrap__NativeTrialActions.cs",
@@ -1236,73 +1241,73 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__controls__NativeButtonReferenceReader.cs",
-      "bytes": 13580,
-      "sha256": "b9fca442f42a77ad4a3ee6663d9e608ebcfdaf89b0a5fcf6806351ef3bcae04c"
+      "bytes": 13678,
+      "sha256": "f40b6a295967f203c0592ecd83cba99fcfd136ca3646a2b71410f48794900555"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__controls__NativeControlGeometryReadonlyProfile.cs",
-      "bytes": 10973,
-      "sha256": "d7565d6e5be4ce90b12e8c5673e6a614e7f71f3b60c864bd0e6f026eb230cec7"
+      "bytes": 11080,
+      "sha256": "542dadc925754d2c1561ec55094eac500a7589c9dac030fcfa19753aeef9f95a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeLiveLabelTrialProfile.cs",
-      "bytes": 30195,
-      "sha256": "06c9b4cbc6f19949444f85bc7c7b73863745e50a65a9f9a5f76c261e0606cd2b"
+      "bytes": 30300,
+      "sha256": "02f02aa8e5d59e1158360f5ec01dac2c14eeb0e4b05eeba3ff37458f2f2e7160"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeLivePage31FlushProfile.cs",
-      "bytes": 9889,
-      "sha256": "97151c4ab3d4148de226560fed5a127195b4412225df31b0d7b3ba49099191da"
+      "bytes": 9995,
+      "sha256": "5bd1af8cd773135061efdf709cf1d7813fbff08abce827a72030c9964f111dfe"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeMainCtrlPersistenceProfile.cs",
-      "bytes": 4937,
-      "sha256": "f4bf1901776e1330a8095ca29624089b47cc0846c1b87089651a615ad16aeea8"
+      "bytes": 5047,
+      "sha256": "4c978d925e59f33b8342af2da582705d95c6398984361350f17733ce069db884"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeMainCtrlRestorationTrialProfile.cs",
-      "bytes": 12753,
-      "sha256": "82ec72f1ccddb5933933fd7888c3a94df7578cb5479cace4052319c6e8c858b0"
+      "bytes": 12868,
+      "sha256": "762231151c8aa8874c0288387c4b5792a9ac411cafc0c5ecd3978b8609ed57b7"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeReferenceRenameTrialProfile.cs",
-      "bytes": 27195,
-      "sha256": "e9af991fe4cad19a59df9797d751d8280b0723abfd0c0df8c9bda91f0df40453"
+      "bytes": 27306,
+      "sha256": "a8db0d7da0bfa61fddb22baffb8c8368cc73ab258e8c5ffa4360a9cb30fa6568"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeReferencesViewProfile.cs",
-      "bytes": 10282,
-      "sha256": "1a546edde8104bcf2490799f19a11d6a35be696b42e8a145b7263622d56fe578"
+      "bytes": 10387,
+      "sha256": "ee402f67bc5c2d6c9399a24d4acf31935a9265bbcb4014df1c2188e53a58aad9"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/coverage-20261101__references-view__NativeReferencesViewProfileV2.cs",
-      "bytes": 13513,
-      "sha256": "c1e3a9922e14a5a856a951a14213de1088554031e952fc807a7c499235d8c28e"
+      "bytes": 13620,
+      "sha256": "c38e2d7113db46011af34af39d4c894f4dccb7118946826a7737cca36445ea2a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__control__NativeControlExtensionProfile.v2.cs",
-      "bytes": 24329,
-      "sha256": "cecdc7574da766e577717abccb036a2aaae71f04bf11e69fddf40f022c1f2064"
+      "bytes": 24424,
+      "sha256": "2206be022f37ff1956b13adebba042fc78426e27199d087eafdf754c8f327f55"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__control__NativeStandardControlsExtensionProfile.v3.cs",
-      "bytes": 26546,
-      "sha256": "c87f3819efc2108a087a8619e900850f4b3e832d0e06f0ccd0936b87fe9cca08"
+      "bytes": 26650,
+      "sha256": "7a405bd9cc698b3011a508355a9a5636bf83557a5bf41ecf8c4db1bbf0f6e4d3"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__page__NativePageDeleteExtensionProfile.cs",
-      "bytes": 22890,
-      "sha256": "29bfb6c7ee640613a02d81f41c0b218aceb2f568655ea6bc0da33c0ccad80388"
+      "bytes": 22982,
+      "sha256": "8dee62d36f338a13fc5f338a2b0ea6ac29ada234639f73114da3a890c2d07596"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__page__NativePageExtensionProfile.cs",
-      "bytes": 13199,
-      "sha256": "ce6fa6545a648e0315888d12fc29b0b6c21087ddff9242827121b16ca010a365"
+      "bytes": 13285,
+      "sha256": "ecb176848f4be99adf5c16889d6788473ff6b1704b2e75ae4f432e4fe4c9b6fe"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__page__NativePageSizeExtensionProfile.cs",
-      "bytes": 15766,
-      "sha256": "59be62483fd99e8e740d80babc1e016ef3e79087efd79c480513656f47f136d0"
+      "bytes": 15856,
+      "sha256": "56bf38854ce559c9f727ddea0084eba63a4cc450d9e51fa23820821bcf906f22"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__delete__NativeTemporaryStrategyCreator.cs",
@@ -1311,8 +1316,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "bytes": 16423,
-      "sha256": "566ef1627e139a64ca18c5ecb75bdc6d7121383ce79d2c142545d9de30994088"
+      "bytes": 16517,
+      "sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyTriggerCursorProbe.cs",
@@ -1326,28 +1331,28 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
-      "bytes": 27584,
-      "sha256": "c7e955457451a0c614add58c1a23c4c2de2e9b6793766e32d047a2c9a3e62b39"
+      "bytes": 27803,
+      "sha256": "3ebcad141a461fed06ac8b0bc45110efa84a08ba3d3532420c7340c1ae3a9328"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmRawCapture.cs",
-      "bytes": 3982,
-      "sha256": "18bed69076b3956b7d2e086067541740614e43ddec8dca3d6587287cb22e61cd"
+      "bytes": 4044,
+      "sha256": "9db98c23155691a1e57da675044e05c33e1407ef6cd2c8ea41202a35e714425b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmTypedSpecification.cs",
-      "bytes": 9348,
-      "sha256": "ceb0d5801dd9c97396d0d93f999a20f97b4747c8379c2977b1719ed44a23edd8"
+      "bytes": 9419,
+      "sha256": "62a80cc3e3e5dfdbe2e4b4f9ed3c7105d30ef16ab2988fae214e0028f07fcb66"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationListEditing.cs",
-      "bytes": 5884,
-      "sha256": "be8de1a369e6f5a463d6318eb0c2db0962eb6e388b4892d87bce9cfa30986295"
+      "bytes": 5951,
+      "sha256": "c3e36109e8d4458862e60923a0c13caa93f63e6280b515f35b687b4bf8ffab00"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnedValues.cs",
-      "bytes": 13344,
-      "sha256": "363a1908f9074a02a09b5dec26e99975fce4d34403f7a85688b9b0988d4e3041"
+      "bytes": 13480,
+      "sha256": "7c39beed3e7a395742f3ed84cc749a4186313838e296152b389942d5c97b637a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnerIndex.cs",
@@ -1355,9 +1360,14 @@
       "sha256": "c60a7da7ddc4d81b985a5c444703a01c4cf7ee814ba68aa453a499e6734a369e"
     },
     {
+      "file": "assets/pro-native-bridge/delivery/source/sources/NativeBinaryIdentity.cs",
+      "bytes": 2652,
+      "sha256": "65bc20602c3ffc8f7d3e8b30d389dd26a04909c905c092fb1ffa3981d6ac0f11"
+    },
+    {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
-      "bytes": 18317,
-      "sha256": "796b22c75e8380962cce18fb4decd2fb5aed2971d135db13089e548a2705d937"
+      "bytes": 18384,
+      "sha256": "454bcef92e9fb7096d6bb4d9a6cbfdfb98ea57e23a20d47ca0ee9a745f847e3a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeChunkedRawMemory.cs",
@@ -1371,8 +1381,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeContainedImageMembers.cs",
-      "bytes": 5898,
-      "sha256": "43038fe07d61adfabb3fc70b832b91cc27fe9f8d04b6f7de44ba048c80e87c36"
+      "bytes": 5967,
+      "sha256": "bf9e136c8890fb68cfb1e6aca4188c0f62c8c7adfd0f20c8b9d3de140c31f60b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
@@ -1386,8 +1396,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "bytes": 38733,
-      "sha256": "32353ed74e32b0d6fd222036eb024bd564cd0b47c6ed2024b4e5b39a4c3aa99a"
+      "bytes": 38933,
+      "sha256": "8bb331498177845fce24c222379e51383219ba566513bbea10317a8fe9264e3e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlGeometryBatch.cs",
@@ -1406,8 +1416,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
-      "bytes": 16909,
-      "sha256": "623586fe3fa8795e587e7e4d95601ea6864bafccd913090f2badb192d807d329"
+      "bytes": 16979,
+      "sha256": "0c4759e22572931eccd326f17976b5ce3c125c91e85e18a6756fd7e3d6ab1804"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlReferencedRename.cs",
@@ -1416,23 +1426,23 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlSliderFillVisual.v2.cs",
-      "bytes": 21278,
-      "sha256": "1f1376d19dcd9341a18e5845861833dc0501dfdefce96c38099baf3f7ef602fb"
+      "bytes": 21500,
+      "sha256": "07e1e8011915077f5cf92af640267c0e5ee27fe0efaf985bb7ece4c6ba1923fb"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
-      "bytes": 25028,
-      "sha256": "d3bf4659d9e85c67d63045de7b6d704531972d951ee2ed80a80f123953d2c397"
+      "bytes": 25186,
+      "sha256": "8123339264a39d0eac0585b3096ed6b31350df456a65ba6dce09f18ab084e703"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "bytes": 33370,
-      "sha256": "1363e15d852bd293ce05bbe3e3f3846ffbc93d196ad0a08d5e407b07d3bf4751"
+      "bytes": 33530,
+      "sha256": "75f115e9911442d8ff1a92d9f48be8d6890a86feb964dbc727b5daa7afb80c61"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionEditing.cs",
-      "bytes": 19805,
-      "sha256": "f25df8d03ddd90be6772ec22e6b2a702bbbfd75ad3f034cd6e2e3f078cda6251"
+      "bytes": 19880,
+      "sha256": "4b38e1fd29ec05938681f2477ef7f300aa11824cb73e547f496efb55538ebc32"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionReadonly.cs",
@@ -1446,18 +1456,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataEngineering.cs",
-      "bytes": 39265,
-      "sha256": "9b7efc11c57110dcb29c4bc357b8b3ff61dc329150c94669ad1847ef86c04658"
+      "bytes": 39391,
+      "sha256": "deceb52bd42f7747d797448ba22b83d97f25e9f7c9e0f558951c106c9c45ef77"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataGroupDeleting.cs",
-      "bytes": 12461,
-      "sha256": "361c1d8a4d70f689a95cd5a56af6ce0ff644da44d307677da73ef92cde578d95"
+      "bytes": 12526,
+      "sha256": "44e06c67ac875f3b7dd56b82ad2b402cefa3c14573e3c339050a391c4decf9bd"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataGroupsAndArrays.cs",
-      "bytes": 20463,
-      "sha256": "5a0ca62920fa04fe550421e2b0456a2776def699751231094d37836c19d72bb4"
+      "bytes": 20597,
+      "sha256": "d06fa1863f37995cd163e55d34b091a7a6e25f2844ef85e64bd7e006e9bb5db7"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataLogicalCatalog.cs",
@@ -1466,8 +1476,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataPrototypeEditing.v3.cs",
-      "bytes": 26923,
-      "sha256": "399eaf8e7a784bf952014002da8597789bd2b998d9e3618528c686d5d92c195f"
+      "bytes": 27065,
+      "sha256": "91bcfe329c53e7a126c9fbfdfd20716c058020ae70248fe507e17de02d91e0a6"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDataReferencedRename.cs",
@@ -1481,8 +1491,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeDomainProjectCheck.cs",
-      "bytes": 12422,
-      "sha256": "fa8dcc309da4bcd6f123cccf00624a764c805faadabac221cae2ce1484a0fa6d"
+      "bytes": 12488,
+      "sha256": "310824bd23bc37c444b813af25c8c823dbd48690dc9c3273454312ff9004a281"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringBatch.cs",
@@ -1531,88 +1541,88 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeHeadlessReferenceRenameProfile.cs",
-      "bytes": 42100,
-      "sha256": "2baad92f551d760332c76541e3bb283723ae9d9b842d98131f46267efd8f473d"
+      "bytes": 42256,
+      "sha256": "b7c19e90269929d85cba6bbfae836fffe49bf0848a37f65a9c765d90f8dcd755"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeHistoryStoreProjection.cs",
-      "bytes": 14468,
-      "sha256": "535be1840d9ba2afbbce6e4e9222ba9a89716d0882ddcb1472db8a5bbb8dd002"
+      "bytes": 14608,
+      "sha256": "34e99a1691a029dbb738846f1d754fb1db885eb364688eba8938ff62a65871a6"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLabelMetadataReadonlyProfile.cs",
-      "bytes": 66294,
-      "sha256": "3666f7afa2fd5ce16395b3b1fe594e16d2c020a2368501346c6c807cefbf5c6e"
+      "bytes": 66674,
+      "sha256": "5d2dbd36bac1e09014f224819c97b55dd12c37167168452031b247f30ad6fce8"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarCachedReadonlyProfile.cs",
-      "bytes": 42976,
-      "sha256": "f28c9173662e8e882e61165538c567d5cf238361c97935e075ce95eedb1bdf50"
+      "bytes": 43056,
+      "sha256": "97141ec19a51728ebddb3ded7da0f161d782f764c201652290d591475fff5c65"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarReadonlyProfile.cs",
-      "bytes": 37313,
-      "sha256": "08be940e92920a8d0cbb718e1561e7c096f7d9244fa72e5ca6897fbae2189d1a"
+      "bytes": 37387,
+      "sha256": "bccfc87479834c211376181b5bd23254c8d07602227344eec8689795dd791d97"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
-      "bytes": 16512,
-      "sha256": "5d14847eaa406d20bf7859bfca47145646304f3c4b112a153dad5c3081854e01"
+      "bytes": 16578,
+      "sha256": "c89f8ff7d48a8ab724a87b86e4015e20e529958d96d23e7f058fb731aa356648"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistManagementEditing.v3.cs",
-      "bytes": 26067,
-      "sha256": "4b7450d5a9f2e2b6e5d79e289979c4134e729ffbabb2c4ee3e9a6e4df9dfb946"
+      "bytes": 26143,
+      "sha256": "ec21ac68880b8938b5578eb377d30882685affe0f01e9b206c064a73f919fd05"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistOpenViewsRefresh.cs",
-      "bytes": 9638,
-      "sha256": "845c1eb5705e0aaa7b95fd50044128651739b8f3330a773ba778c3a9c67d108f"
+      "bytes": 9710,
+      "sha256": "d77f90cd7827e4977fcfa44ea06c0c74f242c1b796daf018d854e770ac6b367a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
-      "bytes": 30634,
-      "sha256": "2c2029a9e9cd5bddd96c4cba4cf30da1df9eec211e6a5534d3187ab3e617a584"
+      "bytes": 30780,
+      "sha256": "5dd114796430d9775431765f5f0d9e87c3beed0cfee4c71bbbba2bc65a766378"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeOperations.functional.cs",
-      "bytes": 27331,
-      "sha256": "7dca92b6e87f6748773ea8d89d38bee2e15d8fa31bf50168f9dc77466b64ac7b"
+      "bytes": 27588,
+      "sha256": "ce9af72a31f4a04a150c8514f780d331ac7e1947f2d0afefa06b59365fac03ee"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeOriginalFontValue.cs",
-      "bytes": 9131,
-      "sha256": "d3ecbdd47233b69daaf9324ef5111fafb7eba3501c17fa26c4ba98e90a34efc4"
+      "bytes": 9196,
+      "sha256": "94d7a7790ed0a84b760d8636ba7f5d108f28c99a4b21d403c59a0ef635d62f6d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "bytes": 15232,
-      "sha256": "8f479e84507e4a82a0a4bcd91753fa8e62a39792cd0c9b7a15ad78d2cf200b94"
+      "bytes": 15302,
+      "sha256": "643e46d212c961a2cc6dd258f6aa45da4931d2ff4d252e4b3f663832a011f2ea"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "bytes": 27410,
-      "sha256": "36d8c4456300d447323000afae8ecb43cdabd704ebd4dec1cf498fc79adecab7"
+      "bytes": 27556,
+      "sha256": "a9ef4c9f6b777f65d585d37f071be2598c3aec9af4a766870c0147c5e88e8696"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "bytes": 31111,
-      "sha256": "95a3c389fabe344d7d4c2cf1f5edd6d9f8dffde43237ec5eb0cad58bdc412a31"
+      "bytes": 31265,
+      "sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventDefinitionCatalog.v2.cs",
-      "bytes": 12324,
-      "sha256": "c6df82a9c05890daf8ea0414af0875f70eaea19f61049b15be9c1def6eb572fb"
+      "bytes": 12478,
+      "sha256": "8f113c28ea11c20932bdd141dcc5755f6f2739abe46699937716f1fec96dcd81"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventListEditing.v4.cs",
-      "bytes": 26289,
-      "sha256": "074cf10243acfa9f90aff3f01ff737ce6b578fc6c0a8d753c92d8f3fb1076667"
+      "bytes": 26431,
+      "sha256": "4fce3dac1f2fb436676943cb47cc05ef128d5c2b33b05d0042811f87354b246b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventSourceEditing.v2.cs",
-      "bytes": 13612,
-      "sha256": "4cf8b7bb2314fd98f64a4bbb08fd0c7341986972280906ac61d8dbe8dcd72ea2"
+      "bytes": 13685,
+      "sha256": "108166abbf5d0eb6e645392d4b6938ca805400ac1cc1659dd61745e4831a36b9"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageHistoryEditing.cs",
@@ -1621,8 +1631,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageViewOperations.cs",
-      "bytes": 13529,
-      "sha256": "de0688deab9be86e39bab52def912d8875466946ca274e733debb52a33e4fff3"
+      "bytes": 13661,
+      "sha256": "38c993f69163105a41406270758611820e9b11b4e96f3cd24283048308f0dda5"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePersistenceEditing.cs",
@@ -1631,8 +1641,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePictureContainedReferences.v2.cs",
-      "bytes": 25695,
-      "sha256": "78d1337bf3399f3fc5461a83b550fa928f89c4b5df1608eae972d784c7beb725"
+      "bytes": 25849,
+      "sha256": "5bb7c53fc6c8f6d0e950db0c5625cea9f8a489cbaa2c2a22baa05d0bd9ea3654"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePicturePrivateRasterReplacement.cs",
@@ -1641,8 +1651,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
-      "bytes": 37399,
-      "sha256": "ae4af0385ce712d11b15ac05a3b43c1f148657d4b63d8365c11b9cb4b0c5acb7"
+      "bytes": 37545,
+      "sha256": "0941da868c83f246de16f5b45501262e81a03f226d3cfd25a1076ac977abb36a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.ReferencePersistence.cs",
@@ -1651,28 +1661,28 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
-      "bytes": 13380,
-      "sha256": "83a252e0771314b59419520dccc3c3abfaae11014d5e1ca7a9c2bd21f30a8389"
+      "bytes": 13514,
+      "sha256": "e5c13a74674a3b5e76ab2bbc7a1915232969b6743a5ed8c3551ac53abbe5873c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "bytes": 28234,
-      "sha256": "114d52cf42d688da5dd23f0f804ecc94059e168c32cac7c59e97b0f8059dad3f"
+      "bytes": 28372,
+      "sha256": "e9093f00a85deb89be849a354c613cc1c0772a746c2547aa18c35b555227a0e3"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedDrawingCommands.cs",
-      "bytes": 23097,
-      "sha256": "d4c560de7a9254704090256d3b32bf936a28b05478621fa03384ac6ccc8a20ac"
+      "bytes": 23167,
+      "sha256": "20d46f4d9f1e28042b5c23a975a1906bc1be9e29b7038141be666c94d31d0715"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "bytes": 29608,
-      "sha256": "599ecd5b822cb2a0f1dab3ce6dd3984384039acb1ec21bb4e6e7997bdfeed2d8"
+      "bytes": 29742,
+      "sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "bytes": 24254,
-      "sha256": "4a50154a991cf30c4f398bd17805de89338c4b00fbb9293941009366067909e5"
+      "bytes": 24334,
+      "sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
@@ -1691,18 +1701,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeProjectCompileDiagnostics.cs",
-      "bytes": 7546,
-      "sha256": "a313773ba5b52702134b3a44001c587d29eeecec1fe6d5f55ec110ebf230adfc"
+      "bytes": 7619,
+      "sha256": "afe0db68234d5cb1efe2b0dd968ab966faacc5adfe3174eec67488ecc10cf166"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeProjectLifecycle.cs",
-      "bytes": 24956,
-      "sha256": "d6c20705c85df8fc8121b8d93a002b87d7b7418804cfc97871e8e12cc7583346"
+      "bytes": 25084,
+      "sha256": "ae6ea0b6c05d107db2a7d8767a5f2614a271992fe1b1fc5f49aa456010a0f661"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePropertyKeyWarmupProfile.cs",
-      "bytes": 31441,
-      "sha256": "89b28be381f7c7f677da2fea1e5a20e585b7d13d5e6de4f7e6bb60cf8da2e5ab"
+      "bytes": 31585,
+      "sha256": "6ee1b57b6455595087a6c274011cc3d9ba0e60652b181f5073321002df37e0da"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePropertyTarget.cs",
@@ -1716,18 +1726,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipeMatrixEditing.cs",
-      "bytes": 19450,
-      "sha256": "6e832a98ef7adf240d372bf8ce790f2e9aaf5fea35055fe1e8f9560f030e9dbc"
+      "bytes": 19584,
+      "sha256": "6b68f942f47c4934c2fb847ad57361263ec86990b3e9aff812347347b85dfb7a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipePersistenceContract.cs",
-      "bytes": 14351,
-      "sha256": "7b40ffef9a07a3e64ee9c92a392f98efaf917c2e7f960f6b4a7913f9f05b1a91"
+      "bytes": 14497,
+      "sha256": "5e686f2f03817ca2e5d485d75fb891b92725602b36fa2e4f52f91a6f222f3c6b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipeStoreProjection.cs",
-      "bytes": 6163,
-      "sha256": "927cbfd2422b90ede2649859c03ee001fb16af4732834df9dc9ca5e182365807"
+      "bytes": 6230,
+      "sha256": "a9b56812b830418221c4f73083bd6a77521a23a56e2956ba2380d7f3515becce"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedObjectRename.cs",
@@ -1736,8 +1746,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "bytes": 38773,
-      "sha256": "40f101132699a9287c4f63e72a425e79f407e693a2eee4b102f68d8e32ad2809"
+      "bytes": 38842,
+      "sha256": "d9af2b477f385f3d5fef2410048220a3786735166e5da05d218ce4d862793a7c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceModulePersistence.cs",
@@ -1751,13 +1761,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceRedirection.cs",
-      "bytes": 21125,
-      "sha256": "f52d7d471f3b16f8fb3c076e2c26e5e88f9254f4734cdbd07707326b156da511"
+      "bytes": 21193,
+      "sha256": "5ae33ff3196c0e166f13d1bbcbb9f7361c91fe9f63ec519160f0e87ef21dbfd1"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
-      "bytes": 25541,
-      "sha256": "4194db13abed0f85381a29b678559b62bba5a97199b20d35cf04f1573ce95d47"
+      "bytes": 25685,
+      "sha256": "c09a41d92b1087573fe464511912314020dcab5ef994d04fe818b947ab706286"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeRequestPipeline.cs",
@@ -1776,13 +1786,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyCanonicalOwnership.cs",
-      "bytes": 8671,
-      "sha256": "86a3602697dc969da045cff73357e625a4347b551b037a88f1eb83cffcf3c6d0"
+      "bytes": 8745,
+      "sha256": "b2a47f848ccefd588c1db718603ce4d7a01cc9e67aa7dd9a4196fee4141ced40"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyCanonicalSourceEditing.cs",
-      "bytes": 14133,
-      "sha256": "32bbf87531ab87f0ceea9f3283e366b70100f5d4e75dbc306ba4b6d874c27779"
+      "bytes": 14211,
+      "sha256": "ac780b558b7ef39bd511962adf905cd8bd26473b8a186638fc0dfea206b8f1c2"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyConditionSemantics.cs",
@@ -1796,8 +1806,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDocumentClosing.v4.cs",
-      "bytes": 15522,
-      "sha256": "211bc92f4361fd415ffd2d2765c22c45c735fac6026fee304462333402b0bfc9"
+      "bytes": 15670,
+      "sha256": "141703572b9b5069aa348dac9c1cf35c2898b1297d8806d4a8a708c995360bbf"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecycleCatalog.cs",
@@ -1806,8 +1816,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecycleEditing.v2.cs",
-      "bytes": 13252,
-      "sha256": "8da7e941c46582a1af4eac72b85f4518e61a8ded38d2707ccca4f9917f6b1dcd"
+      "bytes": 13402,
+      "sha256": "c4df84a180af63ade75ea56e7cc9c2ceeef884af832501a909e13661a1619101"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecyclePrepared.v3.cs",
@@ -1831,23 +1841,23 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyOwnedGeneration.cs",
-      "bytes": 21488,
-      "sha256": "cd91efffd29f9ff7cff4220e17e2ceee16797e8c86a2fcdd760dd08bb5e4fe55"
+      "bytes": 21559,
+      "sha256": "f33378e6dcf11fb53bf58eeb8c0452bf9add3ad8943ee2e17b71bae0505e83ab"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProductCapabilities.cs",
-      "bytes": 6837,
-      "sha256": "bf7097ee43433890f1a2eee1ffb35889c76bb9c5f10e1ec6904e2ae58551a1a9"
+      "bytes": 6912,
+      "sha256": "125d20552e9d24b7f8887d234abdf01aef1d544d6eaca8016c50b6d62fb223c2"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProgSourceNormalization.cs",
-      "bytes": 5604,
-      "sha256": "9051e0df63071c9aa647c7026ea10f50b962c029544f8ee4c930cda1183ae27f"
+      "bytes": 5841,
+      "sha256": "f8a7f1a0773259a1381c5ebe16a4aa8902f57e4b9bc255ce14b5f8b00715f68d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProtectedCopy.cs",
-      "bytes": 5413,
-      "sha256": "641e5a0eba9c8d5bc636a24389a9f5296f495e0f43232456e6cd74f644f061a8"
+      "bytes": 5549,
+      "sha256": "ddd468da6238975dc1741be0db92115efe3f668c73689a97c3f1dc224dc1b8bf"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProviderTemplates.cs",
@@ -1856,8 +1866,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyRootAddGeneration.cs",
-      "bytes": 3329,
-      "sha256": "1fe4eec97f261bb2f94f8d8fce485c509273352c8d74d60eb59922dd8c50e0df"
+      "bytes": 3402,
+      "sha256": "6c41410f6e5e390a0da426ee0450d52f73f2ffeea170f9ab790682c26b31405a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategySourceBatchEditing.cs",
@@ -1866,18 +1876,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyStandardSvrEditing.cs",
-      "bytes": 9579,
-      "sha256": "62c37450b9cc69feb157c9b1b01bf6868acf814624d94d3b83aa9bcfa6ba1fbf"
+      "bytes": 9653,
+      "sha256": "bb6c9f632a4d984f5ea4d97cdfcded751f5849ab7ebe3a082cd32d707f64ac7c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "bytes": 28540,
-      "sha256": "471299be67d788e19568acfc3e6cdd20b344281d78f993b4833e01e96978a3ff"
+      "bytes": 28696,
+      "sha256": "4928033a1a3b66712aa6c7712f760fa38ccfb847333e47f45b1398f53ecfc059"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerProperties.cs",
-      "bytes": 19394,
-      "sha256": "34ebdf34b4b99acacebb5c2d9f79493fc819e23289e9117809693a6986d540c2"
+      "bytes": 19466,
+      "sha256": "239ed98a456f3ec93e9541e6363116d3df477cc1bb1fdac9bb0d504ec44c6a2e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTypedParameterEditing.v5.cs",
@@ -1886,8 +1896,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTypedParameterFields.v3.cs",
-      "bytes": 10627,
-      "sha256": "b5ff368a66cf11a9882a7c5cdcbe817f74a16098b8516ea95f9aabb402c49571"
+      "bytes": 10705,
+      "sha256": "e837449a35361016115e83da26962823d751170323bcce7af1a4fcb826dd886b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingContextEditing.v2.cs",
@@ -1896,13 +1906,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
-      "bytes": 41045,
-      "sha256": "8583c9cca7543ae4a6b63b4461d0ea929191d08277cb6dc92e0c5d81b38f5b99"
+      "bytes": 41195,
+      "sha256": "cb07431bd559b311961538fb468d4a302860e366378d6406fcb0bb7c9581077c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingSynchronization.cs",
-      "bytes": 12221,
-      "sha256": "23980abd9ccf1c20da4ae544eff8ee4cbef55d5b28a6b337e934b11461915fcc"
+      "bytes": 12299,
+      "sha256": "239311312932afcf2efbf79ebaed9e1f0127ac9bbb126d143f9257a7a0d90dce"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
@@ -1921,13 +1931,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DeviceTree.v3.cs",
-      "bytes": 41936,
-      "sha256": "0ac325de719aa678a10614ece401f2d9c91db327ec6e9aadd9fff958d2676cfd"
+      "bytes": 42331,
+      "sha256": "0016f7eeb650f99a410b6d57f424e0c2fecaa1bab4441123e046cd887c61acb5"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
-      "bytes": 14459,
-      "sha256": "c146ddd48fcc003d007bceff7552e75ec37411b14b06aa86d7bd87d1085c47fc"
+      "bytes": 14528,
+      "sha256": "54ce343945b414fa4ea1d92533a8de497e5154084f04a342449b38563b00d501"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCatalog.v3.cs",
@@ -1941,23 +1951,23 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
-      "bytes": 31517,
-      "sha256": "676e73d24f3b797a08de0f8edcbe179cee1c797ad655459cdcb87a32d490b84c"
+      "bytes": 31857,
+      "sha256": "3cf2ac991ce9befcd91c3b799cba5022a32db6a9077f211684c46f998fe86f3d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InPlaceProperties.v2.cs",
-      "bytes": 29543,
-      "sha256": "c1c0a7d34a7813dcd35b39c34beadca778d3c19470cf346005c459753d9dd19a"
+      "bytes": 29782,
+      "sha256": "ef78a741d7b6952c63020e7e8dab7991c8a45ba945874f838ea8e23b8909b861"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InstalledDriverAdd.v4.cs",
-      "bytes": 24079,
-      "sha256": "2e57d49dc1751ac06d394a166a8dd3e1980d072e3d5aa3be37bafca88d1c9847"
+      "bytes": 24316,
+      "sha256": "f79847f7b44d4b9b3c97364dd9fe6033cbf90ab5d43cdbbde2e54a408efe8783"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.MemoryDriverCache.cs",
-      "bytes": 7017,
-      "sha256": "5fbc828cd1dd4837fe3963e1ae2e495c6ff8046c3a7234a78898d1403806d7f0"
+      "bytes": 7181,
+      "sha256": "5a6121f53ce219a74849b6e7bc6bfaf2bd7696bb4eea8bb94dd8a59ca821bd46"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.ReferencedRename.v2.cs",
@@ -1971,8 +1981,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
-      "bytes": 46036,
-      "sha256": "dd08e7a042e2ddc8f4afdf2d61e45ad19fe55606cf36146ef5aac643091b8c63"
+      "bytes": 46105,
+      "sha256": "1e775ab438c1865e805ef132a1370bfb76c582a2f01baae281b653308aacf923"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableEditPermit.cs",
@@ -1986,8 +1996,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableLabelEditor.cs",
-      "bytes": 30347,
-      "sha256": "42c298486abdd62d3c15576002e7f64d0529d10e0e90392b1743b78567103526"
+      "bytes": 30477,
+      "sha256": "edc0372590c47b6c3d964ef9d90a45dfbfcae4e701645b16c72dfe88491c37ea"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableStrategyDeleteBatch.cs",
@@ -1996,8 +2006,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableStrategySourceBatch.cs",
-      "bytes": 36708,
-      "sha256": "c471e3e8531377d23a4d4c6b1f87a14914f9347dd4132b07dc90b671173fe04e"
+      "bytes": 36781,
+      "sha256": "1045ee51a4ccea5b00d8352625354d6f1fa21e1231a711d5ff662cd86007eec1"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeLabelProfile.cs",
@@ -2006,8 +2016,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "bytes": 45095,
-      "sha256": "df432e02317a78369718bd784bcee5c981b024604b935616351dd5c8aaaa088b"
+      "bytes": 45179,
+      "sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/build_hook_pe.py",
@@ -2021,18 +2031,18 @@
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/prepare_hot_attach.py",
-      "bytes": 8525,
-      "sha256": "081aab97489ee4891017be8c3d086bb021f98e424f4bd9bbe3a1b8a26a8de0e3"
+      "bytes": 9633,
+      "sha256": "82bb52aa97125ae5592ea4213c469c8a49e3f74510c73525f488f7448b4da1a2"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/README.md",
-      "bytes": 10005,
-      "sha256": "4e2143577ac91537b4918861bb515aeba9797289844f676190077430a97261fb"
+      "bytes": 10164,
+      "sha256": "321c59402f744ec49603d7ade838628d640a24db003bc939dfdbfc7408ec195a"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/source-manifest.json",
-      "bytes": 4012,
-      "sha256": "904fc5545f39c51878d44a854f2cf57540c1dd020a289f87856cd645d6b157df"
+      "bytes": 4309,
+      "sha256": "fdd8a8e8b5cee5d239fd641375b84da6e6dfc6b73895a3bbe2f47d27cf09fb7f"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/source/HotAttachClient.cs",
@@ -2106,8 +2116,8 @@
     },
     {
       "file": "CHANGELOG.md",
-      "bytes": 5655,
-      "sha256": "790e4143855563bebaaee78b9e3c51c18efc8609da0ff0c9d1b37df5bee2cdd6"
+      "bytes": 6428,
+      "sha256": "9b2394640634afba3523615cb6cd2c9a88b4352c10c4807cd5d6ea2b6db456cc"
     },
     {
       "file": "CONTRIBUTING.md",
@@ -2121,8 +2131,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 11418,
-      "sha256": "1641a0aa5862c1cddd5969e438a304bc32bc82fea1c9b76a5479594c64bbb84f"
+      "bytes": 11793,
+      "sha256": "5f5f2dd92dc2c3779b6b849e4f4a3d630f1622a7da9cc3090b655ed8f90fced4"
     },
     {
       "file": "references/bounded-edits.md",
@@ -2195,9 +2205,19 @@
       "sha256": "b1246f79648141f4c360377a85ae92e56c618222c1341dfce9ae5e24a0177f68"
     },
     {
+      "file": "references/pro-native-binary-compatibility.md",
+      "bytes": 3125,
+      "sha256": "a6d9a43cb2b811a523b44e85636d11b774de2baa953713dcce903b05c2c69e61"
+    },
+    {
+      "file": "references/pro-native-build-admission-validation.json",
+      "bytes": 2452,
+      "sha256": "a075134e4958649d0b934893bd0e1b4df7f7be776b509dc9e2fd1e8e223b5b60"
+    },
+    {
       "file": "references/pro-native-deployment.md",
-      "bytes": 17966,
-      "sha256": "887d3b07748e4345b8dbb747ff6eb2f21124e9184d4c4fb3466b933b71bd782c"
+      "bytes": 18083,
+      "sha256": "a1006782ffee94dceb8168db9462c699db8d79980ffa06946af4c1e2fe1f2e62"
     },
     {
       "file": "references/pro-native-device-reopen.md",
@@ -2256,8 +2276,8 @@
     },
     {
       "file": "references/source-provenance.json",
-      "bytes": 32189,
-      "sha256": "8635b9c18eb75cf96b263f3133761ec4aa69f5b0a75bb15d2222d1ea55e595dd"
+      "bytes": 32883,
+      "sha256": "92c7463cf654d483f51b9347e1b6551bfa72e3e49a5ec646ab74d2474139906b"
     },
     {
       "file": "references/statistics-and-export.md",
@@ -2421,8 +2441,8 @@
     },
     {
       "file": "SKILL.md",
-      "bytes": 11294,
-      "sha256": "6f9d34893d0f1bad26673be19e38f9340feef40cad8aac055bba39435b65b4b5"
+      "bytes": 11819,
+      "sha256": "a1ede0e57e69dbeddebcdab7e6940ac991327371933530cf8314657f641756b7"
     },
     {
       "file": "tools/mcgs_ui.py",

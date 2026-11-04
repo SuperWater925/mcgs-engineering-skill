@@ -5,6 +5,8 @@ from pathlib import Path
 import argparse,hashlib,json,subprocess,sys,uuid,importlib.util,os
 HERE=Path(__file__).resolve().parent
 DEFAULT_BOOT=HERE.parent/'bootstrap'
+sys.path.insert(0,str(DEFAULT_BOOT))
+from pe_image import pe32_identity
 CSC=Path(os.environ.get('WINDIR',r'C:\Windows'))/'Microsoft.NET/Framework/v4.0.30319/csc.exe'
 def sha(p):return hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def write(p,x):
@@ -15,27 +17,42 @@ def absolute(s):
  for x in [p,*p.parents]:
   if x.exists():assert not (x.stat(follow_symlinks=False).st_file_attributes&0x400),'Reparse path'
  return p
+def hot_capability(editor,host_kind):
+ return {'schema':1,**pe32_identity(editor),'entry_mode':'thread_specific_hot_attach',
+         'hot_attach_mechanism_supported':True,'mechanism_preflight_only':True,
+         'mechanism':{'hook':'WH_GETMESSAGE','activation':'COM','callback_thread':'target_UI_STA'},
+         'static_loader_contract_supported':False,'native_cold_scan_used':False,
+         'own_message_loop_host':host_kind.startswith('own-test'),'host_kind':host_kind,
+         'manufacturer_loader_or_business_abi_claimed':False,'actual_attach_verified':False,
+         'scope':'Current explicit PE32/I386 image identity and standard WH_GETMESSAGE/COM UI-STA mechanism only. No manufacturer cold-loader or native business ABI compatibility is claimed.'}
+
 def main():
  ap=argparse.ArgumentParser();ap.add_argument('--task-root',required=True);ap.add_argument('--runtime-root',required=True);ap.add_argument('--bootstrap-root',required=True);ap.add_argument('--install-root',required=True);ap.add_argument('--editor');ap.add_argument('--host-kind',choices=['pro','own-test-message-loop','own-test-native-message-loop'],default='pro');ap.add_argument('--bootstrap-template',default=str(DEFAULT_BOOT));ap.add_argument('--ping-only',action='store_true');z=ap.parse_args()
  task,runtime,boot,install=[absolute(v) for v in [z.task_root,z.runtime_root,z.bootstrap_root,z.install_root]]
  assert len(str(runtime).encode('utf-16le'))//2<=220,'Native result path exceeds bounded path length'
  assert runtime.is_relative_to(task) and boot.is_relative_to(task) and runtime!=task and boot!=task
  assert not runtime.is_relative_to(boot) and not boot.is_relative_to(runtime)
- boot.mkdir(parents=True,exist_ok=False);runtime.mkdir(parents=True,exist_ok=True);(runtime/'hot-attach').mkdir(exist_ok=True);src=boot/'bound-source';src.mkdir()
  templates=absolute(z.bootstrap_template);editor=absolute(z.editor) if z.editor else install/'Program/OwnMessageLoopHost.exe'
+ if not CSC.is_file():raise ValueError('The x86 .NET Framework C# compiler is unavailable: '+str(CSC))
+ for file in ['source/Bootstrap.cs','source/BootstrapLayout.cs','source/EngineLoader.cs','source/DurableQueuePump.cs','source/NullSafeDispatch.cs','build_native_wrapper.py']:
+  if not (templates/file).is_file():raise ValueError('Bootstrap template input is missing: '+str(templates/file))
  if z.host_kind.startswith('own-test'):
-  assert not z.editor,'Own test executable is built here, not an external image'
+  if z.editor:raise ValueError('Own test executable is built here, not an external image')
+  cap=None
+ else:
+  if not z.editor or not editor.is_file():raise ValueError('Use --editor with the explicit actual Pro executable')
+  if not install.is_dir() or not editor.is_relative_to(install):raise ValueError('The explicit executable must be inside the existing installation root')
+  cap=hot_capability(editor,z.host_kind)
+ boot.mkdir(parents=True,exist_ok=False);runtime.mkdir(parents=True,exist_ok=True);(runtime/'hot-attach').mkdir(exist_ok=True);src=boot/'bound-source';src.mkdir()
+ if z.host_kind.startswith('own-test'):
   editor.parent.mkdir(parents=True,exist_ok=True)
   if z.host_kind=='own-test-native-message-loop':
    mod=importlib.util.spec_from_file_location('own_native_loop',HERE/'build_native_loop.py');gen=importlib.util.module_from_spec(mod);mod.loader.exec_module(gen);gen.build(runtime,editor,templates/'build_native_wrapper.py')
   else:run([CSC,'/nologo','/target:winexe','/platform:x86','/codepage:65001','/reference:System.Web.Extensions.dll','/reference:System.Windows.Forms.dll','/out:'+str(editor),HERE/'source/OwnMessageLoopHost.cs'])
- else:assert editor.is_file(),'Use the explicit actual Pro executable'
+  cap=hot_capability(editor,z.host_kind)
  class_guid=str(uuid.uuid4()).upper();interface_guid=str(uuid.uuid4()).upper();assembly_guid=str(uuid.uuid4()).upper();assembly_name='McgsHotBridge_'+uuid.UUID(class_guid).hex[:12]
- if z.host_kind=='pro':
-  cap=load(templates/'loader-capability.current.json');assert cap['binary_sha256']==sha(editor),'Actual original loader/ABI contract is missing for this installed image'
- else:cap={'schema':1,'binary_sha256':sha(editor),'static_loader_contract_supported':True,'own_message_loop_host':True,'manufacturer_loader_or_business_abi_claimed':False,'native_cold_scan_used':False,'scope':'Only own x86 STA loop, standard COM activation and transport; no Pro functionality is claimed.'}
  write(boot/'loader-capability.json',cap)
- config={'schema':1,'task_root':str(task),'runtime_root':str(runtime),'install_root':str(install),'bootstrap_root':str(boot),'editor_executable':str(editor),'editor_sha256':sha(editor),'loader_contract_file':str(boot/'loader-capability.json'),'loader_contract_sha256':sha(boot/'loader-capability.json'),'addins_directory':str(install/'Program/Addins'),'addins_ini_file':str(install/'Program/Addins/Addins.ini'),'startup_registry_path':r'Software\McgsHotAttachOwn\Startup','entry_mode':'thread_specific_hot_attach','host_kind':z.host_kind,'hot_assembly_name':assembly_name,'ping_only':bool(z.ping_only or z.host_kind.startswith('own-test'))}
+ config={'schema':1,'task_root':str(task),'runtime_root':str(runtime),'install_root':str(install),'bootstrap_root':str(boot),'editor_executable':str(editor),'editor_sha256':cap['binary_sha256'],'loader_contract_file':str(boot/'loader-capability.json'),'loader_contract_sha256':sha(boot/'loader-capability.json'),'addins_directory':str(install/'Program/Addins'),'addins_ini_file':str(install/'Program/Addins/Addins.ini'),'startup_registry_path':r'Software\McgsHotAttachOwn\Startup','entry_mode':'thread_specific_hot_attach','host_kind':z.host_kind,'hot_assembly_name':assembly_name,'ping_only':bool(z.ping_only or z.host_kind.startswith('own-test'))}
  write(boot/'McgsInternalBridge.bridge.json',config);scope_sha=sha(boot/'McgsInternalBridge.bridge.json')
  for n in ['Bootstrap.cs','BootstrapLayout.cs','EngineLoader.cs','DurableQueuePump.cs','NullSafeDispatch.cs']:
   s=(templates/'source'/n).read_text(encoding='utf-8-sig')
@@ -54,7 +71,7 @@ def main():
  dll=boot/(assembly_name+'.dll')
  run([CSC,'/nologo','/target:library','/platform:x86','/codepage:65001','/optimize+','/reference:System.Web.Extensions.dll','/reference:System.Windows.Forms.dll','/out:'+str(dll),*[src/n for n in ['Bootstrap.cs','BootstrapLayout.cs','EngineLoader.cs','DurableQueuePump.cs','NullSafeDispatch.cs','HotAttachComEntry.cs']]])
  client=boot/'McgsHotAttach.exe';run([CSC,'/nologo','/target:exe','/platform:x86','/codepage:65001','/reference:System.Web.Extensions.dll','/out:'+str(client),HERE/'source/HotAttachClient.cs'])
- plan={'schema':1,'host_kind':z.host_kind,'class_guid':class_guid,'interface_guid':interface_guid,'runtime_root':str(runtime),'bootstrap_dll':str(dll),'bootstrap_dll_sha256':sha(dll),'bootstrap_assembly_full_name':assembly_name+', Version=1.0.0.0, Culture=neutral, PublicKeyToken=null','bootstrap_config':str(boot/'McgsInternalBridge.bridge.json'),'bootstrap_scope_sha256':scope_sha,'editor_executable':str(editor),'editor_sha256':sha(editor),'event_prefix':r'Local\McgsHotAttach_'+scope_sha+'_','hook_dll':str(boot/'McgsHotAttachHook.dll')}
+ plan={'schema':1,'host_kind':z.host_kind,'class_guid':class_guid,'interface_guid':interface_guid,'runtime_root':str(runtime),'bootstrap_dll':str(dll),'bootstrap_dll_sha256':sha(dll),'bootstrap_assembly_full_name':assembly_name+', Version=1.0.0.0, Culture=neutral, PublicKeyToken=null','bootstrap_config':str(boot/'McgsInternalBridge.bridge.json'),'bootstrap_scope_sha256':scope_sha,'editor_executable':str(editor),'editor_sha256':cap['binary_sha256'],'event_prefix':r'Local\McgsHotAttach_'+scope_sha+'_','hook_dll':str(boot/'McgsHotAttachHook.dll')}
  write(boot/'hook-build-config.json',plan)
  m=importlib.util.spec_from_file_location('hook_build',HERE/'build_hook_pe.py');b=importlib.util.module_from_spec(m);m.loader.exec_module(b);native=b.build(boot/'hook-build-config.json',plan['hook_dll'],templates/'build_native_wrapper.py');plan['hook_dll_sha256']=sha(plan['hook_dll']);write(boot/'hot-attach.json',plan)
  engines=boot/'engines';engines.mkdir()

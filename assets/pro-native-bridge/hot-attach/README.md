@@ -10,7 +10,7 @@
 
 首次生产使用先完成[首次热接的文件准备](../../../references/pro-native-deployment.md#首次热接的文件准备)。该段从实际技能/任务/安装绝对路径开始，依次执行生产 prepare → 七键 binding → compile → promotion → stage → layout，定义本页使用的 `$Native`、`$PythonExecutable`、`$FreshBootstrapRoot`、`$ActualProExecutable` 和 `$DeployedScopeJson`。命令都使用工具完整路径，不依赖当前目录。已有桥直接复用；不要重复首次部署或复制旧scope。
 
-准备器只生成/编译自有代码，不注册、不加载到目标、不启动 Pro、不修改 Addins/Startup/厂商文件。BootstrapRoot 必须全新；RuntimeRoot 与它分开且都在显式 TaskRoot 下。当前 loader 能力文件必须匹配实际原 EXE SHA，不以软件版本号判断支持。未知二进制的业务支持仍由原引擎 ABI 合同决定。
+准备器只生成/编译自有代码，不注册、不加载到目标、不启动 Pro、不修改 Addins/Startup/厂商文件。BootstrapRoot 必须全新；RuntimeRoot 与它分开且都在显式 TaskRoot 下。热接按本次显式 PE32/I386 目标生成 Windows hook / COM / UI-STA 机制合同，不再复用冷 scanner 的作者 EXE 指纹门槛。实际 EXE SHA 只绑定本次选定文件，准备后换文件需重新读取身份。业务接口按实际函数和对象结构处理，连接通过不表示其全部相同。
 
 每个配置使用独立随机 CLSID、接口和程序集 GUID、唯一 `McgsHotBridge_*` 程序集名，并剥掉未用的冷 AddIn COM 壳。不会复用旧冷桥的程序集身份、52119C44 类或类型库注册。
 

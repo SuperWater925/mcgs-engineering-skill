@@ -13,7 +13,7 @@ namespace McgsInternalBridge {
 
   internal static void RequireBeforeSave(NativeDataEngineering.Api api) {
    api.Current();
-   NativeMemory.Require(api.Engine.ImageSha256 == BinarySha, "Recipe STORE projection requires its exact original binary.");
+   NativeMemory.Require(NativeBinaryIdentity.Observe(BinarySha,api.Engine.ImageSha256,"NativeRecipeStoreProjection:16:editor"), "Recipe STORE projection requires its exact original binary.");
    api.Check("RecipeSave"); api.Check("RecipeSaveWorker");
    byte[] expected = new byte[StorePrefix.Length / 2];
    for (int i = 0; i < expected.Length; i++) expected[i] = Byte.Parse(StorePrefix.Substring(i * 2, 2), NumberStyles.HexNumber, CultureInfo.InvariantCulture);
