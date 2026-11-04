@@ -4,7 +4,7 @@
 
 **不限定软件大版本或小版本。** 版本号只记录，按实际数据库、归档结构、引用、完整回环与有限修改边界判断能力。保留原版本字段和未知字节，未知结构明确报告。
 
-[下载技能包](https://github.com/SuperWater925/mcgs-offline-edit-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
+[下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
 ## 功能范围
 
@@ -26,7 +26,7 @@
 
 重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu 预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
 
-历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。本版 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。
+历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。此前发布的 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。本版 `v2026.11.04-engineering` 将仓库与技能统一更名，不改变这些接口和验证范围。
 
 ## 选择离线或在线
 
@@ -43,21 +43,23 @@
 
 ## 安装
 
-从 [Releases](https://github.com/SuperWater925/mcgs-offline-edit-skill/releases/latest) 下载 ZIP，按同页 `SHA256SUMS.txt` 核对 SHA256。解压后的顶层目录是 `mcgs-offline-edit`，放入其中一处：
+从 [Releases](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) 下载 ZIP，按同页 `SHA256SUMS.txt` 核对 SHA256。解压后的顶层目录是 `mcgs-engineering`，放入其中一处：
 
-- Claude Code：`%USERPROFILE%\.claude\skills\mcgs-offline-edit`
-- Codex：`%USERPROFILE%\.codex\skills\mcgs-offline-edit`
+- Claude Code：`%USERPROFILE%\.claude\skills\mcgs-engineering`
+- Codex：`%USERPROFILE%\.codex\skills\mcgs-engineering`
 
 也可以克隆：
 
 ```powershell
 # Claude Code
-git clone https://github.com/SuperWater925/mcgs-offline-edit-skill.git "$env:USERPROFILE\.claude\skills\mcgs-offline-edit"
+git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USERPROFILE\.claude\skills\mcgs-engineering"
 # Codex
-git clone https://github.com/SuperWater925/mcgs-offline-edit-skill.git "$env:USERPROFILE\.codex\skills\mcgs-offline-edit"
+git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USERPROFILE\.codex\skills\mcgs-engineering"
 ```
 
-目标已存在时，先比较并保全本地修改。保留整个目录结构，不只复制 `SKILL.md`。Codex 中调用 `$mcgs-offline-edit`，Claude Code 中描述任务，或直接执行命令。
+目标已存在时，先比较并保全本地修改。保留整个目录结构，不只复制 `SKILL.md`。Codex 中调用 `$mcgs-engineering`，Claude Code 中描述任务，或直接执行命令。
+
+从旧版迁移时，先保全并比较本地修改，将旧 `mcgs-offline-edit` 安装目录备份移到 `skills` 目录之外，再安装新包唯一根目录 `mcgs-engineering`；不要同时保留两个技能。本版不保留旧调用别名，改用 `$mcgs-engineering`。已有在线运行资料不自动搬动，也无需因技能更名重建运行 scope。
 
 ## 共用环境
 
@@ -111,12 +113,12 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.11.04-pro-online --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.04-engineering --out local-artifacts/release
 ```
 
 静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。
 
-欢迎通过 [Issues](https://github.com/SuperWater925/mcgs-offline-edit-skill/issues/new/choose) 和 PR 参与；任务见 [ROADMAP](ROADMAP.md)。只提交有权公开的最小脱敏资料。
+欢迎通过 [Issues](https://github.com/SuperWater925/mcgs-engineering-skill/issues/new/choose) 和 PR 参与；任务见 [ROADMAP](ROADMAP.md)。只提交有权公开的最小脱敏资料。
 
 ## 许可
 

@@ -1,6 +1,6 @@
 # 可认领任务
 
-本清单列昆仑通态触摸屏离线编辑及 Pro 在线编辑的后续工作，不包含 PLC 编程或具体客户工程。这里是任务提案，不代表已经支持或有人认领。请通过 [Issue 模板](https://github.com/SuperWater925/mcgs-offline-edit-skill/issues/new/choose) 引用任务编号认领，并在对应 Issue 中更新进度。
+本清单列昆仑通态触摸屏离线编辑及 Pro 在线编辑的后续工作，不包含 PLC 编程或具体客户工程。这里是任务提案，不代表已经支持或有人认领。请通过 [Issue 模板](https://github.com/SuperWater925/mcgs-engineering-skill/issues/new/choose) 引用任务编号认领，并在对应 Issue 中更新进度。
 
 当前已交付 Pro 内部原生编辑、普通启动热接入、兼容同页批次及后台准备/回执流水线；不将这些作为待从零开发的任务。0102 新业务优化仍缺真实工程复测，Stu 在线入口尚未实现。当前证据见[流水线验证记录](references/pro-native-pipeline-validation.json)。
 
