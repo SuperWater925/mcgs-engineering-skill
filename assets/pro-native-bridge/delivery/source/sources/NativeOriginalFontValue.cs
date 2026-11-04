@@ -23,7 +23,7 @@ namespace McgsInternalBridge {
    string file=Path.Combine(NativeOperations.TaskRoot,"coverage-20261101","usable-edit-0001","typed-properties","font-value-abi-profile.json");
    NativeMemory.Require(NativeMemory.Hash(file)==ProfileSha,"Original FontValue ABI file differs.");
    var profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));
-   NativeMemory.Require(Convert.ToInt32(profile["schema"])==1&&Convert.ToString(profile["binary_sha256"])==engine.ImageSha256&&Convert.ToInt32(profile["owned_value_size"])==16&&Convert.ToInt32(profile["owned_row_size"])==20,"Original FontValue installed ABI differs.");
+   NativeMemory.Require(Convert.ToInt32(profile["schema"])==1&&NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),engine.ImageSha256,"NativeOriginalFontValue:26:editor")&&Convert.ToInt32(profile["owned_value_size"])==16&&Convert.ToInt32(profile["owned_row_size"])==20,"Original FontValue installed ABI differs.");
    var methods=new Dictionary<string,IntPtr>();uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
    foreach(object item in (IEnumerable)profile["functions"]) {
     var guard=(Dictionary<string,object>)item;string hex=Convert.ToString(guard["bytes"]);byte[] bytes=new byte[hex.Length/2];

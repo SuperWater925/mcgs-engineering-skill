@@ -12,9 +12,9 @@ namespace McgsInternalBridge {
     string path=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"strategy-prep","node-edit-prep","lifecycle-prep","strategy-document-close-abi-profile.json");
     NativeMemory.Require(NativeMemory.Hash(path)==CloseAbiProfileSha,"Strategy document close ABI profile differs.");
     profile=new JavaScriptSerializer{MaxJsonLength=4*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));
-    NativeMemory.Require(Convert.ToString(profile["binary_sha256"])==e.ImageSha256&&Convert.ToString(profile["node_abi_profile_sha256"])==AbiProfileSha&&Convert.ToString(profile["typed_abi_profile_sha256"])==TypedAbiProfileSha,"Strategy close image/node/typed dependency differs.");
+    NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),e.ImageSha256,"NativeStrategyDocumentClosing.v4:15:editor")&&Convert.ToString(profile["node_abi_profile_sha256"])==AbiProfileSha&&Convert.ToString(profile["typed_abi_profile_sha256"])==TypedAbiProfileSha,"Strategy close image/node/typed dependency differs.");
     Mfc=GetModuleHandleW("mfc110u.dll");string loaded=null;foreach(ProcessModule mod in Process.GetCurrentProcess().Modules)if(mod.BaseAddress==Mfc){loaded=mod.FileName;mfcImageBytes=mod.ModuleMemorySize;}
-    NativeMemory.Require(Mfc!=IntPtr.Zero&&loaded!=null&&NativeMemory.Hash(loaded)==Convert.ToString(profile["mfc_sha256"]),"Original strategy close MFC is not already loaded/exact.");
+    NativeMemory.Require(Mfc!=IntPtr.Zero&&loaded!=null&&NativeBinaryIdentity.Observe(Convert.ToString(profile["mfc_sha256"]),NativeMemory.Hash(loaded),"NativeStrategyDocumentClosing.v4:17:module"),"Original strategy close MFC is not already loaded/exact.");
     Current();int closeRva=N(profile["mfc_close_rva"]);NativeMemory.Require(closeRva>=0&&closeRva<mfcImageBytes,"Original strategy MFC close address is outside its exact loaded module.");Close=(V0)Marshal.GetDelegateForFunctionPointer(NativeMemory.Add(Mfc,closeRva),typeof(V0));
    }
    internal void Current(){Api.Current();Contexts.Current();

@@ -17,17 +17,17 @@ namespace McgsInternalBridge {
         public static Dictionary<string,object> Dispatch(Dictionary<string,object> request,object datObj,int uiThreadId) {
             NativeMemory.Require(uiThreadId>0 && NativeMemory.GetCurrentThreadId()==uiThreadId,"Engine entry is outside captured host UI thread.");
             NativeMemory.Require(ExpectedUiThreadId==0,"Nested engine entry is refused before changing the active request scope or trace.");ExpectedUiThreadId=uiThreadId;
-            NativeOperationTrace.MutationAttempted=false;NativeOperationTrace.Phase="preconditions";
+            NativeOperationTrace.MutationAttempted=false;NativeOperationTrace.Phase="preconditions";NativeBinaryIdentity.Begin(request);
             NativeRequestPipeline.NativeStarted(request);
             try {
                 NativeEngineeringProjectScope.Enter(request); NativeOperationTrace.Begin(request);
                 var result=NativeOperations.Dispatch(request,datObj);
-                result["write_attempted"]=NativeOperationTrace.MutationAttempted;result["operation_phase"]=NativeOperationTrace.Phase;return NativeRequestPipeline.IsPrepared(request)?result:NativeEngineeringLargeReceipt.Pack(request,result);
+                result["write_attempted"]=NativeOperationTrace.MutationAttempted;result["operation_phase"]=NativeOperationTrace.Phase;result["vendor_binary_identity"]=NativeBinaryIdentity.Snapshot();return NativeRequestPipeline.IsPrepared(request)?result:NativeEngineeringLargeReceipt.Pack(request,result);
             } catch(Exception e) {
                 return new Dictionary<string,object>{{"ok",false},{"error",e.Message},{"error_type",e.GetType().Name},{"hresult","0x"+e.HResult.ToString("X8")},
-                    {"write_attempted",NativeOperationTrace.MutationAttempted},{"operation_phase",NativeOperationTrace.Phase},{"managed_stack",e.StackTrace},{"comparison_evidence",NativeEngineeringComparisonEvidence.Metadata(e)},
+                    {"write_attempted",NativeOperationTrace.MutationAttempted},{"operation_phase",NativeOperationTrace.Phase},{"managed_stack",e.StackTrace},{"comparison_evidence",NativeEngineeringComparisonEvidence.Metadata(e)},{"vendor_binary_identity",NativeBinaryIdentity.Snapshot()},
                     {"project_writes_quarantined",true},{"writer_ready",false},{"project_write_gate_policy",NativeProjectWriteGate.Policy}};
-            } finally{try{NativeEngineeringProjectScope.Exit();}finally{try{NativeOperationTrace.End(request);}finally{ExpectedUiThreadId=0;}}}
+            } finally{try{NativeEngineeringProjectScope.Exit();}finally{try{NativeOperationTrace.End(request);}finally{NativeBinaryIdentity.End();ExpectedUiThreadId=0;}}}
         }
     }
     internal static class NativeOperationTrace {
@@ -162,7 +162,7 @@ namespace McgsInternalBridge {
             var profile=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(NativeOperations.TaskRoot,"static","read-tree-guard-profile.json"),Encoding.UTF8));
             var binary=(Dictionary<string,object>)profile["binary"];
             preferredBase=Number(binary["image_base"]);ImageSha256=NativeMemory.Hash(executable);
-            NativeMemory.Require(ImageSha256==Convert.ToString(binary["sha256"]),"Loaded editor differs from the locally derived internal ABI profile; extract its actual structure first.");
+            NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(binary["sha256"]),ImageSha256,"NativeOperations.functional:165:editor"),"Loaded editor differs from the locally derived internal ABI profile; extract its actual structure first.");
             int pe=NativeMemory.I32(ImageBase,0x3C);NativeMemory.Require(NativeMemory.I32(ImageBase,pe)==0x4550,"Invalid editor PE image.");
             imageSize=NativeMemory.I32(ImageBase,pe+24+56);NativeMemory.Require(imageSize>0 && imageSize<256*1024*1024,"Invalid editor image size.");
             foreach(object entry in (IEnumerable)profile["functions"]) {

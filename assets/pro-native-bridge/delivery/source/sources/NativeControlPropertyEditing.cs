@@ -18,7 +18,7 @@ namespace McgsInternalBridge {
     Engine=engine;Context=context;Common=new NativePageControlAbi(engine,context,project);
     string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"typed-properties","control-properties-abi-profile.json");
     NativeMemory.Require(NativeMemory.Hash(file)==AbiProfileSha,"Control property ABI contract changed.");
-    var contract=ReadJson(file);NativeMemory.Require(Convert.ToString(contract["binary_sha256"])==engine.ImageSha256,"Control property ABI belongs to another installed image.");
+    var contract=ReadJson(file);NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(contract["binary_sha256"]),engine.ImageSha256,"NativeControlPropertyEditing:21:editor"),"Control property ABI belongs to another installed image.");
     file=Path.Combine(NativeOperations.TaskRoot,Convert.ToString(contract["original_live_profile_file"]).Replace('/',Path.DirectorySeparatorChar));
     NativeMemory.Require(NativeMemory.Hash(file)==Convert.ToString(contract["original_live_profile_sha256"]),"Control history/refresh ABI proof changed.");
     var profile=ReadJson(file);uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));

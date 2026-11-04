@@ -23,12 +23,12 @@ namespace McgsInternalBridge {
     string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"project-services-prep","page-view-open-abi-profile.v2.json");
     NativeMemory.Require(NativeMemory.Hash(file)==AbiProfileSha,"Native designer-open ABI contract differs.");
     profile=new JavaScriptSerializer{MaxJsonLength=4*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file));
-    NativeMemory.Require(Convert.ToString(profile["binary_sha256"])==e.ImageSha256,"Native designer-open binary differs.");
+    NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),e.ImageSha256,"NativePageViewOperations:26:editor"),"Native designer-open binary differs.");
     string evidence=Path.Combine(NativeUsableEditPermit.DirectoryRoot,Convert.ToString(profile["source_evidence"]).Replace('/',Path.DirectorySeparatorChar));
     NativeMemory.Require(NativeMemory.Hash(evidence)==Convert.ToString(profile["source_evidence_sha256"]),"Native designer-open source derivation differs.");
     var methods=new Dictionary<string,IntPtr>();foreach(object value in(IEnumerable)profile["functions"]){var row=M(value);IntPtr address=e.Address(N(row["rva"]));Bytes(row,address,e.ImageBase,0x400000U);methods.Add(Convert.ToString(row["name"]),address);}
     var mfc=M(profile["mfc"]);IntPtr module=GetModuleHandleW("mfc110u.dll");string actual=null;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==module)actual=loaded.FileName;
-    NativeMemory.Require(module!=IntPtr.Zero&&actual!=null&&NativeMemory.Hash(actual)==Convert.ToString(mfc["sha256"]),"Native document template MFC owner differs.");
+    NativeMemory.Require(module!=IntPtr.Zero&&actual!=null&&NativeBinaryIdentity.Observe(Convert.ToString(mfc["sha256"]),NativeMemory.Hash(actual),"NativePageViewOperations:31:module"),"Native document template MFC owner differs.");
     foreach(object value in(IEnumerable)mfc["imports"]){var row=M(value);IntPtr address=NativeMemory.Add(module,N(row["target_rva"]));NativeMemory.Require(ExportOrdinal(module,new IntPtr(N(row["ordinal"])))==address&&NativeMemory.Ptr(e.Address(N(row["iat_rva"])),0)==address,"Native document template import target differs.");Bytes(row,address,module,0x10000000U);}
     IntPtr app=Common.Common.Shared.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(NativeMemory.Ptr(app,0x520)==Common.Common.Shared.RootDoc(),"Designer application root differs.");
     Frame=NativeMemory.Ptr(app,0x20);Table(Frame,M(profile["main_frame"]));Template=NativeMemory.Ptr(Frame,N(profile["template_frame_offset"]));Table(Template,M(profile["template"]));

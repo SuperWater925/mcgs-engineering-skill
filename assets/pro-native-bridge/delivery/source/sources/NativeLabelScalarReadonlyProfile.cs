@@ -59,7 +59,7 @@ namespace McgsInternalBridge {
     foreach(var item in Map(Profile["modules"])){
      var expected=Map(item.Value);IntPtr found=IntPtr.Zero;string seenPath=null;int size=0;
      foreach(ProcessModule module in Process.GetCurrentProcess().Modules)if(String.Equals(module.ModuleName,item.Key,StringComparison.OrdinalIgnoreCase)){
-      NativeMemory.Require(PathEqual(module.FileName,Convert.ToString(expected["path"]))&&NativeMemory.Hash(module.FileName)==Convert.ToString(expected["sha256"]),"Scalar actual required module differs.");
+      NativeMemory.Require(PathEqual(module.FileName,Convert.ToString(expected["path"]))&&NativeBinaryIdentity.Observe(Convert.ToString(expected["sha256"]),NativeMemory.Hash(module.FileName),"NativeLabelScalarReadonlyProfile:62:module"),"Scalar actual required module differs.");
       NativeMemory.Require(found==IntPtr.Zero||(found==module.BaseAddress&&size==module.ModuleMemorySize&&PathEqual(seenPath,module.FileName)),"Scalar required module has conflicting identities.");found=module.BaseAddress;size=module.ModuleMemorySize;seenPath=module.FileName;
      }
      NativeMemory.Require(found!=IntPtr.Zero&&size>0,"Scalar requires an already-loaded pinned module; no library is loaded.");modules.Add(item.Key,found);sizes.Add(item.Key,size);preferred.Add(item.Key,unchecked((uint)Num(expected["preferred_base"])));

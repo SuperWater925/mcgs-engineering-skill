@@ -4,6 +4,8 @@
 
 **不限定软件大版本或小版本。** 版本号只记录，按实际数据库、归档结构、引用、完整回环与有限修改边界判断能力。保留原版本字段和未知字节，未知结构明确报告。
 
+在线连接与业务入口不再用作者 EXE/DLL/驱动的整文件指纹作准入白名单。厂商文件 SHA 差异作为观测信息返回；函数、RTTI、虚表和对象布局仍按实际接口核对。连接成功与业务适配分别记录，离线模板版本不构成升级要求。详见[构建与接口匹配](references/pro-native-binary-compatibility.md)。
+
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
 ## 功能范围

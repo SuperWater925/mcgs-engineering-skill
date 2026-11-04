@@ -52,13 +52,13 @@ namespace McgsInternalBridge {
                     var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);
                     IntPtr handle=GetModuleHandleW(name);NativeMemory.Require(handle!=IntPtr.Zero,"Page ABI module is not already loaded: "+name);
                     ProcessModule found=null;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==handle){found=loaded;break;}
-                    NativeMemory.Require(found!=null && NativeMemory.Hash(found.FileName)==Convert.ToString(item["sha256"]),"Page ABI module differs from its inspected image: "+name);
+                    NativeMemory.Require(found!=null && NativeBinaryIdentity.Observe(Convert.ToString(item["sha256"]),NativeMemory.Hash(found.FileName),"NativePreparedPageCopy.v2:55:module"),"Page ABI module differs from its inspected image: "+name);
                     modules.Add(name,handle);sizes.Add(name,found.ModuleMemorySize);preferred.Add(name,unchecked((uint)NativeEngine.Number(item["preferred_base"])));
                 }
                 NativeMemory.Require(modules["McgsSetPro.exe"]==Engine.ImageBase,"Page ABI and attached engine disagree.");
                 AddFunctions((IEnumerable)profile["functions"],false);
                 var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));
-                NativeMemory.Require(Convert.ToString(save["binary_sha256"])==Engine.ImageSha256,"Save profile is for a different editor image.");
+                NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(save["binary_sha256"]),Engine.ImageSha256,"NativePreparedPageCopy.v2:61:editor"),"Save profile is for a different editor image.");
                 AddFunctions((IEnumerable)save["functions"],true);
             }
             void AddFunctions(IEnumerable entries,bool saveFormat) {

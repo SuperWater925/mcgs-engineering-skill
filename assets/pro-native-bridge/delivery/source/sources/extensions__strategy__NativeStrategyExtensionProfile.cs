@@ -34,7 +34,7 @@ namespace McgsInternalBridge {
                     var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);IntPtr handle=GetModuleHandleW(name);
                     NativeMemory.Require(handle!=IntPtr.Zero,"Required module is not loaded: "+name);
                     string path=null;foreach(ProcessModule module in Process.GetCurrentProcess().Modules)if(module.BaseAddress==handle){path=module.FileName;break;}
-                    NativeMemory.Require(path!=null && NativeMemory.Hash(path)==Convert.ToString(item["sha256"]),"Strategy read module SHA differs: "+name);
+                    NativeMemory.Require(path!=null && NativeBinaryIdentity.Observe(Convert.ToString(item["sha256"]),NativeMemory.Hash(path),"extensions__strategy__NativeStrategyExtensionProfile:37:module"),"Strategy read module SHA differs: "+name);
                     handles.Add(name,handle);bases.Add(name,unchecked((uint)NativeEngine.Number(item["preferred_base"])));
                 }
                 NativeMemory.Require(handles["McgsSetPro.exe"]==engine.ImageBase,"Strategy read editor identity differs.");

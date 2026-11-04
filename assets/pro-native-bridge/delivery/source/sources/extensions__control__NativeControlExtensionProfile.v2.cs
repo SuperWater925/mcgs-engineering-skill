@@ -36,7 +36,7 @@ namespace McgsInternalBridge {
                 string path=Path.Combine(NativeOperations.TaskRoot,"extensions","control","control-abi-guard-v2.json");
                 NativeMemory.Require(NativeMemory.Hash(path)==GuardSha,"Control ABI guard profile hash differs.");
                 var profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));
-                NativeMemory.Require(engine.ImageSha256==Convert.ToString(profile["binary_sha256"]),"Control native ABI was derived from a different actual editor binary.");
+                NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),engine.ImageSha256,"extensions__control__NativeControlExtensionProfile.v2:39:editor"),"Control native ABI was derived from a different actual editor binary.");
                 foreach(object value in (IEnumerable)profile["functions"]) {
                     var f=(Dictionary<string,object>)value;functions.Add(Convert.ToString(f["name"]),f);Verify(f);
                 }

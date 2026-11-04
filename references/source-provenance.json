@@ -334,8 +334,8 @@
     "native_errors_zero_for_P01_P03_P06": true
   },
   "native_internal_delivery": {
-    "source_build_revision": "0102-background-pipeline-20261103",
-    "source_stage_manifest_sha256": "9ad1eea01709991d3b63c14568967ccb45c4c66333467158207da9a912c1b98f",
+    "source_build_revision": "0103-no-author-build-whitelist-20261104",
+    "source_stage_manifest_sha256": "7030fb9d9fcc39c7905421afc53626c826fa197430369f26fe0d987c607834ec",
     "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
     "configuration": "seven explicit directory/transport fields, project per request",
     "legacy_native_routes_exposed": false,
@@ -344,7 +344,7 @@
     "deployment_document": "references/pro-native-deployment.md",
     "historical_source_build_revision": "0069",
     "historical_source_stage_manifest_sha256": "883e44e5205637fa6f2412bba076ae129f6413c9ce76b7ff92042e202d44fbb1",
-    "source_template_count": 156,
+    "source_template_count": 157,
     "separate_unbound_layout_required": true,
     "native_ui_increment_20261103": {
       "date": "2026-11-03",
@@ -434,6 +434,17 @@
       "business_engine_vendor_acceptance_pending": true,
       "whole_page_speedup_measured": false,
       "paused_engineering_resumed": false
+    },
+    "previous_source_build_revision": "0102-background-pipeline-20261103",
+    "current_bootstrap_package_source_manifest_sha256": "c7826c5ec4f1190c4a3f6ffeeca5c4cbc1ef91927a958aafe3521d5b6e222745",
+    "binary_admission_update": {
+      "file": "references/pro-native-build-admission-validation.json",
+      "sha256": "a075134e4958649d0b934893bd0e1b4df7f7be776b509dc9e2fd1e8e223b5b60",
+      "author_vendor_whole_file_SHA_admission_removed": true,
+      "software_release_number_whitelist": false,
+      "actual_function_and_object_structure_requirements_retained": true,
+      "real_Pro_business_acceptance_performed": false,
+      "paused_engineering_resumed": false
     }
   },
   "exporter_System_SQL_NULL_row_identity": {
@@ -450,7 +461,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "6f9d34893d0f1bad26673be19e38f9340feef40cad8aac055bba39435b65b4b5"
+        "packaged_sha256": "a1ede0e57e69dbeddebcdab7e6940ac991327371933530cf8314657f641756b7"
       },
       {
         "file": "references/pro-native-ui-workflow.md",

@@ -6,7 +6,7 @@ This is the optional cold-start deployment entry; ordinary running Pro processes
 
 Supply absolute local paths: an existing owned `task_root`, fresh disjoint children `runtime_root` and `bootstrap_root`, the original `install_root`, exact `editor_executable`, `addins_directory`, `addins_ini_file`, and the **actual existing** per-user `startup_registry_path`. No drive-relative paths, network paths, reparse ancestors, guessed parent-directory layout, software release whitelist, or automatic installation search is used. A fresh task has fresh roots; previous claims are never copied or deleted.
 
-`loader-capability.current.json` describes the proved native scanner/TYPELIB/callback ABI of the original executable SHA in that file. The SHA is a code-capability binding, not a release-number predicate. An unrecognized executable needs its own derived native loader contract before preparation; editing a version field is not compatibility proof. New-machine loading/UAC/COM compatibility has not been tested.
+`loader-capability.current.json` preserves the reference scanner/TYPELIB/callback protocol and historical evidence. Preparation binds the explicitly selected current executable without an author-file SHA admission list. For a different binary, the prepared contract declares the configured cold Addin protocol while retaining reference evidence separately and does not claim that its native scanner was already verified. Hot attachment uses its independent Windows hook / COM / UI-STA mechanism contract. Actual loading and business acceptance remain separate observations.
 
 ## File-only preparation and build
 
