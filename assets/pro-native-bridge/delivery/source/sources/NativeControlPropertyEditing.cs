@@ -35,20 +35,15 @@ namespace McgsInternalBridge {
   static List<Dictionary<string,object>> CloneRows(List<Dictionary<string,object>> rows){return new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<List<Dictionary<string,object>>>(NativePageControlPreparation.Json(rows));}
   static List<IntPtr> GroupChildren(Api api,IntPtr complete,IntPtr doc) {
    int type=NativeMemory.I32(complete,0xC);NativeMemory.Require(type==0x503A||type==0x5039,"Only actual CDrawUnit/CDrawCell containers carry this verified child-list layout.");
-   IntPtr list=NativeMemory.Add(complete,0xE4);NativeMemory.Require(NativeMemory.Ptr(list,0)==api.Engine.Address(0xD3FD70),"Native group draw list type differs.");
-   IntPtr node=NativeMemory.Ptr(list,4),tail=NativeMemory.Ptr(list,8),previous=IntPtr.Zero;int count=NativeMemory.I32(list,12);
-   NativeMemory.Require(count>=0&&count<=512&&((count==0)==(node==IntPtr.Zero))&&((count==0)==(tail==IntPtr.Zero)),"Native group list endpoints/count differ.");
-   var result=new List<IntPtr>();var visited=new HashSet<uint>();
-   for(int i=0;i<count;i++){NativeMemory.Require(node!=IntPtr.Zero&&visited.Add(NativeMemory.U(node))&&NativeMemory.Ptr(node,4)==previous,"Native group list cycle/back-link differs.");IntPtr child=NativeMemory.Ptr(node,8);NativeMemory.Require(child!=IntPtr.Zero&&!result.Contains(child)&&NativeMemory.Ptr(child,0x64)==doc,"Native group child owner differs.");result.Add(child);previous=node;node=NativeMemory.Ptr(node,0);}
-   NativeMemory.Require(node==IntPtr.Zero&&previous==tail,"Native group list tail differs.");return result;
+   return NativeDynamicCollections.ReadDrawList(NativeMemory.Add(complete,0xE4),doc,api.Engine.Address(0xD3FD70));
   }
   sealed class Selection {internal IntPtr Page,Doc,Full,Object,Selected,View;internal List<Dictionary<string,object>> Values;internal Dictionary<string,object> Snapshot;}
   static Selection Capture(Api api,Dictionary<string,object> action,Dictionary<string,object> sharedPageSnapshot=null) {
    var target=Map(action["target"]);IntPtr page=api.Common.Page(target);int id=Convert.ToInt32(target["page_id"]);IntPtr doc=api.Common.Document(page,id),full=IntPtr.Zero;
    var current=api.Common.TopControls(doc);object raw;
    if(target.TryGetValue("control_path",out raw)) {
-    var path=new List<int>();foreach(object n in (IEnumerable)raw)path.Add(Convert.ToInt32(n));NativeMemory.Require(path.Count>0&&path.Count<=16,"Control path depth differs.");
-    for(int i=0;i<path.Count;i++){NativeMemory.Require(path[i]>=0&&path[i]<current.Count,"Control path is outside current native ownership list.");full=current[path[i]];if(i+1<path.Count)current=GroupChildren(api,full,doc);}
+    var path=new List<int>();foreach(object n in (IEnumerable)raw)path.Add(Convert.ToInt32(n));NativeMemory.Require(path.Count>0,"Control path is empty.");
+    var pathObjects=new HashSet<uint>();for(int i=0;i<path.Count;i++){NativeMemory.Require(path[i]>=0&&path[i]<current.Count,"Control path is outside current native ownership list.");full=current[path[i]];NativeMemory.Require(pathObjects.Add(NativeMemory.U(full)),"Control path repeats a native owner-tree object.");if(i+1<path.Count)current=GroupChildren(api,full,doc);}
    }else {
     foreach(IntPtr candidate in current)if(NativeStrategyProfile.ReadName(api.Common.Shared,NativeMemory.Add(candidate,4))==NativePageControlPreparation.Text(target,"control_name")){NativeMemory.Require(full==IntPtr.Zero,"Top-level control name is not unique; use a native control_path.");full=candidate;}
    }

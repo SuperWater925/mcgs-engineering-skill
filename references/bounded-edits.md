@@ -48,6 +48,6 @@ pwsh -NoProfile -File .\run.ps1 normalize-inputs --export 'D:\验收\导出' --o
 
 命令输出明确控件清单和修复证明。正常工程没有需要修改的记录时报告无候选，不创建空补丁。单位及图片修改会同时更新两层嵌套计数；只读导出始终保留原始异常字节。原工程仍应先备份，修复副本须原厂打开检查。
 
-## 原生工程动作与许可
+## 原生工程动作与当前前像
 
-已打开 Pro 的动作采用 kind/target/完整 before/显式 after，加当前 C# 摘要的 fresh permit，详见[原生工程入口](pro-native-engineering.md)。这与离线 BLOB 字段白名单是不同的提交合同；不能将二者的前像互用。策略多行、设备树和引用改名须保护旁项及完整消费者，创建 ID 和 property before_value 来自真实回执。未知对象/布局不以默认值补齐，timeout 或已 consumed claim 不重播。
+已打开 Pro 的动作采用 kind/target/显式 after，正常 direct 在同次原生调用中读取完整当前前像并执行，不要求 permit 文件，详见[原生工程入口](pro-native-engineering.md)。这与离线 BLOB 字段清单是不同的提交合同；不能将二者的前像互用。策略多行、设备树和引用改名须保护旁项及完整消费者，创建 ID 和 property before_value 来自真实回执。未知对象/布局不以默认值补齐，timeout 或已执行 claim 不重播。`prepare/--permit` 只用于明确选择的旧调用兼容。

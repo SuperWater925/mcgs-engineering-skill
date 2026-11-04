@@ -81,7 +81,7 @@ namespace McgsInternalBridge {
                 NativeMemory.Readable(NativeMemory.Add(document,0x114),4);
                 NativeMemory.Require(NativeMemory.Ptr(document,0x2D4)==Context.ObjectModel,"Strategy lifecycle current object model changed.");
                 string value=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(document,0x24),2048);
-                NativeMemory.Require(!String.IsNullOrEmpty(value)&&Path.GetFullPath(value).Equals(Fixture,StringComparison.OrdinalIgnoreCase),"Strategy lifecycle native project differs from the isolated fixture.");
+                NativeMemory.Require(!String.IsNullOrEmpty(value)&&Path.GetFullPath(value).Equals(Fixture,StringComparison.OrdinalIgnoreCase),"Strategy lifecycle native project differs from the current requested project.");
             }
             static IntPtr Resolve(NativeEngine engine,IntPtr entry) {
                 IntPtr current=entry;for(int i=0;i<8;i++){engine.Rva(current);NativeMemory.Readable(current,5);if(Marshal.ReadByte(current)!=0xE9)return current;current=NativeMemory.Add(current,checked(5+Marshal.ReadInt32(current,1)));}throw new InvalidOperationException("Native factory jump chain exceeds guard bound.");
@@ -96,9 +96,7 @@ namespace McgsInternalBridge {
             internal T Bind<T>(string name)where T:class {Current();return Engine.Bind<T>(factories.ContainsKey(name)?Factory(name):Read.Method(name));}
             internal void Slot(IntPtr value,int slot,int rva){NativeMemory.Require(Engine.Virtual(value,slot)==Engine.Address(rva),"Strategy lifecycle native virtual entry differs at slot "+slot);}
             internal List<IntPtr> Array(IntPtr array,string type) {
-                Read.Table(array,type);int count=NativeMemory.I32(array,8);NativeMemory.Require(count>=0 && count<=128,"Strategy root array exceeds the isolated trial bound.");
-                IntPtr data=NativeMemory.Ptr(array,4);if(count>0)NativeMemory.Readable(data,checked(count*4));
-                var result=new List<IntPtr>();var distinct=new HashSet<uint>();for(int i=0;i<count;i++){IntPtr item=NativeMemory.Ptr(data,4*i);NativeMemory.Require(item!=IntPtr.Zero && distinct.Add(NativeMemory.U(item)),"Strategy root array has an empty/repeated pointer.");result.Add(item);}return result;
+                Read.Table(array,type);return NativeDynamicCollections.ReadUniquePointerArray(array);
             }
             internal Dictionary<int,IntPtr> Blocks() {
                 Current();var result=new Dictionary<int,IntPtr>();var names=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -196,7 +194,7 @@ namespace McgsInternalBridge {
             NativeMemory.Require(Convert.ToString(index["sha256"])==projectSha && Convert.ToBoolean(index["source_unchanged"]) && Convert.ToString(index["project_family"])=="Pro","Fresh strategy baseline identity differs.");
             NativeMemory.Require(Convert.ToString(fingerprints["sha256"])==projectSha && Convert.ToBoolean(fingerprints["source_unchanged"]) && Convert.ToString(fingerprints["project_family"])=="Pro" && Json(index["tables"])==Json(fingerprints["tables"]),"Fresh complete fingerprints do not describe the same project/schema capture.");
             NativeMemory.Require(Convert.ToBoolean(fingerprints["all_field_values_fingerprinted"]) && Convert.ToBoolean(fingerprints["account_values_withheld"]) && Convert.ToString(fingerprints["mode"])=="ACE Mode=Read","Fresh strategy baseline lacks complete read-only fingerprints.");
-            NativeMemory.Require(NativeMemory.Hash(api.Fixture)==projectSha,"Current strategy fixture differs from the fresh complete baseline.");
+            NativeMemory.Require(NativeMemory.Hash(api.Fixture)==projectSha,"Legacy strategy trial project differs from its fresh complete baseline.");
             var source=Proof((Dictionary<string,object>)session["native_source_read"]);var comparison=Proof((Dictionary<string,object>)session["native_source_comparison"]);var inspection=Proof((Dictionary<string,object>)session["native_lifecycle_inspection"]);var template=Proof((Dictionary<string,object>)session["native_creation_inspection"]);
             foreach(var result in new[]{source,inspection,template})NativeMemory.Require(Convert.ToBoolean(result["ok"]) && !Convert.ToBoolean(result["write_attempted"]) && Convert.ToInt32(result["process_id"])==Process.GetCurrentProcess().Id && Convert.ToInt32(result["native_thread_id"])==EngineEntry.ExpectedUiThreadId,"Fresh native source/lifecycle/template proof is outside this UI session.");
             NativeMemory.Require(Convert.ToBoolean(comparison["ok"]) && Convert.ToBoolean(comparison["all_exact_utf16_bytes_equal"]) && Convert.ToInt32(comparison["programs"])==9 && Convert.ToString(comparison["export_sha256"])==projectSha,"Fresh exact-source comparison is not the complete nine-script baseline.");

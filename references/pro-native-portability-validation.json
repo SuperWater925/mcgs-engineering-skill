@@ -1,0 +1,155 @@
+{
+  "schema": 1,
+  "revision": "0104-portability-20261104",
+  "release_tag": "v2026.11.04-portability",
+  "software_release_whitelist": false,
+  "author_vendor_whole_file_SHA_admission": false,
+  "native_container_and_projection": {
+    "initial_production_method_assertions_passed": 29,
+    "root_draw_list_items_tested": 8193,
+    "group_children_tested": 3584,
+    "forest_nodes_tested": 4122,
+    "control_path_components_tested": 26,
+    "native_pointer_array_items_tested": 130,
+    "managed_projection_layers_tested": 6000,
+    "open_strategy_documents_tested": 25,
+    "geometry_and_inspection_items_tested": 130,
+    "followup_native_object_traversal": {
+      "passed": true,
+      "assertions": 17,
+      "described_and_iterated_children": 1025,
+      "own_native_RTTI_and_virtual_callbacks_used": true,
+      "production_Describe_Children_body_called": true,
+      "lazy_first_count_refresh_verified": true,
+      "duplicate_cycle_count_owner_RTTI_checks_preserved": true,
+      "direct_actions_parsed_without_native_edit": 8193,
+      "control_event_header_items": 4097,
+      "control_event_header_capacity": 1048577,
+      "vendor_NativeEngine_constructed": false,
+      "Pro_or_user_project_accessed": false,
+      "methods": [
+        "NativeObjectTraversal.Describe (production NativeEngine.Describe body)",
+        "NativeObjectTraversal.Children (production NativeEngine.Children body)",
+        "NativeEngineeringBatch.ReadDirectActions",
+        "NativeControlEventEditing.Header (actual private native-array header reader)"
+      ],
+      "source_only_checks": [
+        {
+          "file": "NativeButtonActionEditing.cs",
+          "check": "group uses tested actual-count list helper; finite path retains cycle, identity, owner and original eight-slot arrays",
+          "passed": true
+        },
+        {
+          "file": "NativeControlEventEditing.v9.cs",
+          "check": "group uses actual-count list helper; path cycle and positive stride/count/capacity/checked readable-memory retained",
+          "passed": true
+        },
+        {
+          "file": "NativePreparedPageOperations.v2.cs",
+          "check": "page-row iteration keeps actual EOF, unique nonnegative ID and native flags",
+          "passed": true
+        },
+        {
+          "file": "NativeProjectCompileDiagnostics.cs",
+          "check": "page map retains actual count, cycle/backlink, unique IDs, header unchanged, tail and target identity",
+          "passed": true
+        },
+        {
+          "file": "NativeUsableLabelEditor.cs",
+          "check": "same actual page-map count and cycle check retained for label target lookup",
+          "passed": true
+        },
+        {
+          "file": "NativePageEventSourceEditing.v2.cs",
+          "check": "owned field managed quota removed; original identity, known-field, duplicate, text guard and nonempty retained",
+          "passed": true
+        }
+      ],
+      "native_calls_not_executed": [
+        "ButtonAction Capture/Children wrappers with vendor Api or button setters",
+        "ControlEvent Locate/Group/native event creation/setters",
+        "PreparedPageOperations native DAO row iteration/edit",
+        "Compile diagnostic native page-map scan",
+        "Label native target page-map scan",
+        "PageEventSource native field allocation/prepare/apply",
+        "Vendor native history/save or Pro project execution"
+      ],
+      "remaining_bounded_implementations": [
+        {
+          "file": "NativePictureContainedReferences.v2.cs",
+          "line": 41,
+          "kind": "contained-image native recursive traversal, not protocol capacity",
+          "maximum_depth": 16,
+          "maximum_images": 8192
+        },
+        {
+          "file": "NativePictureContainedReferences.v2.cs",
+          "line": 18,
+          "kind": "vector frame native list count bound",
+          "maximum_frames": 4096
+        }
+      ],
+      "scope": "Isolated owned memory/native callbacks, managed parsing, actual array-header reading and source guard checks only; no vendor setter/history/save, Pro, user project, real large-page message timing, or cross-build ABI validation."
+    },
+    "sample_quota_removal_not_unlimited_message_or_process_capacity": true,
+    "native_setters_or_save_called": false
+  },
+  "deployment": {
+    "fixture_case_groups_passed": 8,
+    "legacy_seven_key_scope_tested": true,
+    "optional_editor_eight_key_scope_tested": true,
+    "three_layout_fixture_chains_passed": true,
+    "actual_loader_and_CSharp_layout_used_with_own_managed_fixture": true,
+    "exact_editor_mapping_layouts_passed": 3,
+    "input_integrity_target_consistency_and_nonempty_outputs_preserved": true,
+    "old_loaded_Bootstrap_code_not_changed_by_copying_skill": true,
+    "renamed_editor_manufacturer_business_acceptance": false
+  },
+  "offline_and_preflight": {
+    "family_ACE_and_native_doctor_cases_passed": 24,
+    "real_independent_empty_ACE_database_creation_and_readback": true,
+    "setup_and_doctor_documentation_cases_passed": 3,
+    "setup_mock_argv_marker_not_real_database": true,
+    "standard_zlib_and_corruption_cases_passed": 11,
+    "standard_levels_tested": [
+      0,
+      1,
+      6,
+      9
+    ],
+    "manufacturer_compression_variant_acceptance_tested": false,
+    "writer_level_one_bytes_unchanged": true,
+    "pure_online_requires_ACE": false,
+    "native_doctor_readiness": "selected_file_and_build_prerequisites_only"
+  },
+  "final_build_and_own_connection": {
+    "selected_source_files": 159,
+    "compiled_sources_including_layout": 160,
+    "source_manifest_sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728",
+    "bound_x86_compile_passed": true,
+    "production_engine_sha256": "e08ed946d6f4ab09c6d1d378ff32d51090e2c01873a15b901b77844bd06eb592",
+    "full_shipping_binding_promotion_stage_layout_passed": true,
+    "explicit_editor_eight_key_scope_tested": true,
+    "own_native_host_pings_passed": 3,
+    "own_host_exit_code": 0,
+    "own_CLSID_absent_before_and_after": true,
+    "own_host_evidence_scope": "unchanged Bootstrap/EngineLoader and own ping engine; not the business engine",
+    "business_source_followup_compile_does_not_repeat_unchanged_host_test": true
+  },
+  "retained_actual_requirements": [
+    "Windows/x86/.NET Framework and actual OS process/COM/file permissions",
+    "function bytes/RVA/RTTI/vtable/object layout and supported native types/drivers",
+    "own source/profile/transport/config integrity and current target/project preimages",
+    "at-most-once request handling and finite message/JSON/path/memory capacity"
+  ],
+  "not_performed": {
+    "new_computer_execution": true,
+    "real_Pro_business_write": true,
+    "manufacturer_project_check": true,
+    "user_project_read_or_write": true,
+    "manufacturer_close_reopen": true,
+    "local_simulation": true,
+    "existing_runtime_scope_or_claim_change": true,
+    "paused_engineering_resume": true
+  }
+}

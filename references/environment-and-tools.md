@@ -5,7 +5,7 @@
 
 ## Stu / Pro 共同前提
 
-Windows、PowerShell7，以及与进程位数相同的Microsoft ACE OLEDB 16.0或12.0。入口优先16.0，失败才试12.0；这两个是数据库提供程序版本，不表示工程有16张/12张表。项目实际为12张业务表，必须动态枚举，不能据此只比较某几张表。
+共同基础为 Windows、PowerShell 7、Python 3.11+；仅离线数据库命令另需与进程位数相同的 Microsoft ACE OLEDB 16.0 或 12.0，纯在线无需 ACE。离线入口优先16.0，失败才试12.0；这两个是数据库提供程序版本，不表示工程有16张/12张表。项目实际为12张业务表，必须动态枚举，不能据此只比较某几张表。
 
 Python3.11+用于纯字节归档解码、候选准备和Pro CLI；共同数据库命令只依赖PowerShell/.NET和ACE；Pro新建还使用同位数ADOX.Catalog创建Jet 4兼容格式数据库，但不使用Jet OLEDB提供程序或32位宿主。优先显式传入本机已有Python路径；找不到时可在Codex中调用`mcp__codex_app__load_workspace_dependencies`定位已捆绑运行时。不要把作者机器的Python绝对路径写成迁移前提。无pip依赖。
 
@@ -45,7 +45,7 @@ pwsh -NoProfile -File .\run.ps1 doctor -Project 'D:\工程\当前.MCS'
 
 ## 统一入口与格式适配
 
-两种工程均使用 PowerShell 7 和 ACE。`scripts/ace-runtime.ps1`是共用连接层，自动优先16.0再试12.0；未注册/无法打开时报告原因，不另启32位Windows PowerShell。
+两种工程的离线数据库命令均使用 PowerShell 7 和 ACE；纯在线不要求 ACE。`scripts/ace-runtime.ps1`是共用连接层，自动优先16.0再试12.0；未注册/无法打开时报告原因，不另启32位Windows PowerShell。
 
 ```powershell
 pwsh -NoProfile -File .\run.ps1 doctor -Project 'D:\工程\当前.mcp'
@@ -65,7 +65,7 @@ pwsh -NoProfile -File .\run.ps1 edit --source 'D:\工程\当前.mcp' --spec 'D:\
 
 ## 环境准备后的交互
 
-`doctor`及在线构建依赖准备完成后，先告诉接收者环境已就绪，简要说明离线处理文件、在线修改打开的 Pro 工程这两种方式的区别，并让用户选择。用户当前已明确说“离线”或“在线”时视为已经选择，直接继续，不重问。当前 Stu 只提供离线方式；其在线入口待后续更新。
+先检查共同基础并说明离线、在线的区别，让接收者选择，再核所选方式的依赖。离线数据库命令使用 `doctor` 检查 ACE；在线用 `native-doctor --editor-executable '<实际Pro EXE>' --install-root '<实际安装根>'` 检查文件准备前提，纯在线不依赖独立 ACE 提供程序。不要让纯离线任务先配置在线编译器，也不要把 `doctor` 退出0当作在线接入或业务就绪。`native-doctor.ready_to_prepare` 仅指文件准备，连接权限和实际业务另行核对。用户已明确说“离线”或“在线”时直接沿用，不重问。当前 Stu 只提供离线方式，其在线入口待后续更新。
 
 技能是 AI 的操作说明和入口；`assets/pro-native-bridge` 是实现在线操作的自有工具与源码。当前使用本机文件队列传输，不是 MCP 协议服务器，也不需要额外联网服务。
 

@@ -1,6 +1,7 @@
 """Explicit immutable layout for delivery clients. Pure files; no process/native API."""
 from dataclasses import dataclass
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -9,6 +10,7 @@ import stat
 
 TRANSPORT_SHA256 = "6314e35b3420c544e149e4f0432e6db903b3ac493c14031b10c87ac37cf0669a"
 _FIELDS = {"schema", "task_root", "engineering_root", "runtime_root", "install_root", "transport_client_file", "transport_client_sha256"}
+_OPTIONAL_FIELDS = {"editor_executable"}
 _current = None
 
 
@@ -57,6 +59,11 @@ class DeliveryLayout:
     install_root: Path
     transport_client_file: Path
     transport_client_sha256: str
+    editor_executable: Path | None = None
+
+    @property
+    def program_root(self):
+        return (self.editor_executable or self.install_root / "Program" / "McgsSetPro.exe").parent
 
     @property
     def working_root(self):
@@ -89,12 +96,29 @@ def load(path, expected_sha256):
     return validate_mapping(data, path, expected_sha256)
 
 
+def _selected_editor(data, install):
+    editor = _absolute(data["editor_executable"]) if "editor_executable" in data else install / "Program" / "McgsSetPro.exe"
+    if not editor.is_file() or not editor.is_relative_to(install):
+        raise ValueError("Selected editor must be an existing executable inside the declared installation root: " + str(editor))
+    if "editor_executable" in data:
+        # This is a package asset path, never a discovery of user/task locations.
+        package = Path(__file__).resolve().parent.parent
+        if package.name == "delivery":
+            package = package.parent
+        helper = package / "bootstrap" / "pe_image.py"
+        spec = importlib.util.spec_from_file_location("mcgs_delivery_pe_image", helper)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.pe32_identity(editor)
+    return editor
+
+
 def validate_mapping(data, configuration_file, configuration_sha256):
     """Validate file-only binding input before creating any output directory."""
     path = _absolute(os.fspath(configuration_file))
     if not isinstance(configuration_sha256, str) or re.fullmatch("[a-f0-9]{64}", configuration_sha256) is None:
         raise ValueError("An exact configuration SHA256 is required")
-    if not isinstance(data, dict) or set(data) != _FIELDS or type(data["schema"]) is not int or data["schema"] != 1:
+    if not isinstance(data, dict) or not _FIELDS.issubset(data) or not set(data).issubset(_FIELDS | _OPTIONAL_FIELDS) or type(data["schema"]) is not int or data["schema"] != 1:
         raise ValueError("Unknown delivery layout schema or fields")
     task, engineering, runtime, install = (_directory(data[key]) for key in ("task_root", "engineering_root", "runtime_root", "install_root"))
     if task == Path(task.anchor) or runtime == task or not runtime.is_relative_to(task):
@@ -106,9 +130,8 @@ def validate_mapping(data, configuration_file, configuration_sha256):
         raise ValueError("Transport source is outside both declared roots")
     if data["transport_client_sha256"] != TRANSPORT_SHA256 or hashlib.sha256(_regular(transport, 1024 * 1024)).hexdigest() != TRANSPORT_SHA256:
         raise ValueError("Verified at-most-once transport source differs")
-    if not (install / "Program" / "McgsSetPro.exe").is_file():
-        raise ValueError("Declared Pro install root has no original Program image; ABI is guarded by the native provider")
-    return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256)
+    editor = _selected_editor(data, install)
+    return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256, editor)
 
 
 def configure(path, expected_sha256):

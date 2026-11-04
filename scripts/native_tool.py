@@ -55,10 +55,17 @@ class Export:
         if self.index['sha256'] != self.fp['sha256']:
             raise ValueError('Export and fingerprints have different baselines')
         self.rows = {(r['table'], str(r['row_key'])): r for r in self.index['rows']}
-        if not self.index.get('project_family') and ('System', 'MCGSVER') in self.rows:
-            version = unwrapped(self.blob('System', 'MCGSVER', 'lbContext')).decode('utf-16le').rstrip('\0')
-            self.index['project_version'] = version
-            self.index['project_family'] = 'Pro' if version.startswith('McgsPro ') else 'Stu'
+        if self.index.get('project_family') not in ('Stu', 'Pro'):
+            self.index['project_family'] = 'unrecognized'
+            if ('System', 'MCGSVER') in self.rows:
+                version = unwrapped(self.blob('System', 'MCGSVER', 'lbContext')).decode('utf-16le').rstrip('\0')
+                self.index['project_version'] = version
+                # Read the product brand, never a software release number.
+                # Existing exports may differ in case, spacing or display prefix.
+                brand = re.search(r'(?<![A-Za-z])mcgs[\s_-]*(pro|stu)(?![A-Za-z])',
+                                  version.lstrip('\ufeff'), re.IGNORECASE)
+                if brand:
+                    self.index['project_family'] = 'Pro' if brand.group(1).lower() == 'pro' else 'Stu'
 
     def blob(self, table, key, field):
         info = self.rows[table, str(key)][field]
@@ -134,6 +141,8 @@ def audit_pro(export):
 def _audit_basic(export):
     if export.index.get('project_family') == 'Pro':
         return audit_pro(export)
+    if export.index.get('project_family') != 'Stu':
+        raise ValueError('Unrecognized project family; inspect the actual MCGSVER and archive structure instead of defaulting to Stu')
     result = {'input_sha256': export.index['sha256'], 'windows': [], 'unsupported': [],
               'source_written': False, 'native_compile_verified': False,
               'native_runtime_verified': False, 'physically_tested': False}

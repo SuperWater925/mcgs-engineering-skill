@@ -35,10 +35,8 @@ def prepare(args):
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll", engine_name):
         raise ValueError("engine-file-name must be a single explicit DLL filename")
     output = _absolute(args.output_directory)
-    if os.path.lexists(output):
-        raise FileExistsError("Binding output directory already exists; preserve it and choose a new directory")
-    if not output.parent.is_dir():
-        raise ValueError("Binding output parent must already exist")
+    if os.path.lexists(output) and (not output.is_dir() or any(output.iterdir())):
+        raise FileExistsError("Binding output directory is not empty; preserve its existing files")
     source = _absolute(args.layout_source)
     source_bytes = _regular(source, 1024 * 1024)
     source_sha = digest(source_bytes)
@@ -54,6 +52,8 @@ def prepare(args):
               "install_root": str(_absolute(args.install_root)),
               "transport_client_file": str(_absolute(args.transport_client_file)),
               "transport_client_sha256": TRANSPORT_SHA256}
+    if getattr(args, "editor_executable", None):
+        values["editor_executable"] = str(_absolute(args.editor_executable))
     config_bytes = encoded(values)
     config_sha = digest(config_bytes)
     config_name = Path(engine_name).with_suffix(".scope.json").name
@@ -86,7 +86,9 @@ def prepare(args):
     # All validation above finishes before the one new directory is claimed.
     # A later file error leaves the partial directory intact; it is not retried.
     _not_reparse(output.parent)
-    output.mkdir()
+    output.mkdir(parents=True, exist_ok=True)
+    if any(output.iterdir()):
+        raise FileExistsError("Binding output directory gained existing files before writing; preserve them")
     write_new(output / config_name, config_bytes)
     write_new(output / "NativeEngineeringDeliveryLayout.cs", bound_bytes)
     write_new(output / "binding-manifest.json", encoded(manifest))
@@ -98,6 +100,7 @@ def main():
     for name in ("task-root", "engineering-root", "runtime-root", "install-root", "transport-client-file",
                  "engine-file-name", "layout-source", "layout-source-sha256", "output-directory"):
         parser.add_argument("--" + name, required=True)
+    parser.add_argument("--editor-executable", help="Explicit PE32/I386 editor path; omitted keeps the legacy InstallRoot/Program/McgsSetPro.exe layout")
     args = parser.parse_args()
     result = prepare(args)
     print(json.dumps(result, ensure_ascii=False, indent=2))

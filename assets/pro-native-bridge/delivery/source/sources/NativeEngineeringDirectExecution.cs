@@ -16,13 +16,16 @@ namespace McgsInternalBridge {
    var first=Map(actions[start]["target"]);int page=Convert.ToInt32(first["page_id"]);string name=Convert.ToString(first["page_name"]);int end=start;
    for(int i=start+1;i<actions.Count;i++){var action=actions[i];if(Kind(action)!="control-native-create"||DirectCommit(spec,action))break;var target=Map(action["target"]);if(Convert.ToInt32(target["page_id"])!=page||Convert.ToString(target["page_name"])!=name)break;end=i;}return end;
   }
+  internal static List<Dictionary<string,object>> ReadDirectActions(Dictionary<string,object> spec,bool prepared){
+   NativeMemory.Require(spec.ContainsKey("actions"),"Direct specification needs actions.");var actions=new List<Dictionary<string,object>>();var ids=new HashSet<string>(StringComparer.Ordinal);var supported=new HashSet<string>(Kinds(),StringComparer.Ordinal);
+   foreach(object raw in(IEnumerable)spec["actions"]){var action=prepared?Map(raw):DirectClone(Map(raw));object id;if(!action.TryGetValue("action_id",out id))action["action_id"]="direct_"+actions.Count.ToString("D4");string aid=Convert.ToString(action["action_id"]);NativeMemory.Require(aid.Length>0&&aid.Length<=96&&ids.Add(aid),"Action ID is empty/repeated.");NativeMemory.Require(supported.Contains(Kind(action)),"No implemented adapter for: "+Kind(action));Map(action["target"]);Map(action["after"]);actions.Add(action);}
+   NativeMemory.Require(actions.Count>0,"Direct request has no actions.");return actions;
+  }
   static Dictionary<string,object> ApplyDirect(Dictionary<string,object> request,NativeEngine engine,NativeContext context){
    var result=new Dictionary<string,object>{{"ok",false},{"op","engineering-edit-batch"},{"execution_mode","direct"},{"permit_file_required",false},{"durable_permit_claim_used",false},{"approval_required",false},{"automatic_retry",false},{"automatic_rollback",false},{"actions",new List<object>()},{"direct_action_results",new List<object>()}};
    var reports=(List<object>)result["actions"];var flushReports=new List<object>();var individual=(List<object>)result["direct_action_results"];var preimages=new List<object>();var factoryBatches=new List<object>();result["native_factory_batches"]=factoryBatches;Dictionary<string,object> firstSummary=null,last=null;int completed=0,factoryEnd=-1;NativeCurrentTemplateControlOperations.FactoryBatchScope factoryBatch=null;NativeCurrentTemplateControlOperations.DirectFactoryCaptureScope factoryCapture=null;string phase="direct-load-specification";
    try{
-    var spec=DirectSpec(request);NativeMemory.Require(spec.ContainsKey("actions"),"Direct specification needs actions.");var actions=new List<Dictionary<string,object>>();var ids=new HashSet<string>(StringComparer.Ordinal);var supported=new HashSet<string>(Kinds(),StringComparer.Ordinal);
-    foreach(object raw in(IEnumerable)spec["actions"]){NativeMemory.Require(actions.Count<8192,"Direct specification exceeds its bounded8192action data capacity.");var action=NativeRequestPipeline.IsPrepared(request)?Map(raw):DirectClone(Map(raw));object id;if(!action.TryGetValue("action_id",out id))action["action_id"]="direct_"+actions.Count.ToString("D4");string aid=Convert.ToString(action["action_id"]);NativeMemory.Require(aid.Length>0&&aid.Length<=96&&ids.Add(aid),"Action ID is empty/repeated.");NativeMemory.Require(supported.Contains(Kind(action)),"No implemented adapter for: "+Kind(action));Map(action["target"]);Map(action["after"]);actions.Add(action);}
-    NativeMemory.Require(actions.Count>0,"Direct request has no actions.");
+    var spec=DirectSpec(request);var actions=ReadDirectActions(spec,NativeRequestPipeline.IsPrepared(request));
     result["requested_action_count"]=actions.Count;
     for(int i=0;i<actions.Count;i++){
      var action=actions[i];string kind=Kind(action);phase="direct-read-"+Convert.ToString(action["action_id"]);NativeOperationTrace.SetPhase(phase);

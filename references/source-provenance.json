@@ -80,9 +80,10 @@
       "file": "scripts/native/mcgs_native_zip.py",
       "source": "离线实施/20261016_配方分段/离线改写工具/配方与策略/mcgs_native_zip.py",
       "source_sha256": "eee3a4c5cce9deed8a5f00f783fabcf7598c1dad7f398d58dba555af87ce3b73",
-      "packaged_sha256": "eee3a4c5cce9deed8a5f00f783fabcf7598c1dad7f398d58dba555af87ce3b73",
+      "packaged_sha256": "2736dd4efe43420f07e07a8b4ee33f13d64953682149cc7bfda8e19697935fc2",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
-      "removed_functions": []
+      "removed_functions": [],
+      "adaptation_20261104": "Portable environment/standard archive handling; see portability-review.md and pro-native-portability-validation.json."
     },
     {
       "file": "scripts/native/mcs_button_control.py",
@@ -235,7 +236,7 @@
       "file": "assets/pro-3.5-cli/references/runtime.md",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/references/runtime.md",
       "source_sha256": "3b11f9f7281db087dab407cd33ddc18d55ff6534b7959fc3002c93aa98f6d3eb",
-      "packaged_sha256": "80bd38fe36a7b54a5d2f5275c91bcff4d2d0c608a3900e5c127b33f7df76ddb4",
+      "packaged_sha256": "4934e23645f1120ee085e0ae5e381389d165edc15f3105c1dddefd6084dd3386",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
@@ -259,10 +260,11 @@
       "file": "assets/pro-3.5-cli/scripts/database.ps1",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/database.ps1",
       "source_sha256": "5f491c34d5210206dfd0736fdb0f09ca1e9546f1ebc928f611317a99b0108e4b",
-      "packaged_sha256": "22b19a44fe6039b911eb2122a1956e0d0bfab76a75f88365ae8133d8668ae40c",
+      "packaged_sha256": "6d8534c7b0f623091c1ab76eedefc17d56932ce0fa4c2c5534fba838a4bb2ff8",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
-      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md.",
+      "adaptation_20261104": "Portable environment/standard archive handling; see portability-review.md and pro-native-portability-validation.json."
     },
     {
       "file": "assets/pro-3.5-cli/scripts/mcgs_file.py",
@@ -286,8 +288,9 @@
       "file": "assets/pro-3.5-cli/setup.ps1",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/setup.ps1",
       "source_sha256": "04227848553e5d03f6bb5a4ce82724c44195782cf013c92755bb7f8fe851d15a",
-      "packaged_sha256": "04227848553e5d03f6bb5a4ce82724c44195782cf013c92755bb7f8fe851d15a",
-      "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction."
+      "packaged_sha256": "653cc8c08d63f1d12e86cc3c7c64fd10bff4f2e3db4ec84259040bbe159fd4ac",
+      "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
+      "adaptation_20261104": "Portable environment/standard archive handling; see portability-review.md and pro-native-portability-validation.json."
     },
     {
       "file": "assets/pro-3.5-cli/SKILL.md",
@@ -334,8 +337,8 @@
     "native_errors_zero_for_P01_P03_P06": true
   },
   "native_internal_delivery": {
-    "source_build_revision": "0103-no-author-build-whitelist-20261104",
-    "source_stage_manifest_sha256": "7030fb9d9fcc39c7905421afc53626c826fa197430369f26fe0d987c607834ec",
+    "source_build_revision": "0104-portability-20261104",
+    "source_stage_manifest_sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728",
     "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
     "configuration": "seven explicit directory/transport fields, project per request",
     "legacy_native_routes_exposed": false,
@@ -344,7 +347,7 @@
     "deployment_document": "references/pro-native-deployment.md",
     "historical_source_build_revision": "0069",
     "historical_source_stage_manifest_sha256": "883e44e5205637fa6f2412bba076ae129f6413c9ce76b7ff92042e202d44fbb1",
-    "source_template_count": 157,
+    "source_template_count": 159,
     "separate_unbound_layout_required": true,
     "native_ui_increment_20261103": {
       "date": "2026-11-03",
@@ -355,15 +358,15 @@
       "added_or_changed_source_files": [
         {
           "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlGeometryBatch.cs",
-          "sha256": "749c232d02a42c7cd441b22760f167d3f1cd5555e96a538d5f08a3da78a674f3"
+          "sha256": "672ccea75d4acca1bbd6985c176928a1bdc26cbde0a76c080d6d3b6cde63da30"
         },
         {
           "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
-          "sha256": "53f164fad582404366fef230575e5d03eae7a409df8a0fb464da7bc9d3539933"
+          "sha256": "03779d939d089c65d474aa0817d3df203dc995096e53f1b9e2bede0b63ee894f"
         },
         {
           "file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringBatch.cs",
-          "sha256": "04159fd78194cee453908ace0ecaa0afb500e5ae5ac2e658bbb93334025453ad"
+          "sha256": "ddfaa655bbd45659079a12c92eb498f2d905cd3a52209ee64fed7065b9803b13"
         },
         {
           "file": "assets/pro-native-bridge/client/engineering_session.py",
@@ -435,8 +438,8 @@
       "whole_page_speedup_measured": false,
       "paused_engineering_resumed": false
     },
-    "previous_source_build_revision": "0102-background-pipeline-20261103",
-    "current_bootstrap_package_source_manifest_sha256": "c7826c5ec4f1190c4a3f6ffeeca5c4cbc1ef91927a958aafe3521d5b6e222745",
+    "previous_source_build_revision": "0103-no-author-build-whitelist-20261104",
+    "current_bootstrap_package_source_manifest_sha256": "929ff6847c52246ce397cb724c70a83adf835a2b0ccff3b4a4fb71be48690ff3",
     "binary_admission_update": {
       "file": "references/pro-native-build-admission-validation.json",
       "sha256": "a075134e4958649d0b934893bd0e1b4df7f7be776b509dc9e2fd1e8e223b5b60",
@@ -444,6 +447,13 @@
       "software_release_number_whitelist": false,
       "actual_function_and_object_structure_requirements_retained": true,
       "real_Pro_business_acceptance_performed": false,
+      "paused_engineering_resumed": false
+    },
+    "portability_update": {
+      "file": "references/pro-native-portability-validation.json",
+      "sha256": "5c6d43cdc9caf99afc15f8243e3b2d6649c18cc6a92adb6dad5fc450ba2c2390",
+      "real_Pro_business_acceptance_performed": false,
+      "author_vendor_whole_file_SHA_admission": false,
       "paused_engineering_resumed": false
     }
   },
@@ -461,12 +471,12 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "a1ede0e57e69dbeddebcdab7e6940ac991327371933530cf8314657f641756b7"
+        "packaged_sha256": "7e5798f6e7273d8620cf82a88ab0ef85dad7feafd0de01feae0a8bd66218abc3"
       },
       {
         "file": "references/pro-native-ui-workflow.md",
         "previous_sha256": "5cba2da00335a6b7a8f09c1ecfcd90136f0716580a08782a3e1fcdd0e7ae2a81",
-        "packaged_sha256": "b1e98191d67a4e3230a4ecc5b20631c9a6f54ef93450a30d462dfc19752d67b8"
+        "packaged_sha256": "75a1a08d63e661bf5ed85d5d87adc4c98c1e29b125f830873f5e9340407b52c4"
       }
     ],
     "windows_global_foreground_required": false,

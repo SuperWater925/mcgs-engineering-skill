@@ -36,7 +36,7 @@ namespace McgsInternalBridge {
    object raw;if(!request.TryGetValue("inspection_file",out raw))return result;
    string file=DirectInputFile(Convert.ToString(raw));NativeMemory.Require(NativeMemory.Hash(file)==Convert.ToString(request["inspection_sha256"]),"Inspection selectors file differs.");
    spec=new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));}
-   foreach(object value in (IEnumerable)spec["actions"]){NativeMemory.Require(result.Count<64,"Inspection selectors exceed64 actions.");result.Add(Map(value));}return result;
+   foreach(object value in (IEnumerable)spec["actions"]){result.Add(Map(value));}return result;
   }
   static Dictionary<string,object> ReadSourceAction(NativeEngine engine,NativeContext context,Dictionary<string,object> action) {
    var target=Map(action["target"]);string kind=Kind(action);var full=NativeUsableStrategySourceBatch.Inspect(engine,context);int id=Convert.ToInt32(target[kind=="strategy-create-user"?"template_block_id":"block_id"]);Dictionary<string,object> block=null;
@@ -111,7 +111,7 @@ namespace McgsInternalBridge {
    NativeOperationTrace.SetPhase("engineering-inspect-current-summary");var summary=NativeUsableEditPermit.Capture(engine,context);NativeOperationTrace.SetPhase("engineering-inspect-summary-returned");
    return new Dictionary<string,object>{{"ok",true},{"op","engineering-edit-inspect"},{"process_id",Process.GetCurrentProcess().Id},{"creation_filetime",Process.GetCurrentProcess().StartTime.ToFileTimeUtc()},{"native_thread_id",NativeMemory.GetCurrentThreadId()},
     {"editor_image_sha256",engine.ImageSha256},{"native_summary",summary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(summary)},{"compiled_kinds",Kinds()},{"action_preimages",preimages},
-    {"current_scope","Owned native Pro fixture; dynamic counts; actual installed ABI"},{"write_attempted",false},{"candidate_functional_acceptance_pending",true},{"complete_serialization_preimage_claimed",false},{"binary_validation_reuse",NativeEngineeringFileHashes.Status()}};
+    {"current_scope","Current native Pro project; dynamic counts; actual structural ABI checks"},{"write_attempted",false},{"candidate_functional_acceptance_pending",true},{"complete_serialization_preimage_claimed",false},{"binary_validation_reuse",NativeEngineeringFileHashes.Status()}};
   }
   static Unit PrepareAction(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action) {
    if(Kind(action)==NativePictureResources.VectorCreateKind)return PreparedAdditional(e,c,p,action,NativePictureResources.PrepareVectorCreate(e,c,p,action));

@@ -36,12 +36,15 @@ def main():
     if Path(cfg['bootstrap_root']).resolve()!=boot: raise ValueError('Bootstrap root differs')
     engine=Path(os.path.abspath(a.engine_file));scope=Path(os.path.abspath(a.engine_scope_file))
     for f in [engine,scope]:regular(f)
-    if not re.fullmatch(r'McgsInternalEngine_[0-9]{4,}\.dll',engine.name):raise ValueError('Use a fresh versioned engine filename')
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll',engine.name):raise ValueError('Use a single fresh DLL basename matching the binding filename')
     if scope.name!=engine.stem+'.scope.json':raise ValueError('Scope must have the exact engine sibling filename')
     sc=json.loads(scope.read_text(encoding='utf-8-sig'))
     for key in ['task_root','runtime_root','install_root']:
         if os.path.normcase(os.path.abspath(sc[key]))!=os.path.normcase(os.path.abspath(cfg[key])):
             raise ValueError('Engine and bootstrap disagree on '+key)
+    selected_editor=Path(sc.get('editor_executable',str(Path(sc['install_root'])/'Program'/'McgsSetPro.exe')))
+    if os.path.normcase(os.path.abspath(selected_editor))!=os.path.normcase(os.path.abspath(cfg['editor_executable'])):
+        raise ValueError('Engine and bootstrap disagree on the selected editor executable')
     target=boot/'engines'/engine.name;target_scope=target.with_suffix('.scope.json')
     if target.exists() or target_scope.exists():raise ValueError('Do not overwrite any engine/scope version')
     write_new(target,engine.read_bytes());write_new(target_scope,scope.read_bytes())
