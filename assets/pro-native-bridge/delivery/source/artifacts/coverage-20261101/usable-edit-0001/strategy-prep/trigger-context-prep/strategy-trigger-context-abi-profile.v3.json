@@ -1,0 +1,408 @@
+{
+  "schema": 1,
+  "purpose": "same-class strategy trigger context full field editing through original owned factory/ContextCopy/RootSetContext and original exact existing Trigger row Edit/SerializeToRow/Update",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "base_reader_sha256": "8dc56512ffa3340e2c210ba7eab0db1d36995a3390a535844a9a6319324e8ea6",
+  "types": [
+    {
+      "name": "User",
+      "native_type": 3,
+      "size": 36,
+      "vtable_rva": 15010436,
+      "col_rva": 15280092,
+      "type_rva": 16441944,
+      "rtti": ".?AVCTriggerUser@@",
+      "entries_rva": [
+        105291,
+        195321,
+        115396,
+        4401,
+        130021,
+        120966,
+        73236,
+        66496,
+        316701,
+        295541,
+        28901,
+        348616,
+        100631,
+        274141,
+        80496
+      ],
+      "runtime_class_rva": 16441624,
+      "factory_entry_rva": 338236,
+      "factory_rva": 11329520,
+      "deleting_dtor_rva": 11340544
+    },
+    {
+      "name": "Start",
+      "native_type": 0,
+      "size": 36,
+      "vtable_rva": 15010516,
+      "col_rva": 15280188,
+      "type_rva": 16441976,
+      "rtti": ".?AVCTriggerStart@@",
+      "entries_rva": [
+        222336,
+        47851,
+        115396,
+        4401,
+        130021,
+        206806,
+        73236,
+        66496,
+        316701,
+        295541,
+        28901,
+        83541,
+        100631,
+        139511,
+        80496
+      ],
+      "runtime_class_rva": 16441660,
+      "factory_entry_rva": 223806,
+      "factory_rva": 11329904,
+      "deleting_dtor_rva": 11340480
+    },
+    {
+      "name": "End",
+      "native_type": 1,
+      "size": 36,
+      "vtable_rva": 15010596,
+      "col_rva": 15280284,
+      "type_rva": 16442012,
+      "rtti": ".?AVCTriggerEnd@@",
+      "entries_rva": [
+        40021,
+        186816,
+        115396,
+        4401,
+        130021,
+        289921,
+        73236,
+        66496,
+        316701,
+        295541,
+        28901,
+        101256,
+        100631,
+        336896,
+        80496
+      ],
+      "runtime_class_rva": 16441696,
+      "factory_entry_rva": 339686,
+      "factory_rva": 11330288,
+      "deleting_dtor_rva": 11340096
+    },
+    {
+      "name": "Loop",
+      "native_type": 2,
+      "size": 72,
+      "vtable_rva": 15010756,
+      "col_rva": 15280476,
+      "type_rva": 16442076,
+      "rtti": ".?AVCTriggerLoop@@",
+      "entries_rva": [
+        221566,
+        18606,
+        308596,
+        4401,
+        130021,
+        109411,
+        73236,
+        66496,
+        316701,
+        295541,
+        28901,
+        82116,
+        288431,
+        224076,
+        24471
+      ],
+      "runtime_class_rva": 16441768,
+      "factory_entry_rva": 331431,
+      "factory_rva": 11331360,
+      "deleting_dtor_rva": 11340352
+    }
+  ],
+  "guards": [
+    {
+      "name": "UserFactory",
+      "module": "McgsSetPro.exe",
+      "rva": 11329520,
+      "bytes": "558bec6aff68e47f040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "UserDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 11340544,
+      "bytes": "558bec51894dfc8b4dfce8085055ff8b450883e00174098b4dfc51e8bc9554ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserRuntimeGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 11329504,
+      "bytes": "558bec51894dfcb818e13a018be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "StartFactory",
+      "module": "McgsSetPro.exe",
+      "rva": 11329904,
+      "bytes": "558bec6aff683580040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "StartDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 11340480,
+      "bytes": "558bec51894dfc8b4dfce815cb53ff8b450883e00174098b4dfc51e8fc9554ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StartRuntimeGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 11329888,
+      "bytes": "558bec51894dfcb83ce13a018be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "EndFactory",
+      "module": "McgsSetPro.exe",
+      "rva": 11330288,
+      "bytes": "558bec6aff688680040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "EndDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 11340096,
+      "bytes": "558bec51894dfc8b4dfce86abf54ff8b450883e00174098b4dfc51e87c9754ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EndRuntimeGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 11330272,
+      "bytes": "558bec51894dfcb860e13a018be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "LoopFactory",
+      "module": "McgsSetPro.exe",
+      "rva": 11331360,
+      "bytes": "558bec6aff682881040164a1000000005083ec0ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "LoopDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 11340352,
+      "bytes": "558bec51894dfc8b4dfce8e95557ff8b450883e00174098b4dfc51e87c9654ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LoopRuntimeGetter",
+      "module": "McgsSetPro.exe",
+      "rva": 11331344,
+      "bytes": "558bec51894dfcb8a8e13a018be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "RootSetContext",
+      "module": "McgsSetPro.exe",
+      "rva": 3308864,
+      "bytes": "558bec83ec08894dfc837d08007c138b4dfc81c12c020000e8ed2ad2ff3945087c02eb658b4508508b4dfc81c12c020000e8caaacfff8b088b51103b550c74498b450c508b4d08518b4dfc81c12c020000e8aaaacfff8b108b4a10e88cd5d1ff8b4508508b4dfc81c12c020000e88eaacfff8b0883c108894df86a018b55f88b028b4df88b500cffd28be55dc20800",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ContextCopy",
+      "module": "McgsSetPro.exe",
+      "rva": 11325872,
+      "bytes": "558bec6aff68987e040164a100000000505181ecd0000000535657a1600b3b0133c5508d45f464a3000000008965f0894de88b4508508b4de88b118b4de88b4230ffd00fb6c885c97405e903010000c745fc0000000068000400008d4db0e85b1c06008945e0c645fc016a0068000040006a008d55b0528d8d20ffffffe83ff755ff8945e4c645fc028d8520ffffff508b4d088b118b4d088b4208ffd08d8d20ffffffe8401c06008d4db0e8de7253ff6a0068000040006a018d4db0518d8d68ffffffe8f9f655ff8945dcc645fc038d9568ffffff528b45e88b108b4de88b4208ffd08d8d68ffffffe8fa1b06006a018b4de8e8f03554ff8b4de8e843cc53ff8845ef0fb64def518b4d08e8d83554ffc645fc028d8d68ffffffe8f05657ffc645fc018d8d20ffffffe8e15657ffc645fc008d4db0e88a1b0600eb06b8fbd2ec00c3c745fcffffffffeb07c745fcffffffff8b4df464890d00000000595f5e5b8be55dc2",
+      "reloc_offsets": [
+        6,
+        28,
+        317
+      ]
+    },
+    {
+      "name": "ContextSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 11329200,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8f5a655ff8b4d08894df88b4d08e8d30d58ff85c0746b8b55fc8b4204508b4d08e8e04956ff8b4dfc8b5108528b4d08e8d14956ff8b45fc8b480c518b4d08e8c24956ff8b55fc83c210528b4df8e864fb57ff8b45fc8b4814518b4d08e8224956ff8b55fc8b4218508b4d08e8134956ff8b4dfc8b511c528b4d08e8044956ffeb698b45fc83c004508b4d08e8448c53ff8b4dfc83c108518b4d08e8358c53ff8b55fc83c20c528b4d08e8268c53ff8b45fc83c010508b4df8e88bd757ff8b4dfc83c114518b4d08e8fe8b53ff8b55fc83c218528b4d08e8ef8b53ff8b45fc83c01c508b4d08e8e08b53ff8be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "LoopSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 11331712,
+      "bytes": "558bec83ec10894dfc8b4508508b4dfce82fda54ff8b4d08e8090458ff85c00f84a30000008b4dfc8b512481e2ffff00000fb7c28b4dfc8b513083c20181e2ffff00000fb7cac1e1100bc18945f08b55f0528b4d08e86a3f56ff8b45fc8b4828518b4d08e8543c56ff8b55fc8b4234508b4d08e8453c56ff8b4dfc8b5138528b4d08e8363c56ff8b45fc8b483c518b4d08e8273c56ff8b55fc8b4240508b4d08e8183c56ff8b4dfc8b5144528b4d08e8093c56ff8b45fc8b482c518b4d08e8013f56ffe9640100008d55f4528b4d08e8378253ff8b45f425ffff00000fb7c88b55fc894a248b45f4c1e81025ffff00000fb7c88b55fc894a308b45fc83c028508b4d08e83caa56ff8b4dfc83792400741d8b55fc837a240174148b45fcc74024000000008b4dfcc74128e80300008b55fc83c234528b4d08e807aa56ff8b45fc83c038508b4d08e8f8a956ff8b4dfc83c13c518b4d08e8e9a956ff8b55fc83c240528b4d08e8daa956ff8b45fc83c044508b4d08e8cba956ff8b4dfc83c12c518b4d08e8838153ff8b55fc837a24010f85970000008b45fc837830007e1d8b4dfc8b51308955f88b45f883e8018945f88b4dfc8b55f8895130eb718b45fcc74030000000008b4dfc83793400740c8b55fcc7423000000000eb528b45fc83783800740c8b4dfcc7413001000000eb3d8b55fc837a3c00740c8b45fcc7403002000000eb288b4dfc83794000740c8b55fcc7423003000000eb138b45fc83784400740a8b4dfcc74130040000008be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ContextSerializeToRow",
+      "module": "McgsSetPro.exe",
+      "rva": 11326240,
+      "bytes": "558bec6aff68c97e040164a100000000505181ec98000000535657a1600b3b0133c5508d45f464a3000000008965f0894dec8b4d08e81ccb53ff8b45088b4dec8b510889909c0000008b45088b4dec8b510c8990a00000008b45ec83c010508b4d0881c1b0000000ff15708e3c01c745fc0000000068000400008d4da0e8cc1a06008945d4c645fc016a0068000040006a008d4da0518d8d58ffffffe8b0f555ff8945d0c645fc028d9558ffffff528b45ec8b108b4dec8b4208ffd08d8d58ffffffe8b11a06008d4da0e8971a06008945d88955dc8b4dd8894de88b55088b45e88982ac00000068402000008b4de8518b55088b82a800000050ff15bc673c018b4d088981a80000008b550883baa800000000752d68ea000000e8dc4957ff83c404c645fc018d8d58ffffffe86e5557ffc645fc008d4da0e8171a0600e9270100008b45088b88a800000051ff153c673c018945e4837de400752d68f1000000e8964957ff83c404c645fc018d8d58ffffffe8285557ffc645fc008d4da0e8d1190600e9e10000008d4da0e88e7053ff8b55e8528b45e4508d4da0e8ba1906008945e08b4de83b4de0742d68f8000000e8464957ff83c404c645fc018d8d58ffffffe8d85457ffc645fc008d4da0e881190600e9910000008b55088b82a800000050ff1540673c016a008b4d0881c1a4000000518b4d08e8363354ff6a018b550881c2a4000000528b4d08e8700656ffc645fc018d8d58ffffffe8805457ffc645fc008d4da0e829190600eb218b4dcce8e318060068ff000000e8bc4857ff83c404b882d5ec00c3b877d5ec00c3c745fcffffffffeb09c745fcffffffffeb09eb07c745fcffffffff8b4df464890d00000000595f5e5b8be55dc2",
+      "reloc_offsets": [
+        6,
+        28,
+        106,
+        252,
+        334,
+        484,
+        579,
+        585
+      ]
+    },
+    {
+      "name": "ContextDeserializeFromRow",
+      "module": "McgsSetPro.exe",
+      "rva": 11326880,
+      "bytes": "558bec6aff68fa7e040164a100000000505181ec88000000535657a1600b3b0133c5508d45f464a3000000008965f0894dec8b4508508b4dece8f11b57ff0fb6c885c97405e9700100008b4d08e884c853ff8b55ec8b45088b8898000000894a048b55ec8b45088b889c000000894a088b55ec8b45088b88a0000000894a0c8b550881c2b0000000528b4dec83c110ff15708e3c01c745fc000000008b450883b8ac000000000f84d00000008b4d088b91a800000052ff153c673c018945e8837de800751268bd000000e8ac4757ff83c404e9e300000068000400008d4db0e8ea1706008945dcc645fc016a008b45088b88ac000000518b55e8528d4db0e8032206006a0068000040006a018d45b0508d8d68ffffffe8b6f255ff8945e4c645fc028d8d68ffffff518b55ec8b028b4dec8b5008ffd28d8d68ffffffe8b71706008d4db0e8831c06008d4db0e8c91f06008b45088b88a800000051ff1540673c01c645fc018d8d68ffffffe8af5257ffc645fc008d4db0e858170600eb218b4de0e81217060068d0000000e8eb4657ff83c404b853d7ec00c3b848d7ec00c3c745fcffffffffeb09c745fcffffffffeb09eb07c745fcffffffff8b4df464890d00000000595f5e5b8be55dc20400cccc",
+      "reloc_offsets": [
+        6,
+        28,
+        145,
+        184,
+        349,
+        404,
+        410
+      ]
+    },
+    {
+      "name": "ContextSetDirty",
+      "module": "McgsSetPro.exe",
+      "rva": 11327888,
+      "bytes": "558bec51894dfc8b45fc0fb648200fb655083bca74098b45fc8a4d088848208be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordEdit",
+      "module": "McgsSetPro.exe",
+      "rva": 415792,
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8bb1c0000506a01e8f31c000083c4088be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordUpdate",
+      "module": "McgsSetPro.exe",
+      "rva": 415840,
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e83b1e0000506a03e8731e000083c4088be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "TriggerFieldIsNull",
+      "module": "mfc110u.dll",
+      "rva": 1973211,
+      "bytes": "558bec578bf98b571485d27f0433c0eb355633f68bce394d0875034aeb21ff75",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordBof",
+      "module": "McgsSetPro.exe",
+      "rva": 415088,
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8400a0000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordEof",
+      "module": "McgsSetPro.exe",
+      "rva": 415152,
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8c00b0000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordFirst",
+      "module": "McgsSetPro.exe",
+      "rva": 415440,
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e85b130000506a01e89313000083c408",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecordNext",
+      "module": "McgsSetPro.exe",
+      "rva": 415392,
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8db110000506a01e81312000083c408",
+      "reloc_offsets": []
+    }
+  ],
+  "base_context": {
+    "record_id": 4,
+    "strategy_id": 8,
+    "native_type": 12,
+    "note_CString": 16,
+    "serialized_full_uint32_words": [
+      20,
+      24,
+      28
+    ],
+    "dirty_byte": 32,
+    "nonserialized_padding_bytes": [
+      33,
+      34,
+      35
+    ]
+  },
+  "loop_context": {
+    "full_tail_uint32_offsets": [
+      36,
+      40,
+      44,
+      48,
+      52,
+      56,
+      60,
+      64,
+      68
+    ],
+    "mode_offset": 36,
+    "current_serializable_modes": [
+      0,
+      1
+    ],
+    "interval_raw_uint32_offset": 40,
+    "selector_offset": 48,
+    "copy_codec_inverse": "mode0 source selector=desired selector-1, because native STORE packs selector+1 and native LOAD decrements only mode1. mode1 source selector=desired selector in0..4. Caller before/after retains complete words; no mask/rebase."
+  },
+  "closed_boundaries": [
+    "No same-id open strategy working document: its original Doc83 would overwrite canonical context.",
+    "No cross-class context reinterpretation or raw canonical CString/scalar writes.",
+    "ContextCopy source sets dirty1 too: cloning occurs only inside claimed Apply, and this exact target-only side effect is recorded.",
+    "Private constructor fields may be adjusted; canonical update is exclusively RootSetContext -> original ContextCopy Serialize STORE/LOAD.",
+    "Context create/delete ownership stays in strategy-create-user/strategy-delete until generalized class creation is integrated separately.",
+    "Loop calendar/interval raw fields retain complete values; this profile does not invent all timer UI semantics."
+  ],
+  "native_execution_performed": false,
+  "actual_verified": false,
+  "supersedes_profile_sha256": "e212e2eaa5d368e2ebd5efa266fdd1c48f434e39d1adbb338c864aef1fe46e9a",
+  "storage_codec_contract": "For mode0, a separate original factory-owned context is serialized to the existing row with private selector=desiredCanonicalSelector-1. Original native row deserialization must recover all desired canonical words exactly. No raw canonical field write or wire byte patch.",
+  "kinds": [
+    "strategy-trigger-context",
+    "strategy-trigger-context-flush"
+  ]
+}

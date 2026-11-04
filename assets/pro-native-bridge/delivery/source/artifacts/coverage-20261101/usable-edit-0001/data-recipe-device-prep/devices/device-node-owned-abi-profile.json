@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "base_device_profile_sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76",
+  "driver_cache_profile_sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "functions": [
+    {
+      "name": "OriginalChildArrayAdd",
+      "module": "McgsSetPro.exe",
+      "rva": 1770032,
+      "bytes": "558bec51894dfc8b4508508b4dfce8e70de8ff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalChildArrayAddCore",
+      "module": "McgsSetPro.exe",
+      "rva": 732560,
+      "bytes": "558bec83ec08894dfc8b45fc8b4808894df88b5508528b45f8508b4dfce8eac5a7008b45f88be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalChildArrayRemoveAt",
+      "module": "mfc110u.dll",
+      "rva": 1260001,
+      "bytes": "558bec538b5d08568b750c578bf98d041e85db783985f678358b4f083bc17f2e3bc37c2a3bc67c262bc874188b5704c1e102518d048250518d049a50e8a458f2",
+      "reloc_offsets": [],
+      "ordinal": 12472
+    },
+    {
+      "name": "OriginalParentAcceptChildType",
+      "module": "McgsSetPro.exe",
+      "rva": 1414336,
+      "bytes": "558bec51894dfc8b45fc83783800740433c0eb1a837d0805740b8b4dfc8b55083b513c7507b801000000eb0233c08be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalNestedPasteAdoption",
+      "module": "McgsSetPro.exe",
+      "rva": 1759392,
+      "bytes": "8b4de8e8f0bce5ff8945ac6a016a018b4de8518b55ac8b028b4dac8b9080010000ffd28b45ec8b4de48948248b55ec528b4de483c14ce8ccb8e9ffe8c8a1e6ff508b4de4e8e515980085c074208b4de483c14ce852cfe9ff83f80175108b45ec508b4de4518b4de8e8fd48e7ff680200ffff6a018b55e48b421c508b4dec518b4de8e82fc2e5ff8b4de8e8471698008b4dec83c1048b55ec8b42048b5054ffd2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalNestedDeleteArrayAndDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 1755824,
+      "bytes": "83c0018945dc8b4dc483c14ce889dde9ff3945dc7d2b8b4ddc518b4dc483c14ce8a3e7e8ff8b103b55ec75136a018b45dc508b4dc483c14ce8b5289800eb02ebbc8b4dec898d60ffffff8b9560ffffff8955c0837dc00074176a018b45c08b108b4dc08b4204ffd0898558ffffffeb0ac78558ffffff000000006a018b4dd8518b4de8e811cbe8ff8bc8e81fb8e6ff8945c8837dc80075186a028b55d8528b4d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalDeviceBaseSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 1414688,
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce885efecff8b4d08e86956efff85c074138b4d08518b55fc8b028b4dfc8b5040ffd2eb638b45fc8b0df03f3b018948148b15f03f3b0183c2018915f03f3b01a055dd38018845f8807df8007408807df8017415eb248b4d08518b55fc8b028b4dfc8b5044ffd2eb118b4508508b4dfc8b118b4dfc8b4248ffd08b4dfc8b55088b0289819c0000008be55dc20400",
+      "reloc_offsets": [
+        57,
+        66,
+        75,
+        80
+      ]
+    },
+    {
+      "name": "OriginalDeviceBaseStore",
+      "module": "McgsSetPro.exe",
+      "rva": 1416816,
+      "bytes": "558bec83ec08894dfc8b45088945f88b4dfc83c128518b4df8e8e93befff8b55fc83c22c528b4df8e8da3befff8b45fc8b4848518b4d08e89186edff8b55fc8b4238508b4d08e88286edff8b4dfc8b513c528b4d08e87386edff8b4508508b4dfc83c1608b55fc8b42608b5008ffd28b4508508b4dfc83c1748b55fc8b42748b5008ffd28b4508508b4dfc81c1880000008b55fc8b82880000008b5008ffd28b4508508b4dfc83c14c8b55fc8b424c8b5008ffd28be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalDeviceBaseCurrentLoad",
+      "module": "McgsSetPro.exe",
+      "rva": 1417296,
+      "bytes": "558bec83ec0c894dfc8b45088945f48b4dfc83c128518b4df4e89b16efff8b55fc83c22c528b4df4e88c16efff8b45fc83c048508b4d08e838f3edffc745f8000000008d4df8518b4d08e825f3edff8b55fc8b45f88942388d4df8518b4d08e810f3edff8b55fc8b45f889423c8b4d08518b4dfc83c1608b55fc8b42608b5008ffd28b4508508b4dfc83c1748b55fc8b42748b5008ffd28b4508508b4dfc81c1880000008b55fc8b82880000008b5008ffd28b4508508b4dfc83c14c8b55fc8b424c8b5008ffd28be55dc2",
+      "reloc_offsets": []
+    }
+  ],
+  "child_array": {
+    "offset": 76,
+    "vtable_rva": 13582092,
+    "data_offset": 4,
+    "count_offset": 8,
+    "capacity_offset": 12,
+    "element_bytes": 4,
+    "owned_complete_class": "CDevDll only; unknown CDevObj derived types reject",
+    "physical_parent_complete_offset": 36,
+    "logical_parent_iobject_complete_offset": 12,
+    "document_complete_offset": 156
+  },
+  "scope": "already-loaded module with recursively owned known CDevDll nodes; child rename/delete and same-class leaf template clone; original pointer-array adopt/remove then original deleting destructor",
+  "ownership": "new private clone +24 parent assignment matches original5AD8C3; canonical owning-array mutation uses original add/remove, never a raw canonical vector setter",
+  "native_execution_performed": false,
+  "actual_verified": false
+}

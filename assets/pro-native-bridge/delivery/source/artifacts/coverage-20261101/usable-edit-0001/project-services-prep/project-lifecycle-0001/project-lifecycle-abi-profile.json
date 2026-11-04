@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "tables": {
+    "app": {
+      "vtable_rva": 14455980,
+      "col_rva": 15232968,
+      "type_descriptor_rva": 16398360,
+      "rtti": ".?AVC0McgsApp@@"
+    },
+    "root": {
+      "vtable_rva": 13989508,
+      "col_rva": 15171048,
+      "type_descriptor_rva": 16323500,
+      "rtti": ".?AVC0DocManage@@"
+    },
+    "main_window": {
+      "vtable_rva": 14395308,
+      "col_rva": 15227908,
+      "type_descriptor_rva": 16299644,
+      "rtti": ".?AVC0FrmMain@@"
+    }
+  },
+  "template": {
+    "vtable_rva": 14396356,
+    "col_rva": 15228304,
+    "type_descriptor_rva": 16394500,
+    "rtti": ".?AVC0FrmMultiDocTemplate@@",
+    "offset": 0
+  },
+  "main_window_getter_rva": 499120,
+  "app_rva": 16495992,
+  "canonical_root_pointer_rva": 16494960,
+  "root_close_entry_rva": 66841,
+  "root_close_body_rva": 7169568,
+  "app_open_entry_rva": 83926,
+  "app_open_body_rva": 7389152,
+  "template_close33_entry_rva": 11732152,
+  "mfc": {
+    "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "image_size": 4452352,
+    "imports": [
+      {
+        "name": "COleDocumentOnClose",
+        "rva": 2252383,
+        "bytes": "578bf9e8d6aafdff85c07406837f4c00742e568bb79c00000083a79c00000000",
+        "reloc_offsets": [],
+        "ordinal": 9048,
+        "iat_rva": 16548528
+      },
+      {
+        "name": "CWinAppOpenDocumentFile",
+        "rva": 1837643,
+        "bytes": "558bec8b495c85c974068b015dff6028e824690400cc558bec8b495c85c97406",
+        "reloc_offsets": [],
+        "ordinal": 11820,
+        "iat_rva": 16548736
+      },
+      {
+        "name": "TemplateCloseAllDocuments",
+        "rva": 2124436,
+        "bytes": "558bec51568bf18b06ff505c8945fc85c0741b8b068d4dfc518bceff50608b10",
+        "reloc_offsets": [],
+        "ordinal": 2851,
+        "iat_rva": 16548244
+      }
+    ]
+  },
+  "guards": [
+    {
+      "name": "RootCloseEntry",
+      "rva": 66841,
+      "bytes": "e902616c00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RootCloseBody",
+      "rva": 7169568,
+      "bytes": "558bec6aff68c934ff0064a1000000005083ec50a1600b3b0133c5508d45f464a300000000894dece861b196ff050802000050e856b196ff050402000050e84bb196ff8bc8e8d43997ffe891da93ff8945e48b4dec81c15c020000e8a44e97ff50684c361c0168a45a00008d45b850e8849697ff83c4088945c88b4dc8894dc4c745fc000000008b55c45268f61900006870361c016890361c016a018d4da4e8196496ff8945c08b45c08945bcc645fc018b4dbc518b55e4528b45e48b088b5110ffd283c410c645fc008d4da4e8368a93ffc745fcffffffff8d4db8ff1548913c018b4dec81c15c020000e8144e97ff85c075206a016a008b4dece85295450050ff1548963c018b4dece8339f4500e92402000068f55300008d4df2e8c8d697ffc745fc020000008d4df3e8934694ffc645fc038b4dece8977b95ff6a00687cb6380168ac883801e8655794ff6a0050e8fda9450083c4148b80d80300008945e06a008b4de08b118b4de08b8284000000ffd06a00687cb6380168ac883801e82e5794ff6a0050e8c6a9450083c4148b88dc030000894ddc6a008b55dc8b028b4ddc8b9084000000ffd26a00687cb6380168ac883801e8f75694ff6a0050e88fa9450083c4148b80e00300008945d86a008b4dd88b118b4dd88b8284000000ffd06a00687cb6380168ac883801e8c05694ff6a0050e858a9450083c4148b88e4030000894dd46a008b55d48b028b4dd48b9084000000ffd28b45ec8b880c0200008b55ec8b018b8a0c0200008b908c000000ffd26a008b4dece83cf794ff8d45e8508b4dec81c15c020000e866934500c645fc04e835af96ff8945d08d4de8ff156c913c01508b4dd08b118b4dd08b82b0000000ffd08b4dec81c15c0200008b55ec8b825c0200008b501cffd28d4de8ff156c913c0150689c361c01e8edae96ff8bc8e84cb093ff6a016a008b4dece89e93450050ff1548963c01e8ceae96ff83b82405000000743fe8c0ae96ff8b4dec3b8820050000752fe8b0ae96ff8b902005000083ba9c00000000741be89cae96ff8b80240500008945cc8b4dcc8b118b4dcc8b4268ffd08b4dece8329d4500c645fc038d4de8ff1548913c01c645fc028d4df3e8d33e93ffc745fcffffffff8d4df2e80d5093ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        98,
+        145,
+        150,
+        222,
+        259,
+        319,
+        324,
+        374,
+        379,
+        429,
+        434,
+        484,
+        489,
+        609,
+        658,
+        664,
+        695,
+        793
+      ]
+    },
+    {
+      "name": "AppOpenEntry",
+      "rva": 83926,
+      "bytes": "e905786f00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "AppOpenBody",
+      "rva": 7389152,
+      "bytes": "558bec6aff68bd83ff0064a1000000005083ec34a1600b3b0133c5508d45f464a300000000894df0e8a15793ff83b82005000000741be8935793ff8b8820050000e84dfc92ff85c0750733c0e9d50000008b4508508b4df081c118020000ff1584903c018b4df081c11802000051e8993590ff83c404e8a58090ff8945ec8b55f081c2180200005268b65a00008d45d850e8a23c94ff83c4088945e88b4de8894de4c745fc000000008b55e452681606000068b8791c0168d4791c016a018d4dc0e8370a93ff8945e08b45e08945dcc645fc018b4ddc518b55ec8b028b4dec8b500cffd2c645fc008d4dc0e8583090ffc745fcffffffff8d4dd8ff1548913c018b45f0c680a8050000018b4d08518b4df0e8a44642008945d48b55f0c682a8050000008b45d48b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        96,
+        179,
+        184,
+        252
+      ]
+    },
+    {
+      "name": "RootDestructorAndGlobalClear",
+      "rva": 3337728,
+      "bytes": "558bec6aff688856fa0064a1000000005083ec74a1600b3b0133c5508d45f464a300000000894df08b45f0c70084761501c745fc110000008b4df0e845d9d1ff8b4df08b91a00100008955c48b45c48945ec837dec0074146a018b4dec8b118b4dec8b4204ffd08945c0eb07c745c0000000008b4df0c781a0010000000000008b55f08b82a40100008945bc8b4dbc894de8837de80074146a018b55e88b028b4de88b5004ffd28945b8eb07c745b8000000008b45f0c780a401000000000000e8a10d80008b4df08b91180200008955b48b45b48945e4837de40074136a018b4de48b118b4de48b02ffd08945b0eb07c745b0000000008b4df0c78118020000000000008b55f08b820c0200008945ac8b4dac894dcc837dcc00740f6a018b4dcce8d925ceff8945a8eb07c745a8000000008b55f0c7820c020000000000008b45f08b88d8020000894da48b55a48955e0837de00074146a018b45e08b108b4de08b4204ffd08945a0eb07c745a0000000008b4df0c781d8020000000000008b55f08b82dc0200008378200074198b4df08b91dc0200008b45f08b128b88dc0200008b4268ffd08b4df08b91dc02000089559c8b459c8945dc837ddc0074146a018b4ddc8b118b4ddc8b4204ffd0894598eb07c74598000000008b4df0c781dc020000000000008b55f08b82d40200008945948b4d94894dd8837dd80074146a018b55d88b028b4dd88b5030ffd2894590eb07c74590000000008b45f0c780d4020000000000008b4df08b91e002000089558c8b458c8945d4837dd40074146a018b4dd48b118b4dd48b4204ffd0894588eb07c74588000000008b4df0c781e0020000000000008b55f08b82e40200008945848b4d84894dd0837dd00074146a018b55d08b028b4dd08b5004ffd2894580eb07c74580000000008b45f0c780e402000000000000c70570b13b0100000000e8f826d1ff8b4df03b8820050000750fe8e826d1ffc7802005000000000000e8c661d1ff6a00e802a4ceff83c40468585615018d4dc8ff1550913c01c645fc128d55c852e8f204ceff83c404c645fc118d4dc8ff1548913c01c645fc108b4df081c15c020000e8720a8000c645fc0f8b4df081c140020000e81857d1ffc645fc0e8b4df081c12c020000e8c876d1ffc645fc0d8b4df081c110020000ff1548913c01c645fc0c8b4df081c1f4010000e80a8bceffc645fc0b8b4df081c1e0010000e83a1ad0ffc645fc0a8b4df081c1cc010000ff1548913c01c645fc098b4df081c1c8010000ff1548913c01c645fc088b4df081c1c0010000ff1548913c01c645fc078b4df081c1bc010000ff1548913c01c645fc068b4df081c1a8010000e895008000c645fc058b4df081c188010000e8cf4ed2ffc645fc048b4df081c174010000e8b7fc7f00c645fc038b4df081c160010000e8a5fc7f00c645fc028b4df081c140010000e8262bd2ffc645fc018b4df081c12c010000e8d1098000c645fc008b4df081c118010000e86ffc7f00c745fcffffffff8b4df0e85951cdff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        681,
+        736,
+        745,
+        774,
+        847,
+        902,
+        921,
+        940,
+        959
+      ]
+    },
+    {
+      "name": "RootConstructorGlobalAdoption",
+      "rva": 3304692,
+      "bytes": "e8b5aad1ff8b8dd8feffff8988200500008b95d8feffff891570b13b01",
+      "reloc_offsets": [
+        25
+      ]
+    }
+  ],
+  "abi": {
+    "close": "x86 thiscall void(C0DocManage*); ret0; original root virtual35",
+    "open": "x86 thiscall CDocument*(C0McgsApp*,LPCWSTR); ret4; original app virtual43"
+  },
+  "closed_postconditions": {
+    "app_plus_520": "NULL",
+    "canonical_root_global": "NULL",
+    "old_root_context_or_model_used_after_close": false
+  },
+  "open_postconditions": {
+    "returned_document": "exact new app+520 with guarded C0DocManage RTTI",
+    "canonical_root_global": "exact current app+520",
+    "project": "same saved input path",
+    "fresh_attach": "a new NativeContext created only after original Open returns and raw current-root identity matches"
+  },
+  "original_ui_persistence_and_exceptions_preserved": true,
+  "project_compile_flag_not_forced_or_required_one": true,
+  "host_invoked": false,
+  "compiled": false
+}

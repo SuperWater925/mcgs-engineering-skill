@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "purpose": "original-device-add-from-exact-installed-configuration-driver",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_device_profile_sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76",
+  "driver_profile_sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6",
+  "node_profile_sha256": "e827853f68f622be6a3ff9985621025ee0b3d392ed2e86306338f484250cacff",
+  "functions": [
+    {
+      "name": "DeviceParameterCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 1237664,
+      "bytes": "558bec6aff68e88bf70064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b45f0c6000168985a11018b4df083c104ff1550913c01c745fc00000000689c5a11018b4df083c108ff1550913c01c645fc018b4df0c7410c010000008b55f0c742106400000068a05a11018b4df083c114ff1550913c018b45f0c74018000200008b4df0f20f100560181101f20f1141208b55f0f20f100560181101f20f1142288b45f0c64030008b4df0c74134ffffffffc745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        45,
+        57,
+        69,
+        81,
+        110,
+        122,
+        143,
+        159
+      ]
+    },
+    {
+      "name": "DeviceParameterAssign",
+      "module": "McgsSetPro.exe",
+      "rva": 1465616,
+      "bytes": "558bec51894dfc8b45fc8b4d088a118890140100008b450883c004508b4dfc83c128ff15708e3c018b4d0883c108518b4dfc83c12cff15708e3c018b55fc8b45088b480c894a488b55fc8b45088b4810894a408b55fc8b45088b4818898a1c0100008b55fc8b4508f20f104020f20f1182200100008b4dfc8b5508f20f104228f20f1181280100008b450883c014508b4dfc81c118010000ff15708e3c018b4dfc8b55088b42348981340100008b4dfc8b55088a42308881300100008be55dc20400",
+      "reloc_offsets": [
+        36,
+        55,
+        154
+      ]
+    },
+    {
+      "name": "FrontendGetDeviceInfo",
+      "module": "McgsSetPro.exe",
+      "rva": 1511936,
+      "bytes": "558bec83ec10894df88b45f8837824007465c745fc0000000068989c11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc00741b8b4518508b4d14518b5510528b450c508b4d0851ff55fceb10eb07b801400080eb07eb05b8570007808be55dc2",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "DeviceParameterDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 1343424,
+      "bytes": "558bec51894dfc8b4dfc83c114ff1548913c018b4dfc83c108ff1548913c018b4dfc83c104ff1548913c018be55dc3",
+      "reloc_offsets": [
+        15,
+        27,
+        39
+      ]
+    }
+  ],
+  "data_guards": [
+    {
+      "name": "ParameterDefaultDoubleMinus1",
+      "module": "McgsSetPro.exe",
+      "rva": 13703264,
+      "bytes": "0000000000000000",
+      "reloc_offsets": []
+    }
+  ],
+  "drivers": [
+    {
+      "key": "H5U_MODBUSTCP",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\H5U_MODBUSTCP\\H5U_MODBUSTCP.ui",
+      "sha256": "b61665a50f428d1bc7d7fa1a7aa98b7c86a5795bee5d2d77db57f00f52fe1c8f",
+      "preferred_base": 268435456,
+      "SvrGetDevInfo": {
+        "rva": 124944,
+        "bytes": "558bec83ec1cb90c310610e8b06bfeff508d4df4ff15c4b30410508b4d08ff15c0b304108d4df4ff15e8b304108b450cc700010000008b0d24310610894dfc837dfc007408837dfc01740deb148b5510c70201000000eb098b4510c700040000008b4d14894df8837df800740b837df8017449e98800000068942b0510b90c310610e8396bfeff508d4decff15c4b30410508d55f052e8f5efffff83c40c508b4d18ff15c0b304108d4df0ff15e8b304108d4decff15e8b30410eb4868d82b0510b90c310610e8f56afeff508d4de4ff15c4b30410508d45e850e8b1efffff83c40c508b4d18ff15c0b304108d4de8ff15e8b304108d4de4ff15e8b30410eb0433c0eb05b8010000008be55dc21400cc",
+        "reloc_offsets": [
+          7,
+          22,
+          32,
+          41,
+          56,
+          121,
+          126,
+          141,
+          164,
+          173,
+          182,
+          189,
+          194,
+          209,
+          232,
+          241,
+          250
+        ]
+      }
+    },
+    {
+      "key": "McgsIoT",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\McgsIoT\\McgsIoT.ui",
+      "sha256": "b13f70ca606e3a6cc34d9d65f018a26a81888d3fd86fd035960a5ae3c521285a",
+      "preferred_base": 268435456,
+      "SvrGetDevInfo": {
+        "rva": 24304,
+        "bytes": "558bec8b4d0868e8c90010ff1518a100108b450cc700000000008b4510c700000000008b451483e800741a4875258b4d186854c90010ff1518a10010b8010000005dc214008b4d1868e4c90010ff1518a10010b8010000005dc21400cccccccc558bec8b45",
+        "reloc_offsets": [
+          7,
+          13,
+          50,
+          56,
+          73,
+          79
+        ]
+      }
+    }
+  ],
+  "parameter_layout": {
+    "size": 56,
+    "cstring_offsets": [
+      4,
+      8,
+      20
+    ],
+    "enabled_byte": 0,
+    "refresh_ms": 16,
+    "model_cstring": 8,
+    "uid_cstring": 20
+  },
+  "leaf_get_info_signature": "ThisCall int(frontend, CString& model,int* primaryKind,int* childKind,int category0,CString& description), ret20; original wrapper calls only SvrGetDevInfo",
+  "private_document_binding": {
+    "source_instruction": "6083B5 mov [private+9C],doc",
+    "canonical_raw_document_assignment": false
+  },
+  "native_id_allocation": "Only original archive LOAD inside CDevDll::Clone allocates one serial; no raw counter write",
+  "Get_Set_before_claim": false,
+  "runtime_or_PLC_exports_called": false,
+  "native_execution_performed": false,
+  "actual_acceptance_performed": false,
+  "supersedes_profile_sha256": "44a7bf21fe51561250329044b6301a6c4485dc0fd96eed1e044b66a0e3385441",
+  "parameter_lifetime": "Original ctor52E2A0 -> original dtor547FC0; native caller607AC2/607BEE pairs the same owned0x38 aggregate"
+}

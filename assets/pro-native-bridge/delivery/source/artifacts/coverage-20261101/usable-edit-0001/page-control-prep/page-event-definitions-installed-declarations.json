@@ -1,0 +1,177 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "type_info_rva": 16506504,
+  "type_id": 18,
+  "event_array_offset": 72,
+  "event_info_stride": 40,
+  "events": [
+    {
+      "stack_base": -1164,
+      "declaration_ctor_va": "0xc52066",
+      "argument_descriptors": [],
+      "native_name": "Click",
+      "native_name_va": "0x11ec120",
+      "description_resource_id": 42582,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 0,
+      "argument_count": 0,
+      "append_va": "0xc5210c"
+    },
+    {
+      "stack_base": -1244,
+      "declaration_ctor_va": "0xc52129",
+      "argument_descriptors": [],
+      "native_name": "DBLClick",
+      "native_name_va": "0x11ec14c",
+      "description_resource_id": 42583,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 1,
+      "argument_count": 0,
+      "append_va": "0xc521cf"
+    },
+    {
+      "stack_base": -1324,
+      "declaration_ctor_va": "0xc521ec",
+      "argument_descriptors": [],
+      "native_name": "DBRClick",
+      "native_name_va": "0x11ec184",
+      "description_resource_id": 42584,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 2,
+      "argument_count": 0,
+      "append_va": "0xc52292"
+    },
+    {
+      "stack_base": -624,
+      "declaration_ctor_va": "0xc522af",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseDown",
+      "native_name_va": "0x11ec198",
+      "description_resource_id": 42585,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 3,
+      "argument_count": 4,
+      "append_va": "0xc523a9"
+    },
+    {
+      "stack_base": -704,
+      "declaration_ctor_va": "0xc523c6",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseMove",
+      "native_name_va": "0x11ec1ac",
+      "description_resource_id": 42586,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 4,
+      "argument_count": 4,
+      "append_va": "0xc524d2"
+    },
+    {
+      "stack_base": -664,
+      "declaration_ctor_va": "0xc524ef",
+      "argument_descriptors": [
+        3,
+        3,
+        3,
+        3
+      ],
+      "native_name": "MouseUp",
+      "native_name_va": "0x11ec1c0",
+      "description_resource_id": 42587,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 5,
+      "argument_count": 4,
+      "append_va": "0xc525fb"
+    },
+    {
+      "stack_base": -784,
+      "declaration_ctor_va": "0xc52618",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyDown",
+      "native_name_va": "0x11ec1d0",
+      "description_resource_id": 42588,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 6,
+      "argument_count": 2,
+      "append_va": "0xc526fa"
+    },
+    {
+      "stack_base": -744,
+      "declaration_ctor_va": "0xc52717",
+      "argument_descriptors": [
+        3,
+        3
+      ],
+      "native_name": "KeyUp",
+      "native_name_va": "0x11ec1e0",
+      "description_resource_id": 42589,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 7,
+      "argument_count": 2,
+      "append_va": "0xc527f9"
+    },
+    {
+      "stack_base": -1404,
+      "declaration_ctor_va": "0xc52816",
+      "argument_descriptors": [],
+      "native_name": "Load",
+      "native_name_va": "0x11ec1ec",
+      "description_resource_id": 42590,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 8,
+      "argument_count": 0,
+      "append_va": "0xc528ce"
+    },
+    {
+      "stack_base": -1484,
+      "declaration_ctor_va": "0xc528eb",
+      "argument_descriptors": [],
+      "native_name": "Unload",
+      "native_name_va": "0x11ec1f8",
+      "description_resource_id": 42591,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 9,
+      "argument_count": 0,
+      "append_va": "0xc529a3"
+    },
+    {
+      "stack_base": -1564,
+      "declaration_ctor_va": "0xc529c0",
+      "argument_descriptors": [],
+      "native_name": "Resize",
+      "native_name_va": "0x11ec208",
+      "description_resource_id": 42592,
+      "raw_word_10": 0,
+      "raw_dword_C": 3,
+      "native_event_id": 10,
+      "argument_count": 0,
+      "append_va": "0xc52a6c"
+    }
+  ],
+  "source_instructions": [],
+  "native_calls": 0,
+  "note": "Identifiers and argument descriptors derive from actual event-section instructions C52066 onward. Earlier array+34 entries are methods, not event declarations."
+}

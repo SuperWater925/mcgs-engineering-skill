@@ -1,0 +1,448 @@
+{
+  "schema": 1,
+  "binary": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "tables": [
+    {
+      "name": "PictureManager",
+      "vtable_rva": "0xd8d524",
+      "col_rva": "0xe82254",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfa0560",
+      "rtti": ".?AVPictureManager@@",
+      "slots": [
+        "0x12e4",
+        "0xa9fc",
+        "0x3b8bd",
+        "0x3460d",
+        "0x32cbd",
+        "0x34af9",
+        "0x3e702",
+        "0x3790c",
+        "0x32722",
+        "0x8873",
+        "0x3d8b1",
+        "0x1efa1",
+        "0x5236f",
+        "0x6cbc",
+        "0x4763b",
+        "0x2cb5b",
+        "0xb9ec",
+        "0x3cdf3",
+        "0xab73",
+        "0x970f",
+        "0x4ce5b",
+        "0x53b2",
+        "0x29933",
+        "0x162c0",
+        "0x2c3ea",
+        "0x2f383",
+        "0x54007",
+        "0x3e0a9"
+      ]
+    },
+    {
+      "name": "PictureNameService",
+      "vtable_rva": "0xd8d5c0",
+      "col_rva": "0xe823f0",
+      "complete_offset": 8,
+      "type_descriptor_rva": "0xfa0560",
+      "rtti": ".?AVPictureManager@@",
+      "slots": [
+        "0x5097f",
+        "0x20905"
+      ]
+    },
+    {
+      "name": "PicturePreload",
+      "vtable_rva": "0xd8d5d4",
+      "col_rva": "0xe82408",
+      "complete_offset": 52,
+      "type_descriptor_rva": "0xfa0560",
+      "rtti": ".?AVPictureManager@@",
+      "slots": [
+        "0xc149",
+        "0x17a6c",
+        "0x1c58",
+        "0x54d59",
+        "0x100f0"
+      ]
+    },
+    {
+      "name": "Picture",
+      "vtable_rva": "0xdf69d4",
+      "col_rva": "0xe8bc9c",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfa8240",
+      "rtti": ".?AVCPicture@@",
+      "slots": [
+        "0x38bf4",
+        "0x4bd3f",
+        "0x3b8bd",
+        "0x3460d",
+        "0x1b1a3",
+        "0x4c235",
+        "0x4a629",
+        "0x2d05b",
+        "0x32722",
+        "0x4e7dd",
+        "0x2f87e",
+        "0x1efa1",
+        "0x5236f",
+        "0x6cbc",
+        "0x34e28",
+        "0xdea9",
+        "0x2a08b",
+        "0x50df3",
+        "0x419e8",
+        "0x10c26",
+        "0x3d2d0",
+        "0x36f5c",
+        "0x44dd7",
+        "0x162c0"
+      ]
+    },
+    {
+      "name": "PictureImage",
+      "vtable_rva": "0xdf099c",
+      "col_rva": "0xe8b364",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0xfa7bfc",
+      "rtti": ".?AVCOwnerBitmap@@",
+      "slots": [
+        "0x52af4",
+        "0x357f6",
+        "0x327e0",
+        "0x1131",
+        "0x1fbe5",
+        "0x38eab",
+        "0x1777e",
+        "0x200fe",
+        "0x3d9ce",
+        "0x48545",
+        "0x4c20d",
+        "0x1e42a",
+        "0x409c1",
+        "0x2cbc4",
+        "0xcc34",
+        "0x2da9c",
+        "0x1599c",
+        "0x97be",
+        "0x39e0f",
+        "0x1253a",
+        "0x133a9",
+        "0x26337"
+      ]
+    },
+    {
+      "name": "PictureImageSecondary",
+      "vtable_rva": "0xdf0a0c",
+      "col_rva": "0xe8b3c8",
+      "complete_offset": 4,
+      "type_descriptor_rva": "0xfa7bfc",
+      "rtti": ".?AVCOwnerBitmap@@",
+      "slots": [
+        "0x109e7",
+        "0xf6c8",
+        "0x3b8bd",
+        "0x3460d",
+        "0x363e",
+        "0x4194d",
+        "0x3bb74",
+        "0x143fd",
+        "0x42136"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "ManagerConstructor",
+      "rva": "0x578c20",
+      "bytes": "558bec6aff68d0a4fd0064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4df0e87c57abffc745fc000000008b4df083c134e85950aaff",
+      "reloc_offsets": [
+        6,
+        19
+      ]
+    },
+    {
+      "name": "PictureConstructor",
+      "rva": "0x882600",
+      "bytes": "558bec6aff686b51010164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894df08b4df0e85be979ffc745fc000000008b45f0c700d4691f01",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "name": "ImageConstructor",
+      "rva": "0x85d510",
+      "bytes": "558bec6aff689729010164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894df08b4df0e838797dffc745fc000000008b4df083c104e814be",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "NameMapSize",
+      "rva": "0x1ded5",
+      "bytes": "e9364e5600e9b1954700e9dc273000e9671ea400e992cd5000e99d590e00e9186d7c00e973388600e98eb25300e9b9ec5000e914fd2700e92fcf7f00e98ac672",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapSizeBody",
+      "rva": "0x582d10",
+      "bytes": "558bec51894dfc8b4dfce858d4a8ff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b4dfce8c661abff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawSize",
+      "rva": "0x10177",
+      "bytes": "e9d42b5700e94f289d00e97aef2900e945810c00e9200e6500e99b615300e93661a600e9910f7500e9fcd75300e9e7910600e952435b00e96d6da300e9a8774a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawSizeBody",
+      "rva": "0x582d50",
+      "bytes": "558bec51894dfc8b45fc8b40048be55dc3cccccccccccccccccccccccccccccc558bec51894dfc8b45fc8b4dfc8b40042b01c1f8028be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapBegin",
+      "rva": "0x51140",
+      "bytes": "e9eb0d5300e9a6b39800e971855900e98c11a000e937385600e922874200e95db77600e9a8ec2e00e94380a000e99e747c00e9893f5100e9d41e5300e9ff0b21",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapBeginBody",
+      "rva": "0x581f30",
+      "bytes": "558bec51894dfc8b4508508b4dfce86903a8ff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce8f7",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawBegin",
+      "rva": "0x22ac",
+      "bytes": "e9dffc5700e98a685300e9b5aa0800e9c0c39800e99be09100e9c6649000e9e1007800e93c1f4b00e957497b00e9823f5500e9ad1b4b00e918375c00e9e3f935",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawBeginBody",
+      "rva": "0x581f90",
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b1152e86d74acff83c4048b00508b4d08e8a178acff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapEnd",
+      "rva": "0x10780",
+      "bytes": "e96b1b5700e9b6c55400e9d1a55100e9ccdd9600e9f7389000e9f2549f00e98dd66b00e988374700e953758f00e97e6e7600e9e9194200e9f4709f00e9dfb110",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapEndBody",
+      "rva": "0x5822f0",
+      "bytes": "558bec51894dfc8b4508508b4dfce8c3aeacff8b45088be55dc20400cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b4508508b4dfce871",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawEnd",
+      "rva": "0x4d1c6",
+      "bytes": "e985515300e9c0ca8b00e91b377400e9e66c7c00e9215a3800e99c750600e9373f3100e9f26aa000e99dc67d00e9b81f5900e90377a100e94ea48d00e939657b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapRawEndBody",
+      "rva": "0x582350",
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e8ec74acff8b45088be55dc20400cccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b11",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapIteratorValue",
+      "rva": "0x22520",
+      "bytes": "e9cbd85500e9561f4c00e991811d00e94ccb1c00e927388b00e9f2858100e9ddc25400e9184a5200e9432c4f00e97ebe9f00e9e97c9700e904ed7200e94f9804",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapIteratorValueBody",
+      "rva": "0x57fdf0",
+      "bytes": "558bec51894dfc8b4dfce83cababff50e83ee1a9ff83c4048be55dc3cccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b45fc8b0851e8180b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapIteratorNode",
+      "rva": "0x3a93b",
+      "bytes": "e900555400e93bb12300e956627f00e9a1657000e97c373700e9271d2b00e972197600e95d798400e9b85a6600e933752500e96ed79800e9e91c3500e904cb28",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapIteratorNodeBody",
+      "rva": "0x57fe40",
+      "bytes": "558bec51894dfc8b4dfce8abdea9ff8be55dc3cccccccccccccccccccccccccc558bec51894dfc8b45fc8b0851e8d80aabff83c4048be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapPair",
+      "rva": "0x3094a",
+      "bytes": "e9810e5500e91c415100e9b7d53000e912e12700e99d491c00e928d48500e973335800e9fe4e4600e979034500e9441a2300e9af647e00e96a315600e905d411",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameMapPairBody",
+      "rva": "0x5817d0",
+      "bytes": "558bec8b450883c0085dc3cccccccccc558bec8b45085dc3cccccccccccccccc558bec51894dfc8be55dc20800cccccc558bec8b450883c0045dc3cccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorConstructor",
+      "rva": "0x15145",
+      "bytes": "e9e6130d00e9e1aea400e92ce77c00e907b85a00e932e17800e90d0f4d00e968026400e943345000e9ae082e00e9a9390a00e934897200e9ff475000e91a2a2e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorConstructorBody",
+      "rva": "0xe6530",
+      "bytes": "558bec51894dfc8b45fcc700000000008b4dfcc74104000000008b55fcc74208000000008b45fc8be55dc3cccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorBegin",
+      "rva": "0x3c6c8",
+      "bytes": "e9e3c50a00e94e9d1500e919401500e944e89300e90ff07d00e99ad47700e9157f7500e9c05c2b00e92b281300e966d49500e911027b00e93c006700e977336c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorBeginBody",
+      "rva": "0xe8cb0",
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e808d7f4ff8b45088be55dc20400cccccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b11",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorEnd",
+      "rva": "0xd869",
+      "bytes": "e9d2b70d00e9ddae0a00e9083ca800e923a05600e9be875400e919227f00e944071400e93fc0a400e91ad69200e93581a300e970819f00e92b8b0900e9969b63",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorEndBody",
+      "rva": "0xe9040",
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b5104528b4d08e877d3f4ff8b45088be55dc20400cccccccccccccccccccccccccc558bec51894dfc8b45fc508b4dfc8b51",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorNext",
+      "rva": "0x2516c",
+      "bytes": "e9bf1e0c00e9fab70700e9b592ab00e970848900e93be30d00e926c27200e921897100e9fc206500e9c7e83200e9a25e8100e96d565300e9b8d53a00e9838938",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameVectorNextBody",
+      "rva": "0xe7030",
+      "bytes": "558bec51894dfc8b45fc8b0883c1048b55fc890a8b45fc8be55dc3cccccccccccccccccccccccccccccccccccccccccc558bec51894dfc8b45fc8b0883c1308b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ManagerFindPicture",
+      "rva": "0x579530",
+      "bytes": "558bec83ec0c894dfc8b4508508d4df8518b4dfc83c14ce8a72baaff8d55f4528b4dfc83c14ce82572a9ff508d4df8e84b0ca9ff0fb6c085c0740433c0eb0b8d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureGetName",
+      "rva": "0x882780",
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c010508b4d08ff1554913c018b4dfc83c901894dfc8b45088be55dc20400cccccccccccccccccccccccccccc",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "name": "PictureSetName",
+      "rva": "0x8827c0",
+      "bytes": "558bec51894dfc8b4508508b4dfc83c110ff15708e3c018b4d08518b4dfc83c1188b55fc8b42188b5044ffd2b0018be55dc20400cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "PicturePreloadSetDirty",
+      "rva": "0x578f00",
+      "bytes": "558bec51894dfc8b45fcc64005018be55dc3cccccccccccccccccccccccccccc558bec6aff68c8a5fd0064a1000000005081ec94000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        38,
+        56
+      ]
+    },
+    {
+      "name": "PicturePreloadAdd",
+      "rva": "0x578f20",
+      "bytes": "558bec6aff68c8a5fd0064a1000000005081ec94000000a1600b3b0133c5508d45f464a300000000894df0837d0800750732c0e92e0200008d45ac508b4d088b",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "PicturePreloadSave",
+      "rva": "0x579b10",
+      "bytes": "558bec51894dfc8b4dfc83e934e85e23acffb0018be55dc3cccccccccccccccc558bec6aff68e7a6fd0064a1000000005083ec60a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        38,
+        53
+      ]
+    },
+    {
+      "name": "PictureManagerSave",
+      "rva": "0x57ac10",
+      "bytes": "558bec6aff6872a9fd0064a100000000505181ec40010000535657a1600b3b0133c5508d45f464a3000000008965f0894dec8b4dece814d4acff8b45ec0fb648",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "PictureRekey",
+      "rva": "0x579b30",
+      "bytes": "558bec6aff68e7a6fd0064a1000000005083ec60a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df083c144e88825aaff8d55cc528b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    }
+  ],
+  "mfc": {
+    "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "byte_array": {
+      "name": "CByteArray",
+      "vtable_rva": "0x362b8",
+      "col_rva": "0x362cc",
+      "complete_offset": 0,
+      "type_descriptor_rva": "0x2a3e54",
+      "rtti": ".?AVCByteArray@@",
+      "slots": [
+        "0x1c25fa",
+        "0x260a37",
+        "0x1c253b"
+      ]
+    }
+  },
+  "layout": {
+    "name_map": 76,
+    "name_vector": 108,
+    "hash_map": 120,
+    "manager_raw_size": 208,
+    "picture_raw_size": 208,
+    "picture_name": 16,
+    "picture_hash": 20,
+    "image": 24,
+    "image_raw_size": 164,
+    "image_vector_root": 20,
+    "image_byte_array": 44,
+    "image_frame_list": 136,
+    "loaded": 56,
+    "dirty": 57
+  },
+  "raw_catalog_only": true,
+  "serialization_called": false,
+  "hash_normalization_called": false,
+  "host_invoked": false,
+  "project_written": false
+}

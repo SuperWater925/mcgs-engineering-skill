@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "purpose": "monidev-existing-cache-preservation-and-original-conditional-store",
+  "main_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "driver_sha256": "291d6e0fd5dfd1b71afa5c7172f69e6db6b6863b969c51bdc665cd566c5be1b9",
+  "driver_path": "C:\\unbound-install-root\\Program\\Drivers\\通用设备\\模拟数据设备\\monidevdrv.ui",
+  "driver_profile_sha256": "a1bf858bbd8ebb561b216f0915c5431a243d00eea062b05f58aee151934bccc6",
+  "functions": [
+    {
+      "name": "DeviceConditionalStoreCollect",
+      "module": "McgsSetPro.exe",
+      "rva": 1463904,
+      "bytes": "558bec51894dfc8b45fc83b8fc0000000075088b4dfce8f684eeff8b4dfc83b9fc0000000074108b55fc8b8afc000000e802abedffeb0233c08be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendConditionalStoreCollect",
+      "module": "McgsSetPro.exe",
+      "rva": 1447824,
+      "bytes": "558bec83ec0c894dfc8b45fc508b4dfce8836ceeff8945f8817df801400080746f817df85700078074668b4dfc83790c00745d8b55fc8b4a0ce8c2f9eeff8945f48b45fc8378300074466aff8b4df4518b55fc8b4a3081c100010000e8add69c008b45fc8b480ce83c06efff6a008b4dfc8b490ce8c2caecff8b55fc8b42300500010000508b4dfc8b490ce8fd47ebffb8010000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "FrontendSaveExportDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1513152,
+      "bytes": "558bec83ec10894df88b45f8837824007455c745fc0000000068789d11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc00740b8b450850ff55fceb10eb07b801400080eb07eb05b8570007808be55dc20400",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "DeviceSerializeStore",
+      "module": "McgsSetPro.exe",
+      "rva": 1467392,
+      "bytes": "558bec83ec10894dfc8b4d08e89588eeff85c074328b45fc0fb6881401000085c974138b55fc8b42180d000000018b4dfc894118eb118b55fc8b421825fffffff08b4dfc8941188b4d08e85788eeff85c00f840c0100008b5508528b4dfce8e243eeff8b45088945f08b4dfc81c118010000518b4df0e8fc75eeff8b55fc8b4240508b4d08e8b3c0ecff8b4dfc0fb69114010000528b4d08e8af03ebff8b45fc8b8834010000518b4d08e88ec0ecff8b5508528b4dfc81c1d8000000e8ced8ebff8b4dfc81c1cc000000e8ac00ecff508b4d08e867c3ecffc745f800000000eb098b45f883c0018945f88b4dfc81c1cc000000e88300ecff3945f8731f8b4d08518b55f8528b4dfc81c1cc000000e869cae9ff8bc8e875d8ebffebc58b4dfce88a68ecff8b4dfc81c100010000e8abbee9ff508b4d08e802c0ecff8b4dfc81c100010000e894bee9ff508b4dfc81c100010000e85186ecff508b4d08e891899c00eb3aa055dd38018845f4807df4007408807df4017415eb248b4d08518b55fc8b028b4dfc8b5058ffd2eb118b4508508b4dfc8b118b4dfc8b425cffd0",
+      "reloc_offsets": [
+        356
+      ]
+    },
+    {
+      "name": "StreamConstructor",
+      "module": "McgsSetPro.exe",
+      "rva": 8767504,
+      "bytes": "558bec51894dfc8b45fcc70018f61e018b4dfc83c104e8df262d008b4dfcc74118000000008b55fc8b450889421c8b4dfcc74120000000008b55fcc74224000000008b45fcc74028000000008b45fc8be55dc20400",
+      "reloc_offsets": [
+        12
+      ]
+    },
+    {
+      "name": "StreamBounds",
+      "module": "McgsSetPro.exe",
+      "rva": 8769328,
+      "bytes": "558bec83ec10894dfc8b45fc8378240074298b4dfc8b51180355088b45fc3950287209c745f801000000eb07c745f8000000008a45f8e9b30000008b4dfc83791c00752f8b4dfc83c104e85e547aff8b55fc8b4a18034d083bc17c09c745f401000000eb07c745f4000000008a45f4eb7deb798b4dfc83c104e82f547aff8b55fc8b4a18034d083bc17c06b001eb5feb5b8b4dfc83c104e811547aff05000020008b55fc8b4a18034d083bc17c278b4dfc83c104e8f4537aff8945f06aff8b55f081c200002000528b4dfc83c104e89b1e2d00eb176aff8b45fc8b4818034d08518b4dfc83c104e8821e2d00b0018be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MemoryBackendPointerArrayCtor",
+      "module": "mfc110u.dll",
+      "rva": 437105,
+      "bytes": "33c089410489411089410c894108c701e46303108bc1c3",
+      "reloc_offsets": [
+        16
+      ]
+    },
+    {
+      "name": "MemoryPropertyBackendAllocation",
+      "module": "monidevdrv.ui",
+      "rva": 8384,
+      "bytes": "558bec578b7d08837f1000753f566a28e8591300008bf083c40485f674288d4e10e86a1500000f57c0f20f1106c7460c00000000c64608018977105eb8010000005f5dc20c0033f68977105eb8010000005f5dc20c00cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MemoryBackendLoadRows",
+      "module": "monidevdrv.ui",
+      "rva": 6352,
+      "bytes": "558bec83ec0853578b7d088bd9895df8c7471800000000c7450800000000e8adfeffff6a048d4508508bcfe8b0080000837d08000f8eaa0000008d43108945fc33db566a28e8141b00008bf083c40485f67435f20f100d105600100f57c0f20f1106f20f114e08f20f100d20560010f20f114618f20f100518560010f20f114e10f20f114620eb0233f66a08568bcfe84c0800006a088d4608508bcfe83f0800006a088d4610508bcfe8320800006a088d4618508bcfe8250800006a088d4620508bcfe8180800008b45fc56ff70088bc8e8b61c0000433b5d080f8c63ffffff8b5df85eb8010000005f89430c5b8be55dc20400",
+      "reloc_offsets": [
+        87,
+        107,
+        120
+      ]
+    }
+  ],
+  "data_guards": [
+    {
+      "name": "SaveExportName",
+      "module": "McgsSetPro.exe",
+      "rva": 13737336,
+      "bytes": "537672536176654465764461746100",
+      "reloc_offsets": []
+    }
+  ],
+  "stream_primary_vtable_rva": 14611992,
+  "stream_embedded_bytearray_vtable_rva": 221880,
+  "backend_pointer_array_vtable_rva": 222180,
+  "backend_size": 40,
+  "backend_array_offset": 16,
+  "backend_item_size": 40,
+  "GetProperty_supported": false,
+  "conditional_save_export_absent": true,
+  "serialized_BLOB_source": "already canonical CDevDll+100 CByteArray; original Serialize565660/561790 skips E_NOTIMPL and leaves it exactly unchanged",
+  "unconditional_565620_561700_collect_allowed": false,
+  "backend_business_semantics_claimed": false,
+  "native_execution_performed": false
+}

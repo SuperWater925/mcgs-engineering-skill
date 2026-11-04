@@ -1,0 +1,1903 @@
+{
+  "schema": 1,
+  "binary": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "method": "CRuntimeClass name/size/schema/create+base function pointers; factory direct constructor with matching primary RTTI-vtable write and unique native type constructor argument or type-field+0xC immediate. Metadata only, not permission to call a constructor.",
+  "classes": [
+    {
+      "class_name": "CDrawActiveX",
+      "runtime_class_rva": "0xf8b778",
+      "size": 608,
+      "schema": 0,
+      "factory_entry_rva": "0x33393",
+      "factory_body_rva": "0xb4910",
+      "constructors": [
+        {
+          "entry": "0x4b49b0",
+          "primary_vtables": [
+            "0x10f275c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x4b49d6",
+              "type_id": 20535,
+              "type_hex": "0x5037",
+              "instruction": "0x5037"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20535
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawAlm",
+      "runtime_class_rva": "0xf91be8",
+      "size": 1204,
+      "schema": 0,
+      "factory_entry_rva": "0x5015",
+      "factory_body_rva": "0x365700",
+      "constructors": [
+        {
+          "entry": "0x7657a0",
+          "primary_vtables": [
+            "0x115c66c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7657c6",
+              "type_id": 20524,
+              "type_hex": "0x502c",
+              "instruction": "0x502c"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20524
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawArc",
+      "runtime_class_rva": "0xf96a98",
+      "size": 244,
+      "schema": 0,
+      "factory_entry_rva": "0x53062",
+      "factory_body_rva": "0x432e60",
+      "constructors": [
+        {
+          "entry": "0x832f00",
+          "primary_vtables": [
+            "0x1172f64"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x832f07",
+              "type_id": 20483,
+              "type_hex": "0x5003",
+              "instruction": "0x5003"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20483
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawArrow1",
+      "runtime_class_rva": "0xf96c00",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x3e3e7",
+      "factory_body_rva": "0x448390",
+      "constructors": [
+        {
+          "entry": "0x848430",
+          "primary_vtables": [
+            "0x1174ebc"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x848437",
+              "type_id": 20505,
+              "type_hex": "0x5019",
+              "instruction": "0x5019"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20505
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawArrow2",
+      "runtime_class_rva": "0xf96c6c",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x43937",
+      "factory_body_rva": "0x449ff0",
+      "constructors": [
+        {
+          "entry": "0x84a090",
+          "primary_vtables": [
+            "0x1175094"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84a097",
+              "type_id": 20506,
+              "type_hex": "0x501a",
+              "instruction": "0x501a"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20506
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawArrow3",
+      "runtime_class_rva": "0xf96780",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x2da1f",
+      "factory_body_rva": "0x44bc10",
+      "constructors": [
+        {
+          "entry": "0x84bcb0",
+          "primary_vtables": [
+            "0x117526c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84bcb7",
+              "type_id": 20507,
+              "type_hex": "0x501b",
+              "instruction": "0x501b"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20507
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawBall3D",
+      "runtime_class_rva": "0xf96954",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x40ad9",
+      "factory_body_rva": "0x4409f0",
+      "constructors": [
+        {
+          "entry": "0x840a90",
+          "primary_vtables": [
+            "0x11741d4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x840a97",
+              "type_id": 20515,
+              "type_hex": "0x5023",
+              "instruction": "0x5023"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20515
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawBalloon",
+      "runtime_class_rva": "0xf96738",
+      "size": 240,
+      "schema": 0,
+      "factory_entry_rva": "0x3d780",
+      "factory_body_rva": "0x437bc0",
+      "constructors": [
+        {
+          "entry": "0x884eb0",
+          "primary_vtables": [
+            "0x117389c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x884eb7",
+              "type_id": 20494,
+              "type_hex": "0x500e",
+              "instruction": "0x500e"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20494
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawBitmap",
+      "runtime_class_rva": "0xf96810",
+      "size": 392,
+      "schema": 0,
+      "factory_entry_rva": "0x14b5f",
+      "factory_body_rva": "0x42be50",
+      "constructors": [
+        {
+          "entry": "0x82bef0",
+          "primary_vtables": [
+            "0x1172b9c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x82bf16",
+              "type_id": 20489,
+              "type_hex": "0x5009",
+              "instruction": "0x5009"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20489
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawButton",
+      "runtime_class_rva": "0xf91d10",
+      "size": 1080,
+      "schema": 0,
+      "factory_entry_rva": "0x36363",
+      "factory_body_rva": "0x368f00",
+      "constructors": [
+        {
+          "entry": "0x768fa0",
+          "primary_vtables": [
+            "0x115de6c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x768fc6",
+              "type_id": 20519,
+              "type_hex": "0x5027",
+              "instruction": "0x5027"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20519
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawCell",
+      "runtime_class_rva": "0xf96b28",
+      "size": 256,
+      "schema": 0,
+      "factory_entry_rva": "0x29d61",
+      "factory_body_rva": "0x426970",
+      "constructors": [
+        {
+          "entry": "0x826a10",
+          "primary_vtables": [
+            "0x117224c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x826a36",
+              "type_id": 20537,
+              "type_hex": "0x5039",
+              "instruction": "0x5039"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20537
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawCircle3D",
+      "runtime_class_rva": "0xf969c0",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x24500",
+      "factory_body_rva": "0x440b60",
+      "constructors": [
+        {
+          "entry": "0x840c00",
+          "primary_vtables": [
+            "0x11743ac"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x840c07",
+              "type_id": 20516,
+              "type_hex": "0x5024",
+              "instruction": "0x5024"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20516
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawComboBox",
+      "runtime_class_rva": "0xf92680",
+      "size": 452,
+      "schema": 0,
+      "factory_entry_rva": "0x3852d",
+      "factory_body_rva": "0x383fb0",
+      "constructors": [
+        {
+          "entry": "0x784050",
+          "primary_vtables": [
+            "0x115fd4c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x784076",
+              "type_id": 20540,
+              "type_hex": "0x503c",
+              "instruction": "0x503c"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20540
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawComboBoxPage3",
+      "runtime_class_rva": "0xd5fd00",
+      "size": 364,
+      "schema": 65535,
+      "factory_entry_rva": null,
+      "constructors": [],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawCross",
+      "runtime_class_rva": "0xf967c8",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x39310",
+      "factory_body_rva": "0x43c000",
+      "constructors": [
+        {
+          "entry": "0x83c0a0",
+          "primary_vtables": [
+            "0x1173a74"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x83c0a7",
+              "type_id": 20495,
+              "type_hex": "0x500f",
+              "instruction": "0x500f"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20495
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawCtrl",
+      "runtime_class_rva": "0xfa3dec",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x1a69a",
+      "factory_body_rva": "0x746cf0",
+      "constructors": [
+        {
+          "entry": "0x7d70f0",
+          "primary_vtables": [
+            "0x10f2524"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawCube",
+      "runtime_class_rva": "0xf96858",
+      "size": 240,
+      "schema": 0,
+      "factory_entry_rva": "0x618b",
+      "factory_body_rva": "0x43d050",
+      "constructors": [
+        {
+          "entry": "0x83d0f0",
+          "primary_vtables": [
+            "0x1173c4c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x83d0f7",
+              "type_id": 20496,
+              "type_hex": "0x5010",
+              "instruction": "0x5010"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20496
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawDiamond",
+      "runtime_class_rva": "0xf96bdc",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x98f4",
+      "factory_body_rva": "0x4365b0",
+      "constructors": [
+        {
+          "entry": "0x836650",
+          "primary_vtables": [
+            "0x11734ec"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x836657",
+              "type_id": 20492,
+              "type_hex": "0x500c",
+              "instruction": "0x500c"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20492
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawDll",
+      "runtime_class_rva": "0xf92ab8",
+      "size": 312,
+      "schema": 0,
+      "factory_entry_rva": "0x14eb1",
+      "factory_body_rva": "0x396670",
+      "constructors": [
+        {
+          "entry": "0x795f70",
+          "primary_vtables": [
+            "0x1162224"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x795f98",
+              "type_id": 20541,
+              "type_hex": "0x503d",
+              "instruction": "0x503d"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20541
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawEdit",
+      "runtime_class_rva": "0xf94c64",
+      "size": 496,
+      "schema": 0,
+      "factory_entry_rva": "0x2066c",
+      "factory_body_rva": "0x3b76d0",
+      "constructors": [
+        {
+          "entry": "0x7b7770",
+          "primary_vtables": [
+            "0x1163cb4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7b7796",
+              "type_id": 20517,
+              "type_hex": "0x5025",
+              "instruction": "0x5025"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20517
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawEllipse",
+      "runtime_class_rva": "0xf967a4",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x17e72",
+      "factory_body_rva": "0x42b8e0",
+      "constructors": [
+        {
+          "entry": "0x82b980",
+          "primary_vtables": [
+            "0x11729c4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x82b987",
+              "type_id": 20486,
+              "type_hex": "0x5006",
+              "instruction": "0x5006"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20486
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawFilePlay",
+      "runtime_class_rva": "0xf95018",
+      "size": 304,
+      "schema": 0,
+      "factory_entry_rva": "0x19c4",
+      "factory_body_rva": "0x3c8740",
+      "constructors": [
+        {
+          "entry": "0x7c87e0",
+          "primary_vtables": [
+            "0x1165ae4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7c8806",
+              "type_id": 20532,
+              "type_hex": "0x5034",
+              "instruction": "0x5034"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20532
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawFlow",
+      "runtime_class_rva": "0xf950d4",
+      "size": 348,
+      "schema": 0,
+      "factory_entry_rva": "0xaa42",
+      "factory_body_rva": "0x3cb400",
+      "constructors": [
+        {
+          "entry": "0x7cb4a0",
+          "primary_vtables": [
+            "0x1166b3c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7cb4c6",
+              "type_id": 20518,
+              "type_hex": "0x5026",
+              "instruction": "0x5026"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20518
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawFlow1",
+      "runtime_class_rva": "0xf95428",
+      "size": 352,
+      "schema": 0,
+      "factory_entry_rva": "0x1dca5",
+      "factory_body_rva": "0x3d60e0",
+      "constructors": [
+        {
+          "entry": "0x7d6180",
+          "primary_vtables": [
+            "0x1167d5c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawGrid",
+      "runtime_class_rva": "0xf95534",
+      "size": 460,
+      "schema": 0,
+      "factory_entry_rva": "0x6159",
+      "factory_body_rva": "0x3e3570",
+      "constructors": [
+        {
+          "entry": "0x7e3610",
+          "primary_vtables": [
+            "0x1168c84"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7e3636",
+              "type_id": 20527,
+              "type_hex": "0x502f",
+              "instruction": "0x502f"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20527
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawGuan",
+      "runtime_class_rva": "0xf969e4",
+      "size": 244,
+      "schema": 0,
+      "factory_entry_rva": "0x49c3d",
+      "factory_body_rva": "0x4506a0",
+      "constructors": [
+        {
+          "entry": "0x850740",
+          "primary_vtables": [
+            "0x1175f54"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x850747",
+              "type_id": 20503,
+              "type_hex": "0x5017",
+              "instruction": "0x5017"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20503
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawHalfBox",
+      "runtime_class_rva": "0xf9675c",
+      "size": 244,
+      "schema": 0,
+      "factory_entry_rva": "0x33b04",
+      "factory_body_rva": "0x42ac50",
+      "constructors": [
+        {
+          "entry": "0x82acf0",
+          "primary_vtables": [
+            "0x11727ec"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x82acf7",
+              "type_id": 20504,
+              "type_hex": "0x5018",
+              "instruction": "0x5018"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20504
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawHexagon",
+      "runtime_class_rva": "0xf96a2c",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x1d273",
+      "factory_body_rva": "0x440cd0",
+      "constructors": [
+        {
+          "entry": "0x840d70",
+          "primary_vtables": [
+            "0x1174584"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x840d77",
+              "type_id": 20498,
+              "type_hex": "0x5012",
+              "instruction": "0x5012"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20498
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawHisGrid",
+      "runtime_class_rva": "0xfa15e4",
+      "size": 392,
+      "schema": 0,
+      "factory_entry_rva": "0x16fa9",
+      "factory_body_rva": "0x61ba20",
+      "constructors": [
+        {
+          "entry": "0xa1bac0",
+          "primary_vtables": [
+            "0x11ac5ec"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0xa1bae6",
+              "type_id": 20528,
+              "type_hex": "0x5030",
+              "instruction": "0x5030"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20528
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawHisGridPage11",
+      "runtime_class_rva": "0xdac140",
+      "size": 368,
+      "schema": 65535,
+      "factory_entry_rva": null,
+      "constructors": [],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawHisGridPageTJ",
+      "runtime_class_rva": "0xdabef4",
+      "size": 972,
+      "schema": 65535,
+      "factory_entry_rva": null,
+      "constructors": [],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawHisGridPageText",
+      "runtime_class_rva": "0xdabf88",
+      "size": 1452,
+      "schema": 65535,
+      "factory_entry_rva": null,
+      "constructors": [],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawHisPic",
+      "runtime_class_rva": "0xf9577c",
+      "size": 676,
+      "schema": 0,
+      "factory_entry_rva": "0x35dc3",
+      "factory_body_rva": "0x3eacf0",
+      "constructors": [
+        {
+          "entry": "0x7ead90",
+          "primary_vtables": [
+            "0x116a194"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x7eadb6",
+              "type_id": 20526,
+              "type_hex": "0x502e",
+              "instruction": "0x502e"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20526
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawInputPageSafety",
+      "runtime_class_rva": "0xd6bb94",
+      "size": 340,
+      "schema": 65535,
+      "factory_entry_rva": null,
+      "constructors": [],
+      "proven_type_ids": [],
+      "mapping_confirmed": false
+    },
+    {
+      "class_name": "CDrawIsoscelestriangle",
+      "runtime_class_rva": "0xf96a74",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x21c0b",
+      "factory_body_rva": "0x441d30",
+      "constructors": [
+        {
+          "entry": "0x884ef0",
+          "primary_vtables": [
+            "0x117475c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x884ef7",
+              "type_id": 20499,
+              "type_hex": "0x5013",
+              "instruction": "0x5013"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20499
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawLabel",
+      "runtime_class_rva": "0xf9699c",
+      "size": 392,
+      "schema": 0,
+      "factory_entry_rva": "0x338f7",
+      "factory_body_rva": "0x42c9d0",
+      "constructors": [
+        {
+          "entry": "0x82ca70",
+          "primary_vtables": [
+            "0x1172d8c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x82ca96",
+              "type_id": 20488,
+              "type_hex": "0x5008",
+              "instruction": "0x5008"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20488
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawLine",
+      "runtime_class_rva": "0xf96a50",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x3ff67",
+      "factory_body_rva": "0x425d40",
+      "constructors": [
+        {
+          "entry": "0x825de0",
+          "primary_vtables": [
+            "0x1171e9c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x825de7",
+              "type_id": 20482,
+              "type_hex": "0x5002",
+              "instruction": "0x5002"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20482
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawMulBtn",
+      "runtime_class_rva": "0xf95e94",
+      "size": 508,
+      "schema": 0,
+      "factory_entry_rva": "0x484e6",
+      "factory_body_rva": "0x400c70",
+      "constructors": [
+        {
+          "entry": "0x800d10",
+          "primary_vtables": [
+            "0x116c78c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x800d36",
+              "type_id": 20520,
+              "type_hex": "0x5028",
+              "instruction": "0x5028"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20520
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawMulDis",
+      "runtime_class_rva": "0xf963d0",
+      "size": 444,
+      "schema": 0,
+      "factory_entry_rva": "0x2b102",
+      "factory_body_rva": "0x4177c0",
+      "constructors": [
+        {
+          "entry": "0x817860",
+          "primary_vtables": [
+            "0x11700c4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x817886",
+              "type_id": 20522,
+              "type_hex": "0x502a",
+              "instruction": "0x502a"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20522
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawObj",
+      "runtime_class_rva": "0xfa3dc8",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x11b62",
+      "factory_body_rva": "0x741bd0",
+      "constructors": [
+        {
+          "entry": "0xb41960",
+          "primary_vtables": [
+            "0x1171aec"
+          ],
+          "type_writes": [
+            {
+              "at": "0xb41a30",
+              "type_id": 20480,
+              "type_hex": "0x5000",
+              "instruction": "dword ptr [edx + 0xc], 0x5000"
+            }
+          ],
+          "type_constructor_args": [],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20480
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawOctagon",
+      "runtime_class_rva": "0xf96c24",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x2e64",
+      "factory_body_rva": "0x436dc0",
+      "constructors": [
+        {
+          "entry": "0x836e60",
+          "primary_vtables": [
+            "0x11736c4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x836e67",
+              "type_id": 20493,
+              "type_hex": "0x500d",
+              "instruction": "0x500d"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20493
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawParallelogram",
+      "runtime_class_rva": "0xf96b04",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x30427",
+      "factory_body_rva": "0x433e10",
+      "constructors": [
+        {
+          "entry": "0x833eb0",
+          "primary_vtables": [
+            "0x117313c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x833eb7",
+              "type_id": 20490,
+              "type_hex": "0x500a",
+              "instruction": "0x500a"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20490
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPentagon",
+      "runtime_class_rva": "0xf968c4",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x495d0",
+      "factory_body_rva": "0x43f1d0",
+      "constructors": [
+        {
+          "entry": "0x83f270",
+          "primary_vtables": [
+            "0x1173e24"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x83f277",
+              "type_id": 20497,
+              "type_hex": "0x5011",
+              "instruction": "0x5011"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20497
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPentagon3D",
+      "runtime_class_rva": "0xf9690c",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x25bc6",
+      "factory_body_rva": "0x440880",
+      "constructors": [
+        {
+          "entry": "0x840920",
+          "primary_vtables": [
+            "0x1173ffc"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x840927",
+              "type_id": 20514,
+              "type_hex": "0x5022",
+              "instruction": "0x5022"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20514
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPic",
+      "runtime_class_rva": "0xf9d400",
+      "size": 900,
+      "schema": 0,
+      "factory_entry_rva": "0x510f",
+      "factory_body_rva": "0x49e360",
+      "constructors": [
+        {
+          "entry": "0x89e400",
+          "primary_vtables": [
+            "0x11786a4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x89e426",
+              "type_id": 20525,
+              "type_hex": "0x502d",
+              "instruction": "0x502d"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20525
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPipe1",
+      "runtime_class_rva": "0xf968e8",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x3825d",
+      "factory_body_rva": "0x44d9d0",
+      "constructors": [
+        {
+          "entry": "0x84da70",
+          "primary_vtables": [
+            "0x11759cc"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84da77",
+              "type_id": 20511,
+              "type_hex": "0x501f",
+              "instruction": "0x501f"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20511
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPipe2",
+      "runtime_class_rva": "0xf96930",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x4f2c3",
+      "factory_body_rva": "0x44e530",
+      "constructors": [
+        {
+          "entry": "0x84e5d0",
+          "primary_vtables": [
+            "0x1175ba4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84e5d7",
+              "type_id": 20512,
+              "type_hex": "0x5020",
+              "instruction": "0x5020"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20512
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPipe3",
+      "runtime_class_rva": "0xf96978",
+      "size": 240,
+      "schema": 0,
+      "factory_entry_rva": "0x44594",
+      "factory_body_rva": "0x44f080",
+      "constructors": [
+        {
+          "entry": "0x84f120",
+          "primary_vtables": [
+            "0x1175d7c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84f127",
+              "type_id": 20513,
+              "type_hex": "0x5021",
+              "instruction": "0x5021"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20513
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPlanPic",
+      "runtime_class_rva": "0xfa862c",
+      "size": 1360,
+      "schema": 0,
+      "factory_entry_rva": "0x525e0",
+      "factory_body_rva": "0x89b840",
+      "constructors": [
+        {
+          "entry": "0xc9b8e0",
+          "primary_vtables": [
+            "0x11fbd24"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0xc9b906",
+              "type_id": 20539,
+              "type_hex": "0x503b",
+              "instruction": "0x503b"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20539
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPlane1",
+      "runtime_class_rva": "0xf967ec",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x3831b",
+      "factory_body_rva": "0x44cc80",
+      "constructors": [
+        {
+          "entry": "0x84cd20",
+          "primary_vtables": [
+            "0x1175444"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84cd27",
+              "type_id": 20508,
+              "type_hex": "0x501c",
+              "instruction": "0x501c"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20508
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPlane2",
+      "runtime_class_rva": "0xf96834",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0xc4c8",
+      "factory_body_rva": "0x44d0f0",
+      "constructors": [
+        {
+          "entry": "0x84d190",
+          "primary_vtables": [
+            "0x117561c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84d197",
+              "type_id": 20509,
+              "type_hex": "0x501d",
+              "instruction": "0x501d"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20509
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPlane3",
+      "runtime_class_rva": "0xf9687c",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x529a5",
+      "factory_body_rva": "0x44d560",
+      "constructors": [
+        {
+          "entry": "0x84d600",
+          "primary_vtables": [
+            "0x11757f4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x84d607",
+              "type_id": 20510,
+              "type_hex": "0x501e",
+              "instruction": "0x501e"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20510
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawPoly",
+      "runtime_class_rva": "0xf96a08",
+      "size": 252,
+      "schema": 0,
+      "factory_entry_rva": "0x203f1",
+      "factory_body_rva": "0x423fc0",
+      "constructors": [
+        {
+          "entry": "0x824060",
+          "primary_vtables": [
+            "0x1171cc4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x824067",
+              "type_id": 20487,
+              "type_hex": "0x5007",
+              "instruction": "0x5007"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20487
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawRect",
+      "runtime_class_rva": "0xf96abc",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x1e001",
+      "factory_body_rva": "0x4264f0",
+      "constructors": [
+        {
+          "entry": "0x826590",
+          "primary_vtables": [
+            "0x1172074"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x826597",
+              "type_id": 20484,
+              "type_hex": "0x5004",
+              "instruction": "0x5004"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20484
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawRighttrigngle",
+      "runtime_class_rva": "0xf96ae0",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x3fbc5",
+      "factory_body_rva": "0x442ff0",
+      "constructors": [
+        {
+          "entry": "0x843090",
+          "primary_vtables": [
+            "0x1174934"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x843097",
+              "type_id": 20500,
+              "type_hex": "0x5014",
+              "instruction": "0x5014"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20500
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawRotateBtn",
+      "runtime_class_rva": "0xf9ea10",
+      "size": 440,
+      "schema": 0,
+      "factory_entry_rva": "0x7324",
+      "factory_body_rva": "0x4b4390",
+      "constructors": [
+        {
+          "entry": "0x8b4430",
+          "primary_vtables": [
+            "0x1179f74"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8b4456",
+              "type_id": 20523,
+              "type_hex": "0x502b",
+              "instruction": "0x502b"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20523
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawRotateTbl",
+      "runtime_class_rva": "0xf9eb1c",
+      "size": 784,
+      "schema": 0,
+      "factory_entry_rva": "0x3e0b3",
+      "factory_body_rva": "0x4b9f20",
+      "constructors": [
+        {
+          "entry": "0x8b9fc0",
+          "primary_vtables": [
+            "0x117b52c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8b9fe6",
+              "type_id": 20530,
+              "type_hex": "0x5032",
+              "instruction": "0x5032"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20530
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawRoundRect",
+      "runtime_class_rva": "0xf96c48",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x3dc62",
+      "factory_body_rva": "0x42a370",
+      "constructors": [
+        {
+          "entry": "0x82a410",
+          "primary_vtables": [
+            "0x1172614"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x82a417",
+              "type_id": 20485,
+              "type_hex": "0x5005",
+              "instruction": "0x5005"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20485
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawSaveData",
+      "runtime_class_rva": "0xf9eeb4",
+      "size": 732,
+      "schema": 0,
+      "factory_entry_rva": "0x2c075",
+      "factory_body_rva": "0x4c96a0",
+      "constructors": [
+        {
+          "entry": "0x8c9740",
+          "primary_vtables": [
+            "0x117d944"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8c9766",
+              "type_id": 20531,
+              "type_hex": "0x5033",
+              "instruction": "0x5033"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20531
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawSeal",
+      "runtime_class_rva": "0xf96b94",
+      "size": 228,
+      "schema": 0,
+      "factory_entry_rva": "0x26e0e",
+      "factory_body_rva": "0x446090",
+      "constructors": [
+        {
+          "entry": "0x846130",
+          "primary_vtables": [
+            "0x1174ce4"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x846137",
+              "type_id": 20502,
+              "type_hex": "0x5016",
+              "instruction": "0x5016"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20502
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawSlider",
+      "runtime_class_rva": "0xf9f658",
+      "size": 480,
+      "schema": 0,
+      "factory_entry_rva": "0x52ac7",
+      "factory_body_rva": "0x4ecc30",
+      "constructors": [
+        {
+          "entry": "0x8eccd0",
+          "primary_vtables": [
+            "0x117ff3c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8eccf6",
+              "type_id": 20521,
+              "type_hex": "0x5029",
+              "instruction": "0x5029"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20521
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawSliderFill",
+      "runtime_class_rva": "0xf9f9e8",
+      "size": 496,
+      "schema": 0,
+      "factory_entry_rva": "0x3ddac",
+      "factory_body_rva": "0x4f88a0",
+      "constructors": [
+        {
+          "entry": "0x8f8940",
+          "primary_vtables": [
+            "0x118145c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8f8966",
+              "type_id": 20529,
+              "type_hex": "0x5031",
+              "instruction": "0x5031"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20529
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawStar",
+      "runtime_class_rva": "0xf96b4c",
+      "size": 232,
+      "schema": 0,
+      "factory_entry_rva": "0x51424",
+      "factory_body_rva": "0x443d50",
+      "constructors": [
+        {
+          "entry": "0x843df0",
+          "primary_vtables": [
+            "0x1174b0c"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x843df7",
+              "type_id": 20501,
+              "type_hex": "0x5015",
+              "instruction": "0x5015"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20501
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawTrapezoid",
+      "runtime_class_rva": "0xf96b70",
+      "size": 236,
+      "schema": 0,
+      "factory_entry_rva": "0x4e3f",
+      "factory_body_rva": "0x435050",
+      "constructors": [
+        {
+          "entry": "0x884f30",
+          "primary_vtables": [
+            "0x1173314"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x884f37",
+              "type_id": 20491,
+              "type_hex": "0x500b",
+              "instruction": "0x500b"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20491
+      ],
+      "mapping_confirmed": true
+    },
+    {
+      "class_name": "CDrawUnit",
+      "runtime_class_rva": "0xf96bb8",
+      "size": 256,
+      "schema": 0,
+      "factory_entry_rva": "0x314c1",
+      "factory_body_rva": "0x428900",
+      "constructors": [
+        {
+          "entry": "0x8289a0",
+          "primary_vtables": [
+            "0x1172434"
+          ],
+          "type_writes": [],
+          "type_constructor_args": [
+            {
+              "at": "0x8289c6",
+              "type_id": 20538,
+              "type_hex": "0x503a",
+              "instruction": "0x503a"
+            }
+          ],
+          "code": []
+        }
+      ],
+      "proven_type_ids": [
+        20538
+      ],
+      "mapping_confirmed": true
+    }
+  ],
+  "type_map": {
+    "0x5037": "CDrawActiveX",
+    "0x502c": "CDrawAlm",
+    "0x5003": "CDrawArc",
+    "0x5019": "CDrawArrow1",
+    "0x501a": "CDrawArrow2",
+    "0x501b": "CDrawArrow3",
+    "0x5023": "CDrawBall3D",
+    "0x500e": "CDrawBalloon",
+    "0x5009": "CDrawBitmap",
+    "0x5027": "CDrawButton",
+    "0x5039": "CDrawCell",
+    "0x5024": "CDrawCircle3D",
+    "0x503c": "CDrawComboBox",
+    "0x500f": "CDrawCross",
+    "0x5010": "CDrawCube",
+    "0x500c": "CDrawDiamond",
+    "0x503d": "CDrawDll",
+    "0x5025": "CDrawEdit",
+    "0x5006": "CDrawEllipse",
+    "0x5034": "CDrawFilePlay",
+    "0x5026": "CDrawFlow",
+    "0x502f": "CDrawGrid",
+    "0x5017": "CDrawGuan",
+    "0x5018": "CDrawHalfBox",
+    "0x5012": "CDrawHexagon",
+    "0x5030": "CDrawHisGrid",
+    "0x502e": "CDrawHisPic",
+    "0x5013": "CDrawIsoscelestriangle",
+    "0x5008": "CDrawLabel",
+    "0x5002": "CDrawLine",
+    "0x5028": "CDrawMulBtn",
+    "0x502a": "CDrawMulDis",
+    "0x5000": "CDrawObj",
+    "0x500d": "CDrawOctagon",
+    "0x500a": "CDrawParallelogram",
+    "0x5011": "CDrawPentagon",
+    "0x5022": "CDrawPentagon3D",
+    "0x502d": "CDrawPic",
+    "0x501f": "CDrawPipe1",
+    "0x5020": "CDrawPipe2",
+    "0x5021": "CDrawPipe3",
+    "0x503b": "CDrawPlanPic",
+    "0x501c": "CDrawPlane1",
+    "0x501d": "CDrawPlane2",
+    "0x501e": "CDrawPlane3",
+    "0x5007": "CDrawPoly",
+    "0x5004": "CDrawRect",
+    "0x5014": "CDrawRighttrigngle",
+    "0x502b": "CDrawRotateBtn",
+    "0x5032": "CDrawRotateTbl",
+    "0x5005": "CDrawRoundRect",
+    "0x5033": "CDrawSaveData",
+    "0x5016": "CDrawSeal",
+    "0x5029": "CDrawSlider",
+    "0x5031": "CDrawSliderFill",
+    "0x5015": "CDrawStar",
+    "0x500b": "CDrawTrapezoid",
+    "0x503a": "CDrawUnit"
+  },
+  "native_invocations": 0,
+  "registry_writes": 0,
+  "source_files_modified": false
+}

@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "MultiStateOriginalReplaceName",
+      "rva": 4223824,
+      "bytes": "558bec6aff6864a3fb0064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894decc745f000000000837d080275408b4510508b4d0c518b55ec81c25c01000052e88214c0ff83c40c0345f08945f08b4510508b4d0c518b55ec81c27001000052e86214c0ff83c40c0345f08945f08b4510508b4d0c518b55ec81c2a801000052e84214c0ff83c40c0345f08945f08b4510508b4d0c518b5508528b4dece8e388c4ff0345f08945f0837d080b0f850d010000c745e800000000eb098b45e883c0018945e88b4dec81c120010000e82134c4ff3945e80f8de4000000c745e400000000eb098b4de483c101894de48b55e8528b4dec81c120010000e82e1fc2ff8b0883c108e8ea33c4ff3945e40f8da80000008b45e4508b4de8518b4dec81c120010000e8051fc2ff8b0883c108e8cfb0c0ff8b108b42688945dc8d4de0518b55dc8b028b4ddc8b5040ffd2c745fc000000008b4510508b4d0c518d55e052e86413c0ff83c40c0345f08945f08b45e4508b4de8518b4dec81c120010000e8ab1ec2ff8b0883c108e875b0c0ff8b108b42688945d88d4de0518b55d88b028b4dd88b5044ffd2c745fcffffffff8d4de0ff1548913c01e92affffffe9fcfeffff8b45f08b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        440
+      ]
+    },
+    {
+      "name": "MultiStateOwnerCtor",
+      "rva": 10359328,
+      "bytes": "558bec6aff68b041030164a1000000005051a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8022c62ffc745fc000000008b4df0c701a4dd21018b55f0c74204ecde21018b4df081c1e4000000e84e6366ffc645fc018b4df081c100010000e827a462ff8b4df081c110010000e847f164ffc645fc028b4df081c124010000e8ee1b63ffc645fc038b4df081c138010000e80c5c66ffc645fc048b4df0e80d2a63ffc745fcffffffff8b45f08b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        19,
+        62,
+        72
+      ]
+    },
+    {
+      "name": "PointerArrayGetAt",
+      "rva": 733136,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e845bea7008b55fc8b42048b4d088d04888be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "tables": [
+    {
+      "name": "MultiImageStates",
+      "vtable_rva": 14075676,
+      "col_rva": 15185456,
+      "type_rva": 16342848,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCImageListInObj@@@@",
+      "complete_offset": 0,
+      "slots": [
+        11728390,
+        312931,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "ImageListInObj",
+      "vtable_rva": 14353372,
+      "col_rva": 15224120,
+      "type_rva": 16391752,
+      "rtti": ".?AVCImageListInObj@@",
+      "complete_offset": 0,
+      "slots": [
+        45681,
+        66381,
+        63401,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "ImageFrameArray",
+      "vtable_rva": 14353344,
+      "col_rva": 15224212,
+      "type_rva": 16391788,
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCImageInObj@@@@",
+      "complete_offset": 0,
+      "slots": [
+        11728390,
+        327696,
+        11728402,
+        4401,
+        130021
+      ]
+    },
+    {
+      "name": "ImageInObj",
+      "vtable_rva": 14353220,
+      "col_rva": 15223924,
+      "type_rva": 16383412,
+      "rtti": ".?AVCImageInObj@@",
+      "complete_offset": 0,
+      "slots": [
+        18706,
+        313406,
+        16806,
+        4401,
+        130021
+      ]
+    }
+  ],
+  "contracts": [
+    "CDrawMulBtn original IObject22 receives IO=complete+4; IO+120 is complete+124 state pointer array.",
+    "State CImageListInObj size1C contains frame pointer array+8. Frame CImageInObj size78 owns COwnerBitmap pointer+68. Original code invokes that image slot16/17 only for module11.",
+    "Bitmap complete+E4 remains the other concrete standard image carrier. No aligned scanning or untyped callbacks."
+  ]
+}

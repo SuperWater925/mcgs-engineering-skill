@@ -1,0 +1,743 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": "0x400000"
+    },
+    {
+      "name": "mfc110u.dll",
+      "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": "0x10000000"
+    },
+    {
+      "name": "Qt5Core.dll",
+      "file": "C:\\unbound-install-root\\Program\\Qt5Core.dll",
+      "sha256": "9feec62826eeeb8604027dc10b8ede66174320c9271571feba582ceff2bdc283",
+      "preferred_base": "0x67000000"
+    },
+    {
+      "name": "Qt5Gui.dll",
+      "file": "C:\\unbound-install-root\\Program\\Qt5Gui.dll",
+      "sha256": "3f5a4f78dcd0963f8612037d8f495ac2042f986704f00a848a781e3a6e179ccd",
+      "preferred_base": "0x10000000"
+    },
+    {
+      "name": "Qt5Svg.dll",
+      "file": "C:\\unbound-install-root\\Program\\Qt5Svg.dll",
+      "sha256": "5604145845dca50b5f56d7ac8cfd8cc47a51002b527f37422a30035a627607af",
+      "preferred_base": "0x66000000"
+    }
+  ],
+  "iat_guards": [
+    {
+      "iat_rva": "0xfc9174",
+      "target_module": "mfc110u.dll",
+      "target_rva": "0x8a19"
+    },
+    {
+      "iat_rva": "0xfc8e34",
+      "target_module": "mfc110u.dll",
+      "target_rva": "0x1c1c6a"
+    }
+  ],
+  "picture_preload_vtable_rva": "0xd8d5d4",
+  "picture_preload_entries": [
+    "0xc149",
+    "0x17a6c",
+    "0x1c58",
+    "0x54d59",
+    "0x100f0",
+    "0x4bf92",
+    "0x4958f",
+    "0x2c264",
+    "0x15127",
+    "0x301a7",
+    "0x9ff2",
+    "0x1f96a",
+    "0x35edb",
+    "0x9c32",
+    "0x11239",
+    "0x2bb3e"
+  ],
+  "methods": [
+    {
+      "name": "PictureCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x55371",
+      "abi_parameters": 0,
+      "return_semantics": "pointer",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x55371",
+        "0x882600"
+      ]
+    },
+    {
+      "name": "ImageCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x42596",
+      "abi_parameters": 0,
+      "return_semantics": "pointer",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x42596",
+        "0x85d510"
+      ]
+    },
+    {
+      "name": "ImageDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3e5f4",
+      "abi_parameters": 0,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x3e5f4",
+        "0x85d670"
+      ]
+    },
+    {
+      "name": "ImageAssign",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1777e",
+      "abi_parameters": 1,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x1777e",
+        "0x85dba0"
+      ]
+    },
+    {
+      "name": "ImageLoadFile",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3c06f",
+      "abi_parameters": 1,
+      "return_semantics": "int1",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x3c06f",
+        "0x85fb00"
+      ]
+    },
+    {
+      "name": "PictureAssignImage",
+      "module": "McgsSetPro.exe",
+      "rva": "0x28b46",
+      "abi_parameters": 1,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x28b46",
+        "0x882ed0"
+      ]
+    },
+    {
+      "name": "PictureSetName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2f87e",
+      "abi_parameters": 1,
+      "return_semantics": "bool1",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x2f87e",
+        "0x8827c0"
+      ]
+    },
+    {
+      "name": "PictureDeleteOwned",
+      "module": "McgsSetPro.exe",
+      "rva": "0x38bf4",
+      "abi_parameters": 1,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x38bf4",
+        "0x883d10"
+      ]
+    },
+    {
+      "name": "PictureAdd",
+      "module": "McgsSetPro.exe",
+      "rva": "0x100f0",
+      "abi_parameters": 1,
+      "return_semantics": "bool1",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x100f0",
+        "0x578f20"
+      ]
+    },
+    {
+      "name": "PictureDeleteName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x4bf92",
+      "abi_parameters": 1,
+      "return_semantics": "bool1",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x4bf92",
+        "0x5791a0"
+      ]
+    },
+    {
+      "name": "PictureRefreshHashIndex",
+      "module": "McgsSetPro.exe",
+      "rva": "0x9c32",
+      "abi_parameters": 2,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x9c32",
+        "0x579fa0"
+      ]
+    },
+    {
+      "name": "PictureMarkDirty",
+      "module": "McgsSetPro.exe",
+      "rva": "0x54d59",
+      "abi_parameters": 0,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x54d59",
+        "0x578f00"
+      ]
+    },
+    {
+      "name": "PictureSave",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1c58",
+      "abi_parameters": 0,
+      "return_semantics": "bool1-not-root-persistence",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x1c58",
+        "0x579b10"
+      ]
+    },
+    {
+      "name": "PictureRekey",
+      "module": "McgsSetPro.exe",
+      "rva": "0x20905",
+      "abi_parameters": 2,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x20905",
+        "0x579b30"
+      ]
+    },
+    {
+      "name": "ImageSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0x327e0",
+      "abi_parameters": 1,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x327e0",
+        "0x85e670"
+      ]
+    },
+    {
+      "name": "ArchiveCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c971",
+      "abi_parameters": 4,
+      "return_semantics": "pointer",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x2c971",
+        "0xa79c0"
+      ]
+    },
+    {
+      "name": "ArchiveDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x429bf",
+      "abi_parameters": 0,
+      "return_semantics": "void",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x429bf",
+        "0xa79f0"
+      ]
+    },
+    {
+      "name": "NativeNew",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2e9be",
+      "abi_parameters": null,
+      "return_semantics": "pointer-cdecl-size",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0xb2e9be"
+      ]
+    },
+    {
+      "name": "ArchiveClose",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2ee98",
+      "abi_parameters": null,
+      "return_semantics": "void-thiscall0",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0xb2ee98"
+      ]
+    },
+    {
+      "name": "MemoryFileCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2094f9",
+      "abi_parameters": 1,
+      "return_semantics": "native-pointer-or-void",
+      "ordinal": 566,
+      "jump_chain_rvas": [
+        "0x2094f9"
+      ]
+    },
+    {
+      "name": "MemoryFileBorrowedCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x20952c",
+      "abi_parameters": 3,
+      "return_semantics": "native-pointer-or-void",
+      "ordinal": 567,
+      "jump_chain_rvas": [
+        "0x20952c"
+      ]
+    },
+    {
+      "name": "MemoryFileDtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2095d6",
+      "abi_parameters": 0,
+      "return_semantics": "native-pointer-or-void",
+      "ordinal": 1187,
+      "jump_chain_rvas": [
+        "0x2095d6"
+      ]
+    },
+    {
+      "name": "NativeNewTarget",
+      "module": "mfc110u.dll",
+      "rva": "0x8a19",
+      "abi_parameters": null,
+      "return_semantics": "native-pointer-or-void",
+      "ordinal": 1502,
+      "jump_chain_rvas": [
+        "0x8a19"
+      ]
+    },
+    {
+      "name": "ArchiveCloseTarget",
+      "module": "mfc110u.dll",
+      "rva": "0x1c1c6a",
+      "abi_parameters": 0,
+      "return_semantics": "native-pointer-or-void",
+      "ordinal": 2820,
+      "jump_chain_rvas": [
+        "0x1c1c6a"
+      ]
+    },
+    {
+      "name": "MemoryFileClose",
+      "module": "mfc110u.dll",
+      "rva": "0x209816",
+      "abi_parameters": 0,
+      "return_semantics": "void-autoDelete0-borrowed-buffer-not-freed",
+      "ordinal": null,
+      "jump_chain_rvas": [
+        "0x209816"
+      ]
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "PictureCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x55371",
+      "bytes": "e98ad28200e995348800e9f0097f00e9ab436700e9a68b4500e991c63700e91c450400e967148b00e952ac6000e92d952d00e918951600e9938a9900e94e802c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x882600",
+      "bytes": "558bec6aff686b51010164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894df08b4df0e85be979ffc745fc000000008b45f0c700d4691f01",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "name": "ImageCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x42596",
+      "bytes": "e975af8100e980b17b00e98ba76100e916063000e971400900e9ac8a5200e917c11a00e982095e00e96db55300e9c80b2600e9735e2200e94ef74e00e9791a0a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x85d510",
+      "bytes": "558bec6aff689729010164a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894df08b4df0e838797dffc745fc000000008b4df083c104e814be",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ImageDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3e5f4",
+      "bytes": "e977f08100e932e64300e9bd739c00e9f87a2600e983da4300e96ea82d00e9598c6000e924bd2a00e94f584d00e96adc4300e9c5bc0900e9a08b7400e90bbb60",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x85d670",
+      "bytes": "558bec6aff68042a010164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b45f0c7009c091f018b4df0c741040c0a1f01c745fc0600",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        55
+      ]
+    },
+    {
+      "name": "ImageAssign",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1777e",
+      "bytes": "e91d648400e9f8230c00e9c3718a00e93ebf8a00e919120c00e9a4638a00e90f6fa100e99a981300e9a51a0600e910f9a700e97be76a00e9a62c6700e951bc7b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageAssign",
+      "module": "McgsSetPro.exe",
+      "rva": "0x85dba0",
+      "bytes": "558bec83ec08894df86a0068fc7b3a0168dc7b3a016a008b450850e8b2352d0083c4148945fc837dfc00740c8b4dfc518b4df8e8eee67eff8be55dc20400cccc",
+      "reloc_offsets": [
+        12,
+        17
+      ]
+    },
+    {
+      "name": "ImageLoadFile",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3c06f",
+      "bytes": "e98c3a8200e927d99400e932c65a00e91dd77e00e908246800e9f34f6400e9ee1f2300e979bb5700e934132e00e9cf379f00e93a037600e9b5f66000e9001e27",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageLoadFile",
+      "module": "McgsSetPro.exe",
+      "rva": "0x85fb00",
+      "bytes": "558bec6aff68c52c010164a1000000005081ec00010000a1600b3b0133c5508d45f464a300000000894df08b45f00fb6480885c9745a8d8df4feffffe8552a7e",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "PictureAssignImage",
+      "module": "McgsSetPro.exe",
+      "rva": "0x28b46",
+      "bytes": "e985a38500e970016300e91b9e5100e9d6e43900e9e1aa0500e91c180500e9d7e34600e9b2346200e91df99000e978536700e9439e6100e94e7e8500e979f484",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureAssignImage",
+      "module": "McgsSetPro.exe",
+      "rva": "0x882ed0",
+      "bytes": "558bec51894dfc8b4508508b4dfc83c1188b55fc8b42188b5018ffd28b45fc83c014508b4dfc83c118e8d6457bff8b4dfce8d23479ff8be55dc20400cccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureSetName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2f87e",
+      "bytes": "e93d2f8500e9c8494800e9f3e92900e91e641400e939e5a100e9c4709100e9efd44300e91a242800e985940a00e9f03e8000e9ab976600e976454800e9915a15",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureSetName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x8827c0",
+      "bytes": "558bec51894dfc8b4508508b4dfc83c110ff15708e3c018b4d08518b4dfc83c1188b55fc8b42188b5044ffd2b0018be55dc20400cccccccccccccccccccccccc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "PictureDeleteOwned",
+      "module": "McgsSetPro.exe",
+      "rva": "0x38bf4",
+      "bytes": "e917b18400e9d22b5800e99dff3800e988d22300e9935b4c00e94ed22300e9c9942900e904357f00e9ff7c7c00e99a804f00e9f5234300e98030a400e9cbd977",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureDeleteOwned",
+      "module": "McgsSetPro.exe",
+      "rva": "0x883d10",
+      "bytes": "558bec51894dfc8b4dfce8bf127dff8b450883e001740c8b4dfc51e888ac2a0083c4048b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureAdd",
+      "module": "McgsSetPro.exe",
+      "rva": "0x100f0",
+      "bytes": "e92b8e5600e9e6894e00e9d19d3300e9bc345500e9777c2e00e952879200e93d219100e998208a00e9f3e32d00e9ae65a400e9a9668000e924dc6d00e9df2e56",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureAdd",
+      "module": "McgsSetPro.exe",
+      "rva": "0x578f20",
+      "bytes": "558bec6aff68c8a5fd0064a1000000005081ec94000000a1600b3b0133c5508d45f464a300000000894df0837d0800750732c0e92e0200008d45ac508b4d088b",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "PictureDeleteName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x4bf92",
+      "bytes": "e909d25200e934563500e9ffca2f00e9ea9b7700e9054b7400e9b0ab2c00e9bba76000e936aca700e951eb4500e93c188c00e947e69d00e9326f3a00e94d951f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureDeleteName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x5791a0",
+      "bytes": "558bec6aff68eea5fd0064a1000000005083ec60a1600b3b0133c5508d45f464a300000000894de88b4508508d4de4518b4de883c118e8182faaff8d55b0528b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "PictureRefreshHashIndex",
+      "module": "McgsSetPro.exe",
+      "rva": "0x9c32",
+      "bytes": "e969035700e934fa4a00e9ff9f5b00e9ea715200e9f5e94600e9b0710c00e93b7e8200e98646ac00e9a1dd8300e9fc362000e927786300e9c2675700e99d2b51",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureRefreshHashIndex",
+      "module": "McgsSetPro.exe",
+      "rva": "0x579fa0",
+      "bytes": "558bec6aff686ba7fd0064a1000000005083ec40a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df083c118e81821aaff8d55cc528b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "PictureMarkDirty",
+      "module": "McgsSetPro.exe",
+      "rva": "0x54d59",
+      "bytes": "e9a2415200e9bd4a2900e998ef7a00e9d3226500e92e2c9c00e9495a7900e9a4d19300e97f767700e90a6e7600e935876700e9e0b02900e96be9a000e9060379",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureMarkDirty",
+      "module": "McgsSetPro.exe",
+      "rva": "0x578f00",
+      "bytes": "558bec51894dfc8b45fcc64005018be55dc3cccccccccccccccccccccccccccc558bec6aff68c8a5fd0064a1000000005081ec94000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        38,
+        56
+      ]
+    },
+    {
+      "name": "PictureSave",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1c58",
+      "bytes": "e9b37e5700e9de914700e9a95a4900e9a4c07e00e92f896c00e95a8e2a00e965af1400e960300700e91b718e00e996ce7000e921425100e94cce0f00e9a75d9c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureSave",
+      "module": "McgsSetPro.exe",
+      "rva": "0x579b10",
+      "bytes": "558bec51894dfc8b4dfc83e934e85e23acffb0018be55dc3cccccccccccccccc558bec6aff68e7a6fd0064a1000000005083ec60a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        38,
+        53
+      ]
+    },
+    {
+      "name": "PictureRekey",
+      "module": "McgsSetPro.exe",
+      "rva": "0x20905",
+      "bytes": "e926925500e9811f7100e96c8b6a00e9f79c5c00e9827fa100e9edf48400e918484600e963a20800e93ebd0e00e989e47500e9d4273700e99f532800e93af191",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureRekey",
+      "module": "McgsSetPro.exe",
+      "rva": "0x579b30",
+      "bytes": "558bec6aff68e7a6fd0064a1000000005083ec60a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df083c144e88825aaff8d55cc528b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ImageSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0x327e0",
+      "bytes": "e98bbe8200e976f46400e97127a300e97cd88f00e907807600e952f97400e9ed6c6300e958525400e9d39c5a00e9eeea4300e97941aa00e984c44500e91f1335",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0x85e670",
+      "bytes": "558bec51894dfc8b4508508b4dfce8379f7cff8b4d08e81b067fff85c074106a018b4d08518b4dfce8dc687bffeb0e6a018b5508528b4dfce828847cff8be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArchiveCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c971",
+      "bytes": "e94ab00700e905a49d00e990188d00e9cb235800e996aa4300e901684200e94cdc2e00e9a7b50e00e982069a00e92d553a00e978d79d00e9733f9c00e9debb7e",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArchiveCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79c0",
+      "bytes": "558bec51894dfc8b4514508b4d10518b550c528b4508508b4dfce83379a8008b45fc8be55dc21000cccccccccccccccc558bec51894dfc8b4dfce81979a8008b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArchiveDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x429bf",
+      "bytes": "e92c500600e9a7cc8e00e9d2fe7500e93dbe5c00e998e24600e9634f9800e99e258000e9e9767a00e9949c6600e9af662000e99a16a100e9b5f85100e9207d9a",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArchiveDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79f0",
+      "bytes": "558bec51894dfc8b4dfce81979a8008be55dc3cccccccccccccccccccccccccc558bec83ec08894dfc8b45fc8945f88b4d08518b4df8e8f836faff8b45fc8be5",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NativeNew",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2e9be",
+      "bytes": "ff2574913c01ff2570913c01ff256c913c01ff2568913c01ff2564913c01ff2560913c01ff255c913c01ff2558913c01ff2554913c01ff2550913c01ff254c913c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "name": "ArchiveClose",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2ee98",
+      "bytes": "ff25348e3c01ff25308e3c01ff252c8e3c01ff25288e3c01ff25248e3c01ff25208e3c01ff251c8e3c01ff25188e3c01ff25148e3c01ff25108e3c01ff250c8e3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "name": "MemoryFileCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2094f9",
+      "bytes": "558bec568bf1e8f5deffff8b450889461433c089461889461c894620894624c7066c8a0310c74628010000008bc65e5dc204006a04b8348e2810e8a8f2dfff8b",
+      "reloc_offsets": [
+        33,
+        54
+      ]
+    },
+    {
+      "name": "MemoryFileBorrowedCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x20952c",
+      "bytes": "6a04b8348e2810e8a8f2dfff8bf18975f0e8b7deffff8365fc008b55088b4d0cc7066c8a031085d2750985c97405e825deffff8b451083661800894614f7d81b",
+      "reloc_offsets": [
+        3,
+        34
+      ]
+    },
+    {
+      "name": "MemoryFileDtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2095d6",
+      "bytes": "6a04b8348e2810e8fef1dfff8bf18975f0c7066c8a031033ff897dfc397e247405e81a020000834dfcff8bce897e14897e18897e1c897e20e8ca5de5ffe8787a",
+      "reloc_offsets": [
+        3,
+        19
+      ]
+    },
+    {
+      "name": "NativeNewTarget",
+      "module": "mfc110u.dll",
+      "rva": "0x8a19",
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e5dc35985c075e1ebf3558bec8b450c85c07421837d1000741b0faf451083c004",
+      "reloc_offsets": [
+        13
+      ]
+    },
+    {
+      "name": "ArchiveCloseTarget",
+      "module": "mfc110u.dll",
+      "rva": "0x1c1c6a",
+      "bytes": "568bf1e826b5e9ff836624005ec3558bec837d0800578bf9750433c0eb0aff7508ff1590f22a105903c050ff75088bcfe82b6ce9ff5f5dc204006a14b8e8342810",
+      "reloc_offsets": [
+        35,
+        61
+      ]
+    },
+    {
+      "name": "MemoryFileClose",
+      "module": "mfc110u.dll",
+      "rva": "0x209816",
+      "bytes": "568bf15733ff897e14897e18897e1c897e20397e24740d397e2874088b06ff7624ff506c897e245f5ec38b01ff6058e80edbffffcce908dbffff558bec837d08",
+      "reloc_offsets": []
+    }
+  ],
+  "ownership": {
+    "picture_size": 208,
+    "image_size": 164,
+    "memory_file_size": 44,
+    "archive_size": 72,
+    "evidence": "All five original CPicture callers allocate0xD0; detached image local constructor/dtor and AssignImage→Add are original GUI/resource workers. CMemFile borrowed ctor567 sets autoDelete+28=0; wrapper retains buffer ownership."
+  },
+  "native_invoked": false,
+  "project_written": false,
+  "candidate_only": true
+}

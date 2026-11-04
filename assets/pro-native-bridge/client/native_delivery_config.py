@@ -1,0 +1,167 @@
+"""Explicit immutable layout for delivery clients. Pure files; no process/native API."""
+from dataclasses import dataclass
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import stat
+import threading
+
+TRANSPORT_SHA256 = "6314e35b3420c544e149e4f0432e6db903b3ac493c14031b10c87ac37cf0669a"
+_FIELDS = {"schema", "task_root", "engineering_root", "runtime_root", "install_root", "transport_client_file", "transport_client_sha256"}
+_current = None
+_verified_files = {}
+_verification_lock = threading.RLock()
+
+
+def _identity(info):
+    return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+
+def _not_reparse(path):
+    path = Path(os.path.abspath(path))
+    for item in (path, *path.parents):
+        if os.path.lexists(item):
+            info = os.lstat(item)
+            if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
+                raise ValueError("Delivery path ancestor is a reparse point: " + str(item))
+    return path
+
+
+def _regular(path, maximum):
+    path = _not_reparse(path)
+    info = path.stat()
+    if not stat.S_ISREG(info.st_mode) or not 0 < info.st_size <= maximum:
+        raise ValueError("Delivery input is not a bounded regular file: " + str(path))
+    with path.open("rb") as stream:
+        opened = os.fstat(stream.fileno())
+        # Windows/Python versions may expose different ctime semantics through
+        # path stat versus fstat. Compare IDs/size/mtime across those APIs, then
+        # compare ctime only within the same API before/after the read.
+        if _identity(opened)[:4] != _identity(info)[:4]:
+            raise ValueError("Delivery input identity changed before opening")
+        data = stream.read(maximum + 1)
+        final = os.fstat(stream.fileno())
+    if _identity(final) != _identity(opened) or _identity(path.stat()) != _identity(info) or len(data) != info.st_size or len(data) > maximum:
+        raise ValueError("Delivery input changed while reading")
+    return data
+
+
+def _verify_file(path, maximum, expected_sha256):
+    """Reuse a verified digest only while the exact file identity is unchanged.
+
+    Every check still examines path ancestors and regular-file metadata. Replace,
+    resize, mtime or ctime changes invalidate the cache. Filesystems without a
+    nonzero file ID always take the full-read/hash path. This cache is local to
+    one client process and never attests vendor ABI or native memory.
+    """
+    path = _not_reparse(path)
+    info = path.stat()
+    if not stat.S_ISREG(info.st_mode) or not 0 < info.st_size <= maximum:
+        raise ValueError("Delivery input is not a bounded regular file: " + str(path))
+    identity = _identity(info)
+    key = (os.path.normcase(str(path)), maximum, expected_sha256)
+    with _verification_lock:
+        if info.st_ino and _verified_files.get(key) == identity:
+            return
+        data = _regular(path, maximum)
+        if hashlib.sha256(data).hexdigest() != expected_sha256:
+            raise ValueError("Bound delivery file SHA changed: " + str(path))
+        final = _identity(path.stat())
+        if final != identity:
+            raise ValueError("Bound delivery file changed during verification")
+        if info.st_ino:
+            _verified_files[key] = final
+
+
+def _absolute(text):
+    if not isinstance(text, str) or not text or "\0" in text or not Path(text).is_absolute():
+        raise ValueError("Delivery paths must be explicit absolute strings")
+    return _not_reparse(text)
+
+
+def _directory(text):
+    path = _absolute(text)
+    if not path.is_dir():
+        raise ValueError("Delivery directory is absent: " + str(path))
+    return path
+
+
+@dataclass(frozen=True)
+class DeliveryLayout:
+    configuration_file: Path
+    configuration_sha256: str
+    task_root: Path
+    engineering_root: Path
+    runtime_root: Path
+    install_root: Path
+    transport_client_file: Path
+    transport_client_sha256: str
+
+    @property
+    def working_root(self):
+        return self.runtime_root / "engineering"
+
+    @property
+    def evidence_root(self):
+        return self.engineering_root / "task-evidence"
+
+    def check(self):
+        _verify_file(self.configuration_file, 65536, self.configuration_sha256)
+        for path in (self.task_root, self.engineering_root, self.runtime_root, self.install_root):
+            if not _not_reparse(path).is_dir():
+                raise ValueError("Bound delivery directory changed")
+        if not _not_reparse(self.evidence_root).is_dir():
+            raise ValueError("Bound immutable task-evidence payload has not been deployed")
+        _verify_file(self.transport_client_file, 1024 * 1024, self.transport_client_sha256)
+
+
+def load(path, expected_sha256):
+    if not isinstance(expected_sha256, str) or re.fullmatch("[a-f0-9]{64}", expected_sha256) is None:
+        raise ValueError("An exact bound configuration SHA256 is required")
+    path = _absolute(path)
+    raw = _regular(path, 65536)
+    if hashlib.sha256(raw).hexdigest() != expected_sha256:
+        raise ValueError("Delivery configuration SHA differs")
+    data = json.loads(raw.decode("utf-8-sig"))
+    return validate_mapping(data, path, expected_sha256)
+
+
+def validate_mapping(data, configuration_file, configuration_sha256):
+    """Validate file-only binding input before creating any output directory."""
+    path = _absolute(os.fspath(configuration_file))
+    if not isinstance(configuration_sha256, str) or re.fullmatch("[a-f0-9]{64}", configuration_sha256) is None:
+        raise ValueError("An exact configuration SHA256 is required")
+    if not isinstance(data, dict) or set(data) != _FIELDS or type(data["schema"]) is not int or data["schema"] != 1:
+        raise ValueError("Unknown delivery layout schema or fields")
+    task, engineering, runtime, install = (_directory(data[key]) for key in ("task_root", "engineering_root", "runtime_root", "install_root"))
+    if task == Path(task.anchor) or runtime == task or not runtime.is_relative_to(task):
+        raise ValueError("Runtime must be an explicit child of an owned task directory, not a whole volume")
+    if engineering.is_relative_to(runtime) or runtime.is_relative_to(engineering):
+        raise ValueError("Frozen engineering payload and writable runtime must be disjoint")
+    transport = _absolute(data["transport_client_file"])
+    if not (transport.is_relative_to(task) or transport.is_relative_to(engineering)):
+        raise ValueError("Transport source is outside both declared roots")
+    if data["transport_client_sha256"] != TRANSPORT_SHA256:
+        raise ValueError("Verified at-most-once transport source differs")
+    _verify_file(transport, 1024 * 1024, TRANSPORT_SHA256)
+    if not (install / "Program" / "McgsSetPro.exe").is_file():
+        raise ValueError("Declared Pro install root has no original Program image; ABI is guarded by the native provider")
+    return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256)
+
+
+def configure(path, expected_sha256):
+    global _current
+    value = load(path, expected_sha256)
+    if _current is not None and value != _current:
+        raise ValueError("Client delivery layout is already bound; do not rebind one process")
+    _current = value
+    return value
+
+
+def current():
+    if _current is None:
+        raise ValueError("Use the native_engineering.py entry with explicit --scope-config and --scope-sha256; no implicit directory discovery")
+    _current.check()
+    return _current

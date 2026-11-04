@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "purpose": "exact-Prog-native-full-source-replacement-and-existing-lifecycle-reuse",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": 4194304
+    },
+    {
+      "name": "common.dll",
+      "sha256": "06384d2a706352a4d54875ee679cb34882bfb2a3c42730d5484eae8ffe4159c8",
+      "preferred_base": 268435456
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "ProgReplaceThunk",
+      "module": "McgsSetPro.exe",
+      "rva": 205956,
+      "bytes": "e9f70aa500",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgReplace",
+      "module": "McgsSetPro.exe",
+      "rva": 11022208,
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b45fc83c02050e8965f58ff83c4108be55dc20c00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ReplaceHelperThunk",
+      "module": "McgsSetPro.exe",
+      "rva": 36661,
+      "bytes": "e926ce7f00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ReplaceHelper",
+      "module": "McgsSetPro.exe",
+      "rva": 8412512,
+      "bytes": "558bec8b4514508b4d10518b550c528b450850ff15207a3c0183c4105dc3",
+      "reloc_offsets": [
+        21
+      ]
+    },
+    {
+      "name": "ObjectTreeReplaceExport",
+      "module": "common.dll",
+      "rva": 168736,
+      "bytes": "558bec6aff681e14031064a10000000050a16cc7031033c5508d45f464a300000000a198c8031083e00175348b0d98c8031083c901890d98c80310c745fc00000000b996c80310e8342c000068401b0310e8a353000083c404c745fcffffffff8b5514528b4510508b4d0c518b550852b996c80310e8560600008b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        18,
+        35,
+        46,
+        55,
+        67,
+        77,
+        113
+      ]
+    },
+    {
+      "name": "ProgOriginalSourceEditorConfirmCommitProof",
+      "module": "McgsSetPro.exe",
+      "rva": 11022576,
+      "bytes": "558bec6aff68c329040164a1000000005081ec58020000a1600b3b0133c5508d45f464a300000000894df0e8b28d59ff508d8d9cfdffffe8484159ffc745fc00000000c745bc010000008b45f083c020508d4dc0ff15708e3c018b4df083c108518d4dc4ff15708e3c018b4d08e82e0259ff8945ec837dec00740b8b55ec83c2048955e8eb07c745e8000000008b45e88945c88d8d9cfdffffe8f6bb0a0083f801756a8d4dc0518b55f083c22052e849d05bff83c4080fb6c085c0751a8d4dc4518b55f083c20852e82fd05bff83c4080fb6c085c074366a016a016a008b4d088b118b4d088b8280010000ffd08d4dc0518b4df083c120ff15708e3c018d55c4528b4df083c108ff15708e3c01c745fcffffffff8d8d9cfdffffe8ee545cff8b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        86,
+        102,
+        249,
+        265
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "file": "strategy-properties/strategy-write-guard-profile.json",
+      "sha256": "b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7"
+    },
+    {
+      "file": "extensions/strategy/strategy-extension-write-guard.json",
+      "sha256": "8dc56512ffa3340e2c210ba7eab0db1d36995a3390a535844a9a6319324e8ea6"
+    },
+    {
+      "file": "extensions/strategy/registration/registration-abi-guard.json",
+      "sha256": "31479a50b9ee412815f30791be6610b05ecc50d868e23ad292f41be6eb99f403"
+    }
+  ],
+  "Prog_vtable_rva": 14897436,
+  "Prog_replace_slot": 13,
+  "Prog_replace_entry_rva": 205956,
+  "Prog_source_CString_offset": 32,
+  "replace_IAT_rva": 16546336,
+  "replace_export": "?replaceText@ObjectTree@@YAHAAV?$CStringT@_WV?$StrTraitMFC_DLL@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@ABV23@1ABVObjectMatcher@@@Z",
+  "replace_export_rva": 168736,
+  "calling_convention": "thiscall int(Prog*, const CString& before, const CString& after, const ObjectMatcher&); ret0C",
+  "dataflow": "Block E9BCA0 -> Row E99B30 -> row+8.vtable[13]; CStgyFuncProg slot13 432484 -> E82F80 passes only this+20 to C05D60 -> common ObjectTree::replaceText. Direct Prog dispatch omits other row functions, conditions and trigger replace.",
+  "matcher": {
+    "pattern": 0,
+    "case_sensitive": true,
+    "allocation_bytes": 2,
+    "reuses_original_guarded_constructor_destructor": true
+  },
+  "empty_before_body_ready": true,
+  "empty_before_reason": "Dedicated exact original source-editor confirmation commit: native CStringAssignCopy(destination=Prog+20, owned exact new source CString), after precise Prog identity/full-source preimage, with native root/block dirty and preload saveData. No raw CString memory stores, no dialog, no SDK claim.",
+  "native_execution_performed": false,
+  "runtime_acceptance_performed": false,
+  "created_strategy_registration": {
+    "native_list_insert_once": true,
+    "native_select_called": false,
+    "profile_sha256": "31479a50b9ee412815f30791be6610b05ecc50d868e23ad292f41be6eb99f403",
+    "lease_RegisterCreatedStrategy_before_CompleteApply": true
+  },
+  "original_editor_commit": {
+    "vtable_slot": 9,
+    "entry_rva": 253451,
+    "body_rva": 11022576,
+    "OK_branch": "E8318E..E831FD",
+    "dirty_owner_virtual_byte_offset": 384,
+    "native_copy_callsite": "E831DD..E831EB",
+    "source_CString_offset": 32,
+    "label_CString_offset": 8,
+    "IAT_rva": 16551536,
+    "reused_guarded_api_function": "CStringAssignCopy",
+    "UI_dialog_and_owner_callback_not_called": true,
+    "root_dirty_compile_invalid_and_block_preload_chain_supplied_by_batch": true,
+    "UndoRedo_title_refresh_claimed": false,
+    "separate_Prog_setSource_method_claimed": false
+  }
+}

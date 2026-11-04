@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "revision": "20261103-performance-0101",
+  "user_project_or_live_Pro_modified": false,
+  "animation_algorithm": {
+    "behavior_cases_passed": 8,
+    "managed_test_owners": 215,
+    "forest_builds_per_verify_before": 214,
+    "forest_builds_per_verify_after": 1,
+    "comparison_fields_and_two_verify_rounds_preserved": true,
+    "Pro_native_speed_measured": false
+  },
+  "client_grouping": {
+    "fake_transport_integration_tests_passed": 8,
+    "example_unmerged_rpcs": 3,
+    "example_merged_rpcs": 2,
+    "per_step_results_preimages_and_summaries_preserved": true,
+    "partial_finalization_and_timeout_do_not_replay": true,
+    "Pro_native_speed_measured": false
+  },
+  "notification_transport": {
+    "host": "Own pure native x86 message-loop host, not Pro",
+    "event_source_pings_passed": 20,
+    "same_original_UI_thread": true,
+    "twenty_ping_total_ms": 624.537,
+    "median_ping_ms": 29.6615,
+    "notification_disabled_poll_fallback_passed": true,
+    "poll_fallback_ms": 179.956,
+    "duplicate_request_rejected": true,
+    "own_registration_pump_and_host_cleaned": true,
+    "new_transport_real_Pro_regression_tested": false
+  },
+  "factory_batch": {
+    "same_page_consecutive_creates_share_history_and_final_refresh": true,
+    "per_object_creation_ownership_typed_and_retained_forest_checks_preserved": true,
+    "without_view_falls_back_to_original_individual_creation": true,
+    "layer_embedded_STORE_and_history_preserved": true,
+    "native_factory_batch_in_Pro_tested": false
+  },
+  "native_build": {
+    "binding_and_x86_compile_passed": true,
+    "selected_source_files": 155,
+    "compiled_source_files_including_layout": 156,
+    "owned_ABI_artifacts": 187,
+    "bound_engine_deployed_or_activated": false,
+    "compiled_engine_sha256": "d20479cf17a80a528d99d805bc1fe004fff058f3644064474d03eb3e1fcf1d8f"
+  },
+  "whole_page_speedup_measured": false,
+  "user_paused_engineering_resumed": false
+}

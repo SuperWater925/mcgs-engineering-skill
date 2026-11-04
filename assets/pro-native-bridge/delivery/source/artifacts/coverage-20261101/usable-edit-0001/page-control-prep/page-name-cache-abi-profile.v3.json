@@ -1,0 +1,175 @@
+{
+  "schema": 1,
+  "binary": {
+    "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": "0x400000"
+  },
+  "code_guards": [
+    {
+      "name": "ManagerFindByName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x7747f0",
+      "bytes": "558bec6aff6825fdff0064a1000000005083ec3ca1600b3b0133c5508d45f464a300000000894df08b4508508d4decff1554913c01c745fc000000008d4decff",
+      "reloc_offsets": [
+        6,
+        21,
+        49
+      ]
+    },
+    {
+      "name": "NameCacheClear",
+      "module": "McgsSetPro.exe",
+      "rva": "0x14e460",
+      "bytes": "558bec51894dfc8b4dfce8b210efff8b00508b4dfce8c32befff8b4dfce89f10efff8b4dfc8b1189108b4dfce84ea7efff8b4dfc8b1189108b4dfce886f9ecff8b4dfc8b1189108b45fcc74004000000008be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameCacheNodeValue",
+      "module": "McgsSetPro.exe",
+      "rva": "0x14d2f0",
+      "bytes": "558bec8b450883c0105dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameCacheParent",
+      "module": "McgsSetPro.exe",
+      "rva": "0x14d340",
+      "bytes": "558bec8b450883c0045dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameCacheLeft",
+      "module": "McgsSetPro.exe",
+      "rva": "0x14cd80",
+      "bytes": "558bec8b45085dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NameCacheRight",
+      "module": "McgsSetPro.exe",
+      "rva": "0x14d800",
+      "bytes": "558bec8b450883c0085dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WindowServiceAdd",
+      "module": "McgsSetPro.exe",
+      "rva": "0x52bcb",
+      "bytes": "e9d0ea7400e9abd47400e9b6bc1600e9a1618300e9bcc81300e957de9200e9a2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WindowServiceAdd",
+      "module": "McgsSetPro.exe",
+      "rva": "0x7a16a0",
+      "bytes": "558bec6aff681342000164a1000000005081ec1801000056a1600b3b0133c5508d45f464a300000000894de868fcec1d018d4dd4ff1550913c01c745fc000000",
+      "reloc_offsets": [
+        6,
+        25,
+        45,
+        54
+      ]
+    },
+    {
+      "name": "ManagerFindByName",
+      "module": "McgsSetPro.exe",
+      "rva": "0x52ef",
+      "bytes": "e9fcf47600e927bc7300e972bb5500e97d232400e9686eaf00e973042b00e99e",
+      "reloc_offsets": []
+    }
+  ],
+  "methods": [
+    {
+      "name": "NameCacheClear",
+      "rva": "0x14e460",
+      "stack_pop": 0
+    },
+    {
+      "name": "WindowServiceAdd",
+      "rva": "0x52bcb",
+      "stack_pop": 8,
+      "return": "boolAL"
+    },
+    {
+      "name": "ManagerFindByName",
+      "rva": "0x52ef",
+      "stack_pop": 4
+    }
+  ],
+  "tables": [
+    {
+      "name": "UserWindowObjectManager.IObject",
+      "rva": "0xddf7ec",
+      "col_rva": "0xe89cf0",
+      "offset_to_complete": 0,
+      "raw_col_first20": "000000000000000000000000ac563a01089d2801",
+      "slot_entry_rvas": [
+        "0x3f34b",
+        "0xb0b9",
+        "0x3b8bd",
+        "0x3460d",
+        "0x1b9af",
+        "0x8c38",
+        "0x1a7bc",
+        "0x23191",
+        "0x32722",
+        "0x8873",
+        "0x3d8b1",
+        "0x1efa1",
+        "0x5236f",
+        "0x6cbc",
+        "0x4763b",
+        "0x2cb5b",
+        "0x52ef",
+        "0x251d0",
+        "0x353b9",
+        "0x3dfeb",
+        "0xa164",
+        "0x3328a",
+        "0x29933",
+        "0x162c0",
+        "0x2c3ea",
+        "0x2f383",
+        "0x54007",
+        "0x429c9"
+      ]
+    },
+    {
+      "name": "UserWindowObjectManager.IUserWindowService",
+      "rva": "0xddf898",
+      "col_rva": "0xe89de4",
+      "offset_to_complete": 52,
+      "raw_col_first20": "000000003400000000000000ac563a01089d2801",
+      "slot_entry_rvas": [
+        "0x54480",
+        "0x3e8fb",
+        "0x4101",
+        "0x52bcb",
+        "0x2b3cd",
+        "0x538af",
+        "0x4a507",
+        "0xaef7",
+        "0x26dc8",
+        "0x249d8",
+        "0x1ec2c",
+        "0x478b1",
+        "0x21733"
+      ]
+    }
+  ],
+  "layout": {
+    "manager_cache_offset": 44,
+    "head_offset": 0,
+    "count_offset": 4,
+    "node_left": 0,
+    "node_parent": 4,
+    "node_right": 8,
+    "node_is_nil": 13,
+    "node_key_cstring": 16,
+    "node_value_pair_key": 20,
+    "value_is_opaque_owning_list_key_not_assumed_page_archive_id": true
+  },
+  "original_cache_invalidation_is_derived_only": true,
+  "native_call_executed": false
+}

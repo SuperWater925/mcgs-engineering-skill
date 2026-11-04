@@ -1,0 +1,939 @@
+{
+  "schema": 1,
+  "utc": "2026-11-02T04:30:32.237834+00:00",
+  "scope": "Narrow static-only F4/full engineering-check final-acceptance preparation; no callable helper/host check emitted.",
+  "image": {
+    "path": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "preferred_base": 4194304
+  },
+  "existing_evidence": {
+    "path": "D:\\unbound-task-root\\static\\docmanage-current-vtable.json",
+    "sha256": "c2ff1512211eca7fe6a3e86492d5b201996ea6118e1cc12f4289e841160db980"
+  },
+  "accelerators": [
+    {
+      "resource_type": 9,
+      "resource_id": 129,
+      "language": 2052,
+      "rva": 16965856,
+      "entire_resource_hex": "0b003100a18400000b003200a28400000b003300a38400000b003400a58400000b003500248100000b0041002ae100000b004200508000000b00430022e100000b004400b78400000b004900538000000b004c00ef8000000b004c00818000000b004e0000e100000b004e00538000000b004f0001e100000b00500007e100000b00530003e100000b00540000e800000b00560025e1000003002e0020e1000007002e0023e100000b0028006f8000000300700046e100000700700045e1000003007100e98000000b0071007b8000000b0072007c800000030073001280000003007400138000000b007400828000000b007500c88400000700750051e100000b00760081800000030077001180000003007800568100000b002d0022e1000007002d0025e100000b0025006c8000000b000d00a784000013000d00118000000b0027006d80000013002700718000000b0026006e80000013002600708000000b005700438100000b00580023e100000b0059002ce100000b005a002be100009200720015810000",
+      "F4_items": [
+        {
+          "flags": 3,
+          "virtual_key": 115,
+          "command_id": 32786,
+          "raw_8_hex": "0300730012800000"
+        }
+      ]
+    },
+    {
+      "resource_type": 9,
+      "resource_id": 133,
+      "language": 2052,
+      "rva": 16966296,
+      "entire_resource_hex": "0700700045e1000003002e0020e100000b004c00ef8000000b00430022e100000b002d0022e1000007002e0023e100000b00580023e100000b004400b78400000b000d00a78400000b00560025e1000007002d0025e10000030077001180000013000d00118000000b0059002ce100000b0041002ae1000003007100e98000000b005a002be100000b007400828000000b0028006f8000000b0071007b8000000b0025006c8000000b004c00818000000b007600818000000b0027006d8000000b0026006e8000000b007500c88400000b0072007c8000001300270071800000130026007080000003007300128000000b004e0000e100000b004f0001e100000b00500007e1000003007600138000000b00530003e1000003007800568100000300700046e100000b004900538000000b004e00538000000700750051e10000030074001581000013005000db8400000b003100a18400000b003200a28400000b003400a58400000b003500248100000b003300a38400000b00540000e800000b004200508000008300750027850000",
+      "F4_items": [
+        {
+          "flags": 3,
+          "virtual_key": 115,
+          "command_id": 32786,
+          "raw_8_hex": "0300730012800000"
+        }
+      ]
+    }
+  ],
+  "string_resources": {
+    "0x58e1": "%d个错误,%d个警告!",
+    "0x5979": "正在检查实时数据......",
+    "0x597a": "正在检查设备窗口......",
+    "0x597b": "正在检查配方数据......",
+    "0x597c": "正在检查用户管理数据......",
+    "0x597d": "正在检查策略触发器......",
+    "0x5987": "正在检查主控窗口......",
+    "0x5988": "正在整体检查用户窗口......",
+    "0x5aa1": "当前操作须保存工程，请确认是否继续？",
+    "0x8012": "对组态结果进行检查\n组态检查",
+    "0xa5a6": "组态结果检查中遇上不可预料的错误，请仔细检查所有使用到的扩充构件是否正常！",
+    "0xf020": "组态结果检查完毕!\n组态存在错误!"
+  },
+  "string_resource_evidence": {
+    "0x58e1": {
+      "block_id": 1423,
+      "language": 2052,
+      "block_rva": 31600088,
+      "utf16_hex": "250064002a4e1995ef8b2c00250064002a4e668b4a542100"
+    },
+    "0x5979": {
+      "block_id": 1432,
+      "language": 2052,
+      "block_rva": 31603752,
+      "utf16_hex": "636b2857c068e5679e5bf66570656e632e002e002e002e002e002e00"
+    },
+    "0x597a": {
+      "block_id": 1432,
+      "language": 2052,
+      "block_rva": 31603752,
+      "utf16_hex": "636b2857c068e567be8b0759977ae3532e002e002e002e002e002e00"
+    },
+    "0x597b": {
+      "block_id": 1432,
+      "language": 2052,
+      "block_rva": 31603752,
+      "utf16_hex": "636b2857c068e5674d91b96570656e632e002e002e002e002e002e00"
+    },
+    "0x597c": {
+      "block_id": 1432,
+      "language": 2052,
+      "block_rva": 31603752,
+      "utf16_hex": "636b2857c068e56728753762a17b067470656e632e002e002e002e002e002e00"
+    },
+    "0x597d": {
+      "block_id": 1432,
+      "language": 2052,
+      "block_rva": 31603752,
+      "utf16_hex": "636b2857c068e567567b6575e689d15368562e002e002e002e002e002e00"
+    },
+    "0x5987": {
+      "block_id": 1433,
+      "language": 2052,
+      "block_rva": 31604240,
+      "utf16_hex": "636b2857c068e5673b4ea763977ae3532e002e002e002e002e002e00"
+    },
+    "0x5988": {
+      "block_id": 1433,
+      "language": 2052,
+      "block_rva": 31604240,
+      "utf16_hex": "636b28577465534fc068e56728753762977ae3532e002e002e002e002e002e00"
+    },
+    "0x5aa1": {
+      "block_id": 1451,
+      "language": 2052,
+      "block_rva": 31612976,
+      "utf16_hex": "535f4d52cd645c4f7b98dd4f585be55d0b7a0cfff78b6e78a48b2f662654e77eed7e1fff"
+    },
+    "0x8012": {
+      "block_id": 2050,
+      "language": 2052,
+      "block_rva": 31537544,
+      "utf16_hex": "f95bc47e0160d37e9c67db8f4c88c068e5670a00c47e0160c068e567"
+    },
+    "0xa5a6": {
+      "block_id": 2651,
+      "language": 2052,
+      "block_rva": 31564048,
+      "utf16_hex": "c47e0160d37e9c67c068e5672d4e47900a4e0d4eef538498996584761995ef8b0cfff78bd44ec67ec068e567406209677f4f287530528476696245518467f64e2f662654636b385e01ff"
+    },
+    "0xf020": {
+      "block_id": 3843,
+      "language": 2052,
+      "block_rva": 31576224,
+      "utf16_hex": "c47e0160d37e9c67c068e5678c5bd56b21000a00c47e0160585b28571995ef8b2100"
+    }
+  },
+  "command_message_maps": [
+    {
+      "preferred_va": "0x1157858",
+      "rva": 13989976,
+      "raw_18_hex": "110100000000000012800000128000003a00000026534500",
+      "message": 273,
+      "code": 0,
+      "first_id": 32786,
+      "last_id": 32786,
+      "signature": 58,
+      "function_thunk": "0x455326",
+      "resolved": "0xad6ce0",
+      "thunk_chain": [
+        "0x455326",
+        "0xad6ce0"
+      ]
+    },
+    {
+      "preferred_va": "0x1169028",
+      "rva": 14061608,
+      "raw_18_hex": "110100000000000012800000128000003a000000e5714400",
+      "message": 273,
+      "code": 0,
+      "first_id": 32786,
+      "last_id": 32786,
+      "signature": 58,
+      "function_thunk": "0x4471e5",
+      "resolved": "0x7e2c80",
+      "thunk_chain": [
+        "0x4471e5",
+        "0x7e2c80"
+      ]
+    },
+    {
+      "preferred_va": "0x11ae670",
+      "rva": 14345840,
+      "raw_18_hex": "110100000000000012800000128000003a0000008a594400",
+      "message": 273,
+      "code": 0,
+      "first_id": 32786,
+      "last_id": 32786,
+      "signature": 58,
+      "function_thunk": "0x44598a",
+      "resolved": "0xa210d0",
+      "thunk_chain": [
+        "0x44598a",
+        "0xa210d0"
+      ]
+    },
+    {
+      "preferred_va": "0x11c5d00",
+      "rva": 14441728,
+      "raw_18_hex": "110100000000000012800000128000003a000000a7294300",
+      "message": 273,
+      "code": 0,
+      "first_id": 32786,
+      "last_id": 32786,
+      "signature": 58,
+      "function_thunk": "0x4329a7",
+      "resolved": "0xaceb90",
+      "thunk_chain": [
+        "0x4329a7",
+        "0xaceb90"
+      ]
+    }
+  ],
+  "doc_manage_identity": {
+    "vtable_rva": 13989508,
+    "COL_preferred_va": "0x1277de8",
+    "COL_words": [
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x13913ac",
+      "0x1277e00"
+    ],
+    "type_descriptor_preferred_va": "0x13913ac",
+    "rtti": ".?AVC0DocManage@@",
+    "slot85_thunk_preferred_va": "0x4390c7",
+    "slot85_resolved_preferred_va": "0x726350"
+  },
+  "check_result_owner_type": {
+    "vtable_preferred_va": "0x1143c94",
+    "vtable_rva": 13909140,
+    "COL_preferred_va": "0x1276af4",
+    "COL_words": [
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x139031c",
+      "0x1276b0c"
+    ],
+    "rtti": ".?AVCDlgManageEmbeded@@",
+    "slot100_thunk": "0x42df10",
+    "slot100_summary": "0x689c20"
+  },
+  "entry_parameters": [
+    {
+      "entry": "0xAD6CE0",
+      "rva": 7171296,
+      "abi": "ThisCall void Handler(IntPtr C0DocManage); no explicit stack arguments; ordinary WM_COMMAND0x8012 handler",
+      "recommended_current_execution": false,
+      "why": "Original wrapper performs save confirmation precondition and UI-associated check orchestration; state/lifetime and nonblocking completion still require a guarded adapter."
+    },
+    {
+      "entry": "0xAD6400",
+      "rva": 7169024,
+      "abi": "ThisCall bool(I1) Wrapper(IntPtr C0DocManage); no explicit stack arguments",
+      "required_original_path": "Calls AD62B0 first; do not bypass original save-confirmation branch."
+    },
+    {
+      "entry": "0x726350",
+      "rva": 3302224,
+      "abi": "ThisCall int Virtual85(IntPtr C0DocManage); no explicit stack arguments",
+      "recommended_direct_call": false,
+      "why": "Direct call would skip the original wrapper/precondition and is not a proven pure/headless check API."
+    },
+    {
+      "entry": "0x6877F0",
+      "rva": 2652144,
+      "abi_observed": "ThisCall bool(I1) method; RET4; receives one DWORD argument copied from parent orchestrator [ebp+10] at67FB4E",
+      "parameter_semantics_closed": false,
+      "recommended_direct_call": false,
+      "why": "Owned embedded UI/dispatch context and callback/output lifecycle not closed; not a substitute for all original check stages."
+    }
+  ],
+  "call_chain": [
+    "RT_ACCELERATOR129/133 (2052) VK_F4 -> command0x8012",
+    "C0DocManage WM_COMMAND0x8012 message row1157858 -> thunk455326 -> AD6CE0",
+    "AD6CE0 -> AD6400 -> original preconditionAD62B0; no precondition skip",
+    "AD6400 ordinary branch -> C0DocManage virtual85 -> thunk4390C7 ->726350",
+    "726350 clears root+114 compile-valid at7263DF, runs original object/module check orchestration, sets compile-valid1 only successful branch7264AC; error/catch paths can call original AfxMessageBox",
+    "Embedded result summary CDlgManageEmbeded virtual100 ->689C20 reads vectors+32C/+338/+344 and formats resource58E1 with first two counts"
+  ],
+  "result_counts": {
+    "owner": "CDlgManageEmbeded (actual runtime owned instance has not been located or read by this task)",
+    "error_vector_offset": 812,
+    "warning_vector_offset": 824,
+    "other_vector_offset": 836,
+    "count_function": "4EAC50: ([this+4]-[this])/4",
+    "summary_argument_order": "689D45 ->local20 error;689D56 ->local24 warning; pushes warning then error for format58E1",
+    "error_warning_semantics_proven_by_resource": true,
+    "actual_current_counts_observed": false,
+    "new_check_completion_generation_or_fresh_result_token_closed": false,
+    "zero_existing_vectors_are_a_new_success_proof": false
+  },
+  "side_effects_and_limits": [
+    "Check is not a readonly engineering-intake request: it changes compile-valid and can perform original compression/check/save-dependent processing.",
+    "AD62B0 contains resource5AA1 original save-project confirmation; no return/value force, patch, SendMessage, key simulation or confirmation bypass prepared.",
+    "Result summary689C20 invokes original UI control/text/window operations; the business worker is tied to an owned result/output context.",
+    "A same-UI-thread internal queue can theoretically invoke the original ordinary handler after future guarded integration, but that alone does not prove nonblocking/no-dialog completion or expose fresh counts.",
+    "Only the original handler+confirmation path is closed in this narrow task. A standalone headless full-check worker with exact construction/output lifecycle and new-run completion evidence remains unclosed.",
+    "Do not reclassify current bridge quarantine/read-only routes to call this automatically. Actual check remains deferred until all edit functions finish and final save is authorized."
+  ],
+  "functions": {
+    "DocManageF4Handler": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xad6ce0",
+      "resolved": "0xad6ce0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xad6d0b",
+          "target": "0x42153a",
+          "resolved": "0x95af30"
+        },
+        {
+          "at": "0xad6d1a",
+          "target": "0x443a77",
+          "resolved": "0xad6400"
+        },
+        {
+          "at": "0xad6d29",
+          "target": "0x44d6cb",
+          "resolved": "0x95afb0"
+        }
+      ],
+      "truncated": false
+    },
+    "DocManageCheckWrapper": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xad6400",
+      "resolved": "0xad6400",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xad642e",
+          "target": "0x4020c2",
+          "resolved": "0xad62b0"
+        },
+        {
+          "at": "0xad6458",
+          "target": "0xf2eea4",
+          "resolved": "0xf2eea4"
+        },
+        {
+          "at": "0xad646b",
+          "target": "0xf2eeaa",
+          "resolved": "0xf2eeaa"
+        },
+        {
+          "at": "0xad6473",
+          "target": "0x42f92d",
+          "resolved": "0x7348e0"
+        },
+        {
+          "at": "0xad647f",
+          "target": "0x4545ca",
+          "resolved": "0xafb790"
+        },
+        {
+          "at": "0xad648f",
+          "target": "0x40fd67",
+          "resolved": "0x726790"
+        },
+        {
+          "at": "0xad6497",
+          "target": "0x443027",
+          "resolved": "0x47a330"
+        },
+        {
+          "at": "0xad64ac",
+          "target": "0x44080e",
+          "resolved": "0x7080f0"
+        },
+        {
+          "at": "0xad64ca",
+          "target": "0x443027",
+          "resolved": "0x47a330"
+        },
+        {
+          "at": "0xad64e5",
+          "target": "0x425c57",
+          "resolved": "0x46ea80"
+        },
+        {
+          "at": "0xad64ec",
+          "iat": "0x13c8b44",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 12595
+          }
+        },
+        {
+          "at": "0xad64fe",
+          "target": "0x425c57",
+          "resolved": "0x46ea80"
+        },
+        {
+          "at": "0xad6505",
+          "iat": "0x13c8bc4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1683
+          }
+        },
+        {
+          "at": "0xad6512",
+          "target": "0x425c57",
+          "resolved": "0x46ea80"
+        },
+        {
+          "at": "0xad651e",
+          "target": "0x442726",
+          "resolved": "0x7080d0"
+        },
+        {
+          "at": "0xad652b",
+          "target": "0xf2ed84",
+          "resolved": "0xf2ed84"
+        },
+        {
+          "at": "0xad653e",
+          "target": "0x424b2c",
+          "resolved": "0x7082b0"
+        },
+        {
+          "at": "0xad655a",
+          "target": "0x41248b",
+          "resolved": "0xafc100"
+        },
+        {
+          "at": "0xad6566",
+          "target": "0x441a9c",
+          "resolved": "0x734910"
+        },
+        {
+          "at": "0xad6575",
+          "target": "0xf2eeb0",
+          "resolved": "0xf2eeb0"
+        },
+        {
+          "at": "0xad6585",
+          "target": "0x42f92d",
+          "resolved": "0x7348e0"
+        },
+        {
+          "at": "0xad6594",
+          "target": "0x4545ca",
+          "resolved": "0xafb790"
+        },
+        {
+          "at": "0xad65b3",
+          "target": "0x42e2f3",
+          "resolved": "0xad1ed0"
+        },
+        {
+          "at": "0xad65d2",
+          "target": "0x41248b",
+          "resolved": "0xafc100"
+        },
+        {
+          "at": "0xad65e1",
+          "target": "0x441a9c",
+          "resolved": "0x734910"
+        },
+        {
+          "at": "0xad65f2",
+          "target": "0x41248b",
+          "resolved": "0xafc100"
+        },
+        {
+          "at": "0xad6601",
+          "target": "0x441a9c",
+          "resolved": "0x734910"
+        }
+      ],
+      "truncated": false
+    },
+    "OriginalSaveConfirmationPrecondition": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xad62b0",
+      "resolved": "0xad62b0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xad62eb",
+          "target": "0x41bed2",
+          "resolved": "0x479db0"
+        },
+        {
+          "at": "0xad62f3",
+          "target": "0xf31172",
+          "resolved": "0xf31172"
+        },
+        {
+          "at": "0xad62fd",
+          "target": "0x416180",
+          "resolved": "0x740e40"
+        },
+        {
+          "at": "0xad6316",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xad6331",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xad6338",
+          "target": "0xf2ede4",
+          "resolved": "0xf2ede4"
+        },
+        {
+          "at": "0xad634a",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xad637f",
+          "target": "0x40c9d7",
+          "resolved": "0xad6140"
+        },
+        {
+          "at": "0xad6384",
+          "target": "0x445f20",
+          "resolved": "0x4ab3f0"
+        },
+        {
+          "at": "0xad639b",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xad63a6",
+          "target": "0x447dc5",
+          "resolved": "0x723400"
+        },
+        {
+          "at": "0xad63bd",
+          "target": "0x40c9d7",
+          "resolved": "0xad6140"
+        },
+        {
+          "at": "0xad63c2",
+          "target": "0x445f20",
+          "resolved": "0x4ab3f0"
+        }
+      ],
+      "truncated": false
+    },
+    "ResultDialogSummary": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x689c20",
+      "resolved": "0x689c20",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x689c4b",
+          "target": "0x436133",
+          "resolved": "0x68a020"
+        },
+        {
+          "at": "0x689c59",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x689c74",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x689c83",
+          "target": "0xf2f16e",
+          "resolved": "0xf2f16e"
+        },
+        {
+          "at": "0x689c8a",
+          "target": "0xf2ebfe",
+          "resolved": "0xf2ebfe"
+        },
+        {
+          "at": "0x689c99",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689cb8",
+          "target": "0x44ca55",
+          "resolved": "0x5006c0"
+        },
+        {
+          "at": "0x689ceb",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x689d06",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x689d27",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689d45",
+          "target": "0x43481f",
+          "resolved": "0x4eac50"
+        },
+        {
+          "at": "0x689d56",
+          "target": "0x43481f",
+          "resolved": "0x4eac50"
+        },
+        {
+          "at": "0x689d67",
+          "target": "0x43481f",
+          "resolved": "0x4eac50"
+        },
+        {
+          "at": "0x689d78",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x689d8a",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x689da5",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x689dbd",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x689dc8",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0x689dd8",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689dfb",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x689e17",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0x689e24",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689e4e",
+          "target": "0x423b73",
+          "resolved": "0x46eaa0"
+        },
+        {
+          "at": "0x689e6a",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0x689e77",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689e84",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x689ea2",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x689eb2",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "truncated": false
+    },
+    "VectorPointerCount": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4eac50",
+      "resolved": "0x4eac50",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "DataCheckStage": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x687d50",
+      "resolved": "0x687d50",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x687d85",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x687da0",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x687daa",
+          "target": "0x441411",
+          "resolved": "0x686030"
+        },
+        {
+          "at": "0x687db9",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x687dbf",
+          "target": "0x43ace7",
+          "resolved": "0xb095d0"
+        },
+        {
+          "at": "0x687dc4",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0x687dcf",
+          "target": "0x42e2f3",
+          "resolved": "0xad1ed0"
+        },
+        {
+          "at": "0x687de1",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x687e00",
+          "target": "0x450bf0",
+          "resolved": "0x6a4bd0"
+        },
+        {
+          "at": "0x687e0e",
+          "target": "0xf3100e",
+          "resolved": "0xf3100e"
+        },
+        {
+          "at": "0x687e1d",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x687e30",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0x687e4b",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0x687e55",
+          "target": "0x441411",
+          "resolved": "0x686030"
+        },
+        {
+          "at": "0x687e64",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0x687e6c",
+          "target": "0x4024dc",
+          "resolved": "0xbd2180"
+        },
+        {
+          "at": "0x687e8b",
+          "target": "0x401348",
+          "resolved": "0x695810"
+        }
+      ],
+      "truncated": false
+    },
+    "DocManageVirtual85Check": {
+      "preferred_begin": "0x726350",
+      "preferred_end_exclusive": "0x726786",
+      "raw_hex": "558bec6aff689149fa0064a100000000505181eca8000000a1600b3b0133c58945ec535657508d45f464a3000000008965f0894dc468a4a500008d45b450e88599d2ff83c4088945948b4d94898d64ffffffc745fc000000008b8d64ffffffff156c913c01508d4dd3e8bfd0d1ffc645fc028d4db4ff1548913c018d4dd2e8104acfffc645fc038b4dc4e8a7e9d2ff8b55c4c7821401000000000000c78554ffffff00000000c745ac00000000c645fc048d4dd1e8fbaacfff898548ffffffc645fc0533c08845cd8d4dcd518d4dd4e8e918d1ff89854cffffffc645fc068d55d4528d4dd1e890e6cdff8845ce8a45ce8845d0c645fc058d4dd4e808d1ceff0fb64dd085c9753cc7857cffffff01000000c645fc048d4dd1e82febceffc645fc028d4dd2e8a343ceffc745fcffffffff8d4dd3e8dd54ceff8b857cffffffe9d7020000c645fc048d4dd1e8fdeaceff837dac000f85490100008b55c4c7821401000001000000e8f3b2d1ff89855cffffff8b855cffffff8b884002000083c110e82b41ceff8945a48b4da4894dc8837dc8ff0f84d20000008b55c883c2048955c88b4dc4e8a230d0ff898574ffffff8b8574ffffff3b45c80f8eac0000008d4dc0ff1588903c01c645fc07683ba700008d4dbc51e8ef97d2ff83c40889459c8b559c899568ffffffc645fc088b45c883e804508b8d68ffffffff156c913c01508d4dc051ff1580903c0183c40cc645fc078d4dbcff1548913c016a006a408d4dc0ff156c913c0150e867888000c7856cffffff00000000c645fc048d4dc0ff1548913c01c645fc028d4dd2e87c42ceffc745fcffffffff8d4dd3e8b653ceff8b856cffffffe9b0010000e81359cfff89458c6a00687cb6380168ac8838016a008b558c52e899ab800083c414898560ffffff8b8d60ffffffe893fbceff8845cfeb446820f000008d4db851e81897d2ff83c4088945848b5584899558ffffffc645fc096a006a408b8d58ffffffff156c913c0150e8bb878000c645fc048d4db8ff1548913c01e9b00000008b8d50ffffffe8f287800068a6a500008d45a050e8c496d2ff83c4088945b08b4db0894da8c645fc0b6a006a108b4da8ff156c913c0150e86d878000c645fc0a8d4da0ff1548913c01c78578ffffff01000000b819677200c3b8eb667200c368a6a500008d558852e87096d2ff83c4088945988b4598894590c645fc0c6a006a108b4d90ff156c913c0150e819878000c645fc0a8d4d88ff1548913c01c7458001000000b8f4667200c3b8eb667200c3c745fc03000000eb23c745fc020000008d4dd2e81941ceffc745fcffffffff8d4dd3e85352ceff8b4580eb53eb26c745fc020000008d4dd2e8f440ceffc745fcffffffff8d4dd3e82e52ceff8b8578ffffffeb2bc78570ffffff00000000c645fc028d4dd2e8c740ceffc745fcffffffff8d4dd3e80152ceff8b8570ffffff8b4df464890d00000000595f5e5b8b4dec33cde87ca880008be55dc3",
+      "linear_code": [],
+      "CFG_closure_claimed": false,
+      "reason": "Contains EH funclet RETs; this is a bounded raw/linear evidence span, not an invented early-return completion proof."
+    },
+    "EmbeddedDialogModulePipeline": {
+      "preferred_begin": "0x6877f0",
+      "preferred_end_exclusive": "0x687d50",
+      "raw_hex": "558bec6aff683771f90064a100000000505181ec7c040000a1600b3b0133c58945ec535657508d45f464a3000000008965f0898de8fbffffc745fc00000000e83e52d8ff898578fbffff8b8578fbffff8985c8fbffff8b8dc8fbffff8b118b8dc8fbffff8b82a0000000ffd0e827dfdaff89857cfbffff8b8d7cfbffff898dd4fbffff8b95d4fbffff8b028b8dd4fbffff8b5018ffd2e83e2cd9ff898598fbffff8b8d98fbffffe8b898d7ff8b4508508b8de8fbffffe82faedcff8b4d08518b8de8fbffffe86e45d9ff8b5508528b8de8fbffffe8fb6edcff8b4508508b8de8fbffffe85045d9ff8b4d08518b8de8fbffffe88a06d9ff8b5508528b8de8fbffffe83245d9ff8b4508508b8de8fbffffe87533daff8b4d08518b8de8fbffffe81445d9ff8b5508528b8de8fbffffe857d9d9ff8b4508508b8de8fbffffe8f644d9ff8b4d08518b8de8fbffffe869ced7ff8b5508528b8de8fbffffe8d844d9ff8b4508508b8de8fbffffe856c8dcff8b4d08518b8de8fbffffe8ba44d9ff8b5508528b8de8fbffffe880c2dbff8b4508508b8de8fbffffe89c44d9ff68745900008d8db0fbffff51e87b83dcff83c4088985b8fbffff8b95b8fbffff8995c4fbffffc645fc016a016a008b8dc4fbffffff156c913c01508b8de8fbffffe83f9adbffc645fc008d8db0fbffffff1548913c01e877dedbff898590fbffff8b8590fbffff8985ccfbffff8b8dccfbffff8b118b8dccfbffff8b4208ffd08885e3fbffff0fb68de3fbffff85c9756068755900008d95a0fbffff52e8ea82dcff83c4088985a8fbffff8b85a8fbffff898580fbffffc645fc026a0168ff0000008b8d80fbffffff156c913c01508b8de8fbffffe8ab99dbffc645fc008d8da0fbffffff1548913c0132c0e9b1020000e94e020000c685e6fbffff00b81d7d6800c3b8d07c6800c38d8dd8fbffff518b8d74fbffffe86d84d9ffc645fc046a0168ff0000008d8dd8fbffffff156c913c01508b8de8fbffffe84799dbffc685e7fbffff00c645fc038d8dd8fbffffff1548913c01b80c7d6800c3b8d07c6800c38b9588fbffff8b028b8d88fbffff8b5004ffd2508d85b4fbffff50ff15287a3c0183c4088985c0fbffff8b8dc0fbffff898dbcfbffffc645fc056a0168ff0000008b8dbcfbffffff156c913c01508b8de8fbffffe8cb98dbffc645fc038d8db4fbffffff1548913c01c685e5fbffff00b8fb7c6800c3b8d07c6800c333d2668995ecfbffff68fe0300006a008d85eefbffff50e8fb948a0083c40c6a0068000200008d8decfbffff518b95d0fbffff8b028b8dd0fbffff8b5014ffd28b8dd0fbffffe884728a008d8ddcfbffffff1588903c01c645fc0668cb5e00008d859cfbffff50e84381dcff83c4088985acfbffff8b8dacfbffff898da4fbffffc645fc078d95ecfbffff528b8da4fbffffff156c913c01508d85dcfbffff50ff1580903c0183c40cc645fc068d8d9cfbffffff1548913c016a0168ff0000008d8ddcfbffffff156c913c01508b8de8fbffffe8d097dbffc685e2fbffff00c645fc038d8ddcfbffffff1548913c01b8ea7c6800c3b8d07c6800c368765900008d8d84fbffff51e8a380dcff83c408898594fbffff8b9594fbffff89958cfbffffc645fc086a0168ff0000008b8d8cfbffffff156c913c01508b8de8fbffffe86497dbffc645fc038d8d84fbffffff1548913c01c685e4fbffff00b8d97c6800c3b8d07c6800c3c745fcffffffffeb0fc745fcffffffff8a85e4fbffffeb46eb0fc745fcffffffff8a85e2fbffffeb35eb0fc745fcffffffff8a85e5fbffffeb24eb0fc745fcffffffff8a85e7fbffffeb13eb0fc745fcffffffff8a85e6fbffffeb02b0018b4df464890d00000000595f5e5b8b4dec33cde8b8928a008be55dc20400cccccccc",
+      "linear_code": [],
+      "CFG_closure_claimed": false,
+      "reason": "Contains EH funclet RETs; this is a bounded raw/linear evidence span, not an invented early-return completion proof."
+    }
+  },
+  "host_GUI_queue_process_native_execution_or_tests": false,
+  "permission_or_safety_confirmation_bypassed": false,
+  "doc_manage_message_map_owner_closure": {
+    "root_vtable_slot": 12,
+    "slot_thunk": "0x40e46c",
+    "virtual_method": "0x72fc70",
+    "virtual_method_evidence": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x72fc70",
+      "resolved": "0x72fc70",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x72fc77",
+          "target": "0x43b98f",
+          "resolved": "0x72fc60"
+        }
+      ],
+      "truncated": false
+    },
+    "static_map_getter": "0x72fc60",
+    "static_getter_evidence": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x72fc60",
+      "resolved": "0x72fc60",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "message_map_preferred_va": "0x1157944",
+    "raw_map_header_hex": "b8b0410040781501",
+    "base_map_getter": "0x41b0b8",
+    "entries_preferred_va": "0x1157840",
+    "command0x8012_entry_preferred_va": "0x1157858",
+    "owner_link_closed": true
+  }
+}

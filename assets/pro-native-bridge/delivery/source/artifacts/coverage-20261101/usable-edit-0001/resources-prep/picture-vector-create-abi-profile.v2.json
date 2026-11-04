@@ -1,0 +1,534 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base": 4194304,
+  "methods": {
+    "ListCtor": 329796,
+    "ListDtor": 261876,
+    "ListAddTail": 37986,
+    "ListSerialize": 11729224,
+    "MemorySeekBegin": 17726,
+    "ImageLoadControlArchive": 57141,
+    "ImageHash": 226516,
+    "ImageMakeReference": 334996,
+    "ImageSetReferenceName": 38846,
+    "PictureRecomputeHash": 8923136,
+    "ImageInitializeNamedReference": 156471
+  },
+  "guards": [
+    {
+      "name": "ListCtor",
+      "rva": 329796,
+      "bytes": "e9f7092100e932056100e9fd3e2a00e908d17900e953d90a00e9cec39b00e969",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListCtor",
+      "rva": 2495040,
+      "bytes": "558bec51894dfc8b4508508b4dfce85226dfff8b4dfcc70170fd13018b45fc8b",
+      "reloc_offsets": [
+        24
+      ]
+    },
+    {
+      "name": "ListDtor",
+      "rva": 261876,
+      "bytes": "e977192200e99235a000e9fd326700e968157f00e9d3655200e9feaa5700e9d9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListDtor",
+      "rva": 2496624,
+      "bytes": "558bec51894dfc8b4dfce8deb2daff8be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListAddTail",
+      "rva": 37986,
+      "bytes": "e9198f3700e944364700e93f7b3b00e9fab35100e975cd4d00e9c01b6800e9eb",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListAddTail",
+      "rva": 3679104,
+      "bytes": "558bec51894dfc8b4508508b4dfce89dd57a008be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ListSerialize",
+      "rva": 11729224,
+      "bytes": "ff2514873c01ff2510873c01ff250c873c01ff2508873c01ff2504873c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "MemorySeekBegin",
+      "rva": 17726,
+      "bytes": "e9cda80600e9d8e1a300e9430b1c00e93ed24700e969392300e9f4eaab00e9df",
+      "reloc_offsets": []
+    },
+    {
+      "name": "MemorySeekBegin",
+      "rva": 454160,
+      "bytes": "558bec51894dfc6a006a006a008b45fc8b108b4dfc8b4234ffd08be55dc3cccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageLoadControlArchive",
+      "rva": 57141,
+      "bytes": "e9b60a8500e921879f00e94c331d00e9c77f9300e942bf6300e9ddb30f00e918",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageLoadControlArchive",
+      "rva": 8776176,
+      "bytes": "558bec83ec14894df833c08845ff8d4dfe518b55f8528d4dece8d29900008b45",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageHash",
+      "rva": 226516,
+      "bytes": "e9a7b28200e902f7a100e98d043a00e9288e3400e9d3eb5c00e9eefc4400e9b9",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageHash",
+      "rva": 8791936,
+      "bytes": "558bec6aff684330010164a1000000005083ec48a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ImageMakeReference",
+      "rva": 334996,
+      "bytes": "e957198100e9523d5500e96ded2a00e9e8f10400e9f3e6a000e9be7a7100e979",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageMakeReference",
+      "rva": 8795632,
+      "bytes": "558bec51894dfc8b45fc0fb6480885c97404b001eb348b55fc83c20c528b45fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageSetReferenceName",
+      "rva": 38846,
+      "bytes": "e91d6c8500e9b80c6e00e9a3cd9800e99e9d5000e9795da000e9b4f35a00e9cf",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageSetReferenceName",
+      "rva": 8782816,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10cff15708e3c018be55dc20400cccccc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "PictureRecomputeHash",
+      "rva": 8923136,
+      "bytes": "558bec51894dfc8b45fc83c014508b4dfc83c118e8bb4c7bffb0018be55dc3cc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalVectorConstructorWorker",
+      "rva": 8815632,
+      "bytes": "558bec6aff686035010164a100000000505181ec24010000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "OriginalCloneIntoCell",
+      "rva": 8813904,
+      "bytes": "558bec6aff68e234010164a1000000005081ecd8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "OriginalFrameDeepCopy",
+      "rva": 8812144,
+      "bytes": "558bec6aff680334010164a1000000005081ecd8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "OriginalNamedImageStore",
+      "rva": 8776256,
+      "bytes": "558bec83ec0c894dfc8b45fc508d4df4e8ab950000837d0c00744fe80b807dff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalReferenceRegistration",
+      "rva": 10836352,
+      "bytes": "558bec6aff68efd4030164a1000000005083ec4ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ObjectListBaseCtor",
+      "rva": 342181,
+      "bytes": "e9c6d92000e971b10300e9cce77400e9c7859b00e952144a00e94d018000e9e8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ObjectListBaseCtor",
+      "rva": 2495088,
+      "bytes": "558bec51894dfc8b4508508b4dfce8a7e68c008b4dfcc70154fd13018b45fc8b",
+      "reloc_offsets": [
+        24
+      ]
+    },
+    {
+      "name": "ObjectListBaseDtor",
+      "rva": 52061,
+      "bytes": "e92e4d2500e9a94b8000e994192100e9df531800e9ea18ac00e935f67500e9d0",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ObjectListBaseDtor",
+      "rva": 2496656,
+      "bytes": "558bec51894dfc8b4dfce8a3e08c008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ObjectListMfcCtor",
+      "rva": 11729194,
+      "bytes": "ff2528873c01ff2524873c01ff2520873c01ff251c873c01ff2518873c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "ObjectListMfcDtor",
+      "rva": 11729218,
+      "bytes": "ff2518873c01ff2514873c01ff2510873c01ff250c873c01ff2508873c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "ObjectListMfcAddTail",
+      "rva": 11729200,
+      "bytes": "ff2524873c01ff2520873c01ff251c873c01ff2518873c01ff2514873c01ff25",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26
+      ]
+    },
+    {
+      "name": "ImageInitializeNamedReference",
+      "rva": 156471,
+      "bytes": "e994748300e9bff03800e95a0a2000e9c5f31b00e930b42300e92b882300e956",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageInitializeNamedReference",
+      "rva": 8771536,
+      "bytes": "558bec83ec0c894dfc8b45fc0fb6480885c9741368c0fb1e018b4dfc83c10cff",
+      "reloc_offsets": [
+        21
+      ]
+    },
+    {
+      "name": "ImageInitializeNamedReferenceCompleteBody",
+      "rva": 8771536,
+      "bytes": "558bec83ec0c894dfc8b45fc0fb6480885c9741368c0fb1e018b4dfc83c10cff1584903c01eb7b8b55fc8b028b4dfc8b5024ffd28b45fcc640080168c4fb1e018b4dfc83c10cff1584903c016a006a008d4df4e861ce7dff8b088b50048b45fc89487889507c8b4dfcc74114000000008b55fcc74218000000008b45fcc7401cc0c0c0008b4dfcc74120000000008b55fcc74224000000008b45fcc74028000000008be55dc3",
+      "reloc_offsets": [
+        21,
+        33,
+        60,
+        72
+      ]
+    },
+    {
+      "name": "ImageReleaseOwnedData",
+      "rva": 296261,
+      "bytes": "e976618100e971875300e97ca54600e987db0400e9b2eba400e9ddb19100e918",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageReleaseOwnedData",
+      "rva": 8775360,
+      "bytes": "558bec83ec18894dfc8b45fc0fb6480885c97416681cfc1e018b4dfc83c10cff",
+      "reloc_offsets": [
+        21
+      ]
+    },
+    {
+      "name": "ImageInitializeSizeZero",
+      "rva": 239241,
+      "bytes": "e992dc0300e93d837800e958e52d00e943e02300e95e9a5000e9a9524f00e9e4",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageInitializeSizeZero",
+      "rva": 492320,
+      "bytes": "558bec51894dfc8b45fc8b4d0889088b55fc8b450c8942048b45fc8be55dc208",
+      "reloc_offsets": []
+    }
+  ],
+  "mfc_file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "mfc_preferred_base": 268435456,
+  "imports": [
+    {
+      "iat_rva": 16549652,
+      "ordinal": 12981,
+      "target_rva": 361976,
+      "bytes": "558bec56578b7d088bf18b4718f7d08bcfa801741dff760ce8190200008b7604",
+      "reloc_offsets": []
+    },
+    {
+      "iat_rva": 16549672,
+      "ordinal": 818,
+      "target_rva": 297907,
+      "bytes": "558bec33c089410c8941108941088941048941148b4508894118c70154930310",
+      "reloc_offsets": [
+        28
+      ]
+    },
+    {
+      "iat_rva": 16549656,
+      "ordinal": 1346,
+      "target_rva": 2153347,
+      "bytes": "c70154930310e9cfbfe3ff558bec568bf1ff76046a00e8c9a2e3ff8b55088950",
+      "reloc_offsets": [
+        2
+      ]
+    },
+    {
+      "iat_rva": 16549668,
+      "ordinal": 1957,
+      "target_rva": 294546,
+      "bytes": "558bec568bf16a00ff7608e8c5ffffff8b55088950088b4e0885c9740a890189",
+      "reloc_offsets": []
+    },
+    {
+      "iat_rva": 16552068,
+      "ordinal": 1516,
+      "target_rva": 658803,
+      "bytes": "558bec56ff75088bf1e8297bfaff8bc65e5dc20400558bec660fbe45080fb7c0",
+      "reloc_offsets": []
+    }
+  ],
+  "evidence": [
+    {
+      "name": "ListCtor",
+      "entry": "0x450844",
+      "body": "0x661240",
+      "end_exclusive": "0x661265",
+      "code": []
+    },
+    {
+      "name": "ListDtor",
+      "entry": "0x43fef4",
+      "body": "0x661870",
+      "end_exclusive": "0x661883",
+      "code": []
+    },
+    {
+      "name": "ListAddTail",
+      "entry": "0x409462",
+      "body": "0x782380",
+      "end_exclusive": "0x782397",
+      "code": []
+    },
+    {
+      "name": "ListSerialize",
+      "entry": "0xf2f948",
+      "body": "0xf2f948",
+      "end_exclusive": "0xf2f94e",
+      "code": []
+    },
+    {
+      "name": "MemorySeekBegin",
+      "entry": "0x40453e",
+      "body": "0x46ee10",
+      "end_exclusive": "0x46ee50",
+      "code": []
+    },
+    {
+      "name": "ImageLoadControlArchive",
+      "entry": "0x40df35",
+      "body": "0xc5e9f0",
+      "end_exclusive": "0xc5ea37",
+      "code": []
+    },
+    {
+      "name": "ImageHash",
+      "entry": "0x4374d4",
+      "body": "0xc62780",
+      "end_exclusive": "0xc628de",
+      "code": []
+    },
+    {
+      "name": "ImageMakeReference",
+      "entry": "0x451c94",
+      "body": "0xc635f0",
+      "end_exclusive": "0xc6363e",
+      "code": []
+    },
+    {
+      "name": "ImageSetReferenceName",
+      "entry": "0x4097be",
+      "body": "0xc603e0",
+      "end_exclusive": "0xc603fd",
+      "code": []
+    },
+    {
+      "name": "PictureRecomputeHash",
+      "entry": "0xc82800",
+      "body": "0xc82800",
+      "end_exclusive": "0xc8281f",
+      "code": []
+    },
+    {
+      "name": "OriginalVectorConstructorWorker",
+      "entry": "0xc68410",
+      "body": "0xc68410",
+      "end_exclusive": "0xc68ec4",
+      "code": []
+    },
+    {
+      "name": "OriginalCloneIntoCell",
+      "entry": "0xc67d50",
+      "body": "0xc67d50",
+      "end_exclusive": "0xc68000",
+      "code": []
+    },
+    {
+      "name": "OriginalFrameDeepCopy",
+      "entry": "0xc67670",
+      "body": "0xc67670",
+      "end_exclusive": "0xc67837",
+      "code": []
+    },
+    {
+      "name": "OriginalNamedImageStore",
+      "entry": "0xc5ea40",
+      "body": "0xc5ea40",
+      "end_exclusive": "0xc5eac0",
+      "code": []
+    },
+    {
+      "name": "OriginalReferenceRegistration",
+      "entry": "0xe55980",
+      "body": "0xe55980",
+      "end_exclusive": "0xe55be0",
+      "code": []
+    },
+    {
+      "name": "ObjectListBaseCtor",
+      "entry": "0x4538a5",
+      "body": "0x661270",
+      "end_exclusive": "0x661293",
+      "code": []
+    },
+    {
+      "name": "ObjectListBaseDtor",
+      "entry": "0x40cb5d",
+      "body": "0x661890",
+      "end_exclusive": "0x6618a3",
+      "code": []
+    },
+    {
+      "name": "ObjectListMfcCtor",
+      "entry": "0xf2f92a",
+      "body": "0xf2f92a",
+      "end_exclusive": "0xf2f930",
+      "code": []
+    },
+    {
+      "name": "ObjectListMfcDtor",
+      "entry": "0xf2f942",
+      "body": "0xf2f942",
+      "end_exclusive": "0xf2f948",
+      "code": []
+    },
+    {
+      "name": "ObjectListMfcAddTail",
+      "entry": "0xf2f930",
+      "body": "0xf2f930",
+      "end_exclusive": "0xf2f936",
+      "code": []
+    },
+    {
+      "name": "ImageInitializeNamedReference",
+      "entry": "0x426337",
+      "body": "0xc5d7d0",
+      "end_exclusive": "0xc5d876",
+      "abi": "thiscall void(image), ret0",
+      "actual_primary_table": "0x11f099c",
+      "slot": 21,
+      "native_effects": {
+        "owned_data_release_slot": 9,
+        "reference_flag_byte8": 1,
+        "name": "native default, then original ImageSetReferenceName",
+        "zero_dwords": [
+          "14",
+          "18",
+          "20",
+          "24",
+          "28",
+          "78",
+          "7c"
+        ],
+        "dword1c": 12632256
+      },
+      "code": [],
+      "does_not_call_make_reference_or_picture_manager": true,
+      "requires_exclusively_owned_private_embedded_image": true
+    }
+  ],
+  "contract": {
+    "kind": "picture-create-from-controls",
+    "supported_source": "exact existing CDrawBitmap; one display image in named-reference mode; borrowed source list only",
+    "source_archive": "original typed CObList Serialize into owned native CMemFile/CArchive; no synthetic archive bytes",
+    "native_vector_load": "C5E9F0→C68410; nested original image scope suppresses auto-register; original Cell rect constructor/clone/owning AddTail",
+    "animation": "original worker removes animation only from its private clones and normalizes children into the computed Cell rectangle",
+    "contained_reference_restoration": "deep copy expands named image; hash private embedded member must equal the actual existing resource before original C635F0 converts it; name chosen through original setter17",
+    "normal_cleanup": "Detached image owns the selection-constructor frames; original PictureAssign/C67670 deep-copies into the new CPicture with coherent archive document context; named-image references are restored only after this copy. CObList node dtor never deletes borrowed source controls. Canonical adoption owns the final tree.",
+    "unknown_native_result": "stop; retain ownership/attempt; no guessed cleanup/retry",
+    "original_error_branch_may_show_message": "C68410 unsupported-class/error branches are not called intentionally; only guarded real Bitmap source is accepted",
+    "host_invoked": false,
+    "owner_context": "C68410 root RECT ctor has owner64=0, and cloned child LOAD uses the active document; before raw tree validation use the same original PictureAssign as native gallery callers to deep-copy into a coherent archive context. Never patch owner pointers."
+  },
+  "explicit_existing_reference_contract": {
+    "native_initializer": "primary21 -> 426337 -> C5D7D0; void ret0",
+    "native_name_setter": "primary17 -> 4097BE -> C603E0; CString const& ret4",
+    "image_content_hash_must_match_actual_existing_source_before_release": true,
+    "no_hash_index_hit_assumed": true,
+    "automatic_make_reference_called": false,
+    "existing_catalog_and_both_indexes_must_remain_exact": true,
+    "native_global_registration_mode_must_remain_zero": true,
+    "old_automatically_added_picture_is_never_deleted_or_reclassified": true,
+    "actual_hash_index_miss_proof_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\resources-prep\\picture-make-reference-hash-index-miss-static-0001.json",
+    "actual_hash_index_miss_proof_sha256": "c13ce0e9db1cdf6be1ea6293ec35ac57b740941090a919a7c4bd774d775e35d9"
+  }
+}

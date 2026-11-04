@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": [],
+      "abi": "cdecl ptr0"
+    },
+    {
+      "name": "GetDrawingView",
+      "rva": "0x6dd3b0",
+      "bytes": "558bec83ec0c894dfc8b45fc8b108b4dfc8b4270ffd08945f4837df40074338d",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(selfDoc) ret0"
+    },
+    {
+      "name": "DrawingViewGetDocument",
+      "rva": "0x2468e0",
+      "bytes": "558bec51894dfc8b45fc8b40748be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(selfView) ret0 -> self+74"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(selfPage) ret0"
+    },
+    {
+      "name": "DocumentCanUndo",
+      "rva": "0x6cdef0",
+      "bytes": "558bec83ec10894df80fb6450885c07410e85c2d94ff0fb6c885c9740433c0eb",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self,int checkBusyLowByte) ret4; 0 skips global singleton initialization"
+    },
+    {
+      "name": "DocumentCanRedo",
+      "rva": "0x6cdf80",
+      "bytes": "558bec83ec10894df80fb6450885c07410e8cc2c94ff0fb6c885c9740433c0eb",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self,int checkBusyLowByte) ret4"
+    },
+    {
+      "name": "EmbeddedEditor1",
+      "rva": "0x596fa0",
+      "bytes": "558bec51894dfc8b4508c700000000008b4dfc83b90801000000750433c0eb61",
+      "reloc_offsets": [],
+      "abi": "thiscall int(selfView,out ptr) ret4; RTTI+IsWindow only"
+    },
+    {
+      "name": "EmbeddedEditor2",
+      "rva": "0x597030",
+      "bytes": "558bec51894dfc8b4508c700000000008b4dfc83b90801000000750433c0eb61",
+      "reloc_offsets": [],
+      "abi": "thiscall int(selfView,out ptr) ret4; RTTI+IsWindow only"
+    },
+    {
+      "name": "GlobalBusy",
+      "rva": "0x55bc40",
+      "bytes": "558beca021873b015dc3cccccccccccc558bec8a4508a221873b015dc3cccccc",
+      "reloc_offsets": [
+        4,
+        23
+      ],
+      "abi": "cdecl bool AL; reads global13B8721"
+    },
+    {
+      "name": "ListCount",
+      "rva": "0x489470",
+      "bytes": "558bec51894dfc8b45fc8b400c8be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self) ret0; reads self+C"
+    },
+    {
+      "name": "DocBeforeModify",
+      "rva": "0x6db8d0",
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b4dfce8987695ff8be55dc20c",
+      "reloc_offsets": [],
+      "abi": "thiscall void(doc,view,int modified,int recordHistory) retC; native slot96"
+    },
+    {
+      "name": "LabelSetProperty",
+      "rva": "0x432990",
+      "bytes": "558bec51894dfc8b4508508b4dfce82f68beff837d08000f84a10000008b4dfc",
+      "reloc_offsets": [],
+      "abi": "thiscall void(IObject=complete+4,IPropertyDispatcher*) ret4"
+    },
+    {
+      "name": "ControlSetRect",
+      "rva": "0x746e20",
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce840658dff837d0c00752c8b4d08",
+      "reloc_offsets": [],
+      "abi": "thiscall void(complete,RECT*,NULL) ret8"
+    },
+    {
+      "name": "InvalidateView",
+      "rva": "0xab450",
+      "bytes": "558bec51894dfc8b4508506a008b4dfc8b512052ff1544783c018be55dc20400",
+      "reloc_offsets": [
+        22
+      ],
+      "abi": "thiscall void(CWnd*,int erase) ret4"
+    },
+    {
+      "name": "UpdateView",
+      "rva": "0x7b590",
+      "bytes": "558bec51894dfc8b45fc8b482051ff1554783c018be55dc3cccccccccccccccc",
+      "reloc_offsets": [
+        16
+      ],
+      "abi": "thiscall void(CWnd*) ret0"
+    },
+    {
+      "name": "UndoCommand",
+      "rva": "0x59f980",
+      "bytes": "558bec6aff6841cdfd0064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall void(C0VwDraw*) ret0; entire native command"
+    },
+    {
+      "name": "RedoCommand",
+      "rva": "0x59fe60",
+      "bytes": "558bec6aff6864cdfd0064a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall void(C0VwDraw*) ret0; entire native command"
+    }
+  ],
+  "scope": "Only owned page31/label0 open-designer caption+rect, native prechange history capture, original full Undo/Redo; no GUI/dialog/save/device operation. Fresh pinned session required.",
+  "scope_name": "native-open-page31-label-undo-redo",
+  "target": {
+    "label_rtti": ".?AVCDrawLabel@@"
+  },
+  "tables": {
+    "page_rva": "0xDED294",
+    "document_rva": "0xDC4D94",
+    "view_rva": "0xD9041C",
+    "label_complete_rva": "0xD72D8C",
+    "label_iobject_rva": "0xD72EC4"
+  },
+  "slots": {
+    "doc96_entry_rva": "0x3CBE6",
+    "doc90_entry_rva": "0x3339D",
+    "doc91_entry_rva": "0x32BF5",
+    "label5_entry_rva": "0x3B895",
+    "control21_entry_rva": "0x459f8"
+  },
+  "executed": false
+}

@@ -1,0 +1,137 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "code_guards": [
+    {
+      "name": "DocBeforeModifyEntry",
+      "rva": "0x3cbe6",
+      "bytes": "e9e5ec6900e95037a200e96bff7c00e926cf7b00e9619e3700e9bcd34400e9c7",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DocHistoryCaptureEntry",
+      "rva": "0x1952e",
+      "bytes": "e9dd4a6b00e938fe8200e9e3675a00e98e263300e949310500e9e48f9700e9ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DocSerializeEntry",
+      "rva": "0xca8b",
+      "bytes": "e970bb6c00e9db7d7900e9161a6100e9d17d3600e91c8b8200e9672f8200e922",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ClearStateEntry",
+      "rva": "0xcd60",
+      "bytes": "e97b616d00e9d6546700e9112a1f00e92c51a000e977564800e902f26d00e99d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ViewSelectedEntry",
+      "rva": "0x29d6b",
+      "bytes": "e9a0245700e9ebb65200e946c94e00e9610f3c00e95ced2b00e937c11900e9b2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalDocBeforeModify",
+      "rva": "0x6db8d0",
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b4dfce8987695ff8be55dc20c00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "OriginalHistoryDispatch",
+      "rva": "0x6ce5a0",
+      "bytes": "558bec83ec24894df8c645ff008b45088945f4837df400752a8b4df88b118b4df88b4270ffd08945f0837df00074148d4df0518b55f88b028b4df88b5074ffd28945f4837d0c007420837df400741a837d100074148b45f4508b4df88b118b4df88b8274010000ffd0",
+      "reloc_offsets": []
+    },
+    {
+      "name": "HistoryStore",
+      "rva": "0x6ce010",
+      "bytes": "558bec6aff685525ff0064a100000000505183ec5c535657a1600b3b0133c5508d45f464a3000000008965f0894dec6a008b45ec8b108b4dec8b826c010000ff",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "HistoryCallsDocSerialize",
+      "rva": "0x6ce0e3",
+      "bytes": "8b55ec895594c74598000000008b4508508d4d94518b55ec8b028b4dec8b9070010000ffd2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DocSerializeStoreBranch",
+      "rva": "0x6d8600",
+      "bytes": "558bec6aff68be37ff0064a100000000505183ec7c535657a1600b3b0133c5508d45f464a3000000008965f0894decc705f8213b0101000000c745fc000000008b4d08e85e6697ff8945cc837dcc00742a6a018b4dece8054793ff8b4508508b4dec81c1bc0200008b55ec8b82bc0200008b5008ffd2e92a020000",
+      "reloc_offsets": [
+        6,
+        25,
+        49
+      ]
+    },
+    {
+      "name": "ResetUnselectedTopLevelState",
+      "rva": "0x6e2ee0",
+      "bytes": "558bec83ec10894dfc8b45fc8b108b4dfc8b4270ffd08945f86a0068e8b6380168d0b638018d4df8518b55fc8b028b4dfc8b5074ffd26a0050e854e2440083c4148945f4837df4007502eb528b4dfc81c1bc020000e8464d96ff8945f8837df800743b8d45f8508b4dfc81c1bc020000e85e4994ff8b08894df08b55f0528b45f48b108b4df48b8268010000ffd085c0750a8b4df0c7416000000000ebbf8be55dc20400",
+      "reloc_offsets": [
+        28,
+        33
+      ]
+    },
+    {
+      "name": "ViewContainsSelection",
+      "rva": "0x59c210",
+      "bytes": "558bec83ec0c894df48b45088945f86a008b4df8518b4df481c164010000e80937590085c07409c745fc01000000eb07c745fc000000008b45fc8be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "mfc": {
+    "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "preferred_base": "0x10000000",
+    "code_guards": [
+      {
+        "name": "GetFirstViewPosition",
+        "rva": "0x5c4ef",
+        "bytes": "8b4130c3",
+        "reloc_offsets": []
+      },
+      {
+        "name": "GetNextView",
+        "rva": "0x56ac0",
+        "bytes": "558bec8b45088338000f84cc33030050e853a9faff5dc20400",
+        "reloc_offsets": []
+      },
+      {
+        "name": "ListGetNext",
+        "rva": "0x1428",
+        "bytes": "558bec8b55088b0285c00f846a8a08008b08890a8b40085dc20400",
+        "reloc_offsets": []
+      }
+    ],
+    "imports": [
+      {
+        "ordinal": 5485,
+        "iat_rva": "0xfc7c14",
+        "body_rva": "0x5c4ef"
+      },
+      {
+        "ordinal": 6070,
+        "iat_rva": "0xfc7c18",
+        "body_rva": "0x56ac0"
+      }
+    ]
+  },
+  "layout": {
+    "doc_first_view_node": 48,
+    "node_data": 8,
+    "drawing_view_vtable_rva": "0xd9041c",
+    "selection_member": 356,
+    "list_vtable_rva": "0xd3fd70",
+    "doc_controls": 700,
+    "full_owner": 100,
+    "raw_state": 96
+  },
+  "projection": "Only existing top-level controls outside the actual first drawing view selection receive DWORD60=0 in original STORE. Selected members and all nested objects retain their exact preimage. No managed write to this field.",
+  "native_call_executed": false
+}

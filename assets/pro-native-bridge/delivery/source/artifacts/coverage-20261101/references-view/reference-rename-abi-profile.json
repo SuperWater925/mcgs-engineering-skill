@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "GetAfxApp",
+      "rva": "0x6c060",
+      "bytes": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "reloc_offsets": [],
+      "abi": "cdecl ptr0"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall int(self)ret0"
+    },
+    {
+      "name": "FindWindowByName",
+      "rva": "0x7747f0",
+      "bytes": "558bec6aff6825fdff0064a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(manager,CString const&)ret4; namecache may rebuild"
+    },
+    {
+      "name": "WindowNameToId",
+      "rva": "0x7a2260",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfc83e9348b55fc8b42cc8b5040ffd28945",
+      "reloc_offsets": [],
+      "abi": "thiscall int(windowService,CString const&)ret4"
+    },
+    {
+      "name": "WindowRename",
+      "rva": "0x7a2080",
+      "bytes": "558bec6aff68df42000164a1000000005083ec2ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall bool AL(windowService,oldCString&,newCString&)ret8"
+    },
+    {
+      "name": "ObjectPath",
+      "rva": "0x7ccce0",
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "abi": "thiscall ptr(IObject,outLinker4*)ret4"
+    },
+    {
+      "name": "ReferencePresence",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": [],
+      "abi": "thiscall int(model,targetLinker4*,outFirstReference4*)ret8;0/1/2 notcount"
+    },
+    {
+      "name": "MainCtrlGetDocument",
+      "rva": "0x78db50",
+      "bytes": "558bec51894dfc8b45fc8b40388be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(MainCtrlManager)ret0;manager+38"
+    },
+    {
+      "name": "StartNamesGetter",
+      "rva": "0x6e7e00",
+      "bytes": "558bec51894dfc8b45fc05e00100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1E0"
+    },
+    {
+      "name": "StartIdsGetter",
+      "rva": "0x6e7e40",
+      "bytes": "558bec51894dfc8b45fc05f40100008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+1F4"
+    },
+    {
+      "name": "MemNamesGetter",
+      "rva": "0x6e7e20",
+      "bytes": "558bec51894dfc8b45fc05080200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+208"
+    },
+    {
+      "name": "MemIdsGetter",
+      "rva": "0x6e7e60",
+      "bytes": "558bec51894dfc8b45fc051c0200008be55dc3cccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "abi": "thiscall ptr(docCtrl)ret0;doc+21C"
+    }
+  ],
+  "scope": "Only referenced native home page ID2 rename twice to temporary name and back; no delete or ignore-reference flags",
+  "old_name": "首页",
+  "temporary_name": "BRIDGE_REF_首页改名验证",
+  "button_count": 53,
+  "offline_buttons_file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\button-reference-offline-inventory.json",
+  "offline_buttons_sha256": "dbc19ec343838dd99cb6c096700a24a9d93b7fd152d8a0a409cb2263762a8d4b",
+  "mainctrl": {
+    "manager_vtable_rva": "0xDDB24C",
+    "document_vtable_rva": "0xDC4F8C",
+    "cstring_array_vtable_rva": "0xCEB058",
+    "i4_array_vtable_rva": "0xCEAFA8",
+    "doc_pointer_offset": "0x38",
+    "names_start": "0x1E0",
+    "ids_start": "0x1F4",
+    "names_mem": "0x208",
+    "ids_mem": "0x21C",
+    "array_data": 4,
+    "array_size": 8,
+    "array_max": 12,
+    "array_grow": 16,
+    "start_rename_callback": "0xB8E690",
+    "mem_rename_callback": "0xB8E020",
+    "invalid_or_unmatched_arrays_fail_before_write": true
+  },
+  "slots": {
+    "window_manager_find16_entry_rva": "0x52EF",
+    "window_service_rename5_entry_rva": "0x538AF",
+    "window_service_nameid9_entry_rva": "0x249D8"
+  },
+  "allow_initial_root_or_page31_dirty": true,
+  "automatic_retry": false,
+  "automatic_rollback": false,
+  "executed": false
+}

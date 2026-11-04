@@ -1,0 +1,65 @@
+{
+  "schema": 1,
+  "revision": "20261103-background-pipeline-0102",
+  "native_build": {
+    "selected_source_files": 156,
+    "compiled_sources_including_layout": 157,
+    "owned_ABI_artifacts": 187,
+    "binding_and_x86_compile_passed": true,
+    "business_engine_deployed_or_activated": false,
+    "compiled_engine_sha256": "0f679352022595c3661326693c78e9ff2bc2677c26a64f8a650a9c39759b368c"
+  },
+  "client": {
+    "production_runner_fake_transport_tests_passed": 14,
+    "preparation_overlaps_inflight_RPC": true,
+    "derived_files_overlap_subsequent_RPC": true,
+    "all_background_writes_drained_before_return": true,
+    "writer_errors_propagated": true,
+    "dependency_page_inspection_and_save_boundaries_preserved": true,
+    "partial_timeout_and_duplicate_ID_no_replay": true,
+    "one_scope_and_event_handle_per_request_verified": true,
+    "configuration_identity_change_invalidates_cache": true
+  },
+  "managed_production_components": {
+    "actual_preparation_helper_and_large_receipt_code_tested": true,
+    "specification_and_inspection_SHA_contract_verified": true,
+    "input_snapshot_frozen_after_preparation": true,
+    "actual_payload_file_length_and_SHA_verified": true,
+    "prepare_UI_finalize_and_trace_threads_separated": true,
+    "trace_failure_visible_in_result": true,
+    "legacy_without_preparation_ticket_compatible": true,
+    "actual_comparison_evidence_code_tested": true,
+    "comparison_file_not_written_on_UI": true,
+    "deferred_file_metadata_and_original_UI_identity_preserved": true,
+    "native_project_object_accessed": false
+  },
+  "own_native_host": {
+    "old_engine_without_hooks_compatible": true,
+    "concurrent_submissions": 6,
+    "maximum_simultaneous_UI_dispatches": 1,
+    "background_prepare_finalize_and_publish_verified": true,
+    "background_encoding_and_payload_SHA_verified": true,
+    "prepare_UI_and_finalize_errors_correlated_without_replay": true,
+    "stop_during_inflight_request_and_UI_cleanup_passed": true,
+    "owned_COM_and_host_cleaned": true
+  },
+  "real_Pro_connection_only": {
+    "existing_process_used_without_restart": true,
+    "pure_ping_requests_passed": 3,
+    "background_prepare_finalize_publish_and_UI_dispatch_verified": true,
+    "write_attempted": false,
+    "native_project_objects_read": false,
+    "business_engine_PrepareRequest_or_FinalizeResponse_tested": false,
+    "test_bridge_cleaned_and_Pro_left_running": true
+  },
+  "native_core_changes": {
+    "direct_create_complete_captures_before": 4,
+    "direct_create_complete_captures_after": 2,
+    "single_action_boundary_and_full_checks_preserved": true,
+    "DrawingCapture_shares_one_forest_per_capture": true,
+    "public_layer_adapter_remains_single_target": true,
+    "new_native_business_behavior_tested_in_Pro": false
+  },
+  "user_engineering_modified_or_resumed": false,
+  "whole_page_speedup_measured": false
+}

@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "base_node_profile_sha256": "e827853f68f622be6a3ff9985621025ee0b3d392ed2e86306338f484250cacff",
+  "functions": [
+    {
+      "name": "ModelRenameNotifyModifiedAndSave",
+      "rva": 8224112,
+      "bytes": "558bec83ec0c894df48b4510508b4d0c518b55088b028b4d088b5050ffd2508b45088b108b4d088b4258ffd08b4df403416c8b55f489426c6a0068b8b9380168bc8738016a008b450850e8b393350083c4148945fc837dfc00741e6a018b4dfc8b118b4dfc8b420cffd08b4dfc8b118b4dfc8b4208ffd0eb496a0068b8b9380168bc8738018b4d088b118b4d088b423cffd06a0050e86893350083c4148945f8837df800741c6a018b4df88b118b4df88b420cffd08b4df88b118b4df88b4208ffd08be55dc20c00",
+      "reloc_offsets": [
+        59,
+        64,
+        124,
+        129
+      ]
+    },
+    {
+      "name": "DeviceSetModifiedRecursive",
+      "rva": 7710544,
+      "bytes": "558bec83ec08894dfc8b45fc0fb648080fb655083bca74098b45fc8a4d088848086a0068b8b9380168bc8738018b4dfc83e9048b55fc8b42fc8b503cffd26a0050e8dc693d0083c4148945f8837df80074120fb64508508b4df88b118b4df88b420cffd08be55dc20400",
+      "reloc_offsets": [
+        36,
+        41
+      ]
+    },
+    {
+      "name": "DeviceSaveDelegatesParent",
+      "rva": 7709872,
+      "bytes": "558bec83ec08894df86a0068b8b9380168bc8738018b4df883e9048b45f88b50fc8b423cffd06a0050e8946c3d0083c4148945fc837dfc00740d8b4dfc8b118b4dfc8b4208ffd08be55dc3",
+      "reloc_offsets": [
+        12,
+        17
+      ]
+    },
+    {
+      "name": "DeviceManagerSetModified",
+      "rva": 7879792,
+      "bytes": "558bec83ec0c894dfc8b4dfc83e9348b45fc8b50cc8b4204ffd08b4dfc83790c0074350fb6550885d27409c745f801000000eb07c745f8000000008b45f88945f48b4df4518b55fc8b420c8b4dfc8b108b490c8b426cffd08be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceManagerSave",
+      "rva": 7875632,
+      "bytes": "558bec6aff68cb0c000164a1000000005081ec80000000a1600b3b0133c5508d45f464a300000000894df0684c7f1d018d4de4ff1550913c01c745fc00000000687c7f1d018d4de8ff1550913c01c645fc01e8791489ff8945ec8d45e4508d4de8516a5368a47f1d0168c47f1d016a018d4d9ce8359e8bff8945c88b55c88955c4c645fc028b45c4508b4dec8b118b4dec8b420cffd0c645fc018d4d9ce856c488ffc645fc008d4de8ff1548913c01c745fcffffffff8d4de4ff1548913c018b4df083e9348b55f08b42cc8b5004ffd28b45f083780c000f84110100008b4df08b510c8b45f08b128b480c8b4268ffd083f8010f85f50000006a008b4df08b510c8b45f08b128b480c8b824c010000ffd068e87f1d018d4dd8ff1550913c01c745fc030000006824801d018d4ddcff1550913c01c645fc04e8931389ff8945e08d4dd8518d55dc526a58684c801d01686c801d016a018d4d88e84f9d8bff8945c08b45c08945bcc645fc058b4dbc518b55e08b028b4de08b500cffd2c645fc048d4d88e870c388ffc645fc038d4ddcff1548913c01c745fcffffffff8d4dd8ff1548913c018b45f08b480c8b55f08b018b4a0c8b5068ffd283f80175318b45f08b480c8b55f08b018b4a0c8b5070ffd28945b8837db80074156a008b45f08b480c8b55f08b018b4a0c8b506cffd26890801d018d4dccff1550913c01c745fc0600000068c0801d018d4dd0ff1550913c01c645fc07e8b61289ff8945d48d45cc508d4dd0516a6468e8801d016808811d016a018d8d74ffffffe86f9c8bff8945b48b55b48955b0c645fc088b45b0508b4dd48b118b4dd48b420cffd0c645fc078d8d74ffffffe88dc288ffc645fc068d4dd0ff1548913c01c745fcffffffff8d4dccff1548913c018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        44,
+        53,
+        65,
+        74,
+        101,
+        106,
+        171,
+        187,
+        274,
+        283,
+        295,
+        304,
+        331,
+        336,
+        401,
+        417,
+        495,
+        504,
+        516,
+        525,
+        552,
+        557,
+        628,
+        644
+      ]
+    },
+    {
+      "name": "DeviceDocumentSerialize",
+      "rva": 7258352,
+      "bytes": "558bec51894dfc8b4d08e8b7ea94ff85c00f84bd000000e8a25695ff8bc8e82f4095ff85c0742e8b45fcc6808c01000000c60555dd3801008b4d08518b55fc8b028b4dfc8b9098010000ffd2c60555dd380101eb7d8b45fc058c010000508b4d08e869d294ff8b4dfc8a918c010000881555dd38018b45fc0fb6888c01000083f9017533c705f03f3b01000000008b5508528b4dfce8960c95ff8b4508508b4dfc81c1640100008b55fc8b82640100008b5008ffd2eb148b4508508b4dfc8b118b4dfc8b8298010000ffd0c60555dd380101eb3b6a018b4d08e8066394ffc705f03f3b01000000008b4d08518b4dfce83c0c95ff8b5508528b4dfc81c1640100008b45fc8b90640100008b4208ffd08be55dc20400",
+      "reloc_offsets": [
+        51,
+        78,
+        113,
+        134,
+        205,
+        224
+      ]
+    }
+  ],
+  "contract": {
+    "rename_worker": "BD68F0 -> BD7D70; target IModifiable.SetModified(1) then Save",
+    "modified_byte": "Device IModifiable=complete+8; slot3 B5A750 writes complete+10 BYTE and recursively propagates ancestors only",
+    "save": "slot2 B5A4B0 delegates ancestors to manager+38 B82C30; loaded modified document vslot83 saves it",
+    "serialize": "AEC0F0 STORE path AEC1CE writes global serial scratch counter=0 before serializing root list; not a stable unique-ID allocator",
+    "cache": "Only exact STORE field18/BLOB projection plus same-UTF16 UID CString replacement and guarded owned frontend initialization; no general pointer/word mask"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "original_commit": [],
+  "integer_get_at": [],
+  "string_get_at": [],
+  "integer_element": [],
+  "string_element": [],
+  "native_generate_compile": [],
+  "clear_references": [],
+  "model_clear": [],
+  "resolver_phase0": [],
+  "resolver_phase1": [],
+  "conclusions": [
+    "Original OnOK loop 76C15E..76C24C copies exactly eight mode DWORDs and eight CString values for each of two phases. It does not copy resolved IDs.",
+    "Phase0 modes/IDs/texts are complete+1BC/+1D0/+1E4. Phase1 is +36C/+3BC/+380. complete+394 is a distinct feature array, never an action-ID array.",
+    "The candidate commits only the original mode/text fields. Original resolved IDs and all other action fields remain exact until the explicitly separate original final compilation.",
+    "B462D0 is not a harmless notification: it clears this object path references then invokes the complete primary31 compiler, including font, event and animation compilation. It is not silently invoked by this narrow array editor.",
+    "The editor returns pending_native_final_compile_and_reference_rebuild. Persistence/functional acceptance requires the root-owned original final compilation and independent final data validation.",
+    "Action indices are the actual fixed slots 0..7, not invented event IDs. Disabling/deleting an action means an explicitly supplied enabled=false and/or empty text, while derived IDs are not forged."
+  ]
+}

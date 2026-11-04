@@ -1,0 +1,184 @@
+{
+  "schema": 1,
+  "scope": "Read-only canonical strategy rows and program CString source; private actual ABI, no software version whitelist",
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "preferred_base": "0x400000",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+    },
+    {
+      "name": "mfc110u.dll",
+      "preferred_base": "0x10000000",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da"
+    }
+  ],
+  "functions": [
+    {
+      "name": "BlockFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bd30",
+      "bytes": "558bec83ec08894df8c745fc00000000eb098b45fc83c0018945fc8b4df883c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RowFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99b90",
+      "bytes": "558bec83ec08894dfc8b450c508b4d08518b55fc8b42088b4dfc8b108b49088b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CellFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9e4c0",
+      "bytes": "558bec83ec0c894df8c745fc00000000eb098b45fc83c0018945fc8b4df883c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArrayCount",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb3340",
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ArrayGetAt",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fd0",
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e845bea7008b55fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgFindText",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82fb0",
+      "bytes": "558bec51894dfc8b450c508b4d08518b55fc83c22052e85ef95bff83c40c8be5",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ProgSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83080",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStringGetLength",
+      "module": "mfc110u.dll",
+      "rva": "0xa0dca",
+      "bytes": "8b018b40f4c38b01c3558bec817d080e0007807505e849651600ff7508e819be",
+      "reloc_offsets": [],
+      "ordinal": 5755
+    }
+  ],
+  "tables": [
+    {
+      "name": "RowArray",
+      "rva": "0xe3b49c",
+      "col_rva": "0xe91eac",
+      "entries": [
+        "0xb2f606",
+        "0x1cc88",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    },
+    {
+      "name": "Row",
+      "rva": "0xe3b478",
+      "col_rva": "0xe91e50",
+      "entries": [
+        "0x4b97a",
+        "0x4296",
+        "0x10145",
+        "0x1131",
+        "0x1fbe5",
+        "0x509c0"
+      ]
+    },
+    {
+      "name": "Prog",
+      "rva": "0xe3511c",
+      "col_rva": "0xe91584",
+      "entries": [
+        "0xdba2",
+        "0x29212",
+        "0x53314",
+        "0x1131",
+        "0x1fbe5",
+        "0x5416a",
+        "0x1e39e",
+        "0x1c9e0",
+        "0x454d5",
+        "0x3de0b",
+        "0xd008",
+        "0x3f6cf",
+        "0x2e8f2",
+        "0x32484",
+        "0x2e7da",
+        "0x287cc"
+      ]
+    },
+    {
+      "name": "Cell",
+      "rva": "0xe3b5f8",
+      "col_rva": "0xe91df4",
+      "entries": [
+        "0x48121",
+        "0x2d6f5",
+        "0x2c57a",
+        "0x1131",
+        "0x1fbe5",
+        "0x1839f"
+      ]
+    },
+    {
+      "name": "Conn",
+      "rva": "0xe3b584",
+      "col_rva": "0xe91f0c",
+      "entries": [
+        "0x427ad",
+        "0x3e437",
+        "0x20752",
+        "0x1131",
+        "0x1fbe5",
+        "0x507db",
+        "0x45bb0",
+        "0x35c24",
+        "0x4003e",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x36075",
+        "0x18ab1",
+        "0x425ff",
+        "0x29a91",
+        "0x7518"
+      ]
+    },
+    {
+      "name": "ConnArray",
+      "rva": "0xe3b5dc",
+      "col_rva": "0xe91fd0",
+      "entries": [
+        "0xb2f606",
+        "0x2504a",
+        "0xb2f612",
+        "0x1131",
+        "0x1fbe5",
+        null
+      ]
+    }
+  ],
+  "layout": {
+    "block_iobject_rows_array": 28,
+    "array_data": 4,
+    "array_count": 8,
+    "array_capacity": 12,
+    "row_function": 8,
+    "prog_source": 32
+  }
+}

@@ -1,0 +1,567 @@
+{
+  "schema": 1,
+  "utc": "2026-11-02T05:38:46.971763+00:00",
+  "scope": "Pure-file script alternative contract. No OS/support-bit change, no legacy Counter/Timer node, no runtime action.",
+  "primary_sources": [
+    {
+      "file": "D:\\Work\\Temp\\mcgs-pro-help-20261102\\脚本函数\\计时器操作脚本函数.htm",
+      "sha256": "dc1ed1f7f76b4805ab243769e47a4c2dfbe4a90965fd48ad5d4408aa1aa995af"
+    },
+    {
+      "file": "D:\\Work\\Temp\\mcgs-pro-help-20261102\\脚本函数\\运行环境操作函数.htm",
+      "sha256": "8a0cec604a8deffcb41f82565b91f5ba673dc739509ec6f9a5e698f329e17a82"
+    }
+  ],
+  "timer_plugin": {
+    "file": "C:\\McgsPro\\Program\\plugins\\script\\script_timer_func.dll",
+    "sha256": "1901b86959cb7c2d0333aafbf7c6d8ff4931010eccc3b8fb5194d88961571829",
+    "registered_functions": [
+      {
+        "name": "!TimerRun",
+        "vtable_rva": 23336,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342d74",
+            "thunk": "0x68341750",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrRun",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerStop",
+        "vtable_rva": 23528,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342fa4",
+            "thunk": "0x68341758",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrStop",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerSkip",
+        "vtable_rva": 23464,
+        "argument_type_codes": [
+          3,
+          4
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342f2f",
+            "thunk": "0x68341760",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrAddCurTime",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerReset",
+        "vtable_rva": 22376,
+        "argument_type_codes": [
+          3,
+          4
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x683427df",
+            "thunk": "0x68341768",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrReset",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerValue",
+        "vtable_rva": 22504,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 4,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x683428c4",
+            "thunk": "0x68341770",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrGetCurTimeValue",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerStr",
+        "vtable_rva": 23400,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 8,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342df3",
+            "thunk": "0x683417c0",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSsC1EPKcRKSaIcE",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e05",
+            "thunk": "0x683417a8",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrGetTimeStr",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e17",
+            "thunk": "0x683417d0",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSsC2ERKSs",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e5f",
+            "thunk": "0x683417d8",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSs4_Rep10_M_destroyERKSaIcE",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e76",
+            "thunk": "0x683417d8",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSs4_Rep10_M_destroyERKSaIcE",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e96",
+            "thunk": "0x683417e0",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSs4_Rep10_M_disposeERKSaIcE",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342e9f",
+            "thunk": "0x683426d0",
+            "import": {
+              "dll": "libgcc_s_dw2-1.dll",
+              "name": "_Unwind_Resume",
+              "ordinal": null
+            }
+          },
+          {
+            "call": "0x68342eb2",
+            "thunk": "0x683417e0",
+            "import": {
+              "dll": "libstdc++-6.dll",
+              "name": "_ZNSs4_Rep10_M_disposeERKSaIcE",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerState",
+        "vtable_rva": 22440,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342854",
+            "thunk": "0x68341778",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrGetTimerStatus",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerSetLimit",
+        "vtable_rva": 22696,
+        "argument_type_codes": [
+          3,
+          4,
+          3
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342a27",
+            "thunk": "0x68341780",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SetLimit",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerSetOutput",
+        "vtable_rva": 22760,
+        "argument_type_codes": [
+          3,
+          264
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342aac",
+            "thunk": "0x68341788",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SetOutputVar",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerClearOutput",
+        "vtable_rva": 22824,
+        "argument_type_codes": [
+          3
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342b24",
+            "thunk": "0x68341790",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_ClearOutputVar",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerWaitFor",
+        "vtable_rva": 22568,
+        "argument_type_codes": [
+          3,
+          4
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x6834294f",
+            "thunk": "0x68341798",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrWaitFor",
+              "ordinal": null
+            }
+          }
+        ]
+      },
+      {
+        "name": "!TimerChangeInterval",
+        "vtable_rva": 22888,
+        "argument_type_codes": [
+          3,
+          4
+        ],
+        "return_type_code": 3,
+        "category_code": 65542,
+        "runtime_imports": [
+          {
+            "call": "0x68342baf",
+            "thunk": "0x683417a0",
+            "import": {
+              "dll": "TimerOperation.dll",
+              "name": "Mcgs_TimerOperation_SvrSetInterval",
+              "ordinal": null
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "timer_semantics": {
+    "timer_id_domain": [
+      0,
+      127
+    ],
+    "timer_id_is_global_slot_not_variable_or_strategy_ID": true,
+    "seconds_unit": true,
+    "native_default_interval_seconds": 1,
+    "native_rounding_step_seconds": "0.1 for documented Reset/Skip/ChangeInterval",
+    "state_codes": {
+      "0": "not started",
+      "1": "running",
+      "2": "stopped",
+      "3": "limit reached"
+    },
+    "SetLimit_mode": {
+      "0": "loop at limit",
+      "nonzero": "stop at limit"
+    },
+    "SetLimit_nonpositive": "unlimited",
+    "SetOutput_parameter2": "Bare numeric variable reference; declaration264 and formal ArgReader+0x34, then TimerOperation.SetOutputVar(timer_id, resolved runtime data object ID). Never substitute a raw native_id literal or quoted variable-name string.",
+    "native_return_codes_vs_help": "DLL declaration return3 is integer status for operations; TimerValue return4 is a numeric value; TimerStr return8 string. Help describes numeric returns generically as floating values. Preserve actual declaration codes.",
+    "TimeWaitFor_not_emitted": "Documented blocking wait; no need in a scan-driven finite timer."
+  },
+  "counter_semantics": {
+    "original_event_enum_resource": [
+      {
+        "language": 1033,
+        "resource_type": 240,
+        "resource_id": 1606,
+        "resource_sha256": "dfc40a387d90896fc728831e716636f7a12cbe5da02a5ff530e03c1f31f6b497",
+        "items": [
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "cafdd6b5d0cdcafdbeddb6d4cff3b1a8beafb2fac9fa00",
+            "text": "数值型数据对象报警产生"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "cac2bcfed0cdcafdbeddb6d4cff3cac2bcfeb2fac9fa00",
+            "text": "事件型数据对象事件产生"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdccf8b1e400",
+            "text": "开关型数据对象正跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3b8baccf8b1e400",
+            "text": "开关型数据对象负跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdb8baccf8b1e400",
+            "text": "开关型数据对象正负跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3b8bad5fdccf8b1e400",
+            "text": "开关型数据对象负正跳变"
+          }
+        ]
+      },
+      {
+        "language": 2052,
+        "resource_type": 240,
+        "resource_id": 1606,
+        "resource_sha256": "dfc40a387d90896fc728831e716636f7a12cbe5da02a5ff530e03c1f31f6b497",
+        "items": [
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "cafdd6b5d0cdcafdbeddb6d4cff3b1a8beafb2fac9fa00",
+            "text": "数值型数据对象报警产生"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "cac2bcfed0cdcafdbeddb6d4cff3cac2bcfeb2fac9fa00",
+            "text": "事件型数据对象事件产生"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdccf8b1e400",
+            "text": "开关型数据对象正跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3b8baccf8b1e400",
+            "text": "开关型数据对象负跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3d5fdb8baccf8b1e400",
+            "text": "开关型数据对象正负跳变"
+          },
+          {
+            "control_id": 1146,
+            "message": 1027,
+            "bytes": "bfaab9d8d0cdcafdbeddb6d4cff3b8bad5fdccf8b1e400",
+            "text": "开关型数据对象负正跳变"
+          }
+        ]
+      }
+    ],
+    "actual_event2": "switch positive edge (rising)",
+    "actual_event3": "switch negative edge (falling)",
+    "direct_counter_builtin_closed": false,
+    "bounded_installed_plugin_name_scan": [
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_data_func.dll",
+        "sha256": "c5e53fad2994999faa35deb9953330da0061b4eea7b6ebdc92fb0928e0fb8a6c",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_devscript_func.dll",
+        "sha256": "4e9ac90c6f9027a599bf89dcbaab0774bdb1b16bc44a9b7e75b8178ab33a6d4d",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_file_func.dll",
+        "sha256": "f21d26df8bf14164fafa284baca0d76aedb90d4e904f9714d9ee9b6ffb52e28c",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_memory_func.dll",
+        "sha256": "5c7cff670b74837f8905699c4932bac2f6ea00e303c093e51f6912b65a570a4a",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_recipe_func.dll",
+        "sha256": "ef2b1fe90ab01bdac03bf62a16a16a6a3069d15eda6d222ffed406bc85036714",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_timer_func.dll",
+        "sha256": "1901b86959cb7c2d0333aafbf7c6d8ff4931010eccc3b8fb5194d88961571829",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+        "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_user_func.dll",
+        "sha256": "91a1cc8457074ac32e09b01d9dee4ed08451d0a5896cf66e867f9b6c9d39594d",
+        "Counter_name_occurrences": []
+      },
+      {
+        "file": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+        "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+        "Counter_name_occurrences": []
+      }
+    ],
+    "absence_claim_limit": "No Counter-named entry was found in these installed script DLL names; this is not proof that every possible private vendor function is absent. No original Counter runtime mapping has been closed for this Linux product.",
+    "provided_alternative": "Explicit sampled rising/falling edge count using exclusive current/done/previous/initialized data objects. Invocation, reset priority, initial input sampling and saturation policy must be chosen, not inferred.",
+    "not_guessed": [
+      0,
+      1,
+      4,
+      5
+    ]
+  },
+  "old_programme": {
+    "file": "historical-local-evidence/strategy-functional.remaining-after-typed-call.actual.json",
+    "sha256": "e779862ba7b2f98e02d24190434336db1558edcc04ca66fdb1b090c9583432a5",
+    "targets": [
+      {
+        "step_id": "typed_counter",
+        "kind": "strategy-node-parameters",
+        "target": {
+          "block_id": 16,
+          "block_name": "AI_COMPLETE_User_20261102",
+          "model": "working",
+          "native_row_index": 2,
+          "node_kind": "action"
+        },
+        "class_name": "CStgyFuncCounter",
+        "fields": {
+          "comment": "AI_COMPLETE switch-edge counter",
+          "event_index": 2,
+          "counter_object": "Recipe_EditAble",
+          "reset_condition": "0",
+          "preset_value": "5",
+          "current_value": "time",
+          "state_variable": "Recipe_EditAble"
+        }
+      },
+      {
+        "step_id": "typed_timer",
+        "kind": "strategy-node-parameters",
+        "target": {
+          "block_id": 16,
+          "block_name": "AI_COMPLETE_User_20261102",
+          "model": "working",
+          "native_row_index": 3,
+          "node_kind": "action"
+        },
+        "class_name": "CStgyFuncTimer",
+        "fields": {
+          "comment": "AI_COMPLETE timer",
+          "preset_seconds": "5",
+          "current_seconds": "time",
+          "timing_condition": "Recipe_EditAble",
+          "reset_condition": "0",
+          "state_variable": "Recipe_EditAble"
+        }
+      }
+    ],
+    "new_input_state_not_inferred": "Old fields bind input/state both Recipe_EditAble and current to time. They remain historical evidence only; emitter must receive separate actual owned state bindings."
+  },
+  "required_public_generator_contract": {
+    "module": "timer_counter_source.py",
+    "entry": "emit(action:dict)",
+    "result": [
+      "source",
+      "required_bindings",
+      "required_timer_ids",
+      "source_evidence",
+      "semantic_limits"
+    ],
+    "host_or_runtime_called": false,
+    "native_project_check_passed": false,
+    "binding_verification_owner": "Root reconciles returned required bindings against fresh catalog; supplied IDs are never emitted as variable operands."
+  }
+}

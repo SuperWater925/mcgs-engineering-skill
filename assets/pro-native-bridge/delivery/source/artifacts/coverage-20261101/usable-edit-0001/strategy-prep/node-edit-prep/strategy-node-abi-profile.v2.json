@@ -1,0 +1,3446 @@
+{
+  "schema": 1,
+  "modules": [
+    {
+      "name": "McgsSetPro.exe",
+      "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "preferred_base": "0x400000"
+    },
+    {
+      "name": "mfc110u.dll",
+      "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "preferred_base": "0x10000000"
+    }
+  ],
+  "methods": [
+    {
+      "name": "BlockAddDefaultRow",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ad70",
+      "stack_pop": 8
+    },
+    {
+      "name": "BlockAdoptAppendRow",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ad40",
+      "stack_pop": 4
+    },
+    {
+      "name": "RowArrayInsert",
+      "module": "McgsSetPro.exe",
+      "rva": "0x1b2bb",
+      "stack_pop": 12
+    },
+    {
+      "name": "RowArrayRemove",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2f3a2",
+      "stack_pop": null
+    },
+    {
+      "name": "RowArraySetGrow",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2f39c",
+      "stack_pop": null
+    },
+    {
+      "name": "ArchiveCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c971",
+      "stack_pop": 16
+    },
+    {
+      "name": "ArchiveDtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x429bf",
+      "stack_pop": 0
+    },
+    {
+      "name": "ArchiveClose",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2ee98",
+      "stack_pop": null
+    },
+    {
+      "name": "MemoryFileSeekBegin",
+      "module": "McgsSetPro.exe",
+      "rva": "0x453e",
+      "stack_pop": 0
+    },
+    {
+      "name": "BlockOriginalDeepCopyForCloneProof",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99f20",
+      "stack_pop": 4
+    },
+    {
+      "name": "BlockDeleteUsingRealSelectionForProof",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ab50",
+      "stack_pop": 4
+    },
+    {
+      "name": "RowAdoptingCtor",
+      "module": "McgsSetPro.exe",
+      "rva": "0x45a61",
+      "stack_pop": 8
+    },
+    {
+      "name": "CellAdoptCondition",
+      "module": "McgsSetPro.exe",
+      "rva": "0x5074f",
+      "stack_pop": 12
+    },
+    {
+      "name": "CellReplaceCondition",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9da20",
+      "stack_pop": 8
+    },
+    {
+      "name": "RowReplaceAction",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98940",
+      "stack_pop": 8
+    },
+    {
+      "name": "SelectionClear",
+      "module": "McgsSetPro.exe",
+      "rva": "0x3bb92",
+      "stack_pop": 0
+    },
+    {
+      "name": "SelectionSetBlock",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cdc0",
+      "stack_pop": 4
+    },
+    {
+      "name": "SelectionSetRow",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cde0",
+      "stack_pop": 4
+    },
+    {
+      "name": "SelectionSetCell",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce00",
+      "stack_pop": 4
+    },
+    {
+      "name": "SelectionSetAction",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce20",
+      "stack_pop": 4
+    },
+    {
+      "name": "SelectionSetCondition",
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce40",
+      "stack_pop": 4
+    },
+    {
+      "name": "BlockSelectExisting",
+      "module": "McgsSetPro.exe",
+      "rva": "0x46f60",
+      "stack_pop": 4
+    },
+    {
+      "name": "StrategyViewRefresh",
+      "module": "McgsSetPro.exe",
+      "rva": "0x43d6a",
+      "stack_pop": 0
+    },
+    {
+      "name": "StrategyOpen",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6735",
+      "stack_pop": 4
+    },
+    {
+      "name": "StrategyDocBlock",
+      "module": "McgsSetPro.exe",
+      "rva": "0x13390",
+      "stack_pop": 0
+    },
+    {
+      "name": "StrategyDocLoad",
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ed000",
+      "stack_pop": 8
+    },
+    {
+      "name": "StrategyDocFlush",
+      "module": "McgsSetPro.exe",
+      "rva": "0x5240",
+      "stack_pop": 4
+    },
+    {
+      "name": "StrategyDocBeforeModify",
+      "module": "McgsSetPro.exe",
+      "rva": "0x32f83",
+      "stack_pop": 12
+    },
+    {
+      "name": "StrategyBlockUpdateReferences",
+      "module": "McgsSetPro.exe",
+      "rva": "0xe1c9",
+      "stack_pop": 0
+    },
+    {
+      "name": "TemplateFirstDoc",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304ee",
+      "stack_pop": null
+    },
+    {
+      "name": "TemplateNextDoc",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304f4",
+      "stack_pop": null
+    },
+    {
+      "name": "DocFirstView",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fc84",
+      "stack_pop": null
+    },
+    {
+      "name": "DocNextView",
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fc8a",
+      "stack_pop": null
+    },
+    {
+      "name": "NativeNew",
+      "module": "McgsSetPro.exe",
+      "rva": "0x54d4f",
+      "stack_pop": 4
+    },
+    {
+      "name": "MemoryFileCtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2094f9",
+      "stack_pop": 4
+    },
+    {
+      "name": "MemoryFileDtor",
+      "module": "mfc110u.dll",
+      "rva": "0x2095d6",
+      "stack_pop": 0
+    },
+    {
+      "name": "MemoryFileClose",
+      "module": "mfc110u.dll",
+      "rva": "0x209816",
+      "stack_pop": 0
+    }
+  ],
+  "code_guards": [
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ad70",
+      "bytes": "558bec6aff68b44f040164a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df06a14e8b09f5bff8945e0c745fc00000000837de00074116a",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ad40",
+      "bytes": "558bec51894dfc8b4508508b4dfc83c120e86afa58ff6a018b4dfc83c1088b55fc8b42088b500cffd28be55dc20400cc558bec6aff68b44f040164a100000000",
+      "reloc_offsets": [
+        54
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x1b2bb",
+      "bytes": "e920bea700e9fb99a400e9265d1a00e941125d00e91c5c9300e9178b4600e952cba000e9cde74e00e9085c4700e9d3211500e97e256000e9d9d45200e964bd47",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa970e0",
+      "bytes": "558bec51894dfc8b4510508b4d0c518b5508528b4dfce8278709008be55dc20c00cccccccccccccccccccccccccccccc558bec51894dfc8be55dc20400cccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2f3a2",
+      "bytes": "ff25d88a3c01ff25d48a3c01ff25d08a3c01ff25cc8a3c01ff25c88a3c01ff25c48a3c01ff25c08a3c01ff25bc8a3c01ff25b88a3c01ff25b48a3c01ff25b08a3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2f39c",
+      "bytes": "ff25dc8a3c01ff25d88a3c01ff25d48a3c01ff25d08a3c01ff25cc8a3c01ff25c88a3c01ff25c48a3c01ff25c08a3c01ff25bc8a3c01ff25b88a3c01ff25b48a3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c971",
+      "bytes": "e94ab00700e905a49d00e990188d00e9cb235800e996aa4300e901684200e94cdc2e00e9a7b50e00e982069a00e92d553a00e978d79d00e9733f9c00e9debb7e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79c0",
+      "bytes": "558bec51894dfc8b4514508b4d10518b550c528b4508508b4dfce83379a8008b45fc8be55dc21000cccccccccccccccc558bec51894dfc8b4dfce81979a8008b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x429bf",
+      "bytes": "e92c500600e9a7cc8e00e9d2fe7500e93dbe5c00e998e24600e9634f9800e99e258000e9e9767a00e9949c6600e9af662000e99a16a100e9b5f85100e9207d9a",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79f0",
+      "bytes": "558bec51894dfc8b4dfce81979a8008be55dc3cccccccccccccccccccccccccc558bec83ec08894dfc8b45fc8945f88b4d08518b4df8e8f836faff8b45fc8be5",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2ee98",
+      "bytes": "ff25348e3c01ff25308e3c01ff252c8e3c01ff25288e3c01ff25248e3c01ff25208e3c01ff251c8e3c01ff25188e3c01ff25148e3c01ff25108e3c01ff250c8e3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x453e",
+      "bytes": "e9cda80600e9d8e1a300e9430b1c00e93ed24700e969392300e9f4eaab00e9df514c00e99adf4600e985b31200e9e0a07d00e92b7b3a00e9860da600e9b19b91",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ee10",
+      "bytes": "558bec51894dfc6a006a006a008b45fc8b108b4dfc8b4234ffd08be55dc3cccccccccccccccccccccccccccccccccccc558bece87c01ac005dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99f20",
+      "bytes": "558bec6aff68e34d040164a1000000005081ecd0000000a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8318659ff0fb6c885c97405e96b",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ab50",
+      "bytes": "558bec83ec14894dfc8b4508837808007505e9ce010000c745f800000000eb098b4df883c101894df88b4dfc83c120e8c6fc5aff3945f80f8d950100008b55f8",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x45a61",
+      "bytes": "e96a2fa500e9e53e7e00e980781200e94bdd9a00e9763da200e9011b9800e92c848a00e967f26d00e9c2b17000e9ed126700e938a35300e9b3055000e98e5052",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa989d0",
+      "bytes": "558bec6aff68954c040164a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b4df0e838f45affc745fc000000008b45f0c70078b42301",
+      "reloc_offsets": [
+        6,
+        21,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x5074f",
+      "bytes": "e99cd3a400e9b72a4700e942859300e9bdda0200e968b77c00e953078e00e91e377c00e909e26200e904622900e9bf23a900e9ea997000e9652f9b00e9208b7a",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9daf0",
+      "bytes": "558bec83ec08894dfc8b45108945f8837df801740b837df8027452e9a8000000837d0c007e308b4d0c83e901518b4dfc83c104e8134056ff83380075198b550c",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9da20",
+      "bytes": "558bec83ec18894df88b4508837814007505e9aa000000837d0c007505e99f000000c745fc00000000eb098b4dfc83c101894dfc8b4df883c104e8ebcd5aff39",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98940",
+      "bytes": "558bec83ec10894dfc8b4508837810007502eb72837d0c007502eb6a8b4d088b51083b55fc7402eb5d8b45fc8b4d088b50083b5110754f8b45fc8b4808894df4",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3bb92",
+      "bytes": "e96911a600e9e4474300e90f857e00e9daf37200e9f5eb6800e9604c6a00e97b947c00e936274700e9c10a1d00e96cb90e00e9874e7a00e982379e00e91d057b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cd00",
+      "bytes": "558bec83ec08894dfcc745f8000000008b45fc83781801751d8b4dfc8379040074148b55fc8b4204c7403c00000000c745f8010000008b4dfc8379180375168b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cdc0",
+      "bytes": "558bec51894dfc8b45fc8b4d088948048be55dc20400cccccccccccccccccccc558bec51894dfc8b45fc8b4d088948088be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cde0",
+      "bytes": "558bec51894dfc8b45fc8b4d088948088be55dc20400cccccccccccccccccccc558bec51894dfc8b45fc8b4d0889480c8be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce00",
+      "bytes": "558bec51894dfc8b45fc8b4d0889480c8be55dc20400cccccccccccccccccccc558bec51894dfc8b45fc8b4d088948108be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce20",
+      "bytes": "558bec51894dfc8b45fc8b4d088948108be55dc20400cccccccccccccccccccc558bec51894dfc8b45fc8b4d088948148be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce40",
+      "bytes": "558bec51894dfc8b45fc8b4d088948148be55dc20400cccccccccccccccccccc558bec51894dfc8be55dc21000cccccc558bece8662209005dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x46f60",
+      "bytes": "e93b2fa500e9169f5600e921948000e9acb61a00e9879aa800e962688200e97dc97900e9482c5000e963282a00e95e259c00e9c9da9b00e9c44b9100e9af8824",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa99ea0",
+      "bytes": "558bec83ec08894dfcc745f800000000eb098b45f883c0018945f88b4dfc83c120e884095bff3945f87d2d8b4d08518b55f8528b4dfc83c120e80f8456ff8b08",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x43d6a",
+      "bytes": "e981f6a400e93cac3600e927373100e932cd2f00e9cdeb9400e9388f9200e993db7400e95e706500e959fb4e00e9d4038f00e99f2f7800e94aec6e00e9959365",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa933f0",
+      "bytes": "558bec51894dfc8b4dfce8b25f59ff6a006a008b4dfce8a4a858ff8be55dc3cc558bec6aff684d46040164a1000000005081ecd8000000a1600b3b0133c58945",
+      "reloc_offsets": [
+        38,
+        56
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6735",
+      "bytes": "e906d26900e951fe4200e9dc640700e9970f4f00e9a21e9300e95dc55400e96827a200e9f3e54700e9be801700e979e6a300e924993c00e90f393700e9aa5ea3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6a3940",
+      "bytes": "558bec6aff68c4e1fe0064a1000000005081ec9c030000a1600b3b0133c5508d45f464a300000000894dec68e7a300008d857cffffff50e89cc39aff83c40889",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x13390",
+      "bytes": "e9cb9b6d00e986bf5600e991683f00e9bc678300e9574a1f00e942a68400e9cda47d00e958622300e913860b00e97e1b6d00e959a2a500e9748a8f00e96f58a0",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ecf60",
+      "bytes": "558bec51894dfc8b45fc8b80540100008be55dc3cccccccccccccccccccccccc558bec83ec08894dfcff1578673c018945f88b4dfce8ec7d96ff8b45fc8b8854",
+      "reloc_offsets": [
+        43
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ed000",
+      "bytes": "558bec83ec10894dfc837d08007d0ab801000000e91e010000c745f4ffffffffc745f800000000eb098b45f883c0018945f8e8774795ff8b8820050000e8bd8e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x5240",
+      "bytes": "e9fb7e6e00e936c24600e941647f00e90cf6a400e947a97a00e9b2443a00e92da5a100e908235100e9238c4800e97e3f9800e9d94b4d00e9d4df4000e92f112e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ed140",
+      "bytes": "558bec83ec14894dfce8baca93ff8945f06a018b45f08b108b4df08b420cffd08b4dfc8b91540100008b45fc8b8814010000894a38c745f4ffffffffc745f800",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x32f83",
+      "bytes": "e918b66900e953925500e92e664400e97925a300e974e77e00e92f877800e96a467800e995953c00e9c0c42b00e96b5f2f00e9c6d38a00e941294f00e99cb78b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ce5a0",
+      "bytes": "558bec83ec24894df8c645ff008b45088945f4837df400752a8b4df88b118b4df88b4270ffd08945f0837df00074148d4df0518b55f88b028b4df88b5074ffd2",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe1c9",
+      "bytes": "e942d9a800e99d005200e9c8a92b00e913fea600e91e844100e9e9dd9b00e99484a400e9ff358200e9aa5d3000e915d93300e900ff3000e9eb2f2e00e9966a98",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9bb10",
+      "bytes": "558bec6aff682450040164a1000000005083ec18a1600b3b0133c5508d45f464a300000000894dece84b9c59ff8945f08d45dc508b4dece83f385bff8945e48b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304ee",
+      "bytes": "ff25b8813c01ff25bc813c01ff25c0813c01ff25c4813c01ff25c8813c01ff25cc813c01ff25d0813c01ff25d4813c01ff25d8813c01ff25dc813c01ff25e0813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304f4",
+      "bytes": "ff25bc813c01ff25c0813c01ff25c4813c01ff25c8813c01ff25cc813c01ff25d0813c01ff25d4813c01ff25d8813c01ff25dc813c01ff25e0813c01ff25e4813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fc84",
+      "bytes": "ff25147c3c01ff25187c3c01ff251c7c3c01ff25207c3c01ff25247c3c01ff25287c3c01ff252c7c3c01ff25307c3c01ff25347c3c01ff25387c3c01ff253c7c3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb2fc8a",
+      "bytes": "ff25187c3c01ff251c7c3c01ff25207c3c01ff25247c3c01ff25287c3c01ff252c7c3c01ff25307c3c01ff25347c3c01ff25387c3c01ff253c7c3c01ff25407c3c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x54d4f",
+      "bytes": "e9ac3b0200e947438400e9a2415200e9bd4a2900e998ef7a00e9d3226500e92e2c9c00e9495a7900e9a4d19300e97f767700e90a6e7600e935876700e9e0b029",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x78900",
+      "bytes": "558bec8b450850e8b260ab0083c4045dc20400cccccccccccccccccccccccccc558bec6a108b450c508b4d08e8fb2bfaff8b45085dc20800cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x2094f9",
+      "bytes": "558bec568bf1e8f5deffff8b450889461433c089461889461c894620894624c7066c8a0310c74628010000008bc65e5dc204006a04b8348e2810e8a8f2dfff8b",
+      "reloc_offsets": [
+        33,
+        54
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x2095d6",
+      "bytes": "6a04b8348e2810e8fef1dfff8bf18975f0c7066c8a031033ff897dfc397e247405e81a020000834dfcff8bce897e14897e18897e1c897e20e8ca5de5ffe8787a",
+      "reloc_offsets": [
+        3,
+        19
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x209816",
+      "bytes": "568bf15733ff897e14897e18897e1c897e20397e24740d397e2874088b06ff7624ff506c897e245f5ec38b01ff6058e80edbffffcce908dbffff558bec837d08",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4a642",
+      "bytes": "e9e914a300e974a15200e97f04a100e96a6d2a00e956260500e950cd7a00e9cb2b3b00e906514b00e9e1321a00e99c77a200e957405400e9a2d55100e99dcd82",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7bb30",
+      "bytes": "558bec6aff68ba1b040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a54e8f3915dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4b902",
+      "bytes": "e91902a300e964979900e9cf568600e9cac40d00e985bd0c00e92007a000e94b8b3a00e9d6f93500e951c21600e92c5e7a00e977194a00e9e2f42900e96d7563",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7bb20",
+      "bytes": "558bec51894dfcb808d23a018be55dc3558bec6aff68ba1b040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a54e8f3915dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3a445",
+      "bytes": "e91670a400e901989f00e9eca17a00e9f7c41e00e912d41800e93dca0600e958ff3200e9d3697c00e9be1c1d00e9b9fe7400e974337c00e9dfdc6e00e9aac0a3",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa81460",
+      "bytes": "558bec51894dfc8b4dfce880225bff8b450883e00174098b4dfc51e85c8c59ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c093",
+      "bytes": "e93802a500e9734b8000e96ebe5000e9a9fe4400e954b11600e91f750800e99a74ac00e995be2b00e980631000e91b229600e9d60b9200e901803b00e93cfb27",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7c2d0",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce86d445aff8b4d08518b4dfc83c11c8b55fc8b421c8b5008ffd28b45088945f88b4d08e89e295dff85c00f8495000000",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x36368",
+      "bytes": "e943c5a400e98eea9500e9a95a9300e984e97a00e9cf574700e91ae83600e9551e9f00e9b0896c00e94be45100e9b6c81300e9f1da7600e9cc776f00e9b76aa6",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa828b0",
+      "bytes": "558bec6aff68ea28040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a34e873245dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x1ee2f",
+      "bytes": "e96c3aa600e987945d00e9b2b55a00e94d770c00e998941a00e973039600e93ee14f00e959b53200e904882200e95f884f00e9ba744b00e955ad2200e9002a62",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa828a0",
+      "bytes": "558bec51894dfcb838d43a018be55dc3558bec6aff68ea28040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a34e873245dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xc71b",
+      "bytes": "e9b078a700e99ba49400e9f6848300e961121d00e91c062000e9d7814700e992611c00e93d8a4500e928de1a00e943780a00e90e800800e9a91ba700e954775c",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83fd0",
+      "bytes": "558bec51894dfc8b4dfce829845aff8b450883e00174098b4dfc51e8ec6059ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4d4c8",
+      "bytes": "e96357a300e90e917000e999bb3000e9e4ce1900e94f2a5f00e90a062000e9e5188700e9f0bb4c00e99b302800e9b6b02200e901be9b00e92c320800e9a7cb91",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82c30",
+      "bytes": "558bec6aff687829040164a1000000005083ec34a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8eeda59ff8b4d08518b4df083c1188b55",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x529dc",
+      "bytes": "e9bf52a200e9dac09800e965114700e950af1a00e98b68a800e9b6ae7100e9d1f65200e94c0a8e00e977c58700e9a24d6600e9ad737400e998654e00e9f3d1a0",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa77ca0",
+      "bytes": "558bec6aff689a12040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a38e883d05dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3f7ce",
+      "bytes": "e9bd84a300e928d2a200e9f36b7100e9be135200e9e9fc9c00e9b4d37b00e93fe70d00e9aac76500e9d5712b00e920425800e9fb9c7a00e9c69f7200e921ad1a",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa77c90",
+      "bytes": "558bec51894dfcb868d03a018be55dc3558bec6aff689a12040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a38e883d05dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2f2c",
+      "bytes": "e9bf5fa700e9ca04a000e9752ea500e900486600e97b604900e926dd3d00e961007500e94c7e4d00e977d52e00e962699b00e97da45600e938c02c00e9038158",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa78ef0",
+      "bytes": "558bec51894dfc8b4dfce8ec195cff8b450883e00174098b4dfc51e8cc115aff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x14c2c",
+      "bytes": "e9ff3ba600e95a0b8400e9b5da4000e940457b00e9bb0e5700e986184100e9617d4600e9fcc82800e987a31e00e932e45600e9bd839d00e9084d8300e9a3707a",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa78830",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8c65a5cff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b45088945f88b4d08e83e645dff85c074508b4dfc83",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x53b43",
+      "bytes": "e9f854a200e953024600e9de1ea200e9b95c8800e934e33300e9cf5e7600e9da262200e965531700e920548500e94b276400e9a6715400e981bc1100e9fc229b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79040",
+      "bytes": "558bec6aff688a15040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a14e8e3bc5dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x1541a",
+      "bytes": "e9113ca600e99c088c00e9b7378300e9d2cf0500e91d9f8f00e968568200e9c3bd3200e98e0f4800e9a9ad1700e9a4c70b00e97fbf8000e92abb5100e9758049",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79030",
+      "bytes": "558bec51894dfcb818d13a018be55dc3558bec6aff688a15040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a14e8e3bc5dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x23a33",
+      "bytes": "e97860a500e9a3319a00e94ede5700e9f9560b00e904b79000e9af9c2c00e9ca5a0500e9351b9e00e9e0606f00e9db836a00e9265f6600e9f1263b00e9acba90",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79ab0",
+      "bytes": "558bec51894dfc8b4dfce87cdf58ff8b450883e00174098b4dfc51e80c065aff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x1f4ba",
+      "bytes": "e901a1a500e95ca10700e967131d00e9f2780800e92d2ca700e9a8c74e00e983974600e9ceae3100e9e9eb9600e9f4308100e9af6e7700e92a794d00e9c5033e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa795c0",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8364d5cff8b4d08894df88b4d08e8c3565dff85c074208b55fc8b420c508b4d08e8478f5bff8b4dfc83c110518b4df8",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xeeda",
+      "bytes": "e9e1aca600e93c771600e907ca0d00e9e2887600e93deb3900e9189d3300e9a35da500e96ea76a00e949a85300e9c4407500e90ff94000e9aa020b00e9c59196",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79bc0",
+      "bytes": "558bec6aff68ba17040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a60e863b15dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x35521",
+      "bytes": "e98a46a400e945709900e910a90f00e9ab05a100e956315100e931d64700e9cc34aa00e9a78ca100e902875c00e97d549a00e998503200e9a3710d00e93e8b51",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa79bb0",
+      "bytes": "558bec51894dfcb890d13a018be55dc3558bec6aff68ba17040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a60e863b15dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2e852",
+      "bytes": "e9c9d1a400e9043c5600e95f743a00e9faa83200e9e5cb9200e950c50d00e93b2b0a00e906610500e9119a8f00e90cec4500e9a7563100e912a42700e94dde1d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7ba20",
+      "bytes": "558bec51894dfc8b4dfce897915bff8b450883e00174098b4dfc51e89ce659ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x29eec",
+      "bytes": "e91f08a500e90a57a000e9a5ad8a00e990cd5d00e9dbc85300e936e93b00e9c1ae3a00e96c6ea400e9d7cf0900e902aea300e97db39c00e938e68600e9639889",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7a710",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e63b5cff8b4d08518b4dfc83c1188b55fc8b42188b5008ffd28b4508508b4dfc83c12c8b55fc8b422c8b5008ffd28b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2dfb0",
+      "bytes": "e9bbe4a400e9d6b79a00e9117e8100e99cf27300e987315b00e9e2f93700e9ad7f9c00e948727700e9e3255700e98eb72200e949019c00e9a44a5200e94fa846",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7c470",
+      "bytes": "558bec6aff688f1c040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006824010000e8b0885dff8945f0c745fc00000000837df000740d8b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x44dc8",
+      "bytes": "e99376a300e93e0c7300e939946300e984e05300e90f6f3b00e90ac43800e9251c9500e910628f00e95b892800e9a6ec0900e921637b00e9fc0e7600e957bd38",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7c460",
+      "bytes": "558bec51894dfcb82cd23a018be55dc3558bec6aff688f1c040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006824010000e8b0885dff89",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x1604a",
+      "bytes": "e991b4a600e92c03a300e9d742a100e912983600e94db69f00e9a8247a00e983fa7900e9ee822500e949ac0600e974387100e96f608100e9ea9f4700e9950923",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa814e0",
+      "bytes": "558bec51894dfc8b4dfce8a87a5aff8b450883e00174098b4dfc51e8dc8b59ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x402f5",
+      "bytes": "e9c6cda300e901406500e9fc729b00e967668c00e9a2447600e92d008300e958886800e9a39f8800e95e594300e9b974a800e9a4cd7d00e9bf254700e9caf692",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa7d0c0",
+      "bytes": "558bec83ec24894dfc8b4508508b4dfce836125cff8b4d08518b4dfc83c1148b55fc8b42148b5008ffd28b4508508b4dfc83c1288b55fc8b42288b5008ffd2c7",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe9d5",
+      "bytes": "e9462da700e9b1678200e91c5a2900e977948f00e9529c8800e9dd855200e9e8613a00e923f4a500e95e597000e9e940a600e994b07f00e98f9d1c00e90a0917",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa81720",
+      "bytes": "558bec6aff685a25040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a1ce803365dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x48540",
+      "bytes": "e9cb91a300e976618100e971875300e97ca54600e987db0400e9b2eba400e9ddb19100e918100200e9a3225400e9ded04f00e9a9c79100e914e97c00e96fed37",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa81710",
+      "bytes": "558bec51894dfcb85cd33a018be55dc3558bec6aff685a25040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a1ce803365dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x24578",
+      "bytes": "e9a3dca500e9ce909c00e999998400e9f4ee2700e9bf8d9f00e93a936c00e9d57a6d00e950603d00e95b4f0700e9d6a89d00e9e1b16f00e95cd29a00e9a72a7e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82220",
+      "bytes": "558bec51894dfc8b4dfce8825a58ff8b450883e00174098b4dfc51e89c7e59ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x42b9f",
+      "bytes": "e92ceca300e9772d1c00e9b2701000e95d93a200e9b8817a00e9f30d7900e94e337200e949617000e9b4c55600e90fc6a300e94ad67600e9b5ec7300e940e973",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa817d0",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce826cb5bff8b4d08894df88b4d08e8b3d45cff85c0743e8b55fc83c20c528b4df8e871c25cff8b45fc8b4810518b4d08",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4bb1e",
+      "bytes": "e90d68a300e988d89c00e983287a00e9fea88f00e9992e7b00e9a4815d00e95fc84300e95a6fa900e9d5f68d00e930b48b00e9fbc98300e976034f00e9c1ca9d",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82330",
+      "bytes": "558bec6aff686a27040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a0ce8f3295dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x14376",
+      "bytes": "e9a5dfa600e9e05f9f00e94b6a9600e9e66c8100e981209600e91c8d6800e9574f1e00e922797700e97d5f6800e9d84f4600e983fd3f00e97ec80800e9592079",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82320",
+      "bytes": "558bec51894dfcb8c8d33a018be55dc3558bec6aff686a27040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a0ce8f3295dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x31e8f",
+      "bytes": "e9ec08a500e9c7d68100e9f2d88000e91de97a00e9b84e7900e933966400e9aeff4f00e999583800e9444a1900e98f4b0700e9ea507900e995bf4300e9e0ad6c",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82780",
+      "bytes": "558bec51894dfc8b4dfce862685aff8b450883e00174098b4dfc51e83c7959ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3e30b",
+      "bytes": "e9309fa500e9dbfc6300e9c63c5700e951591100e9cc357800e957d75800e9724f5200e9ad524f00e978202e00e9b3a40900e9ce46a000e9590f0300e9842292",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98240",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8650359ff8b4d08894df88b4d08e8436a5bff85c074208b55fc8b4204508b4d08e8c7a259ff8b4dfc83c108518b4df8",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x47a69",
+      "bytes": "e952c7a300e98ddb6800e9d8c42100e983359e00e9ee305000e969821600e934ecaa00e94fe79e00e91abc8800e9154e6800e900203000e95bca9300e9a69643",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa841c0",
+      "bytes": "558bec6aff682a2d040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a7ce8630b5dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4a309",
+      "bytes": "e9a29ea300e97d368c00e958e88000e903913400e9debb0400e9096ca100e934bf5b00e9bf8ba700e95a9ca000e9f5856e00e900c62900e9ab452600e9c6479b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa841b0",
+      "bytes": "558bec51894dfcb818d53a018be55dc3558bec6aff682a2d040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a7ce8630b5dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x219c7",
+      "bytes": "e9747fa600e97f3ba000e97a462500e915757900e94068a200e96b459100e936d87700e9b1cb7200e9acce5c00e9272c1c00e912f80b00e94def8c00e9f8cf52",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa89940",
+      "bytes": "558bec51894dfc8b4dfce872165bff8b450883e00174098b4dfc51e87c0759ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x49779",
+      "bytes": "e972c1a300e92d277200e938905400e9f3875600e9ce559e00e949945400e944214200e9ef563300e95a0e2600e905f41e00e940bf8e00e93bda6300e9261c43",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa858f0",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8068a5bff8b4d08518b4dfc83c1248b55fc8b42248b5008ffd28b4508508b4dfc83c1548b55fc8b42548b5008ffd28b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x80a8",
+      "bytes": "e9c3ada700e90e947d00e909757d00e944447c00e91f496e00e9dae43c00e92552a900e9d032a800e9ab958200e976151400e961b49600e91c645d00e96713a2",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82e70",
+      "bytes": "558bec6aff689d29040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a24e8b31e5dff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdba2",
+      "bytes": "e9b952a700e9c4d7a200e95fd84600e91a173a00e945f84c00e900cd5400e96bb74700e9c6de4700e971362300e97cb79200e907be7e00e922a10600e94dae8f",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa82e60",
+      "bytes": "558bec51894dfcb85cd43a018be55dc3558bec6aff689d29040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a24e8b31e5dff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x29212",
+      "bytes": "e939aea500e984309b00e97fc13700e98a043200e955a90600e9e0fd7600e90bc17500e996bb7500e9d1be7500e96c994800e9a7d63f00e9023c2f00e9bde50e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa84050",
+      "bytes": "558bec51894dfc8b4dfce871395aff8b450883e00174098b4dfc51e86c6059ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x53314",
+      "bytes": "e967fda200e942448200e97dde9e00e9f8729000e973523900e90ed69900e979eb5800e9146a9900e93feb5200e95ae11e00e9454b7e00e950a71b00e98bae7f",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa83080",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce876b25bff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b45088945f88b4d08e8eebb5cff85c074118b4dfc83",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x10c7b",
+      "bytes": "e9708ea700e95bf75900e966279800e941839600e9ccc02900e927a05200e922fd4600e93df82b00e958672900e9f30e2500e92e1f2300e9992e9000e914efa2",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa89af0",
+      "bytes": "558bec6aff683a36040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a3ce833b25cff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x34450",
+      "bytes": "e98b56a500e9e69e8d00e9315d6e00e96c4e4500e9e7132000e9020c5300e9ad390a00e948079300e983703100e97e262700e999c85400e974202e00e98f761a",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa89ae0",
+      "bytes": "558bec51894dfcb8d8d53a018be55dc3558bec6aff683a36040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a3ce833b25cff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x22700",
+      "bytes": "e97b8da600e956a09d00e941879100e9ec924500e9474a0c00e93b837300e9bda73200e9cc946200e923906200e9ce515d00e999634a00e984b73a00e91feba5",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa8b480",
+      "bytes": "558bec51894dfc8b4dfce83ccc57ff8b450883e00174098b4dfc51e83cec58ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x31bfb",
+      "bytes": "e90085a500e98b288800e9762a4b00e9412a4200e94ce72b00e9277b0b00e952918100e95d507000e9985d4e00e9a3c82300e9de0a1c00e9c9120600e9440fa1",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa8a100",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8f6415bff8b4d08894df88b4d08e8834b5cff85c00f84b90000008b55fc8b420c508b4d08e803845aff8b4dfc8b5110",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x47145",
+      "bytes": "e94644a400e9818f8000e95c721000e9f7e75f00e9d2214600e93d5c2600e998129e00e9537e9300e90ec69100e9a92f5200e994410f00e90fc02f00e92a1e4b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa8b590",
+      "bytes": "558bec6aff686a39040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a44e893975cff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x47f5a",
+      "bytes": "e92136a400e9ec91a000e937412a00e9924da000e94d329f00e998d28600e9737b5b00e9be6b5200e9f9130500e974126d00e90fd45300e98a105000e9150350",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa8b580",
+      "bytes": "558bec51894dfcb844d63a018be55dc3558bec6aff686a39040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a44e893975cff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x13d95",
+      "bytes": "e9d6c6a700e9f1309800e91c45a100e9a78b9600e9629c6f00e97d9b0800e928554f00e993f84700e9fe874600e989a98c00e9748b0c00e95f8f5800e93af922",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa90470",
+      "bytes": "558bec51894dfc8b4dfce8aa335bff8b450883e00174098b4dfc51e84c9c58ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x53e72",
+      "bytes": "e9697aa300e964596c00e99fb64e00e90a4c2d00e9f5af8700e900bb5100e9cb1d6e00e9b6ed3500e9a1e63200e94c73a700e9c7824200e9f29d1500e98deb13",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa8b8e0",
+      "bytes": "558bec6aff68e539040164a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e8f7295bff8b4d08518b4df083c10c8b55",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xd873",
+      "bytes": "e9083ca800e923a05600e9be875400e919227f00e944071400e93fc0a400e91ad69200e93581a300e970819f00e92b8b0900e9969b6300e951a34100e9dc4429",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa91480",
+      "bytes": "558bec6aff680a42040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a68e8a3385cff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2ec03",
+      "bytes": "e96828a600e9835d9800e95ec24f00e9e9e1a600e9d49f9d00e95fe79c00e90a9e7200e955c26100e9c02f2800e98b339c00e9068a9900e9016c9900e91cd191",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa91470",
+      "bytes": "558bec51894dfcb83cd73a018be55dc3558bec6aff680a42040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a68e8a3385cff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x10e5b",
+      "bytes": "e9401da800e9bb2f3400e9062f0d00e941a08700e91ca77d00e957a05100e9e2483a00e91dec8e00e998f77c00e9236c5700e96e383200e979303d00e914d113",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa92ba0",
+      "bytes": "558bec51894dfc8b4dfce8cf3758ff8b450883e00174098b4dfc51e81c7558ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x45b9c",
+      "bytes": "e96fc2a400e91ae08800e9c50e0f00e960cca900e9bb73a500e9e6579c00e941874600e9ecb50800e9878e8c00e9729e7e00e98da17b00e908c92a00e973d91b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa91e10",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce8e6c45aff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b4508508b4dfc83c1208b55fc8b42208b5008ffd28b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4c41f",
+      "bytes": "e97cada400e9e78d7e00e9d2632800e90de10d00e908970400e9a32e8c00e9eede4200e9a9b72f00e9046f2500e9ef151700e9fa8b9e00e935cc9800e9f02659",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa971a0",
+      "bytes": "558bec6aff689a49040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a48e883db5bff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x51613",
+      "bytes": "e9785ba400e9237e7700e94e951000e959fe0a00e984ff5500e98f784c00e9ba275400e955203a00e9c0984b00e90b154600e946837400e971298e00e99c1569",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa97190",
+      "bytes": "558bec51894dfcb8e0d73a018be55dc3558bec6aff689a49040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a48e883db5bff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x201a8",
+      "bytes": "e9937ea700e9fea17700e989e69d00e9943a8c00e95f334800e9ba3b3600e9b5f69600e940776500e92be5ac00e936e75300e9e18e7d00e94c838700e957ee07",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98040",
+      "bytes": "558bec51894dfc8b4dfce8d6a15bff8b450883e00174098b4dfc51e87c2058ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2d74a",
+      "bytes": "e9619ea600e92c1b7700e967336800e982d45000e91da74c00e9489c8600e953b84400e9fe6b3e00e9b96a2600e914170d00e96fdaac00e96a742100e9950fac",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa975b0",
+      "bytes": "558bec51894dfc8b4508508b4dfce8486d5aff8b4d08518b4dfc83c10c8b55fc8b420c8b5008ffd28b4508508b4dfc83c1208b55fc8b42208b5008ffd28b4508",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa826",
+      "bytes": "e9352aa900e980a0a600e91b874200e936cc2000e931331600e9fc987d00e937686f00e9920b9300e9fd597400e9b8656500e9c3c64e00e91e6f4000e9090297",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9d260",
+      "bytes": "558bec6aff68dd51040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a20e8c37a5bff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x48121",
+      "bytes": "e92a51a500e9f5633600e970e29600e9eb449000e9b6388c00e931885e00e92ce83800e967e49100e9c2815300e98ddc5100e9d87d6500e9a3bb7e00e9ce7786",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9d250",
+      "bytes": "558bec51894dfcb84cd83a018be55dc3558bec6aff68dd51040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a20e8c37a5bff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2d6f5",
+      "bytes": "e91630a700e9017c6200e91cfc2100e957e76900e9622b6700e97d3c5000e9e8994000e993460900e96efea100e9f9a59400e924d24700e9ef784000e95a209e",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xaa0710",
+      "bytes": "558bec51894dfc8b4dfce8b72d5bff8b450883e00174098b4dfc51e8ac9957ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c57a",
+      "bytes": "e99110a700e96ce6a400e917109a00e972719400e92d2c9000e908326300e9f3686100e96e36a000e979469c00e9441d9500e9eff68b00e93a6d7800e9c52487",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9d610",
+      "bytes": "558bec51894dfc8b4508508b4dfce897af58ff8b4d08518b4dfc83c1048b55fc8b42048b5008ffd28be55dc20400cccc558bec83ec08894df88b4df883c104e8",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4b0ec",
+      "bytes": "e9af1da500e9fa929f00e955ec0500e9d0f3a000e90beb9300e9a6b57600e9513f7000e95c529400e917018e00e9c2928800e95db61f00e968ed0500e9133042",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cea0",
+      "bytes": "558bec6aff688d51040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a18e8837e5bff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x427ad",
+      "bytes": "e9dea6a500e939679300e9342da200e9cfd24400e92a1a8700e9654c8300e9a0cc6b00e99b5c5300e976073a00e9416d0f00e95c6f0500e9277b0300e9f2697b",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9ce90",
+      "bytes": "558bec51894dfcb828d93a018be55dc3558bec6aff688d51040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a18e8837e5bff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3e437",
+      "bytes": "e91423a600e97fcd7900e9ca1ca200e9d59f8700e920a98500e9abf07300e9469a1000e9b10b8900e9fca28500e9c7122600e972590600e9cd130c00e988ab11",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xaa0750",
+      "bytes": "558bec51894dfc8b4dfce883a257ff8b450883e00174098b4dfc51e86c9957ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x20752",
+      "bytes": "e939c8a700e9949e7900e90f102100e93aa77f00e9154e2200e900b68900e98b697c00e9a68e9e00e911d01e00e90cf43500e957fc3300e932532c00e98d6608",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa9cf90",
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce815b658ff8b4d08894df88b4d08e8f31c5bff85c074208b55fc8b4208508b4d08e8775559ff8b4dfc83c114518b4df8",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3ba5c",
+      "bytes": "e9efc6a500e99ab09b00e9853c9400e9b0757700e9ab795500e9b66a3600e961067400e97c761800e9c7597d00e9925a2200e96d2d9500e918576200e9d35c4c",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98150",
+      "bytes": "558bec6aff68ea4b040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a0ce8d3cb5bff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x35abc",
+      "bytes": "e97f26a600e96a761800e9a50fac00e9e0458d00e90b6b7400e966db4800e97145a900e95cef7f00e9771b3800e992cc3700e9cd752300e9a8277700e9338550",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98140",
+      "bytes": "558bec51894dfcb8bcd83a018be55dc3558bec6aff68ea4b040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a0ce8d3cb5bff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x24415",
+      "bytes": "e9b6c3a700e9b11e3800e94ce61c00e9b7af1400e9528c0700e92d79a200e9c8bf8600e9c3568200e99e3d5400e959234b00e964911400e93fe3ab00e90a4346",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xaa07d0",
+      "bytes": "558bec51894dfc8b4dfce8dd465bff8b450883e00174098b4dfc51e8ec9857ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2c1ce",
+      "bytes": "e94dc3a600e9889d8e00e933875200e9be443100e9f99ea400e9e4417b00e92fe47300e9aa115a00e965411000e940999d00e93b909900e9e6008200e9714160",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98520",
+      "bytes": "558bec6aff683a4c040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a14e803c85bff8945f0c745fc00000000837df000740d8b4df0e8",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4b97a",
+      "bytes": "e991cba400e9cccf9d00e9f7dc6200e9a26b3100e96dc91700e9487a9300e97338a900e94eea3d00e9b9833300e9e4b36f00e95fe12300e9caf73900e9f5695f",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98510",
+      "bytes": "558bec51894dfcb8e0d83a018be55dc3558bec6aff683a4c040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a14e803c85bff8945f0c7",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x4296",
+      "bytes": "e975c5a900e9c0549300e93b4ead00e966c0a400e961629e00e98c9a8e00e927f2a500e9221b7c00e95dc21a00e9580d7a00e9e3ca2200e95edd1600e939d982",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xaa0810",
+      "bytes": "558bec51894dfc8b4dfce8351559ff8b450883e00174098b4dfc51e8ac9857ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x10145",
+      "bytes": "e9e68aa800e9017d9600e9bc215500e947516300e9b2207700e90d975700e918c69600e9e3c52400e9cee60a00e909b67c00e9d42b5700e94f289d00e97aef29",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa98c30",
+      "bytes": "558bec6aff68e34c040164a1000000005083ec40a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e856f958ff6a0a8d4db4e89ed057ffc745",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe85c04",
+      "bytes": "0000000000000000000000007cb638011c5c2801",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xf8b67c",
+      "bytes": "70632601000000002e3f4156433046726d4d61696e404000",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdba7ac",
+      "bytes": "66354100",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x13566",
+      "bytes": "e915f16800e910355100e97b6f0900e9065ea600e94147a000e91c366600e9d70e1d00e962a95100e9ed5e3d00e9d8e02800e9d364a600e93e175a00e9497074",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6a2680",
+      "bytes": "558bec51894dfcb84ca31b018be55dc3558bec6aff6851e0fe0064a1000000005083ec14a1600b3b0133c5508d45f464a3000000006a006a4468585a00008d45",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdba7b0",
+      "bytes": "48d34300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3d348",
+      "bytes": "e9d3326700e92efb5800e9b99d5400e904090c00e9cf478700e94aec8e00e9c5bc5d00e9c0dc4e00e92be74300e9a6ae3700e971a52600e9acff8100e9070b77",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6b0620",
+      "bytes": "558bec51894dfc8b4dfce86b6397ff8b450883e00174098b4dfc51e89c9a96ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe85d90",
+      "bytes": "00000000000000000000000004293a01a85d2801",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfa2904",
+      "bytes": "70632601000000002e3f4156433046726d4d756c7469446f6354656d706c617465404000",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbabc4",
+      "bytes": "ca04f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304ca",
+      "bytes": "ff25a0813c01ff25a4813c01ff25a8813c01ff25ac813c01ff25b0813c01ff25b4813c01ff25b8813c01ff25bc813c01ff25c0813c01ff25c4813c01ff25c8813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbabc8",
+      "bytes": "c2724300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x372c2",
+      "bytes": "e999936700e9941d5600e99f971300e96abf9c00e9e54b8200e9d0546600e90bb93700e996913100e921a11f00e92c6c9400e9e78c5700e942470500e94d9c1f",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6b0660",
+      "bytes": "558bec51894dfc8b4dfce8a28a99ff8b450883e00174098b4dfc51e85c9a96ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbac20",
+      "bytes": "ee04f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbac24",
+      "bytes": "f404f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbac38",
+      "bytes": "a004f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304a0",
+      "bytes": "ff2584813c01ff2588813c01ff258c813c01ff2590813c01ff2594813c01ff2598813c01ff259c813c01ff25a0813c01ff25a4813c01ff25a8813c01ff25ac813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbac3c",
+      "bytes": "a604f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304a6",
+      "bytes": "ff2588813c01ff258c813c01ff2590813c01ff2594813c01ff2598813c01ff259c813c01ff25a0813c01ff25a4813c01ff25a8813c01ff25ac813c01ff25b0813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdbac40",
+      "bytes": "ac04f300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xb304ac",
+      "bytes": "ff258c813c01ff2590813c01ff2594813c01ff2598813c01ff259c813c01ff25a0813c01ff25a4813c01ff25a8813c01ff25ac813c01ff25b0813c01ff25b4813c01",
+      "reloc_offsets": [
+        2,
+        8,
+        14,
+        20,
+        26,
+        32,
+        38,
+        44,
+        50,
+        56,
+        62
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe86998",
+      "bytes": "000000000000000000000000f4333a01b0692801",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfa33f4",
+      "bytes": "70632601000000002e3f41564330446f6353746779404000",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc5374",
+      "bytes": "dd6f4400",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x46fdd",
+      "bytes": "e96e596a00e999b81f00e9d44d7300e98f9a1400e96a119a00e965545a00e9c0fa2b00e92b789400e9a6e48800e971ae0200e9bcfc9a00e9b75f2a00e9b24903",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6ec950",
+      "bytes": "558bec51894dfcb888461c018be55dc3558bec6aff689a54ff0064a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006858010000e8c08396ff89",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc5378",
+      "bytes": "becb4300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x3cbbe",
+      "bytes": "e9adfd6b00e9b8c15100e9a307a600e91ee15400e9392b8c00e9449a9c00e9bf581600e97a3f9500e9e5ec6900e95037a200e96bff7c00e926cf7b00e9619e37",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x6fc970",
+      "bytes": "558bec51894dfc8b4dfce8f1ee90ff8b450883e00174098b4dfc51e84cd791ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc53e4",
+      "bytes": "84fcf200",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc53e8",
+      "bytes": "8afcf200",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc54c0",
+      "bytes": "40524000",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc54c4",
+      "bytes": "12424200",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x24212",
+      "bytes": "e9e98d6c00e994590400e93f0d8000e99aba6900e9057c4500e900050600e93b9d8d00e9c6577a00e971643200e9bc411b00e9b7b40f00e9f2049300e91da380",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xdc54f4",
+      "bytes": "832f4300",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91b7c",
+      "bytes": "00000000000000000000000058613a01941b2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfa6158",
+      "bytes": "70632601000000002e3f41564330567753746779404000",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe398ac",
+      "bytes": "40cd4200",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x2cd40",
+      "bytes": "e9cb5fa600e946399600e931118200e9ec6d7d00e927f16a00e9d28d4500e9fd5e2700e928839c00e923457900e96e935600e949bb4300e9d45c3200e92f9905",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa92d10",
+      "bytes": "558bec51894dfcb8289823018be55dc3558bec6aff689d45040164a1000000005083ec0ca1600b3b0133c5508d45f464a30000000068d0000000e800205cff89",
+      "reloc_offsets": [
+        8,
+        22,
+        37
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe398b0",
+      "bytes": "f94d4500",
+      "reloc_offsets": [
+        0
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0x54df9",
+      "bytes": "e94222a400e94d518d00e9287f3100e903bf7d00e9feb98900e9b9cda100e984f90d00e9dfef0c00e97a017500e9455f4c00e990224400e92b935100e9e62e46",
+      "reloc_offsets": []
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xa97040",
+      "bytes": "558bec51894dfc8b4dfce810145bff8b450883e00174098b4dfc51e87c3058ff8b45fc8be55dc20400cccccccccccccccccccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x1c1c6a",
+      "bytes": "568bf1e826b5e9ff836624005ec3558bec837d0800578bf9750433c0eb0aff7508ff1590f22a105903c050ff75088bcfe82b6ce9ff5f5dc204006a14b8e8342810",
+      "reloc_offsets": [
+        35,
+        61
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0xa0dd0",
+      "bytes": "8b01c3558bec817d080e0007807505e849651600ff7508e819be1800cc680e000780e8dcffffffcc558bec8b450883c01089015dc20400558bec56ff75088bf1",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x466d4",
+      "bytes": "8b0983e910e9bb2bfcff558bec568bf1e8396000008b068bceff90ec0200005e85c0740a8b4508c74004010000005dc20400558bec8b450883e82b0f84be5004",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x44d56",
+      "bytes": "8b8194000000c38bcfffd6e92340fcff85c00f8531b4ffffe93d37fcff85c00f849d36fcffe91fb4ffff85c00f849b36fcffe96c59fcff85c00f85f43ffcffe9",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x3dca6",
+      "bytes": "558bec5de97937fcff558bec5151568bf1837e04000f8416620000b8ffff0000663946040f840762000053578b7d0885ff0f84a1c00400836618008b076a0056",
+      "reloc_offsets": []
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x5c4ef",
+      "bytes": "8b4130c3558bec515153568bf1578b06ff50708945fc85c074248b068d4dfc518bceff50748bf8ff7720ff155cf72a1085c00f85bdd80200837dfc0075dc8b06",
+      "reloc_offsets": [
+        44
+      ]
+    },
+    {
+      "module": "mfc110u.dll",
+      "rva": "0x56ac0",
+      "bytes": "558bec8b45088338000f84cc33030050e853a9faff5dc2040083c8175033c0505050505056ff1504f62a10e942e6ffff33c0e9ac2e0000558bec83e4f883ec1c",
+      "reloc_offsets": [
+        39
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad208",
+      "bytes": "9c1d2301540000000000000042a64400cb224400",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3227c",
+      "bytes": "02b9440045a4430093c0420031114000e5fb41006ba1430058174500c4854200acf841003c504100171344003ade41002b8c43007b254100f5ba40006af7430007b04300",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe910d8",
+      "bytes": "00000000000000000000000050d23a01f0102901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad438",
+      "bytes": "1448230134000000000000006863430063f84400",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe350c4",
+      "bytes": "2fee41001bc74000c8d4440031114000e5fb41008f344100adce4200f7074200a26241003c504100171344003ade41008724400076df40002ccb44002a99410013e74100",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91524",
+      "bytes": "00000000000000000000000088d43a013c152901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad068",
+      "bytes": "dcfb22013800000000000000dc2945008ec44300",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3015c",
+      "bytes": "cef743002c2f40002c4c410031114000e5fb410016bd4000405c4000240545008d5441009478430057544000fd3a40006e53430034b04300867243005d0e4400",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe90e84",
+      "bytes": "000000000000000000000000c0d03a019c0e2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad118",
+      "bytes": "080323011400000000000000433b4500f5154500",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe30a9c",
+      "bytes": "1a544100333a4200baf4410031114000e5fb4100434743008cef420075354100d55444006d2f450008d04000e5fc400080564200f52940002bc94200acfb4300",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe90f40",
+      "bytes": "0000000000000000000000003cd13a01580f2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad190",
+      "bytes": "241223016000000000000000daee40003f594400",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3160c",
+      "bytes": "2155430052e84200ec9e420031114000e5fb4100332c410071414300fa764300d55444008edc440008d04000375a410069cc42001f2e44004e46430087a84300",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe9100c",
+      "bytes": "000000000000000000000000b4d13a0124102901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad22c",
+      "bytes": "241e23012401000000000000b0df420091354300",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe322d4",
+      "bytes": "c84d44004a604100f502440031114000e5fb410028b54000bd3f440018f54200d554440081f4430008d04000d9ff440011ca4200abb8410050494300cdc044009c704300",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe9117c",
+      "bytes": "00000000000000000000000098d23a0194112901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad35c",
+      "bytes": "f03123011c00000000000000d5e94000c7604100",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe338ac",
+      "bytes": "40854400784542009f2b440031114000e5fb4100c1444000b18f4100c7164500d55444006a03420008d04000e5fc400080564200f52940002bc94200887b4200",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe9138c",
+      "bytes": "00000000000000000000000080d33a01a4132901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad3c8",
+      "bytes": "a43d23010c000000000000001ebb4400652c4100",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe344a4",
+      "bytes": "764341008f1e43000be3430031114000e5fb410016bd4000578140002e014400d5544400e0a7400008d04000e5fc400080564200f52940002bc9420082814200",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91458",
+      "bytes": "000000000000000000000000ecd33a0170142901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad518",
+      "bytes": "7c5d23017c00000000000000697a440030eb4300",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3601c",
+      "bytes": "09a34400c71942007997440031114000e5fb410016bd400098e84200bc814400d55444000b8e430008d040006c0a430051c0430005e6410024ec44004d954000",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe916bc",
+      "bytes": "0000000000000000000000003cd53a01d4162901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad45c",
+      "bytes": "e44923012400000000000000a8804000d00f4300",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3511c",
+      "bytes": "a2db4000129242001433450031114000e5fb41006a4145009ee34100e0c94100d55444000bde430008d04000cff64300f2e8420084244300dae74200cc874200",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91584",
+      "bytes": "000000000000000000000000a8d43a019c152901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad5d8",
+      "bytes": "ac6c23013c000000000000007b0c4100ea8d4100",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe37204",
+      "bytes": "5044430000274200fb1b430031114000e5fb410016bd400071aa430001ba4400d5544400ae76440008d04000e5fc400080564200f52940002bc94200b1164200",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91860",
+      "bytes": "000000000000000000000000fcd53a0178182901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad644",
+      "bytes": "987a230144000000000000004571440047364100",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe37fd4",
+      "bytes": "5a7f4400953d4100723e450031114000e5fb410016bd4000ad1d44004dba4300d5544400c8fb400008d04000e5fc400080564200f52940002bc9420070f54400",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe9192c",
+      "bytes": "00000000000000000000000070d63a0144192901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad73c",
+      "bytes": "80882301680000000000000073d8400046694100",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe38be4",
+      "bytes": "03ec42005b0e41009c5b440031114000e5fb4100e11e4100f84b4300436c4100d5544400655a400008d04000cee541002cd44000f3ce420049b740002d0d4300",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91ab0",
+      "bytes": "00000000000000000000000060d73a01c81a2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad7e0",
+      "bytes": "2ca3230148000000000000001fc44400972b4200",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3a75c",
+      "bytes": "13164500a80142004ad7420031114000e5fb4100db5844007c924100f5df4300d554440034d4420008d04000e5fc400080564200f52940002bc94200a4d04400",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91c4c",
+      "bytes": "00000000000000000000000004d83a01641c2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad84c",
+      "bytes": "a4ae2301200000000000000026a840005fdd4000",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3b5f8",
+      "bytes": "21814400f5d642007ac5420031114000e5fb41009f834100",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91df4",
+      "bytes": "00000000000000000000000070d93a010c1e2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad928",
+      "bytes": "30ad23011800000000000000ecb04400e1db4200",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3b584",
+      "bytes": "ad27440037e443005207420031114000e5fb4100db074500b05b4400245c43003e0044003c504100171344003ade410075604300b18a4100ff254400919a420018754000",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60,
+        64
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91f0c",
+      "bytes": "00000000000000000000000074d23a015c112901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad8bc",
+      "bytes": "a4ad23010c000000000000005cba4300fe5c4000",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3b424",
+      "bytes": "bc5a4300154442000be3430031114000e5fb410016bd40003b6744002e014400d55444005985440008d04000e5fc400080564200f52940002bc942005d0e4400",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        24,
+        28,
+        32,
+        36,
+        40,
+        44,
+        48,
+        52,
+        56,
+        60
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91ddc",
+      "bytes": "0000000000000000000000009cd03a01640e2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xfad8e0",
+      "bytes": "a8af23011400000000000000cec142009c144500",
+      "reloc_offsets": [
+        0,
+        12,
+        16
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe3b478",
+      "bytes": "7ab94400964240004501410031114000e5fb4100c0094500",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20
+      ]
+    },
+    {
+      "module": "McgsSetPro.exe",
+      "rva": "0xe91e50",
+      "bytes": "00000000000000000000000094d93a01681e2901",
+      "reloc_offsets": [
+        12,
+        16
+      ]
+    }
+  ],
+  "classes": [
+    {
+      "class_name": "CStgyConnData",
+      "size": 84,
+      "schema": 0,
+      "runtime_class_rva": "0xfad208",
+      "factory_rva": "0x4a642",
+      "vtable_rva": "0xe3227c",
+      "col_rva": "0xe910d8",
+      "type_descriptor_rva": "0xfad250",
+      "rtti": ".?AVCStgyConnData@@",
+      "entries": [
+        "0x4b902",
+        "0x3a445",
+        "0x2c093",
+        "0x1131",
+        "0x1fbe5",
+        "0x3a16b",
+        "0x51758",
+        "0x285c4",
+        "0x1f8ac",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x38c2b",
+        "0x1257b",
+        "0xbaf5",
+        "0x3f76a",
+        "0x3b007"
+      ],
+      "kind": "condition",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyConnIF",
+      "size": 52,
+      "schema": 0,
+      "runtime_class_rva": "0xfad438",
+      "factory_rva": "0x36368",
+      "vtable_rva": "0xe350c4",
+      "col_rva": "0xe91524",
+      "type_descriptor_rva": "0xfad488",
+      "rtti": ".?AVCStgyConnIF@@",
+      "entries": [
+        "0x1ee2f",
+        "0xc71b",
+        "0x4d4c8",
+        "0x1131",
+        "0x1fbe5",
+        "0x1348f",
+        "0x2cead",
+        "0x207f7",
+        "0x162a2",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x2487",
+        "0xdf76",
+        "0x4cb2c",
+        "0x1992a",
+        "0x1e713"
+      ],
+      "kind": "condition",
+      "complete_deep_raw_projection": true
+    },
+    {
+      "class_name": "CStgyFuncAddin",
+      "size": 56,
+      "schema": 0,
+      "runtime_class_rva": "0xfad068",
+      "factory_rva": "0x529dc",
+      "vtable_rva": "0xe3015c",
+      "col_rva": "0xe90e84",
+      "type_descriptor_rva": "0xfad0c0",
+      "rtti": ".?AVCStgyFuncAddin@@",
+      "entries": [
+        "0x3f7ce",
+        "0x2f2c",
+        "0x14c2c",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x5c40",
+        "0x50524",
+        "0x1548d",
+        "0x37894",
+        "0x5457",
+        "0x3afd",
+        "0x3536e",
+        "0x3b034",
+        "0x37286",
+        "0x40e5d"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncCallStgy",
+      "size": 20,
+      "schema": 0,
+      "runtime_class_rva": "0xfad118",
+      "factory_rva": "0x53b43",
+      "vtable_rva": "0xe30a9c",
+      "col_rva": "0xe90f40",
+      "type_descriptor_rva": "0xfad13c",
+      "rtti": ".?AVCStgyFuncCallStgy@@",
+      "entries": [
+        "0x1541a",
+        "0x23a33",
+        "0x1f4ba",
+        "0x1131",
+        "0x1fbe5",
+        "0x34743",
+        "0x2ef8c",
+        "0x13575",
+        "0x454d5",
+        "0x52f6d",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x3fbac"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncCounter",
+      "size": 96,
+      "schema": 0,
+      "runtime_class_rva": "0xfad190",
+      "factory_rva": "0xeeda",
+      "vtable_rva": "0xe3160c",
+      "col_rva": "0xe9100c",
+      "type_descriptor_rva": "0xfad1b4",
+      "rtti": ".?AVCStgyFuncCounter@@",
+      "entries": [
+        "0x35521",
+        "0x2e852",
+        "0x29eec",
+        "0x1131",
+        "0x1fbe5",
+        "0x12c33",
+        "0x34171",
+        "0x376fa",
+        "0x454d5",
+        "0x4dc8e",
+        "0xd008",
+        "0x15a37",
+        "0x2cc69",
+        "0x42e1f",
+        "0x3464e",
+        "0x3a887"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncData",
+      "size": 292,
+      "schema": 0,
+      "runtime_class_rva": "0xfad22c",
+      "factory_rva": "0x2dfb0",
+      "vtable_rva": "0xe322d4",
+      "col_rva": "0xe9117c",
+      "type_descriptor_rva": "0xfad298",
+      "rtti": ".?AVCStgyFuncData@@",
+      "entries": [
+        "0x44dc8",
+        "0x1604a",
+        "0x402f5",
+        "0x1131",
+        "0x1fbe5",
+        "0xb528",
+        "0x43fbd",
+        "0x2f518",
+        "0x454d5",
+        "0x3f481",
+        "0xd008",
+        "0x4ffd9",
+        "0x2ca11",
+        "0x1b8ab",
+        "0x34950",
+        "0x4c0cd",
+        "0x3709c"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncDev",
+      "size": 28,
+      "schema": 0,
+      "runtime_class_rva": "0xfad35c",
+      "factory_rva": "0xe9d5",
+      "vtable_rva": "0xe338ac",
+      "col_rva": "0xe9138c",
+      "type_descriptor_rva": "0xfad380",
+      "rtti": ".?AVCStgyFuncDev@@",
+      "entries": [
+        "0x48540",
+        "0x24578",
+        "0x42b9f",
+        "0x1131",
+        "0x1fbe5",
+        "0x44c1",
+        "0x18fb1",
+        "0x516c7",
+        "0x454d5",
+        "0x2036a",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x27b88"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncExit",
+      "size": 12,
+      "schema": 0,
+      "runtime_class_rva": "0xfad3c8",
+      "factory_rva": "0x4bb1e",
+      "vtable_rva": "0xe344a4",
+      "col_rva": "0xe91458",
+      "type_descriptor_rva": "0xfad3ec",
+      "rtti": ".?AVCStgyFuncExit@@",
+      "entries": [
+        "0x14376",
+        "0x31e8f",
+        "0x3e30b",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x8157",
+        "0x4012e",
+        "0x454d5",
+        "0xa7e0",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x28182"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncProc",
+      "size": 124,
+      "schema": 0,
+      "runtime_class_rva": "0xfad518",
+      "factory_rva": "0x47a69",
+      "vtable_rva": "0xe3601c",
+      "col_rva": "0xe916bc",
+      "type_descriptor_rva": "0xfad53c",
+      "rtti": ".?AVCStgyFuncProc@@",
+      "entries": [
+        "0x4a309",
+        "0x219c7",
+        "0x49779",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x2e898",
+        "0x481bc",
+        "0x454d5",
+        "0x38e0b",
+        "0xd008",
+        "0x30a6c",
+        "0x3c051",
+        "0x1e605",
+        "0x4ec24",
+        "0x954d"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncProg",
+      "size": 36,
+      "schema": 0,
+      "runtime_class_rva": "0xfad45c",
+      "factory_rva": "0x80a8",
+      "vtable_rva": "0xe3511c",
+      "col_rva": "0xe91584",
+      "type_descriptor_rva": "0xfad4a8",
+      "rtti": ".?AVCStgyFuncProg@@",
+      "entries": [
+        "0xdba2",
+        "0x29212",
+        "0x53314",
+        "0x1131",
+        "0x1fbe5",
+        "0x5416a",
+        "0x1e39e",
+        "0x1c9e0",
+        "0x454d5",
+        "0x3de0b",
+        "0xd008",
+        "0x3f6cf",
+        "0x2e8f2",
+        "0x32484",
+        "0x2e7da",
+        "0x287cc"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": true
+    },
+    {
+      "class_name": "CStgyFuncSnd",
+      "size": 60,
+      "schema": 0,
+      "runtime_class_rva": "0xfad5d8",
+      "factory_rva": "0x10c7b",
+      "vtable_rva": "0xe37204",
+      "col_rva": "0xe91860",
+      "type_descriptor_rva": "0xfad5fc",
+      "rtti": ".?AVCStgyFuncSnd@@",
+      "entries": [
+        "0x34450",
+        "0x22700",
+        "0x31bfb",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x3aa71",
+        "0x4ba01",
+        "0x454d5",
+        "0x476ae",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x216b1"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncSvr",
+      "size": 68,
+      "schema": 0,
+      "runtime_class_rva": "0xfad644",
+      "factory_rva": "0x47145",
+      "vtable_rva": "0xe37fd4",
+      "col_rva": "0xe9192c",
+      "type_descriptor_rva": "0xfad670",
+      "rtti": ".?AVCStgyFuncSvr@@",
+      "entries": [
+        "0x47f5a",
+        "0x13d95",
+        "0x53e72",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x41dad",
+        "0x3ba4d",
+        "0x454d5",
+        "0xfbc8",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x4f570"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncTimer",
+      "size": 104,
+      "schema": 0,
+      "runtime_class_rva": "0xfad73c",
+      "factory_rva": "0xd873",
+      "vtable_rva": "0xe38be4",
+      "col_rva": "0xe91ab0",
+      "type_descriptor_rva": "0xfad760",
+      "rtti": ".?AVCStgyFuncTimer@@",
+      "entries": [
+        "0x2ec03",
+        "0x10e5b",
+        "0x45b9c",
+        "0x1131",
+        "0x1fbe5",
+        "0x11ee1",
+        "0x34bf8",
+        "0x16c43",
+        "0x454d5",
+        "0x5a65",
+        "0xd008",
+        "0x1e5ce",
+        "0xd42c",
+        "0x2cef3",
+        "0xb749",
+        "0x30d2d"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStgyFuncWnd",
+      "size": 72,
+      "schema": 0,
+      "runtime_class_rva": "0xfad7e0",
+      "factory_rva": "0x4c41f",
+      "vtable_rva": "0xe3a75c",
+      "col_rva": "0xe91c4c",
+      "type_descriptor_rva": "0xfad804",
+      "rtti": ".?AVCStgyFuncWnd@@",
+      "entries": [
+        "0x51613",
+        "0x201a8",
+        "0x2d74a",
+        "0x1131",
+        "0x1fbe5",
+        "0x458db",
+        "0x1927c",
+        "0x3dff5",
+        "0x454d5",
+        "0x2d434",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x4d0a4"
+      ],
+      "kind": "action",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStrategyCell",
+      "size": 32,
+      "schema": 0,
+      "runtime_class_rva": "0xfad84c",
+      "factory_rva": "0xa826",
+      "vtable_rva": "0xe3b5f8",
+      "col_rva": "0xe91df4",
+      "type_descriptor_rva": "0xfad970",
+      "rtti": ".?AVCStrategyCell@@",
+      "entries": [
+        "0x48121",
+        "0x2d6f5",
+        "0x2c57a",
+        "0x1131",
+        "0x1fbe5",
+        "0x1839f"
+      ],
+      "kind": "cell",
+      "complete_deep_raw_projection": true
+    },
+    {
+      "class_name": "CStrategyConn",
+      "size": 24,
+      "schema": 0,
+      "runtime_class_rva": "0xfad928",
+      "factory_rva": "0x4b0ec",
+      "vtable_rva": "0xe3b584",
+      "col_rva": "0xe91f0c",
+      "type_descriptor_rva": "0xfad274",
+      "rtti": ".?AVCStrategyConn@@",
+      "entries": [
+        "0x427ad",
+        "0x3e437",
+        "0x20752",
+        "0x1131",
+        "0x1fbe5",
+        "0x507db",
+        "0x45bb0",
+        "0x35c24",
+        "0x4003e",
+        "0x1503c",
+        "0x41317",
+        "0x1de3a",
+        "0x36075",
+        "0x18ab1",
+        "0x425ff",
+        "0x29a91",
+        "0x7518"
+      ],
+      "kind": "auxiliary",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStrategyFunc",
+      "size": 12,
+      "schema": 0,
+      "runtime_class_rva": "0xfad8bc",
+      "factory_rva": "0x3ba5c",
+      "vtable_rva": "0xe3b424",
+      "col_rva": "0xe91ddc",
+      "type_descriptor_rva": "0xfad09c",
+      "rtti": ".?AVCStrategyFunc@@",
+      "entries": [
+        "0x35abc",
+        "0x24415",
+        "0x3e30b",
+        "0x1131",
+        "0x1fbe5",
+        "0xbd16",
+        "0x4673b",
+        "0x4012e",
+        "0x454d5",
+        "0x48559",
+        "0xd008",
+        "0xfce5",
+        "0x25680",
+        "0x29f5",
+        "0x2c92b",
+        "0x40e5d"
+      ],
+      "kind": "auxiliary",
+      "complete_deep_raw_projection": false
+    },
+    {
+      "class_name": "CStrategyRow",
+      "size": 20,
+      "schema": 0,
+      "runtime_class_rva": "0xfad8e0",
+      "factory_rva": "0x2c1ce",
+      "vtable_rva": "0xe3b478",
+      "col_rva": "0xe91e50",
+      "type_descriptor_rva": "0xfad994",
+      "rtti": ".?AVCStrategyRow@@",
+      "entries": [
+        "0x4b97a",
+        "0x4296",
+        "0x10145",
+        "0x1131",
+        "0x1fbe5",
+        "0x509c0"
+      ],
+      "kind": "row",
+      "complete_deep_raw_projection": true
+    }
+  ],
+  "notes": [
+    "Primary5 is not a generic setter/copy. IF5 is type-code; Row/Cell/Prog5 are specialized archive store.",
+    "Deep clone uses each concrete native Serialize2 and its actual CRuntimeClass factory, as original BlockDeepCopy does.",
+    "Default-row insertion and existing-row append are original CStrategyBlock owner methods.",
+    "Deletion with an actual selection context is separately identified; no fake GUI context is fabricated."
+  ],
+  "host_invoked": false,
+  "project_written": false,
+  "native_execution_verified": false,
+  "owners": {
+    "MainFrame": {
+      "vtable_rva": "0xdba7ac",
+      "col_rva": "0xe85c04",
+      "type_descriptor_rva": "0xf8b67c",
+      "rtti": ".?AVC0FrmMain@@"
+    },
+    "Template": {
+      "vtable_rva": "0xdbabc4",
+      "col_rva": "0xe85d90",
+      "type_descriptor_rva": "0xfa2904",
+      "rtti": ".?AVC0FrmMultiDocTemplate@@"
+    },
+    "StrategyDocument": {
+      "vtable_rva": "0xdc5374",
+      "col_rva": "0xe86998",
+      "type_descriptor_rva": "0xfa33f4",
+      "rtti": ".?AVC0DocStgy@@"
+    },
+    "StrategyView": {
+      "vtable_rva": "0xe398ac",
+      "col_rva": "0xe91b7c",
+      "type_descriptor_rva": "0xfa6158",
+      "rtti": ".?AVC0VwStgy@@"
+    }
+  },
+  "mfc_imports": [
+    {
+      "iat_rva": "0xfc8e34",
+      "ordinal": 2820,
+      "target_rva": "0x1c1c6a"
+    },
+    {
+      "iat_rva": "0xfc916c",
+      "ordinal": 1654,
+      "target_rva": "0xa0dd0"
+    },
+    {
+      "iat_rva": "0xfc9148",
+      "ordinal": 1039,
+      "target_rva": "0x466d4"
+    },
+    {
+      "iat_rva": "0xfc81b8",
+      "ordinal": 5475,
+      "target_rva": "0x44d56"
+    },
+    {
+      "iat_rva": "0xfc81bc",
+      "ordinal": 6057,
+      "target_rva": "0x3dca6"
+    },
+    {
+      "iat_rva": "0xfc7c14",
+      "ordinal": 5485,
+      "target_rva": "0x5c4ef"
+    },
+    {
+      "iat_rva": "0xfc7c18",
+      "ordinal": 6070,
+      "target_rva": "0x56ac0"
+    }
+  ]
+}

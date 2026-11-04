@@ -1,0 +1,366 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "purpose": "Original event compiler derived +74 output for normal runtime88=0 scripts and exact unbound standard Click ID; full raw evidence retained",
+  "functions": [
+    {
+      "name": "EventGenerateMain_C57E30",
+      "rva": 8748592,
+      "bytes": "558bec6aff68ca1f010164a1000000005083ec60a1600b3b0133c5508d45f464a300000000894df08b4508508b4df0e80f507bff8945e4837de400750733c0e91b0500008b4df0c74114ffffffff8b55f0c74218000000006820d71e018b45f083c01050e8e55e7fff83c4080fb6c885c90f84660100008b55f083c218528b45f083c014508b4df083c11051e8ed987eff8b8820050000e8aa517bff85c00f84a10000008b55f052685aa500008d45d050e8327e7fff83c4088945d88b4dd8894dd4c745fc000000008b4dd4ff156c913c01508b4df083c110ff156c913c0150e899987eff8b8820050000e8427f7fffc745fcffffffff8d4dd0ff1548913c018b55f08b421850e872987eff8b8820050000e836827fff8b4df00fb6918800000085d2750933c0e933040000eb126a01e849987eff8b8820050000e833247bffe9830000008b45f08b4818518b55e40fb74210508b4df0e82d327fff85c075688d4de8ff1588903c01c745fc010000006812a200008d4de8ff15b48b3c018b4df0518d4de8ff156c913c01508b4df083c110ff156c913c0150e8e0977eff8b8820050000e8897e7fffc745cc00000000c745fcffffffff8d4de8ff1548913c018b45cce9970300006a028b55f083c210528b450850e88adb7cff83c40cc745ec00000000eb098b4dec83c101894dec8b4df083c11ce8fdaf7eff3945ec0f8d710100008b55ec528b4df083c130e8b8f57effc700ffffffff8b45ec508b4df083c144e8a3f57effc700000000006824d71e018b4dec518b4df083c11ce8e6db7cff50e8075d7fff83c4080fb6d085d20f84fc0000008b45ec508b4df083c144e866f57eff508b4dec518b4df083c130e856f57eff508b55ec528b4df083c11ce8a3db7cff50e8f4967eff8b8820050000e8b14f7bff85c00f84b40000008b45f050685aa500008d4dc051e8397c7fff83c4088945c88b55c88955c4c745fc020000008b4dc4ff156c913c01508b45ec508b4df083c11ce84cdb7cff8bc8ff156c913c0150e895967eff8b8820050000e83e7d7fffc745fcffffffff8d4dc0ff1548913c018b4dec518b4df083c144e8b7f47eff8b1052e863967eff8b8820050000e827807fff8b45f00fb6888800000085c9750933c0e924020000eb146a01e83a967eff8b8820050000e824227bffeb236a028b55ec528b4df083c11ce8c5da7cff508b450850e8f8d97cff83c40ce972feffff8b4df00fb6918800000085d274318b4508508b4df083c17051e88efe7dff83c4080fb6d085d275126a01e8db957eff8b8820050000e8c5217bffe91f0100008d4d94e8ae7a7cffc745fc030000008d4594508b4df083c174518b5508528b45f083c07050e85ada7bff83c4100fb6c885c90f85d80000008d4ddcff1588903c01c645fc048d4de0ff1588903c01c645fc058b55e48b0250688f5b00008d4db451e8cf7a7fff83c4088945bc8b55bc8955b8c645fc068b4db8ff156c913c01508d45dc50ff1580903c0183c40cc645fc058d4db4ff1548913c018b4d9c516878d71e018d55e052ff1580903c0183c40c8b4508508d4de0ff156c913c01508d4ddcff156c913c0150e8fe947eff8b8820050000e8a77b7fffc745b000000000c645fc048d4de0ff1548913c01c645fc038d4ddcff1548913c01c745fcffffffff8d4d94e8bd987bff8b45b0e99c000000c745fcffffffff8d4d94e8a6987bff8b4df083790c01741b8b55f0837a0c0274128b45f083780c0174098b4df083790c0275648b4df0e8e51f7fff85c075588b55f05268df5a00008d45a450e8d4797fff83c4088945ac8b4dac894da8c745fc070000008b4da8ff156c913c01506880d71e01e843947eff8b8820050000e8ec7a7fffc745fcffffffff8d4da4ff1548913c0133c0eb05b8010000008b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        89,
+        206,
+        219,
+        252,
+        357,
+        378,
+        391,
+        404,
+        444,
+        558,
+        711,
+        735,
+        768,
+        1008,
+        1021,
+        1070,
+        1081,
+        1097,
+        1106,
+        1116,
+        1132,
+        1142,
+        1179,
+        1192,
+        1324,
+        1330,
+        1362
+      ]
+    },
+    {
+      "name": "EventScriptCompiler_BCEAC0",
+      "rva": 8186560,
+      "bytes": "558bec6aff686977000164a1000000005081ecd4000000a1600b3b0133c58945f0508d45f464a3000000008b450c898560ffffff83bd60ffffff007405e9e3000000833dc0d43b01000f85cb0000006874221e018d8d58ffffffff1550913c01c745fc000000006898221e018d8d5cffffffff1550913c01c645fc01e8bf5584ff898554ffffff8d8d58ffffff518d955cffffff5268ad00000068b4221e0168cc221e016a038d8d20ffffffe86cdf86ff898548ffffff8b8548ffffff89853cffffffc645fc028b8d3cffffff518b9554ffffff8b028b8d54ffffff8b500cffd2c645fc018d8d20ffffffe8780584ffc645fc008d8d5cffffffff1548913c01c745fcffffffff8d8d58ffffffff1548913c0132c0e983010000a1c0d43b01898560ffffff8d4d98e8e77d87ffc745fc030000008b8d60ffffff518d5598528d8d34ffffffe8d40d84ffc645fc048b4d08ff156c913c01508d4d98e8002887ff8b8560ffffff508d4d98e8fa1d88ff6a008d4d9851e8f4d683ff8bc8e8db5d87ff0fb6d085d20f85da0000008d4d98e885c085ff8b4d1489018d4d98e803ac87ff8b55148942048d8568ffffff508d4d98e88caa86ff898550ffffff8b8d50ffffff898d4cffffffc645fc058b8d4cffffffe8c16683ff508b4d1483c108ff1584903c01c645fc048d8d68ffffffe80fdb86ff8d5580528d4d98e869d486ff898544ffffff8b8544ffffff898540ffffffc645fc068b8d40ffffffe8786683ff508b4d1483c10cff1584903c01c645fc048d4d80e8c9da86ffc68566ffffff00c645fc038d8d34ffffffe8f01785ffc745fcffffffff8d4d98e8f53c83ff8a8566ffffffeb378b4d10518d4d98e843ce85ffc68567ffffff01c645fc038d8d34ffffffe8b71785ffc745fcffffffff8d4d98e8bc3c83ff8a8567ffffff8b4df464890d00000000598b4df033cde88c2236008be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        68,
+        80,
+        92,
+        104,
+        116,
+        155,
+        160,
+        252,
+        271,
+        283,
+        339,
+        480,
+        553
+      ]
+    },
+    {
+      "name": "ParserCompiledByteCopy_D3EE80",
+      "rva": 9694848,
+      "bytes": "558bec51894dfc6aff8b4dfc83c14ce84e2770ff508b4d08e801001f008b4dfc83c14ce83a2770ff508b4dfc83c14ce8a4556cff508b4d08e8ecfc6eff50e823211f0083c40c8be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "host_invoked": false,
+  "tests_run": false,
+  "compiled_byte_array_contract": {
+    "when": "The explicitly permitted original full Generate returned successfully for every scoped owner and the event is in normal runtime88=0 mode",
+    "native_member": "0x74",
+    "source_member": "0x70",
+    "contents": "The complete original compiler-produced CByteArray; not restricted to 13 bytes, empty scripts, comments, or a fixed hash",
+    "source_and_bindings": "string70, string10 and ordered strings1C remain exact; no unknown serialized field is projected",
+    "raw_retained": true
+  },
+  "unbound_standard_click_contract": {
+    "event_class_types": [
+      18,
+      257,
+      261,
+      262,
+      267,
+      272,
+      274,
+      275,
+      277,
+      281,
+      282,
+      69632
+    ],
+    "event_id": 0,
+    "native_name": "Click",
+    "native_main_descriptor": 0,
+    "source10": "",
+    "arguments": [],
+    "runtime_byte88": 0,
+    "word14_after_success": 65535,
+    "runtime_output_required_exact_before_semantic_comparison": true,
+    "actual_metadata_intake": {
+      "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\consolidated-acceptance-0001\\event-binding-repair-intake-0001.response.json",
+      "sha256": "d1894674cad7d732b8b472a052ee97a3a95f98e8f658b0d426e6e7716298ac53"
+    },
+    "actual_control_declarations": [
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件0",
+          "rtti": ".?AVCDrawRect@@",
+          "class": "CDrawRect",
+          "control_path": [
+            0
+          ]
+        },
+        "event_class_type": 275,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件1",
+          "rtti": ".?AVCDrawLine@@",
+          "class": "CDrawLine",
+          "control_path": [
+            1
+          ]
+        },
+        "event_class_type": 274,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件2",
+          "rtti": ".?AVCDrawBitmap@@",
+          "class": "CDrawBitmap",
+          "control_path": [
+            2
+          ]
+        },
+        "event_class_type": 281,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件4",
+          "rtti": ".?AVCDrawUnit@@",
+          "class": "CDrawUnit",
+          "control_path": [
+            3
+          ]
+        },
+        "event_class_type": 277,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件7",
+          "rtti": ".?AVCDrawLabel@@",
+          "class": "CDrawLabel",
+          "control_path": [
+            4
+          ]
+        },
+        "event_class_type": 282,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件8",
+          "rtti": ".?AVCDrawButton@@",
+          "class": "CDrawButton",
+          "control_path": [
+            5
+          ]
+        },
+        "event_class_type": 257,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件9",
+          "rtti": ".?AVCDrawEdit@@",
+          "class": "CDrawEdit",
+          "control_path": [
+            6
+          ]
+        },
+        "event_class_type": 272,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件10",
+          "rtti": ".?AVCDrawHisPic@@",
+          "class": "CDrawHisPic",
+          "control_path": [
+            7
+          ]
+        },
+        "event_class_type": 261,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件11",
+          "rtti": ".?AVCDrawMulBtn@@",
+          "class": "CDrawMulBtn",
+          "control_path": [
+            8
+          ]
+        },
+        "event_class_type": 262,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 36,
+          "page_name": "AI_COMPLETE_模板与动画",
+          "control_name": "控件12",
+          "rtti": ".?AVCDrawSaveData@@",
+          "class": "CDrawSaveData",
+          "control_path": [
+            9
+          ]
+        },
+        "event_class_type": 267,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 10,
+          "page_name": "报警浏览",
+          "control_name": "控件6",
+          "rtti": ".?AVCDrawDll@@",
+          "class": "CDrawDll",
+          "control_path": [
+            0
+          ]
+        },
+        "event_class_type": 69632,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 4,
+          "page_name": "状态监控",
+          "control_name": "控件2",
+          "rtti": ".?AVCDrawDll@@",
+          "class": "CDrawDll",
+          "control_path": [
+            3
+          ]
+        },
+        "event_class_type": 69632,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 9,
+          "page_name": "XY曲线",
+          "control_name": "控件18",
+          "rtti": ".?AVCDrawDll@@",
+          "class": "CDrawDll",
+          "control_path": [
+            2
+          ]
+        },
+        "event_class_type": 69632,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 9,
+          "page_name": "XY曲线",
+          "control_name": "控件19",
+          "rtti": ".?AVCDrawDll@@",
+          "class": "CDrawDll",
+          "control_path": [
+            3
+          ]
+        },
+        "event_class_type": 69632,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      },
+      {
+        "target": {
+          "page_id": 12,
+          "page_name": "配方管理",
+          "control_name": "控件5",
+          "rtti": ".?AVCDrawDll@@",
+          "class": "CDrawDll",
+          "control_path": [
+            9
+          ]
+        },
+        "event_class_type": 69632,
+        "native_name": "Click",
+        "native_id": 0,
+        "raw_word_10": 0,
+        "argument_descriptors": []
+      }
+    ]
+  }
+}

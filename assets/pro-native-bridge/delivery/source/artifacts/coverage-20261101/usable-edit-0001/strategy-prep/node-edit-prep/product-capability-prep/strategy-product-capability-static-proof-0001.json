@@ -1,0 +1,1730 @@
+{
+  "schema": "mcgs.strategy-product-capability.static-proof.v1",
+  "read_only_file_analysis": true,
+  "no_host_or_compile_or_model_test": true,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": {
+    "RowCompile": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xe987b0",
+      "resolved": "0xe987b0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xe987eb",
+          "target": "0x43cbc8",
+          "resolved": "0xe9d370"
+        },
+        {
+          "at": "0xe98848",
+          "target": "0x42573e",
+          "resolved": "0x49da90"
+        },
+        {
+          "at": "0xe9885b",
+          "target": "0x454acf",
+          "resolved": "0x49c980"
+        },
+        {
+          "at": "0xe98862",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe9886e",
+          "target": "0x40b6fe",
+          "resolved": "0xec6a30"
+        },
+        {
+          "at": "0xe98887",
+          "target": "0x42fbdf",
+          "resolved": "0xec6830"
+        },
+        {
+          "at": "0xe988bd",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xe988d9",
+          "iat": "0x13c8e6c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1680
+          }
+        },
+        {
+          "at": "0xe988df",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xe988f2",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe988fe",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xe98909",
+          "target": "0x44fe62",
+          "resolved": "0x724070"
+        },
+        {
+          "at": "0xe9891f",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "truncated": false
+    },
+    "ProductNonLite": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xec6830",
+      "resolved": "0xec6830",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xec6843",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        }
+      ],
+      "truncated": false
+    },
+    "PaletteFeatureAllowed": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xec6a30",
+      "resolved": "0xec6a30",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xec6a64",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        },
+        {
+          "at": "0xec6a7e",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6a94",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xec6aac",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xec6ab6",
+          "iat": "0x13c8e0c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 2941
+          }
+        },
+        {
+          "at": "0xec6add",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6afc",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6b14",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6b26",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        },
+        {
+          "at": "0xec6b40",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6b56",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xec6b6e",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xec6b78",
+          "iat": "0x13c8e0c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 2941
+          }
+        },
+        {
+          "at": "0xec6b9f",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6bbe",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6bd3",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "truncated": false
+    },
+    "ScriptFunctionAllowed": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xec61c0",
+      "resolved": "0xec61c0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xec6200",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        },
+        {
+          "at": "0xec6230",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6245",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6257",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6269",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec627b",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec62b3",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xec62c0",
+          "iat": "0x13c8e0c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 2941
+          }
+        },
+        {
+          "at": "0xec62e7",
+          "target": "0xf30e03",
+          "resolved": "0xf30e03"
+        },
+        {
+          "at": "0xec62f9",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6329",
+          "target": "0xf30e03",
+          "resolved": "0xf30e03"
+        },
+        {
+          "at": "0xec633b",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec635b",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        },
+        {
+          "at": "0xec63ac",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec63c4",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec63d9",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec63ee",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6403",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6418",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec642d",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6442",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6457",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec646c",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6481",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6496",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec64ab",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec64c0",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec64d5",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec64ea",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec64ff",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6514",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6529",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec653e",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6553",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6568",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec657d",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec658f",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65a1",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65b3",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65c5",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65d7",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65e9",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec65fb",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec660d",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec661f",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6631",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6643",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6655",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6667",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6679",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec668b",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec669d",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec66af",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec66c1",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec66d3",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec66e5",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec66f7",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6709",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec671b",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec672d",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xec6768",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xec6775",
+          "iat": "0x13c8e0c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 2941
+          }
+        },
+        {
+          "at": "0xec679f",
+          "target": "0xf30e03",
+          "resolved": "0xf30e03"
+        },
+        {
+          "at": "0xec67b1",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec67e1",
+          "target": "0xf30e03",
+          "resolved": "0xf30e03"
+        },
+        {
+          "at": "0xec67f3",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xec6816",
+          "target": "0xf30ffe",
+          "resolved": "0xf30ffe"
+        }
+      ],
+      "truncated": false
+    },
+    "PaletteGetCount": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x42573e",
+      "resolved": "0x49da90",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "PaletteGetAt": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x454acf",
+      "resolved": "0x49c980",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x49c98e",
+          "target": "0x45060f",
+          "resolved": "0x49d850"
+        }
+      ],
+      "truncated": false
+    },
+    "CStringArrayElement": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x49d850",
+      "resolved": "0x49d850",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x49d876",
+          "target": "0xf2ee32",
+          "resolved": "0xf2ee32"
+        }
+      ],
+      "truncated": false
+    },
+    "CallStgyCompile": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xe79380",
+      "resolved": "0xe79380",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xe793ae",
+          "iat": "0x13c8e64",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 14238
+          }
+        },
+        {
+          "at": "0xe793ba",
+          "iat": "0x13c8e60",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 14232
+          }
+        },
+        {
+          "at": "0xe793ce",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xe793d9",
+          "target": "0x45166d",
+          "resolved": "0xad0600"
+        },
+        {
+          "at": "0xe793f2",
+          "target": "0x42093c",
+          "resolved": "0x6a5ce0"
+        },
+        {
+          "at": "0xe79408",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xe7941d",
+          "iat": "0x13c8bb4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "at": "0xe79426",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xe79438",
+          "iat": "0x13c8bb4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "at": "0xe79445",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe7944f",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe79456",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xe79461",
+          "target": "0x44fe62",
+          "resolved": "0x724070"
+        },
+        {
+          "at": "0xe79474",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xe79484",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xe7949f",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0xe794b2",
+          "target": "0x43e70c",
+          "resolved": "0xe790d0"
+        },
+        {
+          "at": "0xe794c2",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xe794d4",
+          "iat": "0x13c8bb4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "at": "0xe794dd",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xe794ef",
+          "iat": "0x13c8bb4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "at": "0xe794fc",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe79506",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xe7950d",
+          "target": "0x4417ae",
+          "resolved": "0x46c060"
+        },
+        {
+          "at": "0xe79518",
+          "target": "0x44fe62",
+          "resolved": "0x724070"
+        },
+        {
+          "at": "0xe7952b",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xe79538",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xe79548",
+          "target": "0x4540b6",
+          "resolved": "0x49c2c0"
+        },
+        {
+          "at": "0xe79563",
+          "target": "0x4540b6",
+          "resolved": "0x49c2c0"
+        }
+      ],
+      "truncated": true
+    },
+    "ExitCompile": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x44012e",
+      "resolved": "0xe82800",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    }
+  },
+  "action_primary6_tags": {
+    "CStgyFuncAddin": 65539,
+    "CStgyFuncCallStgy": 65540,
+    "CStgyFuncCounter": 65541,
+    "CStgyFuncData": 65549,
+    "CStgyFuncDev": 65542,
+    "CStgyFuncExit": 65543,
+    "CStgyFuncProc": 65544,
+    "CStgyFuncProg": 65550,
+    "CStgyFuncSnd": 65545,
+    "CStgyFuncSvr": 65546,
+    "CStgyFuncTimer": 65547,
+    "CStgyFuncWnd": 65548,
+    "CStrategyFunc": 65537
+  },
+  "action_primary6_bodies": {
+    "CStgyFuncAddin": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x405c40",
+      "resolved": "0xe78fc0",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncCallStgy": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x42ef8c",
+      "resolved": "0xe79b40",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncCounter": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x434171",
+      "resolved": "0xe7bab0",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncData": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x443fbd",
+      "resolved": "0xe81670",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncDev": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x418fb1",
+      "resolved": "0xe822b0",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncExit": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x408157",
+      "resolved": "0xe82830",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncProc": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x42e898",
+      "resolved": "0xe89a70",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncProg": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x41e39e",
+      "resolved": "0xe84110",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncSnd": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x43aa71",
+      "resolved": "0xe8b510",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncSvr": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x441dad",
+      "resolved": "0xe91400",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncTimer": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x434bf8",
+      "resolved": "0xe92c30",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStgyFuncWnd": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x41927c",
+      "resolved": "0xe980d0",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "CStrategyFunc": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x44673b",
+      "resolved": "0xea0990",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    }
+  },
+  "conclusion": {
+    "RowCompile": "After action primary7 succeeds, the original compiler examines the global registered palette, invokes EC6A30 for each name and EC6830; on any unsupported palette entry or LinuxLite only action tag0x1000E (Prog) may continue. RTTI factory availability is not product eligibility.",
+    "actual_old_dump_os": "linux",
+    "not_a_factory_initialization_field": true,
+    "do_not_modify_os_or_support_tables": true,
+    "linux_script_function_gate": "EC61C0 explicitly allows !SetStgy and !SetStgyMode by name. This does not turn legacy CallStgy into a supported row.",
+    "legacy_exit_is_not_script_exit_without_scope_proof": true
+  },
+  "script_window_plugin_sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+  "script_window_plugin": {
+    "SetStgyCall": {
+      "source": "C:\\unbound-install-root\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "entry": "0x64303b80",
+      "resolved": "0x64303b80",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x64303bb6",
+          "target": "0x643018f8",
+          "resolved": "0x643018f8"
+        }
+      ],
+      "truncated": false
+    },
+    "SetStgyModeCall": {
+      "source": "C:\\unbound-install-root\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "entry": "0x64302c70",
+      "resolved": "0x64302c70",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x64302ca6",
+          "target": "0x643018f8",
+          "resolved": "0x643018f8"
+        }
+      ],
+      "truncated": false
+    },
+    "RunUserStgyImport": {
+      "source": "C:\\unbound-install-root\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "entry": "0x643018f8",
+      "resolved": "0x643018f8",
+      "code": [],
+      "calls": [],
+      "truncated": true
+    },
+    "SetStgyReturnType": {
+      "source": "C:\\unbound-install-root\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "entry": "0x64304b20",
+      "resolved": "0x64304b20",
+      "code": [],
+      "calls": [],
+      "truncated": false
+    },
+    "SetStgyArgTypes": {
+      "source": "C:\\unbound-install-root\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "entry": "0x64304ac0",
+      "resolved": "0x64304ac0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x64304ae2",
+          "target": "0x64301920",
+          "resolved": "0x64301920"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "script_window_import": {
+    "dll": "stgy.dll",
+    "name": "Mcgs_Stgy_RunUserStgy",
+    "ordinal": null
+  },
+  "setstgy_signature_rtti": {
+    "name": "7SetStgy",
+    "typeinfo_va": "0x643078F8",
+    "base_name": "7DeclareI14CategoryMCGSOPLi4EILi263EEE",
+    "return_raw_type": 4,
+    "argument_raw_types": [
+      263
+    ]
+  },
+  "setstgymode_signature_rtti": {
+    "name": "11SetStgyMode",
+    "typeinfo_va": "0x64307748",
+    "same_base": "7DeclareI14CategoryMCGSOPLi4EILi263EEE"
+  },
+  "setstgy_runtime_modes": {
+    "SetStgy": 0,
+    "SetStgyMode": 1,
+    "function": "Mcgs_Stgy_RunUserStgy",
+    "resolved_strategy_ID_not_string_at_runtime": true,
+    "native_error_return_not_propagated_by_this_plugin_wrapper": true
+  },
+  "runtime_stgy_sha256": "9a87aa8981aa26c9b062df576146c733794b8b81a1996043ceba88aa5255e939",
+  "runtime_stgy": {
+    "RunUserStgyExport": {
+      "source": "C:\\unbound-install-root\\Program\\stgy.dll",
+      "sha256": "9a87aa8981aa26c9b062df576146c733794b8b81a1996043ceba88aa5255e939",
+      "entry": "0x6fcc3cf0",
+      "resolved": "0x6fcc3cf0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x6fcc3d08",
+          "target": "0x6fcc2cc0",
+          "resolved": "0x6fcc2cc0"
+        }
+      ],
+      "truncated": false
+    },
+    "RunUserStgyWorker": {
+      "source": "C:\\unbound-install-root\\Program\\stgy.dll",
+      "sha256": "9a87aa8981aa26c9b062df576146c733794b8b81a1996043ceba88aa5255e939",
+      "entry": "0x6fcc2cc0",
+      "resolved": "0x6fcc2cc0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x6fcc2d29",
+          "target": "0x6fcc28b0",
+          "resolved": "0x6fcc28b0"
+        },
+        {
+          "at": "0x6fcc2d3d",
+          "target": "0x6fcc1bf0",
+          "resolved": "0x6fcc1bf0"
+        }
+      ],
+      "truncated": false
+    },
+    "ScheduleOrRun": {
+      "source": "C:\\unbound-install-root\\Program\\stgy.dll",
+      "sha256": "9a87aa8981aa26c9b062df576146c733794b8b81a1996043ceba88aa5255e939",
+      "entry": "0x6fcc1bf0",
+      "resolved": "0x6fcc1bf0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x6fcc1c07",
+          "iat": "0x6fcd4558",
+          "import": {
+            "dll": "QtCore4.dll",
+            "name": "_ZN14QReadWriteLock11lockForReadEv",
+            "ordinal": null
+          }
+        },
+        {
+          "at": "0x6fcc1c1b",
+          "iat": "0x6fcd4560",
+          "import": {
+            "dll": "QtCore4.dll",
+            "name": "_ZN14QReadWriteLock6unlockEv",
+            "ordinal": null
+          }
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "local_official_help": {
+    "path": "D:\\Work\\Temp\\mcgs-pro-help-20261102\\脚本函数\\运行环境操作函数.htm",
+    "sha256": "8a0cec604a8deffcb41f82565b91f5ba673dc739509ec6f9a5e698f329e17a82",
+    "sections": {
+      "<a name=SetStgy>": "SetStgy(StgyName)\r\n\r\n函数意义： 执行StgyName指定的运行策略\r\n\r\n返 回 值： 浮点数\r\n返回值 =  0，调用正常\r\n返回值 <> 0，调用不正常\r\n\r\n参    数： StgyName，策略名，字符串\r\n\r\n实    例： !SetStgy(阀门关闭)   ’执行一次运行策略“阀门关闭”，调用者不等待“阀门关闭”执行完毕，继续执行以下程序\r\n\r\n注意事项： 此函数为异步执行\r\n\r\n",
+      "<a name=SetStgyMode>": "!SetStgyMode(StgyName)\r\n\r\n函数意义： 通过脚本函数（位于系统函数-运行环境类）实现函数调用方式的策略调用\r\n\r\n返 回 值： 浮点数，返回值恒为0\r\n\r\n参    数： StgyName，字符串，策略名\r\n\r\n\r\n实    例： !SetStgyMode(阀门关闭)  ’执行一次运行策略“阀门关闭”，“阀门关闭”策略执行完毕后，才返回调用者，调用者继续执行以下程序\r\n\r\n注意事项： 此函数是同步执行\r\n\r\n",
+      "<a name=ChangeLoopStgy>": "!ChangeLoopStgy(StgyName,n)\r\n\r\n函数意义： 改变循环策略的循环时间\r\n\r\n返 回 值： 浮点数\r\n返回值 = 0，调用正常\r\n返回值 <> 0，调用不正常\r\n\r\n参    数： StgyName，策略名\r\nn，浮点数，以毫秒数表示循环策略的循环时间\r\n\r\n实    例： !ChangeLoopStgy(循环策略,5000)  ’将循环策略的循环时间改为5秒\r\n\r\n注意事项： 指定毫秒数小于100时默认为100\r\n\r\n"
+    }
+  },
+  "actual_intake": {
+    "path": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\consolidated-acceptance-0001\\recovery-copy-live-intake-0002.response.json",
+    "sha256": "9b46ed55b599e3a72f0e2cd270fb39d5a879bc7c382c863b74574ee04590485c",
+    "process_id": 36604,
+    "creation_filetime": 134380689694728892,
+    "block_id": 16,
+    "block_name": "AI_COMPLETE_User_20261102",
+    "rows": [
+      {
+        "native_row_index": 0,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BE68",
+          "raw_size": 36,
+          "raw_hex": "1c51b101000000002076d31eb862b85da81ab1110d0000000d0000000000000008a7b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE working User source",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c00450054004500200077006f0072006b0069006e00670020005500730065007200200073006f007500720063006500",
+          "source_utf16le_sha256": "354e8b885fc95c25aa0cc9002a5dcad0eb2f491289200ecc1a025b3e985735f7",
+          "source_utf16_code_units": 33,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 1,
+        "class_name": "CStgyFuncCallStgy",
+        "label": "AI_COMPLETE call strategy",
+        "linux_allowed": false,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncCallStgy",
+          "pointer": "0x118DC780",
+          "raw_size": 20,
+          "raw_hex": "9c0ab1010000000050a6c2111100000050abc211",
+          "all_deep_private_fields_covered": false,
+          "label": "AI_COMPLETE call strategy"
+        }
+      },
+      {
+        "native_row_index": 2,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BFE8",
+          "raw_size": 36,
+          "raw_hex": "1c51b101000000008877d31eb862b85d681bb1110d0000000d00000000000000a8a6b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 3,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BB68",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000b07cd31eb862b85dc01ab1110d0000000d0000000000000068adb51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 4,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BE38",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000007dd31eb862b85d501bb1110d0000000d00000000000000c8aab51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 5,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BC88",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000c878d31eb862b85de819b1110d0000000d00000000000000c8adb51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 6,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8C0A8",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000707bd31eb862b85d081bb1110d0000000d0000000000000008b0b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 7,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BFB8",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000987bd31eb862b85d001ab1110d0000000d0000000000000088b1b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 8,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BE98",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000087ad31eb862b85dd81ab1110d0000000d0000000000000088aeb51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 9,
+        "class_name": "CStgyFuncExit",
+        "label": "AI_COMPLETE native Exit action",
+        "linux_allowed": false,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncExit",
+          "pointer": "0x11B11B80",
+          "raw_size": 12,
+          "raw_hex": "a444b10100000000a0c7b51e",
+          "all_deep_private_fields_covered": false,
+          "label": "AI_COMPLETE native Exit action"
+        }
+      },
+      {
+        "native_row_index": 10,
+        "class_name": "CStgyFuncProg",
+        "label": "AI_COMPLETE typed Prog",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BB98",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000e06ec91eb862b85d781ab1110d0000000d00000000000000a0a6c211",
+          "all_deep_private_fields_covered": true,
+          "label": "AI_COMPLETE typed Prog",
+          "source": "' AI_COMPLETE typed source",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c00450054004500200074007900700065006400200073006f007500720063006500",
+          "source_utf16le_sha256": "6dd7ef9369554b61886c18aef66a12cc7a593d261fa2287f28d84e92e38d1a31",
+          "source_utf16_code_units": 26,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 11,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8BBC8",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000807ad31eb862b85d981bb1110d0000000d0000000000000068b0b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE native placeholder",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c0045005400450020006e0061007400690076006500200070006c0061006300650068006f006c00640065007200",
+          "source_utf16le_sha256": "081ba4c1102f8bf374ff2e0246106c6510952c1ad6eeb53702be244e00d44665",
+          "source_utf16_code_units": 32,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      },
+      {
+        "native_row_index": 12,
+        "class_name": "CStgyFuncProg",
+        "label": "脚本程序",
+        "linux_allowed": true,
+        "original_action": {
+          "exists": true,
+          "class_name": "CStgyFuncProg",
+          "pointer": "0x1EC8C2E8",
+          "raw_size": 36,
+          "raw_hex": "1c51b10100000000f87ad31eb862b85de015b1110d0000000d00000000000000c8b0b51e",
+          "all_deep_private_fields_covered": true,
+          "label": "脚本程序",
+          "source": "' AI_COMPLETE working User source",
+          "source_utf16le_hex": "27002000410049005f0043004f004d0050004c00450054004500200077006f0072006b0069006e00670020005500730065007200200073006f007500720063006500",
+          "source_utf16le_sha256": "354e8b885fc95c25aa0cc9002a5dcad0eb2f491289200ecc1a025b3e985735f7",
+          "source_utf16_code_units": 33,
+          "compiled": {
+            "bytes": 13,
+            "sha256": "9ce6c494fe82468ce25c30c30ad97a6db11e5d22bcac40b97df0a7237f7c6eac",
+            "complete_payload_sha256": true
+          }
+        }
+      }
+    ]
+  },
+  "unproven": [
+    "A Loop target is not assumed equivalent to a User target for sync calls.",
+    "Legacy Exit scope must be read before substituting script Exit.",
+    "No runtime / PLC execution has been performed."
+  ]
+}

@@ -1,0 +1,1102 @@
+{
+  "schema": 1,
+  "created_utc": "2026-11-01T17:36:10.579201+00:00",
+  "native_calls_performed": 0,
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "function_va": "0xba82a0",
+  "full_end_exclusive_va": "0xba8bce",
+  "full_range_sha256": "b36ced1dc68f79266fe3eb2241d00d6318b254e96df7f4d644f6602aac5e3f51",
+  "prototype": "ThisCall boolAL(service,descriptor28*,bool checkDuplicate,std::vector<CString>*outInitialized12,CString*error) ret16bytes",
+  "descriptor": {
+    "bytes": 28,
+    "name_CString_offset": 0,
+    "type_int32_offset": 4,
+    "start_int32_offset": 8,
+    "step_int32_offset": 12,
+    "number_mode_int32_offset": 16,
+    "count_int32_offset": 20,
+    "zero_padding_width_int32_offset": 24
+  },
+  "field_contract": {
+    "types": [
+      -1,
+      1,
+      2,
+      3
+    ],
+    "count_min": 1,
+    "count_max": 50000,
+    "modes": {
+      "0": "decimal d",
+      "1": "hex x",
+      "2": "octal o"
+    },
+    "replacement_token": "{R}",
+    "template_semantics": "If count1 and no {R}, output original exact name. Otherwise append {R} if missing, format start+i*step using %0<width><d/x/o> when width>0, replace all {R}. Native code checks start/step arithmetic bounds; managed planner should impose finite bounded width rather than arbitrary allocation.",
+    "check_duplicate": "Arg2 nonzero walks generated names and calls manager IObject16 lookup; no create or dirty setter is present in normal function.",
+    "type_role": "type!=-1 validates each full generated name via C062B0 flags200; -1 additionally checks UTF8 byte length<=64 then same validator. Type does not create CObjData."
+  },
+  "output_ownership": {
+    "container": "std::vector<CString>",
+    "bytes": 12,
+    "begin_offset": 0,
+    "end_offset": 4,
+    "capacity_offset": 8,
+    "element_stride": 4,
+    "initialized_required": true,
+    "normal_return_assignment": "BA8B97 calls4EAC70(out,&localVector): same-allocator branch swaps all three pointers; local then destructed. Output owns CString elements/buffer until original vector destructor.",
+    "original_constructor_va": "4E66F0",
+    "original_dtor_va": "4D92B0",
+    "original_vector_payload_dtor_va": "4DB220",
+    "local_push_back_va": "4FE650",
+    "read_values_while_owner_alive": true
+  },
+  "creates_native_data_objects": false,
+  "calls_project_native_setdirty": false,
+  "build_macro_route": "Generate/validate exact names then plan explicit existing native data-create calls for each under one authorized action; do not label output native data array type.",
+  "functions": {
+    "0xba82a0": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xba82a0",
+      "resolved": "0xba82a0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xba831d",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba8348",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xba835b",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba836b",
+          "iat": "0x13c8bc8",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8027
+          }
+        },
+        {
+          "at": "0xba8381",
+          "target": "0x4504fc",
+          "resolved": "0x49c900"
+        },
+        {
+          "at": "0xba839c",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba83c7",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xba83da",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba840d",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba8434",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba843f",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba8455",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8469",
+          "target": "0x4512df",
+          "resolved": "0x4e66f0"
+        },
+        {
+          "at": "0xba8488",
+          "iat": "0x13c8c60",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4603
+          }
+        },
+        {
+          "at": "0xba849a",
+          "target": "0x41bd1a",
+          "resolved": "0x5525f0"
+        },
+        {
+          "at": "0xba84e9",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba850d",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba8518",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba852b",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba853f",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba85ab",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba85cf",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba85da",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba85ed",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8601",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba8611",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xba8640",
+          "iat": "0x13c9084",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        },
+        {
+          "at": "0xba8653",
+          "iat": "0x13c9084",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        },
+        {
+          "at": "0xba8666",
+          "iat": "0x13c9084",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        },
+        {
+          "at": "0xba867a",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba86a2",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xba86b2",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba86c3",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba86d3",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba86e7",
+          "iat": "0x13c9154",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        },
+        {
+          "at": "0xba86fb",
+          "iat": "0x13c8c60",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4603
+          }
+        },
+        {
+          "at": "0xba870d",
+          "iat": "0x13c8bc4",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1683
+          }
+        },
+        {
+          "at": "0xba871b",
+          "iat": "0x13c9150",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "at": "0xba8742",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba875a",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba8766",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xba8773",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0xba87ae",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba87b9",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba87c9",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xba87d2",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba87e1",
+          "iat": "0x13c8b44",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 12595
+          }
+        },
+        {
+          "at": "0xba87ee",
+          "target": "0x42a8d8",
+          "resolved": "0x4fe650"
+        },
+        {
+          "at": "0xba87fc",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8809",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8816",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8823",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8830",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8850",
+          "target": "0x43c6c8",
+          "resolved": "0x4e8cb0"
+        },
+        {
+          "at": "0xba885f",
+          "target": "0x40d869",
+          "resolved": "0x4e9040"
+        },
+        {
+          "at": "0xba8869",
+          "target": "0x4010b4",
+          "resolved": "0x4e70b0"
+        },
+        {
+          "at": "0xba8878",
+          "target": "0x416ed2",
+          "resolved": "0x4e6e60"
+        },
+        {
+          "at": "0xba8887",
+          "target": "0x44617d",
+          "resolved": "0x4e6f90"
+        },
+        {
+          "at": "0xba8890",
+          "iat": "0x13c9154",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        },
+        {
+          "at": "0xba88a7",
+          "target": "0x414ae2",
+          "resolved": "0xc062b0"
+        },
+        {
+          "at": "0xba88c1",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba88d1",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba88e5",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8908",
+          "target": "0x43c6c8",
+          "resolved": "0x4e8cb0"
+        },
+        {
+          "at": "0xba891a",
+          "target": "0x40d869",
+          "resolved": "0x4e9040"
+        },
+        {
+          "at": "0xba8924",
+          "target": "0x4010b4",
+          "resolved": "0x4e70b0"
+        },
+        {
+          "at": "0xba8933",
+          "target": "0x416ed2",
+          "resolved": "0x4e6e60"
+        },
+        {
+          "at": "0xba8946",
+          "target": "0x44617d",
+          "resolved": "0x4e6f90"
+        },
+        {
+          "at": "0xba894f",
+          "iat": "0x13c9154",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        },
+        {
+          "at": "0xba895c",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba8967",
+          "iat": "0x13c7a4c",
+          "import": {
+            "dll": "common.dll",
+            "name": "?FromWideToUtf8@StringOpt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PB_W@Z",
+            "ordinal": null
+          }
+        },
+        {
+          "at": "0xba8977",
+          "target": "0x450100",
+          "resolved": "0x6fd610"
+        },
+        {
+          "at": "0xba898d",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba89b5",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xba89c5",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba89d6",
+          "target": "0x41d4e9",
+          "resolved": "0x5478d0"
+        },
+        {
+          "at": "0xba89e2",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba89f2",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba8a0c",
+          "target": "0x414ae2",
+          "resolved": "0xc062b0"
+        },
+        {
+          "at": "0xba8a26",
+          "target": "0x41d4e9",
+          "resolved": "0x5478d0"
+        },
+        {
+          "at": "0xba8a32",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8a42",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba8a56",
+          "target": "0x41d4e9",
+          "resolved": "0x5478d0"
+        },
+        {
+          "at": "0xba8a62",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8a8c",
+          "target": "0x43c6c8",
+          "resolved": "0x4e8cb0"
+        },
+        {
+          "at": "0xba8a9e",
+          "target": "0x40d869",
+          "resolved": "0x4e9040"
+        },
+        {
+          "at": "0xba8aa8",
+          "target": "0x4010b4",
+          "resolved": "0x4e70b0"
+        },
+        {
+          "at": "0xba8ab7",
+          "target": "0x416ed2",
+          "resolved": "0x4e6e60"
+        },
+        {
+          "at": "0xba8aca",
+          "target": "0x44617d",
+          "resolved": "0x4e6f90"
+        },
+        {
+          "at": "0xba8ad3",
+          "iat": "0x13c9154",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        },
+        {
+          "at": "0xba8b11",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xba8b35",
+          "iat": "0x13c916c",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "at": "0xba8b40",
+          "iat": "0x13c9080",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4754
+          }
+        },
+        {
+          "at": "0xba8b53",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8b64",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8b74",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba8b85",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xba8b97",
+          "target": "0x453526",
+          "resolved": "0x4eac70"
+        },
+        {
+          "at": "0xba8baa",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        },
+        {
+          "at": "0xba8bc3",
+          "target": "0xf30ffe",
+          "resolved": "0xf30ffe"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4e66f0": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4e66f0",
+      "resolved": "0x4e66f0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4e66fc",
+          "target": "0x40aba0",
+          "resolved": "0x4d90f0"
+        },
+        {
+          "at": "0x4e6705",
+          "target": "0x411d5b",
+          "resolved": "0x4e6410"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4e6410": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4e6410",
+      "resolved": "0x4e6410",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4e641a",
+          "target": "0x415145",
+          "resolved": "0x4e6530"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4eac70": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4eac70",
+      "resolved": "0x4eac70",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4eacac",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x4eacb9",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x4eacbf",
+          "target": "0x451299",
+          "resolved": "0x4e3c70"
+        },
+        {
+          "at": "0x4eacd5",
+          "iat": "0x13c69c0",
+          "import": {
+            "dll": "MSVCP110.dll",
+            "name": "?_Swap_all@_Container_base0@std@@QAEXAAU12@@Z",
+            "ordinal": null
+          }
+        },
+        {
+          "at": "0x4eace3",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4eacf9",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4ead0f",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4ead27",
+          "target": "0x42f432",
+          "resolved": "0x4e8a20"
+        },
+        {
+          "at": "0x4ead34",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4ead4a",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4ead60",
+          "target": "0x407e69",
+          "resolved": "0x4e4ec0"
+        },
+        {
+          "at": "0x4ead6e",
+          "target": "0x40a042",
+          "resolved": "0x4e4b50"
+        },
+        {
+          "at": "0x4ead7a",
+          "target": "0x44f5ac",
+          "resolved": "0x4e66a0"
+        },
+        {
+          "at": "0x4ead8a",
+          "target": "0x40a042",
+          "resolved": "0x4e4b50"
+        },
+        {
+          "at": "0x4ead96",
+          "target": "0x4288fd",
+          "resolved": "0x4e6970"
+        },
+        {
+          "at": "0x4ead9f",
+          "target": "0x40a042",
+          "resolved": "0x4e4b50"
+        },
+        {
+          "at": "0x4eadab",
+          "target": "0x4288fd",
+          "resolved": "0x4e6970"
+        },
+        {
+          "at": "0x4eadba",
+          "target": "0x44db8f",
+          "resolved": "0x4d92b0"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4d92b0": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4d92b0",
+      "resolved": "0x4d92b0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4d92ba",
+          "target": "0x44414d",
+          "resolved": "0x4db220"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4db220": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4db220",
+      "resolved": "0x4db220",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4db234",
+          "iat": "0x13c69b8",
+          "import": {
+            "dll": "MSVCP110.dll",
+            "name": "?_Orphan_all@_Container_base0@std@@QAEXXZ",
+            "ordinal": null
+          }
+        },
+        {
+          "at": "0x4db24a",
+          "target": "0x437466",
+          "resolved": "0x4da000"
+        },
+        {
+          "at": "0x4db26b",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x4db272",
+          "target": "0x44f99e",
+          "resolved": "0x4db7b0"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4fe650": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4fe650",
+      "resolved": "0x4fe650",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4fe66c",
+          "target": "0x41f091",
+          "resolved": "0x4e89b0"
+        },
+        {
+          "at": "0x4fe682",
+          "target": "0x418890",
+          "resolved": "0x4e8800"
+        },
+        {
+          "at": "0x4fe68b",
+          "target": "0x42b139",
+          "resolved": "0x4e5d60"
+        },
+        {
+          "at": "0x4fe6a2",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x4fe6a9",
+          "target": "0x43e5e0",
+          "resolved": "0x4e5830"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4e8cb0": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4e8cb0",
+      "resolved": "0x4e8cb0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4e8cc4",
+          "target": "0x4363d1",
+          "resolved": "0x4e64c0"
+        }
+      ],
+      "truncated": false
+    },
+    "0x4e9040": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4e9040",
+      "resolved": "0x4e9040",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4e9055",
+          "target": "0x4363d1",
+          "resolved": "0x4e64c0"
+        }
+      ],
+      "truncated": false
+    },
+    "0xc062b0": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0xc062b0",
+      "resolved": "0xc062b0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0xc062e1",
+          "target": "0x447e3d",
+          "resolved": "0xc070a0"
+        },
+        {
+          "at": "0xc062f9",
+          "target": "0x44fd18",
+          "resolved": "0xb03340"
+        },
+        {
+          "at": "0xc06319",
+          "target": "0x423b73",
+          "resolved": "0x46eaa0"
+        },
+        {
+          "at": "0xc06335",
+          "iat": "0x13c8e70",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "at": "0xc06342",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "at": "0xc06352",
+          "iat": "0x13c9148",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "truncated": false
+    }
+  }
+}

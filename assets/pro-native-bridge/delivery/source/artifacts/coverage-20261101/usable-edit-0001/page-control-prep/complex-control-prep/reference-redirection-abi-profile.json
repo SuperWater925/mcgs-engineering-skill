@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "ReplaceIncomingConsumers",
+      "rva": 8224320,
+      "bytes": "558bec6aff683689000164a1000000005083ec50a1600b3b0133c5508d45f464a300000000894df08b4508508b4df08b118b4df08b4228ffd08945e88b4df083c124518b5508528d45a4508b4df0e8b27487ffc745fc000000008d4da4894dec68b03c1e018b5508528d45e450e84aad83ff83c40cc645fc018b4dec518b55f083c224528b4508508b4df0e844bc84ff8b4dece8af9b87ff0fb6c885c9741ec645fc008d4de4ff1548913c01c745fcffffffff8d4da4e8d4b886ffeb4c8b5510528b450c508b4de8518b55ec528b4df0e8036384ff8b4510508b4d0c518b55e8528b45ec508b4df0e8239885ffc645fc008d4de4ff1548913c01c745fcffffffff8d4da4e886b886ff8b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        97,
+        168,
+        246
+      ]
+    },
+    {
+      "name": "ReplaceConsumerValue",
+      "rva": 8224608,
+      "bytes": "558bec83ec08894df8c745fc00000000837d0c00741f8b4514508b4d10518b5508528b450c8b108b4d0c8b4258ffd00345fc8945fc8b45fc8be55dc21000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ReplaceConsumerGroups",
+      "rva": 8224672,
+      "bytes": "558bec6aff686189000164a1000000005083ec74a1600b3b0133c5508d45f464a300000000894df08b45088945d48d4de4518b4dd4e8313384ff8d55c0528b4dd4e8fa1a86ffeb088d4de4e810a586ff8d45c0508d4de4e8817683ff0fb6c885c90f84af0100008d4de4e8dd9e82ff8945d08b55d08b028945ec837dec000f848d0100008d4db0e852ab84ffc745fc000000008d4d80e8efb582ffc645fc018b4dd083c104894dcc8d55e0528b4dcce8b4df84ff8d45bc508b4dcce8778083ffeb088d4de0e8471083ff8d4dbc518d4de0e83de484ff0fb6d085d274648d4de0e8b93387ff8945b88b45b8508b4df08b5168528d45a8508b4df0e8fd0287ff8b4804894ddc837ddc0074348b5514528b4510508b4ddc518b550c528b4df0e83b8b83ff8b4df003416c8b55f089426c8d45dc508d4da0518d4d80e83a1183ffeb818d55ec528d4d80e8067284ff85c0760f8b45ec8b108b4dec8b4254ffd0eb578d4d80894dc88d55d8528b4dc8e8680d85ff8d45b4508b4dc8e888ac87ffeb088d4dd8e865cb86ff8d4db4518d4dd8e85ab082ff0fb6d085d2741c8d4dd8e88aa085ff8b008945c48b4dc48b118b4dc48b4254ffd0ebc96a0068b8b9380168bc8738016a008b4dec51e80490350083c4148945e8837de800741c6a018b55e88b028b4de88b500cffd28b45e88b108b4de88b4208ffd0c645fc008d4d80e8adcf83ffc745fcffffffff8d4db0e8c6f486ffe932feffff8b4df464890d00000000598be55dc21000",
+      "reloc_offsets": [
+        6,
+        21,
+        442,
+        447
+      ]
+    },
+    {
+      "name": "ReplaceDirectConsumers",
+      "rva": 8225232,
+      "bytes": "558bec6aff688489000164a1000000005083ec70a1600b3b0133c5508d45f464a300000000894df08d4d84e82bcc82ffc745fc000000008b450883c0208945dc8d4de4518b4ddce8ecdd84ff8d55c4528b4ddce8af7e83ffeb088d4de4e87f0e83ff8d45c4508d4de4e875e284ff0fb6c885c90f84e70000008d4de4e8ed3187ff8945c08b55c0528b45f08b4868518d55b4528b4df0e8310187ff8d45b48945d88b4dd88b51048955ec8b45d88b08894dd4837dec000f849f0000008b5514528b4510508b4dec518b550c528b4df0e85a8983ff8b4df003416c8b55f089426c8b45ec8b108b4dec8b4254ffd0837dd40074686a0068b8b9380168bc8738016a008b4dd451e8988e350083c4148945d0837dd00074128d55d0528d45ac508d4d84e8339385ffeb336a0068b8b9380168bc8738016a008b4dec51e8638e350083c4148945cc837dcc0074108d55cc528d45a4508d4d84e8fe9285ffe9fafeffff8d4d84894dc88d55e0528b4dc8e8c47084ff8d45bc508b4dc8e8c22386ffeb088d4de0e8d2c484ff8d4dbc518d4de0e8ed3286ff0fb6d085d2742b8d4de0e8ca7485ff8b008945e86a018b4de88b118b4de88b420cffd08b4de88b118b4de88b4208ffd0ebbac745fcffffffff8d4d84e8e35383ff8b4df464890d00000000598be55dc21000cc",
+      "reloc_offsets": [
+        6,
+        21,
+        246,
+        251,
+        299,
+        304
+      ]
+    },
+    {
+      "name": "ResolveConsumerPath",
+      "rva": 8221792,
+      "bytes": "558bec6aff685888000164a1000000005083ec64a1600b3b0133c5508d45f464a300000000894db88d4da4e84f9e87ffc745fc000000008d45a4508b4d1051e8689a86ff83c4088b550c8955f08b450c8945dcc745e8000000008d4da4894de48d55ec528b4de4e8fc5186ff8d45d8508b4de4e8916383ffeb088d4dece8d29b82ff8d4dd8518d4dece8e4f983ff0fb6d085d274468d4dece880ec86ff8945d08b45e88945d48b4de883c101894de8837dd4007502ebc3837df0007502eb1c8b55f08955dc8b45d0508b4df08b118b4df08b4240ffd08945f0eb9f837df000757ae8382e85ff8945e068c65600008d4dbc51e8c18787ff83c4088945cc8b55cc8955c8c645fc018b45c8506860010000689c401e016830411e016a018d4d90e864b787ff8945c48b4dc4894dc0c645fc028b55c0528b45e08b108b4de08b4210ffd0c645fc018d4d90e8c5cc82ffc645fc008d4dbcff1548913c016a006a008d4df0518d55dc528d4db0e884bb86ff508b4d08e8fce283ffc745fcffffffff8d4da4e8a86587ff8b45088b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        273,
+        278,
+        343
+      ]
+    },
+    {
+      "name": "OriginalRenameUsesIncomingWorker",
+      "rva": 8220222,
+      "bytes": "83f8ff75148b550c528d45f0508d4ddc518b4dece84e5e85ff",
+      "reloc_offsets": []
+    }
+  ],
+  "abi": {
+    "ReplaceIncomingConsumers": "void ThisCall(ObjectModel*, CString const& oldFullPath, CString const& oldShortName, CString const& existingReplacementShortName), ret0C"
+  },
+  "requirements": [
+    "Existing replacement has same concrete RTTI, module and native parent; both native identities/names remain unchanged.",
+    "Every registered incoming path is projected from old prefix to existing replacement prefix and both graph maps must agree after the native generate path.",
+    "The worker invokes consumer IObject22 replaceName(module,old,new), IObject21 generate and IModifiable dirty/saveData. Commit and all affected save_scope permissions are required before calling it.",
+    "Affected open private strategy documents are refused; close/synchronize them explicitly before redirection.",
+    "CPicture IObject22 is a no-op. Unregistered resource-inside-resource references are not claimed by this generic graph worker."
+  ]
+}

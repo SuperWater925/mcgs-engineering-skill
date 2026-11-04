@@ -1,0 +1,270 @@
+{
+  "schema": "mcgs.button-string-array.static-proof.v1",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "original_button_profile": {
+    "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\page-control-prep\\button-actions-abi-profile.json",
+    "sha256": "aff6bc34f939ed1f44d558688c31aac46e34c81214b4dd20a5f0daf8e0d344e6"
+  },
+  "root_cause": "Button phases use the EXE CArray<CString,CString> complete object, not MFC CStringArray. The existing generic PageEvents MFC checker was called for the wrong concrete container type.",
+  "phase0": {
+    "complete_offset": 484,
+    "caller": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x768fa0",
+      "resolved": "0x768fa0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x768fce",
+          "target": "0x403e54",
+          "resolved": "0x4b7e80"
+        },
+        {
+          "at": "0x768ff6",
+          "target": "0x4508d5",
+          "resolved": "0xa622b0"
+        },
+        {
+          "at": "0x769008",
+          "target": "0x442596",
+          "resolved": "0xc5d510"
+        },
+        {
+          "at": "0x76901a",
+          "target": "0x40f231",
+          "resolved": "0xb32d00"
+        },
+        {
+          "at": "0x76902c",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x76903e",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x769050",
+          "target": "0x404d95",
+          "resolved": "0x49a480"
+        },
+        {
+          "at": "0x769062",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x769075",
+          "target": "0xf2ef0a",
+          "resolved": "0xf2ef0a"
+        },
+        {
+          "at": "0x769087",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x76909a",
+          "target": "0xf2ef0a",
+          "resolved": "0xf2ef0a"
+        },
+        {
+          "at": "0x7690ac",
+          "target": "0x44eb7f",
+          "resolved": "0x781730"
+        },
+        {
+          "at": "0x7690b8",
+          "target": "0x44a24b",
+          "resolved": "0x76f180"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "phase1": {
+    "embedded_member_offset": 592,
+    "member_array_offset": 304,
+    "complete_array_offset": 896,
+    "caller": {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x44eb7f",
+      "resolved": "0x781730",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x781759",
+          "target": "0x40b6b3",
+          "resolved": "0x4782a0"
+        },
+        {
+          "at": "0x781764",
+          "target": "0x40f231",
+          "resolved": "0xb32d00"
+        },
+        {
+          "at": "0x781776",
+          "target": "0x4508d5",
+          "resolved": "0xa622b0"
+        },
+        {
+          "at": "0x781785",
+          "target": "0x442596",
+          "resolved": "0xc5d510"
+        },
+        {
+          "at": "0x781797",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x7817a9",
+          "target": "0x404d95",
+          "resolved": "0x49a480"
+        },
+        {
+          "at": "0x7817bb",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x7817cd",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x7817df",
+          "target": "0x42d08d",
+          "resolved": "0x49a3c0"
+        },
+        {
+          "at": "0x7817f1",
+          "target": "0x404d95",
+          "resolved": "0x49a480"
+        },
+        {
+          "at": "0x781803",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x781816",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x781829",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x78183c",
+          "iat": "0x13c9088",
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "at": "0x78184f",
+          "target": "0xf2ef0a",
+          "resolved": "0xf2ef0a"
+        },
+        {
+          "at": "0x781861",
+          "target": "0xf2ef0a",
+          "resolved": "0xf2ef0a"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  "StringArrayCtor": {
+    "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "entry": "0x404d95",
+    "resolved": "0x49a480",
+    "code": [],
+    "calls": [
+      {
+        "at": "0x49a48a",
+        "target": "0x447e38",
+        "resolved": "0x46b9b0"
+      }
+    ],
+    "truncated": false
+  },
+  "element_accessor": {
+    "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "entry": "0x454acf",
+    "resolved": "0x49c980",
+    "code": [],
+    "calls": [
+      {
+        "at": "0x49c98e",
+        "target": "0x45060f",
+        "resolved": "0x49d850"
+      }
+    ],
+    "truncated": false
+  },
+  "element_layout": {
+    "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "entry": "0x49d850",
+    "resolved": "0x49d850",
+    "code": [],
+    "calls": [
+      {
+        "at": "0x49d876",
+        "target": "0xf2ee32",
+        "resolved": "0xf2ee32"
+      }
+    ],
+    "truncated": false
+  },
+  "exact_exe_table": {
+    "rva": 13545560,
+    "col_rva": 15133488,
+    "type_rva": 16292736,
+    "complete_offset": 0,
+    "rtti": ".?AV?$CArray@V?$CStringT@_WV?$StrTraitMFC_DLL@_WV?$ChTraitsCRT@_W@ATL@@@@@ATL@@V12@@@",
+    "slots": [
+      11727406,
+      88816,
+      235631,
+      4401,
+      130021
+    ]
+  },
+  "no_secondary_this_adjustment": true,
+  "source_fix": "Only NativeButtonActionEditing.Texts switches from PageProperties.MfcArray to its exact local Table(StringArray); MFC PageEvent/Recipe CStringArray guards remain unchanged.",
+  "host_calls": 0,
+  "GUI_calls": 0,
+  "tests_or_models_or_compile_run": false
+}

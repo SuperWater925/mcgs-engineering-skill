@@ -1,0 +1,24 @@
+// MainCtrl-specific persisted-reference recovery. Never sets dirty or a service save flag.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Web.Script.Serialization;
+namespace McgsInternalBridge {
+ internal static class NativeMainCtrlPersistenceProfile {
+  const string ProfileSha="79905517a2f4d2cafd2e2d3c767bc4ff98a71828a6c966c00f9a0514c47fc842";
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]delegate IntPtr P0(IntPtr self);
+  static string Here{get{return Path.Combine(NativeOperations.TaskRoot,"coverage-20261101","references-view");}}
+  static Dictionary<string,object> Load(string path){return new JavaScriptSerializer{MaxJsonLength=8*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));}
+  internal static Dictionary<string,object> Inspect(NativeEngine engine,NativeContext context){
+   var reference=NativeReferenceRenameTrialProfile.Inspect(engine,context);NativeMemory.Require(Convert.ToBoolean(reference["ok"])&&!Convert.ToBoolean(reference["write_attempted"]),"MainCtrl inspection requires successful restored-reference preflight.");
+   string file=Path.Combine(Here,"mainctrl-persistence-abi-profile.json");NativeMemory.Require(NativeMemory.Hash(file)==ProfileSha,"MainCtrl persistence profile differs.");var profile=Load(file);NativeMemory.Require(Convert.ToInt32(profile["schema"])==1&&Convert.ToString(profile["binary_sha256"])==engine.ImageSha256,"MainCtrl persistence installed editor differs.");IntPtr getter=IntPtr.Zero;uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
+   foreach(object value in (IEnumerable)profile["functions"]){var f=(Dictionary<string,object>)value;string text=Convert.ToString(f["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);foreach(object relocation in (IEnumerable)f["reloc_offsets"]){int at=Convert.ToInt32(relocation);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"MainCtrl prefix relocation incomplete.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-preferred)),0,bytes,at,4);}IntPtr method=engine.Address(NativeEngine.Number(f["rva"]));NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(method,bytes.Length)),"MainCtrl native method prefix differs: "+f["name"]);if(Convert.ToString(f["name"])=="GetMainDocument")getter=method;}
+   IntPtr manager=IntPtr.Zero;foreach(IntPtr child in engine.Children(context.Root)){var d=engine.Describe(child);if(Convert.ToInt32(d["module"])!=9)continue;NativeMemory.Require(manager==IntPtr.Zero&&Convert.ToString(d["rtti"])==".?AVMainCtrlManager@@"&&NativeMemory.Ptr(child,0)==engine.Address(0xDDB24C),"MainCtrl manager identity is not unique/exact.");manager=child;}NativeMemory.Require(manager!=IntPtr.Zero,"MainCtrl manager absent.");IntPtr service=NativeMemory.Add(manager,0x34),doc=engine.Bind<P0>(getter)(manager);NativeMemory.Require(NativeMemory.Ptr(service,0)==engine.Address(0xDDB304)&&NativeMemory.Ptr(NativeMemory.Ptr(service,0),8)==engine.Address(0x2F144)&&doc==NativeMemory.Ptr(manager,0x38)&&NativeMemory.Ptr(doc,0)==engine.Address(0xDC4F8C)&&NativeMemory.Ptr(NativeMemory.Ptr(doc,0),83*4)==engine.Address(0x118B),"MainCtrl service/document save interfaces differ.");NativeMemory.Readable(manager,0x45);NativeMemory.Readable(doc,0x155);int flag=Marshal.ReadByte(manager,0x44),dirty=NativeMemory.I32(doc,0x48),preview=Marshal.ReadByte(doc,0x154);NativeMemory.Require((flag==0||flag==1)&&(dirty==0||dirty==1)&&preview==0,"MainCtrl saveflag/modified/preview mode is outside the audited real-document scope.");var state=(Dictionary<string,object>)reference["state"];NativeMemory.Require(Convert.ToString(state["mainctrl_document"])==NativeMemory.Hex(doc),"Restored-reference and MainCtrl document identities differ.");
+   return new Dictionary<string,object>{{"ok",true},{"write_attempted",false},{"manager",NativeMemory.Hex(manager)},{"service",NativeMemory.Hex(service)},{"main_document",NativeMemory.Hex(doc)},{"service_save_flag",flag},{"main_document_modified",dirty},{"main_document_preview_byte",preview},{"formal_service_save_would_execute",flag==1},{"formal_service_save_would_skip_but_return_true",flag==0},{"direct_document_save_separate_fresh_scope_required",flag==0},{"native_mainctrl_arrays",state["mainctrl_references"]},{"reference_semantic_sha256",reference["semantic_sha256"]},{"root_modified",reference["root_modified"]},{"compile_valid",reference["compile_valid"]},{"reference_inspection",reference},{"abi_profile_sha256",ProfileSha},{"save_called",false},{"set_dirty_or_saveflag_called",false},{"reference_rename_replay_requested",false}};
+  }
+ }
+}

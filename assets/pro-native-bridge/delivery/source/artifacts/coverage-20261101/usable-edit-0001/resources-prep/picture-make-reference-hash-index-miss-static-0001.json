@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "scope": "file-only exact lookup analysis; no host/native call",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_flow": [
+    "C635F0 calls E55980(image,outCString); no target resource name argument",
+    "E55980 service+34.slot6 resolves44958F->9793E0",
+    "9793E0 calls C62780(image,outHash); searches (service+44)==manager+78 hash->name map",
+    "979488 obtains hash pair second (CString name), then searches(service+18)==manager+4C name->CPicture map; either missing returnsNULL",
+    "E55980 NULL branch chooses new unique name and allocates/adoptsCPicture before caller later sets requested name"
+  ],
+  "limits": [
+    "No reconstruction of historical index population cause",
+    "No host call performed by this analysis",
+    "Caller explicit name assignment after MakeReference cannot prevent manager adoption already performed"
+  ],
+  "functions": {
+    "make_reference": {
+      "start": "0xc635f0",
+      "end_exclusive": "0xc63692",
+      "raw_sha256": "b41f780642ce681dbf4dd591b6e94a44bd091d0453d2a945cbf4910d61332e69",
+      "instructions": []
+    },
+    "lookup_image": {
+      "start": "0x9793e0",
+      "end_exclusive": "0x97950e",
+      "raw_sha256": "71817050ce453f33134dff206c73f526875852dce2bd6324ba7ef121aca630f6",
+      "instructions": []
+    },
+    "manager_make_reference": {
+      "start": "0xe55980",
+      "end_exclusive": "0xe55c09",
+      "raw_sha256": "3d357b50e785197ecef649874eb08fb4ff7167634f315c1162cc7f3753f80c44",
+      "instructions": []
+    }
+  }
+}

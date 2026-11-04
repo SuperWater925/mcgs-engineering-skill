@@ -1,0 +1,135 @@
+{
+  "schema": "recipe-native-named-persistence-contract-v2",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "system_name_capacity_utf16_units": 32,
+  "recipe_key_prefix": "MCGS_RECIPE_",
+  "recipe_name_capacity_utf16_units": 20,
+  "schema_evidence_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\consolidated-acceptance-0001\\compact-final-acceptance-0001\\anonymous-System-producer-0001\\System-strName-closed-schema.json",
+  "schema_evidence_sha256": "ceec53a69bef118641a66833a203fe7152df629fd368a62191bea2df2ddb13e7",
+  "schema_evidence_only_closed_snapshot": true,
+  "runtime_schema_query_performed": false,
+  "capacity_is_database_capability_not_software_version": true,
+  "functions": [
+    {
+      "name": "RootReadNamedData",
+      "rva": 3322032,
+      "bytes": "558bec6aff68a350fa0064a100000000505181ec28010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "ByteArrayCtorThunk",
+      "rva": 11726602,
+      "bytes": "ff25e88d3c01",
+      "reloc_offsets": [
+        2
+      ]
+    },
+    {
+      "name": "ByteArrayDtorThunk",
+      "rva": 11727466,
+      "bytes": "ff25a88b3c01",
+      "reloc_offsets": [
+        2
+      ]
+    },
+    {
+      "name": "RecipeSerialize",
+      "rva": 9437984,
+      "bytes": "558bec83ec18894dfc8b45fcf30f1005a0582001f30f1140348b4d08894df08b4d08e85fe974ff85c0",
+      "reloc_offsets": [
+        16
+      ]
+    },
+    {
+      "name": "RecipeItemSerialize",
+      "rva": 9433760,
+      "bytes": "558bec51894dfc8b4d08e8f7f974ff85c0742f8b45fc83c008508b4d08e8876f70ff",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeSaveNamed",
+      "rva": 9440480,
+      "bytes": "558bec6aff68a3d4010164a100000000505181ecbc020000a1600b3b0133c58945ec",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "RecipeManagerLoad",
+      "rva": 7939952,
+      "bytes": "558bec6aff68152a000164a100000000505181ec54030000a1600b3b0133c58945ec",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "RootSaveNamedData",
+      "rva": 3320400,
+      "bytes": "558bec6aff682050fa0064a100000000505181ec34010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "C0RecSystemDFX",
+      "rva": 859264,
+      "bytes": "558bec51894dfc6a018b4d08e8773ef5ff6a018b45fc0598000000506844960f01",
+      "reloc_offsets": [
+        29
+      ]
+    }
+  ],
+  "mfc": {
+    "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "image_size": 4452352,
+    "exports": [
+      {
+        "name": "MfcOrdinal359",
+        "rva": 1843662,
+        "bytes": "33c089410489411089410c894108c701b86203108bc1c3",
+        "reloc_offsets": [
+          16
+        ],
+        "ordinal": 359,
+        "iat_rva": 16551400
+      },
+      {
+        "name": "MfcOrdinal1060",
+        "rva": 1843685,
+        "bytes": "ff7104c701b8620310ff1594f42a1059c3",
+        "reloc_offsets": [
+          5,
+          11
+        ],
+        "ordinal": 1060,
+        "iat_rva": 16550824
+      }
+    ],
+    "byte_array_vtable_rva": 221880
+  },
+  "native_read_signature": "ThisCall bool AL(self Root,LPCWSTR key,CByteArray* owned); ret8",
+  "byte_array_bytes": 20,
+  "wire": {
+    "format_dword": true,
+    "unicode_cstring_name": true,
+    "columns_count_i4": true,
+    "column_fields": [
+      "variable_name CString",
+      "caption CString",
+      "native_kind DWORD"
+    ],
+    "row_count_i4": true,
+    "row_width_mfc_writecount": true,
+    "row_cell_cstrings": true,
+    "trailing_bytes_permitted": 0,
+    "raw_byte38_not_serialized_by_current_original_recipe_store": true
+  },
+  "prefix_rule": "All prefixes end at full decoded instruction boundaries; every HIGHLOW operand inside each prefix is included in full."
+}

@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "GetUserView",
+      "rva": "0x6dd3b0",
+      "bytes": "558bec83ec0c894dfc8b45fc8b108b4dfc8b4270ffd08945f4837df40074338d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DocSetModified",
+      "rva": "0x6da7c0",
+      "bytes": "558bec51894dfc8b4508508b4dfce892ee92ff8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "WindowSaveData",
+      "rva": "0x7a25c0",
+      "bytes": "558bec6aff688c43000164a1000000005083ec38a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "SerializeWindowAttributes",
+      "rva": "0x6e3100",
+      "bytes": "558bec6aff684648ff0064a100000000505181ec74030000a1600b3b0133c589",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "WindowPropertiesDialog",
+      "rva": "0x6dda10",
+      "bytes": "558bec6aff68283fff0064a10000000050b894110000e8b53a4500a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    }
+  ],
+  "layout": {
+    "width_offset": "0x270",
+    "height_offset": "0x274",
+    "type": "signed int32",
+    "serialized_property_indices": [
+      6,
+      7
+    ],
+    "source": [
+      "AE3405..AE3412 width",
+      "AE342A..AE3437 height"
+    ],
+    "native_ok_stores": [
+      "ADE3FA..ADE406 width",
+      "ADE40C..ADE418 height"
+    ]
+  },
+  "native_input_validation": {
+    "page_type": "C0DocUserPage1",
+    "vtable": "0x1202804",
+    "ddx": "CC8632..CC865D bind page+9C/+A0, control IDs0x3FC/0x3FD, MFC ordinal3746 RVA1F36A1",
+    "subclass_overrides": {
+      "12": "CC89E0 message map",
+      "66": "CC85F0 DDX",
+      "95": "CC8890 OnInitDialog"
+    },
+    "range_claim": "No generic range is claimed. Adapter only allows exact positive464x248, within the prepared480x272 device and containing all three controls."
+  },
+  "notification": {
+    "native_original": "ADE551 calls ADD3B0; only a nonnull user view takes Invalidate(1) then9990C0",
+    "guard": "Require ADD3B0(doc)==NULL before mutation and after flush; reject already opened user view, so original optional-view refresh branch does not apply.",
+    "compile": "Do not call ADEC40 compile/reference checking implicitly; root performs one final original configuration check separately."
+  },
+  "scope": "Internal native document-field adapter, not a general IObject property API. Only two int32 fields on owned page31 may change. No DLL patch, basic-block jump or fake dialog stack.",
+  "executed": false
+}

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "original_live_profile_file": "coverage-20261101/references-view/live-label-abi-profile.json",
+  "original_live_profile_sha256": "9ab9fef153e982c0a53e7a758dcf9eedd2c8797747acf393a85ce47eeb858d3a",
+  "font_value_profile_sha256": "461045f97202c033a85191b1c1615883f5662ba53f67f4e1a76084f2c0b449e2",
+  "collector_callback_stack_bytes": [4, 12, 12, 12, 12, 12, 12, 16, 12, 20, 12, 20, 12, 12],
+  "dispatcher_callback_stack_bytes": [4, 8, 8, 8, 8, 8, 8, 8, 12, 8, 12, 8, 8],
+  "getter_contract": "Original CDrawObj IObject slot6; own callbacks copy all typed values synchronously; component recursion is bounded.",
+  "setter_contract": "Original CDrawObj IObject slot5; only exact already-returned root-owner keys/tags are writable in this adapter.",
+  "component_write_contract": "Select a component explicitly through its native getter-derived component path; no scalar casts for native tag9.",
+  "native_method_derivation": "typed-dispatcher-static-source.json, scalar-setter-static-source.json, collector-shapes-static-source.json, font-value-static-source.json",
+  "runtime_verified": false
+}

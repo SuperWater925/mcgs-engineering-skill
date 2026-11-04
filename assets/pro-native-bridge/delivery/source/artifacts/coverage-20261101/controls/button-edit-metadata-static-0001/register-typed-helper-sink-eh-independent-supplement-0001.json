@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "module": {
+    "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+  },
+  "base_profile": {
+    "file": "D:\\unbound-task-root\\coverage-20261101\\controls\\button-edit-metadata-static-0001\\button-edit-metadata-profile-candidate.json",
+    "sha256": "d7eb4c24d9beb3b419b31e01226971bc2dc2073d797e3faa8c9121b2526ff0a8"
+  },
+  "protocol": {
+    "RegisterTypedHelper": "cdecl void(sink*, property_id int32, native_tag int32), caller pops12; key factory hidden_sret CString on stack; native sink.slot1 thiscall(key&,tag), caller ignores return",
+    "sink_slot1": "original owned PropertyRegister E18DA0, ret8; no synthetic receiver/callback",
+    "sink_slot2": "original E18FA0 forwards slot1(key,9); component entries remain real declarations",
+    "helper_local_CString": "EBP-18; normal dtor plus original native EH action"
+  },
+  "typed_helper_EH": {
+    "handler": "0xfd3ca9",
+    "handler_bytes_hex": "8b5424088d420c8b4af033c8e844d3f5ffb8bc9a2f01e950d3f5ff",
+    "funcinfo": "0x12f9abc",
+    "funcinfo_words": [
+      "0x19930522",
+      "0x1",
+      "0x12f9ab4",
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x0",
+      "0x1"
+    ],
+    "unwind_map": "0x12f9ab4",
+    "action": "0xfd3ca0",
+    "action_bytes_hex": "8d4de8ff2548913c01",
+    "cstring_storage_ebp_offset": -24,
+    "MFC_ordinal": 1039
+  },
+  "additional_guard_candidates": [
+    {
+      "name": "TypedHelperEHHandler",
+      "preferred_va": "0xfd3ca9",
+      "rva": "0xbd3ca9",
+      "length": 27,
+      "bytes_hex": "8b5424088d420c8b4af033c8e844d3f5ffb8bc9a2f01e950d3f5ff",
+      "highlow_offsets": [
+        18
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypedHelperFuncInfo",
+      "preferred_va": "0x12f9abc",
+      "rva": "0xef9abc",
+      "length": 36,
+      "bytes_hex": "2205931901000000b49a2f01000000000000000000000000000000000000000001000000",
+      "highlow_offsets": [
+        8
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypedHelperUnwindMap",
+      "preferred_va": "0x12f9ab4",
+      "rva": "0xef9ab4",
+      "length": 8,
+      "bytes_hex": "ffffffffa03cfd00",
+      "highlow_offsets": [
+        4
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    },
+    {
+      "name": "TypedHelperCStringUnwindAction",
+      "preferred_va": "0xfd3ca0",
+      "rva": "0xbd3ca0",
+      "length": 9,
+      "bytes_hex": "8d4de8ff2548913c01",
+      "highlow_offsets": [
+        5
+      ],
+      "all_intersecting_highlow_fully_contained": true
+    }
+  ],
+  "ASLR_models": 12,
+  "original_target_EH_not_rewritten": true,
+  "native_exception_recovery_guaranteed": false,
+  "host_native_calls": 0
+}

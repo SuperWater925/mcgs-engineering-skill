@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "author_native_calls": 0,
+  "correction": "AA2D60 owner is C0FrmMain (type descriptor138B67C), not C0FrmManage. Previous agent short message named Manage incorrectly.",
+  "owner_rtti": ".?AVC0FrmMain@@",
+  "drawing_frame_rtti": ".?AVC0FrmChild@@",
+  "show": "UserWindowObject IObject.slot25 entry415366 ->C534E0; void ThisCall(pageIObject,childIObjectOrNULL),ret4. Calls C0FrmMain AA2D60(pageArchiveId).",
+  "open_worker": "AA2D60 ThisCall(frameMain,int pageArchiveId),int result/ret4; complete normal function throughAA32BB. Existing target frame is activated; max-views branches can close other documents or show message and must be excluded before authorized call.",
+  "max_views": "452B12 ->C4ED60 returns singleton13BDDD4, init flag13BDDD8; may cold-construct. Actual43AEBD ->C4EDE0 ignores this and returns literal0x14 (20), ret0. Caller can guard exact code and use bounded literal without warming options.",
+  "predicate": "AACCE0 ThisCall(unusedSelf,CDocument*,C0FrmDraw**),boolAL/ret8; sets*out0, calls doc28/GetFirstViewPosition then29/GetNextView once, GetParentFrame and dynamic_cast C0FrmDraw. It is presence of one drawing frame, not arbitrary viewcount. ECX is stored but never used. Original cdecl AACD70(doc,out) setsECX0 and calls AACCE0,ret0.",
+  "functions": {
+    "0xc534e0": [],
+    "0xaa2d60": [],
+    "0xc4ed60": [],
+    "0xc4ede0": [],
+    "0xaacce0": [],
+    "0xaacd70": []
+  },
+  "no_host_validation": true
+}

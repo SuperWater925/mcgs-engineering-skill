@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "purpose": "Exact original Prog Generate source normalization, not a blanket whitespace mask",
+  "editor": {
+    "file": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084"
+  },
+  "mfc": {
+    "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "ordinal": 14226,
+    "raw_eat_entry_rva": "0x18b54",
+    "export_body_rva": "0xa83ee"
+  },
+  "classifier": {
+    "owner": "MSVCR110.dll",
+    "import": "iswspace",
+    "mfc_iat_rva": "0x2AF49C",
+    "actual_runtime_locale_not_assumed_or_changed": true
+  },
+  "segments": [
+    {
+      "preferred_va": "0xe82fe0",
+      "rva": "0xa82fe0",
+      "end_exclusive": "0xe83023",
+      "role": "Prog primary7: ECX=complete+20, Trim first; then BCE750 compile; ret4",
+      "bytes_hex": "558bec51894dfc8b4dfc83c120ff15588c3c018b45fc83c00c508b4d08518b55fc83c22052e8cdb659ff83c40c0fb6c085c0750433c0eb05b8010000008be55dc20400",
+      "instructions": []
+    },
+    {
+      "preferred_va": "0x100a83ee",
+      "rva": "0xa83ee",
+      "end_exclusive": "0x100a83f7",
+      "role": "Trim: call TrimRight then tail-jump TrimLeft",
+      "bytes_hex": "e8210000008bc8eb70",
+      "instructions": []
+    },
+    {
+      "preferred_va": "0x100a8414",
+      "rva": "0xa8414",
+      "end_exclusive": "0x100a8467",
+      "role": "TrimRight: last contiguous iswspace run, original CString buffer release length",
+      "bytes_hex": "5356578bf933f68b1f0fb7036685c0743c0fb7c050ff159cf42a105985c0740885f675068bf3eb0233f683c3020fb7036685c075dc85f674142b378bcfd1fe56e8fb15f6ff568bcfe89b16f6ff8bc75f5e5bc3",
+      "instructions": []
+    },
+    {
+      "preferred_va": "0x100a8467",
+      "rva": "0xa8467",
+      "end_exclusive": "0x100a84ce",
+      "role": "TrimLeft: first contiguous iswspace run, original CString move and length update",
+      "bytes_hex": "53568b359cf42a108bd9578b3beb0383c7020fb70750ffd65985c075f28b033bf8743eff70f42bf88bcbd1ffe8bc15f6ff8b0b8bd08b41f48bf02bf78d0445020000008d0c7502000000518d0c7a515052e8090efbff83c4108bcb56e83416f6ff5f5e8bc35bc3",
+      "instructions": []
+    }
+  ],
+  "actual_failure_evidence": {
+    "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\comparison-failures\\20261102T0328590285818-1e1af34acc884f7d80fa704389cc888a.json",
+    "sha256": "9e62a6f4c3bcd38665a7ead87571215f1c09b27c5a5fca0ae59ceeb178e925d1",
+    "requested_utf16_units": 35,
+    "observed_utf16_units": 33,
+    "removed_actual_suffix_utf16le_hex": "0d000a00"
+  },
+  "contract": {
+    "applies_to": "CStgyFuncProg complete+20 only when original primary7 Generate/compile runs",
+    "order": [
+      "original Assign full requested source",
+      "original MFC14226 trims both ends",
+      "original BCE750 compiler"
+    ],
+    "interior_code_units_preserved_by_trim": true,
+    "dotnet_trim_or_fixed_unicode_table_equivalence_proved": false,
+    "other_typed_or_condition_fields_normalized_by_this_proof": false,
+    "compiled_cache_or_other_fields_ignored": false,
+    "recommended_expectation": "Use the same guarded original MFC14226 on an independently owned scratch CString; record full requested and normalized values; compare exact post-Generate source and all other fields"
+  },
+  "host_invoked": false,
+  "native_calls": 0,
+  "old_claim_or_failure_modified": false
+}

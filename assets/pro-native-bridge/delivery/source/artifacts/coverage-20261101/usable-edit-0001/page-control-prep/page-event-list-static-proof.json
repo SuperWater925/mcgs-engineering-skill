@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "functions": {
+    "EventFactory": {
+      "start_va": "0xc57770",
+      "end_va_exclusive": "0xc577e2",
+      "instructions": []
+    },
+    "EventDeepCopy": {
+      "start_va": "0xc578b0",
+      "end_va_exclusive": "0xc57a69",
+      "instructions": []
+    },
+    "EventScalarDelete": {
+      "start_va": "0xc5bd00",
+      "end_va_exclusive": "0xc5bd29",
+      "instructions": []
+    },
+    "EventIsEmpty": {
+      "start_va": "0xc58b70",
+      "end_va_exclusive": "0xc58bed",
+      "instructions": []
+    },
+    "EventArrayAdd": {
+      "start_va": "0xc5bdc0",
+      "end_va_exclusive": "0xc5bdd9",
+      "instructions": []
+    },
+    "PointerArrayAdd": {
+      "start_va": "0x4b2d90",
+      "end_va_exclusive": "0x4b2db9",
+      "instructions": []
+    },
+    "PointerArraySetSizeThunk": {
+      "start_va": "0xf2f396",
+      "end_va_exclusive": "0xf2f39c",
+      "instructions": []
+    },
+    "OriginalOwningListCommit": {
+      "start_va": "0xc596e6",
+      "end_va_exclusive": "0xc5985d",
+      "instructions": []
+    },
+    "OriginalFactoryAndDefaultInfo": {
+      "start_va": "0xc590b0",
+      "end_va_exclusive": "0xc5933c",
+      "instructions": []
+    }
+  },
+  "boundaries": [
+    "Original OnOK clears canonical ownership by each event virtual1(flags1), sets the vacated owning pointer NULL, then original CPtrArray.SetSize(0,-1).",
+    "It appends a freshly constructed event then deep-copies a nonempty working template via C578B0. The candidate clones all private replacements first, then repeats the established canonical ownership clear/adopt sequence.",
+    "C578B0 deliberately leaves newly constructed payload58 and runtime88 unchanged. Replacement therefore requires explicit permission for original event payload rebuilding and defers compilation to the final native check.",
+    "Templates must come from actual existing events on a UserWindowObject, classTypeId0x12, and event IDs must be unique in the new list. Missing native event metadata is not fabricated.",
+    "Unknown native partial ownership result is never automatically freed, rolled back or retried. A normal private object is freed only on its explicitly owned successful pre-adoption path."
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "bounded_functions": {
+    "0x4de540": [],
+    "0x4de580": [],
+    "0x4de5d0": [],
+    "0x4e56f0": [],
+    "0x4e15b0": [],
+    "0x4de670": [],
+    "0x4dea40": [],
+    "0x4e7380": [],
+    "0x4dfb70": [],
+    "0x4e00d0": [],
+    "0xba7180": [],
+    "0xbaa8c0": [],
+    "0xc46d50": [],
+    "0xc46dc0": [],
+    "0xbcc700": [],
+    "0x4697a0": []
+  },
+  "constraints": [
+    "+B4 is authoritative vector<CString> member names; +80 is CArray<Int32> cached member IDs; +94 is vector<CString> related groups. +2C is storage mode, not count.",
+    "DataAdd mutates private prototype ID and deep-copies it. A registered canonical object must never be passed as prototype.",
+    "CObjData copy ctor first calls C46D50 base ctor: GetModuleObject(2) assigned at complete+4. It does not leave owner NULL. Candidate verifies this actual owner before any member-cache rebuild.",
+    "Deleting chain 4E7380 ->4DEA40 ->C46DC0 ->BCC700 ->4697A0 only destroys owned extensions/containers/base vtables; no parent unlink or graph removal in these bounded base bodies.",
+    "Variable name validation uses original cdecl 4DE5D0(wchar*), which constructs CString and calls C061A0(CString*,0x200); ret0, caller owns one stack argument.",
+    "Group clone uses original new(C0), copy constructor, native name/member assignment, then original Add. Prototype deleting destructor is only used after successful adoption of a different canonical object.",
+    "Borrowed member vector only borrows CString representations held by owned native CStrings. Native GroupMemberNamesSet copies the range; it never adopts the source vector.",
+    "Only existing scalar user-variable members are accepted by this candidate. No group cycles or native implicit missing-variable creation.",
+    "Array generator only plans names; canonical data-batch performs actual creation."
+  ]
+}

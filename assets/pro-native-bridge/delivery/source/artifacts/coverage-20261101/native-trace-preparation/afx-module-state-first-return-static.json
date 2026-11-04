@@ -1,0 +1,38 @@
+{
+  "exe_getter": {
+    "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+    "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+    "entry": "0x46c060",
+    "resolved": "0x46c060",
+    "code": [],
+    "calls": [
+      {
+        "at": "0x46c063",
+        "target": "0xf2eb56",
+        "resolved": "0xf2eb56"
+      }
+    ],
+    "truncated": false
+  },
+  "iat": "0x13c9064",
+  "import": {
+    "dll": "mfc110u.dll",
+    "name": null,
+    "ordinal": 2194
+  },
+  "module_state_function": {
+    "source": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "entry": "0x1000809a",
+    "resolved": "0x1000809a",
+    "code": [],
+    "calls": [
+      {
+        "at": "0x1000809a",
+        "target": "0x10008082",
+        "resolved": "0x10008082"
+      }
+    ],
+    "truncated": false
+  }
+}

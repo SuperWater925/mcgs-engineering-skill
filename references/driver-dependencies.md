@@ -19,3 +19,7 @@ H5U 本地 DLL 的文件版本为 7.0.1.7，配套 UI 为 7.0.0.3；McgsIoT UI �
 本轮驱动均来自本机已有目录，没有下载执行第三方站点软件。McgsPro 安装目录只新增 22 个依赖文件，旧驱动字节保持不变；原工程及厂商运行数据保持原 SHA。技能包继续不带厂商驱动二进制，搬到另一台电脑时须发现和验证当地依赖。
 
 P06 控件与策略综合副本另已保存、退出原厂编辑器并重开，重新全工程检查仍为 0 错误 / 19 警告。三份修改副本在原厂处理后的文件侧安全导出与归档审查也全部通过。
+
+## 原生安装驱动入口
+
+[Pro 原生工程入口](pro-native-engineering.md)可依据实际已安装的 provider catalog，由原厂 factory/Add 创建实例，再取得真实 default schema 和属性值。当前有专属合同的 H5U_MODBUSTCP 为12项、McgsIoT 为9项，仍须逐文件 SHA、代码和 cache/STORE 守卫匹配；这不是所有驱动的通用 schema。Windows 文件 key 按 OrdinalIgnoreCase 唯一匹配，完整路径和 SHA 保持严格。H5U 空字符串及 IoT framing 使用其真实原生 STORE 规则，不放宽完整 BLOB 比较。monidevdrv 的运行参数业务语义仍未全部闭合。技能不附带原厂 DLL，不以目录同名代替安装合法来源。

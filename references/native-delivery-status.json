@@ -1,0 +1,198 @@
+{
+  "schema": 1,
+  "utc": "2026-11-02T12:31:54.155988+00:00",
+  "source_build_revision": "0069",
+  "source_count": 150,
+  "source_stage_manifest_sha256": "883e44e5205637fa6f2412bba076ae129f6413c9ce76b7ff92042e202d44fbb1",
+  "portable_engine_revision": "0089",
+  "portable_compiled": true,
+  "portable_engine_sha256": "0c022135cbb4f4eafb9a111b266f076be2e2c38743443b85dc18ed5ed4984eb8",
+  "portable_scope_sha256": "3cb2dff4d6f1a437428e1f440c5794927a5602e306af1e66880510daadce4b33",
+  "portable_bound_manifest_sha256": "65c21a50bc6ca28b7d9ce46af2e5fa386a2f25fc2db0669f0da1a082a49fc543",
+  "isolated_owned_payload_file_count": 303,
+  "frozen_old_profiles_overwritten": false,
+  "frozen_owned_ABI_file_count": 185,
+  "complete_source_IO_inventory_file_count": 150,
+  "historical_payload_files_omitted": 15,
+  "ABI_only_metadata_projections": 9,
+  "portable_current_project_inspection": {
+    "status": "passed",
+    "completed": true,
+    "portable_package_source_revision": "0069",
+    "source_count": 150,
+    "bound_source_count_including_explicit_layout": 151,
+    "portable_engine_revision": "0089",
+    "portable_engine_sha256": "0c022135cbb4f4eafb9a111b266f076be2e2c38743443b85dc18ed5ed4984eb8",
+    "portable_scope_sha256": "3cb2dff4d6f1a437428e1f440c5794927a5602e306af1e66880510daadce4b33",
+    "bound_manifest_sha256": "65c21a50bc6ca28b7d9ce46af2e5fa386a2f25fc2db0669f0da1a082a49fc543",
+    "pure_abi_dependency_count": 185,
+    "isolated_owned_payload_file_count": 303,
+    "write_attempted": false,
+    "native_save_called": false,
+    "native_calls_replayed": false,
+    "actual_receipt_sha256": "313a29853bbf5440d462d08019d6ed5d3cd78a57d101120023608fd49265adb0",
+    "external_local_receipt_file": "historical-local-evidence/actual-inspection.response.json",
+    "raw_receipt_or_project_payload_bundled": false,
+    "scope_and_process_creation_attestation_verified": true,
+    "large_payload_bytes": 528527,
+    "large_payload_sha256": "0e3938f779f2cd9e614b9ed6d56b417df791ca5623e6dfe69e04831656422092",
+    "large_payload_path_hash_correlation_verified": true,
+    "read_only_project_whole_file_sha_unchanged": true,
+    "root_modified_after_read": 0,
+    "named_definitions_count": 3,
+    "named_definition_bytes_sorted": [
+      44,
+      332,
+      1020
+    ],
+    "named_index_bytes": 56,
+    "named_definitions_full_fields_exact": true,
+    "embedded_raster_payload_bytes": 1843,
+    "embedded_raster_payload_sha256": "219916f1a6844a3237915a70dd7a9c5dc1c505c009db66d30f948afe6545fb2e",
+    "typed_input_boolean_word54": 0,
+    "typed_boolean_padding_excluded_from_value": true,
+    "current_cached_compile_valid_after_reopen": 0,
+    "fresh_original_check_evidence_is_separate_from_cached_reopen_status": true,
+    "single_host_submission_for_final_revision": true,
+    "unpublished_cli_path_rejection_preserved": true
+  },
+  "latest_functional_recipe_picture_reopen_comparison": {
+    "status": "passed",
+    "ok": true,
+    "scope": "actual configured project contents, original check/save/normal close/reopen and complete native readback",
+    "full_report": {
+      "external_local_file": "historical-local-evidence/final-compact-comparison.actual-0001.json",
+      "sha256": "daaf589d4b30ec37777193b9cafdd41d789875696b520154b6a72133c8e81425",
+      "payload_copied_into_status": false
+    },
+    "native_configuration_equal": true,
+    "coverage": {
+      "pages": 17,
+      "controls_including_nested": 290,
+      "typed_properties": 4275,
+      "control_events": 15,
+      "class_collections": 5,
+      "animation_owners": 290,
+      "native_tables": 12,
+      "all_field_fingerprints": 695,
+      "complete_binary_field_fingerprints": 144,
+      "full_utf16_sources": 14,
+      "independent_state_definitions": 9,
+      "owned_strategy_shapes": 3,
+      "repaired_named_recipe_definition_bytes": 332,
+      "configured_embedded_pixel_payload_bytes": 1843
+    },
+    "saved_to_closed_all_tables_exact": true,
+    "closed_to_reopened_all_tables_exact": true,
+    "storage_field_or_blob_exceptions": 0,
+    "native_configuration_differences": 0,
+    "baseline_changes_individually_attributed": 25,
+    "original_native_check": {
+      "actually_called": true,
+      "returned_normally": true,
+      "return_value": 0,
+      "compile_valid_after_return": 1
+    },
+    "original_normal_close_reopen": {
+      "completed": true,
+      "both_root_globals_confirmed_empty": true,
+      "fresh_model_attached_after_original_open": true,
+      "native_calls_replayed": false,
+      "user_cancelled_save_as": true,
+      "user_selected_no_for_backup_restore_prompt": true,
+      "prompt_response_source": "root-observed actual native user interaction; not inferred from a cached flag"
+    },
+    "runtime_or_PLC_execution_verified": false,
+    "whole_process_heap_semantic_equality_claimed": false,
+    "software_major_or_minor_release_whitelist_used": false
+  },
+  "first_deployment_own_offline_compile_type_library": "passed",
+  "new_machine_native_loading": "not performed",
+  "vendor_binary_user_project_dump_claim_image_payload_bundled": false,
+  "public_SDK_claimed": false,
+  "software_release_whitelist_used": false,
+  "actual_acceptance_evidence": {
+    "contains_project_payload": false,
+    "contains_project_names_or_identifiers": false,
+    "full_functional_native_edit_save_check_close_reopen_source": {
+      "source_revision": "0068",
+      "source_count": 150,
+      "compiled": true,
+      "build_manifest_sha256": "d495447c2200eab02d6105862345455adcd1bd41114005b9445fdf192e822372",
+      "functional_candidate_assembly_sha256": "78e4dff00992006443e5c2d73564400116105f8a4ba0562f968012507a133916",
+      "actual_functional_acceptance_report_sha256": "daaf589d4b30ec37777193b9cafdd41d789875696b520154b6a72133c8e81425"
+    },
+    "final_delivery_source": {
+      "source_revision": "0069",
+      "source_count": 150,
+      "compiled": true,
+      "build_manifest_sha256": "c99583e6558013cbf811d0c9748b4c6df2606dadf85c74fcb4dc7c0403193ad4",
+      "functional_candidate_assembly_sha256": "8d35573181a1767d89611835e4c825f2250ca09fb8e442986317cc647e3371eb",
+      "candidate_assembly_is_not_the_separately_bound_portable_assembly": true,
+      "all_source_names_equal_to_source68": true,
+      "unchanged_source_files": 148,
+      "changed_source_files": 2,
+      "only_change": "CAniInput native bytes54/55 are read and written separately; alignment bytes56/57 are preserved; preclaim validation permits only the two explicit native boolean bytes",
+      "managed_code_delta": [
+        {
+          "code_file": "NativeAnimationOwnedValues.cs",
+          "source68_sha256": "4299c9d6e0aaaf6a9b8d7053601834e086acdac37301d59c8fca258d973040d5",
+          "source69_sha256": "6b50350dfaebe5ba0a8dff2ce6af6f344e623c45ce10001977bf64c0704d86a2",
+          "normalized_unified_code_delta_sha256": "b064a964de6b1865570fe97df3bb5a75cdb3ff969711405cab94216f39bc461c"
+        },
+        {
+          "code_file": "NativeControlAnimationEditing.cs",
+          "source68_sha256": "9d2ec1223a11325ed0596557160d1a0813ee11dd1256490e86cbddaa09f7b5e8",
+          "source69_sha256": "f819837ba31d5449f633d2e3cffdd6dddaf7a3695ef5d3f9381fc174bd619f4b",
+          "normalized_unified_code_delta_sha256": "a21d063f6ad15204a9ea35346668cb7b4a0db4e5812ee394bd219a7c4be4effa"
+        }
+      ],
+      "abi_profile_change_claimed": false,
+      "project_edit_save_check_or_reopen_repeated_with_source69": false,
+      "source69_full_functional_retest_claimed": false
+    },
+    "external_evidence_references": [
+      {
+        "external_local_file": "historical-local-evidence/final-compact-comparison.actual-0001.json",
+        "sha256": "daaf589d4b30ec37777193b9cafdd41d789875696b520154b6a72133c8e81425",
+        "payload_copied_into_status": false
+      },
+      {
+        "external_local_file": "historical-local-evidence/baseline-to-final.exact-reviewed-attribution-0001.json",
+        "sha256": "660867f5b903aed16d3aae166a1f71edfb6bed4857f405f7d04532c00df765b9",
+        "payload_copied_into_status": false
+      },
+      {
+        "external_local_file": "historical-local-evidence/final-original-root85-check-0002.response.json",
+        "sha256": "865b35b9b34e982be13dc16e12f609d94da22f8618fede0692761db18ec7569b",
+        "payload_copied_into_status": false
+      },
+      {
+        "external_local_file": "historical-local-evidence/close-reopen.response.json",
+        "sha256": "fdc03441224999016e080782202d34036a134721cf8b244b4950cb6e3719a8a1",
+        "payload_copied_into_status": false
+      },
+      {
+        "external_local_file": "historical-local-evidence/animation-input-cache-and-field54-static-proof.json",
+        "sha256": "bdae9988890f3110961ae368c1a90a9ead03e3c8a9396a2da71b2ec303fdcf45",
+        "payload_copied_into_status": false
+      },
+      {
+        "external_local_file": "historical-local-evidence/actual-inspection.response.json",
+        "sha256": "313a29853bbf5440d462d08019d6ed5d3cd78a57d101120023608fd49265adb0",
+        "payload_copied_into_status": false
+      }
+    ],
+    "status_preparation_invoked_host_or_database": false,
+    "portable_binding_adaptation": {
+      "pure_abi_input_closure_review": "150 source files and 1140 lexical I/O expressions, cross-checked by domain reachability audits",
+      "additional_static_abi_inputs": 4,
+      "additional_whole_file_profile_hash_pins": 4,
+      "native_entry_bytes_rtti_offsets_parameters_or_product_gates_changed": false,
+      "all_project_edit_save_check_close_reopen_proofs_remain_source68": true,
+      "typed_boolean_fix_source69_proven_by_final_bound_read": true,
+      "previous_incomplete_revision87_failure_preserved": true
+    }
+  },
+  "final_status_input_sha256": "4864e40978c4b829e8b8a0afdd9a0e8ec81c787a6532fcd1327233114f48d7f1"
+}

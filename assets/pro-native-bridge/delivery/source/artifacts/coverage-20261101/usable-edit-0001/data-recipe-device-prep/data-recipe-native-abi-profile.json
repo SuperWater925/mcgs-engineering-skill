@@ -1,0 +1,700 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "functions": [
+    {
+      "name": "DataFind",
+      "rva": 8022400,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e9348b55fc8b42cc8b5040ffd28be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataCreate",
+      "rva": 8022448,
+      "bytes": "558bec6aff68ce4c000164a1000000005081ec70010000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "DataSave",
+      "rva": 8023760,
+      "bytes": "558bec6aff68354d000164a1000000005081ecf8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    },
+    {
+      "name": "DataAdd",
+      "rva": 8024448,
+      "bytes": "558bec83ec08894dfc8b45088b4dfc8b51048990a40000008b45fc8b480483c1",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataDeleteIndices",
+      "rva": 8025104,
+      "bytes": "558bec6aff68c54d000164a1000000005081ecd400000056a1600b3b0133c550",
+      "reloc_offsets": [
+        6,
+        25
+      ]
+    },
+    {
+      "name": "DataInitial",
+      "rva": 8033376,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e8fb968aff0fb6c885c974308b550c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataMetadata",
+      "rva": 8033472,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e89b968aff0fb6c885c974308b550c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataFlags",
+      "rva": 8033568,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e83b968aff0fb6c885c974298b5508",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataRange1",
+      "rva": 8033648,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e8eb958aff0fb6c885c9742d8b5508",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataRange0",
+      "rva": 8033728,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e89b958aff0fb6c885c9742d8b5508",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataComment",
+      "rva": 8033808,
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e84b958aff0fb6c885c974308b550c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataSetDirty",
+      "rva": 8038416,
+      "bytes": "558bec51894dfc8b45fc8a4d088848608be55dc20400cccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataVectorSize",
+      "rva": 8152208,
+      "bytes": "558bec51894dfc8b45fc8b4dfc8b40042b01c1f8028be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataVectorAt",
+      "rva": 8104992,
+      "bytes": "558bec51894dfc8b45fc8b088b55088d04918be55dc20400cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UIntInputEnd",
+      "rva": 8139888,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b5104528b4d08e810c186ff8b45088be55d",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UIntInputBegin",
+      "rva": 8136064,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e801d086ff8b45088be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataRefresh",
+      "rva": 8027632,
+      "bytes": "558bec51894dfc6a03e8b09989ff8b882405000081c114030000e897238aff8b",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataListRefresh",
+      "rva": 7064448,
+      "bytes": "558bec83ec08894df86a02e84c5994ff83c4048945fc6a018b45fc8b108b4dfc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NativeDataCreateListNotification",
+      "rva": 3344201,
+      "bytes": "e824c3cdff8945cc8b45cc8b108b4dcc8b422cffd0837de8007c088b4df0e82f",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DataSetName",
+      "rva": 916304,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c108ff15708e3c01b0018be55dc20400cc",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "DataId",
+      "rva": 916544,
+      "bytes": "558bec51894dfc8b45fc8b80a40000008be55dc3cccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeCreateOwned",
+      "rva": 9469376,
+      "bytes": "558bec6aff68fbe1010164a1000000005083ec10a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeCtor",
+      "rva": 9434480,
+      "bytes": "558bec6aff6846d2010164a1000000005083ec3ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeDtor",
+      "rva": 9434896,
+      "bytes": "558bec6aff688bd2010164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeAssign",
+      "rva": 9435808,
+      "bytes": "558bec6aff680fd3010164a1000000005083ec58a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeDeleteOwned",
+      "rva": 9472144,
+      "bytes": "558bec51894dfc8b4dfce8334373ff8b450883e001740c8b4dfc51e808612200",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeSetName",
+      "rva": 9436496,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10851e8850474ff83c4080fb6d052e890",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeRegisterReferences",
+      "rva": 9437200,
+      "bytes": "558bec6aff6894d3010164a1000000005083ec48a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeSave",
+      "rva": 7939632,
+      "bytes": "558bec51894dfc8b4dfc83e934e872ca88ffb0018be55dc3cccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeSaveWorker",
+      "rva": 7941296,
+      "bytes": "558bec6aff68be2a000164a100000000505181ec64010000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ]
+    },
+    {
+      "name": "RecipeSetDirty",
+      "rva": 7944784,
+      "bytes": "558bec51894dfc8b45fcc64005018be55dc3cccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeAdd",
+      "rva": 7944816,
+      "bytes": "558bec6aff684b2c000164a1000000005083ec18a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeDeleteName",
+      "rva": 7945008,
+      "bytes": "558bec6aff68772c000164a1000000005083ec4ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeListCount",
+      "rva": 7956736,
+      "bytes": "558bec51894dfc8b45fc8b40048be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeListBegin",
+      "rva": 7955584,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b1152e822d888ff83c4048b00508b4d08e8",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeListEnd",
+      "rva": 7956000,
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b11528b4d08e810e98aff8b45088be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeListDeref",
+      "rva": 7952480,
+      "bytes": "558bec51894dfc8b45fc8b0851e8751e89ff83c4048be55dc3cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeItemAt",
+      "rva": 9472464,
+      "bytes": "558bec51894dfc837d08007c198b45fc8b4d083b48087d0e8b45086bc0148b55",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeItemCount",
+      "rva": 9472528,
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeItemSetter",
+      "rva": 9434064,
+      "bytes": "558bec83ec08894df88b45f883c004506a438b4d0851e8b81c72ff83c40c8845",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeItemGetter",
+      "rva": 9434176,
+      "bytes": "558bec6aff68f0d1010164a1000000005083ec20a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "RecipeCellSet",
+      "rva": 3866832,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e845ed77008b550c",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeCellAt",
+      "rva": 1349504,
+      "bytes": "558bec51894dfc837d08007c0b8b45fc8b4d083b48087c05e895569e008b55fc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipeCellsCount",
+      "rva": 500528,
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "name": "RecipePointerArrayCtor",
+      "rva": 1333696,
+      "bytes": "558bec51894dfc8b4dfce86924f0ff8b45fcc700086911018b4dfcc741040000",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "ObjectPath",
+      "rva": 8178912,
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ReferenceCheck",
+      "rva": 8226528,
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ModelRenameWorker",
+      "rva": 8218864,
+      "bytes": "558bec6aff686787000164a1000000005081ecf8000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ]
+    }
+  ],
+  "tables": {
+    "DataManager": {
+      "rva": 14551516,
+      "col_rva": 15244980,
+      "type_rva": 16406944,
+      "rtti": ".?AVVariableObjectManager@@",
+      "complete_offset": 0,
+      "slots": [
+        161406,
+        274526,
+        243901,
+        214541,
+        32411,
+        121956,
+        83546,
+        306991,
+        206626,
+        34931,
+        252081,
+        126881,
+        336751,
+        27836,
+        292411,
+        183131,
+        232821,
+        82866,
+        317811,
+        121816,
+        197981,
+        58886,
+        170291,
+        90816,
+        181226,
+        193411,
+        344071,
+        291946
+      ]
+    },
+    "DataService": {
+      "rva": 14551692,
+      "col_rva": 15245364,
+      "type_rva": 16406944,
+      "rtti": ".?AVVariableObjectManager@@",
+      "complete_offset": 52,
+      "slots": [
+        340426,
+        333906,
+        61691,
+        164161,
+        336066,
+        30551,
+        282391,
+        44191,
+        283731,
+        163486,
+        218161,
+        175556,
+        324426,
+        31151,
+        291611,
+        219891,
+        300746,
+        6936,
+        289736,
+        43166,
+        56011,
+        214781,
+        51706,
+        147226,
+        292226,
+        196841,
+        114396,
+        264031,
+        67676,
+        182336,
+        324736,
+        231046,
+        89666,
+        246811,
+        27241,
+        262051,
+        175716,
+        265711,
+        19066,
+        265026
+      ]
+    },
+    "CObjData": {
+      "rva": 13612980,
+      "col_rva": 15143708,
+      "type_rva": 16304676,
+      "rtti": ".?AVCObjData@@",
+      "complete_offset": 0,
+      "slots": [
+        202566,
+        176771,
+        243901,
+        214541,
+        195721,
+        313181,
+        146251,
+        332486,
+        206626,
+        126846,
+        247461,
+        119226,
+        336751,
+        105911,
+        28996,
+        284356,
+        7021,
+        263831,
+        34771,
+        281131,
+        30656,
+        255426,
+        237616,
+        90816,
+        77031,
+        110806,
+        344071,
+        174686
+      ]
+    },
+    "RecipeManager": {
+      "rva": 14533508,
+      "col_rva": 15242244,
+      "type_rva": 16403624,
+      "rtti": ".?AVRecipeObjectManager@@",
+      "complete_offset": 0,
+      "slots": [
+        215316,
+        43516,
+        243901,
+        214541,
+        296866,
+        244276,
+        163121,
+        184411,
+        206626,
+        34931,
+        252081,
+        126881,
+        336751,
+        27836,
+        292411,
+        183131,
+        336956,
+        101716,
+        122316,
+        166156,
+        335236,
+        57346,
+        170291,
+        90816,
+        181226,
+        316526,
+        344071,
+        331086
+      ]
+    },
+    "RecipeService": {
+      "rva": 14533680,
+      "col_rva": 15242488,
+      "type_rva": 16403624,
+      "rtti": ".?AVRecipeObjectManager@@",
+      "complete_offset": 52,
+      "slots": [
+        100661,
+        278506,
+        63201,
+        244826,
+        89646,
+        217656,
+        185896
+      ]
+    },
+    "CRecipe": {
+      "rva": 14702452,
+      "col_rva": 15257748,
+      "type_rva": 16419768,
+      "rtti": ".?AVCRecipe@@",
+      "complete_offset": 0,
+      "slots": [
+        105771,
+        261476,
+        243901,
+        214541,
+        51421,
+        146276,
+        191806,
+        184411,
+        206626,
+        212526,
+        138996,
+        126881,
+        336751,
+        27836,
+        109371,
+        99171,
+        275646,
+        147321,
+        107986,
+        204451,
+        254056,
+        243516,
+        50836,
+        90816,
+        249796,
+        53786,
+        344071,
+        172501
+      ]
+    },
+    "RecipeItemPrimary": {
+      "rva": 14702344,
+      "col_rva": 15257628,
+      "type_rva": 16419736,
+      "rtti": ".?AVCRecipeItem@@",
+      "complete_offset": 0,
+      "slots": [
+        332291,
+        311711,
+        334821,
+        4401
+      ]
+    },
+    "RecipeItemLinker": {
+      "rva": 14702372,
+      "col_rva": 15257724,
+      "type_rva": 16419736,
+      "rtti": ".?AVCRecipeItem@@",
+      "complete_offset": 4,
+      "slots": [
+        233001,
+        321496,
+        243901,
+        214541,
+        157536,
+        80266,
+        256131,
+        134566,
+        270646
+      ]
+    },
+    "RecipePointerArray": {
+      "rva": 13723912,
+      "col_rva": 15151784,
+      "type_rva": 16309328,
+      "rtti": ".?AV?$CArray@PAVCStringArray@@PAV1@@@",
+      "complete_offset": 0,
+      "slots": [
+        11727406,
+        287086,
+        287511,
+        4401
+      ]
+    },
+    "ManagerFrame": {
+      "rva": 14401588,
+      "col_rva": 15228652,
+      "type_rva": 16322936,
+      "rtti": ".?AVC0FrmManage@@",
+      "complete_offset": 0,
+      "slots": [
+        233596
+      ]
+    },
+    "DataList": {
+      "rva": 14408188,
+      "col_rva": 15229392,
+      "type_rva": 16395352,
+      "rtti": ".?AVC0ManListVar@@",
+      "complete_offset": 0,
+      "slots": [
+        86091
+      ]
+    }
+  },
+  "mfc": {
+    "path": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+    "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+    "preferred_base": 268435456,
+    "CStringArray": {
+      "rva": 222280,
+      "col_rva": 222300,
+      "type_rva": 2768644,
+      "complete_offset": 0,
+      "rtti": ".?AVCStringArray@@"
+    },
+    "ctor_ordinal": 968,
+    "ctor_rva": 1845675,
+    "ctor_proof": "mov [ecx],preferredBase+0x36448; fields4/8/C/10=0; ret"
+  },
+  "layout": {
+    "DataManager": {
+      "service": 52,
+      "vector": 104,
+      "next_id": 56,
+      "dirty": 148
+    },
+    "CObjData": {
+      "name": 8,
+      "comment": 12,
+      "metadata_text": 16,
+      "native_type": 20,
+      "initial_text": 112,
+      "range0_bits": 116,
+      "range1_bits": 120,
+      "flags": 124,
+      "native_id": 164,
+      "extension": 176
+    },
+    "RecipeManager": {
+      "service": 52,
+      "loaded": 56,
+      "dirty": 57,
+      "list": 60
+    },
+    "RecipeList": {
+      "head": 0,
+      "count": 4,
+      "next": 0,
+      "prev": 4,
+      "value": 8
+    },
+    "CRecipe": {
+      "size": 60,
+      "name": 8,
+      "columns": 12,
+      "rows": 32,
+      "format_bits": 52,
+      "raw_byte38": 56
+    },
+    "RecipeItem": {
+      "size": 20,
+      "IPropertyLinker": 4,
+      "variable_name": 8,
+      "caption": 12,
+      "native_kind": 16
+    },
+    "CArray": {
+      "data": 4,
+      "count": 8,
+      "capacity": 12,
+      "grow": 16
+    }
+  },
+  "scope": "Implementation candidate. No native operation, host read, compile or tests in this derivation.",
+  "constraints": [
+    "CObjData slot5 is an empty ret4; service setters are used instead.",
+    "Service vector index is distinct from native identity +A4.",
+    "Data delete input is borrowed const uint vector header; original reads begin/end and constructs its own deletion set.",
+    "Recipe manager is a circular list (not a vector); nodes hold CRecipe pointers at+8.",
+    "Recipe service Add adopts pointer, not a deep copy.",
+    "Recipe Save AL is fixed1 and worker catches errors; native dirty0 is an observation, not final disk acceptance.",
+    "Rename/delete here require incoming reference status0; referenced consumer persistence needs the separate full reference adapter.",
+    "No type meaning inferred from numeric code, and no arbitrary new recipe rows/columns are fabricated."
+  ]
+}

@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": "0x400000",
+  "functions": [
+    {
+      "name": "PageNew",
+      "rva": "0x6bb580",
+      "bytes": "558bec6aff686803ff0064a100000000505181ecd8000000535657a1600b3b01",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "WindowRename",
+      "rva": "0x7a2080",
+      "bytes": "558bec6aff68df42000164a1000000005083ec2ca1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString const&",
+        "CString const&"
+      ],
+      "returns": "bool8"
+    },
+    {
+      "name": "PageArchiveId",
+      "rva": "0x850800",
+      "bytes": "558bec51894dfc8b45fc8b40108be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "RootDatabase",
+      "rva": "0x6d1b90",
+      "bytes": "558bec6aff68712bff0064a100000000505183ec70535657a1600b3b0133c550",
+      "reloc_offsets": [
+        6,
+        25
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "CDaoDatabase*"
+    },
+    {
+      "name": "DatabaseIsOpen",
+      "rva": "0x2626f0",
+      "bytes": "558bec51894dfc8b45fc8b40748be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "RowCtor",
+      "rva": "0xd0620",
+      "bytes": "558bec6aff68d4f5f60064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CDaoDatabase*"
+      ],
+      "returns": "CDBWndUser*"
+    },
+    {
+      "name": "RowDtor",
+      "rva": "0xd2980",
+      "bytes": "558bec6aff68f6faf60064a1000000005051a1600b3b0133c5508d45f464a300",
+      "reloc_offsets": [
+        6,
+        19
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RowOpen",
+      "rva": "0x654c0",
+      "bytes": "558bec83ec14894dfc8d4510508d4d0c518d5508528b45fc508d4dece89f0500",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "int type",
+        "wchar_t const* SQL",
+        "int options"
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "RowClose",
+      "rva": "0x65500",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e84b070000506a03e88307000083c408",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RowBof",
+      "rva": "0x65570",
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8400a0000",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "RowEof",
+      "rva": "0x655b0",
+      "bytes": "558bec83ec10894df8c745fc000000008b45f8508d4dfc518d4df0e8c00b0000",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "RowFirst",
+      "rva": "0x656d0",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e85b130000506a01e89313000083c408",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RowNext",
+      "rva": "0x656a0",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8db110000506a01e81312000083c408",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RowFind",
+      "rva": "0x65770",
+      "bytes": "558bec83ec14894df8c745fc000000008d4508508b4df8518d55fc528d4dece8",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "wchar_t const* criterion"
+      ],
+      "returns": "int32"
+    },
+    {
+      "name": "RowEdit",
+      "rva": "0x65830",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e8bb1c0000506a01e8f31c000083c408",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RowUpdate",
+      "rva": "0x65860",
+      "bytes": "558bec83ec08894dfc8b45fc508d4df8e83b1e0000506a03e8731e000083c408",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "void"
+    },
+    {
+      "name": "RootNotify",
+      "rva": "0x329650",
+      "bytes": "558bec51894dfc8b450c508b4d08518b55fc8b8ae4020000e81df0d1ff8be55d",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "IObject*",
+        "int action"
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "WindowRemove",
+      "rva": "0x7a1c30",
+      "bytes": "558bec6aff68b042000164a1000000005081ecec000000a1600b3b0133c5508d",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString const&",
+        "RemoveDecision*3bytes"
+      ],
+      "returns": "bool8"
+    },
+    {
+      "name": "ListFindId",
+      "rva": "0x6b8d00",
+      "bytes": "558bec83ec0c894df88b4df8e8aa0f98ff8945f4c745fc00000000eb098b45fc",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "int pageID"
+      ],
+      "returns": "int32"
+    },
+    {
+      "name": "ListRemove",
+      "rva": "0x6b8e60",
+      "bytes": "558bec83ec0c894dfc8b4508508b4dfce80f9796ff0fb64d0c83f9017402eb4f",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "int row",
+        "bool selectNext32bitStack"
+      ],
+      "returns": "void"
+    },
+    {
+      "name": "ListCount",
+      "rva": "0x100410",
+      "bytes": "558bec51894dfc6a006a0068041000008b45fc8b482051ff151c783c018be55d",
+      "reloc_offsets": [
+        25
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "int32"
+    },
+    {
+      "name": "ObjectPath",
+      "rva": "0x7ccce0",
+      "bytes": "558bec6aff682872000164a1000000005083ec14a1600b3b0133c5508d45f464",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString* sret"
+      ],
+      "returns": "CString*"
+    },
+    {
+      "name": "ReferenceCheck",
+      "rva": "0x7d86e0",
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e88a4685ff8d55f452",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "CString const& path",
+        "CString& referencedPath"
+      ],
+      "returns": "int32"
+    },
+    {
+      "name": "GetFontManager",
+      "rva": "0x655170",
+      "bytes": "558bec51894dfc8b45fc8b405c8be55dc3cccccccccccccccccccccccccccccc",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [],
+      "returns": "McgsFontManage*"
+    },
+    {
+      "name": "RemovePageFontMaps",
+      "rva": "0x6699b0",
+      "bytes": "558bec83ec24894dfc8d4508508d4df8518b4dfc81c19c000000e829d19bff8d",
+      "reloc_offsets": [],
+      "calling_convention": "thiscall",
+      "stack_args": [
+        "int pageID"
+      ],
+      "returns": "void"
+    }
+  ],
+  "row": {
+    "rtti": ".?AVCDBWndUser@@",
+    "vtable_rva": "0xcf9b1c",
+    "size": 184,
+    "runtimeclass_va": "0x10f9ad0",
+    "runtimeclass_size_literal": 184,
+    "fields": {
+      "id": 152,
+      "name_cstring": 156,
+      "delete_flag": 176,
+      "compile_flag": 180
+    },
+    "main_ctor_return": "4D0718 ret4",
+    "main_dtor_return": "4D29FE ret"
+  },
+  "remove_decision": {
+    "size": 3,
+    "bytes": [
+      0,
+      0,
+      0
+    ],
+    "semantics": "Native BD6640: first reference check result0 skips UI; for nonzero refs, byte1==0 suppresses dialog and byte2==0 causes false. Writer pre-checks references0 independently before removal."
+  },
+  "deletion": {
+    "native_segment": "ABC1DD..ABC400",
+    "new_page_only": true,
+    "whole_page_copy_retested": false,
+    "steps": [
+      "native RootNotify(page,2)",
+      "WindowService.remove(name,decision)",
+      "native list DeleteItem + reselection",
+      "native CDBWndUser.Edit, deleteFlag=minExistingFlag-1, Update",
+      "CLinguist.GetFontManage().RemovePageFontMaps(id)"
+    ],
+    "negative_semantics": [
+      "ABB8C0 rejects deleteFlag<0 when rebuilding native page model",
+      "AD42C0+AD4468 skips deleteFlag<0 in page export",
+      "AD1ED0 native database-save/cleanup loop deletes rows with negative flags and resets positive flags to0"
+    ],
+    "save_boundary": "Root controls final native save. Writer reports logical/model/list removal and observed negative row mark; physical row removal must be established independently after save, never assumed."
+  },
+  "font_owner": {
+    "root_offset": "0x20c",
+    "owner_rtti": ".?AVCLinguist@@",
+    "owner_vtable_rva": "0xdb35dc",
+    "manager_offset": "0x5c",
+    "manager_type": "McgsFontManage, nonpolymorphic",
+    "constructor_chain": [
+      "726DF1 allocation ->726E12 A51070 ->726E45 root+20C",
+      "A51070 writes vt11B35DC",
+      "A5118F A677D0 ->A511B0 owner+5C",
+      "A677D0 constructs page-ID map fields+9C and+A4",
+      "A699B0 removes requested ID from those two maps only"
+    ]
+  },
+  "guard_policy": "Requires a root-created fresh safe-export authorization and matching current native identity; no host/queue/DB reads during preparation.",
+  "evidence": [
+    "function-00abbb30.json",
+    "function-00ba1c30.json",
+    "function-00bd6640.json",
+    "function-00ab8e60.json",
+    "function-004d0620.json",
+    "function-004654c0.json",
+    "function-00ad1ed0.json",
+    "function-00ad42c0.json",
+    "function-00726b20.json",
+    "function-00a51070.json",
+    "function-00a677d0.json"
+  ],
+  "executed": false
+}

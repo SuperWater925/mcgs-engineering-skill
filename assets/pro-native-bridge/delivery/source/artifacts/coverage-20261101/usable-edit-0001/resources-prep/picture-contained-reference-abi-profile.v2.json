@@ -1,0 +1,146 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "ImageNameSetterEntry",
+      "rva": 38846,
+      "bytes": "e91d6c8500e9b80c6e00e9a3cd9800e99e9d5000e9795da000e9b4f35a00e9cf",
+      "reloc_offsets": []
+    },
+    {
+      "name": "ImageNameSetterBody",
+      "rva": 8782816,
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10cff15708e3c018be55dc20400",
+      "reloc_offsets": [
+        19
+      ]
+    },
+    {
+      "name": "ImageDrawFlagAndRootList",
+      "rva": 8772576,
+      "bytes": "558bec6aff68502a010164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b45f00fb6480885c974368b550c528b450883ec108bcc8b1089118b50048951048b50088951088b400c89410c8b4df083c10c51e852b37bff83c418e9b2010000837d0c007505e9a70100008b550c528d4de4e89e547effc745fc000000006a048b4d0ce813232d008b45f08378240175298b4d08518b550c528b4df0e8e0c07dffc745fcffffffff8d4de4e83b467fffe95d010000e98b0000008b45f08378240275268b4d08518b550c528b4df0e8d5617effc745fcffffffff8d4de4e809467fffe92b010000eb5c8b45f08378240375268b4d08518b550c528b4df0e819397affc745fcffffffff8d4de4e8da457fffe9fc000000eb2d8b45f08378240575248b4d08518b550c528b4df0e8b6937bffc745fcffffffff8d4de4e8ab457fffe9cd0000008b45f08378140074608b4df081c188000000e873477bff83f801754b8b4df081c188000000e88d457dff8b08894dec8b55ec81c2800000008b45088b08890a8b4804894a048b4808894a088b400c89420c6a008b4d0c518b55ec8b028b4dec8b9098000000ffd2eb558b45f08378180074398b4df08b511c528b4d08e8b0ad7cff508b4d08e8dd1c7dff508b45088b4804518b55088b02508b4d0c518b55f08b028b4df08b5034ffd2eb138b4508508b4d0c8b5104528b4df0e83cf27dffc745fcffffffff8d4de4e8d9447fff8b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "ImageHashEncodeAndRestore",
+      "rva": 8802656,
+      "bytes": "558bec6aff683833010164a1000000005081ecfc000000a1600b3b0133c58945f0508d45f464a300000000894ddc8b45dc0fb6480885c97424518bcc89a57cffffff686cf61e01ff154c913c01894580e8611d7dff83c404e9de03000068000400008d8d50ffffffe8a19c2c00c745fc000000006a0068000040006a008d9550ffffff528d8d08ffffffe882777cffc645fc018b45dc83782401741b8b4ddc8379240274128b55dc837a240374098b45dc83782405754fc7458c020000008b4d8c518d8d08ffffffe8dcb77bff8b55dc8b42788b4a7c89459c894da08b55a0528b459c508d8d08ffffff51e8ae147aff6a018d9508ffffff528b4ddce82fcd7affe9b50200008b45dc837814000f84de010000c74590100000008b4d90518d8d08ffffffe880b77bff8d4dbce845427effc645fc028d4dc4e839427effc645fc038d4db4e824077cffc645fc048b4ddc81c188000000e8c5297eff8945d4837dd4000f84950000008d55d4528b4ddc81c188000000e8d9257cff8b008945d8837dd80074738b4dd883c144518d4dbce81ab07dff8b55d8c74244000000008b45d883c048508d4dc4e801b07dff8b4dd8c74148000000008b55d881c280000000528d4db4e81c407aff6a646a646a006a008d4de0e873827bff8b4dd881c1800000008b1089118b50048951048b50088951088b400c89410ce961ffffff8d4d84e857c47effc645fc058d8d08ffffff518b4ddce80ffc7bff8d4d84e86fc97dff8b4ddc81c188000000e8f2287eff8945d4837dd4000f84810000008d55d4528b4ddc81c188000000e806257cff8b008945d0837dd000745f8d4dbce88fe67dff8b4dd08b108951448d4dbce8d5117aff8d4dc4e877e67dff8b4dd08b108951488d4dc4e8bd117aff8d4db4e841897bff8b4dd081c1800000008b1089118b50048951048b50088951088b400c89410c8d4db4e831997cffe975ffffffc645fc048d4d84e89e0f7effc645fc038d4db4e840c87bffc645fc028d4dc4e8ff957effc645fc018d4dbce8f3957effe9ca0000008b4ddc8379100074316a006a008d8df8feffffe820527dff8b108b40048955948945988b4d98518b5594528b4ddc83c178e8821b7aff85c07446c745cc030000008b45cc508d8d08ffffffe868b57bff6a006a008d8d00ffffffe8d9517dff8b088b5004894dac8955b08b45b0508b4dac518d9508ffffff52e82f127affeb4ac745cc000000008b45cc508d8d08ffffffe822b57bff8b4ddc8b51788b417c8955a48945a88b4da8518b55a4528d8508ffffff50e8f4117aff6a018d8d08ffffff518b4ddce86ed77eff8d8d08ffffffe872992c008d8d50ffffffe883a12c006aff8d8d50ffffffe848992c00508b4d08e857992c008d8d50ffffffe8ecef79ff8b4d08e883ce79ff508b4d08e846967cff508d8d50ffffffe80b992c008d8d50ffffffe840a12c00c645fc008d8d08ffffffe836d47dffc745fcffffffff8d8d50ffffffe8d9982c008b4df464890d00000000598b4df033cde84eba2c008be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        67,
+        73
+      ]
+    },
+    {
+      "name": "ImageGetHash",
+      "rva": 8791936,
+      "bytes": "558bec6aff684330010164a1000000005083ec48a1600b3b0133c5508d45f464a300000000894de88b45e80fb6480885c97423518bcc8965c468dc041f01ff154c913c018945c0e84a477dff83c40432c0e9f80000008d4dace82cc72c00c745fc000000008d55ac528b4de8e8e7f57aff6a018d4decff15dc723c01c645fc018d4dace8d5fb79ff508d4dace898c37cff508d4decff15d4723c018d45e4508d4dd8518d4decff15d0723c018945e08b55e08955dcc645fc028b4ddcff15e4723c01c645fc048d4dd8ff1570733c018d4de4ff156c733c018945d48b45d4508d4dc851ff15247a3c0183c4088945d08b55d08955ccc645fc058b45cc8b08516864051f018b550852ff1580903c0183c40cc645fc048d4dc8ff1548913c01c645f301c645fc018d4de4ff1570733c01c645fc008d4decff15d8723c01c745fcffffffff8d4dace89fc92c008a45f38b4df464890d00000000598be55dc20400cc",
+      "reloc_offsets": [
+        6,
+        21,
+        58,
+        64,
+        120,
+        151,
+        168,
+        190,
+        203,
+        212,
+        229,
+        256,
+        266,
+        282,
+        299,
+        312
+      ]
+    },
+    {
+      "name": "PictureHash",
+      "rva": 8923136,
+      "bytes": "558bec51894dfc8b45fc83c014508b4dfc83c118e8bb4c7bffb0018be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PictureHashIndexRefresh",
+      "rva": 5742496,
+      "bytes": "558bec6aff686ba7fd0064a1000000005083ec40a1600b3b0133c5508d45f464a300000000894df08b4508508d4dec518b4df083c118e81821aaff8d55cc528b4df083c118e89667a9ff508d4dece8bc01a9ff0fb6c085c07405e95c0100000fb64d0c85c9741b8d4dece81185aaff8b50088955e08b45e08b108b4de08b4254ffd08d4dece8f684aaff83c004508d4de4ff1554913c01c745fc000000008d4de8518d4dece8d684aaff8b4808e809f8abffc645fc018d55e8528d45e450e83a01acff83c4080fb6c885c97422c645fc008d4de8ff1548913c01c745fcffffffff8d4de4ff1548913c01e9cc0000008d55e4528d45dc508b4df083c144e859dbaaff8d4dc8518b4df083c144e89840acff508d4ddce8c94fa9ff0fb6d085d2747d8d45e8508d4dece85384aaff83c0048bc8ff15708e3c018b4ddc894dd88b55d8528d45c4508b4df083c144e8edecabff8b4d08518d55e8528d45bc50e8beb1aaff83c40c8945d48b4dd4894dd0c645fc028b55d0528d45b4508b4df083c144e80db0a8ffc645fc018d4dbce8107da9ff8b4df08b118b4df08b420cffd0c645fc008d4de8ff1548913c01c745fcffffffff8d4de4ff1548913c018b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        147,
+        214,
+        230,
+        308,
+        423,
+        439
+      ]
+    },
+    {
+      "name": "BitmapOriginalReplaceName",
+      "rva": 4376480,
+      "bytes": "558bec6aff6881d5fb0064a1000000005083ec0ca1600b3b0133c5508d45f464a300000000894df0c745ec00000000837d080b75678d45e8508b4df081c1e00000008b55f08b82e00000008b5040ffd2c745fc000000008b4510508b4d0c518d55e852e816c0bdff83c40c0345ec8945ec8d45e8508b4df081c1e00000008b55f08b82e00000008b5044ffd2c745fcffffffff8d4de8ff1548913c018b4510508b4d0c518b5508528b4df0e88c34c2ff0345ec8945ec8b45ec8b4df464890d00000000598be55dc20c00",
+      "reloc_offsets": [
+        6,
+        21,
+        152
+      ]
+    },
+    {
+      "name": "PictureOriginalReplaceNameNoOp",
+      "rva": 5779040,
+      "bytes": "558bec51894dfc33c08be55dc20c00",
+      "reloc_offsets": []
+    }
+  ],
+  "imports": [
+    {
+      "name": "OriginalCStringAssign1514",
+      "file": "C:\\unbound-install-root\\Program\\mfc110u.dll",
+      "sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+      "ordinal": 1514,
+      "iat_rva": 16551536,
+      "target_rva": 658951,
+      "preferred_base": 268435456,
+      "bytes": "558bec56ff75088bf1e8ee85faff8bc65e5dc204006a04b8ae5c2610e8b879f6",
+      "reloc_offsets": [
+        24
+      ]
+    }
+  ],
+  "image_vtable_rva": 14616988,
+  "image_name_setter_entry_rva": 38846,
+  "member_layout": {
+    "bitmap_type": 20489,
+    "bitmap_size": 392,
+    "bitmap_image_offset": 228,
+    "image_named_reference_byte": 8,
+    "image_name_cstring": 12,
+    "image_vector_mode_dword": 20,
+    "image_vector_frame_list": 136,
+    "list_next": 0,
+    "list_previous": 4,
+    "list_data": 8,
+    "list_head": 4,
+    "list_tail": 8,
+    "list_count": 12
+  },
+  "contracts": [
+    "CPicture IObject22 is a no-op and its graph is not a proof of embedded resource-reference completeness.",
+    "COwnerBitmap+14 is a mode flag; vector frame owning CDraw roots are list+88 node.data8.",
+    "Only exact typed CDrawBitmap complete+E4 is a writable member. Cell/Unit child recursion uses the frozen exact class profile.",
+    "Named image setter is original CString assignment at self+C, ThisCall void self,CString& ret4. No raw project string writes.",
+    "Manager RefreshHashIndex(name,1) invokes original CPicture21, native image encoding/hash and original hash-map refresh. Vector normalization restores its saved root words and RECT on its normal path.",
+    "All known unedited resource fields/strings/payloads/raw control bytes remain exact. Changed CString data pointers are adopted only together with an exact native after-string read.",
+    "Contained redirect and delete/rename precheck do not claim other animation/dynamic-component/resource references are fully covered.",
+    "Second real carrier: CDrawMulBtn full+124 state pointer array -> CImageListInObj+8 frame array -> CImageInObj+68 COwnerBitmap pointer.",
+    "Each standard animation pointer is exact-RTTI checked. The thirteen standard animation classes have no COwnerBitmap member; unknown animation/control/provider classes inside the vector tree refuse before mutation.",
+    "A named image inside multi-state content is changed by the same original COwnerBitmap slot17, without reinterpreting a frame record or copying opaque payload bytes."
+  ],
+  "image_member_profile_sha256": "e484b72d2ef79314ec620422121bfff2eff54b03d6c867e40f9b9ea4848e8060",
+  "animation_profile_sha256": "8a5cfe13b43cb6a971a84cdcb3055708d75abd3b2bb9e8aac69e4cd093aa5548"
+}

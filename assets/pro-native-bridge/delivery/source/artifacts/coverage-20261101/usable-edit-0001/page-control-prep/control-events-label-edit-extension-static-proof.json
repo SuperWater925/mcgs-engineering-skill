@@ -1,0 +1,136 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "classes": [
+    {
+      "class_name": "CDrawLabel",
+      "full_override": [],
+      "actual_extra_declarations": [
+        {
+          "stack_base": -204,
+          "declaration_ctor_va": "0x82db00",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x82db9b"
+        },
+        {
+          "stack_base": -244,
+          "declaration_ctor_va": "0x82dbb8",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x82dc53"
+        }
+      ],
+      "direct_call_bodies": [
+        "0xc56750",
+        "0xb03340",
+        "0xc56600",
+        "0x4e7470",
+        "0x4b8470",
+        "0xc56970",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56810",
+        "0x4e73c0",
+        "0x4b83f0",
+        "0xc56b90",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56a30",
+        "0x791f90",
+        "0x4b8370",
+        "0xc56b90",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56a30",
+        "0x791f90",
+        "0x4b8370"
+      ]
+    },
+    {
+      "class_name": "CDrawEdit",
+      "full_override": [],
+      "actual_extra_declarations": [
+        {
+          "stack_base": -184,
+          "declaration_ctor_va": "0x7b7d98",
+          "argument_descriptors": [],
+          "native_name": "BeforeWrite",
+          "description_resource_id": 123,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 9,
+          "argument_count": 0,
+          "append_va": "0x7b7e36"
+        },
+        {
+          "stack_base": -264,
+          "declaration_ctor_va": "0x7b7e53",
+          "argument_descriptors": [],
+          "native_name": "AfterWrite",
+          "description_resource_id": 124,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 10,
+          "argument_count": 0,
+          "append_va": "0x7b7ef1"
+        },
+        {
+          "stack_base": -224,
+          "declaration_ctor_va": "0x7b7f0e",
+          "argument_descriptors": [],
+          "native_name": "Change",
+          "description_resource_id": 23098,
+          "raw_word_10": 0,
+          "raw_dword_C": 3,
+          "native_event_id": 8,
+          "argument_count": 0,
+          "append_va": "0x7b7faf"
+        }
+      ],
+      "direct_call_bodies": [
+        "0xc56750",
+        "0xb03340",
+        "0xc56600",
+        "0x4e7470",
+        "0x4b8470",
+        "0xc56b90",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56a30",
+        "0x791f90",
+        "0x4b8370",
+        "0xc56b90",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56a30",
+        "0x791f90",
+        "0x4b8370",
+        "0xc56b90",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56a30",
+        "0x791f90",
+        "0x4b8370",
+        "0xc56970",
+        "0xb03340",
+        "0x4b9180",
+        "0xc56810",
+        "0x4e73c0",
+        "0x4b83f0"
+      ]
+    }
+  ],
+  "scope": "Two original overrides append actual event declarations; they also append property/method metadata values. No project setter, serializer, modal handler or fabricated sink is invoked by these fixed constructors."
+}

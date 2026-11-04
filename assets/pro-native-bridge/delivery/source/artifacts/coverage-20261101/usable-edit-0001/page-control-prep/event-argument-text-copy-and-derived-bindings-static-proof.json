@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "native_calls": 0,
+  "original_owned_argument_copy": [],
+  "get_at": [],
+  "element_reference": [],
+  "original_event_compile": [],
+  "conclusions": [
+    "Original CEventDispatch::copy C579D9..EA obtains a mutable target CString reference using425C57->46EA80->46ECE0 and assigns via the original CString copy; the reference is array.data+index*4.",
+    "Argument arrays have the exact count defined by actual native EventInfo descriptors. No array growth or fabricated descriptor/ID is needed to change argument text.",
+    "Original compile C58033..57 clears each derived ID at+30 toFFFFFFFF and mode at+44 to0, then original parser derives them from the argument CString. These are outputs, not caller-supplied raw enum/variable IDs.",
+    "Candidates therefore accept only a complete argument-text array of the existing native descriptor count, leave current derived ID/mode values untouched during editing, and explicitly require final original native compilation/reference rebuild."
+  ]
+}

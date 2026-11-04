@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "upstream_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
+  "files": [
+    {
+      "path": "source\\Bootstrap.cs",
+      "bytes": 13086,
+      "sha256": "b3f32aa6d94e3d6118daf7d5274c67d85935b9be557929e183f6859c60ec341f"
+    },
+    {
+      "path": "source\\BootstrapLayout.cs",
+      "bytes": 7136,
+      "sha256": "5663c4ff5811f14f8e6e11eefcdf952c7a43d750f91df11381224331382ab8b6"
+    },
+    {
+      "path": "source\\BridgeSessionLauncher.cs",
+      "bytes": 7151,
+      "sha256": "0d808a9d6bd3c4931fbc0c7ced9fc7d1253bfe6452f66f3c01b971fab53dc465"
+    },
+    {
+      "path": "source\\DurableQueuePump.cs",
+      "bytes": 20197,
+      "sha256": "b44854e6da8b2422743bf6e3ddd48a7cc470c606009fed7a8c5e3a318bbfac6e"
+    },
+    {
+      "path": "source\\EmbedTypeLib.cs",
+      "bytes": 2531,
+      "sha256": "21a040cb104d6585ba5c900f73ac15b08d2713c2fe2bccbe354c13ae3505cd97"
+    },
+    {
+      "path": "source\\EngineLoader.cs",
+      "bytes": 6459,
+      "sha256": "ad7291b60d486ffe80ca0c63d23f519917041d7baafc3e2b5842e8d1d5ce463b"
+    },
+    {
+      "path": "source\\ExportHostTypeLib.cs",
+      "bytes": 5269,
+      "sha256": "fb48611a8b04926214a078ffeb43d933924bc536e9184a8c3978ef38cf1c5c50"
+    },
+    {
+      "path": "source\\NullSafeDispatch.cs",
+      "bytes": 13835,
+      "sha256": "e56f2f7547300dd740a038803eff4ba65c0ed829c5e1a2c7ede0a7b081a47bf7"
+    },
+    {
+      "path": "source\\TypeLibDump.cs",
+      "bytes": 5530,
+      "sha256": "bc944c882cd6b53747441668a205f8c20f47fa4816baac71b5afedfc98e199e0"
+    },
+    {
+      "path": "prepare_bootstrap.py",
+      "bytes": 8937,
+      "sha256": "cab60c1b3ac5211249ea15d7d45d0efa872da92e0e353bc82cfbbf8ef5573cdb"
+    },
+    {
+      "path": "build_bootstrap.ps1",
+      "bytes": 5891,
+      "sha256": "d1a6455f87efc9326f699bb4999632a6f5effd595d33cf29d79ff94a5145a032"
+    },
+    {
+      "path": "install_bootstrap.ps1",
+      "bytes": 9416,
+      "sha256": "c1aad62da4b22489a10eb9b849fcf14d1f2ef603016fb6ddeefc2b4488085d83"
+    },
+    {
+      "path": "remove_bootstrap.ps1",
+      "bytes": 4926,
+      "sha256": "2ff40beb5722c90298ed0a220bd1e8b230db48a3cc2fcfde9dad667fd2dd57af"
+    },
+    {
+      "path": "stage_engine.py",
+      "bytes": 3387,
+      "sha256": "266e7f040bb2fcdd438b8ab656d8c4be9102b6c9906222d6391ce9e20fbbc224"
+    },
+    {
+      "path": "build_native_wrapper.py",
+      "bytes": 19716,
+      "sha256": "29e9975d671044e65a583738be701c53a4b47c87789b7568ec3c1fea01b0f74c"
+    },
+    {
+      "path": "loader-capability.current.json",
+      "bytes": 1369,
+      "sha256": "93b2d1659ef96fae512fc064417fc0e5779179f543a7e2bee0028a3288ee567c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 8781,
+      "sha256": "3f0eeffab594bfc975ad7a54138ea64df689060199e94918df85cac6d88f5d48"
+    },
+    {
+      "path": "upstream-source-hashes.json",
+      "bytes": 1266,
+      "sha256": "c0c98c4b29ecff2e04aa3792c82410ea7b4240a05b5602eb1277293b0360a7bc"
+    },
+    {
+      "path": "offline-build-verification.json",
+      "bytes": 2623,
+      "sha256": "9a0dd4474993d1985036804dc5a46be9e7b12b7b98a772ac3f8bacb6637b62c1"
+    }
+  ],
+  "bound_build_outputs_bundled": false,
+  "new_machine_acceptance": "not performed"
+}

@@ -1,0 +1,542 @@
+{
+  "schema": 1,
+  "source_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "scope": "Independent raw layout supplement; native functions are static evidence, not to be invoked by the raw reader.",
+  "functions": [
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918e60",
+      "resolved": "0x918e60",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918e6a",
+          "target": "0x4353be",
+          "resolved": "0x918f50"
+        },
+        {
+          "at": "0x918e70",
+          "target": "0x42d178",
+          "resolved": "0x9252e0"
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f50",
+      "resolved": "0x918f50",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918f5a",
+          "target": "0x41c3ff",
+          "resolved": "0x918ef0"
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918ef0",
+      "resolved": "0x918ef0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918efd",
+          "target": "0x44c9a6",
+          "resolved": "0x91c210"
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c210",
+      "resolved": "0x91c210",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "PrimaryNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x9252e0",
+      "resolved": "0x9252e0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x9252e7",
+          "target": "0x44f2ff",
+          "resolved": "0x915af0"
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryPairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915af0",
+      "resolved": "0x915af0",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "PrimaryPairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918ec0",
+      "resolved": "0x918ec0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918eca",
+          "target": "0x43112e",
+          "resolved": "0x918f90"
+        },
+        {
+          "at": "0x918ed0",
+          "target": "0x43abde",
+          "resolved": "0x925320"
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f90",
+      "resolved": "0x918f90",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918f9a",
+          "target": "0x41e7b3",
+          "resolved": "0x918f30"
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f30",
+      "resolved": "0x918f30",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918f3d",
+          "target": "0x446943",
+          "resolved": "0x91c230"
+        }
+      ],
+      "truncated": false,
+      "name": "EnumDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c230",
+      "resolved": "0x91c230",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "EnumNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x925320",
+      "resolved": "0x925320",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x925327",
+          "target": "0x450c13",
+          "resolved": "0x915b10"
+        }
+      ],
+      "truncated": false,
+      "name": "EnumPairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915b10",
+      "resolved": "0x915b10",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "EnumPairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918e90",
+      "resolved": "0x918e90",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918e9a",
+          "target": "0x40fdda",
+          "resolved": "0x918f70"
+        },
+        {
+          "at": "0x918ea0",
+          "target": "0x425a95",
+          "resolved": "0x925300"
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDereference"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f70",
+      "resolved": "0x918f70",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918f7a",
+          "target": "0x4029dc",
+          "resolved": "0x918f10"
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDeref1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x918f10",
+      "resolved": "0x918f10",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x918f1d",
+          "target": "0x454ead",
+          "resolved": "0x91c220"
+        }
+      ],
+      "truncated": false,
+      "name": "TypeDeref2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x91c220",
+      "resolved": "0x91c220",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "TypeNodePayload"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x925300",
+      "resolved": "0x925300",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x925307",
+          "target": "0x403490",
+          "resolved": "0x915b00"
+        }
+      ],
+      "truncated": false,
+      "name": "TypePairIdentity1"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x915b00",
+      "resolved": "0x915b00",
+      "code": [],
+      "calls": [],
+      "truncated": false,
+      "name": "TypePairIdentity2"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x923670",
+      "resolved": "0x923670",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x92367f",
+          "target": "0x425ec3",
+          "resolved": "0x91c240"
+        },
+        {
+          "at": "0x923692",
+          "target": "0x425ec3",
+          "resolved": "0x91c240"
+        },
+        {
+          "at": "0x9236a7",
+          "target": "0x44f421",
+          "resolved": "0x91c2a0"
+        },
+        {
+          "at": "0x9236d6",
+          "target": "0x425ec3",
+          "resolved": "0x91c240"
+        },
+        {
+          "at": "0x9236ea",
+          "target": "0x406582",
+          "resolved": "0x91a5e0"
+        }
+      ],
+      "truncated": false,
+      "name": "PrimaryMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x9237d0",
+      "resolved": "0x9237d0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x9237df",
+          "target": "0x431e3f",
+          "resolved": "0x91c260"
+        },
+        {
+          "at": "0x9237f2",
+          "target": "0x431e3f",
+          "resolved": "0x91c260"
+        },
+        {
+          "at": "0x923807",
+          "target": "0x4243ca",
+          "resolved": "0x91c2c0"
+        },
+        {
+          "at": "0x923836",
+          "target": "0x431e3f",
+          "resolved": "0x91c260"
+        },
+        {
+          "at": "0x92384a",
+          "target": "0x403d9b",
+          "resolved": "0x91a780"
+        }
+      ],
+      "truncated": false,
+      "name": "EnumMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x923720",
+      "resolved": "0x923720",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x92372f",
+          "target": "0x422084",
+          "resolved": "0x91c250"
+        },
+        {
+          "at": "0x923742",
+          "target": "0x422084",
+          "resolved": "0x91c250"
+        },
+        {
+          "at": "0x923757",
+          "target": "0x4237bd",
+          "resolved": "0x91c2b0"
+        },
+        {
+          "at": "0x923786",
+          "target": "0x422084",
+          "resolved": "0x91c250"
+        },
+        {
+          "at": "0x92379a",
+          "target": "0x4278f4",
+          "resolved": "0x91a6b0"
+        }
+      ],
+      "truncated": false,
+      "name": "TypeMapClear"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x6d16f0",
+      "resolved": "0x6d16f0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x6d16fd",
+          "target": "0x4025b3",
+          "resolved": "0x4fde30"
+        },
+        {
+          "at": "0x6d1709",
+          "target": "0x416b9e",
+          "resolved": "0x54caf0"
+        },
+        {
+          "at": "0x6d171d",
+          "target": "0x4025b3",
+          "resolved": "0x4fde30"
+        },
+        {
+          "at": "0x6d1743",
+          "target": "0x41f091",
+          "resolved": "0x4e89b0"
+        },
+        {
+          "at": "0x6d1759",
+          "target": "0x418890",
+          "resolved": "0x4e8800"
+        },
+        {
+          "at": "0x6d176a",
+          "target": "0x42b409",
+          "resolved": "0x4e5de0"
+        },
+        {
+          "at": "0x6d1781",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x6d1788",
+          "target": "0x44823e",
+          "resolved": "0x4e59c0"
+        },
+        {
+          "at": "0x6d17b1",
+          "target": "0x41f091",
+          "resolved": "0x4e89b0"
+        },
+        {
+          "at": "0x6d17c7",
+          "target": "0x418890",
+          "resolved": "0x4e8800"
+        },
+        {
+          "at": "0x6d17d0",
+          "target": "0x42b409",
+          "resolved": "0x4e5de0"
+        },
+        {
+          "at": "0x6d17e7",
+          "target": "0x414164",
+          "resolved": "0x4da260"
+        },
+        {
+          "at": "0x6d17ee",
+          "target": "0x44823e",
+          "resolved": "0x4e59c0"
+        }
+      ],
+      "truncated": false,
+      "name": "CStringVectorAppend"
+    },
+    {
+      "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+      "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+      "entry": "0x4a30a0",
+      "resolved": "0x4a30a0",
+      "code": [],
+      "calls": [
+        {
+          "at": "0x4a30ad",
+          "target": "0x430891",
+          "resolved": "0x498fe0"
+        },
+        {
+          "at": "0x4a30b9",
+          "target": "0x4333ed",
+          "resolved": "0x4a0f20"
+        },
+        {
+          "at": "0x4a30cd",
+          "target": "0x430891",
+          "resolved": "0x498fe0"
+        },
+        {
+          "at": "0x4a30f3",
+          "target": "0x42c863",
+          "resolved": "0x4a2450"
+        },
+        {
+          "at": "0x4a3109",
+          "target": "0x4043db",
+          "resolved": "0x4a22b0"
+        },
+        {
+          "at": "0x4a311a",
+          "target": "0x41d408",
+          "resolved": "0x4997f0"
+        },
+        {
+          "at": "0x4a3131",
+          "target": "0x451ca3",
+          "resolved": "0x4a0e90"
+        },
+        {
+          "at": "0x4a3138",
+          "target": "0x4343ba",
+          "resolved": "0x498ff0"
+        },
+        {
+          "at": "0x4a3161",
+          "target": "0x42c863",
+          "resolved": "0x4a2450"
+        },
+        {
+          "at": "0x4a3177",
+          "target": "0x4043db",
+          "resolved": "0x4a22b0"
+        },
+        {
+          "at": "0x4a3180",
+          "target": "0x41d408",
+          "resolved": "0x4997f0"
+        },
+        {
+          "at": "0x4a3197",
+          "target": "0x451ca3",
+          "resolved": "0x4a0e90"
+        },
+        {
+          "at": "0x4a319e",
+          "target": "0x4343ba",
+          "resolved": "0x498ff0"
+        }
+      ],
+      "truncated": false,
+      "name": "Int32VectorAppend"
+    }
+  ],
+  "conclusions": [
+    "Each map iterator ultimately returns node+8 as pair payload; its map operator[] returns payload+4 at918B46/918C74/918DA4, so key=node+8/value=node+C.",
+    "Each map clear resets sentinel.next/sentinel.prev to head, count map+4 to0 and walks node.next, corroborating circular element-list header layout.",
+    "CString/int vector append methods read begin+0/end+4/capacity+8 and advance end by4. The outer map value atnode+C is a12-byte vector header; 4-byte CString storage or int32 elements are selected by the concrete map source."
+  ],
+  "profile_sha256": "559c3494c65f2ca389571b02d9a60980186b210bcdd72a56c60533962148d1fd",
+  "host_access": false,
+  "native_calls": 0
+}

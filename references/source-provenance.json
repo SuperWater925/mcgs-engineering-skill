@@ -6,17 +6,18 @@
   "files": [
     {
       "file": "scripts/native/mcs_window_archive.py",
-      "source": "<原项目>/离线改写工具/窗口与控件/mcs_window_archive.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/窗口与控件/mcs_window_archive.py",
       "source_sha256": "2ae15141920b3488230deaab12d090cf81ce9a71c9bee09e613281c06da7e3cc",
       "packaged_sha256": "551222ad4a871ec493082eb354ff5b8c10ac61a36f01a642c3c0663330437ed7",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "audit_exports"
-      ]
+      ],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcs_plugin_controls.py",
-      "source": "<原项目>/离线改写工具/窗口与控件/mcs_plugin_controls.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/窗口与控件/mcs_plugin_controls.py",
       "source_sha256": "dec9bdecc8d19781d5f1a21a035584b539b2d2b10f4c9aeff2d0b01a97b0596b",
       "packaged_sha256": "40a473268e85f6ec7dbf3f73b7ffc294df14faad42812d35c1e3cfcb63bccbec",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
@@ -29,51 +30,55 @@
         "create_combined_xy",
         "audit_xy",
         "audit_recipe"
-      ]
+      ],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcs_recipe_association.py",
-      "source": "<原项目>/离线改写工具/窗口与控件/mcs_recipe_association.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/窗口与控件/mcs_recipe_association.py",
       "source_sha256": "bc0258bde1b4b34fa7ab5319ef500d337d689b6d810cdbd1463c7908b51e6a74",
       "packaged_sha256": "639d522252590610fbef33170133fa2d8e3a97b9891b2ad68251e56b5cd73304",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "load_recipe_definition"
-      ]
+      ],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/窗口事件归档.py",
-      "source": "<原项目>/离线改写工具/窗口与控件/窗口事件归档.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/窗口与控件/窗口事件归档.py",
       "source_sha256": "c5f23874a6310e419468277978bfde361eda1e8d2e1d47d3aa454bf0773d07c9",
       "packaged_sha256": "d5f06843ef4c1a42bdc703fd75870f53f8ff8d751ca78f289eae6e4e507b7241",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "核对样本"
-      ]
+      ],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/可见动画归档.py",
-      "source": "<原项目>/离线改写工具/窗口与控件/可见动画归档.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/窗口与控件/可见动画归档.py",
       "source_sha256": "faba79753968b50dbb4e804e33483053e81e98303c9455a7568dbd68f53f7a03",
       "packaged_sha256": "9da472a08330f9318a38fc1f24572b592b5280d64db747dbea345b90ee674f54",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "audit"
       ],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcgs_recipe_strategy.py",
-      "source": "<原项目>/离线改写工具/配方与策略/mcgs_recipe_strategy.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/配方与策略/mcgs_recipe_strategy.py",
       "source_sha256": "76006a31160fd287833397915339f2028effdafedaed8292dfd809ed3b2fc2ba",
       "packaged_sha256": "886f9683ef0c9b31b6cb77eb0217d1f5ea2d8d9945797604b6b9d74bfacbef2b",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcgs_native_zip.py",
-      "source": "<原项目>/离线改写工具/配方与策略/mcgs_native_zip.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/配方与策略/mcgs_native_zip.py",
       "source_sha256": "eee3a4c5cce9deed8a5f00f783fabcf7598c1dad7f398d58dba555af87ce3b73",
       "packaged_sha256": "eee3a4c5cce9deed8a5f00f783fabcf7598c1dad7f398d58dba555af87ce3b73",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
@@ -81,20 +86,21 @@
     },
     {
       "file": "scripts/native/mcs_button_control.py",
-      "source": "<原项目>/离线改写工具/配方与策略/mcs_button_control.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/配方与策略/mcs_button_control.py",
       "source_sha256": "ef94f663d530f018f808eff340dc970b69665ba7f238936781a1c4d062bb5f92",
-      "packaged_sha256": "2d408d21ecaf30b43b368d60b1dcd1647f68022e5994275af913a7fe2b1cb888",
+      "packaged_sha256": "b78fc4186016240019b5a3f53ee5fd2ba35281394dc757871235f917fb6d4903",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "_template",
         "create_button",
         "audit_native_buttons"
       ],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcs_input_text.py",
-      "source": "<原项目>/离线改写工具/数据对象/mcs_input_text.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/数据对象/mcs_input_text.py",
       "source_sha256": "11749e53bd5e44a04b10ecdd2fbfbcd375f28e2c9b8eb3d1d127edbb52804a7f",
       "packaged_sha256": "115529ad56fdc3460efd780e112c8f405e36c0a27035a91b45f24160eadd4a02",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
@@ -104,31 +110,33 @@
         "create_input",
         "create_label"
       ],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/对象归档.py",
-      "source": "<原项目>/离线改写工具/数据对象/对象归档.py",
+      "source": "离线实施/20261016_配方分段/离线改写工具/数据对象/对象归档.py",
       "source_sha256": "c327c64f06b841fbbec27c53b2f10221514775e3216855e75f53492298d77e87",
       "packaged_sha256": "f610b3ed799d281bb11ed657be281236457439b5f6d16bef4dc5eb092e7ffa92",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/原生界面样式.py",
-      "source": "<原项目>/20261021_全工程界面优化/原生界面样式.py",
+      "source": "离线实施/20261016_配方分段/20261021_全工程界面优化/原生界面样式.py",
       "source_sha256": "6b919d6fb3858964b6642b0dd24e6e70994e566ae1f127709432c076ada773ef",
       "packaged_sha256": "4aa61299fef9af12355fce3e64699ec06c2cfd294f70d3c3c7a0f071178bda8b",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [
         "audit"
       ],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/原生趋势样式.py",
-      "source": "<原项目>/20261021_全工程界面优化/原生趋势样式.py",
+      "source": "离线实施/20261016_配方分段/20261021_全工程界面优化/原生趋势样式.py",
       "source_sha256": "a63763a88475ef51491474326c3ab9e0c7a2c95609346be14b0a74f09cf50459",
       "packaged_sha256": "a63763a88475ef51491474326c3ab9e0c7a2c95609346be14b0a74f09cf50459",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
@@ -136,33 +144,34 @@
     },
     {
       "file": "scripts/native/报警表原生样式.py",
-      "source": "<原项目>/20261021_全工程界面优化/报警表原生样式.py",
+      "source": "离线实施/20261016_配方分段/20261021_全工程界面优化/报警表原生样式.py",
       "source_sha256": "25919f6cf5b84eb67968fa4f8f90a183e025667389ba0f36c4b0eeb708227ed6",
       "packaged_sha256": "533bfa0573343d31e68a58fc8f4cce0ed0d48fc8f2fef9a44545371e83c2b32f",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/旧下拉框与历史表样式.py",
-      "source": "<原项目>/20261021_全工程界面优化/独立审查/旧下拉框与历史表样式.py",
+      "source": "离线实施/20261016_配方分段/20261021_全工程界面优化/独立审查/旧下拉框与历史表样式.py",
       "source_sha256": "cd137ffe57660c4e4f9b98b7e87b92ff209f5899a4b31e1e46240cdec1bb2386",
       "packaged_sha256": "3493a144f9b66afc33b0559cc99f0bba03836d8d6b0f9777ec33a3a330db17c5",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
       "removed_functions": [],
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/当前存盘浏览样式.py",
-      "source": "<原项目>/20261021_全页可读性与存盘导出/当前存盘浏览样式.py",
+      "source": "离线实施/20261016_配方分段/20261021_全页可读性与存盘导出/当前存盘浏览样式.py",
       "source_sha256": "d9707d1c2bac05cbb2e0b1186bf9db1c7d12c62ef826de80e21b2b8e8e048a69",
       "packaged_sha256": "37eb1065d04fd9bf77e68230284bebae3ed520e02875482a1e19e4ec5d1dbef2",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
-      "removed_functions": []
+      "removed_functions": [],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "scripts/native/mcs_file_browser.py",
-      "source": "<原项目>/曲线读数与文件选择/mcs_file_browser.py",
+      "source": "离线实施/20261016_配方分段/曲线读数与文件选择/mcs_file_browser.py",
       "source_sha256": "37d2acc9ecfd9a218c87ad2bf72a0d5d6fb94de37a1eb5166d01a8db33c2d84c",
       "packaged_sha256": "dccc4ac50da58442f80322609dea81427517b9bc4c427427720e694a4e7103a3",
       "adaptation": "Flat relative imports; removed project-specific audit/factory entry points requiring private sample files. Codec classes remain.",
@@ -170,7 +179,8 @@
         "current_template",
         "make_file_browser",
         "evidence"
-      ]
+      ],
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/agents/openai.yaml",
@@ -178,8 +188,8 @@
       "source_sha256": "34b97b940fd1de5ab1c30550459a9e73a32c8ceb5c6e0bb39cd7965226cefbdb",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "packaged": false,
-      "removed_on": "2026-10-30",
-      "removal_reason": "Unified main skill replaces the nested Pro registration"
+      "removed_on": "2026-10-29",
+      "removal_reason": "Merged into the single main skill; historical provenance retained."
     },
     {
       "file": "assets/pro-3.5-cli/assets/blank-project.json",
@@ -187,7 +197,7 @@
       "source_sha256": "edac9a5489eefc952ce9720ae593b083b1e03482dff5556b441a65fd54fd8ffa",
       "packaged_sha256": "a7bbcddecb23b71bd81ced1fb0e71237d2a89230dd9c1b11a563828bfd1da209",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/assets/primitives.json",
@@ -207,33 +217,36 @@
       "file": "assets/pro-3.5-cli/references/acceptance.md",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/references/acceptance.md",
       "source_sha256": "083b534583e66d343c3fc40d0def08af4b1f6d21833dd5f1e2761f4f6b471dcf",
-      "packaged_sha256": "312c92a3bc66007909c5fe120066197bb173b020615e7ccef8b4e5de2dffd5a7",
+      "packaged_sha256": "bd1c2131d0757b87f34096011cd278e456a2cad44af67024f98ffb977584a2ca",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/references/editing.md",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/references/editing.md",
       "source_sha256": "4cd09a36f9b64a0503208d738589bd03570ba87d63f4dc01968d146191d8ac22",
-      "packaged_sha256": "62bf543f71781d4705c07b07a28e63915432270d31f30af7713c8b549f3a26b2",
+      "packaged_sha256": "85d11f017814751b20044590e858f2875358f9f9206829ce835c7b797cfbc356",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/references/runtime.md",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/references/runtime.md",
       "source_sha256": "3b11f9f7281db087dab407cd33ddc18d55ff6534b7959fc3002c93aa98f6d3eb",
-      "packaged_sha256": "bf0e39ef18244328b5636b90f0a0efcf0f61b466ef49e6e3b457f62955936efd",
+      "packaged_sha256": "80bd38fe36a7b54a5d2f5275c91bcff4d2d0c608a3900e5c127b33f7df76ddb4",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/requirements.txt",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/requirements.txt",
       "source_sha256": "150f1e36840234437268717295eefa1bcacc90b8f48d85d8de25f2f9236de9f2",
-      "packaged_sha256": "229456722524e788b2b16624d4cae8d86863eece41a5a143ef6bc822ba477010",
+      "packaged_sha256": "c24a17559732bfbe4ba4f3bfb213fffe8c95ec573f88fe6a4763990e4c54ba1e",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/run.cmd",
@@ -246,17 +259,19 @@
       "file": "assets/pro-3.5-cli/scripts/database.ps1",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/database.ps1",
       "source_sha256": "5f491c34d5210206dfd0736fdb0f09ca1e9546f1ebc928f611317a99b0108e4b",
-      "packaged_sha256": "a915e709f9fc29982074fe1ef6bf346f495e29d8abbde8e6a461d3ad7d47716f",
+      "packaged_sha256": "22b19a44fe6039b911eb2122a1956e0d0bfab76a75f88365ae8133d8668ae40c",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/scripts/mcgs_file.py",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/mcgs_file.py",
       "source_sha256": "7c3190b204bd0b8a446373beccf709620e4d176f8002e5c9ca1b8d4ffa5f2622",
-      "packaged_sha256": "403b699c58bcb3de9211b7bfb58e10b54dbe8ee618eacc674075a42b9165c86a",
+      "packaged_sha256": "037d9aff84e1fb452a4885b3ca5bb1967a72f8e528e842364d5df0038603e9f9",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/scripts/native_format.py",
@@ -264,7 +279,8 @@
       "source_sha256": "23172d903ca677dab1c0d4301d089597ae6f4434d5eebb134571fd3e7e2abb18",
       "packaged_sha256": "4143cfe0895fcbc220d9eae2079bfa396fb9c5311410b7ca24b28844c8544a2e",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
+      "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
+      "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
     },
     {
       "file": "assets/pro-3.5-cli/setup.ps1",
@@ -279,8 +295,8 @@
       "source_sha256": "d6db94059f6e7233bb4d18a70ec4a3f88a72ab777697079697fac0b4e998784e",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "packaged": false,
-      "removed_on": "2026-10-30",
-      "removal_reason": "Unified main skill replaces the nested Pro registration"
+      "removed_on": "2026-10-29",
+      "removal_reason": "Merged into the single main skill; historical provenance retained."
     },
     {
       "file": "assets/pro-3.5-cli/THIRD_PARTY_LICENSE.txt",
@@ -288,108 +304,183 @@
       "source_sha256": "7bfe03fb9b14e598b46acf609996e5d04411af1ff6a2d62270e080dcb4f812a6",
       "packaged_sha256": "7bfe03fb9b14e598b46acf609996e5d04411af1ff6a2d62270e080dcb4f812a6",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction."
-    },
-    {
-      "file": "tools/mcgs_ui.py",
-      "sources": [
-        {
-          "source": "<原项目>/20261022_现代化界面重排/准备现代化界面增量.py",
-          "source_sha256": "50cba61981234898633572371e8b798fb9915b117618ea0eca40d01e1709ce36"
-        },
-        {
-          "source": "<原项目>/20261023_设备页优化/准备设备页副本.py",
-          "source_sha256": "7ead420c088740207e0a501df72e033be2a96a482ae21d496dbca956705df407"
-        },
-        {
-          "source": "<原项目>/20261022_最小仿真副本/诊断/准备单段诊断副本.py",
-          "source_sha256": "887e9d72c939c514a472c23652bec086a0fc5b0ca4e551e6f289838055e04923"
-        },
-        {
-          "source": "<原项目>/20261022_最小仿真副本/通讯指示/准备通讯指示副本.py",
-          "source_sha256": "890126285cc8b620a463ce53f484f42bf5094f4c57ec533845bf62ca86a6a5e9"
-        }
-      ],
-      "adaptation": "取通用部分：色板与样式种类、控件编辑函数、业务字节不变检查、Page 页面构建类、set_decimals、显示框绑定；去掉具体工程的窗口规格和对齐表；新增 Export/Templates/new_window/Candidate。导航边线与设备页两张卡片的生成结果与原脚本逐字节相同。",
-      "packaged_sha256": "3d7374962fe22e765657c56330f95afe836d2f76d9e4ccbe566e3b273308f817",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
-    },
-    {
-      "file": "tools/样式规格应用.py",
-      "sources": [
-        {
-          "source": "<原项目>/20261022_现代化界面重排/准备现代化界面增量.py",
-          "source_sha256": "50cba61981234898633572371e8b798fb9915b117618ea0eca40d01e1709ce36"
-        }
-      ],
-      "adaptation": "原 main 流程改为读规格文件；去掉固定底稿 SHA 与目标指纹比对，改用导出自带的前指纹。用原工程 v4 规格跑出的 18 个窗口 BLOB 与原候选逐字节相同。",
-      "packaged_sha256": "5bddd0a2172851b08a27913f05e37f03734690a5651d444b58eb08110fa1b427"
-    },
-    {
-      "file": "tools/离线预览.py",
-      "sources": [
-        {
-          "source": "<原项目>/20261022_现代化界面重排/离线预览_按原厂对齐.py",
-          "source_sha256": "b5b3f0582355b61d59da125f8cbed573e6ddbcce359e510642db6ee3f0d76196"
-        },
-        {
-          "source": "<原项目>/布局与曲线优化/解析用户布局.py",
-          "source_sha256": "5b68414fae6f68654ef8dab99178317a8d5b9d37d5a7aa7a5c0f53697b8951f3"
-        }
-      ],
-      "adaptation": "依赖改为 scripts/native；字体目录取 WINDIR；SVG 转换改用 MCGS_NODE/MCGS_SHARP；去掉设计叠加分支与写死的导航激活表（改为 --active-map）；接受 index.json，--full-dir 可选；0x5028 common 画笔不画。仅改路径时 39 个窗口与原版逐像素相同；最终版与原版的差异只在 0x5028 边线和底部说明文字。",
-      "packaged_sha256": "fe4602f58e6fd3096a8e1b1d9ff6bff5c200b3ea6d03dddb690bbb2464f36684"
-    },
-    {
-      "file": "tools/文字容纳检查.py",
-      "sources": [
-        {
-          "source": "<原项目>/20261022_现代化界面重排/文字容纳检查.py",
-          "source_sha256": "71ef8a9232176fdc041ba4dc38a4e588f0d7093472ed19d81a2e6fb463d03739"
-        }
-      ],
-      "adaptation": "改用 mcgs_ui；画面边界默认取窗口自身宽高（--screen 可指定）；共用边线的窗口改为 --segment-ok 参数。同参数下输出与原版逐字节相同。",
-      "packaged_sha256": "e1874ed760da109975fe4de577d2f4014547ee252776249c8e889b4927c32b1a"
-    },
-    {
-      "file": "tools/新增窗口事务.ps1",
-      "sources": [
-        {
-          "source": "<原项目>/20261023_IO监视/执行IO监视受限事务.ps1",
-          "source_sha256": "9c1efab29ea9ecf0c7ea1683e06f07b00e03322d5163a69ea4fcd57a549a6d47"
-        }
-      ],
-      "adaptation": "技能脚本改为相对路径；更新白名单改为与 run.ps1 apply 相同的规则；新增行限 WndUser、窗口号和窗口名不重复；输出不限目录但必须是新文件；加 -Commit 预检模式。",
-      "packaged_sha256": "d183351147e170c389ac1fea723ec76de095ae88a6df26be1fc152b044bd3ef2",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
-    },
-    {
-      "file": "scripts/stu_project.ps1",
-      "sources": [
-        {
-          "source": "原 mcgs-stu-offline-edit 包 scripts/stu_project.ps1",
-          "source_sha256": "8f9837f2b1afbb6944ac6a0500857bccc63493c5dcd2a20b1f88906d7bd9bbda"
-        }
-      ],
-      "adaptation": "SafeSystemRow 白名单加 MCGSLINGUIST（界面多语言字符表），供离线预览解析文字 token；其余未改。",
-      "packaged_sha256": "353781188892d0da8b66f34c6ac6d3e70b0d2dcd9084c274aa651356c9f60844",
-      "adaptation_20261030": "Shared ACE runtime, structure-based Stu/Pro adaptation and bounded edits; see unified-validation.md."
     }
   ],
-  "project_specific_content_included": false,
-  "public_release_20261030": {
-    "single_skill": true,
-    "software_release_gates": false,
-    "shared_runtime": "PowerShell 7 / ACE16 or ACE12 / Python3.11+",
-    "new_references": [
-      "pro-adapter.md",
-      "bounded-edits.md",
-      "driver-dependencies.md",
-      "unified-validation.md"
+  "unification_20261029": {
+    "new_files": [
+      "scripts/ace-runtime.ps1",
+      "references/pro-adapter.md",
+      "references/unified-validation.md"
     ],
-    "vendor_binaries_bundled": false,
-    "customer_inputs_bundled": false,
-    "existing_stu_tools_preserved": true,
-    "new_window_connection_import_verified_by_commit_and_readback": true,
-    "runtime_logic_matches_locally_validated_revision": true
+    "single_skill": true,
+    "test_inputs_bundled": false,
+    "vendor_binaries_bundled": false
+  },
+  "completion_20261030": {
+    "new_files": [
+      "scripts/native/control_patch.py",
+      "references/bounded-edits.md"
+    ],
+    "shared_environment": true,
+    "release_gates": false,
+    "native_compile_and_no_device_runtime_verified": true,
+    "blank_template_changes": "Only native schema metadata: 12 COUNTER identities, primary and unique indexes; original seed data retained",
+    "test_projects_and_vendor_binaries_bundled": false
+  },
+  "driver_completion_20261030": {
+    "reference": "references/driver-dependencies.md",
+    "binaries_bundled": false,
+    "software_release_gates": false,
+    "native_errors_zero_for_P01_P03_P06": true
+  },
+  "native_internal_delivery": {
+    "source_build_revision": "0102-background-pipeline-20261103",
+    "source_stage_manifest_sha256": "9ad1eea01709991d3b63c14568967ccb45c4c66333467158207da9a912c1b98f",
+    "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
+    "configuration": "seven explicit directory/transport fields, project per request",
+    "legacy_native_routes_exposed": false,
+    "current_process_or_project_fixture_bundled": false,
+    "local_bound_dll_bundled": false,
+    "deployment_document": "references/pro-native-deployment.md",
+    "historical_source_build_revision": "0069",
+    "historical_source_stage_manifest_sha256": "883e44e5205637fa6f2412bba076ae129f6413c9ce76b7ff92042e202d44fbb1",
+    "source_template_count": 156,
+    "separate_unbound_layout_required": true,
+    "native_ui_increment_20261103": {
+      "date": "2026-11-03",
+      "actual_native_case_date": "2026-11-02",
+      "validation_record": "references/native-ui-validation.json",
+      "workflow_reference": "references/pro-native-ui-workflow.md",
+      "rules_contract": "references/pro-native-ui-rules.json",
+      "added_or_changed_source_files": [
+        {
+          "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlGeometryBatch.cs",
+          "sha256": "749c232d02a42c7cd441b22760f167d3f1cd5555e96a538d5f08a3da78a674f3"
+        },
+        {
+          "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
+          "sha256": "53f164fad582404366fef230575e5d03eae7a409df8a0fb464da7bc9d3539933"
+        },
+        {
+          "file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringBatch.cs",
+          "sha256": "04159fd78194cee453908ace0ecaa0afb500e5ae5ac2e658bbb93334025453ad"
+        },
+        {
+          "file": "assets/pro-native-bridge/client/engineering_session.py",
+          "sha256": "df74ef76b4e2f668a1ef792fcb1d8a6c7bf90e18927e1df2d03c8abecf2065aa"
+        }
+      ],
+      "bound_layout_or_assembly_copied_from_user_task": false,
+      "runtime_engine_switched_during_skill_update": false,
+      "native_features_tested_in_previous_actual_case": true,
+      "new_live_engineering_regression_for_packaging": false,
+      "version_restrictions_introduced": false,
+      "create_batch_feature_added": false
+    },
+    "generic_visual_and_direct_update": {
+      "new_native_kinds": [
+        "control-slider-fill-visual",
+        "control-mulbutton-visual"
+      ],
+      "paired_basic_caption_supported": true,
+      "internal_mdi_helpers_bundled": true,
+      "windows_foreground_required": false,
+      "forced_maximization_required": false,
+      "default_direct_execution": true,
+      "permit_file_required": false,
+      "per_batch_human_confirmation_required": false,
+      "project_path_inside_task_root_required": false,
+      "in_process_ordered_fresh_action_preimages": true,
+      "native_memory_ABI_type_owner_checks_retained": true,
+      "duplicate_timeout_mutation_not_replayed": true,
+      "direct_mode_native_edit_acceptance_verified": false,
+      "current_paused_project_modified_for_packaging": false,
+      "verification_record": "references/pro-native-ui-increment-validation.json"
+    },
+    "hot_attach": {
+      "validation_record": "assets/pro-native-bridge/hot-attach/validation-summary.json",
+      "sha256": "bb293c1bbd12756514b0b703f011765c3bba5143809a4fba423b7b32a8be70fd",
+      "vendor_application_binaries_modified": false
+    },
+    "performance_update": {
+      "verification_record": "references/pro-native-performance-validation.json",
+      "verification_sha256": "91c215441437cbf07bdf3f1a59fde34896311415852126abc1d7ca736bb9cb36",
+      "workflow_reference": "references/pro-native-performance.md",
+      "animation_forest_rebuilt_once_per_verification_round": true,
+      "existing_animation_comparisons_retained": true,
+      "compatible_client_steps_coalesced": true,
+      "same_page_factory_history_and_refresh_grouped": true,
+      "no_view_original_creation_path_preserved": true,
+      "layer_embedded_STORE_and_history_preserved": true,
+      "event_notification_with_poll_fallback": true,
+      "per_action_and_queue_timing_recorded": true,
+      "native_new_batch_vendor_acceptance_pending": true,
+      "whole_page_speedup_measured": false,
+      "paused_project_modified": false
+    },
+    "background_pipeline_update": {
+      "verification_record": "references/pro-native-pipeline-validation.json",
+      "verification_sha256": "ef7777243869d397b5dfc741c6cf312174e9c032a721ef8eeb2470930b5dafb5",
+      "workflow_reference": "references/pro-native-pipeline.md",
+      "queue_preparation_and_publication_on_background_worker": true,
+      "native_dispatch_remains_single_original_UI_thread": true,
+      "engine_prepare_and_finalize_hooks_added": true,
+      "pure_input_preparsed_and_frozen": true,
+      "client_preparation_and_derived_IO_overlap_RPC": true,
+      "native_trace_and_comparison_artifacts_written_off_UI": true,
+      "direct_create_capture_reduced_from_four_to_two": true,
+      "DrawingCapture_one_forest_per_capture": true,
+      "real_Pro_connection_only_threading_verified": true,
+      "business_engine_vendor_acceptance_pending": true,
+      "whole_page_speedup_measured": false,
+      "paused_engineering_resumed": false
+    }
+  },
+  "exporter_System_SQL_NULL_row_identity": {
+    "file": "scripts/stu_project.ps1",
+    "sha256": "97821909769014f0517a59da0082da5fcb24054eab17998ed40448d92649b0bf",
+    "change": "System SQL NULL names retained independently by real iID; ACE helper path remains relative"
+  },
+  "software_write_visibility_rule_20261103": {
+    "date": "2026-11-03",
+    "source": "Explicit user clarification: 最前 means the target editor/page is active inside Pro, not the application in the Windows global foreground.",
+    "scope": "Activate the internal target before initial writing and when changing targets; preserve the existing engineering identity and action guards.",
+    "corrects_previous_windows_foreground_interpretation": true,
+    "changed_documents": [
+      {
+        "file": "SKILL.md",
+        "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
+        "packaged_sha256": "0cecad62ccd623303ab2f2b506c16dda0dadf120c3e9f1956e733fad25c2b0a3"
+      },
+      {
+        "file": "references/pro-native-ui-workflow.md",
+        "previous_sha256": "5cba2da00335a6b7a8f09c1ecfcd90136f0716580a08782a3e1fcdd0e7ae2a81",
+        "packaged_sha256": "b1e98191d67a4e3230a4ecc5b20631c9a6f54ef93450a30d462dfc19752d67b8"
+      }
+    ],
+    "windows_global_foreground_required": false,
+    "forced_maximization_required": false,
+    "pause_due_to_other_app_focus": false,
+    "additional_per_batch_approval_introduced": false,
+    "SDK_or_ABI_changed": false,
+    "software_host_or_project_invoked": false,
+    "computer_use_skill_invoked": false,
+    "offline_file_preparation_is_not_vendor_visible_editing": true
+  },
+  "receiving_user_workflow": {
+    "environment_ready_choose_offline_or_online": true,
+    "existing_explicit_mode_choice_reused": true,
+    "pro_offline_and_online_available": true,
+    "stu_offline_only_in_this_delivery": true,
+    "online_is_editor_engineering_not_PLC_download": true
+  },
+  "publication_20261104": {
+    "repository": "https://github.com/SuperWater925/mcgs-offline-edit-skill",
+    "release_tag": "v2026.11.04-pro-online",
+    "source_revision": "0102-background-pipeline-20261103",
+    "native_code_changed_since_pipeline_package": false,
+    "star_requirement_added_to_skill_entrypoint": true,
+    "github_account_actions_require_current_user_authorization": true,
+    "paused_engineering_resumed": false
   }
 }

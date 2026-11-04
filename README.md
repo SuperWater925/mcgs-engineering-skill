@@ -1,6 +1,6 @@
-# 昆仑通态 MCGS 离线工程编辑技能（Stu / Pro）
+# 昆仑通态 MCGS 工程编辑技能（Stu / Pro）
 
-给 Claude Code / Codex 使用的技能，离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及同一套 PowerShell 7 / ACE / Python 环境。**
+给 Claude Code / Codex 使用的技能，离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程，也可通过 Pro 内部原生接口在线编辑已打开的工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及同一套 PowerShell 7 / ACE / Python 环境。** Stu 当前使用离线流程，Pro 可选择离线或在线。
 
 **不限定软件大版本或小版本。** 版本号只记录，按实际数据库、归档结构、引用、完整回环与有限修改边界判断能力。保留原版本字段和未知字节，未知结构明确报告。
 
@@ -17,14 +17,29 @@
 | 已测历史输入框长度异常 | 显式 `normalize-inputs`，只读不自动修复 | 同左 |
 | 基础 JSON 工程、变量、控件创建与编辑 | 无空白工程工厂 | `create` / `edit` / `demo` |
 | 模板控件工厂、样式、预览、文字检查、受限新增窗口 | 保留既有 `tools/` 工具链 | 未将这组 Stu 工具扩展为通用 Pro 工厂 |
+| 已打开工程的原生页面、控件、策略、数据库、配方、设备和资源编辑 | 本版不提供在线入口 | `native-engineering`，按已闭合 ABI 与实际产品能力执行 |
+| 原厂保存、检查、关闭重开 | 离线输出后另行验收 | 在线原生入口；各项结果分别记录 |
 
-字段、命令和规格见[有界修改](references/bounded-edits.md)、[Pro 适配](references/pro-adapter.md)、[Stu 界面工具](references/ui-tools.md)。不提供任意新控件、通用表增删、设备协议生成或 PLC 程序开发。
+离线字段、命令和规格见[有界修改](references/bounded-edits.md)、[Pro 适配](references/pro-adapter.md)、[Stu 界面工具](references/ui-tools.md)。离线工厂不提供任意新控件或通用表增删；在线原生能力见[工程入口](references/pro-native-engineering.md)。本技能不提供设备协议生成、PLC 程序开发或现场下载。
 
-文件读写阶段不启动厂商软件、不连接设备。`apply` 默认只预检；提交输出新文件，或在独立备份后就地修改。原厂打开、全工程检查、编译和相关交互另行验收。
+离线文件读写不启动厂商软件、不连接设备。离线 `apply` 默认只预检；提交输出新文件，或在独立备份后就地修改。在线入口使用当前 Pro 的原生对象及保存方法，也不连接设备。文件回读、原厂检查、关闭重开和本机模拟分别验收。
 
 重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu 预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
 
-优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。本轮未重做原厂编译或实机验证，历史原厂验收范围单独保留。
+历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。本版 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。
+
+## 选择离线或在线
+
+环境检查完成后，智能体会向使用者说明并询问采用哪一种方式；已明确选择时不重复询问。
+
+- **离线修改**：直接处理工程文件，适合批量生成和整页调整，完成后在原厂软件查看。
+- **在线修改（Pro）**：通过内部接口修改当前已打开工程，可以看到画面逐步变化，并调用原厂保存和检查；需接入本机桥，频繁刷新通常更慢。
+
+普通启动的 Pro 优先热接入，不要求每次经桥接启动器重启；已有桥直接复用。实际模块、位数、对象布局及产品能力仍须匹配，软件版本号不作白名单。连接配置不是许可证，正常在线执行默认 direct，不要求许可文件或逐批审批。
+
+在线采用“后台准备 → 原 UI 线程批量执行 → 后台回执”：纯数据准备、日志和不同派生文件输出可以并行，同一工程的原生修改、保存和资源释放仍由单一 UI 线程执行。更改前先激活 Pro 内部目标页面或编辑器，不强制最大化或抢 Windows 焦点。更新技能不会自动恢复已暂停的工程。
+
+首次部署、热接入和已有桥升级见[连接与部署](references/pro-native-deployment.md)；界面施工见[在线界面工作流](references/pro-native-ui-workflow.md)；线程、批次及旧桥兼容范围见[后台流水线](references/pro-native-pipeline.md)。包内交付自有源码与绑定工具，不含可直接套用到任意电脑的厂商 DLL 或本机绑定结果。
 
 ## 安装
 
@@ -54,7 +69,7 @@ git clone https://github.com/SuperWater925/mcgs-offline-edit-skill.git "$env:USE
 
 `assets/pro-3.5-cli/` 仅保留兼容路径及模板来源，不是版本门槛，也不再注册第二个技能。详见[环境说明](references/environment-and-tools.md)。
 
-## 快速使用
+## 离线快速使用
 
 在技能目录执行，替换本次输入与新的输出路径；两种工程使用同样的已有内容处理命令：
 
@@ -68,7 +83,18 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 最后一条只预检。已有写入授权并确认本次清单后，加 `-Commit` 才提交；就地写入另需 `-InPlace -Backup <新备份路径>`。`doctor` 通过仅表示环境可用。
 
-## 本轮验证
+## 验证范围
+
+### 本版 Pro 在线集成
+
+- 完整目录绑定及 x86 编译通过：156 份原生源码加绑定 Layout，共 157 份；另核对 187 份自有 ABI 资料。
+- 生产客户端的 14 项假 transport 测试、实际 managed 准备/回执/比较证据代码的隔离验证通过；覆盖预备与 RPC 重叠、文件输出完成与错误传播、依赖边界和超时不重放。
+- 自有原生宿主 6 个并发提交测试通过，原生 UI Dispatch 最大并发始终为 1。
+- 真实 Pro 普通启动后热接入及新版桥的 3 次纯 ping 通过，确认后台队列与原 UI 线程分离；未重启 Pro，也未恢复暂停工程。
+
+0102 后台流水线的业务 engine 尚未在 Pro 启用；新增批量创建、保存重开及整页净耗时仍未在真实工程复测。连接成功、隔离测试或 `ok=true` 均不能代替原厂工程检查通过。详见[流水线验证记录](references/pro-native-pipeline-validation.json)、[此前界面接口验证](references/native-ui-validation.json)和[性能验证](references/pro-native-performance-validation.json)。
+
+### 历史离线与原厂验收
 
 2026-10-30 本地验证覆盖 6 份 Pro、38 份厂商样例/模板和新旧 Stu，共 46 个不同工程，完成 7,888 项专项检查及适用记录功能回归。测试工程、业务数据、截图和厂商程序不公开；见[验证摘要](references/unified-validation.md)与[机器统计](references/validation.json)。
 
@@ -85,10 +111,10 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.10.30-offline-opt --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.04-pro-online --out local-artifacts/release
 ```
 
-静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据。
+静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。
 
 欢迎通过 [Issues](https://github.com/SuperWater925/mcgs-offline-edit-skill/issues/new/choose) 和 PR 参与；任务见 [ROADMAP](ROADMAP.md)。只提交有权公开的最小脱敏资料。
 

@@ -1,0 +1,66 @@
+// Generic lifecycle candidate. Original factories, copy, registration, DAO and document owners.
+// No fixed trial session, project reopen, GUI automation, native execution test or root save.
+using System;using System.Collections;using System.Collections.Generic;using System.IO;
+using System.Runtime.InteropServices;using System.Text;using System.Web.Script.Serialization;
+namespace McgsInternalBridge {
+ internal static partial class NativeStrategyWorkingModelEditing {
+  // Read breadcrumbs flush through the existing trace sink; no mutation flag is set.
+  internal static T LTrace<T>(string label,Func<T> call){NativeOperationTrace.SetPhase("lifecycle-read-"+label+"-begin");T value=call();NativeOperationTrace.SetPhase("lifecycle-read-"+label+"-returned");return value;}
+  internal static void LTraceVoid(string label,Action call){LTrace<bool>(label,delegate{call();return true;});}
+  internal const string LifecycleAbiProfileSha="196b87fe84290adb8ca1712ce6a5e059ee479c45c696ec9264c68346a7da1a26";
+  internal static readonly string[] LifecycleKinds={"strategy-create","strategy-copy","strategy-rename","strategy-delete","strategy-working-trigger-context"};
+  internal static bool LifecycleHandles(Dictionary<string,object> action){string kind=Convert.ToString(action["kind"]);object abi;
+   if(kind=="strategy-create"||kind=="strategy-copy"||kind=="strategy-working-trigger-context")return true;
+   return (kind=="strategy-rename"||kind=="strategy-delete"||kind=="strategy-trigger-context")&&action.TryGetValue("abi_profile_sha256",out abi)&&Convert.ToString(abi)==LifecycleAbiProfileSha;
+  }
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)][return:MarshalAs(UnmanagedType.I1)]internal delegate bool LSetName(IntPtr io,IntPtr text);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)][return:MarshalAs(UnmanagedType.I1)]internal delegate bool LRename(IntPtr model,IntPtr io,IntPtr text,int confirm,IntPtr error,int checkDuplicate);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)][return:MarshalAs(UnmanagedType.I1)]internal delegate bool LRemove(IntPtr model,IntPtr path,IntPtr decisions);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]internal delegate int LRefs(IntPtr model,IntPtr path,IntPtr output);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]internal delegate void LTwoInts(IntPtr self,int first,int second);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]internal delegate void LDefaultRow(IntPtr self,int before,IntPtr anchor);
+  [UnmanagedFunctionPointer(CallingConvention.ThisCall)]internal delegate int LSaveDoc(IntPtr self,IntPtr ignored);
+  internal sealed class LifecycleApi {
+   internal readonly CloseContract CloseContract;internal readonly Api Native;internal readonly TypedContract Typed;internal readonly NativeStrategyTriggerContextEditing.Api Contexts;internal readonly NativeStrategyDeleteExtensionProfile.Api DeleteApi;
+   internal readonly string Project;internal readonly Factory CreateBlock;internal readonly VP CopyBlock;internal readonly VI DeleteBlock,ContextInit,RootDirty;internal readonly IP RootAdd,ListInsert;internal readonly I0 NextId;internal readonly I1 RootDelete,ListFind,ListRefresh;internal readonly LTwoInts ListRemove;internal readonly LSetName SetName;internal readonly LRename Rename;internal readonly LRemove ModelRemove;internal readonly LRefs References;internal readonly LDefaultRow DefaultRow;internal readonly LSaveDoc SavePage,SaveMain;
+   internal readonly Dictionary<string,NativeStrategyTriggerContextEditing.Factory> ContextFactories=new Dictionary<string,NativeStrategyTriggerContextEditing.Factory>();internal readonly Dictionary<string,NativeStrategyTriggerContextEditing.VI> ContextDestructors=new Dictionary<string,NativeStrategyTriggerContextEditing.VI>();readonly Dictionary<string,IntPtr> methods=new Dictionary<string,IntPtr>();readonly Dictionary<string,object> profile;
+   internal LifecycleApi(NativeEngine e,NativeContext c,string project){Project=Path.GetFullPath(project);CloseContract=LTrace("ctor-close-contract",()=>new CloseContract(e,c,project));Native=CloseContract.Api;Typed=CloseContract.Typed;Contexts=CloseContract.Contexts;DeleteApi=LTrace("ctor-delete-api",()=>new NativeStrategyDeleteExtensionProfile.Api(e,c));
+    string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"strategy-prep","node-edit-prep","lifecycle-prep","strategy-lifecycle-abi-profile.json");NativeMemory.Require(NativeMemory.Hash(file)==LifecycleAbiProfileSha,"Generic native strategy lifecycle contract differs.");profile=new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));NativeMemory.Require(Convert.ToString(profile["binary_sha256"])==e.ImageSha256,"Lifecycle native image differs.");
+    foreach(object value in(IEnumerable)profile["dependencies"]){var row=M(value);NativeMemory.Require(NativeMemory.Hash(Convert.ToString(row["path"]))==Convert.ToString(row["sha256"]),"Frozen lifecycle native dependency differs.");}
+    foreach(object value in(IEnumerable)profile["methods"]){var row=M(value);methods.Add(Convert.ToString(row["name"]),e.Address(N(row["rva"])));}LTraceVoid("ctor-current",()=>Current());
+     NativeOperationTrace.SetPhase("lifecycle-read-ctor-bind-delegates-begin");
+    CreateBlock=Bind<Factory>("CreateBlock");CopyBlock=Bind<VP>("BlockDeepCopy");DeleteBlock=Bind<VI>("BlockDelete");ContextInit=Bind<VI>("ContextInit");RootAdd=Bind<IP>("RootAdd");NextId=Bind<I0>("NextId");SetName=Bind<LSetName>("BlockSetName");DefaultRow=Bind<LDefaultRow>("BlockDefaultRow");RootDelete=Bind<I1>("RootDelete");ListRemove=Bind<LTwoInts>("ListRemove");ListFind=Bind<I1>("ListFind");ListInsert=Bind<IP>("ListInsert");ListRefresh=Bind<I1>("ListRefresh");Rename=Bind<LRename>("ModelRenameWorker");ModelRemove=Bind<LRemove>("ModelRemove");References=Bind<LRefs>("ReferenceCheck");RootDirty=Native.Base.Read.Existing.Bind<VI>("RootSetModified");SavePage=Native.References.Bind<LSaveDoc>("UserDocSave");SaveMain=Native.References.Bind<LSaveDoc>("MainDocSave");NativeOperationTrace.SetPhase("lifecycle-read-ctor-bind-delegates-returned");
+    NativeOperationTrace.SetPhase("lifecycle-read-ctor-context-delegates-begin");foreach(var type in Contexts.Types.Values){ContextFactories.Add(Convert.ToString(type["rtti"]),Contexts.Maker(type));ContextDestructors.Add(Convert.ToString(type["rtti"]),Contexts.Destroyer(type));}NativeOperationTrace.SetPhase("lifecycle-read-ctor-context-delegates-returned");
+    NativeMemory.Require(NativeMemory.Ptr(NativeMemory.Ptr(DeleteApi.List,0),93*4)==e.Address(0x43621),"Original strategy list refresh virtual differs.");LTraceVoid("ctor-trigger-properties-contract",()=>TriggerPropertiesContract(this));
+   }
+   internal T Bind<T>(string name)where T:class{return Native.Engine.Bind<T>(methods[name]);}
+   internal void Current(){Native.Current();Contexts.Current();DeleteApi.Current();CloseContract.Current();
+    foreach(object value in(IEnumerable)profile["guards"]){var row=M(value);byte[] raw=B(Convert.ToString(row["bytes"]));foreach(object rel in(IEnumerable)row["reloc_offsets"]){int i=N(rel);Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(raw,i)+NativeMemory.U(Native.Engine.ImageBase)-0x400000U)),0,raw,i,4);}NativeMemory.Require(H(raw)==H(NativeMemory.Bytes(Native.Engine.Address(N(row["rva"])),raw.Length)),"Actual loaded lifecycle method differs: "+Convert.ToString(row["name"]));}
+   }
+   internal Dictionary<int,Dictionary<string,object>> Db(){using(var cursor=LTrace("dao-allocate-construct-open",()=>new LifecycleCursor(this)))return LTrace("dao-all",()=>cursor.All());}
+   internal List<object> DbRows(){var all=Db();var ids=new List<int>(all.Keys);ids.Sort();var list=new List<object>();foreach(int id in ids)list.Add(all[id]);return list;}
+   internal List<object> ListRows(){var blocks=LTrace("list-blocks",()=>Native.Base.Blocks());LTrace("list-validate-rows",()=>DeleteApi.ListRows(blocks));var ids=new List<int>(blocks.Keys);ids.Sort();var rows=new List<object>();foreach(int id in ids)rows.Add(new Dictionary<string,object>{{"block_id",id},{"native_list_row",LTrace("list-find-"+id,()=>ListFind(DeleteApi.List,id))}});return rows;}
+   internal void Dirty(){RootDirty(Native.Base.Root,1);Marshal.WriteInt32(Native.Base.Root,0x114,0);}
+  }
+  static List<object> LifecycleWorking(LifecycleApi api){var list=new List<object>();foreach(var view in LTrace("working-views",()=>api.Native.Views()).Values){LTraceVoid("working-owner-"+view.Id,()=>api.CloseContract.Owns(view));list.Add(new Dictionary<string,object>{{"view",view.Describe()},{"block",FullBlockRecord(api.Typed,api.Contexts,view.Id,NativeMemory.Add(view.Block,4))}});}return list;}
+  static int LifecycleTargetId(Dictionary<string,object> action){var t=M(action["target"]);string k=Convert.ToString(action["kind"]);return k=="strategy-create"?-1:N(t[k=="strategy-copy"?"template_block_id":"block_id"]);}
+  static Dictionary<string,object> LifecycleCapture(LifecycleApi api,Dictionary<string,object> action){LTraceVoid("capture-current",()=>api.Current());var blocks=LTrace("capture-blocks",()=>api.Native.Base.Blocks());int id=LifecycleTargetId(action);object selected=null,reference=null;
+   if(id>=0&&blocks.ContainsKey(id)){var target=M(action["target"]);string key=Convert.ToString(action["kind"])=="strategy-copy"?"template_block_name":"block_name";NativeMemory.Require(NativeStrategyProfile.ReadName(api.Native.Base.Read.Existing,blocks[id])==Text(target[key]),"Lifecycle native target ID/name differs.");selected=FullBlockRecord(api.Typed,api.Contexts,id,blocks[id]);reference=NativeReferencedPageEditing.PreparedObjectRename.Read(api.Native.Engine,api.Native.Context,api.Project,action,blocks[id]);}
+   object templateState=null;if(Convert.ToString(action["kind"])=="strategy-copy"&&selected!=null){var t=M(action["target"]);object mode;var open=api.Native.Views();bool working=t.TryGetValue("model",out mode)?Convert.ToString(mode)=="working":open.ContainsKey(id);if(t.ContainsKey("model"))NativeMemory.Require(Convert.ToString(mode)=="working"||Convert.ToString(mode)=="canonical","Unknown actual copy source model.");NativeMemory.Require(!working||open.ContainsKey(id),"Requested actual working copy source is absent.");IntPtr io=working?NativeMemory.Add(open[id].Block,4):blocks[id];templateState=new Dictionary<string,object>{{"actual_model",working?"working":"canonical"},{"record",FullBlockRecord(api.Typed,api.Contexts,id,io)}};}
+   return new Dictionary<string,object>{{"abi_profile_sha256",LifecycleAbiProfileSha},{"kind",action["kind"]},{"selected_block",selected},{"copy_template",templateState},{"canonical_catalog",LTrace("capture-canonical",()=>InspectPersistentCanonical(api.Native.Engine,api.Native.Context,api.Project))},{"working_documents",LTrace("capture-working",()=>LifecycleWorking(api))},{"trigger_native_rows",LTrace("capture-dao-rows",()=>api.DbRows())},{"native_list_rows",LTrace("capture-list-rows",()=>api.ListRows())},{"next_strategy_id",LTrace("capture-next-id",()=>api.NextId(api.Native.Base.Root))},{"rename_state",reference},{"root_modified",NativeMemory.I32(api.Native.Base.Root,0x48)},{"root_compile_raw",NativeMemory.I32(api.Native.Base.Root,0x114)},{"claim_preimage_uses_serialize",false},{"functional_acceptance_pending",true}};
+  }
+  internal static Dictionary<string,object> LifecycleRead(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){
+   if(Convert.ToString(action["kind"])=="strategy-working-trigger-context"||Convert.ToString(action["kind"])=="strategy-trigger-context")return WorkingContextRead(e,c,project,action);
+   return LTrace("read-capture",()=>LifecycleCapture(LTrace("read-api",()=>new LifecycleApi(e,c,project)),action));
+  }
+  internal static INativePreparedPageControlEdit LifecyclePrepare(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){
+   if(Convert.ToString(action["kind"])=="strategy-working-trigger-context"||Convert.ToString(action["kind"])=="strategy-trigger-context")return new WorkingContextPrepared(new LifecycleApi(e,c,project),action);
+   return new LifecyclePrepared(new LifecycleApi(e,c,project),action);
+  }
+  static string LifecycleName(object value){string name=Text(value);NativePageControlPreparation.Name(name);NativeMemory.Require(name.Length<256&&name.IndexOf('.')<0,"Native strategy name must be bounded and have no linker separator.");return name;}
+  static bool LifecycleMutable(LifecycleApi api,IntPtr io){IntPtr context=NativeMemory.Ptr(io,0xC);int type=NativeMemory.I32(context,12),id=NativeMemory.I32(io,0x30);api.Contexts.Type(context);return (type==2&&id!=1)||type==3;}
+  static List<object> SortedDb(Dictionary<int,Dictionary<string,object>> all){var ids=new List<int>(all.Keys);ids.Sort();var rows=new List<object>();foreach(int id in ids)rows.Add(all[id]);return rows;}
+  static object LogicalBlock(Dictionary<string,object> value){return new Dictionary<string,object>{{"block_id",value["block_id"]},{"block_name",value["block_name"]},{"persistent_rows",value["persistent_rows"]},{"known_block_metadata",value["known_block_metadata"]},{"trigger_fields",value["trigger_fields"]}};}
+ }
+}
+

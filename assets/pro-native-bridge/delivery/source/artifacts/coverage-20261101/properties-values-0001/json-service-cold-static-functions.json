@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "source_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "bounded_functions": [
+    {
+      "name": "JsonServiceGetter1",
+      "entry_va": "0xe25550",
+      "end_va_exclusive": "0xe2555a",
+      "instructions": []
+    },
+    {
+      "name": "JsonServiceGetter2",
+      "entry_va": "0xe25560",
+      "end_va_exclusive": "0xe2556a",
+      "instructions": []
+    },
+    {
+      "name": "JsonServiceSingleton",
+      "entry_va": "0xe56df0",
+      "end_va_exclusive": "0xe56e64",
+      "instructions": []
+    },
+    {
+      "name": "JsonServiceCtor",
+      "entry_va": "0xdfb460",
+      "end_va_exclusive": "0xdfb4fa",
+      "instructions": []
+    },
+    {
+      "name": "JsonServiceDtor",
+      "entry_va": "0xdfb500",
+      "end_va_exclusive": "0xdfb585",
+      "instructions": []
+    },
+    {
+      "name": "JsonServiceAtexit",
+      "entry_va": "0x10d2c30",
+      "end_va_exclusive": "0x10d2c3f",
+      "instructions": []
+    },
+    {
+      "name": "InterfaceBase1",
+      "entry_va": "0xe0c470",
+      "end_va_exclusive": "0xe0c48f",
+      "instructions": []
+    },
+    {
+      "name": "InterfaceBase2",
+      "entry_va": "0xe0a420",
+      "end_va_exclusive": "0xe0a43f",
+      "instructions": []
+    },
+    {
+      "name": "IServiceBase",
+      "entry_va": "0x97f9c0",
+      "end_va_exclusive": "0x97f9d7",
+      "instructions": []
+    },
+    {
+      "name": "PropertyRegisterCtor",
+      "entry_va": "0xe0c5d0",
+      "end_va_exclusive": "0xe0c650",
+      "instructions": []
+    },
+    {
+      "name": "PropertyRegisterDtor",
+      "entry_va": "0xe0d0f0",
+      "end_va_exclusive": "0xe0d1d4",
+      "instructions": []
+    },
+    {
+      "name": "PropertyRegisterDeletingDtor",
+      "entry_va": "0xe101a0",
+      "end_va_exclusive": "0xe101cc",
+      "instructions": []
+    },
+    {
+      "name": "AggregateCtor",
+      "entry_va": "0xe0c7f0",
+      "end_va_exclusive": "0xe0c86a",
+      "instructions": []
+    },
+    {
+      "name": "JsonGetterUnwindAndHandler",
+      "entry_va": "0x103d6db",
+      "end_va_exclusive": "0x103d704",
+      "instructions": []
+    }
+  ],
+  "Json_getter_EH": {
+    "funcinfo_va": "0x13623bc",
+    "unwind_to": -1,
+    "action_va": "0x103d6db",
+    "effect": "clear only global13C0008 bit0 during normal C++ unwind; not arbitrary-fault recovery"
+  },
+  "native_calls": 0,
+  "host_access": false
+}

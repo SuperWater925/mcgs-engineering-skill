@@ -1,0 +1,64 @@
+{
+  "mode": "mutation ABI evidence; not part of read-tree execution",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "Host_GetApp",
+      "rva": "0x6c060",
+      "expected_first32": "558bece8ee2aac008b40045dc3cccccc558bec817d080e0007807507e8932aac",
+      "relocation_offsets": [],
+      "calling_convention": "cdecl",
+      "this": "none",
+      "args": [],
+      "return": "App*",
+      "slot": "cdecl",
+      "verified": true
+    },
+    {
+      "name": "C0DocManage_SetModified",
+      "rva": "0x3416d0",
+      "expected_first32": "558bec51894dfc8b45fc8b4d088948488be55dc20400cccccccccccccccccccc",
+      "relocation_offsets": [],
+      "calling_convention": "thiscall",
+      "this": "C0DocManage*",
+      "args": [
+        "int32 modified"
+      ],
+      "return": "void",
+      "slot": 27,
+      "verified": true
+    },
+    {
+      "name": "C0DocManage_OnSaveDocument",
+      "rva": "0x32e8d0",
+      "expected_first32": "558bec6aff682a55fa0064a1000000005083ec2ca1600b3b0133c5508d45f464",
+      "relocation_offsets": [
+        6,
+        21
+      ],
+      "calling_convention": "thiscall",
+      "this": "C0DocManage*",
+      "args": [
+        "LPCWSTR exact_current_project_path"
+      ],
+      "return": "BOOL32",
+      "slot": 34,
+      "verified": true
+    }
+  ],
+  "doc_rtti": ".?AVC0DocManage@@",
+  "doc_vtable_rva": "0xd57684",
+  "app_current_doc_offset": "0x520",
+  "doc_object_model_offset": "0x2d4",
+  "doc_modified_field": "0x48",
+  "native_strategy_dirty_companion_field": "0x114=0 after SetModified(1)",
+  "save_validation": "Exact same path from OLE McgsSetName, strictly isolated project allowlist and unchanged process/module. Nonzero BOOL indicates native return success only; require file changed, offline readback, native check and close/reopen persistence. Native save can report failures/UI if storage errors; do not retry blindly.",
+  "save_evidence": "C0DocManage vslot0x88 aligns with COleDocument base vslot34 native structured-storage save implementation; override reads LPCWSTR, calls vslotE0 to commit editors/database, then same-current-path success path. No SaveAs used.",
+  "sources": [
+    "docmanage-setmodified-slot6c.json",
+    "native-strategy-dirty-notify-crosscheck.json",
+    "docmanage-document-lifecycle-candidates.json",
+    "docmanage-save-prerequisite-slot-e0.json",
+    "mfc-base-COleDocument-slot34.json"
+  ]
+}

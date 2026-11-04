@@ -1,0 +1,84 @@
+{
+  "schema": 1,
+  "status": "OWN_PURE_NATIVE_COLD_CLR_AND_REAL_PRO_CONNECTION_LAYER_PASS",
+  "own_source_compile": true,
+  "final_identity_revision": {
+    "unique_managed_assembly_name": true,
+    "independent_random_class_interface_and_assembly_guids": true,
+    "old_cold_AddIn_COM_shell_removed": true,
+    "unique_numeric_transport_engine_assembly": true,
+    "package_relative_bootstrap_dependency": true
+  },
+  "executed_scope": {
+    "host": "Own native PE32 STA message loop, not Pro",
+    "native_PE_CLR_directory": false,
+    "before_attach_CLR_modules_loaded": false,
+    "thread_specific_WH_GETMESSAGE_triggered": true,
+    "COM_first_CLR_activation_succeeded": true,
+    "COM_apartment_type": "APTTYPE_MAINSTA",
+    "native_hresult": "0x00000000",
+    "managed_attach_return": 0,
+    "same_original_UI_thread_queue_ping": true,
+    "datobj_null": true,
+    "thread_hook_removed": true,
+    "own_pump_normally_stopped": true,
+    "own_native_host_normally_exited": true,
+    "only_own_private_registration_removed": true
+  },
+  "registration": {
+    "default_selection": "auto: target IL above Medium -> HKLM/Registry32; otherwise HKCU/Registry32",
+    "verified_branch": "High integrity HKLM/Registry32",
+    "HKCU_under_Medium_verified": false,
+    "preserved_HKCU_high_integrity_failure": "0x80070002; no activation or retry of that native attempt",
+    "automatic_elevation_or_policy_change": false,
+    "registry_override_used": false
+  },
+  "not_performed": {
+    "real_Pro_ordinary_process_hot_attach": false,
+    "new_Pro_process_launch": false,
+    "manufacturer_business_method": true,
+    "native_project_object_read": true,
+    "project_open_close_switch_save_edit_or_check": true,
+    "existing_bridge_runtime_or_active_engine_change": true,
+    "watcher_or_autostart_installation": true,
+    "new_machine_compatibility_validation": true
+  },
+  "boundary": "Real Pro ordinary-start connection-layer ping and own native cold-CLR mechanism passed on this machine. No native project objects or manufacturer business methods were called; project editing/check/save/reopen and new-machine compatibility are not validated by this transport test. Ordinary startup may restore recent projects; no guaranteed-empty startup argument is claimed. Medium/HKCU remains untested.",
+  "distribution": "Source allowlist only; no local build artifacts, runtime config, paths, native result files, claims, projects, vendor DLL, dump, account or password.",
+  "real_Pro_executed_scope": {
+    "host": "Ordinarily launched original Pro, ping-only transport engine",
+    "launch_command_had_project_argument": false,
+    "before_attach_CLR_or_bridge_modules_loaded": false,
+    "thread_specific_WH_GETMESSAGE_triggered": true,
+    "COM_first_CLR_activation_succeeded": true,
+    "COM_apartment_type": "APTTYPE_MAINSTA",
+    "native_hresult": "0x00000000",
+    "managed_attach_return": 0,
+    "same_original_UI_thread_queue_ping": true,
+    "transport_probe_engine": true,
+    "own_test_host": false,
+    "datobj_null": true,
+    "write_attempted": false,
+    "manufacturer_business_abi_tested": false,
+    "native_project_object_read": false,
+    "thread_hook_removed": true,
+    "own_pump_normally_stopped": true,
+    "only_own_private_registration_removed": true,
+    "application_responding_after": true,
+    "application_left_running": true,
+    "automatic_retry": false
+  },
+  "performance_notifications_revision": {
+    "verification_record": "references/pro-native-performance-validation.json",
+    "own_native_host_event_and_poll_fallback_verified": true,
+    "new_event_runtime_real_Pro_regression_tested": false,
+    "existing_real_Pro_hot_attach_record_is_baseline_connection_evidence": true
+  },
+  "background_pipeline_revision": {
+    "verification_record": "references/pro-native-pipeline-validation.json",
+    "own_native_host_concurrency_errors_and_stop_verified": true,
+    "existing_real_Pro_pure_ping_thread_roles_verified": true,
+    "production_business_engine_in_Pro_verified": false,
+    "native_project_objects_read_or_modified_for_this_test": false
+  }
+}

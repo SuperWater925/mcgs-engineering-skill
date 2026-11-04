@@ -1,0 +1,95 @@
+{
+  "scope": "Root and reliably related thread_spawn descendants; metadata only",
+  "sessions": 42,
+  "source_relative": "交接资料/20261022_完整交接/资料核验/本根与可可靠关联子会话_工具技能元数据.json",
+  "source_sha256": "03609e09231cf05649f3ed587f2585401618ada14873bc51fdeb98bce2025814",
+  "outer_tool_call_counts": {
+    "exec": 6412,
+    "followup_task": 127,
+    "interrupt_agent": 5,
+    "list_agents": 69,
+    "request_user_input_async": 15,
+    "send_message": 2981,
+    "sleep": 14,
+    "spawn_agent": 41,
+    "wait": 1,
+    "wait_agent": 332
+  },
+  "literal_nested_tool_call_counts": {
+    "apply_patch": 1100,
+    "clock__curr_time": 77,
+    "exec_command": 6810,
+    "mcp__codex_app__load_workspace_dependencies": 9,
+    "mcp__codex_app__open_in_codex": 1,
+    "mcp__node_repl__js": 647,
+    "view_image": 125,
+    "web__run": 36,
+    "write_stdin": 83
+  },
+  "skills": [
+    {
+      "skill": "computer-use",
+      "read_verb_observed": true,
+      "sessions": 4
+    },
+    {
+      "skill": "computer-use",
+      "read_verb_observed": true,
+      "sessions": 2
+    },
+    {
+      "skill": "documents",
+      "read_verb_observed": true,
+      "sessions": 2
+    },
+    {
+      "skill": "pdf",
+      "read_verb_observed": true,
+      "sessions": 2
+    },
+    {
+      "skill": "pdf",
+      "read_verb_observed": true,
+      "sessions": 1
+    },
+    {
+      "skill": "openai-docs",
+      "read_verb_observed": true,
+      "sessions": 1
+    },
+    {
+      "skill": "skill-creator",
+      "read_verb_observed": true,
+      "sessions": 3
+    },
+    {
+      "skill": "hmi-launcher-maintenance",
+      "read_verb_observed": true,
+      "sessions": 5
+    },
+    {
+      "skill": "mcgs-offline-engineering / McgsPro3.5.1.6963",
+      "read_verb_observed": true,
+      "sessions": 4
+    },
+    {
+      "skill": "mcgs-offline-engineering / McgsPro3.5.1.6963",
+      "read_verb_observed": true,
+      "sessions": 19
+    },
+    {
+      "skill": "mcgs-offline-engineering / generic",
+      "read_verb_observed": true,
+      "sessions": 11
+    },
+    {
+      "skill": "mcgs-stu-offline-edit",
+      "read_verb_observed": false,
+      "sessions": 1
+    }
+  ],
+  "message_bodies_included": false,
+  "tool_arguments_included": false,
+  "credentials_included": false,
+  "not_a_required_runtime_tool_inventory": true
+}

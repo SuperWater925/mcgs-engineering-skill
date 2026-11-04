@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "scope": "Installed exact script declaration metadata; source generation only",
+  "modules": {
+    "script_window_func.dll": {
+      "path": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+      "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+      "preferred_base": "0x64300000",
+      "argument_and_return_declarations": {
+        "0x64304a40": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+          "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+          "entry": "0x64304a40",
+          "resolved": "0x64304a40",
+          "code": [],
+          "calls": [
+            {
+              "at": "0x64304a62",
+              "target": "0x64301920",
+              "resolved": "0x64301920"
+            }
+          ],
+          "truncated": false
+        },
+        "0x64304ab0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_window_func.dll",
+          "sha256": "762203d18cade1199a2ddc91889af07eca4839ad05a4d3559a21789933eb633a",
+          "entry": "0x64304ab0",
+          "resolved": "0x64304ab0",
+          "code": [],
+          "calls": [],
+          "truncated": false
+        }
+      }
+    },
+    "script_tool_func.dll": {
+      "path": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+      "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+      "preferred_base": "0x62a00000",
+      "argument_and_return_declarations": {
+        "0x62a100b0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a100b0",
+          "resolved": "0x62a100b0",
+          "code": [],
+          "calls": [
+            {
+              "at": "0x62a100d2",
+              "target": "0x62a02158",
+              "resolved": "0x62a02158"
+            }
+          ],
+          "truncated": false
+        },
+        "0x62a10120": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a10120",
+          "resolved": "0x62a10120",
+          "code": [],
+          "calls": [],
+          "truncated": false
+        },
+        "0x62a10080": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a10080",
+          "resolved": "0x62a10080",
+          "code": [],
+          "calls": [],
+          "truncated": false
+        },
+        "0x62a100a0": {
+          "source": "C:\\McgsPro\\Program\\plugins\\script\\script_tool_func.dll",
+          "sha256": "ab914207ae03c94df95eb1560434288a2edd00228af7c7ba08a6e4001c220988",
+          "entry": "0x62a100a0",
+          "resolved": "0x62a100a0",
+          "code": [],
+          "calls": [],
+          "truncated": false
+        }
+      }
+    }
+  },
+  "closed_contracts": {
+    "SetWindow": {
+      "argument_codes": [
+        261,
+        4
+      ],
+      "return_code": 4,
+      "modes": {
+        "1": "open visible",
+        "2": "open hidden",
+        "3": "close",
+        "4": "print",
+        "5": "refresh"
+      }
+    },
+    "SetDevice": {
+      "argument_codes": [
+        262,
+        3,
+        8
+      ],
+      "return_code": 4,
+      "modes": {
+        "1": "start",
+        "2": "stop",
+        "3": "query running state",
+        "4": "collect once",
+        "5": "period ms from command string",
+        "6": "exact provider command"
+      }
+    },
+    "Beep": {
+      "argument_codes": [],
+      "return_code": 4,
+      "wav_equivalence": false
+    }
+  },
+  "notes": [
+    "Native CObjData type1/2/3 differs from script declaration argument codes3/4/8.",
+    "SetWindow takes actual typed window reference0x105, SetDevice actual typed device reference0x106, not fabricated ID literals.",
+    "Provided declaration source is Windows engineering-plugin evidence; no Linux runtime or PLC test performed."
+  ],
+  "native_calls_performed": false,
+  "compiler_or_tests_run": false
+}

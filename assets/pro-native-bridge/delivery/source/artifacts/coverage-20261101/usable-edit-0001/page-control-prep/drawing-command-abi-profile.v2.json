@@ -1,0 +1,3241 @@
+{
+  "schema": 1,
+  "binary": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "template_profile_sha256": "094a8f07100d8c14b59274d220ff825b70f6cff27348f6a833b198a66478abe0",
+  "drawing_view_vtable_rva": "0xd9041c",
+  "selected_list_offset": 356,
+  "commands": [
+    {
+      "name": "group",
+      "command_id": 32891,
+      "message_map_rva": "0xd911f0",
+      "signature": 58,
+      "handler_entry_rva": "0x1529e"
+    },
+    {
+      "name": "ungroup",
+      "command_id": 32892,
+      "message_map_rva": "0xd91208",
+      "signature": 58,
+      "handler_entry_rva": "0x41d94"
+    },
+    {
+      "name": "front",
+      "command_id": 32893,
+      "message_map_rva": "0xd91268",
+      "signature": 58,
+      "handler_entry_rva": "0x32de4"
+    },
+    {
+      "name": "back",
+      "command_id": 32894,
+      "message_map_rva": "0xd91250",
+      "signature": 58,
+      "handler_entry_rva": "0x48a09"
+    },
+    {
+      "name": "forward",
+      "command_id": 32895,
+      "message_map_rva": "0xd91238",
+      "signature": 58,
+      "handler_entry_rva": "0x1ebb9"
+    },
+    {
+      "name": "backward",
+      "command_id": 32896,
+      "message_map_rva": "0xd91220",
+      "signature": 58,
+      "handler_entry_rva": "0x45624"
+    },
+    {
+      "name": "ungroup_unit",
+      "command_id": 33079,
+      "message_map_rva": "0xd90c08",
+      "signature": 58,
+      "handler_entry_rva": "0x2c3f9"
+    }
+  ],
+  "methods": {
+    "group": {
+      "entry_rva": "0x1529e",
+      "body_rva": "0x5a4210",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x41529e",
+        "resolved": "0x9a4210",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a4247",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a4258",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a4281",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a429c",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a42a9",
+            "target": "0x4473de",
+            "resolved": "0xb46cd0"
+          },
+          {
+            "at": "0x9a42b5",
+            "target": "0xf2eece",
+            "resolved": "0xf2eece"
+          },
+          {
+            "at": "0x9a42ca",
+            "target": "0x454d4f",
+            "resolved": "0x478900"
+          },
+          {
+            "at": "0x9a42ea",
+            "target": "0x41d5ac",
+            "resolved": "0x478260"
+          },
+          {
+            "at": "0x9a42f3",
+            "target": "0x44838d",
+            "resolved": "0x827210"
+          },
+          {
+            "at": "0x9a4325",
+            "target": "0x450844",
+            "resolved": "0x661240"
+          },
+          {
+            "at": "0x9a433b",
+            "target": "0x43fa3f",
+            "resolved": "0x9a7750"
+          },
+          {
+            "at": "0x9a4346",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a4351",
+            "target": "0x436d6d",
+            "resolved": "0x5afe40"
+          },
+          {
+            "at": "0x9a4372",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a4387",
+            "target": "0x432100",
+            "resolved": "0xbd1ef0"
+          },
+          {
+            "at": "0x9a439a",
+            "target": "0x408ed6",
+            "resolved": "0xbccaa0"
+          },
+          {
+            "at": "0x9a43b9",
+            "iat": "0x13c8e70",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1514
+            }
+          },
+          {
+            "at": "0x9a43c6",
+            "iat": "0x13c9148",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1039
+            }
+          },
+          {
+            "at": "0x9a43cc",
+            "target": "0x4542b9",
+            "resolved": "0x826950"
+          },
+          {
+            "at": "0x9a43d5",
+            "target": "0xf2eece",
+            "resolved": "0xf2eece"
+          },
+          {
+            "at": "0x9a4406",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a440b",
+            "target": "0x435788",
+            "resolved": "0xbd2170"
+          },
+          {
+            "at": "0x9a442f",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a4436",
+            "target": "0x4347e8",
+            "resolved": "0xad8fe0"
+          },
+          {
+            "at": "0x9a4452",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a4461",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a4489",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a4498",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a44ad",
+            "target": "0x432100",
+            "resolved": "0xbd1ef0"
+          },
+          {
+            "at": "0x9a44c0",
+            "target": "0x408ed6",
+            "resolved": "0xbccaa0"
+          },
+          {
+            "at": "0x9a44df",
+            "iat": "0x13c8e70",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1514
+            }
+          },
+          {
+            "at": "0x9a44ec",
+            "iat": "0x13c9148",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1039
+            }
+          },
+          {
+            "at": "0x9a451a",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a451f",
+            "target": "0x435788",
+            "resolved": "0xbd2170"
+          },
+          {
+            "at": "0x9a4574",
+            "target": "0x43ed15",
+            "resolved": "0x4d9510"
+          },
+          {
+            "at": "0x9a4590",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a459f",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a45a4",
+            "target": "0x435788",
+            "resolved": "0xbd2170"
+          },
+          {
+            "at": "0x9a45c8",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a45cf",
+            "target": "0x4347e8",
+            "resolved": "0xad8fe0"
+          },
+          {
+            "at": "0x9a45e8",
+            "target": "0x43ed15",
+            "resolved": "0x4d9510"
+          },
+          {
+            "at": "0x9a45fb",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a4607",
+            "target": "0x40c306",
+            "resolved": "0x827290"
+          },
+          {
+            "at": "0x9a4632",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a4639",
+            "target": "0x412184",
+            "resolved": "0xad8f20"
+          },
+          {
+            "at": "0x9a4647",
+            "target": "0x4509ca",
+            "resolved": "0x999420"
+          },
+          {
+            "at": "0x9a4655",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a4670",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a46b0",
+            "target": "0x4305e4",
+            "resolved": "0x9973f0"
+          },
+          {
+            "at": "0x9a46b8",
+            "target": "0x40d1b6",
+            "resolved": "0x47b590"
+          },
+          {
+            "at": "0x9a46c0",
+            "target": "0x4391f8",
+            "resolved": "0x99b400"
+          },
+          {
+            "at": "0x9a46d2",
+            "target": "0x43fef4",
+            "resolved": "0x661870"
+          },
+          {
+            "at": "0x9a46e7",
+            "target": "0xf30ffe",
+            "resolved": "0xf30ffe"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "ungroup": {
+      "entry_rva": "0x41d94",
+      "body_rva": "0x5a46f0",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x441d94",
+        "resolved": "0x9a46f0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a4721",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a4733",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a475c",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a4777",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a4781",
+            "target": "0x4542b9",
+            "resolved": "0x826950"
+          },
+          {
+            "at": "0x9a478a",
+            "target": "0xf2eece",
+            "resolved": "0xf2eece"
+          },
+          {
+            "at": "0x9a479d",
+            "target": "0x436d6d",
+            "resolved": "0x5afe40"
+          },
+          {
+            "at": "0x9a47b3",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a47d2",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a47e7",
+            "target": "0x432100",
+            "resolved": "0xbd1ef0"
+          },
+          {
+            "at": "0x9a47fd",
+            "target": "0x408ed6",
+            "resolved": "0xbccaa0"
+          },
+          {
+            "at": "0x9a4816",
+            "iat": "0x13c8e70",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1514
+            }
+          },
+          {
+            "at": "0x9a4823",
+            "iat": "0x13c9148",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1039
+            }
+          },
+          {
+            "at": "0x9a4830",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x9a483e",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a4855",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a4864",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a4871",
+            "target": "0x450844",
+            "resolved": "0x661240"
+          },
+          {
+            "at": "0x9a489a",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a48a9",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a48c1",
+            "iat": "0x13c916c",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1654
+            }
+          },
+          {
+            "at": "0x9a48cb",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a48d2",
+            "target": "0x43ecbb",
+            "resolved": "0xae2700"
+          },
+          {
+            "at": "0x9a48e6",
+            "iat": "0x13c9084",
+            "import": {
+              "dll": "mfc110u.dll",
+              "name": null,
+              "ordinal": 1516
+            }
+          },
+          {
+            "at": "0x9a48ef",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a4901",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a4908",
+            "target": "0x412184",
+            "resolved": "0xad8f20"
+          },
+          {
+            "at": "0x9a4937",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a4979",
+            "target": "0x4343c9",
+            "resolved": "0x9994a0"
+          },
+          {
+            "at": "0x9a4981",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a4998",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a49a7",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a49ac",
+            "target": "0x435788",
+            "resolved": "0xbd2170"
+          },
+          {
+            "at": "0x9a49d0",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a49d7",
+            "target": "0x4347e8",
+            "resolved": "0xad8fe0"
+          },
+          {
+            "at": "0x9a4a10",
+            "target": "0x43fef4",
+            "resolved": "0x661870"
+          },
+          {
+            "at": "0x9a4a1f",
+            "target": "0x43ed15",
+            "resolved": "0x4d9510"
+          },
+          {
+            "at": "0x9a4a2c",
+            "target": "0x40d1b6",
+            "resolved": "0x47b590"
+          },
+          {
+            "at": "0x9a4a34",
+            "target": "0x4391f8",
+            "resolved": "0x99b400"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "front": {
+      "entry_rva": "0x32de4",
+      "body_rva": "0x5a2f30",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x432de4",
+        "resolved": "0x9a2f30",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a2f3c",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2f5f",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2f70",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a2f84",
+            "target": "0x4415a1",
+            "resolved": "0x768770"
+          },
+          {
+            "at": "0x9a2f91",
+            "target": "0x408a7b",
+            "resolved": "0x9b5a90"
+          },
+          {
+            "at": "0x9a2fa2",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          },
+          {
+            "at": "0x9a2fb1",
+            "target": "0xf2f936",
+            "resolved": "0xf2f936"
+          },
+          {
+            "at": "0x9a2fbd",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a2fc9",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "back": {
+      "entry_rva": "0x48a09",
+      "body_rva": "0x5a2e80",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x448a09",
+        "resolved": "0x9a2e80",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a2e8c",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2eaf",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2ec0",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a2ed4",
+            "target": "0x4415a1",
+            "resolved": "0x768770"
+          },
+          {
+            "at": "0x9a2ee1",
+            "target": "0x408a7b",
+            "resolved": "0x9b5a90"
+          },
+          {
+            "at": "0x9a2ef2",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          },
+          {
+            "at": "0x9a2f01",
+            "target": "0xf2f936",
+            "resolved": "0xf2f936"
+          },
+          {
+            "at": "0x9a2f0d",
+            "target": "0x420563",
+            "resolved": "0x9b3b00"
+          },
+          {
+            "at": "0x9a2f19",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "forward": {
+      "entry_rva": "0x1ebb9",
+      "body_rva": "0x5a2db0",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x41ebb9",
+        "resolved": "0x9a2db0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a2dbc",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2ddf",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2df0",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a2e04",
+            "target": "0x4415a1",
+            "resolved": "0x768770"
+          },
+          {
+            "at": "0x9a2e11",
+            "target": "0x408a7b",
+            "resolved": "0x9b5a90"
+          },
+          {
+            "at": "0x9a2e22",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          },
+          {
+            "at": "0x9a2e2d",
+            "target": "0x4086b1",
+            "resolved": "0x9b3c20"
+          },
+          {
+            "at": "0x9a2e44",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a2e50",
+            "target": "0xf2f936",
+            "resolved": "0xf2f936"
+          },
+          {
+            "at": "0x9a2e60",
+            "target": "0x43657f",
+            "resolved": "0x9b3cb0"
+          },
+          {
+            "at": "0x9a2e6c",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "backward": {
+      "entry_rva": "0x45624",
+      "body_rva": "0x5a2ce0",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x445624",
+        "resolved": "0x9a2ce0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a2cec",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2d15",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a2d26",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a2d37",
+            "target": "0x4415a1",
+            "resolved": "0x768770"
+          },
+          {
+            "at": "0x9a2d44",
+            "target": "0x408a7b",
+            "resolved": "0x9b5a90"
+          },
+          {
+            "at": "0x9a2d55",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          },
+          {
+            "at": "0x9a2d60",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a2d77",
+            "target": "0x441beb",
+            "resolved": "0x9b3c00"
+          },
+          {
+            "at": "0x9a2d83",
+            "target": "0xf2f936",
+            "resolved": "0xf2f936"
+          },
+          {
+            "at": "0x9a2d93",
+            "target": "0x41d1b5",
+            "resolved": "0x9b3d10"
+          },
+          {
+            "at": "0x9a2d9f",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "ungroup_unit": {
+      "entry_rva": "0x2c3f9",
+      "body_rva": "0x5a14f0",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x42c3f9",
+        "resolved": "0x9a14f0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a1521",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a1533",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a155c",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a157b",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a158c",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x9a1591",
+            "target": "0x437ba0",
+            "resolved": "0x8288e0"
+          },
+          {
+            "at": "0x9a159a",
+            "target": "0xf2eece",
+            "resolved": "0xf2eece"
+          },
+          {
+            "at": "0x9a15b2",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a15bc",
+            "target": "0x450844",
+            "resolved": "0x661240"
+          },
+          {
+            "at": "0x9a15da",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a15e9",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a1611",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a1620",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a1635",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a1647",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a164e",
+            "target": "0x412184",
+            "resolved": "0xad8f20"
+          },
+          {
+            "at": "0x9a165a",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a169c",
+            "target": "0x4343c9",
+            "resolved": "0x9994a0"
+          },
+          {
+            "at": "0x9a16a4",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a16bb",
+            "target": "0xf31172",
+            "resolved": "0xf31172"
+          },
+          {
+            "at": "0x9a16ca",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9a16d6",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a16dd",
+            "target": "0x4347e8",
+            "resolved": "0xad8fe0"
+          },
+          {
+            "at": "0x9a1719",
+            "target": "0x43fef4",
+            "resolved": "0x661870"
+          },
+          {
+            "at": "0x9a1726",
+            "target": "0x4305e4",
+            "resolved": "0x9973f0"
+          },
+          {
+            "at": "0x9a172e",
+            "target": "0x40d1b6",
+            "resolved": "0x47b590"
+          },
+          {
+            "at": "0x9a1736",
+            "target": "0x4391f8",
+            "resolved": "0x99b400"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "cell_constructor": {
+      "entry_rva": "0x4838d",
+      "body_rva": "0x427210",
+      "return": "4",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x44838d",
+        "resolved": "0x827210",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x827242",
+            "target": "0x41885e",
+            "resolved": "0x81f710"
+          },
+          {
+            "at": "0x82726c",
+            "target": "0x450844",
+            "resolved": "0x661240"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "cell_runtime": {
+      "entry_rva": "0x542b9",
+      "body_rva": "0x426950",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x4542b9",
+        "resolved": "0x826950",
+        "code": [],
+        "calls": [],
+        "truncated": false
+      }
+    },
+    "unit_runtime": {
+      "entry_rva": "0x37ba0",
+      "body_rva": "0x4288e0",
+      "return": "",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x437ba0",
+        "resolved": "0x8288e0",
+        "code": [],
+        "calls": [],
+        "truncated": false
+      }
+    },
+    "select": {
+      "entry_rva": "0x509ca",
+      "body_rva": "0x599420",
+      "return": "8",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x4509ca",
+        "resolved": "0x999420",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x99944c",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x999478",
+            "target": "0x425dbf",
+            "resolved": "0x99a7a0"
+          },
+          {
+            "at": "0x999484",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99948c",
+            "target": "0x4305e4",
+            "resolved": "0x9973f0"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "select_list": {
+      "entry_rva": "0x343c9",
+      "body_rva": "0x5994a0",
+      "return": "4",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x4343c9",
+        "resolved": "0x9994a0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9994b2",
+            "target": "0xf2fb70",
+            "resolved": "0xf2fb70"
+          },
+          {
+            "at": "0x9994ba",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9994d3",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9994ec",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x999507",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x999533",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x99954b",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x99956d",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x999588",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x999599",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x9995a3",
+            "target": "0x4305e4",
+            "resolved": "0x9973f0"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "select_add": {
+      "entry_rva": "0x25dbf",
+      "body_rva": "0x59a7a0",
+      "return": "4",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x425dbf",
+        "resolved": "0x99a7a0",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x99a7c3",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          },
+          {
+            "at": "0x99a7d1",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x99a7ec",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x99a810",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99a824",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x99a83c",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x99a857",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99a865",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x99a880",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x99a891",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "selected_contains": {
+      "entry_rva": "0x29d6b",
+      "body_rva": "0x59c210",
+      "return": "4",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x429d6b",
+        "resolved": "0x99c210",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x99c22e",
+            "target": "0xf2f93c",
+            "resolved": "0xf2f93c"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "selection_notify": {
+      "entry_rva": "0x26bc",
+      "body_rva": "0x59c550",
+      "return": "0xc",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x4026bc",
+        "resolved": "0x99c550",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x99c578",
+            "target": "0x40da4e",
+            "resolved": "0x4ab450"
+          },
+          {
+            "at": "0x99c589",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99c5b6",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x99c5cb",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x99c5d6",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99c5f6",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x99c60b",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x99c61c",
+            "target": "0x42dabf",
+            "resolved": "0x999a70"
+          },
+          {
+            "at": "0x99c628",
+            "target": "0x40c1e4",
+            "resolved": "0x999bb0"
+          },
+          {
+            "at": "0x99c636",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x99c63d",
+            "target": "0x41656d",
+            "resolved": "0xada7e0"
+          },
+          {
+            "at": "0x99c651",
+            "target": "0x409507",
+            "resolved": "0x9972f0"
+          },
+          {
+            "at": "0x99c687",
+            "target": "0xf2ffd8",
+            "resolved": "0xf2ffd8"
+          }
+        ],
+        "truncated": false
+      }
+    },
+    "ordered_selection": {
+      "entry_rva": "0x3fa3f",
+      "body_rva": "0x5a7750",
+      "return": "4",
+      "function": {
+        "source": "C:\\unbound-install-root\\Program\\McgsSetPro.exe",
+        "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+        "entry": "0x43fa3f",
+        "resolved": "0x9a7750",
+        "code": [],
+        "calls": [
+          {
+            "at": "0x9a775c",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a7764",
+            "target": "0x42b71a",
+            "resolved": "0x6468e0"
+          },
+          {
+            "at": "0x9a776b",
+            "target": "0x408a7b",
+            "resolved": "0x9b5a90"
+          },
+          {
+            "at": "0x9a777e",
+            "target": "0x447c80",
+            "resolved": "0x5b03e0"
+          },
+          {
+            "at": "0x9a7793",
+            "target": "0x4278b3",
+            "resolved": "0x646a00"
+          },
+          {
+            "at": "0x9a77a4",
+            "target": "0x427480",
+            "resolved": "0x9a76b0"
+          },
+          {
+            "at": "0x9a77b5",
+            "target": "0x409462",
+            "resolved": "0x782380"
+          },
+          {
+            "at": "0x9a77bf",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          },
+          {
+            "at": "0x9a77cd",
+            "target": "0x4124b8",
+            "resolved": "0x5c3610"
+          }
+        ],
+        "truncated": false
+      }
+    }
+  },
+  "classes": [
+    {
+      "class_name": "CDrawActiveX",
+      "primary_vtable_rva": "0xcf275c",
+      "slots": {
+        "1": "0x48e96",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawAlm",
+      "primary_vtable_rva": "0xd5c66c",
+      "slots": {
+        "1": "0x19a38",
+        "5": "0x4f25a",
+        "6": "0x52e73",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawArc",
+      "primary_vtable_rva": "0xd72f64",
+      "slots": {
+        "1": "0x28fb0",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawArrow1",
+      "primary_vtable_rva": "0xd74ebc",
+      "slots": {
+        "1": "0x52946",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawArrow2",
+      "primary_vtable_rva": "0xd75094",
+      "slots": {
+        "1": "0x44927",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawArrow3",
+      "primary_vtable_rva": "0xd7526c",
+      "slots": {
+        "1": "0x37cbd",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawBall3D",
+      "primary_vtable_rva": "0xd741d4",
+      "slots": {
+        "1": "0x52dc4",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawBalloon",
+      "primary_vtable_rva": "0xd7389c",
+      "slots": {
+        "1": "0x14d49",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawBitmap",
+      "primary_vtable_rva": "0xd72b9c",
+      "slots": {
+        "1": "0x20b49",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0x4eae4"
+      }
+    },
+    {
+      "class_name": "CDrawButton",
+      "primary_vtable_rva": "0xd5de6c",
+      "slots": {
+        "1": "0x50e93",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawCell",
+      "primary_vtable_rva": "0xd7224c",
+      "slots": {
+        "1": "0x1e295",
+        "5": "0x712b",
+        "6": "0x238f8",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawCircle3D",
+      "primary_vtable_rva": "0xd743ac",
+      "slots": {
+        "1": "0x24451",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawComboBox",
+      "primary_vtable_rva": "0xd5fd4c",
+      "slots": {
+        "1": "0xfa60",
+        "5": "0x3a3b4",
+        "6": "0x1a69f",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawCross",
+      "primary_vtable_rva": "0xd73a74",
+      "slots": {
+        "1": "0x4e44a",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawCube",
+      "primary_vtable_rva": "0xd73c4c",
+      "slots": {
+        "1": "0x2950f",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawDiamond",
+      "primary_vtable_rva": "0xd734ec",
+      "slots": {
+        "1": "0x1780f",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawDll",
+      "primary_vtable_rva": "0xd62224",
+      "slots": {
+        "1": "0xdbb1",
+        "5": "0x4115a",
+        "6": "0x3d9ec",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawEdit",
+      "primary_vtable_rva": "0xd63cb4",
+      "slots": {
+        "1": "0x4b73b",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawEllipse",
+      "primary_vtable_rva": "0xd729c4",
+      "slots": {
+        "1": "0x15a0f",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawFilePlay",
+      "primary_vtable_rva": "0xd65ae4",
+      "slots": {
+        "1": "0x2315",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawFlow",
+      "primary_vtable_rva": "0xd66b3c",
+      "slots": {
+        "1": "0x5428c",
+        "5": "0x31c0a",
+        "6": "0x3d7a8",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawGrid",
+      "primary_vtable_rva": "0xd68c84",
+      "slots": {
+        "1": "0x2b643",
+        "5": "0xc504",
+        "6": "0x1d2b4",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawGuan",
+      "primary_vtable_rva": "0xd75f54",
+      "slots": {
+        "1": "0x4722b",
+        "5": "0x444a4",
+        "6": "0x2034c",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawHalfBox",
+      "primary_vtable_rva": "0xd727ec",
+      "slots": {
+        "1": "0x2438e",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawHexagon",
+      "primary_vtable_rva": "0xd74584",
+      "slots": {
+        "1": "0x1e7f4",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawHisGrid",
+      "primary_vtable_rva": "0xdac5ec",
+      "slots": {
+        "1": "0x54d04",
+        "5": "0xa646",
+        "6": "0x6cad",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawHisPic",
+      "primary_vtable_rva": "0xd6a194",
+      "slots": {
+        "1": "0x1cd6e",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawIsoscelestriangle",
+      "primary_vtable_rva": "0xd7475c",
+      "slots": {
+        "1": "0x41745",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawLabel",
+      "primary_vtable_rva": "0xd72d8c",
+      "slots": {
+        "1": "0x541c4",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0x229d5"
+      }
+    },
+    {
+      "class_name": "CDrawLine",
+      "primary_vtable_rva": "0xd71e9c",
+      "slots": {
+        "1": "0x4f7c8",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawMulBtn",
+      "primary_vtable_rva": "0xd6c78c",
+      "slots": {
+        "1": "0x319bc",
+        "5": "0x966f",
+        "6": "0x2aa4",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawMulDis",
+      "primary_vtable_rva": "0xd700c4",
+      "slots": {
+        "1": "0x11be4",
+        "5": "0x966f",
+        "6": "0x2aa4",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawObj",
+      "primary_vtable_rva": "0xd71aec",
+      "slots": {
+        "1": "0x4ab6a",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawOctagon",
+      "primary_vtable_rva": "0xd736c4",
+      "slots": {
+        "1": "0x276c4",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawParallelogram",
+      "primary_vtable_rva": "0xd7313c",
+      "slots": {
+        "1": "0x3b782",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPentagon",
+      "primary_vtable_rva": "0xd73e24",
+      "slots": {
+        "1": "0x48f9a",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPentagon3D",
+      "primary_vtable_rva": "0xd73ffc",
+      "slots": {
+        "1": "0x3a215",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPic",
+      "primary_vtable_rva": "0xd786a4",
+      "slots": {
+        "1": "0x50db7",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPipe1",
+      "primary_vtable_rva": "0xd759cc",
+      "slots": {
+        "1": "0x39ad6",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPipe2",
+      "primary_vtable_rva": "0xd75ba4",
+      "slots": {
+        "1": "0x39f36",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPipe3",
+      "primary_vtable_rva": "0xd75d7c",
+      "slots": {
+        "1": "0x4d2a2",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPlanPic",
+      "primary_vtable_rva": "0xdfbd24",
+      "slots": {
+        "1": "0x7e82",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPlane1",
+      "primary_vtable_rva": "0xd75444",
+      "slots": {
+        "1": "0x363c7",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPlane2",
+      "primary_vtable_rva": "0xd7561c",
+      "slots": {
+        "1": "0x1f4d8",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPlane3",
+      "primary_vtable_rva": "0xd757f4",
+      "slots": {
+        "1": "0x522b1",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawPoly",
+      "primary_vtable_rva": "0xd71cc4",
+      "slots": {
+        "1": "0xfbe6",
+        "5": "0x39027",
+        "6": "0x1ce31",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawRect",
+      "primary_vtable_rva": "0xd72074",
+      "slots": {
+        "1": "0x5812",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawRighttrigngle",
+      "primary_vtable_rva": "0xd74934",
+      "slots": {
+        "1": "0x8fb7",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawRotateBtn",
+      "primary_vtable_rva": "0xd79f74",
+      "slots": {
+        "1": "0x9c37",
+        "5": "0x1fbb8",
+        "6": "0x2e505",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawRotateTbl",
+      "primary_vtable_rva": "0xd7b52c",
+      "slots": {
+        "1": "0x1ee0c",
+        "5": "0x4cf69",
+        "6": "0x263fa",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawRoundRect",
+      "primary_vtable_rva": "0xd72614",
+      "slots": {
+        "1": "0x21d96",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawSaveData",
+      "primary_vtable_rva": "0xd7d944",
+      "slots": {
+        "1": "0x1f24e",
+        "5": "0xa006",
+        "6": "0x2cdf9",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawSeal",
+      "primary_vtable_rva": "0xd74ce4",
+      "slots": {
+        "1": "0x4be2f",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawSlider",
+      "primary_vtable_rva": "0xd7ff3c",
+      "slots": {
+        "1": "0x35bf7",
+        "5": "0x4f4d",
+        "6": "0x4500c",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawSliderFill",
+      "primary_vtable_rva": "0xd8145c",
+      "slots": {
+        "1": "0x10b4f",
+        "5": "0x100f5",
+        "6": "0x2f338",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawStar",
+      "primary_vtable_rva": "0xd74b0c",
+      "slots": {
+        "1": "0x1cf85",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawTrapezoid",
+      "primary_vtable_rva": "0xd73314",
+      "slots": {
+        "1": "0x1672",
+        "5": "0x282a4",
+        "6": "0x4877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    },
+    {
+      "class_name": "CDrawUnit",
+      "primary_vtable_rva": "0xd72434",
+      "slots": {
+        "1": "0x3ffd",
+        "5": "0x3706",
+        "6": "0x4a877",
+        "29": "0x1acd",
+        "63": "0xce9b"
+      }
+    }
+  ],
+  "code_guards": [
+    {
+      "rva": "0x1529e",
+      "bytes": "e96def5800e9383aa500e9d3759100e9ee3b8300e989b93400e924d48700e9dfc36e00e94a742d00e9a5977300e9e0ce",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a4210",
+      "bytes": "558bec6aff6897d0fd0064a1000000005081eca0000000a1600b3b0133c58945f0508d45f464a300000000894dc88b4dc881c164010000e86ce2a6ff85c07f05e9820400008b4dc8e8bd74a8ff89459c6a016a018b45c8508b4d9c8b118b4d9c8b8280010000ffd08b4dc881c164010000e8fa39aaff8945bc837dbc0074368d4dbc518b4dc881c164010000e81236a8ff8b10899574ffffffe83031aaff508b8d74ffffffe814ac580085c07405e914040000ebc46800010000e8800aabff894590c745fc00000000837d9000741e6a006a006a006a008d4de0e8bd92a7ff508b4d90e89540aaff8945a4eb07c745a4000000008b45a489857cffffffc745fcffffffff8b8d7cffffff894dc46a0a8d8d54ffffffe81ac5aaffc745fc010000008d9554ffffff528b4dc8e8ffb6a9ff8d8d54ffffffe83539aaff8945bc8d4db8e8172aa9ffc645b900c645ba01837dbc000f848a0200008d45bc508d8d54ffffffe83c35a8ff8b08894dcc837dcc007502ebda8d4db4e874dda8ffc645fc028d5580528b4dcc83c104e8374ba6ff89458c8b458c898578ffffffc645fc038b8d78ffffff518d4db4ff15708e3c01c645fc028d4d80ff1548913c01e8e8feaaff508b4dcce8f4aa580085c075628b55cc8b45c48942546a008b4dcc8b118b4dcc8b82fc000000ffd08b4dcc518b4dc481c1e4000000e85750a6ffe87813a9ff8945988d55b8528d45b4508b4d988b118b4d988b4214ffd08b4dcc518b4dc8e8e672a8ff8bc8e8ad03a9ffe9a10100006a0068541d390168a49338016a008b55cc52e81bcd580083c41405e40000008bc8e81a38aaff894594837d94000f840b0100008d4594506a0068541d390168a49338016a008b4dcc51e8e4cc580083c41405e40000008bc8e81634a8ff8b108955c0837dc0007502ebbf8d4db0e84edca8ffc645fc048d4584508b4dc083c104e8114aa6ff898570ffffff8b8d70ffffff894d88c645fc058b5588528d4db0ff15708e3c01c645fc048d4d84ff1548913c018b45c08b4dc48948546a008b55c08b028b4dc08b90fc000000ffd28b45c0508b4dc481c1e4000000e8434fa6ffe86412a9ff8945ac8d4db8518d55b0528b45ac8b108b4dac8b4214ffd08b4dcc81c18000000083ec108bd48b0189028b41048942048b41088942088b490c894a0c8b55c08b028b4dc08b5018ffd2c645fc028d4db0e89ca7a9ffe9ebfeffff6a0068541d390168a49338016a008b45cc50e8ddcb580083c41405e40000008bc8e8ccb55800e8df11a9ff8945a88d4db8518d55b4528b45a88b108b4da88b4214ffd08b4dcc518b4dc8e84d71a8ff8bc8e81402a9ff8b55cc8b028b4dcc8b5074ffd2c645fc018d4db4e828a7a9ffe96cfdffff8b4dc881c164010000e870b558008d45d0508b4dc4e8fa7ca6ff8b4dc481c1800000008b1089118b50048951048b50088951088b400c89410c8b4dc4518b4dc8e8e370a8ff8bc8e846dba6ff6a008b55c4528b4dc8e87ec3aaff8b4dc481c1e4000000e82636aaff8945bc837dbc00744a8d45bc508b4dc481c1e4000000e83e32a8ff8b08894da08b55c481c28000000083ec108bc48b0a89088b4a048948048b4a088948088b520c89500c8b45a08b108b4da08b4214ffd0ebb08b4dc8e82fbfa8ff8b4dc8e8f98aa6ff8b4dc8e8334ba9ffc745fcffffffff8d8d54ffffffe81db8a9ff8b4df464890d00000000598b4df033cde812c958008be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        427,
+        440,
+        563,
+        568,
+        618,
+        623,
+        721,
+        734,
+        881,
+        886
+      ]
+    },
+    {
+      "rva": "0x41d94",
+      "bytes": "e957295600e992005600e9bdd85500e9f82c5300e9d35f0600e94ef6a400e979e77300e994346a00e9df4b4d00e9ea26",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a46f0",
+      "bytes": "558bec6aff68d8d0fd0064a1000000005083ec5ca1600b3b0133c5508d45f464a300000000894dec8b4dec81c164010000e892dda6ff83f8017405e9090300008b4dece8e26fa8ff8945d46a016a018b45ec508b4dd48b118b4dd48b8280010000ffd08b4dec81c164010000e81f35aaff8945e0837de00074308d4de0518b4dec81c164010000e83731a8ff8b108955c8e833fbaaff508b4dc8e83fa7580085c07505e9a1020000ebca8d4df0e8cb25a9ffc645f100c645f2018b4dec81c164010000e8c834aaff8945e0837de0000f84640200008d45e0508b4dec81c164010000e8dc30a8ff8b08894de4837de4007502ebd78d4dd8e814d9a8ffc745fc000000008d55bc528b4de483c104e8d446a6ff8945c48b45c48945c0c645fc018b4dc0518d4dd8ff15708e3c01c645fc008d4dbcff1548913c018b55e4528b4dece88a92a8ff8b4dec81c164010000e82db358006a0068541d390168a49338016a008b45e450e818c9580083c41405e40000008bc8e81734aaff8945d06a0a8d4d98e8cebfaaffc645fc02837dd0000f84ee0000008d4dd0516a0068541d390168a49338016a008b55e452e8d3c8580083c41405e40000008bc8e80530a8ff8b008945e8837de8007502ebbf8b4de883c14cff156c913c01508b4dece84a6ea8ff8bc8e8e4a3a9ff85c07511685cfc18018b4de883c14cff1584903c018b4dece8266ea8ff8b4de88941548b55e8528b4dece8146ea8ff8bc8e877d8a6ff6a018b45e88b108b4de88b82fc000000ffd08b4de883c1048b55e88b42048b5054ffd28b45e8508d4d98e8264ba6ff8b4de481c18000000083ec108bd48b0189028b41048942048b41088942088b490c894a0c8b55e88b028b4de88b5018ffd2e908ffffff8d4598508b4dece84bfaa8ff8d4d98e8eab158006a0068541d390168a49338016a008b4de451e8d5c7580083c41405e40000008bc8e8c4b15800e8d70da9ff8945cc8d55f0528d45d8508b4dcc8b118b4dcc8b4214ffd08b4de4518b4dece8456da8ff8bc8e80cfea8ff8b55e48955b88b45b88945dc837ddc0074146a018b4ddc8b118b4ddc8b4204ffd08945b4eb07c745b400000000c645fc008d4d98e8dfb4a9ffc745fcffffffff8d4dd8e8f1a2a9ffe992fdffff8b4dece88587a6ff8b4dece8bf47a9ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        296,
+        309,
+        342,
+        347,
+        411,
+        416,
+        467,
+        492,
+        504,
+        665,
+        670
+      ]
+    },
+    {
+      "rva": "0x32de4",
+      "bytes": "e947015700e9f2671f00e93dd3a100e9484d4000e943829a00e9bec01300e9990ba900e9d4c27a00e9bf968f00e97a8b",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a2f30",
+      "bytes": "558bec83ec18894dfc8b4dfce8d987a8ff8945f06a016a018b45fc508b4df08b118b4df08b8280010000ffd08b4dfce8b687a8ff8945ec8b4dfc81c164010000e843f5a6ff85c07f02eb538b4dfc81c164010000e818e6a9ff8b08894df48b4dece8e55aa6ff8945f86a008b55f4528b4df8e895c958008945e88b45e8508b4df8e880c958008b4df4518b4df8e8a064a6ff8b55f4528b4dfce8f1aaa8ff8be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x48a09",
+      "bytes": "e972a45500e94d0f1000e958857700e983dd4c00e98e220300e9a9ac8e00e994658800e92f647a00e98a150900e9458d",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a2e80",
+      "bytes": "558bec83ec18894dfc8b4dfce88988a8ff8945f06a016a018b45fc508b4df08b118b4df08b8280010000ffd08b4dfce86688a8ff8945ec8b4dfc81c164010000e8f3f5a6ff85c07f02eb538b4dfc81c164010000e8c8e6a9ff8b08894df48b4dece8955ba6ff8945f86a008b55f4528b4df8e845ca58008945e88b45e8508b4df8e830ca58008b4df4518b4df8e851d6a7ff8b55f4528b4dfce8a1aba8ff8be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1ebb9",
+      "bytes": "e9f2415800e9ed422800e9b8e10700e983e6a300e91ea18b00e919891b00e914db8900e98f972900e98a741300e9452e",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a2db0",
+      "bytes": "558bec83ec1c894dfc8b4dfce85989a8ff8945ec6a016a018b45fc508b4dec8b118b4dec8b8280010000ffd08b4dfce83689a8ff8945e48b4dfc81c164010000e8c3f6a6ff85c07f02eb768b4dfc81c164010000e898e7a9ff8b08894df08b4de4e8655ca6ff8945f86a008b55f0528b4df8e815cb58008945f48b4df8e87f58a6ff3945f4743a8b45f48945e88d4de8518b4df8e86a4aa8ff8b55f4528b4df8e8e1ca58008b45f0508b4de8518b4df8e81a37a9ff8b55f0528b4dfce84eaca8ff8be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x45624",
+      "bytes": "e9b7d65500e962654300e97d6a9f00e9881f9c00e983926500e93e094300e9e9790400e9d44e0500e98ff10f00e91adc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a2ce0",
+      "bytes": "558bec83ec1c894dfc8b4dfce8298aa8ff8945ec6a016a018b45fc508b4dec8b118b4dec8b8280010000ffd08b4dfc81c164010000e89ef7a6ff85c07f05e9810000008b4dfce8ef89a8ff8945e48b4dfc81c164010000e865e8a9ff8b08894df08b4de4e8325da6ff8945f86a008b55f0528b4df8e8e2cb58008945f48b4df8e81b4faaff3945f4743a8b45f48945e88d4de8518b4df8e86feea9ff8b55f4528b4df8e8aecb58008b45f0508b4de8518b4df8e81da4a7ff8b55f0528b4dfce81bada8ff8be55dc3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2c3f9",
+      "bytes": "e9f2505700e90d114e00e98891ab00e9237aa500e9de1e8500e9a95b7900e924fa4400e99f533800e91ac32400e905bc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a14f0",
+      "bytes": "558bec6aff6835cefd0064a1000000005083ec40a1600b3b0133c5508d45f464a300000000894df08b4df081c164010000e8920fa7ff83f8017405e90b0200008b4df0e8e2a1a8ff8945e06a016a018b45f0508b4de08b118b4de08b8280010000ffd08b4df081c164010000e81f67aaff8945dc837ddc000f84b50100008d4ddc518b4df081c164010000e83363a8ff8b108955ec8b45ec508b4df0e82ec5a8ffe80a66a9ff508b4dece82fd9580083f8017405e9920100008b4df081c164010000e8b9e558006a0a8d4db4e883f2aaffc745fc000000006a00681082390168a49338016a008b4dec51e893fb580083c41405e40000008bc8e89266aaff8945d8837dd8000f849a0000008d55d8526a00681082390168a49338016a008b45ec50e85cfb580083c41405e40000008bc8e88e62a8ff8b08894de8837de8007502ebbf8b4df0e8e0a0a8ff8b55e88942548b45e8508b4df0e8cea0a8ff8bc8e8310ba7ff8b4de8518d4db4e8037ea6ff8b55ec81c28000000083ec108bc48b0a89088b4a048948048b4a088948088b520c89500c8b45e88b108b4de88b4218ffd0e95cffffff8d4db4518b4df0e8282da9ff8d4db4e8c7e458006a00681082390168a49338016a008b55ec52e8b2fa580083c41405e40000008bc8e8a1e458008b45ec508b4df0e83fa0a8ff8bc8e80631a9ff8b4dec894dd48b55d48955e4837de40074146a018b45e48b108b4de48b4204ffd08945d0eb07c745d000000000c745fcffffffff8d4db4e8d6e7a9ffe941feffff8b4df0e8b9eea8ff8b4df0e883baa6ff8b4df0e8bd7aa9ff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        219,
+        224,
+        274,
+        279,
+        444,
+        449
+      ]
+    },
+    {
+      "rva": "0x4838d",
+      "bytes": "e97eee3d00e9093f5000e914261f00e9bff07800e9ea1b5800e9a57ba000e9b0357700e99b4d4400e9c6466800e9e14e",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x427210",
+      "bytes": "558bec6aff6870cefb0064a1000000005051a1600b3b0133c5508d45f464a300000000894df08b45085068395000008b4df0e81716bfffc745fc000000008b4df0c7014c2217018b55f0c74204942317016a0a8b4df081c1e4000000e8d395c2ffc745fcffffffff8b45f08b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        19,
+        67,
+        77
+      ]
+    },
+    {
+      "rva": "0x542b9",
+      "bytes": "e992263d00e9bd8a9a00e938616000e933744200e97e872b00e9098b1b00e9b4ce7400e93f5b5000e9ea301700e9b5fb",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x426950",
+      "bytes": "558becb8286b39015dc3",
+      "reloc_offsets": [
+        4
+      ]
+    },
+    {
+      "rva": "0x37ba0",
+      "bytes": "e93b0d3f00e946001700e9b1fb8100e9bca47d00e9979b1100e9825b0600e9ad204600e9d8933700e973ba0c00e98e27",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4288e0",
+      "bytes": "558becb8b86b39015dc3",
+      "reloc_offsets": [
+        4
+      ]
+    },
+    {
+      "rva": "0x509ca",
+      "bytes": "e9518a5400e9dcb54200e987e58b00e9c2490f00e92ddd8800e9583f6d00e933a72900e92ead9b00e9a9b97700e9448b",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x599420",
+      "bytes": "558bec51894dfc837d0c0075246a006a026a008b45fc8b108b4dfc8b829c010000ffd08b4dfc81c164010000e81f675900837d080074188b4d08518b55fc8b028b4dfc8b9068010000ffd285c07402eb188b4508508b4dfce842c9a8ff8b4d08518b4dfce83646a9ff8b4dfce85371a9ff8be55dc20800",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x343c9",
+      "bytes": "e9d2505600e9ede61500e9a8190500e973608a00e9fe8b9000e909ec7800e9c4923700e98fa61300e98a6a9000e9c5fe",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5994a0",
+      "bytes": "558bec83ec1c894dfc8b4dfc81c164010000e8b96659008b4d08e8c1e7aaff8945f4837df4000f84980000008d45f4508b4d08e8dbe3a8ff8b08894df8837df800747c8b4dfc81c164010000e88fe7aaff8945f0837df000742c8d55f0528b4dfc81c164010000e8a7e3a8ff8b008945ec8b4dec83796001740a8b55ecc7426001000000ebce8b45f8508b4dfc81c164010000e82affa6ff8b4df8c74160020000008b4dfc81c164010000e8688fa7ff83f801750a8b55f8c7426004000000e95effffff8b4dfc81c164010000e80ee7aaff8945e8837de80074258d45e8508b4dfc81c164010000e826e3a8ff8b08894de48b55e4528b4dfce82145a9ffebd58b4dfce83c70a9ff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x25dbf",
+      "bytes": "e9dc495700e9f7254400e9b20d2800e97d5f0400e958fb9d00e973019c00e9ced18000e979ab7f00e944f47200e97f96",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x59a7a0",
+      "bytes": "558bec83ec10894dfc837d08007505e9e40000006a008b4508508b4dfc81c164010000e8745159008b4dfc81c164010000e8aad4aaff8945f8837df80074388d4df8518b4dfc81c164010000e8c2d0a8ff8b108955f48b45f48378600174168b4df4c74160010000008b55f4528b4dfce8aa32a9ffebc28b4508508b4dfc81c164010000e839eca6ff8b4d08c74160020000008b4dfc81c164010000e8777ca7ff83f801750a8b5508c74260040000008b4508508b4dfce86332a9ff8b4dfc81c164010000e816d4aaff8945f8837df80074258d4df8518b4dfc81c164010000e82ed0a8ff8b108955f08b45f0508b4dfce82932a9ffebd58be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x29d6b",
+      "bytes": "e9a0245700e9ebb65200e946c94e00e9610f3c00e95ced2b00e937c11900e9b2c3a000e97d6d7f00e938da5500e9e306",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x59c210",
+      "bytes": "558bec83ec0c894df48b45088945f86a008b4df8518b4df481c164010000e80937590085c07409c745fc01000000eb07c745fc000000008b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x26bc",
+      "bytes": "e98f9e5900e97a193a00e9b5570700e900767900e90b9e5400e936d97a00e961fb5f00e9ec762e00e977e86900e9f2f9",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x59c550",
+      "bytes": "558bec83ec38894dfc8b450c8945f8837df8030f87c60000008b4df8ff248d94c699006a008b4dfce8d114a7ffe9ad0000008b5510528b4dfce83115a9ffe99c000000837d100074088b45108945f4eb0c8b4dfc81c164010000894df48b55f48955ec8b4dece8c5b6aaff8945f0837df00074198d45f0508b4dece8e3b2a8ff8b08518b4dfce8e414a9ffebe1eb508b55fc81c26401000039551074428b45108945e48b4de4e885b6aaff8945e8837de800742b8d4de8518b4de4e8a3b2a8ff8b108955e08b45e0508b4dfce89e14a9ff8b4de0518b4dfce8b7fba6ffebcf8d55d8528b4dfce8dff0a8ff8bc8e82b9fa7ff8b45dc508b4dd8518d55c8528b4dfce8b1cea6ff8b088b5004894dd88955dc8b45d88945d08b4ddc894dd48b159c7e3c0152a19c7e3c01508b4dd4518b55d0526a018b4dfce84c3959008be55dc20c00",
+      "reloc_offsets": [
+        31,
+        287,
+        293
+      ]
+    },
+    {
+      "rva": "0x3fa3f",
+      "bytes": "e90c7d5600e9c7f54600e9a2469900e91d4a5000e9f8c62700e9b3188400e97e698100e909125000e944474d00e99f42",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5a7750",
+      "bytes": "558bec83ec10894df88b4d08e857ada6ff8b4df8e8b13fa8ff8bc8e80b13a6ff8945fc837dfc007502eb578b4dfce8fd04aaff8945f4837df40074308d45f4508b4dfce81b01a8ff8b08894df08b55f0528b4df8e8d7fca7ff83f801750c8b45f0508b4d08e8a81ca6ffebca8b4d08e8f4aca6ff8b4df881c164010000e8e6aca6ff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x59c694",
+      "bytes": "73c5990082c5990093c59900dfc59900",
+      "reloc_offsets": [
+        0,
+        4,
+        8,
+        12
+      ]
+    },
+    {
+      "rva": "0x48e96",
+      "bytes": "e975f90600e9a0e39d00e9ebfd1d00e9f6478e00e981f60400e99ca79a00e9e7766600e9f23f5100e97df05000e908a9",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xb8810",
+      "bytes": "558bec51894dfc8b4dfce8bbb2f9ff8b450883e00174098b4dfc51e8ac18f6ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x282a4",
+      "bytes": "e9a76f3f00e9c2360500e91d5e5000e9680e1d00e98303a300e93e499a00e979fa6400e954034600e90fa53700e9da99",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x41f250",
+      "bytes": "558bec83ec14894dfc8d4d08e879a4c1ff8b450c508b4d08518d4dece82703c3ff8b108b40048955f48945f88b4df851",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4877",
+      "bytes": "e9c4aa4100e93fae8600e9ca427700e9c5c82500e920171400e9fbf5a200e946f7a200e9a1c55500e9cc475100e9a7c0",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x41f340",
+      "bytes": "558bec83ec14894dfc8d4d08e889a3c1ff68102700008d4d08e83707c1ff508b45fc8b888000000051ff15b8673c018b",
+      "reloc_offsets": [
+        43
+      ]
+    },
+    {
+      "rva": "0x1acd",
+      "bytes": "e9deed4100e969a30600e9a4ff7700e92fa77600e9dad95300e9f5134300e910bb1c00e90b21ac00e966f19700e9c144",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4208b0",
+      "bytes": "558bec83ec10894df88b45f88945f48b4df4894dfc837dfc0074146a018b55fc8b028b4dfc8b5004ffd28945f0eb07c7",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xce9b",
+      "bytes": "e9109e7300e93bfb4500e9f6c84500e9419a6700e91cc38000e907592d00e902208c00e9ed408400e9f88d7b00e97362",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x746cb0",
+      "bytes": "558bec51894dfc8be55dc20400cccccc558bece8eda88fff5dc3cccccccccccc558becb8ec3d3a015dc3cccccccccccc",
+      "reloc_offsets": [
+        36
+      ]
+    },
+    {
+      "rva": "0x19a38",
+      "bytes": "e9b3eb3400e99e5c0500e9a9c4aa00e954345c00e98ff33e00e9aa482e00e9458f5900e9605b8200e91b615600e97699",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3685f0",
+      "bytes": "558bec51894dfc8b4dfce85dc1ccff8b450883e00174098b4dfc51e8cc1acbff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f25a",
+      "bytes": "e911663100e93ccca100e9d7fd8700e9125c0f00e9adcd0400e918d07100e9f3997600e9ee007000e929280b00e914ef",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x365870",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8092accff8d4d08e8f2",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x52e73",
+      "bytes": "e9482a3100e9d3dc0f00e99e824900e959249400e9746e7a00e91f9c1f00e90ae01e00e925490d00e9701b0b00e9ebcf",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3658c0",
+      "bytes": "558bec83ec1056894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce889efc9ffc745",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x28fb0",
+      "bytes": "e9abf54500e9567f8d00e911961600e91caf9000e9c7128b00e902e72800e98df44300e978912300e9d3346300e98ea3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488560",
+      "bytes": "558bec51894dfc8b4dfce8f50cb8ff8b450883e00174098b4dfc51e85c1bb9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x52946",
+      "bytes": "e9555c4300e9f09e3a00e90b2a1f00e946b99d00e991de5200e9ac2a8600e9675b7a00e9927b7300e90d22a900e9e837",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4885a0",
+      "bytes": "558bec51894dfc8b4dfce8dd41baff8b450883e00174098b4dfc51e81c1bb9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x44927",
+      "bytes": "e9b43c4400e94f502b00e91a6c9f00e9459f9300e9f01ba900e9ebe63600e986670700e9510f9200e9dc4d7100e9c776",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4885e0",
+      "bytes": "558bec51894dfc8b4dfce85d0cbcff8b450883e00174098b4dfc51e8dc1ab9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x37cbd",
+      "bytes": "e95e094500e9b972ac00e9841c7300e9efe75400e9eaf02b00e985310800e940428d00e90b2d8500e9b6e78100e9a123",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488620",
+      "bytes": "558bec51894dfc8b4dfce8c9e6b7ff8b450883e00174098b4dfc51e89c1ab9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x52dc4",
+      "bytes": "e997584300e942d62000e9ddc16100e9e81b3600e9d3903500e9ce036e00e9c9609400e994a70400e99f010400e95a54",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488660",
+      "bytes": "558bec51894dfc8b4dfce88b94b7ff8b450883e00174098b4dfc51e85c1ab9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x14d49",
+      "bytes": "e952394700e9ed636a00e9c8f60900e963a46c00e93e0a5d00e9e90e5500e974294700e97f581100e9da599200e93589",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4886a0",
+      "bytes": "558bec51894dfc8b4dfce8eeb9bcff8b450883e00174098b4dfc51e81c1ab9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x20b49",
+      "bytes": "e9927b4600e99d662d00e9a84d5600e903cf3600e9eefe1600e9b9b2a400e9b47d8600e97f682100e9ca9da000e9f575",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4886e0",
+      "bytes": "558bec51894dfc8b4dfce86b4abaff8b450883e00174098b4dfc51e8dc19b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4eae4",
+      "bytes": "e987dd3d00e992fa4200e9dd190700e9a8baaa00e9537c6200e94e1c0500e9b9670400e9b4df7200e95fb56400e9daa9",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x42c870",
+      "bytes": "558bec51894dfc8b4508508b4dfc81c1e4000000e8fe6fbdff8be55dc20400cc558bece83e3670005dc3cccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x50e93",
+      "bytes": "e9a8123300e9038e1d00e96e5c0300e929515300e974d8a700e93f877b00e91acf7800e9756c2700e9b0d48d00e98b65",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x382140",
+      "bytes": "558bec51894dfc8b4dfce842c3cbff8b450883e00174098b4dfc51e87c7fc9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1e295",
+      "bytes": "e986a44600e9c1778300e98c398100e9c7e27f00e922667f00e9bd308f00e9f8178f00e913368500e9bef52a00e90900",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488720",
+      "bytes": "558bec51894dfc8b4dfce8eadebbff8b450883e00174098b4dfc51e89c19b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x712b",
+      "bytes": "e9a0fd4100e91bef4800e9b6003c00e9a1c82900e9cc7c1b00e9f78a0d00e9b20d5100e94d862e00e9d8921000e99354",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x426ed0",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8a913c0ff8be55dc210",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x238f8",
+      "bytes": "e913364000e9ae8b8600e9c9a05300e974496700e95f619b00e9faf98300e9159a4c00e9b058ad00e98b2b2e00e996af",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x426f10",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce83cd9bdff8be55dc210",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x24451",
+      "bytes": "e90a434600e9f5b34600e9801b2300e98b0a2d00e966c71d00e9910c1d00e97ce47000e9c7055500e9624e4700e9ad61",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488760",
+      "bytes": "558bec51894dfc8b4dfce85febb8ff8b450883e00174098b4dfc51e85c19b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xfa60",
+      "bytes": "e9eb233800e996111200e9e1ed3f00e9fc8e3500e9a7ab2900e9b2370a00e9ad375700e9182f0900e993906500e98e4d",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x391e50",
+      "bytes": "558bec51894dfc8b4dfce89b40c9ff8b450883e00174098b4dfc51e86c82c8ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3a3b4",
+      "bytes": "e9f79f3400e9625b8300e9dd717f00e978707f00e9f3036a00e98ee14400e989ed5400e954334500e98f6c7a00e95a42",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3843b0",
+      "bytes": "558bec51894dfc8d4d08e8a047caff5068102700008b45fc8b882401000051ff15b8673c018b55fc89822401000083ec",
+      "reloc_offsets": [
+        33
+      ]
+    },
+    {
+      "rva": "0x1a69f",
+      "bytes": "e96c9d3600e94798a500e9e2628100e9edfb7700e9e8a91800e9430bae00e99e529100e909966200e964ad7500e97f3e",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x384410",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce83c04c8ff8d4d08e81c",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4e44a",
+      "bytes": "e951a34300e90c842a00e9b7877200e9921b4e00e9fd500b00e988611700e903c69400e9ae207200e9395d1500e9640b",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4887a0",
+      "bytes": "558bec51894dfc8b4dfce8982dbcff8b450883e00174098b4dfc51e81c19b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2950f",
+      "bytes": "e9ccf24500e9b7b00f00e9a2430700e9ad399200e958c07600e9c3ce0e00e9de0f8e00e929b48000e9549a7300e93fda",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4887e0",
+      "bytes": "558bec51894dfc8b4dfce8212bb9ff8b450883e00174098b4dfc51e8dc18b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1780f",
+      "bytes": "e90c104700e9c7923700e952963200e92d569100e908df2000e9d3bf7500e94ed40600e9d9454900e954c40600e9efb4",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488820",
+      "bytes": "558bec51894dfc8b4dfce8106ebaff8b450883e00174098b4dfc51e89c18b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xdbb1",
+      "bytes": "e91a173a00e945f84c00e900cd5400e96bb74700e9c6de4700e971362300e97cb79200e907be7e00e922a10600e94dae",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3af2d0",
+      "bytes": "558bec51894dfc8b4dfce8aac8c7ff8b450883e00174098b4dfc51e8ecadc6ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4115a",
+      "bytes": "e9a1a93500e9ecc21800e9e7cd1000e932037700e94d146000e9e8274f00e923e84e00e92e204d00e9690d3b00e954fd",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x39bb00",
+      "bytes": "558bec6aff68ce03fb0064a1000000005083ec6ca1600b3b0133c58945f0508d45f464a300000000894dd0c645d7018b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "rva": "0x3d9ec",
+      "bytes": "e99fe23500e9aa502300e9b5a97c00e9601a7300e9ebf43c00e916eea200e951535a00e92cae4300e9f70faa00e9f28d",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x39bc90",
+      "bytes": "558bec6aff681e04fb0064a1000000005083ec6ca1600b3b0133c58945f0508d45f464a300000000894dd0c645d7018b",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "rva": "0x4b73b",
+      "bytes": "e940c53700e97b187f00e9969a3500e98134a300e9cca89f00e99728a000e9525d3c00e97d540c00e968292d00e9036c",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3c7c80",
+      "bytes": "558bec51894dfc8b4dfce8ef06c8ff8b450883e00174098b4dfc51e83c24c5ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x15a0f",
+      "bytes": "e94c2e4700e927033800e912f62d00e95d3b2d00e9288d2300e9436c1000e97eae4600e929693c00e91442a600e94f15",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488860",
+      "bytes": "558bec51894dfc8b4dfce8bcbdbaff8b450883e00174098b4dfc51e85c18b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2315",
+      "bytes": "e9b68e3c00e9f19a0f00e95ce99700e9179a7e00e9f28e7b00e92d7fac00e9d8404800e9934f2400e94e2f7800e9b927",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3cb1d0",
+      "bytes": "558bec51894dfc8b4dfce81fdac6ff8b450883e00174098b4dfc51e8eceec4ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5428c",
+      "bytes": "e9dff73700e94af41500e9a51e7700e9607f3600e97bf03200e966cba000e911968e00e9dc2a3e00e967182900e99226",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3d3a70",
+      "bytes": "558bec51894dfc8b4dfce83f57c4ff8b450883e00174098b4dfc51e84c66c4ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x31c0a",
+      "bytes": "e9412a4200e94ce72b00e9277b0b00e952918100e95d507000e9985d4e00e9a3c82300e9de0a1c00e9c9120600e9440f",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x454650",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e86f50beffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x3d7a8",
+      "bytes": "e9d36f4100e92e530500e9d9bb3500e9c4836d00e97fdb5200e9da699900e9d5031c00e9904f0300e9eb1f3400e9b641",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x454780",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e83f4fbeffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x2b643",
+      "bytes": "e918cf3b00e9033b2400e94e892300e9a93f1700e9b4dd0600e91f978500e98ad68500e905034400e970c72300e94b45",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3e8560",
+      "bytes": "558bec51894dfc8b4dfce872a0c5ff8b450883e00174098b4dfc51e85c1bc3ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xc504",
+      "bytes": "e9f7743d00e9f2982600e98d7f8100e9e8343c00e953841f00e98e5b5800e999405b00e9f4860800e95fbe8700e99aba",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3e3a00",
+      "bytes": "558bec83ec2ca1600b3b0133c58945fc56894de88b45088945ec8b4d0c894df08b55108955f48b45148945f8c745e400",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x1d2b4",
+      "bytes": "e967693c00e972aa5100e9ad451400e958720700e9b3c34c00e9fe532400e939e09800e9e4a32c00e92ffc9a00e9ca46",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3e3c20",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc56894de483ec108bc48b4d0889088b550c8950048b4d108948088b551489500c",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x4722b",
+      "bytes": "e970164400e93b6e1200e976578c00e9c1d25600e94cf92c00e907d54f00e9e2327c00e9ed6d6d00e918809300e9f33c",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4888a0",
+      "bytes": "558bec51894dfc8b4dfce8ad4ebcff8b450883e00174098b4dfc51e81c18b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x444a4",
+      "bytes": "e9b7cd4000e9a2e91700e99d19a300e9d8018a00e9430d6000e9bed34e00e9c9776b00e984235400e95fd54e00e98aa7",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x451260",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e85f84beffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x2034c",
+      "bytes": "e9ff254300e9ca122200e9b55b6700e9d03faa00e99b564f00e976ecab00e98115a600e90c3f9100e957b20500e9c295",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x452950",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e86f6dbeffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x2438e",
+      "bytes": "e94d454600e9787c4400e993a43100e9ce4aa300e989fa7f00e914527a00e9af6e4e00e9faa79500e915004600e99057",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4888e0",
+      "bytes": "558bec51894dfc8b4dfce85edcbaff8b450883e00174098b4dfc51e8dc17b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1e7f4",
+      "bytes": "e927a14600e962ef8c00e9bd9e5800e9b8aa0700e9d3898100e9eea96d00e999a25400e914b04c00e92f5b0e00e9cae4",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488920",
+      "bytes": "558bec51894dfc8b4dfce88128bbff8b450883e00174098b4dfc51e89c17b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x54d04",
+      "bytes": "e9b7da5e00e952f09200e9bded5300e928a34500e993db5f00e95ed06a00e979d26300e9c4d04e00e95f47a700e93a47",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x6427c0",
+      "bytes": "558bec51894dfc8b4dfce8d639a0ff8b450883e00174098b4dfc51e8fc789dff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xa646",
+      "bytes": "e9452b6100e9808b9700e9fb0b8d00e9a6be8c00e901f57e00e90c457600e967917d00e952697d00e9ed993300e9f888",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x61d190",
+      "bytes": "558bec83ec30a1600b3b0133c58945fc56894de88b45088945ec8b4d0c894df08b55108955f48b45148945f88d4dece8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x6cad",
+      "bytes": "e9ee666100e969921200e9a4b95600e9ff370600e91ad67c00e9453d9900e9b0db8200e97bf37a00e9b6812c00e951a6",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x61d3a0",
+      "bytes": "558bec83ec20a1600b3b0133c58945fc56894de88b45088945ec8b4d0c894df08b55108955f48b45148945f88d4dece8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x1cd6e",
+      "bytes": "e9bd083e00e988e62000e973f36c00e95e3e9100e929fd6d00e954dd4800e98f252800e95abc7300e965a34a00e99033",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3fd630",
+      "bytes": "558bec51894dfc8b4dfce8bd2cc2ff8b450883e00174098b4dfc51e88ccac1ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x41745",
+      "bytes": "e916724400e901031500e9fca49800e9276e4f00e9a20f8700e9fde02b00e9e8671800e983889a00e98eb90600e969c5",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488960",
+      "bytes": "558bec51894dfc8b4dfce840efb8ff8b450883e00174098b4dfc51e85c17b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x541c4",
+      "bytes": "e9d7474300e9c2a13900e96d831b00e9b8d17900e973457c00e9aeb24e00e9e9a62400e994251200e9cfff9700e9cae1",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4889a0",
+      "bytes": "558bec51894dfc8b4dfce88c07baff8b450883e00174098b4dfc51e81c17b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x229d5",
+      "bytes": "e9c6034100e941570b00e9ec1c4600e9874a8500e9725c6a00e9dd29ad00e9282f8300e9736b8200e92e237700e9a93a",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x432da0",
+      "bytes": "558bec51894dfc8b45fc83b87c01000000741e8b4dfc83b9800100000074128b5508528b45fc8b8880010000e8b60abd",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f7c8",
+      "bytes": "e913924300e93ea67900e939774400e9341e0800e95f095800e91a772800e9050f2d00e990413900e97b4d9e00e9e674",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4889e0",
+      "bytes": "558bec51894dfc8b4dfce866adb8ff8b450883e00174098b4dfc51e8dc16b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x319bc",
+      "bytes": "e98fc33d00e9ba569100e9657e7e00e960706400e98b985400e996fe4c00e9f1fe4400e9bc4e2200e987ab0600e962fd",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x40dd50",
+      "bytes": "558bec51894dfc8b4dfce84b3bc1ff8b450883e00174098b4dfc51e86cc3c0ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x966f",
+      "bytes": "e93c8c9d00e977578400e9523d7700e97d044000e948572c00e963506900e9de393400e9d99d6300e9e42a1f00e97f55",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x9e22b0",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8c95f64ff8be55dc210",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2aa4",
+      "bytes": "e947f89d00e972089e00e9fdc96500e968876400e963b8a600e92e258000e9b9ba5600e924168d00e95f697e00e91a2a",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x9e22f0",
+      "bytes": "558bec83ec0c894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce85a2562ffc745f8",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x11be4",
+      "bytes": "e947ce4000e972a08400e9dd4e2f00e9f89d5e00e973235b00e94eb86800e929726600e934984600e99fd81700e97a84",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x41ea30",
+      "bytes": "558bec51894dfc8b4dfce8759bc1ff8b450883e00174098b4dfc51e88cb6bfff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4ab6a",
+      "bytes": "e9b1de4300e98cf57900e997b85100e9124a5000e93d0d2b00e9f8868800e983868800e94e3f5000e9094d3300e97484",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488a20",
+      "bytes": "558bec51894dfc8b4dfce8a504baff8b450883e00174098b4dfc51e89c16b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x276c4",
+      "bytes": "e997134600e9f2a92f00e94d760400e968ff4800e9f3bd8900e93e7d6100e9a9bf7a00e9d4e97600e9af6c5900e9ba17",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488a60",
+      "bytes": "558bec51894dfc8b4dfce8251abcff8b450883e00174098b4dfc51e85c16b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3b782",
+      "bytes": "e919d34400e9e4283700e90fad1c00e97a537f00e985604f00e930ad2900e93be78800e9f6107d00e9617e3600e9ec40",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488aa0",
+      "bytes": "558bec51894dfc8b4dfce8ab8eb8ff8b450883e00174098b4dfc51e81c16b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x48f9a",
+      "bytes": "e981fb4300e97c1b2f00e917b95200e9e2b14f00e98dcb3800e968240d00e923798a00e90ef80f00e919a40b00e90473",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488b20",
+      "bytes": "558bec51894dfc8b4dfce81f27b8ff8b450883e00174098b4dfc51e89c15b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3a215",
+      "bytes": "e9c6e84400e911a81b00e99c899200e9f73a8e00e932339c00e9bdfc7900e9c802a000e9b39b9300e93ef37700e9c9e5",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488ae0",
+      "bytes": "558bec51894dfc8b4dfce8d162baff8b450883e00174098b4dfc51e8dc15b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x50db7",
+      "bytes": "e974024600e97f358600e92afe7c00e985cd7300e9f0185f00e9ebb64f00e936f31300e9f1475a00e9ec3d5600e9f7a9",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4b1030",
+      "bytes": "558bec51894dfc8b4dfce89a77b9ff8b450883e00174098b4dfc51e88c90b6ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x39ad6",
+      "bytes": "e985f04400e970179e00e96b237b00e966737500e9e1a75000e9cc007600e9b7846c00e9e2db1500e9ad149400e9c80d",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488b60",
+      "bytes": "558bec51894dfc8b4dfce8daccb7ff8b450883e00174098b4dfc51e85c15b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x39f36",
+      "bytes": "e965ec4400e9b05a7f00e90b621500e9b6c68900e941627900e91cb40900e9776d3e00e9325f9b00e98dd0a900e9685c",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488ba0",
+      "bytes": "558bec51894dfc8b4dfce8db61b9ff8b450883e00174098b4dfc51e81c15b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4d2a2",
+      "bytes": "e939b94300e974578900e9df082b00e9ca412a00e9b5351a00e950f60100e9fb679100e946a17200e9d1a19900e9ecf0",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488be0",
+      "bytes": "558bec51894dfc8b4dfce8a790baff8b450883e00174098b4dfc51e8dc14b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x7e82",
+      "bytes": "e999828a00e9b4556c00e9bfb15800e9aa2a3b00e9a53da200e900357a00e97bd65200e9c6e95100e991009c00e94cc3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x8b0120",
+      "bytes": "558bec51894dfc8b4dfce887c477ff8b450883e00174098b4dfc51e89c9f76ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x363c7",
+      "bytes": "e954284500e9efa12d00e9ea000b00e9d5ee0400e9b0cca000e98b7ba000e9c6228500e9714d4300e96c722b00e967f4",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488c20",
+      "bytes": "558bec51894dfc8b4dfce818b9b8ff8b450883e00174098b4dfc51e89c14b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1f4d8",
+      "bytes": "e983974600e9ceae3100e9e9eb9600e9f4308100e9af6e7700e92a794d00e9c5033e00e92072ad00e9ab56a200e9c6ee",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488c60",
+      "bytes": "558bec51894dfc8b4dfce82725bcff8b450883e00174098b4dfc51e85c14b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x522b1",
+      "bytes": "e9ea694300e9f5b09c00e9f00e9300e9bba79700e976e27600e941d74500e93cb09000e947c58100e982857200e90df3",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488ca0",
+      "bytes": "558bec51894dfc8b4dfce843cbb9ff8b450883e00174098b4dfc51e81c14b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xfbe6",
+      "bytes": "e9f5904700e9b025a400e95bf77000e9365c5b00e951353100e9bcd5a400e947331800e992647700e9dd1ca200e9383d",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488ce0",
+      "bytes": "558bec51894dfc8b4dfce84c66bcff8b450883e00174098b4dfc51e8dc13b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x39027",
+      "bytes": "e914be3e00e92f322800e95a3ea200e9d5907800e930832600e98b4c3900e9e6cd5200e9c14f2600e97cd69b00e92726",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x424e40",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e87f48c1ffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x1ce31",
+      "bytes": "e99a724000e955c81a00e9502b6400e95bcf4200e976194000e921850600e99cf39b00e9f77c7600e932359000e92d7e",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4240d0",
+      "bytes": "558bec83ec1ca1600b3b0133c58945fc894de88d4d08e8ef55c1ffc745e400000000eb098b45e483c0018945e48b4de8",
+      "reloc_offsets": [
+        7
+      ]
+    },
+    {
+      "rva": "0x5812",
+      "bytes": "e909354800e96407a400e98f945400e9ba1e5400e985766500e990de6500e94b392200e906f95100e9917a2800e9cc06",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488d20",
+      "bytes": "558bec51894dfc8b4dfce849fbb7ff8b450883e00174098b4dfc51e89c13b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x8fb7",
+      "bytes": "e9a4fd4700e9af896900e95a389700e9e5178500e930905400e9fb4b3a00e9b6213a00e9e1813800e95c799000e94763",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488d60",
+      "bytes": "558bec51894dfc8b4dfce8e0c5bbff8b450883e00174098b4dfc51e85c13b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x9c37",
+      "bytes": "e934fa4a00e9ff9f5b00e9ea715200e9f5e94600e9b0710c00e93b7e8200e98646ac00e9a1dd8300e9fc362000e92778",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4b9670",
+      "bytes": "558bec51894dfc8b4dfce8b453b6ff8b450883e00174098b4dfc51e84c0ab6ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1fbb8",
+      "bytes": "e913494900e90ec09600e9e9225e00e97ff61400e94f469300e9fabc7600e9551b2300e9602c1000e90b9c9b00e906a1",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4b44d0",
+      "bytes": "558bec83ec0c894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8a73db7ff8d4d08",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2e505",
+      "bytes": "e9d6604800e9c1491600e96cd1a300e9470a9d00e9a22c7f00e99d097500e9d8bbac00e9f3128e00e93e0f9f00e9c934",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4b45e0",
+      "bytes": "558bec83ec14894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce86a02b5fff20f10",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1ee0c",
+      "bytes": "e9ef944a00e95af58500e915458000e9d06e4700e91b435100e966dd3800e9d1840c00e96c3aa600e987945d00e9b2b5",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4c8300",
+      "bytes": "558bec51894dfc8b4dfce8f62ab6ff8b450883e00174098b4dfc51e8bc1db5ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4cf69",
+      "bytes": "e972d64600e96d792500e968b88e00e9a3c36000e9de193600e979cb0400e964957900e97fec3a00e96a954500e91507",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4ba5e0",
+      "bytes": "558bec83ec3c894dfc8b45fcf20f2a80f4000000f20f5905b80816018d4d08f20f1145f4e88c54b7fff20f2ac0f20f10",
+      "reloc_offsets": [
+        24
+      ]
+    },
+    {
+      "rva": "0x263fa",
+      "bytes": "e9a1434900e9ec2d0b00e987139200e9129b7b00e94d357900e9d8e84a00e9d3593d00e9de7b1c00e9a943a300e904c6",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4ba7a0",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8aca0b4ff8d4d08e8c2",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x21d96",
+      "bytes": "e905704600e990db4600e9fb081000e926a62300e901130b00e9dce3a300e9775b7500e952963f00e9ad6f2000e91838",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488da0",
+      "bytes": "558bec51894dfc8b4dfce8b2eabbff8b450883e00174098b4dfc51e81c13b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1f24e",
+      "bytes": "e95d6f4c00e9c86c4100e9a3310e00e90e9e0c00e9f9c84600e9b47c3600e95f6a1a00e9aa819f00e9c5d27500e9a019",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4e61b0",
+      "bytes": "558bec51894dfc8b4dfce80668b5ff8b450883e00174098b4dfc51e80c3fb3ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0xa006",
+      "bytes": "e9a5fb4b00e9504b4100e9eb659e00e9f6707e00e9c1197200e92c1e5000e937f1ac00e932729300e91d227600e9c8c9",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4c9bb0",
+      "bytes": "558bec83ec0856894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8c6e6b5ffc745",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2cdf9",
+      "bytes": "e982ce4900e99ddc3200e9b8251c00e9e314a300e9de058200e929fe6600e944ad3100e92f8d2700e9dabb1100e915ef",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4c9c80",
+      "bytes": "558bec83ec0856894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8c9abb3ffc745",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4be2f",
+      "bytes": "e9accf4300e9a7a62a00e972f3aa00e96ddd8000e9f8d25100e9b3a74800e95e5c2100e979119c00e9b4c43f00e9df66",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488de0",
+      "bytes": "558bec51894dfc8b4dfce8e3f2baff8b450883e00174098b4dfc51e8dc12b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x35bf7",
+      "bytes": "e9d4234c00e9af9c4400e96a173800e975e28a00e9f0548500e93bb27600e9e65a4800e9e16d1100e96c569c00e987ac",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f7fd0",
+      "bytes": "558bec51894dfc8b4dfce8e496b4ff8b450883e00174098b4dfc51e8ec20b2ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f4d",
+      "bytes": "e94e7e4e00e9792fa000e984672400e9bf2e0b00e9da8c4600e9a5dc3a00e9d0a59500e94bba8e00e956595100e91165",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4ecda0",
+      "bytes": "558bec83ec4c894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8d7b4b3ff8b45fc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4500c",
+      "bytes": "e9df7f4a00e98a603600e9150e7200e970347400e90b9e1000e926499e00e961745000e9dc5ca100e9d7df9e00e9f2fb",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4ecff0",
+      "bytes": "558bec51894dfc8d4d08e8962ab4fff20f2ac08b45fcf20f598098010000f20f5e05b8081601f20f580510cd1501f20f",
+      "reloc_offsets": [
+        34,
+        42
+      ]
+    },
+    {
+      "rva": "0x10b4f",
+      "bytes": "e94c1e4f00e967ce7e00e96273a400e9bd8c6a00e948169800e943d87f00e9ee0ba000e9d9362500e9f4b77600e93fc4",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x5029a0",
+      "bytes": "558bec51894dfc8b4dfce8d6a1b0ff8b450883e00174098b4dfc51e81c77b1ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x100f5",
+      "bytes": "e9e6894e00e9d19d3300e9bc345500e9777c2e00e952879200e93d219100e998208a00e9f3e32d00e9ae65a400e9a966",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f8ae0",
+      "bytes": "558bec83ec34894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce897f7b2ff8b45fc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x2f338",
+      "bytes": "e933994c00e91e57ac00e909c84400e974e72100e9af5d0600e93a029b00e9a55c6d00e9a0889100e99b018400e9f685",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4f8c70",
+      "bytes": "558bec83ec0c894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce8dabbb0fff20f10",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1cf85",
+      "bytes": "e996be4600e971334600e9cc512a00e987927b00e9127f4600e97d1dad00e948c07a00e943071500e97e62aa00e90966",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488e20",
+      "bytes": "558bec51894dfc8b4dfce86f15b8ff8b450883e00174098b4dfc51e89c12b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x1672",
+      "bytes": "e9e9774800e9a4ef9c00e99f3b9900e9daa06f00e9f5155300e970364e00e91ba14100e9569d2400e9519c9c00e99c25",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488e60",
+      "bytes": "558bec51894dfc8b4dfce87849b8ff8b450883e00174098b4dfc51e85c12b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3ffd",
+      "bytes": "e99e4e4800e959c04600e9243d1d00e96fd1a400e95afa7f00e9c57f0600e98011a300e9eb974a00e9d6203100e921fb",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x488ea0",
+      "bytes": "558bec51894dfc8b4dfce88bfab8ff8b450883e00174098b4dfc51e81c12b9ff8b45fc8be55dc20400cccccccccccccc",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x3706",
+      "bytes": "e9655b4200e9202bad00e97b8f0f00e9b69c6000e951ff0c00e95ca97700e987d37400e982066800e90dec5300e9c8f4",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x429270",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce809f0bfff8be55dc210",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4a877",
+      "bytes": "e934ea3d00e9ff45a900e9eacba300e9158f3800e980b35a00e90b7f5400e932482600e981fb9c00e9bc0a6d00e9c779",
+      "reloc_offsets": []
+    },
+    {
+      "rva": "0x4292b0",
+      "bytes": "558bec51894dfc83ec108bc48b4d0889088b550c8950048b4d108948088b551489500c8b4dfce89cb5bdff8be55dc210",
+      "reloc_offsets": []
+    }
+  ],
+  "status": "static-candidate-no-host-acceptance",
+  "notes": [
+    "Native handlers include original DocBeforeModify and original owner/model notifications.",
+    "Group creates CDrawCell and flattens selected existing CDrawCell containers; its children are moved, not deep-cloned.",
+    "Ungroup uses original native collision checks and child name registration.",
+    "Layer handlers operate on the first selected control; API prepares one exact target."
+  ]
+}

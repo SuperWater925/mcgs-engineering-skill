@@ -1,0 +1,145 @@
+{
+  "schema": 1,
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "guards": [
+    {
+      "name": "RootExistingErrorWriter",
+      "rva": 3293296,
+      "bytes": "558bec6aff682c45fa0064a1000000005083ec08a1600b3b0133c5508d45f464a300000000894df068045c15018b45f005c801000050e851c4d2ff83c4080fb6c885c9741768085c15018b55f081c2cc01000052e833c4d2ff83c4088b4d08518b4df081c1c8010000ff1584903c018b550c528b4df081c1cc010000ff1584903c018b45f083b8d001000000750c8b4df08b55108991d00100008b450c508d4decff1550913c01c745fc000000008d4dec518b55f081c2c801000052e86289d0ff83c408c745fcffffffff8d4decff1548913c0133c08b4df464890d00000000598be55dc20c00cc",
+      "reloc_offsets": [
+        6,
+        21,
+        41,
+        70,
+        107,
+        126,
+        163,
+        208
+      ]
+    },
+    {
+      "name": "PageGenerateEntry",
+      "rva": 52771,
+      "bytes": "e9f8618400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "PageGenerateBooleanBody",
+      "rva": 8728608,
+      "bytes": "558bec6aff68e014010164a1000000005081ecb4000000a1600b3b0133c5508d45f464a300000000894df06804c31e018d4de0ff1550913c01c745fc00000000e89b107cff8945c88b45f08b480c5168ccc21e018d55e05268e70200006828c31e016844c31e016a018d8d7cffffffe8499a7eff8945b88b45b8894590c645fc018b4d90518b55c8528b45c88b088b5110ffd283c410c645fc008d8d7cffffffe863c07bffc745fcffffffff8d4de0ff1548913c01e8ae267eff8945c08d45a4508b4df0e8a2c27fff8945ac8b4dac894d94c745fc020000008b5594528b45c08b108b4dc08b4208ffd0c745fcffffffff8d4da4e8fcbb7eff8b4df08b5110528b45f083c00c508b4df0e8945d7fff8945ec837dec000f85a400000068b8c31e018d4dd0ff1550913c01c745fc030000006820c41e018d4de8ff1550913c01c645fc04e8980f7cff8945d88d4dd0518d55e85268ec0200006844c41e016860c41e016a038d8d54ffffffe84e997eff8945988b459889459cc645fc058b4d9c518b55d88b028b4dd88b500cffd2c645fc048d8d54ffffffe86cbf7bffc645fc038d4de8ff1548913c01c745fcffffffff8d4dd0ff1548913c0132c0e95b0100008b45ec8b108b4dec8b8254010000ffd085c00f84a400000068a8c41e018d4dd4ff1550913c01c745fc060000006884c41e018d4ddcff1550913c01c645fc07e8dc0e7cff8945e48d4dd4518d55dc5268f10200006810c51e01682cc51e016a018d8d68ffffffe892987eff8945b48b45b48945b0c645fc088b4db0518b55e48b028b4de48b500cffd2c645fc078d8d68ffffffe8b0be7bffc645fc068d4ddcff1548913c01c745fcffffffff8d4dd4ff1548913c0132c0e99f0000006850c51e018d4dbcff1550913c01c745fc090000006888c51e018d4dc4ff1550913c01c645fc0ae8380e7cff8945cc8d45bc508d4dc45168f702000068acc51e0168c8c51e016a018d8d40ffffffe8ee977eff8945a88b55a88955a0c645fc0b8b45a0508b4dcc8b118b4dcc8b420cffd0c645fc0a8d8d40ffffffe80cbe7bffc645fc098d4dc4ff1548913c01c745fcffffffff8d4dbcff1548913c01b0018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        44,
+        53,
+        80,
+        94,
+        99,
+        177,
+        285,
+        294,
+        306,
+        315,
+        345,
+        350,
+        421,
+        437,
+        473,
+        482,
+        494,
+        503,
+        533,
+        538,
+        609,
+        625,
+        637,
+        646,
+        658,
+        667,
+        697,
+        702,
+        773,
+        789
+      ]
+    },
+    {
+      "name": "UserDocumentCompileEntry",
+      "rva": 16371,
+      "bytes": "e948ac6d00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "UserDocumentCompileStatusBody",
+      "rva": 7203904,
+      "bytes": "558bec6aff68ea3fff0064a1000000005083ec78a1600b3b0133c5508d45f464a300000000894dec8b4dece8166197ff6a00e8653892ff83c4048945e48b45ec055c020000508b4de48b118b4de48b4240ffd08945e8837de80075178b4decc7811401000000000000b801000000e9850300008b55e8528d8d7cffffffe8c6d692ffc745fc000000008d857cffffff508b4de88b118b4de88b4244ffd0e8a66a95ff8945e08d4dd4518b4de8e89a0697ff8945dc8b55dc8955d8c645fc018b45d8508b4de08b118b4de08b4208ffd0c645fc008d4dd4e8faff95ff8d4d8ce81e0a97ffc645fc028d4d8c518d55c8528b4de8e89fa192ff8945d08b45d08945ccc645fc038b4dcc51e8120f97ff83c4088845f3c645fc028d4dc8ff1548913c010fb655f385d20f849b0000008d4d8ce8b1c493ff85c00f868b0000006a008d4594508d4d8ce8b6ef93ff8bc8e8121593ff8bc8ff156c913c01508d4dbc518b4de8e830a192ff8945c48b55c48955c0c645fc048b4dc0ff156c913c0150e8ec2996ff8b8820050000e8951097ffc645fc028d4dbcff1548913c01c745b801000000c645fc008d4d8ce8eb0595ffc745fcffffffff8d8d7cffffffe8565497ff8b45b8e9310200008b4dece81b6d95ff0fb6c085c0753a8b4decc7811401000000000000c745b401000000c645fc008d4d8ce8a20595ffc745fcffffffff8d8d7cffffffe80d5497ff8b45b4e9e80100008b55e8528b4dece8a84b96ff0fb6c085c0753a8b4decc7811401000000000000c745b001000000c645fc008d4d8ce8550595ffc745fcffffffff8d8d7cffffffe8c05397ff8b45b0e99b0100008b55e852e8613194ff83c4040fb6c085c0753a8b4decc7811401000000000000c745ac01000000c645fc008d4d8ce8080595ffc745fcffffffff8d8d7cffffffe8735397ff8b45ace94e0100008b4dece88a7094ff0fb6d085d2753a8b45ecc7801401000000000000c745a801000000c645fc008d4d8ce8bf0495ffc745fcffffffff8d8d7cffffffe82a5397ff8b45a8e9050100008b4de8518b4dece854fd95ff0fb6d085d2753a8b45ecc7801401000000000000c745a401000000c645fc008d4d8ce8720495ffc745fcffffffff8d8d7cffffffe8dd5297ff8b45a4e9b80000008b4de8518b4dece80ccf96ff0fb6d085d275378b45ecc7801401000000000000c745a001000000c645fc008d4d8ce8250495ffc745fcffffffff8d8d7cffffffe8905297ff8b45a0eb6e8b4dece8cf6795ff0fb6c885c975378b55ecc7821401000000000000c7459c01000000c645fc008d4d8ce8df0395ffc745fcffffffff8d8d7cffffffe84a5297ff8b459ceb28c7459800000000c645fc008d4d8ce8b50395ffc745fcffffffff8d8d7cffffffe8205297ff8b45988b4df464890d00000000598be55dc3cc",
+      "reloc_offsets": [
+        6,
+        21,
+        284,
+        341,
+        376,
+        406
+      ]
+    }
+  ],
+  "tables": {
+    "app": {
+      "vtable_rva": 14455980,
+      "col_rva": 15232968,
+      "type_descriptor_rva": 16398360,
+      "rtti": ".?AVC0McgsApp@@"
+    },
+    "root": {
+      "vtable_rva": 13989508,
+      "col_rva": 15171048,
+      "type_descriptor_rva": 16323500,
+      "rtti": ".?AVC0DocManage@@"
+    },
+    "page": {
+      "vtable_rva": 14602900,
+      "col_rva": 15249228,
+      "type_descriptor_rva": 16321016,
+      "rtti": ".?AVUserWindowObject@@"
+    },
+    "document": {
+      "vtable_rva": 14437780,
+      "col_rva": 15230624,
+      "type_descriptor_rva": 16299700,
+      "rtti": ".?AVC0DocUser@@"
+    }
+  },
+  "raw_fields": {
+    "root": "CString1C8 owner / CString1CC error / uint32 1D0 first nonzero code",
+    "page_document": "CString25C name / uint32 114 compile"
+  },
+  "writer_contract": {
+    "entry": "724070",
+    "this": "C0DocManage complete",
+    "abi": "thiscall int(root,LPCWSTR owner,LPCWSTR error,int code), ret12; reader never calls it",
+    "owner_assignment": "7240D9",
+    "error_assignment": "7240EC",
+    "code_first_only_assignment": "724104"
+  },
+  "page_generate_return_contract": {
+    "entry": "40CE23 -> C53020",
+    "abi": "thiscall bool AL(page), ret0",
+    "success": "C53339 AL1 only after loadedDoc.primary85 returned EAX0",
+    "false_branches": [
+      "C5312F loadedDoc NULL -> C531D9 AL0",
+      "C531EE document85 EAX!=0 -> C53295 AL0"
+    ]
+  },
+  "document_compile_return_contract": {
+    "entry": "403FF3 -> ADEC40",
+    "success": "ADF010 local0; ADF035 EAX0",
+    "failure": "explicit EAX1 and document114=0; never reclassified as success"
+  },
+  "evidence": {
+    "root_writer": [],
+    "page_generate": [],
+    "document_compile": []
+  },
+  "existing_journal_may_predate_failed_operation": true,
+  "diagnostic_must_not_clear_or_recompile": true,
+  "host_invoked": false
+}

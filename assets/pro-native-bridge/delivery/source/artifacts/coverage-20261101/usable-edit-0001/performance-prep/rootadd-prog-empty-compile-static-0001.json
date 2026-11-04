@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "scope": "narrow actual RootAdd-generated empty Prog compiled payload; not generic STORE/LOAD normalization",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "native_calls": 0,
+  "actual_diagnostic": "consolidated-acceptance-0001/adoption-private-canonical-diagnostic.response.json",
+  "expected_empty_program_compiled_hex": "00000000000000000000000001",
+  "functions": {
+    "RootAdd": {
+      "va": 7504368,
+      "end_exclusive": 7504765,
+      "instructions": []
+    },
+    "BlockCopy": {
+      "va": 15310624,
+      "end_exclusive": 15311069,
+      "instructions": []
+    },
+    "ProgSerialize": {
+      "va": 15216768,
+      "end_exclusive": 15216864,
+      "instructions": []
+    },
+    "BlockGenerate": {
+      "va": 15317776,
+      "end_exclusive": 15317939,
+      "instructions": []
+    },
+    "BlockCompile": {
+      "va": 15321120,
+      "end_exclusive": 15321984,
+      "instructions": []
+    },
+    "RowCompilePrefix": {
+      "va": 15304624,
+      "end_exclusive": 15304752,
+      "instructions": []
+    },
+    "ProgCompile": {
+      "va": 15216608,
+      "end_exclusive": 15216673,
+      "instructions": []
+    },
+    "ProgramCompile": {
+      "va": 12379984,
+      "end_exclusive": 12380863,
+      "instructions": []
+    },
+    "ProgramByteArrayCopy": {
+      "va": 13889152,
+      "end_exclusive": 13889226,
+      "instructions": []
+    },
+    "ProgramCtor": {
+      "va": 13887920,
+      "end_exclusive": 13888101,
+      "instructions": []
+    },
+    "CompilerBuild": {
+      "va": 13878288,
+      "end_exclusive": 13879138,
+      "instructions": []
+    },
+    "WriteHeaderDWORD": {
+      "va": 13927440,
+      "end_exclusive": 13927482,
+      "instructions": []
+    },
+    "WriteDWORD": {
+      "va": 13927488,
+      "end_exclusive": 13927513,
+      "instructions": []
+    },
+    "WriteByte": {
+      "va": 13927152,
+      "end_exclusive": 13927227,
+      "instructions": []
+    }
+  },
+  "conclusions": [
+    "Prog Serialize E83080 only serializes base, original bytearray+C, and source CString20; it does not synthesize cache on LOAD.",
+    "RootAdd728365 invokes IObject21 after deep-copy/adoption. E9BB87 invokes E9C820, which invokes RowCompile E987B0 and action primary7.",
+    "Exact CStgyFuncProg primary7 E82FE0 runs original full-text compile BCE750 then normal success exports Program+4C through D3EE80 into Prog+C.",
+    "D3C53D..D3C574 emit program scalar0, owned-object count, local-symbol count as three 4-byte words; AST-null branch emits no body; D3C63D writes final byte01 via D482F0.",
+    "Actual thirteen bytes match exactly the empty successful-program representation. This report does not broaden it to arbitrary nonempty Prog or other action classes or IF condition cache.",
+    "Conditional projection must require exact empty source, exact old empty compiled field, exact new thirteen-byte value, unchanged remaining row semantic fields, and invocation provenance through this RootAdd original Generate."
+  ],
+  "unproved": [
+    "No host stack or compiler-internal live header/AST sampling was performed; source-state observations come from parent actual diagnostic."
+  ]
+}

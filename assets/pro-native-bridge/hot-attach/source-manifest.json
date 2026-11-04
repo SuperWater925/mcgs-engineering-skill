@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "status": "SOURCE_READY_OWN_NATIVE_COLD_CLR_AND_REAL_PRO_CONNECTION_LAYER_VERIFIED",
+  "install_relative_root": "assets/pro-native-bridge/hot-attach",
+  "default_bootstrap_dependency": "../bootstrap",
+  "allowlist": [
+    {
+      "file": "prepare_hot_attach.py",
+      "sha256": "081aab97489ee4891017be8c3d086bb021f98e424f4bd9bbe3a1b8a26a8de0e3",
+      "bytes": 8525
+    },
+    {
+      "file": "build_hook_pe.py",
+      "sha256": "66721db214723dfe818aa5db11b80773ffec9e55de534fe308fc00c03307e81a",
+      "bytes": 7975
+    },
+    {
+      "file": "build_native_loop.py",
+      "sha256": "75fedbbb524a4df1acfc3321dcbd89dd78bc6a8a51f9f133258575e2660fce1a",
+      "bytes": 6786
+    },
+    {
+      "file": "source/HotAttachComEntry.cs",
+      "sha256": "db8bb5239942a441e252653c369b553145560b4abcc2655cd531a6c4577107fd",
+      "bytes": 1316
+    },
+    {
+      "file": "source/HotAttachClient.cs",
+      "sha256": "032c21b46f6865efc17ca32a5f231192b148c76edfd2ae0d1092ca091bcbb476",
+      "bytes": 11752
+    },
+    {
+      "file": "source/OwnMessageLoopHost.cs",
+      "sha256": "93fc1b3995b8b02a225bd764decdf13bfd4a20130f5aaf99a9d998695e0eee05",
+      "bytes": 1282
+    },
+    {
+      "file": "source/OwnPingEngine.cs",
+      "sha256": "50b95539611f06688110f4f6cec4857e9d2c77ecba5ad04392bc36f135130fe1",
+      "bytes": 1040
+    },
+    {
+      "file": "README.md",
+      "sha256": "d5592620609f33c6fdd6452982989236213f4cbeb713b28cfef5b4802793c596",
+      "bytes": 8028
+    },
+    {
+      "file": "validation-summary.json",
+      "sha256": "bb293c1bbd12756514b0b703f011765c3bba5143809a4fba423b7b32a8be70fd",
+      "bytes": 4169
+    }
+  ],
+  "bootstrap_dependencies": [
+    {
+      "file": "../bootstrap/source/Bootstrap.cs",
+      "sha256": "b3f32aa6d94e3d6118daf7d5274c67d85935b9be557929e183f6859c60ec341f"
+    },
+    {
+      "file": "../bootstrap/source/BootstrapLayout.cs",
+      "sha256": "5663c4ff5811f14f8e6e11eefcdf952c7a43d750f91df11381224331382ab8b6"
+    },
+    {
+      "file": "../bootstrap/source/EngineLoader.cs",
+      "sha256": "ad7291b60d486ffe80ca0c63d23f519917041d7baafc3e2b5842e8d1d5ce463b"
+    },
+    {
+      "file": "../bootstrap/source/DurableQueuePump.cs",
+      "sha256": "b44854e6da8b2422743bf6e3ddd48a7cc470c606009fed7a8c5e3a318bbfac6e"
+    },
+    {
+      "file": "../bootstrap/source/NullSafeDispatch.cs",
+      "sha256": "e56f2f7547300dd740a038803eff4ba65c0ed829c5e1a2c7ede0a7b081a47bf7"
+    },
+    {
+      "file": "../bootstrap/build_native_wrapper.py",
+      "sha256": "29e9975d671044e65a583738be701c53a4b47c87789b7568ec3c1fea01b0f74c"
+    },
+    {
+      "file": "../bootstrap/loader-capability.current.json",
+      "sha256": "93b2d1659ef96fae512fc064417fc0e5779179f543a7e2bee0028a3288ee567c"
+    },
+    {
+      "file": "../bootstrap/stage_engine.py",
+      "sha256": "266e7f040bb2fcdd438b8ab656d8c4be9102b6c9906222d6391ce9e20fbbc224"
+    }
+  ],
+  "exclude_everything_else": true,
+  "excluded_local_directories": [
+    "own-loop-*",
+    "own-native-loop-*",
+    "pro-ping-prepared-*",
+    "compile-final-*",
+    "__pycache__"
+  ],
+  "distribution_contains_vendor_binaries_or_projects": false,
+  "unbound_templates_have_task_paths_or_PIDs": false,
+  "staging_contract": {
+    "bootstrap_scope_sha256_key_present": true,
+    "engines_directory_created_in_Pro_mode": true,
+    "pro_without_ping_only_leaves_active_engine_absent": true,
+    "existing_stage_engine_py_used": true,
+    "matching_scope_task_runtime_install_required": true,
+    "old_active_engine_not_overwritten": true
+  },
+  "real_Pro_hot_attach_verified": true,
+  "own_pure_native_cold_CLR_mechanism_verified": true,
+  "no_current_user_project_operated": true,
+  "real_Pro_verification_scope": "Ping-only connection layer, same original UI thread, no native project object read or manufacturer business method; not project or new-machine acceptance.",
+  "Medium_HKCU_registration_verified": false
+}

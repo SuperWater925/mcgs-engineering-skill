@@ -1,0 +1,230 @@
+{
+  "schema": 1,
+  "purpose": "claimed private-copy native driver name/value/enum property editing; no canonical preclaim Store/Get",
+  "base_device_profile_sha256": "656cf9fc7c158ff8588dc106ffae2ec108e33e8d3e24b280b967e0f896705d76",
+  "image_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "mfc_sha256": "33f631c0b561199b5feb9020faa99e50efa9f421d7484ffa640c5561494726da",
+  "guards": [
+    {
+      "name": "DevicePropertyGet",
+      "module": "McgsSetPro.exe",
+      "rva": 1462752,
+      "bytes": "558bec6aff6887d2f70064a1000000005083ec38a1600b3b0133c5508d45f464a300000000894dec8b45ec83b8fc0000000075088b4dece85589eeff8b4dec83b9fc000000000f84bb0100006aff6a008b4d08e8729c9c006aff6a008b4d0ce8669c9c008d4dbce8eb70ebffc745fc000000006aff6a008d4dbce8ddc0ebffc745e800000000eb098b55e883c2018955e88b4d10e83efaebff3945e87d5d8b45e8508b4d10e82a46eeff833800744a8b4de8518b4d10e81946eeff8b108955d88b45d88945e4837de40074146a018b4de48b118b4de48b4204ffd08945d4eb07c745d4000000008b4de8518b4d10e8e145eeffc70000000000eb8d8d55bc528b4508508b4d0c518b55ec8b82fc000000508b4dec8b89fc000000e8513beeff6aff8d4dbce8f267eeff508b4d10e855fcedffc745f000000000eb098b55f083c2018955f08d4dbce8cf67eeff3945f00f8da30000008b45f0508d4dbce8bd4feaff0fb60885c975148b55f0528b4d10e86045eeffc70000000000eb776a14e8ecf9eeff8945e0c645fc01837de000740d8b4de0e82c9b9c008945dceb07c745dc000000008b45dc8945d0c645fc008b4df0518b4d10e81a45eeff8b55d089108b45f0508b4d10e80945eeff8b08518b55f0528b4d0ce89d08ecff508b45ec8b88fc000000518b55ec8b8afc000000e89236ecffe943ffffffc745fcffffffff8d4dbce859a1ecff33c08b4df464890d00000000598be55dc20c00cccccccccccc",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DevicePropertySet",
+      "module": "McgsSetPro.exe",
+      "rva": 1463296,
+      "bytes": "558bec51894dfc8b45fc83b8fc0000000075088b4dfce85687eeff8b4dfc83b9fc0000000074228b550c528b4508508b4dfc8b91fc000000528b45fc8b88fc000000e8e1b5eaffeb0233c08be55dc2",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeviceFrontendInitialize",
+      "module": "McgsSetPro.exe",
+      "rva": 1474928,
+      "bytes": "558bec6aff683fd6f70064a1000000005083ec1ca1600b3b0133c5508d45f464a300000000894df08b45f083b8fc000000007405e9cc0000008b4df0e8b36aeaff8b4df081c118010000ff1564913c0185c07505e9ac0000006a38e8ee679c0083c4048945ecc745fc00000000837dec00741b8b4df0518b55f081c218010000528b4dece8ab03eeff8945e8eb07c745e8000000008b45e88945e0c745fcffffffff8b4df08b55e08991fc0000008b45f08b88fc000000e86766ecff85c0753d8b4df08b91fc0000008955dc8b45dc8945e4837de400740f6a018b4de4e8720eebff8945d8eb07c745d8000000008b4df0c781fc00000000000000eb088b4df0e87736ebff8b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        76
+      ]
+    },
+    {
+      "name": "PropertyGetExportDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1512656,
+      "bytes": "558bec83ec10894df88b45f8837824007461c745fc0000000068589c11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc0074178b4514508b4d10518b550c528b450850ff55fceb10eb07b801400080eb07eb05b8570007808be55dc2",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "PropertySetExportDispatcher",
+      "module": "McgsSetPro.exe",
+      "rva": 1513568,
+      "bytes": "558bec83ec10894df88b45f883782400745dc745fc0000000068189c11018d4df0ff15cc873c018945f48b4df4ff15608b3c01508b4df88b512452ff155c673c018945fc8d4df0ff154c8b3c01837dfc0074138b4510508b4d0c518b550852ff55fceb10eb07b801400080eb07eb05b8570007808be55dc2",
+      "reloc_offsets": [
+        26,
+        35,
+        47,
+        61,
+        73
+      ]
+    },
+    {
+      "name": "EnumPointerArrayCtor",
+      "module": "McgsSetPro.exe",
+      "rva": 631744,
+      "bytes": "558bec51894dfc8b4dfce869dafaff8b45fcc700a8af0e018b4dfcc74104000000008b55fcc74210000000008b45fcc7400c000000008b4dfcc74108000000008b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ]
+    },
+    {
+      "name": "EnumPointerArrayDeletingDtor",
+      "module": "McgsSetPro.exe",
+      "rva": 642304,
+      "bytes": "558bec51894dfc8b4dfce8a773fbff8b450883e00174098b4dfc51e8bcd3f7ff8b45fc8be55dc204",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CStringArrayCtor",
+      "module": "mfc110u.dll",
+      "rva": 1845675,
+      "bytes": "33c089410489411089410c894108c701486403108bc1c36810040000b8dc3628",
+      "reloc_offsets": [
+        16,
+        29
+      ],
+      "ordinal": 968
+    },
+    {
+      "name": "CStringArraySetSize",
+      "module": "mfc110u.dll",
+      "rva": 1846028,
+      "bytes": "558bec53568b75088bd985f60f881f0100008b450c85c078038943108b4b0485",
+      "reloc_offsets": [],
+      "ordinal": 13785
+    },
+    {
+      "name": "CStringArrayDeletingDtor",
+      "module": "mfc110u.dll",
+      "rva": 2495421,
+      "bytes": "558becf6450802568bf174265768c2291c108d7efcff376a1456e8a748e1fff6",
+      "reloc_offsets": [
+        14
+      ]
+    },
+    {
+      "name": "OriginalNew",
+      "module": "mfc110u.dll",
+      "rva": 35353,
+      "bytes": "558bec565783cfffff7508ff1590f42a108bf05985f60f849a4807005f8bc65e",
+      "reloc_offsets": [
+        13
+      ],
+      "ordinal": 1502
+    }
+  ],
+  "enum_pointer_array": {
+    "vtable_rva": 13545384,
+    "col_rva": 15133304,
+    "rtti": ".?AV?$CArray@HH@@",
+    "size": 20,
+    "count_offset": 8,
+    "data_offset": 4,
+    "slots_rva": [
+      11727406,
+      123036,
+      193056,
+      4401,
+      130021
+    ]
+  },
+  "CStringArray": {
+    "size": 20,
+    "vtable_mfc_rva": 222280,
+    "count_offset": 8,
+    "data_offset": 4,
+    "element_stride": 4
+  },
+  "drivers": [
+    {
+      "key": "H5U_MODBUSTCP",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\H5U_MODBUSTCP\\H5U_MODBUSTCP.ui",
+      "sha256": "b61665a50f428d1bc7d7fa1a7aa98b7c86a5795bee5d2d77db57f00f52fe1c8f",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 124896,
+          "bytes": "558bec8b450850e894bdffff83c40485c07d0583c8ffeb05b8010000005dc204"
+        },
+        "SvrGetProperty": {
+          "rva": 123600,
+          "bytes": "558bec83ec088b450850e8a1c2ffff83c40485c07d0883c8ffe9110100006aff"
+        },
+        "SvrSetProperty": {
+          "rva": 124128,
+          "bytes": "558bec83ec248b450850e891c0ffff83c40485c07d0883c8ffe936020000c745"
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 123920,
+          "bytes": "558bec83ec0c8b450850e861c1ffff83c40485c07d0883c8ffe99d000000c745"
+        },
+        "SvrSaveDevData": {
+          "rva": 127456,
+          "bytes": "558bec8b450850e8c4b6ffff83c404b8010000005dc20400cccccccccccccccc"
+        }
+      },
+      "get_supported_static": true,
+      "success_return_without_output_is_support": false
+    },
+    {
+      "key": "McgsIoT",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\用户定制设备\\McgsIoT\\McgsIoT.ui",
+      "sha256": "b13f70ca606e3a6cc34d9d65f018a26a81888d3fd86fd035960a5ae3c521285a",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 23984,
+          "bytes": "558bec568b7508837e100075436a40ff1558a1001083c40485c074098bc8e8ad"
+        },
+        "SvrGetProperty": {
+          "rva": 22368,
+          "bytes": "558bec83e4c083ec34538b5d0856837b100057753b6a40ff1558a1001083c404"
+        },
+        "SvrSetProperty": {
+          "rva": 23072,
+          "bytes": "558bec83ec28a118c0001033c58945fc8b4d0c8b4510538b5d0856837b100057"
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 22880,
+          "bytes": "558bec53568b750857837e1000753b6a40ff1558a1001083c40485c074098bc8"
+        }
+      },
+      "get_supported_static": true,
+      "success_return_without_output_is_support": false
+    },
+    {
+      "key": "monidevdrv",
+      "path": "C:\\unbound-install-root\\Program\\Drivers\\通用设备\\模拟数据设备\\monidevdrv.ui",
+      "sha256": "291d6e0fd5dfd1b71afa5c7172f69e6db6b6863b969c51bdc665cd566c5be1b9",
+      "preferred_base": 268435456,
+      "exports": {
+        "SvrInitDevSet": {
+          "rva": 8336,
+          "bytes": "558becff7508e8c5f7ffff6809040000e85befffff83c408b8010000005dc204"
+        },
+        "SvrGetProperty": {
+          "rva": 8224,
+          "bytes": "b801000000c21000cccccccccccccccc558bec56578b7d088b771085f6743f80"
+        },
+        "SvrSetProperty": {
+          "rva": 8384,
+          "bytes": "558bec578b7d08837f1000753f566a28e8591300008bf083c40485f674288d4e"
+        },
+        "SvrEnumPropertyValue": {
+          "rva": 7824,
+          "bytes": "b801000000c20c00cccccccccccccccc558bec56578b7d088b771085f6741f8b"
+        }
+      },
+      "get_supported_static": false,
+      "success_return_without_output_is_support": false
+    }
+  ],
+  "get_signature": "ThisCall void(complete, CStringArray* values, CStringArray* names, CArray<int,int>* enumOwnedPointers), ret12",
+  "set_signature": "ThisCall int(complete, CStringArray* names, CStringArray* values), ret8",
+  "preclaim_driver_frontend_init_or_Get": false,
+  "private_config_chain": "factory -> original deep clone current target -> original InitDevSet frontend -> full Get/verify user before values -> original Set -> full Get selected/untouched/enum check -> original model remove/release frontend/clone into same existing target -> restore name/parent/register -> fresh target Get exact full properties",
+  "runtime_exports_called": false,
+  "native_execution_performed": false,
+  "actual_verified": false
+}
