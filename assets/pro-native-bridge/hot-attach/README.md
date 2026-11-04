@@ -8,38 +8,59 @@
 
 目录放在 `assets/pro-native-bridge/hot-attach`，其兄弟 `bootstrap` 提供既有自有 Bootstrap/EngineLoader/DurableQueuePump/NullSafeDispatch 与 PE assembler。默认按包内相对目录查找，不依赖 Codex/Claude 安装目录或本机用户目录；也可显式给 `--bootstrap-template`。
 
-先由既有目录配置取得绝对参数；下面变量是调用者提供的路径，不是固定任务或工程：
-
-```powershell
-python .\hot-attach\prepare_hot_attach.py `
-  --task-root $TaskRoot --runtime-root $RuntimeRoot `
-  --bootstrap-root $FreshBootstrapRoot --install-root $InstallRoot `
-  --editor $ActualProExecutable --host-kind pro
-```
+首次生产使用先完成[首次热接的文件准备](../../../references/pro-native-deployment.md#首次热接的文件准备)。该段从实际技能/任务/安装绝对路径开始，依次执行生产 prepare → 七键 binding → compile → promotion → stage → layout，定义本页使用的 `$Native`、`$PythonExecutable`、`$FreshBootstrapRoot`、`$ActualProExecutable` 和 `$DeployedScopeJson`。命令都使用工具完整路径，不依赖当前目录。已有桥直接复用；不要重复首次部署或复制旧scope。
 
 准备器只生成/编译自有代码，不注册、不加载到目标、不启动 Pro、不修改 Addins/Startup/厂商文件。BootstrapRoot 必须全新；RuntimeRoot 与它分开且都在显式 TaskRoot 下。当前 loader 能力文件必须匹配实际原 EXE SHA，不以软件版本号判断支持。未知二进制的业务支持仍由原引擎 ABI 合同决定。
 
 每个配置使用独立随机 CLSID、接口和程序集 GUID、唯一 `McgsHotBridge_*` 程序集名，并剥掉未用的冷 AddIn COM 壳。不会复用旧冷桥的程序集身份、52119C44 类或类型库注册。
 
-生产配置不加 `--ping-only`，使用原有文件级 `bootstrap/stage_engine.py` 装入已经绑定到**相同 TaskRoot/RuntimeRoot/InstallRoot** 的自有引擎和同名 scope。prepare 的 build manifest 已提供 `bootstrap_scope_sha256`，并预建 engines 目录，因此与原 staging 合同直接兼容：
+生产配置不加 `--ping-only`。业务 engine 与同名 scope 已由上节绑定到相同 TaskRoot/RuntimeRoot/InstallRoot，并通过 `bootstrap/stage_engine.py` 放入本次 engines 目录；无需在连接前重复 stage。首次 active-engine.json 不覆盖已有选择，换 Bootstrap 不借用另一 RuntimeRoot 的 active-engine、scope 或 claims。
+
+## 选择目标并连接
+
+指定用户要接入的实际 Pro PID，读取其主窗口所属线程，不能用线程顺序猜 UI。以下采集与 `--plan` 都只读，不注册、不接入，也不打开或修改工程。`--plan` 无需预先传 creation FILETIME，返回后再用于 `--connect`：
 
 ```powershell
-python .\bootstrap\stage_engine.py --bootstrap-root $FreshBootstrapRoot `
-  --engine-file $BoundEngine --engine-scope-file $BoundScope
+Get-Process -Name McgsSetPro -ErrorAction SilentlyContinue | Select-Object Id, MainWindowTitle, Path
+$TargetPid = 0  # 替换为上方已确认的本次实际PID，不自动取第一项。
+if ($TargetPid -le 0) { throw '先只读确认目标进程，再填写实际TargetPid。' }
+$Target = Get-Process -Id $TargetPid -ErrorAction Stop
+$Target.Refresh()
+$MainWindow = $Target.MainWindowHandle
+if ($MainWindow -eq [IntPtr]::Zero) { throw '所选进程当前没有可核实的主窗口。' }
+if (-not ('McgsHotAttachWindowIdentity' -as [type])) {
+    Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+public static class McgsHotAttachWindowIdentity {
+    [DllImport("user32.dll", SetLastError=true)]
+    public static extern uint GetWindowThreadProcessId(IntPtr hwnd, out uint processId);
+}
+"@
+}
+[uint32]$WindowOwnerPid = 0
+$UiThreadId = [McgsHotAttachWindowIdentity]::GetWindowThreadProcessId($MainWindow, [ref]$WindowOwnerPid)
+if ($UiThreadId -eq 0 -or $WindowOwnerPid -ne $Target.Id) { throw '主窗口owner/PID不匹配。' }
+$HotClient = Join-Path $FreshBootstrapRoot 'McgsHotAttach.exe'
+$HotConfig = Join-Path $FreshBootstrapRoot 'hot-attach.json'
+$PlanText = & $HotClient --plan $HotConfig $TargetPid $UiThreadId
+if ($LASTEXITCODE -ne 0) { throw '目标plan核对失败。' }
+$Plan = $PlanText | ConvertFrom-Json
+if (-not $Plan.ok) { throw '目标plan未通过。' }
+$CreationFiletime = [long]$Plan.creation_filetime
+$Plan | ConvertTo-Json -Depth 8
 ```
 
-首次 staging 的 active-engine.json 必须未存在，不覆盖别的运行会话。换 Bootstrap 时不能借用另一个 RuntimeRoot 的 active-engine、scope 或 claims。
-
-对已选定、同位数且权限可访问的目标，读取其当前 PID、主窗口所属 UI 线程和 creation FILETIME。它们是调用身份，不能沿用历史进程值：
+核对 plan 的目标、UI线程、位数及注册范围后，在已授权的在线任务中执行一次 connect。它自动完成自身注册和线程接入，无额外许可文件或确认框；结果不明时先读实际文件，不重跑：
 
 ```powershell
-& "$FreshBootstrapRoot\McgsHotAttach.exe" --plan `
-  "$FreshBootstrapRoot\hot-attach.json" $TargetPid $UiThreadId $CreationFiletime
-
-# 已授权接入时一条 connect 自动完成自身注册和线程接入，无额外许可文件/UI。
-& "$FreshBootstrapRoot\McgsHotAttach.exe" --connect `
-  "$FreshBootstrapRoot\hot-attach.json" $TargetPid $UiThreadId $CreationFiletime
+$AttachText = & $HotClient --connect $HotConfig $TargetPid $UiThreadId $CreationFiletime
+if ($LASTEXITCODE -ne 0) { throw '接入失败或结果不明；保留结果并核查，勿自动重试。' }
+$Attach = $AttachText | ConvertFrom-Json
+$Attach | ConvertTo-Json -Depth 8
 ```
+
+连接后才能按[工程入口](../../../references/pro-native-engineering.md)查询本次实际工程；此前的 layout 仅核本地配置，不能代替当前工程的原生 inspect。未运行 Pro 时，到文件准备与 layout 即止，不用自有宿主或 ping-only 结果冒充生产接入。
 
 可在参数末尾追加需要排除的 PID；命中即拒绝。Pro 模式还核真实 main HWND 的 owner PID/UI thread，不接受任意工作线程。仅安装所选线程的 WH_GETMESSAGE，不装全局 hook，不使用 WriteProcessMemory/CreateRemoteThread、输入注入、SendInput、ShowWindow、菜单 handler 或窗口操作。只投递没有业务语义的 WM_NULL 唤醒消息循环。Windows 返回权限不足时直接报告，不提升权限或修改安全策略。
 

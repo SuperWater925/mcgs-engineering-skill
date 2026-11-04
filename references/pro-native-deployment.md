@@ -19,48 +19,103 @@ inspection 的 `compiled_kinds` 是本次编译入口清单，`action_preimages`
 
 `device-catalog`、`data-catalog`、`recipe-catalog`、`picture-catalog`、`language-catalog`、`reference-graph` 等通过 inspection selectors 取得当前内容；驱动 property catalog 的原厂 Get 则是私有clone动作，不能把它混作完全无副作用的普通读取。未知派生控件/驱动、未闭合属性或产品不支持的动作精确拒绝；没有 PLC 运行或下载命令。
 
-## 已有桥的同任务更新
+## 首次热接的文件准备
 
-先核清实际 TaskRoot、RuntimeRoot、BootstrapRoot、InstallRoot。原队列留在 RuntimeRoot，工程结果与 claim 在 RuntimeRoot\engineering。当前请求使用新ID关联结果；不覆盖已加载DLL，不自动重发尚未明确结果的超时操作。每个工程请求给出目标工程；默认direct会在原生调用内取得当前PID、线程、对象和必要前像。
-
-下面 `$Native` 为本技能的 `assets\pro-native-bridge`，路径和 SHA 来自本次绑定结果。已有桥复用原 RuntimeRoot、传输文件及原队列；无桥则先按热接或明确选择的冷启动 prepare 生成本次目录，再创建 EngineeringRoot 和 runtime\engineering。两种 prepare 的新目录前提以各自工具为准，不能拿冷启动的目录规则强制重建已有桥。TransportClientFile 可将包内 `transport\bridge_client.py` 原字节复制到本次 RuntimeRoot。
+已有桥直接按下节更新；首次部署按以下顺序执行。使用 PowerShell 7，把前三个占位路径替换为接收电脑的实际绝对路径；SkillRoot 可为 Codex 或 Claude 的实际安装目录，TaskRoot 选择本次尚不存在的新目录。InstallRoot 是含 `Program\McgsSetPro.exe` 的安装根。需要本机 `%WINDIR%\Microsoft.NET\Framework\v4.0.30319\csc.exe`（x86）存在。所有工具用绝对路径调用，不依赖当前工作目录；SHA 均从本次文件计算，不复制作者路径、PID、历史 claim 或哈希。BootstrapRoot 留给 prepare 创建，不预先手工建它。
 
 ```powershell
+$ErrorActionPreference = 'Stop'
+$SkillRoot = (Resolve-Path -LiteralPath '<已解压的mcgs-engineering完整目录>').Path
+$InstallRoot = (Resolve-Path -LiteralPath '<本机Pro安装根目录>').Path
+$TaskRoot = '<本次全新任务目录的绝对路径>'
+$Native = Join-Path $SkillRoot 'assets\pro-native-bridge'
+$PythonExecutable = (Get-Command python -ErrorAction Stop).Source
+$DotNetFrameworkX86Csc = Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319\csc.exe'
+$ActualProExecutable = Join-Path $InstallRoot 'Program\McgsSetPro.exe'
+if (-not (Test-Path -LiteralPath $DotNetFrameworkX86Csc -PathType Leaf)) { throw '缺少.NET Framework x86 csc.exe，先补齐本机编译环境。' }
+if (-not (Test-Path -LiteralPath $ActualProExecutable -PathType Leaf)) { throw '安装根目录中未找到原Pro程序。' }
+$RuntimeRoot = Join-Path $TaskRoot 'runtime'
+$FreshBootstrapRoot = Join-Path $TaskRoot 'bootstrap'
+$EngineeringRoot = Join-Path $TaskRoot 'engineering-payload'
+$NewLayoutDirectory = Join-Path $RuntimeRoot 'binding'
+$NewBoundDirectory = Join-Path $RuntimeRoot 'bound'
+$NewEngineFileName = 'McgsInternalEngine_' + [DateTime]::UtcNow.ToString('yyyyMMddHHmmssfff') + '.dll'
+$NewEngineScopeFileName = [IO.Path]::ChangeExtension($NewEngineFileName, '.scope.json')
+if (Test-Path -LiteralPath $TaskRoot) { throw '请保留现有目录，另选全新TaskRoot。' }
+New-Item -ItemType Directory -Path $TaskRoot | Out-Null
+
+# 1. 生产桥准备/编译；不加 --ping-only，不注册、不接入、不启动Pro。
+& $PythonExecutable "$Native\hot-attach\prepare_hot_attach.py" `
+  --task-root $TaskRoot --runtime-root $RuntimeRoot `
+  --bootstrap-root $FreshBootstrapRoot --install-root $InstallRoot `
+  --editor $ActualProExecutable --host-kind pro
+if ($LASTEXITCODE -ne 0) { throw 'hot prepare失败；保留输出，不重跑同一目录。' }
+
+# 2. 创建分离的只读资料目标与运行输出目录，复制本版transport原字节。
+New-Item -ItemType Directory -Path $EngineeringRoot | Out-Null
+New-Item -ItemType Directory -Path (Join-Path $RuntimeRoot 'engineering') | Out-Null
+$TransportClientFile = Join-Path $RuntimeRoot 'bridge_client.py'
+Copy-Item -LiteralPath "$Native\transport\bridge_client.py" -Destination $TransportClientFile
 $Layout = Join-Path $Native 'delivery\device-entry-v2\NativeEngineeringDeliveryLayout.cs'
 $LayoutSha = (Get-FileHash -LiteralPath $Layout -Algorithm SHA256).Hash.ToLowerInvariant()
-python "$Native\delivery\device-entry-v2\prepare_delivery_binding.py" `
+& $PythonExecutable "$Native\delivery\device-entry-v2\prepare_delivery_binding.py" `
   --task-root $TaskRoot --engineering-root $EngineeringRoot --runtime-root $RuntimeRoot `
   --install-root $InstallRoot --transport-client-file $TransportClientFile `
   --engine-file-name $NewEngineFileName --layout-source $Layout --layout-source-sha256 $LayoutSha `
   --output-directory $NewLayoutDirectory
+if ($LASTEXITCODE -ne 0) { throw '七键binding失败；保留输出。' }
 
-python "$Native\delivery\bind_common_delivery.v5.py" `
+# 3. 绑定本版源码/ABI资料，再编译x86自有engine。
+$NewScopeJson = Join-Path $NewLayoutDirectory $NewEngineScopeFileName
+& $PythonExecutable "$Native\delivery\bind_common_delivery.v5.py" `
   --source-stage "$Native\delivery\source" --scope-json $NewScopeJson `
   --bound-layout-source "$NewLayoutDirectory\NativeEngineeringDeliveryLayout.cs" `
   --output-directory $NewBoundDirectory --engine-file-name $NewEngineFileName
-
+if ($LASTEXITCODE -ne 0) { throw '源码binding失败；保留输出。' }
 & "$NewBoundDirectory\build-bound-source.ps1" -Csc $DotNetFrameworkX86Csc
 
-# 默认只列出精确新文件计划；--commit 才复制自有资料，每个目标均须不存在。
-python "$Native\delivery\promote_delivery_payload.py" `
-  --bound-manifest "$NewBoundDirectory\bound-source-manifest.json" `
-  --bound-manifest-sha256 $BoundManifestSha --scope-json "$NewBoundDirectory\$NewEngineScopeFileName" --scope-sha256 $ScopeSha `
+# 4. 从本次输出取SHA，部署新ABI资料；每个目标都必须尚不存在。
+$BoundManifest = Join-Path $NewBoundDirectory 'bound-source-manifest.json'
+$BoundScope = Join-Path $NewBoundDirectory $NewEngineScopeFileName
+$BoundEngine = Join-Path $NewBoundDirectory $NewEngineFileName
+$BoundManifestSha = (Get-FileHash -LiteralPath $BoundManifest -Algorithm SHA256).Hash.ToLowerInvariant()
+$ScopeSha = (Get-FileHash -LiteralPath $BoundScope -Algorithm SHA256).Hash.ToLowerInvariant()
+& $PythonExecutable "$Native\delivery\promote_delivery_payload.py" `
+  --bound-manifest $BoundManifest --bound-manifest-sha256 $BoundManifestSha `
+  --scope-json $BoundScope --scope-sha256 $ScopeSha `
   --record "$NewBoundDirectory\payload-promotion.json" --commit
+if ($LASTEXITCODE -ne 0) { throw '资料promotion失败；保留部分输出。' }
+
+# 5. 首次stage只创建新active-engine，不覆盖已有选择。
+& $PythonExecutable "$Native\bootstrap\stage_engine.py" --bootstrap-root $FreshBootstrapRoot `
+  --engine-file $BoundEngine --engine-scope-file $BoundScope
+if ($LASTEXITCODE -ne 0) { throw 'engine stage失败；保留输出。' }
+$DeployedScopeJson = Join-Path "$FreshBootstrapRoot\engines" $NewEngineScopeFileName
+$ScopeSha = (Get-FileHash -LiteralPath $DeployedScopeJson -Algorithm SHA256).Hash.ToLowerInvariant()
+
+# 6. layout只核本地配置/资料，不接入Pro、不访问工程。
+& "$SkillRoot\run.ps1" native-engineering `
+  --scope-config $DeployedScopeJson --scope-sha256 $ScopeSha layout
+if ($LASTEXITCODE -ne 0) { throw 'layout核对失败。' }
 ```
 
-七个配置键为 schema、task_root、engineering_root、runtime_root、install_root、transport_client_file、transport_client_sha256。所有根目录显式给出，工程不放进配置。EngineeringRoot 保存只读 profiles 和独立的 task-evidence 资料镜像；绑定工具仅处理本交付manifest明确列出的自有源码/ABI文件，不扫描任务目录追收历史回执。既有清洁基线的150源I/O/185资料审查、15份实际数据排除和9份混合profile净化保留来源，新增源数以当前manifest为准；原生函数、RTTI、类、布局、偏移和导入字节仍严格守卫。4个先前只有路径加载的热输入已补齐，Shared StrategyApi、ReadApi四种固定profileName及两处PageDuplicate SaveProfile增加整体SHA校验。绑定工具递归重算自有资料的路径及内容 SHA，并同步所有原 SHA→纯ABI派生 SHA 的源 pin，不修改旧证据、不放松 native 守卫。WorkingRoot=RuntimeRoot\engineering。未绑定 Layout 源中的 PENDING 只是生成器输入，不能直接部署。
+七个配置键为 schema、task_root、engineering_root、runtime_root、install_root、transport_client_file、transport_client_sha256。生成器从当前 transport 合同填写最后一项。EngineeringRoot 与 RuntimeRoot 分离，前者保存部署的只读 profiles / task-evidence，后者保存队列、claim 与 `engineering` 输出。未绑定 Layout 的 PENDING 不能部署。上述流程完成后，按[热接入的目标身份与连接步骤](../assets/pro-native-bridge/hot-attach/README.md#选择目标并连接)继续；只有接入成功后才使用当前工程的 inspect/编辑入口。
 
-编译结果是 x86 自有 engine。将新的 `McgsInternalEngine_NNNN.dll` 与同名 `.scope.json` 一起放到已配置 BootstrapRoot\engines，核 DLL/SHA 后再由当前桥的既有 file-only engine 选择流程切换。已有 Bootstrap 不在更新 engine 时替换。首次部署的 `stage_engine.py` 只创建第一份 active-engine.json，不覆盖后续选择。新 bootstrap 的选择文件另外保留 bootstrap_scope_sha256；它与 engine 配置 engineering_delivery_scope_sha256 分开。
+2026-11-04 从发布 ZIP 新解压到含中文及空格的独立目录，已完成本节生产 prepare、157源编译、307份自有ABI资料promotion、stage与新scope layout核对；均未注册或接入Pro、未调用业务engine。独立自有宿主另完成3次ping与清理。这是可搬移文件链证据，不代表新电脑环境或原厂业务验收。
 
-切换后只需一次当前工程 inspect 确认 scope attestation、大结果 payload、当前身份和完整前像，不为接入重新跑所有功能。以下是本次新 ID/新输出的命令形状；不要复制示例为某个历史 fixture。
+## 已有桥的同任务更新
+
+复用实际 TaskRoot、RuntimeRoot、BootstrapRoot、队列和历史结果；不要重跑上节创建新任务/首次 stage 的命令。选新的 binding/bound 输出目录、独立 EngineeringRoot 和版本化 transport 文件（例如 `bridge_client_0102.py`），按上节对应的 binding → compile → promotion 段生成新 engine / 同名 scope，不覆盖已加载DLL或在用资料。已有 Bootstrap 不随 engine 更新替换；启用新版后台调度需按[流水线兼容规则](pro-native-pipeline.md)接入新版 Bootstrap。
+
+核新 DLL / scope SHA 后，按既有 file-only 选择流程更新当前 RuntimeRoot 的 active-engine；保留当前 bootstrap_scope_sha256，不能误填 engine 的 engineering_delivery_scope_sha256。每次工程请求单独给路径，默认 direct 在调用内读取当前 PID、线程与目标前像。切换后仅做一次实际工程 inspect，确认 scope attestation、大结果 payload 和当前身份，不为更新重跑全部业务功能：
 
 ```powershell
-pwsh -NoProfile -File "$SkillRoot\run.ps1" native-engineering `
-  --scope-config $DeployedScopeJson --scope-sha256 $ScopeSha layout
-pwsh -NoProfile -File "$SkillRoot\run.ps1" native-engineering `
+& "$SkillRoot\run.ps1" native-engineering `
   --scope-config $DeployedScopeJson --scope-sha256 $ScopeSha `
-  inspect --project $ActualOpenProject --id $FreshId --out $FreshReceipt
+  inspect --project $ActualOpenProject --out $FreshReceipt
 ```
+
+FreshReceipt 使用 runtime 内的新文件。未知/超时结果保留 claim，先读实际状态，不自动重发。暂停工程不会因工具更新恢复。
 
 ## 普通启动 Pro 后的热接入
 
