@@ -15,7 +15,7 @@
 
 ## 从一个小任务开始
 
-先看 [任务清单](ROADMAP.md) 和 [已有 Issues](https://github.com/SuperWater925/mcgs-offline-edit-skill/issues)。选好后开一个 Issue 或在相关 Issue 留言，说明任务编号、准备做什么、使用的软件版本，避免重复投入。未标注“已认领”不保证无人进行；以 Issue 中最新沟通为准。
+先看 [任务清单](ROADMAP.md) 和 [已有 Issues](https://github.com/SuperWater925/mcgs-engineering-skill/issues)。选好后开一个 Issue 或在相关 Issue 留言，说明任务编号、准备做什么、使用的软件版本，避免重复投入。未标注“已认领”不保证无人进行；以 Issue 中最新沟通为准。
 
 不清楚原生格式时，可以先修安装说明、整理问题复现步骤或测试现有工具。涉及新版本、新控件和写入边界的较大改动，先在 Issue 中说明输入和计划。
 

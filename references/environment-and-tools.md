@@ -11,7 +11,9 @@ Python3.11+用于纯字节归档解码、候选准备和Pro CLI；共同数据�
 
 原厂McgsStu / McgsPro及相匹配的控件、驱动、字体用于最终检查与模拟，由接收者安装；本技能不分发它们。不要下载未知DLL补齐依赖。
 
-将整个`mcgs-offline-edit`文件夹放到目标电脑的`%USERPROFILE%\.codex\skills\`（Codex，调用`$mcgs-offline-edit`）或`%USERPROFILE%\.claude\skills\`（Claude Code），也可用PowerShell7直接运行该文件夹内的`run.ps1`。保留`assets/`、`scripts/`、`references/`的相对结构。若同名技能已有本地改动，先比较再合并，不盲目覆盖。
+将整个`mcgs-engineering`文件夹放到目标电脑的`%USERPROFILE%\.codex\skills\`（Codex，调用`$mcgs-engineering`）或`%USERPROFILE%\.claude\skills\`（Claude Code），也可用PowerShell7直接运行该文件夹内的`run.ps1`。保留`assets/`、`scripts/`、`references/`的相对结构。若同名技能已有本地改动，先比较再合并，不盲目覆盖。
+
+旧 `mcgs-offline-edit` 安装需先保全本地修改并备份移到 `skills` 目录之外，只保留新 `mcgs-engineering` 技能；不保留旧调用别名。已有在线运行资料不自动搬动，也不因技能更名重建运行 scope，迁移步骤见[安装说明](../README.md#安装)。
 
 更新时先核本机实际安装位置与已有本地修改，再同步本次授权的技能副本，并重算`references/package-files.sha256.json`：
 - 按路径不区分大小写排序，列出除它自身外的全部文件，记字节数和SHA256；

@@ -30,6 +30,13 @@ def main() -> int:
         print(checked.stdout, end='')
         print(checked.stderr, file=sys.stderr, end='')
         return checked.returncode
+    skill_text = (root / 'SKILL.md').read_text(encoding='utf-8-sig')
+    header = re.match(r'\A---\s*\n(.*?)\n---(?:\s*\n|$)', skill_text, re.S)
+    name = re.search(r'^name:\s*([a-z0-9-]{1,64})\s*$', header.group(1), re.M) if header else None
+    if not name:
+        parser.error('SKILL.md must declare a valid skill name')
+    skill_name = name.group(1)
+    prefix = skill_name + '/'
     files = package_files(root)
     forbidden = {'.mcs', '.mcp', '.mdb', '.accdb', '.exe', '.dll', '.so', '.chm', '.zip', '.rar', '.7z', '.key', '.pem', '.pfx'}
     for path in files:
@@ -40,11 +47,11 @@ def main() -> int:
     if file_manifest(root, files) != expected:
         parser.error('Source files changed during validation')
     output.mkdir(parents=True)
-    archive_path = output / f'mcgs-offline-edit-{args.version}.zip'
+    archive_path = output / f'{skill_name}-{args.version}.zip'
     included = sorted(files + [root / MANIFEST], key=lambda p: p.relative_to(root).as_posix().casefold())
     with zipfile.ZipFile(archive_path, 'x', compression=zipfile.ZIP_DEFLATED) as archive:
         for path in included:
-            info = zipfile.ZipInfo('mcgs-offline-edit/' + path.relative_to(root).as_posix(), (1980, 1, 1, 0, 0, 0))
+            info = zipfile.ZipInfo(prefix + path.relative_to(root).as_posix(), (1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o644 << 16
             archive.writestr(info, path.read_bytes())
@@ -53,16 +60,16 @@ def main() -> int:
             raise ValueError('ZIP CRC verification failed')
         entries = {p['file']: p['sha256'] for p in expected['files']}
         entries[MANIFEST] = hashlib.sha256((root / MANIFEST).read_bytes()).hexdigest()
-        assert set(archive.namelist()) == {'mcgs-offline-edit/' + p for p in entries}
+        assert set(archive.namelist()) == {prefix + p for p in entries}
         for name, digest in entries.items():
-            if hashlib.sha256(archive.read('mcgs-offline-edit/' + name)).hexdigest() != digest:
+            if hashlib.sha256(archive.read(prefix + name)).hexdigest() != digest:
                 raise ValueError(f'Archived file differs: {name}')
     if file_manifest(root, package_files(root)) != expected:
         raise ValueError('Source files changed while packaging')
     digest = hashlib.sha256(archive_path.read_bytes()).hexdigest()
     (output / 'SHA256SUMS.txt').write_text(f'{digest}  {archive_path.name}\n', encoding='ascii')
     print(json.dumps({'passed': True, 'archive': str(archive_path), 'sha256': digest,
-                      'files': len(included), 'root': 'mcgs-offline-edit'}, ensure_ascii=False, indent=2))
+                      'files': len(included), 'root': skill_name}, ensure_ascii=False, indent=2))
     return 0
 
 

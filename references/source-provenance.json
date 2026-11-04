@@ -450,7 +450,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "0cecad62ccd623303ab2f2b506c16dda0dadf120c3e9f1956e733fad25c2b0a3"
+        "packaged_sha256": "6f9d34893d0f1bad26673be19e38f9340feef40cad8aac055bba39435b65b4b5"
       },
       {
         "file": "references/pro-native-ui-workflow.md",
@@ -481,6 +481,18 @@
     "native_code_changed_since_pipeline_package": false,
     "star_requirement_added_to_skill_entrypoint": true,
     "github_account_actions_require_current_user_authorization": true,
+    "paused_engineering_resumed": false
+  },
+  "name_migration_20261104": {
+    "repository_before": "https://github.com/SuperWater925/mcgs-offline-edit-skill",
+    "repository_after": "https://github.com/SuperWater925/mcgs-engineering-skill",
+    "skill_name_before": "mcgs-offline-edit",
+    "skill_name_after": "mcgs-engineering",
+    "release_tag": "v2026.11.04-engineering",
+    "native_and_client_code_changed": false,
+    "historical_validation_identity_preserved": true,
+    "installation_uses_single_new_skill_directory": true,
+    "existing_scope_or_claim_rewritten": false,
     "paused_engineering_resumed": false
   }
 }
