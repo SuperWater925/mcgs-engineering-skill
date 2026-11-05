@@ -13,9 +13,8 @@ def write(p,x):
  with Path(p).open('xb')as f:f.write((json.dumps(x,ensure_ascii=False,indent=2)+'\n').encode('utf-8'))
 def run(a):subprocess.run([str(x) for x in a],check=True)
 def absolute(s):
+ if not Path(s).is_absolute():raise ValueError('Use an explicit absolute path')
  p=Path(s).resolve();assert p.drive and str(p)!=p.anchor
- for x in [p,*p.parents]:
-  if x.exists():assert not (x.stat(follow_symlinks=False).st_file_attributes&0x400),'Reparse path'
  return p
 
 def empty_output(path,label):
@@ -49,9 +48,10 @@ def template_sources(templates):
  return sources
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--task-root',required=True);ap.add_argument('--runtime-root',required=True);ap.add_argument('--bootstrap-root',required=True);ap.add_argument('--install-root',required=True);ap.add_argument('--editor');ap.add_argument('--host-kind',choices=['pro','own-test-message-loop','own-test-native-message-loop'],default='pro');ap.add_argument('--bootstrap-template',default=str(DEFAULT_BOOT));ap.add_argument('--ping-only',action='store_true');z=ap.parse_args()
+ global CSC
+ ap=argparse.ArgumentParser();ap.add_argument('--task-root',required=True);ap.add_argument('--runtime-root',required=True);ap.add_argument('--bootstrap-root',required=True);ap.add_argument('--install-root',required=True);ap.add_argument('--editor');ap.add_argument('--host-kind',choices=['pro','own-test-message-loop','own-test-native-message-loop'],default='pro');ap.add_argument('--bootstrap-template',default=str(DEFAULT_BOOT));ap.add_argument('--ping-only',action='store_true');ap.add_argument('--csc',type=Path,default=CSC,help='Explicit x86 .NET Framework-compatible C# compiler');z=ap.parse_args()
+ CSC=z.csc.resolve()
  task,runtime,boot,install=[absolute(v) for v in [z.task_root,z.runtime_root,z.bootstrap_root,z.install_root]]
- assert len(str(runtime).encode('utf-16le'))//2<=220,'Native result path exceeds bounded path length'
  assert runtime.is_relative_to(task) and boot.is_relative_to(task) and runtime!=task and boot!=task
  assert not runtime.is_relative_to(boot) and not boot.is_relative_to(runtime)
  templates=absolute(z.bootstrap_template);editor=absolute(z.editor) if z.editor else install/'Program/OwnMessageLoopHost.exe'

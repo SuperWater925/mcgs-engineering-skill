@@ -355,12 +355,14 @@ def controls_patch(export,spec,output):
         raise ValueError('Control spec requires current input_sha256 and controls')
     if not isinstance(spec['controls'],list) or not spec['controls']:raise ValueError('Empty controls list')
     family=export.index.get('project_family')
-    raw=export.blob('System','ObjData','lbContext')
-    if family=='Pro':variables=pro_format().variables(unwrapped(raw))
-    else:
-        _,rows=objects.parse(raw)
-        variables=[{'name':r.name.value,'kind':r.kind,'id':r.id} for r in rows]
-    variables={v['name']:v for v in variables}
+    variables={}
+    if any('binding' in change.get('edits',{}) for change in spec['controls']):
+        plain=unwrapped(export.blob('System','ObjData','lbContext'))
+        if family=='Pro':rows=pro_format().variables(plain)
+        else:
+            _,objects_rows=objects.parse(plain)
+            rows=[{'name':r.name.value,'kind':r.kind,'id':r.id} for r in objects_rows]
+        variables={v['name']:v for v in rows}
     windows={};originals={};plain_originals={};paths=[];replacements={}
     for change in spec['controls']:
         if set(change)!={'window','path','sha256','edits'}:raise ValueError('Control operation requires window/path/sha256/edits')

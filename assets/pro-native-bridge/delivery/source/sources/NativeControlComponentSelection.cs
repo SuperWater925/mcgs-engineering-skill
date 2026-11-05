@@ -16,9 +16,9 @@ namespace McgsInternalBridge {
    else{
     var item=Map(token);NativeMemory.Require(item.Count==2&&item.ContainsKey("native_key")&&item.ContainsKey("occurrence")&&item["native_key"] is string,"Component selector must be a unique caption or {native_key,occurrence}.");
     object ordinal=item["occurrence"];NativeMemory.Require(ordinal is int||ordinal is long||ordinal is uint,"Component occurrence must be an exact integer.");
-    long number=Convert.ToInt64(ordinal);NativeMemory.Require(number>=0&&number<=4095,"Component occurrence is outside the guarded getter bound.");occurrence=(int)number;key=(string)item["native_key"];
+    long number=Convert.ToInt64(ordinal);NativeMemory.Require(number>=0&&number<Int32.MaxValue,"Component occurrence is outside the guarded getter bound.");occurrence=(int)number;key=(string)item["native_key"];
    }
-   NativeMemory.Require(!String.IsNullOrEmpty(key)&&key.Length<=256&&key.IndexOf('\0')<0,"Component native key is invalid.");
+   NativeMemory.Require(!String.IsNullOrEmpty(key)&&key.IndexOf('\0')<0,"Component native key is invalid.");
    IntPtr found=IntPtr.Zero;int matches=0;
    foreach(var row in values){if(Convert.ToString(row["native_owner"])!=NativeMemory.Hex(owner)||Convert.ToString(row["native_key"])!=key||Convert.ToInt32(row["native_type_tag"])!=9)continue;
     if(occurrence<0){NativeMemory.Require(found==IntPtr.Zero,"Component caption repeats; select the exact getter occurrence explicitly.");found=new IntPtr(NativeEngine.Number(row["component_iobject"]));}

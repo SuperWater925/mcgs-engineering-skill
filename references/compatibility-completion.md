@@ -1,6 +1,6 @@
 # 跨构建适配消费链
 
-软件发行号不参与准入。工具回执要求 `cross_build_contract=mcgs-native-cross-build/v3`，用来确认进程实际加载本版修复后的业务引擎。已有桥通过 `native-engine-select` 更新；不用为此重启 Pro、清除请求或复制旧会话资料。
+本页记录前轮v3消费链实现，软件发行号不参与准入。当前逐项处理和真实边界见[后续复查处理](compatibility-resolution.md)。`cross_build_contract`用于识别工具修订，不按精确值拒绝未来工具；按实际所需能力通过`native-engine-select`更新业务引擎，不清除请求或复制旧会话资料。
 
 ## 在线局部操作
 

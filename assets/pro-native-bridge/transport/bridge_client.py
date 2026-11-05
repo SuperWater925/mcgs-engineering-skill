@@ -18,7 +18,7 @@ import time
 import uuid
 
 ROOT = Path(__file__).resolve().parent
-MAX_RECEIPT_BYTES = 1024 * 1024
+MAX_RECEIPT_BYTES = (1 << 31) - 1  # CLR/x86 length representation, not a sample quota.
 HOST_DIRECTORIES = ("inbox", "outbox", "processed", "claims", "claimed")
 RESERVED = {"CON", "PRN", "AUX", "NUL"} | {x + str(i) for x in ("COM", "LPT") for i in range(1, 10)}
 
@@ -157,10 +157,10 @@ def _exists(path):
 
 
 def _not_reparse(path):
-    info = os.lstat(path)
-    if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
-        raise OSError("Queue reparse points are not accepted: " + str(path))
-    return info
+    # ROOT is canonical at connection setup. Resolve an explicitly configured
+    # junction/UNC location; request uniqueness and exact receipt correlation
+    # still apply to the real files.
+    return Path(path).resolve(strict=True).stat()
 
 
 def _directory(path, create=False):
@@ -172,6 +172,7 @@ def _directory(path, create=False):
 
 
 def _read(path, maximum=MAX_RECEIPT_BYTES):
+    path = Path(path).resolve(strict=True)
     info = _not_reparse(path)
     if not stat.S_ISREG(info.st_mode) or info.st_size > maximum:
         raise OSError("Queue record is not a bounded regular file: " + str(path))

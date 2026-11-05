@@ -146,8 +146,8 @@ def font_heights(data):
 def _resize_font(data, pixel_height):
     if pixel_height is None:
         return data
-    if type(pixel_height) is not int or not 8 <= pixel_height <= 128:
-        raise ValueError("Button font height must be 8..128 pixels")
+    if type(pixel_height) is not int or not 1 <= pixel_height <= 0x7fffffff:
+        raise ValueError("Button font height must fit the native signed LONG")
     font_heights(data)
     result = bytearray(data)
     r = Reader(data)

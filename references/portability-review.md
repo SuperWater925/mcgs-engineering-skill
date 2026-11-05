@@ -1,5 +1,7 @@
 # 换电脑与首次使用的可迁移性复查
 
+本页保留前轮修复记录，各项范围限于当时所列入口，不能外推为所有消费分支或所有数量限制均已移除。当前逐项处理、容量与保留能力见[后续复查处理](compatibility-resolution.md)及[分项证据](compatibility-resolution-validation.json)。
+
 本轮接续取消软件发行号、作者 EXE/DLL 整文件 SHA 白名单的工作，检查会让普通项目或不同安装布局被拒绝的其它条件。详细证据见[本轮隔离验证](pro-native-portability-validation.json)；此前取消指纹准入的记录见[构建准入验证](pro-native-build-admission-validation.json)。
 
 ## 本轮修复

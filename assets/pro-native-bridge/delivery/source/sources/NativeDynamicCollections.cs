@@ -2,6 +2,11 @@
 using System;using System.Collections;using System.Collections.Generic;
 namespace McgsInternalBridge {
  internal static class NativeDynamicCollections {
+  internal static void ValidateBuffer(IntPtr pointer,int count,int stride,string label){
+   NativeMemory.Require(count>=0&&stride>0&&(count==0||pointer!=IntPtr.Zero),"Invalid native buffer count/pointer: "+label);
+   long bytes=checked((long)count*stride);NativeMemory.Require(bytes<=Int32.MaxValue&&(ulong)NativeMemory.U(pointer)+(ulong)bytes<=0x100000000UL,"Native buffer exceeds x86/CLR representation: "+label);
+   for(int offset=0;offset<bytes;){int block=(int)Math.Min(1024*1024,bytes-offset);NativeMemory.Readable(NativeMemory.Add(pointer,offset),block);offset=checked(offset+block);}
+  }
   internal static List<IntPtr> ReadDrawList(IntPtr list,IntPtr document,IntPtr expectedTable){
    NativeMemory.Require(NativeMemory.Ptr(list,0)==expectedTable,"Current native drawing-list class differs.");
    IntPtr node=NativeMemory.Ptr(list,4),tail=NativeMemory.Ptr(list,8),previous=IntPtr.Zero;int count=NativeMemory.I32(list,12);

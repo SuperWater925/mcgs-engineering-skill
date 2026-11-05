@@ -3,7 +3,7 @@
 The native Pro scanner deletes its scanned coclass registration, then calls the
 scanned DLL's *native* DllRegisterServer export.  This adapter carries the exact
 stable bridge type library and restores only the three transaction-owned private
-HKLM/Registry32 roots.  It is not a COM server and does not invoke the bridge.
+selected HKCU/HKLM Registry32 roots.  It is not a COM server and does not invoke the bridge.
 
 No registry API is invoked by this Python builder.  DllRegisterServer must be
 separately reviewed and explicitly invoked by the parent experiment runner.
@@ -75,15 +75,18 @@ class Assembler:
 
 
 def load_contract():
-    global ROOTS, WRAPPER_NAME
+    global ROOTS, WRAPPER_NAME, HKLM
     tx_path = CONTRACT
     plan_path = BOOT / 'hklm-registration-plan.json'
     tx_raw, plan_raw = tx_path.read_bytes(), plan_path.read_bytes()
     tx, plan = json.loads(tx_raw), json.loads(plan_raw)
-    if tx['state'] != 'prepared_not_registered' or tx['hive'] != 'HKLM' or tx['view'] != 'Registry32':
+    if tx['state'] != 'prepared_not_registered' or tx['hive'] not in ('HKCU', 'HKLM') or tx['view'] != 'Registry32':
         raise ValueError('Unexpected transaction hive/view')
     config_raw = (BOOT / 'McgsInternalBridge.bridge.json').read_bytes()
     config = json.loads(config_raw)
+    if plan['hive'] != tx['hive'] or config.get('cold_registry_hive', 'HKLM') != tx['hive']:
+        raise ValueError('Prepared registration hive differs from the bound configuration')
+    HKLM = 0x80000001 if tx['hive'] == 'HKCU' else 0x80000002
     if tx['bootstrap_scope_sha256'] != sha(config_raw) or plan['bootstrap_scope_sha256'] != sha(config_raw) or Path(config['bootstrap_root']).resolve() != BOOT:
         raise ValueError('Registration contract/config binding differs')
     identity = config.get('cold_com_identity')
@@ -108,9 +111,7 @@ def load_contract():
         raise ValueError('Unexpected transaction marker')
     entries = tx['expected_entries']
     stable = BOOT / 'McgsInternalBridge.dll'
-    codebase = 'file:///' + str(stable).replace('\\', '/')
-    if urllib.parse.unquote(codebase) != codebase:
-        raise ValueError('CodeBase must use the tested unescaped native URI')
+    codebase = stable.as_uri()
     seen = set()
     for entry in entries:
         key = entry['key']
@@ -122,9 +123,8 @@ def load_contract():
             if not isinstance(name, str) or not isinstance(value, str):
                 raise ValueError('Only REG_SZ values are supported')
             if '\0' in name + value: raise ValueError('Embedded NUL')
-            if len(wstr(value)) > 2048: raise ValueError('Registry value too large')
             if name == 'CodeBase' and value != codebase:
-                raise ValueError('Transaction CodeBase is not current unescaped URI')
+                raise ValueError('Transaction CodeBase is not the bound file URI')
     for root in ROOTS:
         entry = next(e for e in entries if e['key'] == root)
         if entry['values'].get(MARKER) != token:
@@ -159,6 +159,11 @@ def build():
         for name, value in e['values'].items(): intern(name); intern(value)
     intern(MARKER); intern(token)
 
+    buffer_bytes = max(2048, *(len(wstr(value)) for entry in entries for value in entry['values'].values()))
+    frame_size = align(buffer_bytes + 32, 16)
+    if frame_size > 0x7fffffff:
+        raise ValueError('Registration value exceeds the x86 stack-frame representation')
+    buffer_displacement = -frame_size
     a = Assembler()
     a.label('DllMain')
     a.emit(b'\xb8\x01\0\0\0\xc2\x0c\0')  # TRUE; stdcall 3 args
@@ -166,8 +171,14 @@ def build():
     a.label('DllRegisterServer')
     # EBP establishes locals.  Saved EBX/ESI/EDI occupy -4/-8/-12.
     # hKey=-16, cbData=-20, type=-24, originalError=-28,
-    # disposition=-32, buffer=-2080 (ends at -33).
-    a.emit(b'\x55\x8b\xec\x53\x56\x57\x81\xec' + p32(0x820))
+    # disposition=-32; buffer is sized to this exact contract and ends at -33.
+    a.emit(b'\x55\x8b\xec\x53\x56\x57')
+    # Touch every reserved page, preserving Windows stack guard expansion.
+    remaining = frame_size
+    while remaining:
+        reserve = min(4096, remaining)
+        a.emit(b'\x81\xec' + p32(reserve) + b'\xf6\x04\x24\x00')
+        remaining -= reserve
     a.emit(b'\xc7\x45\xf0\0\0\0\0')
 
     def open_key(key, missing_label):
@@ -187,9 +198,9 @@ def build():
         n = str(query_counter); query_counter += 1
         done = 'query_done_' + n
         present = 'query_present_' + n
-        a.emit(b'\xc7\x45\xec' + p32(2048))
+        a.emit(b'\xc7\x45\xec' + p32(buffer_bytes))
         a.emit(b'\xc7\x45\xe8' + p32(0))
-        a.push_local_address(-20); a.push_local_address(-2080)
+        a.push_local_address(-20); a.push_local_address(buffer_displacement)
         a.push_local_address(-24); a.push(0)
         a.push_address(intern(name)); a.push_handle()
         a.call_import('RegQueryValueExW')
@@ -201,7 +212,7 @@ def build():
         a.emit(b'\x83\x7d\xe8\x01'); a.jump('invalid_data_close', 0x85)
         a.emit(b'\x81\x7d\xec' + p32(len(wstr(expected))))
         a.jump('invalid_data_close', 0x85)
-        a.emit(b'\x8d\xb5' + p32(-2080))
+        a.emit(b'\x8d\xb5' + p32(buffer_displacement))
         a.emit(b'\xbf'); a.absolute32(intern(expected))
         a.emit(b'\xb9' + p32(len(wstr(expected))) + b'\xfc\xf3\xa6')
         a.jump('invalid_data_close', 0x85)
@@ -267,7 +278,7 @@ def build():
     a.emit(b'\x85\xc0'); a.jump('epilog', 0x8e)
     a.emit(b'\x25\xff\xff\0\0\x0d\0\0\x07\x80')
     a.label('epilog')
-    a.emit(b'\x81\xc4' + p32(0x820) + b'\x5f\x5e\x5b\x5d\xc3')
+    a.emit(b'\x81\xc4' + p32(frame_size) + b'\x5f\x5e\x5b\x5d\xc3')
 
     text_rva = 0x1000
     rdata_rva = align(text_rva + len(a.code), ALIGN)
@@ -398,7 +409,7 @@ def build():
         'absolute_fixup_count': len(a.absolute),
         'relocation_sites': [hex(text_rva + o) for o, _ in a.absolute],
         'ownership_marker': MARKER, 'transaction_id': token,
-        'registry_hive': 'HKLM', 'registry_view_flag': 'KEY_WOW64_32KEY (0x200)',
+        'registry_hive': 'HKCU' if HKLM == 0x80000001 else 'HKLM', 'registry_view_flag': 'KEY_WOW64_32KEY (0x200)',
         'write_roots': ROOTS, 'expected_entries': entries, 'writes': writes,
         'protection': {
             'full_read_only_preflight_before_first_mutation': True,

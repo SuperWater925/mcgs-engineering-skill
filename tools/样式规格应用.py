@@ -74,7 +74,7 @@ def edit_control(before, s, wid, name, mod):
 def main(export_dir, spec_path, output, tag):
     export = u.Export(export_dir)
     mod = load_spec(spec_path)
-    windows = {wid: export.window(wid) for wid in export.window_ids()}
+    windows = {wid: export.window(wid) for wid in mod.SPEC}
     originals = copy.deepcopy(windows)
     needed = set()
     for page in mod.SPEC.values():
@@ -82,15 +82,22 @@ def main(export_dir, spec_path, output, tag):
             needed.add('rect')
         needed.update('label' if s['op'] == 'new_text' else 'line' for s in page.get('above', []))
     tpl = u.Templates.pick(export, getattr(mod, 'TEMPLATES', None), kinds=tuple(sorted(needed)))
-    all_sources = '\n'.join(v for w in windows.values() for _, v in u.business_sources(w)) + '\n' + u.strategy_text(export.path)
+    requires_reference_scan=any(page.get('delete') or 'replace_background' in page for page in mod.SPEC.values())
+    all_sources=''
+    if requires_reference_scan:
+        # Destructive operations still need a complete readable reference
+        # projection. Local visual edits only preserve their selected pages.
+        reference_windows=[windows[wid] if wid in windows else export.window(wid) for wid in export.window_ids()]
+        sources=[u.reference_sources(w) for w in reference_windows]
+        all_sources='\n'.join(value for source in sources for _,value in source)+'\n'+u.strategy_text(export)
     report = dict(input_sha256=export.sha256, spec=str(spec_path), spec_sha256=u.sha(Path(spec_path).read_bytes()),
-                  templates=tpl['_source'], windows={}, deleted=[], added=[], gui=False, vendor_code_executed=False,
+                  templates=tpl['_source'], unsupported_template_candidates=tpl['_unsupported_template_candidates'], windows={}, deleted=[], added=[], gui=False, vendor_code_executed=False,
                   database_opened=False, project_family=export.family,
                   native_compile_verified=False, native_runtime_verified=False)
 
     for wid, spec in mod.SPEC.items():
         w = windows[wid]
-        win_name = w.settings().properties[1].value
+        win_name = w.settings().field('name').value
         changes = []
         for name, s in spec.get('controls', {}).items():
             i = u.find(w, name)
@@ -131,8 +138,7 @@ def main(export_dir, spec_path, output, tag):
             report['added'].append(dict(window_id=wid, **{k: v for k, v in s.items() if k != 'op'}, op=s['op']))
         if 'window_background' in spec:
             settings = w.settings()
-            assert settings.properties[15].vt == 3
-            settings.properties[15].value = u.c(spec['window_background'])
+            settings.field('background').value = u.c(spec['window_background'])
             w.trailer = settings.to_bytes()
         names = u.known_control_names(w.controls)
         assert len(names) == len(set(names)), ('控件重名', wid)

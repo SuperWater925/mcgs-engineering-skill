@@ -9,7 +9,8 @@ import re
 import stat
 import threading
 
-TRANSPORT_SHA256 = "6314e35b3420c544e149e4f0432e6db903b3ac493c14031b10c87ac37cf0669a"
+TRANSPORT_SHA256 = "298e62cf5798acc03d82af5dd5b5751703a1e65348e12a485780239c01fe3417"
+CLR_MAX_LENGTH = (1 << 31) - 1
 _FIELDS = {"schema", "task_root", "engineering_root", "runtime_root", "install_root", "transport_client_file", "transport_client_sha256"}
 _OPTIONAL_FIELDS = {"editor_executable"}
 _current = None
@@ -22,13 +23,9 @@ def _identity(info):
 
 
 def _not_reparse(path):
-    path = Path(os.path.abspath(path))
-    for item in (path, *path.parents):
-        if os.path.lexists(item):
-            info = os.lstat(item)
-            if stat.S_ISLNK(info.st_mode) or getattr(info, "st_file_attributes", 0) & 0x400:
-                raise ValueError("Delivery path ancestor is a reparse point: " + str(item))
-    return path
+    # Bind the real target, including installations reached through junctions.
+    # File-ID/size/time and SHA checks below still detect target replacement.
+    return Path(path).expanduser().resolve(strict=False)
 
 
 def _regular(path, maximum):
@@ -115,20 +112,20 @@ class DeliveryLayout:
         return self.engineering_root / "task-evidence"
 
     def check(self):
-        _verify_file(self.configuration_file, 65536, self.configuration_sha256)
+        _verify_file(self.configuration_file, CLR_MAX_LENGTH, self.configuration_sha256)
         for path in (self.task_root, self.engineering_root, self.runtime_root, self.install_root):
             if not _not_reparse(path).is_dir():
                 raise ValueError("Bound delivery directory changed")
         if not _not_reparse(self.evidence_root).is_dir():
             raise ValueError("Bound immutable task-evidence payload has not been deployed")
-        _verify_file(self.transport_client_file, 1024 * 1024, self.transport_client_sha256)
+        _verify_file(self.transport_client_file, CLR_MAX_LENGTH, self.transport_client_sha256)
 
 
 def load(path, expected_sha256):
     if not isinstance(expected_sha256, str) or re.fullmatch("[a-f0-9]{64}", expected_sha256) is None:
         raise ValueError("An exact bound configuration SHA256 is required")
     path = _absolute(path)
-    raw = _regular(path, 65536)
+    raw = _regular(path, CLR_MAX_LENGTH)
     if hashlib.sha256(raw).hexdigest() != expected_sha256:
         raise ValueError("Delivery configuration SHA differs")
     data = json.loads(raw.decode("utf-8-sig"))
@@ -169,7 +166,7 @@ def validate_mapping(data, configuration_file, configuration_sha256):
         raise ValueError("Transport source is outside both declared roots")
     if data["transport_client_sha256"] != TRANSPORT_SHA256:
         raise ValueError("Verified at-most-once transport source differs")
-    _verify_file(transport, 1024 * 1024, TRANSPORT_SHA256)
+    _verify_file(transport, CLR_MAX_LENGTH, TRANSPORT_SHA256)
     editor = _selected_editor(data, install)
     return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256, editor)
 

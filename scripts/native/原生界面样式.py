@@ -22,9 +22,22 @@ def sha(raw):return hashlib.sha256(raw).hexdigest()
 
 def animation(r):
     start=r.pos
-    if r.u16()!=0xffff:raise FormatError('Animation class reference is not in this frozen schema')
-    schema=r.u16();n=r.u16();name=r.take(n).decode('ascii')
+    if not hasattr(r,'animation_classes'):
+        r.animation_classes={};r.animation_objects={};r.animation_next_index=1
+    tag=r.u16();large=tag==0x7fff
+    if large:tag=r.u32()
+    if not large and tag==0xffff:
+        schema=r.u16();n=r.u16();name=r.take(n).decode('ascii')
+        r.animation_classes[r.animation_next_index]=(name,schema);r.animation_next_index+=1
+    elif tag&(0x80000000 if large else 0x8000):
+        index=tag&(0x7fffffff if large else 0x7fff)
+        if index not in r.animation_classes:raise FormatError('Unknown animation class-map reference')
+        name,schema=r.animation_classes[index]
+    else:
+        if tag not in r.animation_objects:raise FormatError('Unknown animation object-map reference')
+        return copy.deepcopy(r.animation_objects[tag]),r.data[start:r.pos]
     if schema!=0:raise FormatError('Unknown animation schema')
+    object_index=r.animation_next_index;r.animation_next_index+=1
     value=r.take(4);expression=CString.parse(r)
     detail=dict(class_name=name,expression=expression.value,initial_float_bits=value.hex())
     if name=='CAniOutput':
@@ -70,6 +83,7 @@ def animation(r):
         detail['tail_arrays']=[ByteArray.parse(r).value,ByteArray.parse(r).value]
         detail['reserved_word']=r.u32()
     else:raise FormatError('Unproven animation class '+name)
+    r.animation_objects[object_index]=copy.deepcopy(detail)
     return detail,r.data[start:r.pos]
 
 @dataclass
@@ -91,7 +105,7 @@ class CommonEnvelope:
         if style&0x100:r.take(8);r.cstring()
         ro=r.pos;r.take(16);po=r.pos;r.take(18);bo=r.pos;r.take(14)
         ast=r.pos;n=r.count();items=[]
-        r.count_extent(n,11,'Animation')
+        r.count_extent(n,2,'Animation')
         for _ in range(n):items.append(animation(r)[0])
         aend=r.pos;r.take(4)
         prefix=record.payload[:r.pos];name=CString.parse(r);meta=ByteArray.parse(r)
@@ -143,9 +157,20 @@ class EventDispatch:
     @classmethod
     def parse(cls,r):
         start=r.pos
-        if r.u16()!=0xffff or r.u16()!=0:raise FormatError('Unproven generic event class header')
-        name=r.take(r.u16()).decode('ascii')
+        if not hasattr(r,'event_classes'):r.event_classes={};r.event_next_index=1
+        tag=r.u16();large=tag==0x7fff
+        if large:tag=r.u32()
+        if not large and tag==0xffff:
+            schema=r.u16();name=r.take(r.u16()).decode('ascii')
+            r.event_classes[r.event_next_index]=(name,schema);r.event_next_index+=1
+        elif tag&(0x80000000 if large else 0x8000):
+            index=tag&(0x7fffffff if large else 0x7fff)
+            if index not in r.event_classes:raise FormatError('Unknown generic event class-map reference')
+            name,schema=r.event_classes[index]
+        else:raise FormatError('Generic event object aliases require an explicit shared-owner editing contract')
+        if schema!=0:raise FormatError('Unproven generic event class schema')
         if name!='CEventDispatch':raise FormatError('Unproven generic event class '+name)
+        r.event_next_index+=1
         header=r.data[start:r.pos];compiled=ByteArray.parse(r)
         start=r.pos
         if any(r.count() for _ in range(3)):raise FormatError('Nonempty generic-event argument arrays require separate schema')
@@ -165,7 +190,7 @@ class GenericMetadata:
     @classmethod
     def parse(cls,data):
         r=Reader(data);start=r.pos;n=r.count();count=data[start:r.pos]
-        if n>1:raise FormatError('Multiple generic event CArchive class maps require separate schema')
+        r.count_extent(n,2,'Generic event')
         events=[EventDispatch.parse(r) for _ in range(n)]
         return cls(count,events,data[r.pos:])
     def to_bytes(self):return self.count_raw+b''.join(v.to_bytes() for v in self.events)+self.tail
@@ -312,7 +337,8 @@ def set_plugin_font(raw,height=None,family=None,weight=None):
         if height is not None:struct.pack_into('<i',b,0,-height)
         if weight is not None:struct.pack_into('<i',b,16,weight)
         if family is not None:
-            value=family.encode('cp936')
+            from mcgs_text import narrow_encoding
+            value=family.encode(narrow_encoding())
             if len(value)>=32:raise ValueError('Plugin LOGFONTA face too long')
             b[28:60]=value+b'\0'*(32-len(value))
         out+=lang+bytes(b)
@@ -335,7 +361,7 @@ def set_font(raw,height=None,family=None,weight=None):
     for _ in range(n):
         lang=r.take(4);b=bytearray(r.take(28));face=CString.parse(r)
         if height is not None:
-            if type(height)is not int or not 8<=height<=128:raise ValueError('Font height invalid')
+            if type(height)is not int or not 1<=height<=0x7fffffff:raise ValueError('Font height must fit the native signed LONG')
             struct.pack_into('<i',b,0,-height)
         if weight is not None:struct.pack_into('<i',b,16,weight)
         if family is not None:face.value=family

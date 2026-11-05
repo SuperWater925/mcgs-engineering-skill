@@ -43,7 +43,7 @@ namespace McgsInternalBridge {
   static string CString(IntPtr storage,int maximum) {
    NativeMemory.Readable(storage,4);IntPtr text=NativeMemory.Ptr(storage,0);NativeMemory.Require(text!=IntPtr.Zero,"Collector CString is NULL.");
    int length=NativeMemory.I32(text,-12),capacity=NativeMemory.I32(text,-8);
-   NativeMemory.Require(length>=0&&length<=maximum&&capacity>=length&&capacity<=1048576,"Collector CString length/capacity differs.");
+   NativeMemory.Require(length>=0&&capacity>=length,"Collector CString length/capacity differs.");
    byte[] raw=NativeMemory.Bytes(text,checked(length*2+2));NativeMemory.Require(raw[raw.Length-1]==0&&raw[raw.Length-2]==0,"Collector CString terminator differs.");
    return new UnicodeEncoding(false,false,true).GetString(raw,0,length*2);
   }
@@ -55,7 +55,7 @@ namespace McgsInternalBridge {
   }
   void Copy(int slot,IntPtr self,IntPtr owner,IntPtr key,IntPtr value,IntPtr number) {
    try {
-    RequireThread();NativeMemory.Require(!disposed&&active&&self==instance&&NativeMemory.I32(self,4)==0x434F4C31&&rows.Count<4096,"Owned property callback context/bound differs.");
+    RequireThread();NativeMemory.Require(!disposed&&active&&self==instance&&NativeMemory.I32(self,4)==0x434F4C31,"Owned property callback context/bound differs.");
     NativeMemory.Require(owner!=IntPtr.Zero&&activeTargets.Contains(NativeMemory.U(owner)),"Getter returned an unentered property owner.");
     string name=CString(key,256);var row=new Dictionary<string,object>{{"native_owner",NativeMemory.Hex(owner)},{"native_key",name},{"collector_slot",slot},{"component_depth",depth-1}};
     switch(slot) {

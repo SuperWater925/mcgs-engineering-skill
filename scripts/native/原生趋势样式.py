@@ -38,7 +38,7 @@ class HistoryCurveStyle:
   for key in ('1b8','1bc','1c0','1c4','1c8','1cc','1d0','1d4','1d8','1dc','1e0','1e4'):take(key,'i')
   take('1e8','f');take('200','i');take('curve_count','i')
   self.curve_count=int.from_bytes(self.spans[-1].raw,'little')
-  if self.curve_count!=16:raise ValueError('Unproven CDrawHisPic trace count')
+  r.count_extent(self.curve_count,47,'History trace')
   for j in range(self.curve_count):
    for key,kind in [('nativeKey','s'),('name','s'),('type','i'),('id','i'),('visible','i'),('source','s'),('unit','s'),('datatype','i'),('min','s'),('max','s'),('output','s'),('reserved','i'),('reserved2','i'),('pen','p')]:take(f'curve{j}_{key}',kind)
   self.spans.append(Span('opaque_tail',data[r.pos:],'b',r.pos))
@@ -46,7 +46,7 @@ class HistoryCurveStyle:
  def to_bytes(self):return b''.join(s.raw for s in self.spans)
  def fields(self):return {s.name:s.raw for s in self.spans}
  def style(self,*,ink,line,color_map,font_height=20):
-  allowed={'fc','10c','11c','12c','198','1b0','1e8','200'}|{f'curve{j}_pen' for j in range(16)};changes=[]
+  allowed={'fc','10c','11c','12c','198','1b0','1e8','200'}|{f'curve{j}_pen' for j in range(self.curve_count)};changes=[]
   for s in self.spans:
    old=s.raw
    if s.kind=='f':s.raw=set_font(old,height=font_height,family='微软雅黑',weight=400)

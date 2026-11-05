@@ -8,15 +8,29 @@ using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Web.Script.Serialization;
 
 namespace McgsInternalBridge {
  internal sealed class NativeLazyFunctionProfile {
+  sealed class RequestOwner {internal IntPtr Handle;internal string Sha;}
+  [ThreadStatic]static Dictionary<string,RequestOwner> requestOwners;
+  internal static void BeginRequest(){requestOwners=new Dictionary<string,RequestOwner>(StringComparer.OrdinalIgnoreCase);}
+  internal static void EndRequest(){requestOwners=null;}
+  static RequestOwner RequestModule(string roleOrPath){RequestOwner result;if(requestOwners!=null&&requestOwners.TryGetValue(roleOrPath,out result))return result;IntPtr handle=NativeAbiTargetProfiles.ModuleHandle(roleOrPath);result=new RequestOwner{Handle=handle};if(handle!=IntPtr.Zero){foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==handle){result.Sha=SourceHash(loaded.FileName);break;}NativeMemory.Require(result.Sha!=null,"Resolved native module has no current loaded image.");}if(requestOwners!=null)requestOwners.Add(roleOrPath,result);return result;}
+  internal static bool SameModule(ProcessModule loaded,string roleOrPath){var expected=RequestModule(roleOrPath);return loaded.BaseAddress==expected.Handle&&expected.Sha!=null&&SourceHash(loaded.FileName)==expected.Sha;}
+  internal static bool ModulePathMatches(string loadedPath,string roleOrPath){var expected=RequestModule(roleOrPath);if(expected.Handle==IntPtr.Zero)return false;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(String.Equals(Path.GetFullPath(loaded.FileName),Path.GetFullPath(loadedPath),StringComparison.OrdinalIgnoreCase))return loaded.BaseAddress==expected.Handle&&SourceHash(loaded.FileName)==expected.Sha;return false;}
+  internal static string SourceHash(string file){using(var stream=new FileStream(file,FileMode.Open,FileAccess.Read,FileShare.Read))using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(stream)).Replace("-","").ToLowerInvariant();}
+  internal static string ReadText(string file){return NativeAbiTargetProfiles.ReadLazyAllText(file,SourceHash(file));}
+  internal static string EntryProfile(Dictionary<string,object> row){object raw;var state=row.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;if(state==null||!state.TryGetValue("profile",out raw)||!(raw is string))throw new InvalidDataException("A native row has no bound profile identity.");return(string)raw;}
+  internal static void CheckRow(Dictionary<string,object> row,string kind){NativeAbiTargetProfiles.CheckEntry(row,kind,EntryProfile(row));}
+  internal static void CheckIdentity(Dictionary<string,object> row,params string[] fields){NativeAbiTargetProfiles.CheckFields(row,"identity",EntryProfile(row),fields);}
   internal readonly NativeEngine Engine;internal readonly string Relative;
   readonly string expectedSha,format;
   Dictionary<string,object> profile;
   readonly Dictionary<string,Dictionary<string,object>> functions=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);
+  readonly HashSet<string> ambiguousFunctions=new HashSet<string>(StringComparer.Ordinal);
   readonly Dictionary<string,Dictionary<string,object>> moduleRows=new Dictionary<string,Dictionary<string,object>>(StringComparer.OrdinalIgnoreCase);
   readonly Dictionary<string,IntPtr> handles=new Dictionary<string,IntPtr>(StringComparer.OrdinalIgnoreCase);
   readonly Dictionary<string,uint> preferred=new Dictionary<string,uint>(StringComparer.OrdinalIgnoreCase);
@@ -25,17 +39,61 @@ namespace McgsInternalBridge {
   [DllImport("kernel32.dll",EntryPoint="GetProcAddress",ExactSpelling=true)]static extern IntPtr GetProcAddressOrdinal(IntPtr module,IntPtr ordinal);
   internal NativeLazyFunctionProfile(NativeEngine engine,string relative,string sha,string rowFormat){Engine=engine;Relative=relative;expectedSha=sha;format=rowFormat;}
   internal Dictionary<string,object> Profile {get{Load();return profile;}}
+  // Profiles use both arrays of named declarations and maps of declarations/evidence.
+  // Map keys supply only a name: an address in a key, scalar method value, or
+  // disassembly record is never promoted to a callable RVA declaration.
+  internal static List<Dictionary<string,object>> ProfileRows(object raw,string collection,bool requireRecords){
+   var result=new List<Dictionary<string,object>>();
+   var map=raw as Dictionary<string,object>;
+   if(map!=null){
+    foreach(var item in map){
+     if(item.Key=="_abi_resolution")continue;
+     var row=item.Value as Dictionary<string,object>;
+     if(row==null){if(requireRecords)throw new InvalidDataException("Native profile "+collection+" map entry is not a record: "+item.Key);continue;}
+     if(!row.ContainsKey("name")){var named=new Dictionary<string,object>(row,StringComparer.Ordinal);named.Add("name",item.Key);row=named;}
+     result.Add(row);
+    }
+    return result;
+   }
+   var list=raw as IList;
+   if(list==null)throw new InvalidDataException("Native profile "+collection+" must be a record list or map.");
+   foreach(object value in list){var row=value as Dictionary<string,object>;if(row==null){if(requireRecords)throw new InvalidDataException("Native profile "+collection+" list entry is not a record.");continue;}result.Add(row);}
+   return result;
+  }
+  static string RowName(Dictionary<string,object> row,string collection){object raw;string name=row.TryGetValue("name",out raw)?raw as string:null;if(String.IsNullOrEmpty(name))throw new InvalidDataException("Native profile "+collection+" declaration has no explicit name or map key.");return name;}
+  // Pure managed normalization, also exercised against the delivered real profiles.
+  // The original profile and each row's bound resolution contract remain untouched.
+  internal static Dictionary<string,Dictionary<string,object>>[] IndexCollections(Dictionary<string,object> parsed){
+   var modules=new Dictionary<string,Dictionary<string,object>>(StringComparer.OrdinalIgnoreCase);
+   var calls=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);
+   var ambiguous=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);
+   object raw;
+   if(parsed.TryGetValue("modules",out raw))foreach(var row in ProfileRows(raw,"modules",true))modules.Add(RowName(row,"modules"),row);
+   foreach(string key in new[]{"functions","methods"}){
+    if(!parsed.TryGetValue(key,out raw))continue;
+    foreach(var row in ProfileRows(raw,key,false)){
+     if(!row.ContainsKey("rva"))continue;
+     string name=RowName(row,key);
+     if(key=="methods"&&calls.ContainsKey(name))continue;
+     if(calls.ContainsKey(name)){ambiguous[name]=row;continue;}
+     calls.Add(name,row);
+    }
+   }
+   return new[]{modules,calls,ambiguous};
+  }
   void Load(){
    if(profile!=null)return;
    string file=Path.Combine(NativeOperations.TaskRoot,Relative.Replace('/',Path.DirectorySeparatorChar));
-   var parsed=new JavaScriptSerializer{MaxJsonLength=32*1024*1024,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(NativeAbiTargetProfiles.ReadLazyAllText(file,expectedSha));
+   var parsed=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(NativeAbiTargetProfiles.ReadLazyAllText(file,expectedSha));
+   var indexed=IndexCollections(parsed);
    object raw;
-   if(parsed.TryGetValue("modules",out raw))foreach(object value in (IEnumerable)raw){var row=(Dictionary<string,object>)value;moduleRows.Add(Convert.ToString(row["name"]),row);}
    if(parsed.TryGetValue("binary_sha256",out raw))NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(raw),Engine.ImageSha256,"NativeLazyFunctionProfile:"+Relative+":editor"),"Native profile belongs to another editor image: "+Relative);
-   if(parsed.TryGetValue("functions",out raw))foreach(object value in (IEnumerable)raw){var row=(Dictionary<string,object>)value;functions.Add(Convert.ToString(row["name"]),row);}
+   foreach(var item in indexed[0])moduleRows.Add(item.Key,item.Value);
+   foreach(var item in indexed[1])functions.Add(item.Key,item.Value);
+   foreach(var item in indexed[2])ambiguousFunctions.Add(item.Key);
    profile=parsed;
   }
-  internal bool Has(string name){Load();return functions.ContainsKey(name);}
+  internal bool Has(string name){Load();return functions.ContainsKey(name)&&!ambiguousFunctions.Contains(name);}
   IntPtr Module(string name){
    IntPtr handle;if(handles.TryGetValue(name,out handle))return handle;
    handle=NativeAbiTargetProfiles.ModuleHandle(name);NativeMemory.Require(handle!=IntPtr.Zero,"Required native module is not already loaded: "+name);
@@ -53,15 +111,20 @@ namespace McgsInternalBridge {
    if(name.Equals("McgsSetPro.exe",StringComparison.OrdinalIgnoreCase))NativeMemory.Require(handle==Engine.ImageBase,"Native profile and attached editor disagree.");
    handles.Add(name,handle);preferred.Add(name,imageBase);sizes.Add(name,found.ModuleMemorySize);return handle;
   }
+  Dictionary<string,object> CodeGuard(string module,int rva){foreach(string key in new[]{"code_guards","functions"}){object raw;if(!profile.TryGetValue(key,out raw))continue;foreach(var row in ProfileRows(raw,key,false)){object address,owner;if(!row.TryGetValue("rva",out address)||EngineNumber(address)!=rva||!row.ContainsKey("bytes"))continue;string role=row.TryGetValue("module",out owner)?Convert.ToString(owner):"McgsSetPro.exe";if(role==module)return row;}}throw new NativeAbiUnavailableException("Requested native method has no byte guard in its own profile.",Relative,module+":"+rva);}
+  static int EngineNumber(object value){return NativeEngine.Number(value);}
+  void GuardMethodChain(string module,int first){var seen=new HashSet<int>();int rva=first;while(true){NativeMemory.Require(seen.Add(rva),"Requested native method has a jump cycle.");var guard=CodeGuard(module,rva);NativeAbiTargetProfiles.CheckEntry(guard,"requested method body",Relative);byte[] bytes=HexBytes(Convert.ToString(guard["bytes"]));IntPtr image=Module(module);NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)guard["reloc_offsets"],unchecked(NativeMemory.U(image)-preferred[module]));NativeMemory.Require(rva>=0&&(long)rva+bytes.Length<=sizes[module]&&BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(NativeMemory.Add(image,rva),bytes.Length)),"Requested native method bytes differ.");if(bytes.Length>=5&&bytes[0]==0xE9){rva=checked(rva+5+BitConverter.ToInt32(bytes,1));continue;}if(bytes.Length>=6&&bytes[0]==0xFF&&bytes[1]==0x25){IntPtr slot=new IntPtr(unchecked((int)BitConverter.ToUInt32(bytes,2)));object imports;if(profile.TryGetValue("mfc_imports",out imports)||profile.TryGetValue("imports",out imports)){bool matched=false;foreach(var row in ProfileRows(imports,"imports",false)){object raw;if(!row.TryGetValue("iat_rva",out raw)||NativeMemory.Add(Engine.ImageBase,EngineNumber(raw))!=slot)continue;NativeAbiTargetProfiles.CheckEntry(row,"requested method import",Relative);IntPtr owner=Module("mfc110u.dll"),target=NativeMemory.Add(owner,EngineNumber(row["target_rva"]));NativeMemory.Require(NativeMemory.Ptr(slot,0)==target,"Requested native method IAT differs.");if(row.TryGetValue("ordinal",out raw))NativeMemory.Require(GetProcAddressOrdinal(owner,new IntPtr(EngineNumber(raw)))==target,"Requested native method ordinal differs.");matched=true;}NativeMemory.Require(matched,"Requested native method import lacks a matching profile role.");}else throw new NativeAbiUnavailableException("Requested method is an import thunk without an import role contract.",Relative,module+":"+rva);}return;}}
   internal IntPtr Address(string name){
    NativeMemory.Require(IntPtr.Size==4&&EngineEntry.ExpectedUiThreadId>0&&NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Native function access requires the captured x86 host UI thread.");
    Load();Dictionary<string,object> row;
+   if(ambiguousFunctions.Contains(name))throw new NativeAbiUnavailableException("Native profile has multiple callable rows with this name; a profile-specific role is required: "+name,Relative,name);
    if(!functions.TryGetValue(name,out row))throw new NativeAbiUnavailableException("Native profile has no requested function: "+name,Relative,name);
    NativeAbiTargetProfiles.CheckEntry(row,"function",Relative);
    object value;string module=row.TryGetValue("module",out value)?Convert.ToString(value):"McgsSetPro.exe";
    IntPtr image=Module(module);int rva=NativeEngine.Number(row["rva"]);
    string bytesKey=format=="strategy"?"expected_first_32_bytes":format=="duplicate"?"first32":format=="save"?"expected_first32":format=="control"?"first32":"bytes";
    string relocKey=format=="strategy"?"relocatable_dword_offsets_in_first32":format=="duplicate"||format=="save"?"relocation_offsets":format=="control"?"relocations":"reloc_offsets";
+   if(!row.ContainsKey(bytesKey)){GuardMethodChain(module,rva);return NativeMemory.Add(image,rva);}
    byte[] expected=HexBytes(Convert.ToString(row[bytesKey]));
    NativeMemory.Require(expected.Length>0&&rva>=0&&(long)rva+expected.Length<=sizes[module],"Native function guard exceeds its module: "+Relative+"/"+name);
    NativeCodeRelocation.RebaseDeltaInPlace(expected,(IEnumerable)row[relocKey],unchecked((uint)(NativeMemory.U(image)-preferred[module])));
@@ -91,9 +154,7 @@ namespace McgsInternalBridge {
    NativeMemory.Readable(NativeMemory.Add(doc,0x24),4);return doc;
   }
   internal static string CurrentProjectPath(NativeEngine engine){
-   IntPtr doc=RootDocument(engine);IntPtr text=NativeMemory.Ptr(doc,0x24);NativeMemory.Require(text!=IntPtr.Zero,"Current native document has no project path.");
-   var result=new StringBuilder();for(int i=0;i<2048;i++){IntPtr at=NativeMemory.Add(text,2*i);NativeMemory.Readable(at,2);char c=(char)(ushort)Marshal.ReadInt16(at);if(c==0){NativeMemory.Require(result.Length>0,"Current native document has no project path.");return Path.GetFullPath(result.ToString());}result.Append(c);}
-   throw new InvalidOperationException("Current native project path exceeds its bounded CString length.");
+   IntPtr doc=RootDocument(engine);string value=NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(doc,0x24),Int32.MaxValue/2-1);NativeMemory.Require(value.Length>0,"Current native document has no project path.");return Path.GetFullPath(value);
   }
  }
 }

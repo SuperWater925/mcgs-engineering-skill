@@ -20,6 +20,7 @@ if($PSVersionTable.PSVersion.Major -lt 7){throw '必须使用 PowerShell 7。'}
 $技能脚本=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\scripts\stu_project.ps1'))
 $Provider='auto';$script:SelectedProvider=$null
 $script:RawTables=@('Alarm','Data','DDEConnection','DDEConnectionPoint','Stgy','System','Trigger','WndControl','WndDevice','WndUser')
+$script:KeyColumns=@{System='strName';Stgy='iStgyID';Trigger='iID';WndUser='iID';WndControl='iID'}
 $令牌=$null;$语法错误=$null
 $语法树=[Management.Automation.Language.Parser]::ParseFile($技能脚本,[ref]$令牌,[ref]$语法错误)
 foreach($函数名 in @('FullPath','Sha','SharedHash','ValueFingerprint','SensitiveTable','SafeSystemRow','SafeKey','Connection','ReadDatabase','Capture','WriteCapture','StableCopy','CompareMaps','ManifestBlob','WriteJson')){
@@ -62,8 +63,10 @@ function 保留模板值($清单值,$原值){
  if($原值 -is [byte[]]){$候选=ManifestBlob $清单值 $清单目录}
  elseif($原值 -is [string]){if($清单值 -isnot [string]){throw '额外文本列类型不同。'};$候选=$清单值}
  elseif($原值 -is [DateTime]){$候选=[DateTime]::Parse([string]$清单值,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::RoundtripKind)}
+ elseif($原值 -is [guid]){$候选=[guid]::Parse([string]$清单值)}
+ elseif($原值 -is [timespan]){$候选=[timespan]::Parse([string]$清单值,[Globalization.CultureInfo]::InvariantCulture)}
  elseif($原值 -is [bool]){if($清单值 -isnot [bool]){throw '额外布尔列类型不同。'};$候选=$清单值}
- else{if([decimal]$清单值 -ne [decimal]$原值){throw '额外数值列必须保持模板值。'};$候选=[Convert]::ChangeType($清单值,$原值.GetType(),[Globalization.CultureInfo]::InvariantCulture)}
+ else{$候选=[Convert]::ChangeType($清单值,$原值.GetType(),[Globalization.CultureInfo]::InvariantCulture)}
  if((ValueFingerprint $候选) -cne (ValueFingerprint $原值)){throw '额外窗口列不得改变模板值。'}
  return ,$原值
 }

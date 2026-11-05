@@ -25,7 +25,7 @@ def import_identity(entry: dict) -> dict:
     Export-role evidence is attached by the locator rather than the PE table,
     so it is not part of the raw import descriptor's symbol identity.
     """
-    identity = {key: value for key, value in entry.items() if key != 'export_role'}
+    identity = {key: value for key, value in entry.items() if key not in ('export_role', 'delayed')}
     identity['dll'] = identity.get('dll', '').casefold()
     if identity.get('name') is not None:
         identity.pop('hint', None)
@@ -85,6 +85,7 @@ class PE32:
         self._parse_relocations()
         self._parse_exports()
         self._parse_imports()
+        self._parse_delay_imports()
 
     def _fail(self, message: str):
         raise PEFormatError(message)
@@ -386,3 +387,109 @@ class PE32:
                 "other_relocation_types": {str(k): len(v) for k, v in self.other_relocations.items()},
                 "export_count": len(self.exports), "import_slot_count": len(self.imports_by_iat),
                 "whole_file_sha_admission": False}
+
+    def _parse_delay_imports(self):
+        """Read IMAGE_DELAYLOAD_DESCRIPTOR without activating the loader.
+
+        Both current RVA descriptors and legacy preferred-VA descriptors are
+        supported. Bound IAT values without an INT remain explicitly unknown.
+        """
+        rva, size = self._directory(13)
+        if not size:
+            return
+        if size < 32:
+            self._fail('Truncated delay-import descriptor')
+        terminated = False
+        for offset in range(0, size - 31, 32):
+            fields = struct.unpack('<8I', self.read(rva + offset, 32))
+            if not any(fields):
+                terminated = True
+                break
+            attrs, name, handle, iat, names, bound, unload, timestamp = fields
+            if attrs & ~1:
+                self._fail('Unknown delay-import descriptor attributes')
+            def address(value):
+                return value if attrs & 1 or not value else self.va_to_rva(value)
+            name, iat, names = address(name), address(iat), address(names)
+            if not name or not iat:
+                self._fail('Delay import lacks a module name or IAT')
+            dll = self.cstring(name)
+            self.import_modules.append(dll)
+            thunk = names or iat
+            available = min(self._backed_available(thunk), self._backed_available(iat)) // 4
+            thunk_terminated = False
+            for index in range(available):
+                value = self.u32(thunk + index * 4)
+                if not value:
+                    thunk_terminated = True
+                    break
+                entry = {'dll': dll, 'name': None, 'ordinal': None, 'delayed': True}
+                if value & 0x80000000:
+                    if value & 0x7fff0000:
+                        if names:
+                            self._fail('Delay ordinal import has reserved bits')
+                        entry.update(bound_address=value, unresolved_reason='bound delay IAT without an original name thunk')
+                    else:
+                        entry['ordinal'] = value & 0xffff
+                else:
+                    try:
+                        pointer = address(value)
+                        entry['hint'] = struct.unpack('<H', self.read(pointer, 2))[0]
+                        entry['name'] = self.cstring(pointer + 2)
+                    except PEFormatError:
+                        if names:
+                            raise
+                        entry.update(bound_address=value, unresolved_reason='bound delay IAT without an original name thunk')
+                site = iat + index * 4
+                if site in self.imports_by_iat:
+                    self._fail('Delay-import descriptors overlap an IAT slot')
+                self.imports_by_iat[site] = entry
+            if not thunk_terminated:
+                self._fail('Delay-import thunk array lacks a file-backed terminator')
+        if not terminated:
+            self._fail('Delay-import descriptors lack a terminator in their directory')
+
+
+def resolve_export(pe, name=None, ordinal=None, dependencies=None):
+    """Prove a named/ordinal export's terminal owner and body, following chains.
+
+    ``dependencies`` maps actual import basenames to (logical alias, PE). An
+    absent/ambiguous owner, malformed forwarder or a cycle returns no proof.
+    No LoadLibrary/GetProcAddress is used and no ordinal is guessed.
+    """
+    dependencies = dependencies if dependencies is not None else getattr(pe, '_abi_import_dependencies', {})
+    owner = getattr(pe, '_abi_module_alias', None)
+    chain, seen = [], set()
+    while True:
+        marker = (id(pe), name, ordinal)
+        if marker in seen:
+            return None
+        seen.add(marker)
+        row = pe.exports.get(name) if name is not None else pe.exports_by_ordinal.get(ordinal)
+        if not row or not row.get('rva'):
+            return None
+        forwarder = row.get('forwarder')
+        if not forwarder:
+            return {'module': owner, 'pe': pe, 'rva': row['rva'], 'ordinal': row['ordinal'],
+                    'name': name, 'forwarders': chain}
+        if '.' not in forwarder:
+            return None
+        module, symbol = forwarder.rsplit('.', 1)
+        if not module or not symbol or any(c in module for c in '\\/:\0'):
+            return None
+        key = module.casefold()
+        if not key.endswith('.dll'):
+            key += '.dll'
+        target = dependencies.get(key)
+        if target is None:
+            return None
+        if symbol.startswith('#'):
+            if not symbol[1:].isdigit():
+                return None
+            name, ordinal = None, int(symbol[1:])
+            if not 0 <= ordinal <= 0xffff:
+                return None
+        else:
+            name, ordinal = symbol, None
+        chain.append({'module': owner, 'forwarder': forwarder})
+        owner, pe = target

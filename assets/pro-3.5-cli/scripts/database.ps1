@@ -6,8 +6,9 @@ if(-not $script:DbProvider){throw 'Matching-bitness ACE 16.0 or 12.0 required'}
 [Console]::OutputEncoding=New-Object Text.UTF8Encoding($false)
 $request=[Console]::In.ReadToEnd() | ConvertFrom-Json
 function Identifier($name) {
-    if($name -notmatch '^[A-Za-z][A-Za-z0-9_]*$') { throw 'Unsupported identifier' }
-    return '['+$name+']'
+    $name=[string]$name
+    if([string]::IsNullOrEmpty($name) -or $name.Contains([char]0)) { throw 'Invalid identifier' }
+    return '['+$name.Replace(']',']]')+']'
 }
 function Connection-String($path,$readOnly) {
     return New-McgsAceConnectionString $path $(if($readOnly){'Read'}else{''}) $script:DbProvider -Create:(-not $readOnly)
@@ -26,7 +27,13 @@ function Dump-Database($connection) {
         $name=[string]$entry.TABLE_NAME
         $cmd=$connection.CreateCommand();$cmd.CommandText='SELECT * FROM '+(Identifier $name)
         $reader=$cmd.ExecuteReader([Data.CommandBehavior]::KeyInfo);$schema=$reader.GetSchemaTable();$fields=@()
-        foreach($column in $schema.Rows) {$fields+=@{name=[string]$column.ColumnName;type=[int]$column.ProviderType;size=[int]$column.ColumnSize;auto_increment=[bool]$column.IsAutoIncrement}}
+        foreach($column in $schema.Rows) {
+            $field=@{name=[string]$column.ColumnName;type=[int]$column.ProviderType;size=[int]$column.ColumnSize;auto_increment=[bool]$column.IsAutoIncrement}
+            foreach($part in @('NumericPrecision','NumericScale')){
+                if($schema.Columns.Contains($part) -and $column[$part] -isnot [DBNull]){$field[$part]=[int]$column[$part]}
+            }
+            $fields+=,$field
+        }
         $rows=@()
         while($reader.Read()) {
             $row=[ordered]@{}
@@ -48,14 +55,44 @@ function Dump-Database($connection) {
     return $result
 }
 function Add-Value($cmd,$field,$value) {
-    if($null -eq $value) {$v=[DBNull]::Value;$size=1}
-    elseif($field.type -eq 205) {$v=[Convert]::FromBase64String($value.binary);$size=[Math]::Max(1,$v.Length)}
-    elseif($field.type -eq 202 -or $field.type -eq 203) {$v=[string]$value;$size=[Math]::Max(1,$v.Length)}
-    elseif($field.type -eq 11) {$v=[bool]$value;$size=1}
-    elseif($field.type -eq 4) {$v=[single]$value;$size=4}
-    elseif($field.type -eq 3) {$v=[int]$value;$size=4}
-    else {throw ('Unsupported field type '+$field.type)}
+    $type=[int]$field.type;$size=1
+    if($null -eq $value -or $value -is [DBNull]) {$v=[DBNull]::Value}
+    else {
+        switch($type) {
+            {$_ -in @(128,204,205)} {
+                if($value -is [byte[]]){[byte[]]$v=$value}else{[byte[]]$v=[Convert]::FromBase64String($value.binary)}
+                $size=[Math]::Max(1,$v.Length);break
+            }
+            {$_ -in @(8,129,130,200,201,202,203)} {
+                $v=[string]$value;$size=[Math]::Max(1,$v.Length)
+                if($type -in @(129,130,200,202) -and [long]$field.size -gt 0 -and $v.Length -gt [long]$field.size){throw ('Text exceeds actual database column capacity: '+$field.name)}
+                break
+            }
+            11 {$v=if($value -is [string]){[bool]::Parse($value)}else{[bool]$value};break}
+            2 {$v=[int16]$value;break}
+            3 {$v=[int]$value;break}
+            4 {$v=[single]$value;break}
+            5 {$v=[double]$value;break}
+            {$_ -in @(6,14,131,139)} {$v=[decimal]$value;break}
+            16 {$v=[sbyte]$value;break}
+            17 {$v=[byte]$value;break}
+            18 {$v=[uint16]$value;break}
+            19 {$v=[uint32]$value;break}
+            20 {$v=[long]$value;break}
+            21 {$v=[uint64]$value;break}
+            {$_ -in @(7,64,133,135)} {$v=if($value -is [datetime]){$value}else{[datetime]::Parse([string]$value,[Globalization.CultureInfo]::InvariantCulture,[Globalization.DateTimeStyles]::RoundtripKind)};break}
+            134 {$v=if($value -is [timespan]){$value}else{[timespan]::Parse([string]$value,[Globalization.CultureInfo]::InvariantCulture)};break}
+            72 {$v=[guid]$value;break}
+            default {throw ('Unsupported actual ACE value type '+$type+' for field '+$field.name)}
+        }
+    }
     $parameter=$cmd.Parameters.Add('p'+$cmd.Parameters.Count,[Data.OleDb.OleDbType][int]$field.type,$size)
+    foreach($part in @('NumericPrecision','NumericScale')) {
+        if($field -is [Collections.IDictionary]){$hasPart=$field.Contains($part)}else{$hasPart=$null -ne $field.PSObject.Properties[$part]}
+        if($type -in @(6,14,131,139) -and $hasPart -and [int]$field.$part -ge 0 -and [int]$field.$part -le 255) {
+            if($part -eq 'NumericPrecision'){$parameter.Precision=[byte]$field.$part}else{$parameter.Scale=[byte]$field.$part}
+        }
+    }
     $parameter.Value=$v
 }
 function Insert-Row($c,$table,$fields,$row,$transaction) {
@@ -83,11 +120,24 @@ if($request.action -eq 'create') {
                 switch([int]$field.type) {
                     3 {$type='LONG'}
                     4 {$type='SINGLE'}
+                    2 {$type='SHORT'}
+                    5 {$type='DOUBLE'}
+                    6 {$type='CURRENCY'}
+                    7 {$type='DATETIME'}
+                    14 {$type='DECIMAL'}
+                    17 {$type='BYTE'}
+                    72 {$type='GUID'}
+                    131 {$type='DECIMAL'}
                     11 {$type='YESNO'}
                     202 {$type='TEXT('+[Math]::Min(255,[int]$field.size)+')'}
                     203 {$type='MEMO'}
                     205 {$type='LONGBINARY'}
                     default {throw 'Unsupported schema type'}
+                }
+                if([int]$field.type -in @(14,131) -and $null -ne $field.PSObject.Properties['NumericPrecision']) {
+                    $precision=[int]$field.NumericPrecision;$scale=if($null -ne $field.PSObject.Properties['NumericScale']){[int]$field.NumericScale}else{0}
+                    if($precision -lt 1 -or $precision -gt 28 -or $scale -lt 0 -or $scale -gt $precision){throw 'Invalid actual ACE decimal precision/scale'}
+                    $type='DECIMAL('+$precision+','+$scale+')'
                 }
                 if($field.auto_increment) {
                     if([int]$field.type -ne 3){throw 'Auto increment requires native integer identity'}
@@ -147,7 +197,7 @@ try {
                     $pageId=[int]$change.values.iID
                     if($pageId -le 0 -or @($before.WndUser.rows | Where-Object {$_['iID'] -eq $pageId}).Count -or $insertedPageIds.ContainsKey($pageId)) {throw 'New page ID is invalid or already exists'}
                     if([string]::IsNullOrWhiteSpace([string]$change.values.strName) -or
-                       [string]$change.values.strName -match "`0" -or ([string]$change.values.strName).Length -gt 32 -or
+                       [string]$change.values.strName -match "`0" -or
                        [int]$change.values.iDeleteFlag -ne 0 -or [int]$change.values.iCompileFlag -ne 0) {throw 'New page name or native initial flags differ'}
                     $row=[ordered]@{}
                     foreach($field in $fields) {$row[$field.name]=$templates[0][$field.name]}

@@ -5,6 +5,7 @@
 """
 from dataclasses import dataclass
 import struct
+from mcgs_text import narrow_encoding
 
 
 class 结构未支持(ValueError):
@@ -42,7 +43,7 @@ class 游标:
         if length > (len(self.data)-self.pos)//(2 if unicode_flag else 1):
             raise 结构未支持(f"字符串长度超过剩余流：offset={start}, length={length}")
         raw = self.read(length * (2 if unicode_flag else 1))
-        text = raw.decode("utf-16le", errors="surrogatepass") if unicode_flag else raw.decode("cp936")
+        text = raw.decode("utf-16le", errors="surrogatepass") if unicode_flag else raw.decode(narrow_encoding())
         return 字串(text, self.data[start:self.pos], unicode_flag)
 
 

@@ -69,8 +69,8 @@ def encoded_json(value):
 
 
 def encoded_size(value):
-    # write_new uses indented JSON. Bound those actual file bytes, not just the
-    # much smaller queue envelope, with room under the native16MiB input limit.
+    # write_new uses indented JSON. Measure those actual file bytes for the
+    # configurable merge budget; this is not a native action-count capacity.
     return len(encoded_json(value))
 
 
@@ -700,8 +700,8 @@ def validate_spec(specification, read_only=False):
     if not isinstance(specification, dict):
         raise ValueError("Each step needs a specification object")
     actions = specification.get("actions")
-    if not isinstance(actions, list) or not 1 <= len(actions) <= 64:
-        raise ValueError("Each step needs 1..64 engineering actions")
+    if not isinstance(actions, list) or not actions:
+        raise ValueError("Each step needs a nonempty engineering action list")
     action_ids = set()
     for action in actions:
         required = ("action_id", "kind", "target") if read_only else ("action_id", "kind", "target", "after")
@@ -742,8 +742,8 @@ def stage(program_file, directory):
     if project.suffix.lower() != ".mcp":
         raise ValueError("This session runner requires the current Pro MCP file")
     steps = program.get("steps")
-    if not isinstance(steps, list) or not 1 <= len(steps) <= 1024:
-        raise ValueError("A session program needs 1..1024 steps")
+    if not isinstance(steps, list) or not steps:
+        raise ValueError("A session program needs a nonempty step list")
     directory = within_root(Path(directory) / "manifest.json", False).parent
     if directory.exists():
         raise FileExistsError("Session directory already exists; it cannot be reused")
@@ -808,12 +808,12 @@ def run(directory, timeout, legacy_permits=False, merge_steps=True, max_merged_a
     if sha(program_file) != manifest["program_sha256"]:
         raise ValueError("Staged engineering program changed")
     program, _ = batch.read_json(program_file)
-    if not math.isfinite(timeout) or not 0 < timeout <= 3600:
-        raise ValueError("Per-request timeout must be finite and between 0 and 3600 seconds")
-    if max_merged_actions is not None and (type(max_merged_actions) is not int or not 1 <= max_merged_actions <= 8192):
-        raise ValueError("max merged actions must be an integer between1 and the native8192-action request capacity")
-    if type(prepare_workers) is not int or not 0 <= prepare_workers <= 8 or type(io_workers) is not int or not 1 <= io_workers <= 8:
-        raise ValueError("prepare workers must be0..8 and IO workers1..8")
+    if not math.isfinite(timeout) or timeout <= 0:
+        raise ValueError("Per-request timeout must be finite and positive")
+    if max_merged_actions is not None and (type(max_merged_actions) is not int or max_merged_actions < 1):
+        raise ValueError("max merged actions must be a positive integer merge budget")
+    if type(prepare_workers) is not int or prepare_workers < 0 or type(io_workers) is not int or io_workers < 1:
+        raise ValueError("prepare workers must be nonnegative and IO workers positive")
     # This durable claim is never cleared, including after timeout or failure.
     batch.write_new(directory / ("execution-claim.json" if legacy_permits else "execution-start.json"), {"schema": 1,
         "session_id": manifest["session_id"], "manifest_sha256": manifest_sha,

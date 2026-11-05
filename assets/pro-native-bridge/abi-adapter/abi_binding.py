@@ -247,14 +247,30 @@ class TargetBinding:
         for relative, record in self.profile_rows.items():
             normalized = relative.replace('\\', '/')
             root_entries = normalized == 'static/read-tree-guard-profile.json'
-            explicit_lazy_reader = normalized in lazy_profiles
-            partial_allowed = (root_entries or explicit_lazy_reader) and bool(record.get('entry_resolutions'))
+            # An explicit ReadLazyAllText consumer validates consumed entries.
+            # Generic CheckProfile still refuses partial files, including those
+            # not yet converted to an operation-level reader.
+            explicit_lazy_reader = bool(record.get('entry_resolutions'))
+            partial_allowed = root_entries or explicit_lazy_reader
             status = 'verified' if record['status'] == 'resolved' else 'partial' if partial_allowed else 'unresolved'
             for item in by_relative.get(relative, []):
                 rows.append({'file': item['planned_file'], 'profile': relative, 'status': status,
                              'sha256': digest(resolved[relative]), 'allow_partial_entries': partial_allowed,
                              'entry_validation_contract': contract.group(1) if explicit_lazy_reader else None,
                              'details': json.dumps(record['unresolved_fields'], ensure_ascii=True, separators=(',', ':'))})
+        # Static contracts have no native addresses to locate, but consumers
+        # still need the exact promoted bytes in the bound integrity index.
+        # Omitting them breaks explicit lazy readers before their referenced
+        # live profile can be checked. This does not admit unresolved ABI rows.
+        for relative, items in by_relative.items():
+            if relative in self.profile_rows:
+                continue
+            _need(relative in resolved, 'Copied static contract has no frozen bytes: ' + relative)
+            for item in items:
+                rows.append({'file': item['planned_file'], 'profile': relative,
+                             'status': 'unchanged', 'sha256': digest(resolved[relative]),
+                             'allow_partial_entries': False, 'entry_validation_contract': None,
+                             'integrity_only': True, 'details': 'Frozen non-native contract; no address proof implied'})
         modules = []
         for alias, item in self.result['modules'].items():
             modules.append({'logical_name': alias, 'reference_basename': (item.get('reference') or {}).get('basename') or alias,

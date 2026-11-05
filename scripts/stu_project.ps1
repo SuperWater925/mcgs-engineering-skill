@@ -52,13 +52,28 @@ function Connection([string]$Path,[string]$Mode='Read'){
 function ReadDatabase($Conn,$Transaction=$null,[string]$ExportDirectory=''){
  $tables=[ordered]@{};$schemas=[Collections.Generic.List[object]]::new();$exports=[Collections.Generic.List[object]]::new()
  foreach($table in @($Conn.GetSchema('Tables')|Where-Object TABLE_TYPE -eq 'TABLE'|Select-Object -ExpandProperty TABLE_NAME|Sort-Object)){
-  if($table -notmatch '^[A-Za-z0-9_]+$'){throw 'Unexpected database table identifier; refusing to interpolate it.'}
-  $cmd=$Conn.CreateCommand();$cmd.CommandText='SELECT * FROM ['+$table+']';if($Transaction){$cmd.Transaction=$Transaction}
-  $reader=$cmd.ExecuteReader();$rows=@{};$count=0
+  if([string]::IsNullOrEmpty($table) -or $table.Contains([char]0)){throw 'Invalid database table identifier.'}
+  $cmd=$Conn.CreateCommand();$cmd.CommandText='SELECT * FROM ['+$table.Replace(']',']]')+']';if($Transaction){$cmd.Transaction=$Transaction}
+  $reader=$cmd.ExecuteReader([Data.CommandBehavior]::KeyInfo);$rows=@{};$count=0;$unkeyedCounts=@{}
   try{
    $columns=@(for($i=0;$i -lt $reader.FieldCount;$i++){[ordered]@{name=$reader.GetName($i);type=$reader.GetDataTypeName($i)}})
+   $nativeKey=if($script:KeyColumns.ContainsKey($table)){$script:KeyColumns[$table]}else{$null}
+   $keyOrdinals=@()
+   if($nativeKey){$keyOrdinals=@($reader.GetOrdinal($nativeKey))}
+   else{$keyOrdinals=@($reader.GetSchemaTable().Rows|Where-Object {$_.IsKey -eq $true}|Sort-Object ColumnOrdinal|ForEach-Object {[int]$_.ColumnOrdinal})}
    while($reader.Read()){
-    $count++;$rawKey=if($table -eq 'System'){if($reader['strName'] -is [DBNull] -or [string]::IsNullOrEmpty([string]$reader['strName'])){if($reader['iID'] -is [DBNull]){throw 'Unnamed System row has no native iID.'};'system-unnamed-iID:'+([string]$reader['iID'])}else{[string]$reader['strName']}}else{[string]$reader.GetValue(0)}
+    $count++;$rawKey=if($table -eq 'System'){if($reader['strName'] -is [DBNull] -or [string]::IsNullOrEmpty([string]$reader['strName'])){if($reader['iID'] -is [DBNull]){throw 'Unnamed System row has no native iID.'};'system-unnamed-iID:'+([string]$reader['iID'])}else{[string]$reader['strName']}}elseif($keyOrdinals.Count -eq 1){
+     $keyValue=$reader.GetValue($keyOrdinals[0]);if($keyValue -is [DBNull]){throw ('Null native key in '+$table)}
+     [Convert]::ToString($keyValue,[Globalization.CultureInfo]::InvariantCulture)
+    }elseif($keyOrdinals.Count -gt 1){
+     'composite:'+((@($keyOrdinals|ForEach-Object {ValueFingerprint ($reader.GetValue($_))})) -join ':')
+    }else{
+     # An unknown table need not have an identity column. Fingerprint its full
+     # row and multiplicity, independent of provider enumeration order.
+     $rowDigest=Sha ([Text.Encoding]::UTF8.GetBytes(((@(for($i=0;$i -lt $reader.FieldCount;$i++){ValueFingerprint ($reader.GetValue($i))})) -join '|')))
+     if(-not $unkeyedCounts.ContainsKey($rowDigest)){$unkeyedCounts[$rowDigest]=0};$unkeyedCounts[$rowDigest]++
+     'unkeyed:'+ $rowDigest+':'+$unkeyedCounts[$rowDigest]
+    }
     $key=SafeKey $table $rawKey
     if($rows.ContainsKey($key)){throw "Duplicate row key in $table"}
     $fp=[ordered]@{};$export=[ordered]@{table=$table;row_key=$key}
@@ -68,7 +83,7 @@ function ReadDatabase($Conn,$Transaction=$null,[string]$ExportDirectory=''){
      if($ExportDirectory -and $rawAllowed){
       if($v -is [DBNull]){$export[$name]=$null}
       elseif($v -is [byte[]]){
-       $file=$table+'_'+(Sha ([Text.Encoding]::UTF8.GetBytes($rawKey))).Substring(0,16)+'_'+$name+'.bin'
+       $file=$table+'_'+(Sha ([Text.Encoding]::UTF8.GetBytes($rawKey))).Substring(0,16)+'_'+(Sha ([Text.Encoding]::UTF8.GetBytes($name))).Substring(0,16)+'.bin'
        [IO.File]::WriteAllBytes((Join-Path $ExportDirectory $file),$v)
        $export[$name]=[ordered]@{file=$file;bytes=$v.Length;sha256=($fp[$name] -split ':',3)[2]}
       }else{$export[$name]=$v}
@@ -89,7 +104,7 @@ function Capture([string]$Path,[string]$ExportDirectory=''){
  try{
   $data=ReadDatabase $conn $null $ExportDirectory
   $versionCommand=$conn.CreateCommand();$versionCommand.CommandText="SELECT [lbContext] FROM [System] WHERE [strName]='MCGSVER'"
-  try{$versionValue=$versionCommand.ExecuteScalar();$version=if($versionValue -is [byte[]]){[Text.Encoding]::Unicode.GetString($versionValue).TrimEnd([char]0)}else{''}}finally{$versionCommand.Dispose()}
+  try{$versionValue=$versionCommand.ExecuteScalar();$version=if($versionValue -is [byte[]]){Get-McgsVersionText $versionValue}else{''}}finally{$versionCommand.Dispose()}
   $data['project_version']=$version
   $data['project_family']=Get-McgsProjectFamily $version
   if([IO.Path]::GetExtension($Path) -ieq '.MCP' -and $data.project_family -ne 'Pro'){throw 'MCP extension does not match a verified McgsPro version record.'}

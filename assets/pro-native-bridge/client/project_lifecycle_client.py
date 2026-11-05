@@ -37,7 +37,7 @@ def _working_new(path):
 
 
 def _same_path(first, second):
-    return str(Path(first).absolute()).casefold() == str(Path(second).absolute()).casefold()
+    return str(Path(first).expanduser().resolve(strict=False)).casefold() == str(Path(second).expanduser().resolve(strict=False)).casefold()
 
 
 def prepare(snapshot_file, output, permissions):
@@ -124,7 +124,7 @@ def main():
         output = _working_new(args.out) if args.out else None
         if args.command == "lifecycle-read":
             project = batch.input_file(args.project)
-            copy = Path(args.closed_copy).absolute() if args.closed_copy else batch._LAYOUT.working_root / "lifecycle" / (uuid.uuid4().hex + ".mcp")
+            copy = Path(args.closed_copy).expanduser().resolve(strict=False) if args.closed_copy else batch._LAYOUT.working_root / "lifecycle" / (uuid.uuid4().hex + ".mcp")
             if copy.suffix.casefold() != ".mcp" or _same_path(copy, project):
                 raise ValueError("Lifecycle closed snapshot needs a distinct owned .MCP path")
             request = {"op": READ_OP, "expected_project": str(project), "closed_copy_file": str(copy)}
@@ -147,7 +147,7 @@ def main():
                     raise ValueError("Project must be an existing MCP file")
                 request = {"op": EXECUTE_OP, "expected_project": str(project)}
                 if args.closed_copy:
-                    copy = Path(args.closed_copy).absolute() if args.closed_copy else batch._LAYOUT.working_root / "lifecycle" / (uuid.uuid4().hex + ".mcp")
+                    copy = Path(args.closed_copy).expanduser().resolve(strict=False) if args.closed_copy else batch._LAYOUT.working_root / "lifecycle" / (uuid.uuid4().hex + ".mcp")
                     if copy.suffix.casefold() != ".mcp" or _same_path(copy, project):
                         raise ValueError("Closed snapshot needs a distinct runtime .MCP path")
                     request["closed_copy_file"] = str(copy)

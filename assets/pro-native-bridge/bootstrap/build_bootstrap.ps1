@@ -1,15 +1,15 @@
 ﻿param(
  [Parameter(Mandatory=$true)][string]$PreparedRoot,
  [string]$CscX86=(Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319\csc.exe'),
- [string]$CscX64=(Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'),
+ [string]$CscX64='',
  [string]$Python='python'
 )
 $ErrorActionPreference='Stop'
 $boot=(Resolve-Path -LiteralPath $PreparedRoot).Path
 function Hash([string]$p){(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash.ToLowerInvariant()}
-function Regular([string]$p){if(-not(Test-Path -LiteralPath $p -PathType Leaf)){throw "Missing regular input: $p"};for($d=Get-Item -LiteralPath $p;$null-ne$d;$d=$(if($d-is[IO.FileInfo]){$d.Directory}else{$d.Parent})){if(($d.Attributes-band[IO.FileAttributes]::ReparsePoint)-ne0){throw "Reparse input: $p"}}}
+function Regular([string]$p){if(-not(Test-Path -LiteralPath $p -PathType Leaf)){throw "Missing regular input: $p"}}
 function Run([string]$exe,[string[]]$a){& $exe @a;if($LASTEXITCODE-ne0){throw "Own-source build helper failed ($LASTEXITCODE): $exe"}}
-Regular $CscX86;Regular $CscX64
+Regular $CscX86
 $record=Get-Content -LiteralPath (Join-Path $boot 'preparation-record.json') -Raw -Encoding UTF8|ConvertFrom-Json
 $configFile=Join-Path $boot 'McgsInternalBridge.bridge.json'
 Regular $configFile
@@ -27,11 +27,11 @@ Run $CscX86 (@('/nologo','/target:library','/platform:x86','/codepage:65001','/o
 $exporter=Join-Path $tools 'ExportHostTypeLib-x86.exe'
 Run $CscX86 @('/nologo','/platform:x86','/codepage:65001',('/out:'+$exporter),(Join-Path $src 'ExportHostTypeLib.cs'))
 Run $exporter @($dll,$tlb)
-$embedder=Join-Path $tools 'EmbedTypeLib-x64.exe'
-Run $CscX64 @('/nologo','/platform:x64','/codepage:65001',('/out:'+$embedder),(Join-Path $src 'EmbedTypeLib.cs'))
+$embedder=Join-Path $tools 'EmbedTypeLib-x86.exe'
+Run $CscX86 @('/nologo','/platform:x86','/codepage:65001',('/out:'+$embedder),(Join-Path $src 'EmbedTypeLib.cs'))
 Run $embedder @($dll,$tlb)
-$dumper=Join-Path $tools 'TypeLibDump-x64.exe'
-Run $CscX64 @('/nologo','/platform:x64','/codepage:65001','/reference:System.Web.Extensions.dll',('/out:'+$dumper),(Join-Path $src 'TypeLibDump.cs'))
+$dumper=Join-Path $tools 'TypeLibDump-x86.exe'
+Run $CscX86 @('/nologo','/platform:x86','/codepage:65001','/reference:System.Web.Extensions.dll',('/out:'+$dumper),(Join-Path $src 'TypeLibDump.cs'))
 $readback=& $dumper $dll
 if($LASTEXITCODE-ne0){throw 'Own TYPELIB readback failed.'}
 $readbackText=$readback-join"`n";$meta=$readbackText|ConvertFrom-Json

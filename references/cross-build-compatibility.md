@@ -24,7 +24,7 @@
 
 技能更新后，已加载的旧业务引擎仍是旧代码。用[已有桥更新入口](pro-native-deployment.md#已有桥的同任务更新)选择新 DLL 和 scope，复用实际连接；不要再次首次 stage、覆盖已加载 DLL、清除 claim 或强制重启 Pro。
 
-本版回执的 `cross_build_contract=mcgs-native-cross-build/v3` 是工具能力合同，不是 Mcgs 软件版本白名单。旧回执只有 `mode=current_program_resolved` 时，也应更新一次引擎。
+回执的 `cross_build_contract` 是工具修订记录，不是 Mcgs 软件版本白名单，也不按精确修订号拒绝未来工具。检查本次所需接口的条目验证能力；旧引擎缺少该能力时更新引擎，不能从“已经动态定位”推断所有消费分支都具备新版实现。
 
 默认热接按目标实际路径接入。可选冷接的自有 COM / TYPELIB / wrapper 身份按部署实例生成，安装、移除和启动按本次 EXE 完整路径判断；旧已部署配置按其实际记录处理，不因复制技能修改本机注册表。
 
@@ -34,4 +34,4 @@ PowerShell 导出、Python 审计、界面工具和 Pro JSON 编辑共用同一�
 
 当前原生指针和调用合同仍为 x86 / MSVC。真实对象字段、槽顺序、类层级、编码或归档结构变化，需要对应适配，不能通过删除比较声称兼容。Windows、PowerShell、Python、ACE 和自有桥编译依赖属于工具环境，不是 Mcgs 版本准入。
 
-文件定位、派生资料编译、连接、原厂编辑、保存、文件回读、检查、重开及模拟分别记录。当前消费链规则见[适配补全](compatibility-completion.md)，本轮结果见[分项证据](compatibility-completion-validation.json)；[九项修复验证](cross-build-fixes-validation.json)保留此前发布版范围，未执行项不得写成通过。
+文件定位、派生资料编译、连接、原厂编辑、保存、文件回读、检查、重开及模拟分别记录。当前消费链规则见[逐项处理](compatibility-resolution.md)，本轮结果见[分项证据](compatibility-resolution-validation.json)；[适配补全](compatibility-completion-validation.json)和[九项修复验证](cross-build-fixes-validation.json)保留此前发布版范围，未执行项不得写成通过。

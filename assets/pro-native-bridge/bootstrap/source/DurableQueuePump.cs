@@ -15,7 +15,7 @@ namespace McgsInternalBridge {
         readonly Func<Dictionary<string,object>,Action,Dictionary<string,object>> dispatch;
         readonly Func<Dictionary<string,object>> metadata;
         readonly Action<string,Exception> log;
-        readonly JavaScriptSerializer json=new JavaScriptSerializer{MaxJsonLength=1024*1024,RecursionLimit=40};
+        readonly JavaScriptSerializer json=new JavaScriptSerializer{MaxJsonLength=int.MaxValue,RecursionLimit=256};
         readonly int processId;readonly long processStartTicks;
         readonly Queue<string> recoveryWork=new Queue<string>(),pendingWork=new Queue<string>();
         readonly HashSet<string> observedClaims=new HashSet<string>(StringComparer.OrdinalIgnoreCase),pendingClaims=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -50,8 +50,8 @@ namespace McgsInternalBridge {
             // Delete sharing lets the winning process atomically take a request while
             // another process finishes its read. Write sharing is deliberately absent.
             using(var file=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.Read|FileShare.Delete)) {
-                if(file.Length>65536)throw new InvalidDataException("Queue request exceeds64KiB.");
-                byte[] data=new byte[(int)file.Length];int at=0;
+                if(file.Length>int.MaxValue)throw new InvalidDataException("Queue request exceeds the CLR byte-array representation.");
+                byte[] data=new byte[checked((int)file.Length)];int at=0;
                 while(at<data.Length){int n=file.Read(data,at,data.Length-at);if(n==0)throw new EndOfStreamException("Queue request changed during read.");at+=n;}
                 return data;
             }

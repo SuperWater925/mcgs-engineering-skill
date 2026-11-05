@@ -10,7 +10,7 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本版继续接通跨构建适配的实际调用链：统一代码重定位与模块路径，拆分变量/配方和离线页面依赖，保留非目标未知控件，并兼容压缩封套、旧注释列及扩展窗口属性。既有桥更新到 v3 业务引擎即可复用连接。实现规则见[适配补全](references/compatibility-completion.md)，实际证据见[本轮验证](references/compatibility-completion-validation.json)。
+本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
 ## 功能范围
 
@@ -35,7 +35,7 @@
 
 历史优化版 `v2026.10.30-offline-opt` 已完成 211 项离线/预览检查及安装后 9 项检查；六步混合修改本机耗时减少约 88.5%。该结果仅对应当时的离线流程。此前发布的 `v2026.11.04-pro-online` 集成 Pro 热接入、原生编辑及后台流水线，未取得新版真实整页提速实测。统一更名版 `v2026.11.04-engineering` 保留这些历史结果；当前可迁移性补丁的隔离证据另列，不视作真实工程重新验收。
 
-Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](references/offline-factories.md)，本轮实际测试见[离线功能对接验证](references/offline-parity-validation.json)。新增、克隆、修改已有控件分别记录，未执行的原厂项目不计通过。
+Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](references/offline-factories.md)，此前实际测试见[离线功能对接验证](references/offline-parity-validation.json)。新增、克隆、修改已有控件分别记录，未执行的原厂项目不计通过。
 
 ## 选择离线或在线
 
@@ -98,7 +98,14 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-当前八组适配补全、附带样本假设、文件/托管/数据库与原厂结果见[本轮分项记录](references/compatibility-completion-validation.json)。每项记录实际执行范围，未执行的关闭重开、模拟或通信不计通过。
+当前逐项处理、数量条件及文件/托管/数据库与原厂结果见[本轮分项记录](references/compatibility-resolution-validation.json)。[前轮八组适配补全](references/compatibility-completion-validation.json)保留历史范围；未执行的关闭重开、模拟或通信不计通过。
+
+### 本轮逐项兼容修复（2026-11-05）
+
+- 9组离线验证、模块/导入与部署针对性验证、客户端和最终程序集验证通过；165份源码绑定编译，218份实际接口资料的列表/字典解析与原条目证明保持通过。149项数量条件的处理与真实边界另列，不代表149个旧版均已实测。
+- 中文目录下的热接COM激活、页面读取、一次几何修改和原生Label创建、统一保存及原生回读通过。一次原厂检查实际进入并返回0，编译有效标志为1；错误、警告数量仍未知。
+- 正常关闭重开后，两项目标再次原生回读一致；原厂关闭时的文件副本完成12表读取、归档回环及目标字段核对，其余9个原页面控件记录逐字节相同。重开曾等待原厂提示，处理后核对同一请求的最终结果，没有重发。
+- 本机模拟、设备通信及所有历史发行版逐个原厂验收未执行；全工程其他记录不宣称均已逐字节比较。各层证据与失败修正分开记录。
 
 ### 此前九项跨构建修复（2026-11-05）
 
@@ -116,7 +123,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 - 独立 Pro 测试副本完成一次控件几何修改、原厂保存和原生回读；一次原厂检查正常返回 0，调用后编译有效标志为 1，错误和警告数量未取得。独立文件内容回读受原厂排他锁阻塞，未完成；关闭重开、本机模拟及设备通信本轮未执行。
 - 首次打开测试页后，布局/打印尺寸属性从 0 变为 212，严格后验未通过，保留为独立观察。未放宽比较或回写旧值；确认当前目标页已活动后，以新前像完成上述修改。该打开步骤不计通过。
 
-分项证据见[本轮定位与原厂结果](references/pro-native-dynamic-functions-validation.json)。这些结果不代表逐个实际验收了所有旧发行版，也不证明未知对象布局自动兼容。
+该轮分项证据见[此前定位与原厂结果](references/pro-native-dynamic-functions-validation.json)。这些结果不代表逐个实际验收了所有旧发行版，也不证明未知对象布局自动兼容。
 
 ### 此前 Pro 离线能力补齐（2026-11-04）
 
@@ -124,7 +131,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 - 自有 Pro 测试副本含 2 页、9 个控件和 7 个变量，实际原厂检查、保存、一次关闭重开及新上下文回读通过。检查调用正常返回且当时编译有效标志为 1；错误、警告数量未取得，保持未知。重开后控件、变量、页面事件和按钮动作相同，12 张表的结构及全部字段/BLOB 内容相同。
 - 原厂转换时发现的未配置语言字体行移除、未知 DWORD 变化及单位 getter 返回替换字符均单列记录。文件中的单位及小数位已核对，未据此宣称实际显示和模拟交互全部通过。本轮未执行本机模拟或设备通信。
 
-详细结果及本轮修复的图片引用、在线交付配置问题见[分项验证记录](references/offline-parity-validation.json)。这份测试副本的结果不代替其它用户工程的原厂验收。
+详细结果及该轮修复的图片引用、在线交付配置问题见[此前分项验证记录](references/offline-parity-validation.json)。这份测试副本的结果不代替其它用户工程的原厂验收。
 
 ### 此前可迁移性补丁
 

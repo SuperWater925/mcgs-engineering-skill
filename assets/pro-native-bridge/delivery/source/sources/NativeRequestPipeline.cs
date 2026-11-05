@@ -13,7 +13,7 @@ namespace McgsInternalBridge {
   [ThreadStatic]static Dictionary<string,object> currentNativeRequest;
   [DllImport("kernel32.dll")]static extern int GetCurrentThreadId();
   static string Hash(byte[] value){using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(value)).Replace("-","").ToLowerInvariant();}
-  static Dictionary<string,object> Clone(Dictionary<string,object> value){var json=new JavaScriptSerializer{MaxJsonLength=32*1024*1024,RecursionLimit=256};return json.Deserialize<Dictionary<string,object>>(json.Serialize(value));}
+  static Dictionary<string,object> Clone(Dictionary<string,object> value){var json=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue,RecursionLimit=256};return json.Deserialize<Dictionary<string,object>>(json.Serialize(value));}
   static Dictionary<string,object> ReadDocument(Dictionary<string,object> request,string fileKey,string hashKey,bool requiredHash){
    string path=Path.GetFullPath(Convert.ToString(request[fileKey]));byte[] bytes;
    using(var input=new FileStream(path,FileMode.Open,FileAccess.Read,FileShare.Read)){
@@ -21,7 +21,7 @@ namespace McgsInternalBridge {
    }
    object expected;bool hasHash=request.TryGetValue(hashKey,out expected);if(requiredHash&&!hasHash)throw new InvalidDataException("Inspection selectors need their submitted SHA.");if(hasHash&&Hash(bytes)!=Convert.ToString(expected))throw new InvalidDataException("Submitted input file changed.");
    string text;using(var reader=new StreamReader(new MemoryStream(bytes),Encoding.UTF8,true))text=reader.ReadToEnd();
-   var document=new JavaScriptSerializer{MaxJsonLength=16*1024*1024,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(text);if(document==null)throw new InvalidDataException("Input specification must be an object.");return document;
+   var document=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(text);if(document==null)throw new InvalidDataException("Input specification must be an object.");return document;
   }
   internal static Dictionary<string,object> Prepare(Dictionary<string,object> submitted){
    if(submitted==null)throw new ArgumentNullException("submitted");var clock=Stopwatch.StartNew();var request=Clone(submitted);var ticket=new Ticket{PreparationThread=GetCurrentThreadId()};
@@ -57,7 +57,7 @@ namespace McgsInternalBridge {
    void Write(){
     writerThread=GetCurrentThreadId();try{
      Directory.CreateDirectory(Path.GetDirectoryName(file));using(var output=new FileStream(file,FileMode.Append,FileAccess.Write,FileShare.ReadWrite)){
-      var json=new JavaScriptSerializer{MaxJsonLength=1024*1024};
+      var json=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue};
       while(!rows.IsCompleted){Dictionary<string,object> row;if(!rows.TryTake(out row,20))continue;var text=new StringBuilder();int n=0;
        do{text.Append(json.Serialize(row));text.Append(Environment.NewLine);n++;}while(n<256&&rows.TryTake(out row));
        byte[] bytes=new UTF8Encoding(false).GetBytes(text.ToString());output.Write(bytes,0,bytes.Length);output.Flush();count+=n;batches++;

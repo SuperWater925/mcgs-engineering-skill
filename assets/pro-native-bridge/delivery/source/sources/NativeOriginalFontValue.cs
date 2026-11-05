@@ -40,7 +40,7 @@ namespace McgsInternalBridge {
    foreach(object item in (IEnumerable)specification["rows"]) {
     var row=item as Dictionary<string,object>;NativeMemory.Require(row!=null&&row.Count==5&&row.ContainsKey("language_id")&&row.ContainsKey("face_name")&&row.ContainsKey("height")&&row.ContainsKey("weight")&&row.ContainsKey("italic"),"Font row requires language_id/face_name/height/weight/italic.");
     int id=Integral(row["language_id"]),height=Integral(row["height"]),weight=Integral(row["weight"]);
-    NativeMemory.Require(rows.Count<32&&ids.Add(id)&&height>=-4096&&height<=4096&&weight>=0&&weight<=1000&&row["italic"] is bool&&row["face_name"] is string,"Font row has repeated language or invalid LOGFONT fields.");
+    NativeMemory.Require(ids.Add(id)&&weight>=0&&weight<=1000&&row["italic"] is bool&&row["face_name"] is string,"Font row has repeated language or invalid LOGFONT fields.");
     string face=(string)row["face_name"];NativeMemory.Require(face.Length>0&&face.Length<=31&&face.IndexOf('\0')<0,"LOGFONT face must fit31 UTF16 units plus NUL.");new UnicodeEncoding(false,false,true).GetBytes(face);rows.Add(row);
    }
    NativeMemory.Require(rows.Count>0,"FontValue must retain at least one explicit language row.");

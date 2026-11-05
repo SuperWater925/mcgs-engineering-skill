@@ -28,9 +28,9 @@ namespace McgsInternalBridge {
   static Dictionary<string,object> RegistryArray(Api api,int rva,int vtable,int stride){
    IntPtr at=api.Engine.Address(rva);NativeMemory.Require(NativeMemory.Ptr(at,0)==api.Engine.Address(vtable),"Actual native provider registry CArray vtable differs.");
    IntPtr data=NativeMemory.Ptr(at,4);int count=NativeMemory.I32(at,8),capacity=NativeMemory.I32(at,12),growth=NativeMemory.I32(at,16);
-   NativeMemory.Require(count>=0&&count<=4096&&capacity>=count&&(count==0||data!=IntPtr.Zero),"Actual loaded provider registry shape differs.");
-   if(count>0)NativeMemory.Readable(data,checked(count*stride));var items=new List<object>();
-   for(int i=0;i<count;i++)items.Add(new Dictionary<string,object>{{"native_index",i},{"value",RegistryValue(api,NativeMemory.Add(data,i*stride),stride)}});
+   NativeMemory.Require(count>=0&&capacity>=count&&(count==0||data!=IntPtr.Zero),"Actual loaded provider registry shape differs.");
+   if(count>0)NativeMemory.Readable(data,checked(checked(count*stride)));var items=new List<object>();
+   for(int i=0;i<count;i++)items.Add(new Dictionary<string,object>{{"native_index",i},{"value",RegistryValue(api,NativeMemory.Add(data,checked(i*stride)),stride)}});
    return new Dictionary<string,object>{{"pointer",NativeMemory.Hex(at)},{"data",NativeMemory.Hex(data)},{"count",count},{"capacity",capacity},{"growth_raw",growth},{"element_stride",stride},{"items",items}};
   }
   internal static Dictionary<string,object> ProviderArchiveGlobals(Api api){

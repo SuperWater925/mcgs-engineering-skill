@@ -51,8 +51,8 @@ class NativeStyle:
                 raise ValueError('Native DWORD outside bounds')
             if kind=='color_with_flag':
                 value=(self.values[key]&0xff000000)|(value&0xffffff)
-            if kind=='dimension' and not 1<=value<=1000:
-                raise ValueError('Native row height outside bounds')
+            if kind=='dimension' and not 1<=value<=0x7fffffff:
+                raise ValueError('Native row height must fit a positive signed LONG')
             self.values[key]=value
         return self
 

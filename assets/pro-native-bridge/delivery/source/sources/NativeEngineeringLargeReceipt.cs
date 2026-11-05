@@ -4,7 +4,7 @@ using System;using System.Collections.Generic;using System.IO;using System.Text;
 using System.Security.Cryptography;using System.Text.RegularExpressions;using System.Web.Script.Serialization;
 namespace McgsInternalBridge {
  internal static class NativeEngineeringLargeReceipt {
-  const int Maximum=16*1024*1024;
+  const int Maximum=Int32.MaxValue;
   static string Hash(byte[] bytes){using(var sha=SHA256.Create())return BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();}
   static void Ancestors(string path){string root=Path.GetFullPath(NativeOperations.TaskRoot).TrimEnd('\\');for(var d=new DirectoryInfo(path);d!=null;d=d.Parent){NativeMemory.Require(d.FullName.Equals(root,StringComparison.OrdinalIgnoreCase)||d.FullName.StartsWith(root+"\\",StringComparison.OrdinalIgnoreCase),"Engineering reply ancestor escaped its task root.");if(d.Exists)NativeMemory.Require((d.Attributes&FileAttributes.ReparsePoint)==0,"Engineering reply ancestor is a reparse point.");if(d.FullName.Equals(root,StringComparison.OrdinalIgnoreCase))return;}throw new InvalidOperationException("Engineering reply task root was not reached.");}
   internal static Dictionary<string,object> Pack(Dictionary<string,object> request,Dictionary<string,object> result){
@@ -15,11 +15,11 @@ namespace McgsInternalBridge {
    byte[] submitted;using(var stream=new FileStream(claimed,FileMode.Open,FileAccess.Read,FileShare.Read|FileShare.Delete)){
     NativeMemory.Require(stream.Length>0&&stream.Length<=65536,"Engineering reply request exceeds its queue bound.");submitted=new byte[(int)stream.Length];int at=0;while(at<submitted.Length){int n=stream.Read(submitted,at,submitted.Length-at);if(n==0)throw new EndOfStreamException();at+=n;}
    }
-   var json=new JavaScriptSerializer{MaxJsonLength=Maximum,RecursionLimit=128};
+   var json=new JavaScriptSerializer{MaxJsonLength=Maximum,RecursionLimit=256};
    var original=json.Deserialize<Dictionary<string,object>>(Encoding.UTF8.GetString(submitted));
    NativeMemory.Require(Convert.ToString(original["request_id"])==id&&Convert.ToString(original["op"])==op&&Convert.ToString(original["expected_project"])==Convert.ToString(request["expected_project"]),"Engineering reply request identity differs.");
    string requestSha=Hash(submitted);result["request_id"]=id;result["queue_request_sha256"]=requestSha;
-   byte[] payload=new UTF8Encoding(false,true).GetBytes(json.Serialize(result)+Environment.NewLine);NativeMemory.Require(payload.Length<=Maximum,"Complete engineering reply exceeds16MiB; narrow the logical selectors.");
+   byte[] payload=new UTF8Encoding(false,true).GetBytes(json.Serialize(result)+Environment.NewLine);NativeMemory.Require(payload.Length<=Maximum,"Complete engineering reply exceeds the CLR byte-array representation.");
    string directory=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"reply-payloads");Ancestors(directory);Directory.CreateDirectory(directory);Ancestors(directory);
    string output=Path.Combine(directory,id+".json"),temporary=output+"."+Guid.NewGuid().ToString("N")+".staging";
    NativeMemory.Require(!File.Exists(output)&&!Directory.Exists(output),"Engineering reply ID already has an artifact; never replace or replay it.");
