@@ -12,9 +12,14 @@ using System.Text;
 using System.Web.Script.Serialization;
 
 namespace McgsInternalBridge {
- internal sealed class NativeAbiUnavailableException : InvalidOperationException {
-  internal readonly string Status,Profile,Entry;
-  internal NativeAbiUnavailableException(string message,string profile,string entry) : base(message) {Status="unresolved";Profile=profile;Entry=entry;}
+ internal class NativeCompatibilityException : InvalidOperationException {
+  internal readonly string Category,Profile,Entry;
+  internal readonly Dictionary<string,object> Feature;
+  internal NativeCompatibilityException(string category,string message,string profile,string entry) : base(message) {Category=category;Profile=profile;Entry=entry;Feature=NativeAbiTargetProfiles.CurrentFeature();}
+ }
+ internal sealed class NativeAbiUnavailableException : NativeCompatibilityException {
+  internal readonly string Status;
+  internal NativeAbiUnavailableException(string message,string profile,string entry) : base("locator_unresolved",message,profile,entry) {Status="unresolved";}
  }
  internal static class NativeAbiTargetProfiles {
   internal const string ExpectedIndexSha256="__BOUND_ABI_PROFILE_INDEX_SHA256__";
@@ -26,6 +31,17 @@ namespace McgsInternalBridge {
   static List<Dictionary<string,object>> sourceOrdinals;
   static readonly HashSet<string> verifiedModules=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
   static string indexPath;
+  [ThreadStatic]static string requestedOperation,requestedKind,requestedAction,requestedStage;
+  internal static void BeginRequest(Dictionary<string,object> request) {object value;requestedOperation=request!=null&&request.TryGetValue("op",out value)?Convert.ToString(value,CultureInfo.InvariantCulture):null;requestedKind=requestedAction=null;requestedStage="native_core_context";}
+  internal static void EndRequest() {requestedOperation=requestedKind=requestedAction=requestedStage=null;}
+  internal static void SelectFeature(Dictionary<string,object> action,string stage) {object value;requestedKind=action!=null&&action.TryGetValue("kind",out value)?Convert.ToString(value,CultureInfo.InvariantCulture):null;requestedAction=action!=null&&action.TryGetValue("action_id",out value)?Convert.ToString(value,CultureInfo.InvariantCulture):null;requestedStage=stage;}
+  internal static void SelectFeatureGroup(string kind,string stage) {requestedKind=kind;requestedAction=null;requestedStage=stage;}
+  internal static Dictionary<string,object> CurrentFeature() {return new Dictionary<string,object>{{"operation",requestedOperation},{"kind",requestedKind},{"action_id",requestedAction},{"stage",requestedStage}};}
+  internal static NativeCompatibilityException Problem(string category,string message,string profile,string entry) {return new NativeCompatibilityException(category,message,profile,entry);}
+  internal static void RequireLayout(bool valid,string message,string profile,string entry) {if(!valid)throw Problem("abi_layout_mismatch",message,profile,entry);}
+  internal static void RequireIdentity(bool valid,string message,string profile,string entry) {if(!valid)throw Problem("target_identity",message,profile,entry);}
+  internal static void RequireArtifact(bool valid,string message,string profile,string entry) {if(!valid)throw Problem("own_artifact_integrity",message,profile,entry);}
+  static void RequireFile(string path,string profile) {if(!File.Exists(path))throw Problem("deployment","Required native binding artifact is absent: "+path,profile,"");}
   [DllImport("kernel32.dll",CharSet=CharSet.Unicode,EntryPoint="GetModuleHandleW")]static extern IntPtr GetModuleHandle(string name);
   static string HashFile(string path) {
    using(var sha=SHA256.Create())
@@ -41,10 +57,11 @@ namespace McgsInternalBridge {
    lock(Sync) {
     if(files!=null)return;
     indexPath=Path.Combine(NativeEngineeringDeliveryLayout.EvidenceRoot,IndexName);
+    RequireFile(indexPath,IndexName);
     if(ExpectedIndexSha256.Length!=64||HashFile(indexPath)!=ExpectedIndexSha256)
-     throw new InvalidDataException("Current native API index differs from this engine. Bind the engine and index together from the current program.");
+     throw Problem("own_artifact_integrity","Current native API index differs from this engine. Bind the engine and index together from the current program.",IndexName,"");
     var map=new JavaScriptSerializer{MaxJsonLength=int.MaxValue,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(File.ReadAllText(indexPath,new UTF8Encoding(false,true)));
-    if(Text(map,"schema")!="mcgs-native-bound-profile-index/v1")throw new InvalidDataException("Current native API index schema differs.");
+    if(Text(map,"schema")!="mcgs-native-bound-profile-index/v1")throw Problem("own_artifact_integrity","Current native API index schema differs.",IndexName,"schema");
     var found=new Dictionary<string,Dictionary<string,object>>(StringComparer.OrdinalIgnoreCase);
     foreach(object item in (IEnumerable)map["files"]) {
      var row=(Dictionary<string,object>)item;
@@ -65,6 +82,10 @@ namespace McgsInternalBridge {
    Load();
    Dictionary<string,object> row;
    if(!files.TryGetValue(Path.GetFullPath(path),out row))return;
+   // Availability must never hide a missing/mixed artifact as a feature-local
+   // locator miss. Even legacy check-only calls validate the indexed bytes.
+   RequireFile(path,Text(row,"profile"));
+   if(HashFile(path)!=Text(row,"sha256"))throw Problem("own_artifact_integrity","Resolved native API profile changed after binding: "+Text(row,"profile"),Text(row,"profile"),"");
    string status=Text(row,"status");
    object allow;
    bool partial=status=="partial"&&Text(row,"profile")=="static/read-tree-guard-profile.json"&&row.TryGetValue("allow_partial_entries",out allow)&&allow is bool&&(bool)allow;
@@ -73,8 +94,6 @@ namespace McgsInternalBridge {
     string explanation=row.TryGetValue("details",out details)?Convert.ToString(details,CultureInfo.InvariantCulture):"Unresolved native method or table";
     throw new NativeAbiUnavailableException("Current program API is unresolved for this feature: "+Text(row,"profile")+"; "+explanation+". No particular Pro release is required; inspect or extend this method's locator.",Text(row,"profile"),"");
    }
-   if(verifyBytes&&HashFile(path)!=Text(row,"sha256"))
-    throw new InvalidDataException("Resolved native API profile changed after binding: "+Text(row,"profile"));
   }
   // Historic explicit readers; other consumers may opt in only by calling
   // ReadLazyAllText and checking every consumed function/table before access.
@@ -96,15 +115,15 @@ namespace McgsInternalBridge {
   };
   internal static string ReadLazyAllText(string path,string expectedSha) {
    Load();Dictionary<string,object> row;
-   if(!files.TryGetValue(Path.GetFullPath(path),out row))throw new InvalidDataException("Lazy native profile has no bound integrity index entry.");
+   if(!files.TryGetValue(Path.GetFullPath(path),out row))throw Problem("own_artifact_integrity","Lazy native profile has no bound integrity index entry.",Path.GetFileName(path),"");
    string relative=Text(row,"profile").Replace('\\','/'),status=Text(row,"status");
+   RequireFile(path,relative);byte[] bytes=File.ReadAllBytes(path);string actual;using(var sha=SHA256.Create())actual=BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();
+   if(actual!=Text(row,"sha256")||actual!=expectedSha)throw Problem("own_artifact_integrity","Resolved lazy native profile changed after binding: "+relative,relative,"");
    if(status=="partial"){
     object allow,contract;
     if(!row.TryGetValue("allow_partial_entries",out allow)||!(allow is bool)||!(bool)allow||!row.TryGetValue("entry_validation_contract",out contract)||!(contract is string)||(string)contract!=LazyEntryContract)
      throw new NativeAbiUnavailableException("Native partial profile lacks its explicit per-entry validation contract.",relative,"");
    }else if(status!="verified"&&status!="unchanged")throw new NativeAbiUnavailableException("Current program API is unresolved for this feature.",relative,"");
-   byte[] bytes=File.ReadAllBytes(path);string actual;using(var sha=SHA256.Create())actual=BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();
-   if(actual!=Text(row,"sha256")||actual!=expectedSha)throw new InvalidDataException("Resolved lazy native profile changed after binding: "+relative);
    return new UTF8Encoding(false,true).GetString(bytes).TrimStart('\ufeff');
   }
   internal static void VerifyTemplateInventory(string path,string expectedSha) {
@@ -140,6 +159,7 @@ namespace McgsInternalBridge {
    var paths=new string[fields.Length];for(int i=0;i<fields.Length;i++){if(String.IsNullOrEmpty(fields[i])||!item.ContainsKey(fields[i]))throw new InvalidDataException("Native field reader requested an absent field: "+fields[i]);paths[i]="/"+fields[i].Replace("~","~0").Replace("/","~1");}
    CheckPaths(item,kind,profile,paths);
   }
+  internal static bool ArePathsResolved(Dictionary<string,object> item,string profile,params string[] paths) {try{CheckPaths(item,"optional bound path",profile,paths);return true;}catch(NativeAbiUnavailableException){return false;}}
   internal static void CheckPaths(Dictionary<string,object> item,string kind,string profile,params string[] paths) {
    object raw;var state=item.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;
    string name=item.ContainsKey("name")?Convert.ToString(item["name"],CultureInfo.InvariantCulture):kind;
@@ -160,16 +180,32 @@ namespace McgsInternalBridge {
   internal static int UnresolvedRva(string entry) {
    throw new NativeAbiUnavailableException("Current program native address was not uniquely located: "+entry+". No particular Pro release is imposed by this tool; locate or adapt this entry.","classified C# PE address",entry);
   }
+  internal static bool IsUnavailableFeature(Exception error) {for(var e=error;e!=null;e=e.InnerException){var issue=e as NativeCompatibilityException;if(issue!=null)return issue.Category=="locator_unresolved"||issue.Category=="abi_layout_mismatch"||issue.Category=="unsupported_feature";}return false;}
   internal static Dictionary<string,object> Metadata(Exception error) {
-   while(error!=null) {
-    var problem=error as NativeAbiUnavailableException;
-    if(problem!=null)return new Dictionary<string,object>{{"native_abi_status",problem.Status},{"affected_profile",problem.Profile},{"affected_entry",problem.Entry},{"upgrade_required",false},{"software_version_gate",false}};
-    error=error.InnerException;
+   NativeCompatibilityException problem=null;for(var e=error;e!=null;e=e.InnerException){problem=e as NativeCompatibilityException;if(problem!=null)break;}
+   var feature=problem==null?CurrentFeature():problem.Feature;object kind;feature.TryGetValue("kind",out kind);
+   string category=problem==null?"native_operation_failure":problem.Category;
+   bool local=category=="locator_unresolved"||category=="abi_layout_mismatch"||category=="unsupported_feature";
+   return new Dictionary<string,object>{{"failure_category",category},{"native_abi_status",category=="locator_unresolved"?"unresolved":category=="abi_layout_mismatch"?"incompatible":"not_classified_as_abi"},
+    {"affected_profile",problem==null?null:problem.Profile},{"affected_entry",problem==null?null:problem.Entry},{"affected_feature",feature},
+    {"blocked_scope",!local?"current_native_request":String.IsNullOrEmpty(Convert.ToString(kind,CultureInfo.InvariantCulture))?"shared_native_context":"requested_feature"},{"feature_isolation_eligible",local&&!String.IsNullOrEmpty(Convert.ToString(kind,CultureInfo.InvariantCulture))},{"other_features_status","not_evaluated"},
+    {"project_unsupported_claimed",false},{"upgrade_required",false},{"software_version_gate",false}};
+  }
+  internal static void RecordFailure(Dictionary<string,object> result,Exception error) {var metadata=Metadata(error);result["native_abi"]=metadata;result["failure_category"]=metadata["failure_category"];result["affected_feature"]=metadata["affected_feature"];var feature=(Dictionary<string,object>)metadata["affected_feature"];object action;if(!result.ContainsKey("failed_action_id")&&feature.TryGetValue("action_id",out action)&&action is string&&!String.IsNullOrEmpty((string)action))result["failed_action_id"]=action;}
+  internal static Dictionary<string,object> InspectFeature(Dictionary<string,object> action,Func<Dictionary<string,object>> reader) {
+   SelectFeature(action,"inspect-selector");
+   try{return new Dictionary<string,object>{{"status","preimage_read"},{"preimage",reader()}};}
+   catch(Exception error){
+    // This path is read-only and explicit: no inferred exception categories,
+    // no continuation after a mutation/uncertain call, no fabricated before.
+    if(NativeOperationTrace.MutationAttempted||!IsUnavailableFeature(error))throw;
+    var metadata=Metadata(error);if(!Object.Equals(metadata["feature_isolation_eligible"],true))throw;
+    var issue=new Dictionary<string,object>{{"action_id",action["action_id"]},{"kind",action["kind"]},{"target",action["target"]},{"status","unavailable"},{"read_completed",false},{"error",error.Message}};RecordFailure(issue,error);
+    return new Dictionary<string,object>{{"status","unavailable"},{"issue",issue}};
    }
-   return new Dictionary<string,object>();
   }
   internal static Dictionary<string,object> BindingMetadata() {
-   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v4"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false},{"operation_entry_validation",true},{"selected_module_equivalent_copy",true},{"field_resolution_validation",true}};
+   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v5"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false},{"operation_entry_validation",true},{"selected_module_equivalent_copy",true},{"field_resolution_validation",true},{"adaptive_locator",true},{"feature_scoped_failure",true},{"root_vtable_slots_checked_on_use",true}};
   }
   internal static bool MatchesLogicalOrdinalName(string module,string name,int actualOrdinal) {
    Load();
@@ -227,8 +263,8 @@ namespace McgsInternalBridge {
     if(path!=null&&!path.Equals(Path.GetFullPath(loaded.FileName),StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("Legacy native module path is ambiguous: "+logicalName);
     path=Path.GetFullPath(loaded.FileName);
    }
-   if(path==null||!File.Exists(path))throw new InvalidDataException("Native module file is unavailable for this target's API binding: "+logicalName);
-   lock(Sync){string key=Text(row,"logical_name");if(!verifiedModules.Contains(key)){if(HashFile(path)!=Text(row,"actual_sha256"))throw new InvalidDataException("Native module file changed since this target's API binding: "+logicalName);verifiedModules.Add(key);}}
+   if(path==null||!File.Exists(path))throw Problem("deployment","Native module file is unavailable for this target's API binding: "+logicalName,"selected modules",logicalName);
+   lock(Sync){string key=Text(row,"logical_name");if(!verifiedModules.Contains(key)){if(HashFile(path)!=Text(row,"actual_sha256"))throw Problem("target_identity","Native module file changed since this target's API binding: "+logicalName,"selected modules",logicalName);verifiedModules.Add(key);}}
    return path;
   }
   internal static IntPtr ModuleHandle(string logicalName) {
@@ -249,7 +285,7 @@ namespace McgsInternalBridge {
      handle=loaded.BaseAddress;
     }
    }
-   if(Convert.ToBoolean(row["is_editor"],CultureInfo.InvariantCulture)&&handle!=Process.GetCurrentProcess().MainModule.BaseAddress)throw new InvalidDataException("Selected native editor differs from the attached host.");
+   if(Convert.ToBoolean(row["is_editor"],CultureInfo.InvariantCulture)&&handle!=Process.GetCurrentProcess().MainModule.BaseAddress)throw Problem("target_identity","Selected native editor differs from the attached host.","selected modules",logicalName);
    return handle;
   }
   internal static string ReadAllText(string path) {CheckProfile(path,true);return File.ReadAllText(path);}

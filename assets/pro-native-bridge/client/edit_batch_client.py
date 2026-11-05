@@ -246,6 +246,12 @@ def prepare(snapshot_path, specification_path, output):
         raise ValueError("Specification needs a nonempty prepared action list")
     seen = set()
     observed = {row["action_id"]: row for row in snapshot.get("action_preimages", [])}
+    unsupported = snapshot.get("unsupported_actions", [])
+    if not isinstance(unsupported, list) or any(not isinstance(row, dict) or not isinstance(row.get("action_id"), str) for row in unsupported):
+        raise ValueError("Inspection unsupported_actions must identify each unavailable action")
+    unavailable = {row["action_id"]: row for row in unsupported}
+    if len(unavailable) != len(unsupported) or any(key in observed for key in unavailable):
+        raise ValueError("Inspection has repeated or conflicting available/unavailable action identities")
     for action in actions:
         if not isinstance(action, dict) or not all(key in action for key in
                 ("action_id", "kind", "target", "after")):
@@ -254,6 +260,18 @@ def prepare(snapshot_path, specification_path, output):
         if not isinstance(action_id, str) or not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", action_id) or action_id in seen:
             raise ValueError("Action id invalid or repeated")
         seen.add(action_id)
+        if action_id in unavailable:
+            issue = unavailable[action_id]
+            if issue.get("kind") != action["kind"] or issue.get("target") != action["target"]:
+                raise ValueError("Unavailable inspection action does not match this kind/target: " + action_id)
+            native = issue.get("native_abi", {})
+            if not isinstance(native, dict):
+                native = {}
+            details = {"action_id": action_id, "kind": action["kind"],
+                       "failure_category": native.get("failure_category", issue.get("failure_category", "unsupported_feature")),
+                       "affected_profile": native.get("affected_profile"), "affected_entry": native.get("affected_entry")}
+            raise ValueError("Requested feature is unavailable; no action is dropped and other features are not rejected: " +
+                             json.dumps(details, ensure_ascii=False, separators=(",", ":")))
         if "before" not in action or "abi_profile_sha256" not in action:
             row = observed.get(action_id)
             if row is None or row["kind"] != action["kind"] or row["target"] != action["target"]:

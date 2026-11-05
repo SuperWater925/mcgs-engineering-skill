@@ -337,8 +337,8 @@
     "native_errors_zero_for_P01_P03_P06": true
   },
   "native_internal_delivery": {
-    "source_build_revision": "operation-scoped-compatibility-v4-20261105",
-    "source_stage_manifest_sha256": "54945c473ec5272e46ed0506d99afd6b3f682599cb3c61e9de93d6d13f9169fc",
+    "source_build_revision": "adaptive-native-locator-v5-20261105",
+    "source_stage_manifest_sha256": "6b1565e2975c1fb941ede903fa12f6e0d286e5eacc78e4370fe62e9ef557d59f",
     "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
     "configuration": "seven explicit directory/transport fields, project per request",
     "legacy_native_routes_exposed": false,
@@ -438,8 +438,8 @@
       "whole_page_speedup_measured": false,
       "paused_engineering_resumed": false
     },
-    "previous_source_build_revision": "0107-compatibility-completion-20261105",
-    "current_bootstrap_package_source_manifest_sha256": "e5aee91f07cae52ee922f8221e7ba21ed1cb45181100c9aeb4e3e275eea51932",
+    "previous_source_build_revision": "operation-scoped-compatibility-v4-20261105",
+    "current_bootstrap_package_source_manifest_sha256": "c551f33f7e219cf8cd7bcc68b359bd7d03645039779be0f1097f46c4e02c173b",
     "binary_admission_update": {
       "file": "references/pro-native-build-admission-validation.json",
       "sha256": "a075134e4958649d0b934893bd0e1b4df7f7be776b509dc9e2fd1e8e223b5b60",
@@ -659,6 +659,42 @@
       "sha256": "3a7d1a78db110193740ebbcde7a00cc45fe8622a3e1ed89f71bf7e4414690d96",
       "historical_release_validation_hashes_preserved": true,
       "current_bound_engine_sha256": "8d2ef2b9f4605eb9ead89c41043b57cb7a72c0d47920e93477bd805b4c49e2f6"
+    },
+    "adaptive_native_location": {
+      "file": "references/adaptive-native-location-validation.json",
+      "sha256": "c296563ae7dbf81df52f65bddc1aa7e20890b2f5688682b53ab37b6edae717cc",
+      "current_bound_engine_sha256": "a6076024a22da1e6bc07b03836f097922b28badee1cde48f9c80a0b58b20fe07",
+      "historical_validation_files_preserved": true,
+      "current_tools": [
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/adaptive_x86.py",
+          "sha256": "3d1adc80420dec205661f5c48d849f44ac5c679f4403fb1a371149fab3caa924"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/x86_signature.py",
+          "sha256": "bdfba49e767466fb56c9b5f586019563303c146edad9a16ddc5dc6779db1b938"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_locator.py",
+          "sha256": "e4daff8b8cce67f911c3da51e142d48f467dfdf73f04d3e7516c1112d561dc37"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/rtti.py",
+          "sha256": "4deec963c3b96a5ad22176353bb7545474d3256cb576b0f7a0ddda0b1233791a"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_binding.py",
+          "sha256": "a426570ce2f24951edf1394ce835092431ded7daea3bb2c03a733e1924d989ac"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs",
+          "sha256": "a30af4ad2f3b8b171df532ebecef4396692e5c5999dcc1454fa6ebac16e740ae"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/adaptive_report.py",
+          "sha256": "a403d5f3dc07693697123111f0a15a7b5806b3c2502760f113481b0d6b288ca6"
+        }
+      ]
     }
   },
   "exporter_System_SQL_NULL_row_identity": {
@@ -675,7 +711,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "e355a4b05b62d9f05633893f65d4a3f6aa29ecce433b3087de9177b24c5e3932"
+        "packaged_sha256": "080dc6adddcefef49c301bf5cce2763180c28c033988e1d316f7d2773c7201f9"
       },
       {
         "file": "references/pro-native-ui-workflow.md",

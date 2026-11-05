@@ -93,6 +93,36 @@ addresses. Core `functions[]` and `vtable_guards[]` rows have
 `_abi_resolution` with `status`, `details`, and `proof_ids` for per-entry use.
 One unrelated missing entry must not disable every core function.
 
+## Anchored adaptation and diagnostics
+
+Strict decoding remains the first tier. The adaptive tier preserves the observed
+entry/return registers, member displacements and widths, stack operations and
+control paths while recognizing padding, constrained saved-register allocation,
+equivalent branch/import forms and entry thunks. Candidate role evidence comes
+from named exports, actual class/interface tables or independently proved
+callers. A class name and old slot number alone cannot authorize changes to
+strings or callee identity. Code-pointer and callee hints are candidates until
+that entry's own published model succeeds; a short nested context is insufficient.
+
+Function maps contain current guard bytes and HIGHLOW offsets. Unused hierarchy
+or trailing-slot differences do not reject already-proved identities. Actual
+interface offsets, member layouts or required slots are not guessed. Reports
+record resolution tiers and local failures; location evidence is not a claim of
+verified native calling semantics or a new global permission gate.
+
+The common skill entry can explain an existing binding without Capstone, a
+bridge, ACE, or a running editor:
+
+```text
+run.ps1 native-abi report --adaptation BOUND/abi-resolution/adaptation.json --attestation BOUND/abi-resolution/profiles/attestation.json --profile static/read-tree-guard-profile.json --include-located --out NEW_REPORT.json
+```
+
+`located_runtime_unverified`, `partial_entry_runtime_fields_required` and
+`metadata_only` do not mean that a native operation has passed. Per-selector
+native inspection also reports `all_requested_features_available`,
+`partial_inspection` and `unsupported_actions`; preparation cannot invent a
+missing preimage. See the [workflow](../../../references/adaptive-native-location.md).
+
 Absolute target paths appear only in local results/attestations, never in the
 portable reference catalog. Existing object layout and calling-semantic
 contracts remain in force. Code/RTTI location is not proof of changed object

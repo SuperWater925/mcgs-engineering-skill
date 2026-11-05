@@ -18,6 +18,7 @@ namespace McgsInternalBridge {
             NativeMemory.Require(uiThreadId>0 && NativeMemory.GetCurrentThreadId()==uiThreadId,"Engine entry is outside captured host UI thread.");
             NativeMemory.Require(ExpectedUiThreadId==0,"Nested engine entry is refused before changing the active request scope or trace.");ExpectedUiThreadId=uiThreadId;
             NativeOperationTrace.MutationAttempted=false;NativeOperationTrace.Phase="preconditions";NativeBinaryIdentity.Begin(request);
+            NativeAbiTargetProfiles.BeginRequest(request);
             NativeRequestPipeline.NativeStarted(request);
             try {
                 NativeEngineeringProjectScope.Enter(request); NativeOperationTrace.Begin(request);
@@ -27,7 +28,7 @@ namespace McgsInternalBridge {
                 return new Dictionary<string,object>{{"ok",false},{"error",e.Message},{"error_type",e.GetType().Name},{"hresult","0x"+e.HResult.ToString("X8")},
                     {"write_attempted",NativeOperationTrace.MutationAttempted},{"operation_phase",NativeOperationTrace.Phase},{"managed_stack",e.StackTrace},{"comparison_evidence",NativeEngineeringComparisonEvidence.Metadata(e)},{"vendor_binary_identity",NativeBinaryIdentity.Snapshot()},
                     {"project_writes_quarantined",true},{"writer_ready",false},{"project_write_gate_policy",NativeProjectWriteGate.Policy}};
-            } finally{try{NativeEngineeringProjectScope.Exit();}finally{try{NativeOperationTrace.End(request);}finally{NativeBinaryIdentity.End();ExpectedUiThreadId=0;}}}
+            } finally{try{NativeEngineeringProjectScope.Exit();}finally{try{NativeOperationTrace.End(request);}finally{NativeAbiTargetProfiles.EndRequest();NativeBinaryIdentity.End();ExpectedUiThreadId=0;}}}
         }
     }
     internal static class NativeOperationTrace {
@@ -155,6 +156,8 @@ namespace McgsInternalBridge {
         readonly int imageSize,preferredBase;
         readonly Dictionary<string,Dictionary<string,object>> functions=new Dictionary<string,Dictionary<string,object>>();
         readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();
+        readonly HashSet<string> abiFunctionsVerified=new HashSet<string>();
+        readonly HashSet<string> abiTablesVerified=new HashSet<string>();
         internal NativeEngine() {
             string executable=Process.GetCurrentProcess().MainModule.FileName;
             ImageBase=Process.GetCurrentProcess().MainModule.BaseAddress;
@@ -166,10 +169,10 @@ namespace McgsInternalBridge {
             int pe=NativeMemory.I32(ImageBase,0x3C);NativeMemory.Require(NativeMemory.I32(ImageBase,pe)==0x4550,"Invalid editor PE image.");
             imageSize=NativeMemory.I32(ImageBase,pe+24+56);NativeMemory.Require(imageSize>0 && imageSize==Process.GetCurrentProcess().MainModule.ModuleMemorySize,"Invalid editor image size.");
             foreach(object entry in (IEnumerable)profile["functions"]) {
-                var item=(Dictionary<string,object>)entry;functions.Add(Convert.ToString(item["name"]),item);VerifyFunction(item);
+                var item=(Dictionary<string,object>)entry;functions.Add(Convert.ToString(item["name"]),item);
             }
             foreach(object entry in (IEnumerable)profile["vtable_guards"]) {
-                var item=(Dictionary<string,object>)entry;tables.Add(Convert.ToString(item["name"]),item);VerifyTable(item);
+                var item=(Dictionary<string,object>)entry;tables.Add(Convert.ToString(item["name"]),item);
             }
         }
         internal static int Number(object value) {
@@ -177,27 +180,58 @@ namespace McgsInternalBridge {
         }
         internal IntPtr Address(int rva){NativeMemory.Require(rva>=0 && rva<imageSize,"RVA is outside editor image.");return NativeMemory.Add(ImageBase,rva);}
         internal int Rva(IntPtr pointer){long value=(long)NativeMemory.U(pointer)-NativeMemory.U(ImageBase);NativeMemory.Require(value>=0 && value<imageSize,"Pointer is outside editor image.");return (int)value;}
-        internal IntPtr Function(string name){return Address(Number(functions[name]["rva"]));}
+        internal IntPtr Function(string name){Dictionary<string,object> item;if(!functions.TryGetValue(name,out item))throw new NativeAbiUnavailableException("Root profile has no requested function: "+name,"static/read-tree-guard-profile.json",name);if(!abiFunctionsVerified.Contains(name)){VerifyFunction(item);abiFunctionsVerified.Add(name);}return Address(Number(item["rva"]));}
         internal T Bind<T>(IntPtr function)where T:class{Rva(function);NativeMemory.Readable(function,1);return Marshal.GetDelegateForFunctionPointer(function,typeof(T))as T;}
         internal T Call<T>(string name)where T:class{return Bind<T>(Function(name));}
         static byte[] ParseHex(string text){var result=new byte[text.Length/2];for(int i=0;i<result.Length;i++)result[i]=Byte.Parse(text.Substring(i*2,2),NumberStyles.HexNumber);return result;}
         void VerifyFunction(Dictionary<string,object> item) {
+            NativeAbiTargetProfiles.CheckFields(item,"function","static/read-tree-guard-profile.json","rva","expected_first_32_bytes","relocatable_dword_offsets_in_first32");
             var expected=ParseHex(Convert.ToString(item["expected_first_32_bytes"]));
             NativeCodeRelocation.RebaseDeltaInPlace(expected,(IEnumerable)item["relocatable_dword_offsets_in_first32"],unchecked((uint)(NativeMemory.U(ImageBase)-(uint)preferredBase)));
             byte[] actual=NativeMemory.Bytes(Address(Number(item["rva"])),expected.Length);
-            NativeMemory.Require(BitConverter.ToString(actual)==BitConverter.ToString(expected),"Internal function signature differs: "+item["name"]);
+            NativeAbiTargetProfiles.RequireIdentity(BitConverter.ToString(actual)==BitConverter.ToString(expected),"Current bound function bytes changed: "+item["name"],"static/read-tree-guard-profile.json",Convert.ToString(item["name"],CultureInfo.InvariantCulture));
         }
         void VerifyTable(Dictionary<string,object> item) {
+            NativeAbiTargetProfiles.CheckEntry(item,"vtable");
             IntPtr table=Address(Number(item["rva"]));
             NativeMemory.Require(NativeMemory.Ptr(table,-4)==Address(Number(item["col_rva"])),"RTTI COL differs: "+item["name"]);
             int i=0;foreach(object slot in (IEnumerable)item["slot_entry_rvas"]){NativeMemory.Require(NativeMemory.Ptr(table,4*i)==Address(Number(slot)),"Vtable slot differs: "+item["name"]+"/"+i);i++;}
         }
+        void VerifyTableIdentity(Dictionary<string,object> item) {
+            const string profile="static/read-tree-guard-profile.json";string name=Convert.ToString(item["name"],CultureInfo.InvariantCulture);
+            NativeAbiTargetProfiles.CheckFields(item,"root vtable identity",profile,"rva","col_rva","offset_to_complete");
+            IntPtr table=Address(Number(item["rva"])),col=Address(Number(item["col_rva"]));
+            NativeAbiTargetProfiles.RequireLayout(NativeMemory.Ptr(table,-4)==col,"Current root vtable COL differs: "+name,profile,name+"/col_rva");
+            NativeAbiTargetProfiles.RequireLayout(NativeMemory.I32(col,0)==0&&NativeMemory.I32(col,4)==Number(item["offset_to_complete"])&&NativeMemory.I32(col,8)==0,"Current root interface this-adjustment differs: "+name,profile,name+"/offset_to_complete");
+        }
         internal void RequireTable(IntPtr instance,string name) {
-            NativeMemory.Readable(instance,4);NativeMemory.Require(NativeMemory.Ptr(instance,0)==Address(Number(tables[name]["rva"])),"Unexpected native object type: "+name);
+            Dictionary<string,object> item;if(!tables.TryGetValue(name,out item))throw new NativeAbiUnavailableException("Root profile has no requested table: "+name,"static/read-tree-guard-profile.json",name);
+            if(!abiTablesVerified.Contains(name)){VerifyTableIdentity(item);abiTablesVerified.Add(name);}
+            NativeMemory.Readable(instance,4);NativeAbiTargetProfiles.RequireLayout(NativeMemory.Ptr(instance,0)==Address(Number(tables[name]["rva"])),"Unexpected native object type: "+name,"static/read-tree-guard-profile.json",name);
         }
         internal IntPtr Virtual(IntPtr instance,int slot) {
             NativeMemory.Require(slot>=0 && slot<=32,"Invalid IObject virtual slot.");
-            IntPtr table=NativeMemory.Ptr(instance,0);Rva(table);IntPtr method=NativeMemory.Ptr(table,4*slot);Rva(method);return method;
+            IntPtr table=NativeMemory.Ptr(instance,0);int tableRva=Rva(table);IntPtr method=NativeMemory.Ptr(table,4*slot);Rva(method);
+            // Core context tables are shared by every feature. Validate only the
+            // slot about to be used; an unrelated unresolved tail is not needed.
+            const string profile="static/read-tree-guard-profile.json";
+            Dictionary<string,object> selected=null;
+            foreach(var candidate in tables.Values){
+                // A retained reference value is not a candidate current RVA.
+                if(!NativeAbiTargetProfiles.ArePathsResolved(candidate,profile,"/rva")||Number(candidate["rva"])!=tableRva)continue;
+                if(selected==null)selected=candidate;
+                if(abiTablesVerified.Contains(Convert.ToString(candidate["name"],CultureInfo.InvariantCulture))){selected=candidate;break;}
+            }
+            if(selected!=null){var item=selected;
+                string path="/slot_entry_rvas/"+slot.ToString(CultureInfo.InvariantCulture),name=Convert.ToString(item["name"],CultureInfo.InvariantCulture);
+                if(!abiTablesVerified.Contains(name)){VerifyTableIdentity(item);abiTablesVerified.Add(name);}
+                var slots=item["slot_entry_rvas"] as IList;if(slots==null||slot>=slots.Count)throw new NativeAbiUnavailableException("Current core table has no bound contract for the requested slot: "+name+"/"+slot,profile,name+path);
+                NativeAbiTargetProfiles.CheckPaths(item,"root virtual slot",profile,path);
+                NativeAbiTargetProfiles.RequireLayout(method==Address(Number(slots[slot])),"Current core virtual entry differs: "+name+"/"+slot,profile,name+path);
+            }
+            // Non-core classes retain the exact selected entry checks in their
+            // existing caller-specific profiles; no new generic admission.
+            return method;
         }
         internal NativeContext Attach() {
             IntPtr service=Call<CdeclPointer>("GetUserWindowService")();NativeMemory.Require(service!=IntPtr.Zero,"No current user-window service.");

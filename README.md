@@ -12,6 +12,8 @@
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
+当前在线定位增加有角色依据的等价代码适配，移除摘要计算与未使用根槽的整份资料门槛；多项只读检查逐项返回前像或未适配原因。`native-abi report`可查看具体接口，静态定位成功不等于原厂调用已验证。范围见[分层自动适配](references/adaptive-native-location.md)及[对应验证](references/adaptive-native-location-validation.json)。
+
 ## 功能范围
 
 | 功能 | McgsStu | McgsPro |
@@ -98,7 +100,14 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-当前逐项处理、数量条件及文件/托管/数据库与原厂结果见[本轮分项记录](references/compatibility-resolution-validation.json)。[前轮八组适配补全](references/compatibility-completion-validation.json)保留历史范围；未执行的关闭重开、模拟或通信不计通过。
+当前自动定位与功能隔离的算法、程序集和原厂结果见[本轮分项记录](references/adaptive-native-location-validation.json)。此前[数量条件与消费入口修复](references/compatibility-resolution-validation.json)及[八组适配补全](references/compatibility-completion-validation.json)保留各自历史范围。
+
+### 本轮自动定位与功能隔离（2026-11-05）
+
+- 56项匹配正反例、20项定位用例、14项最终生产程序集用例、5项客户端部分结果用例、7项报告/离线隔离检查通过；165份源码完成模板及当前目标绑定编译。
+- 当前安装的5874个函数采用完整内容等价证据定位；代码形态变化的自动适配另由自有合成PE验证，不冒充其它原厂发行版实测。
+- 真实Pro混合只读请求保留正常前像，并单独报告未知功能无前像。自有副本的一次几何修改、Label创建、集中保存、原厂检查和正常关闭重开通过；重开后原生目标与关闭副本中的文件字段一致，10个非目标旧控件记录逐字节相同。
+- 原厂检查实际进入并返回0、编译有效标志为1，错误/警告数量未知。未执行本机模拟、设备通信及所有旧发行版逐个原厂验收，未声称工程其他记录均已全量比较。
 
 ### 本轮逐项兼容修复（2026-11-05）
 

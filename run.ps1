@@ -9,8 +9,12 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-engine-select'){
 if($args.Count -gt 0 -and $args[0] -eq 'native-abi'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $locatorArgs=@()
- if($args.Count -gt 1){$locatorArgs=@($args[1..($args.Count-1)])}
- & $python -B -X utf8 (Join-Path $PSScriptRoot 'assets/pro-native-bridge/abi-adapter/abi_locator.py') @locatorArgs
+ $locatorScript='assets/pro-native-bridge/abi-adapter/abi_locator.py'
+ if($args.Count -gt 1 -and $args[1] -eq 'report'){
+  $locatorScript='assets/pro-native-bridge/abi-adapter/adaptive_report.py'
+  if($args.Count -gt 2){$locatorArgs=@($args[2..($args.Count-1)])}
+ }elseif($args.Count -gt 1){$locatorArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot $locatorScript) @locatorArgs
  exit $LASTEXITCODE
 }
 if($args.Count -gt 0 -and $args[0] -eq 'new-window'){

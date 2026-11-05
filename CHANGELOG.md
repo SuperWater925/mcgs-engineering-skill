@@ -1,5 +1,15 @@
 # 更新记录
 
+## v2026.11.05-adaptive-native-locator：分层自动定位与单项功能隔离
+
+- 严格定位之外，使用具名导出、实际RTTI角色、已证明调用方和受约束等价代码规则自动适配；保留入口/返回、成员偏移、栈与控制流合同，不以参考RVA择优。
+- 支持padding、热补丁标记、受证明的寄存器分配、分支编码、同导入角色及入口跳板变化；同类旧槽不能独自放宽字符串和callee身份，短callee上下文不生成独立可调用地址。
+- 无关继承描述和尾槽不阻断已证明接口；根身份和实际使用槽按需校验，计算Hash不再检查整份profile的功能状态。
+- 只读selector逐项隔离明确的未适配接口；准备写入必须取得对应真实前像，写入失败仍保留完成前缀，不跳步骤或重放。
+- 新增`native-abi report`文件侧报告，区分已定位、部分字段、仅元数据和未定位；错误带功能、动作、阶段及具体接口，资料完整性和全局身份错误单独处理。
+
+实现规则与本次实际验证分列于[自动适配说明](references/adaptive-native-location.md)和[分项证据](references/adaptive-native-location-validation.json)，不宣称所有历史软件发行版均已实测。
+
 ## v2026.11.05-operation-scoped-compatibility：逐项修复消费入口与工具配额
 
 - 补齐共用Capture压缩MCGSVER、Stu controls压缩ObjData，以及仅绑定操作需要变量读取的实际接线。

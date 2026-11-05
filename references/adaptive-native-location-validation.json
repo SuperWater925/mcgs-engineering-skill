@@ -1,0 +1,390 @@
+{
+  "schema": "mcgs-adaptive-native-location-validation/v1",
+  "date": "2026-11-05",
+  "release_tag": "v2026.11.05-adaptive-native-locator",
+  "status": "unified_validation_recorded",
+  "previous_release_commit": "e55020f64609e490e84087a0ad399c166b201079",
+  "vendor_software_version_gate": false,
+  "author_vendor_whole_file_sha_used_as_admission": false,
+  "implementation": [
+    "strict-first independently anchored x86 adaptation with CFG must-defined saved-register roles",
+    "RTTI actual interface identity separated from methods and unrelated hierarchy/tail fields",
+    "candidate code referents require their own supplied function contract before address publication",
+    "thunk topology and known full terminal contracts checked without cyclic callable proof",
+    "actual current guard bytes and relocation fields retained",
+    "root identity and used virtual slots loaded on demand; Hash has no profile availability gate",
+    "per-selector genuine preimages or local unsupported results, with no automatic skipping in writes",
+    "typed fault categories and exact action/feature/stage context",
+    "JSON-only static report and offline path isolated from online dependencies"
+  ],
+  "matcher_validation": {
+    "passed": true,
+    "case_count": 56,
+    "cases": [
+      "fixture identity names the actual PE export",
+      "old strict matcher distinguishes register/padding variant",
+      "independent role admits padding and defined callee-saved register variant",
+      "actual register mapping is explicit",
+      "partial disassembly does not claim whole semantics",
+      "unanchored fuzzy match is never admitted",
+      "wrong candidate rejected",
+      "missing proof rejected",
+      "dependent claim rejected",
+      "unknown role rejected",
+      "member displacement remains a concrete mismatch",
+      "member width remains a concrete mismatch",
+      "this entry register remains a concrete mismatch",
+      "return register remains a concrete mismatch",
+      "stack cleanup remains a concrete mismatch",
+      "inconsistent register role remains a concrete mismatch",
+      "zero-offset LEA is a flag-preserving register copy",
+      "callee-saved entry value is not renamed as a hidden parameter",
+      "fixed partial-register alias fixes its containing register",
+      "implicit CPUID EBX role cannot be remapped",
+      "CFG must-defined rejects skip-definition",
+      "CFG must-defined rejects loop-restore-entry",
+      "CFG must-defined rejects loop-entry-merge",
+      "CFG predecessor intersection accepts both-paths-define",
+      "CFG predecessor intersection accepts loop-initialized",
+      "zeroing idiom defines a saved register without reading its entry value",
+      "short/near branches preserve canonical target through padding",
+      "changed local basic-block destination is rejected",
+      "branch landing inside an instruction is rejected",
+      "localized short text does not reject an independently anchored entry",
+      "changed string address is not published as a cross-build data mapping",
+      "text relaxation is explicit evidence",
+      "same RTTI slot cannot relax changed method-identifying text",
+      "RTTI slot can still adapt register/padding when semantic anchors are unchanged",
+      "unproved char width change does not receive text exception",
+      "native caller role is not globally rejected by a changed private callee body",
+      "same RTTI slot cannot relax a changed callee context",
+      "RTTI slot retains unchanged callee evidence through register adaptation",
+      "RTTI slot cannot promote nested callee changed-string context to independent identity",
+      "named export permits the same nested diagnostic text adaptation without privilege promotion",
+      "changed callee is not silently admitted as a resolved address",
+      "aligned callee is a validation candidate only",
+      "candidate callee with changed member layout still fails its own contract",
+      "equivalent callee prefix supplies a provisional role for full validation",
+      "callee is separately adaptable only after its own layout contract matches",
+      "aligned executable pointer is a candidate and never an unverified function mapping",
+      "CALL import stub and CALL IAT use independently proved same import role",
+      "removed executable import stub is not mapped to IAT storage or another module",
+      "changed import symbol is not an equivalent transfer",
+      "arbitrary helper call does not become an import merely by position",
+      "new direct entry wrapper is followed using current bytes",
+      "removed reference thunk retains independently identified current entry",
+      "removed thunk body correspondence is provisional, not a guessed mapping",
+      "entry thunk cycle rejected",
+      "legacy missing ctor displacement cannot emit layout mapping for current cd 0",
+      "legacy missing ctor displacement cannot emit layout mapping for current cd 8"
+    ],
+    "scope": "Synthetic valid PE32 images and Capstone decoding; no vendor module loaded or called",
+    "vendor_software_called": false,
+    "engineering_project_accessed": false,
+    "all_unknown_ABIs_claimed_supported": false
+  },
+  "locator_validation": {
+    "passed": true,
+    "cases": [
+      "stable primary RTTI role survives an extra unrelated base",
+      "named/RTTI identity drives real padding adaptation",
+      "resolved guard is actual current bytes with original guard length",
+      "changed whole hierarchy arrays are not mapped as an old layout",
+      "additional unused virtual tail does not reject existing table identity",
+      "a changed actual member displacement blocks only the required entry",
+      "unresolved retained reference RVA is never published as a current mapping",
+      "changed COL this-subobject offset is not relaxed",
+      "constructor displacement still requires exact actual evidence",
+      "changed self PMD is not hidden by an equal class name",
+      "aligned caller target is only a candidate until its own register/field structure is verified",
+      "callee proof retains caller dependency and writes the actual new address",
+      "located edge function retains its original guard extent and reports a local unsupported contract",
+      "an unavailable guard span does not abort resolution or other feature entry guards",
+      "strict same-class A identity outranks unrelated B at the old slot number",
+      "method resolution records strict same-class search and never old-slot selection bias",
+      "removed JMP terminal body maps to its actual entry, never the first CALL callee",
+      "intermediate thunk bodies do not acquire independent RTTI callable identities",
+      "24-byte callee context cannot publish a mapping when its own longer member contract fails",
+      "wrapper cannot bypass an explicit failing complete terminal body contract"
+    ],
+    "vendor_software_called": false,
+    "engineering_project_accessed": false,
+    "old_vendor_release_validation_claimed": false
+  },
+  "partial_client_validation": {
+    "passed": true,
+    "cases": [
+      "available_selector_in_partial_inspection_can_prepare_with_its_real_preimage",
+      "unavailable_action_is_rejected_even_with_supplied_before_and_abi",
+      "mixed_preparation_does_not_silently_drop_pending_actions",
+      "malformed_duplicate_and_conflicting_statuses_are_rejected",
+      "prior_complete_inspection_receipts_remain_compatible"
+    ],
+    "queue_published": false,
+    "Pro_called": false,
+    "scope": "Current prepare code with file-only synthetic inspection receipts; not a native preimage validation"
+  },
+  "report_and_offline_isolation_validation": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "partial_and_metadata_not_claimed_callable_or_global_rejection",
+        "passed": true
+      },
+      {
+        "case": "exact_profile_and_entry_filter_keeps_independent_located_entry",
+        "passed": true
+      },
+      {
+        "case": "missing_selected_identity_is_explicit",
+        "passed": true
+      },
+      {
+        "case": "packaged_PowerShell_entry_dispatches_JSON_only_report",
+        "passed": true
+      },
+      {
+        "case": "report_refuses_existing_output_without_rewriting_evidence",
+        "passed": true
+      },
+      {
+        "case": "mixed_evidence_report_is_input_failure_not_vendor_version_error",
+        "passed": true
+      },
+      {
+        "case": "offline_actual_export_audit_runs_with_online_imports_forbidden",
+        "passed": true
+      }
+    ],
+    "Pro_called": false,
+    "database_written": false,
+    "offline_export_index_unchanged": true
+  },
+  "raw_template_compile": {
+    "passed": true,
+    "source_count": 165,
+    "unbound_compile_only": true,
+    "Pro_called": false
+  },
+  "production_engine": {
+    "passed": true,
+    "binding": {
+      "exit_code": 0,
+      "seconds": 183.774
+    },
+    "compilation": {
+      "exit_code": 0,
+      "seconds": 0.983
+    },
+    "source_count": 165,
+    "engine_sha256": "a6076024a22da1e6bc07b03836f097922b28badee1cde48f9c80a0b58b20fe07",
+    "scope_sha256": "b7f6f827f99495a76a9522d0ce20fc286e9191bf46e6cee1c940a27b2c619b7c",
+    "index_sha256": "30a2e71df8c4ec11dc4f7300e4958fc3ab0a46711983670d408adede019377f1",
+    "bound_manifest_sha256": "9f79a71a38ec7ebd8d49ebdf97b068bde5001b1a1f9be2e5592cbe8eae6d2905",
+    "scope_metadata": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "b7f6f827f99495a76a9522d0ce20fc286e9191bf46e6cee1c940a27b2c619b7c"
+    },
+    "native_called": false,
+    "engine_activated": false
+  },
+  "production_runtime_validation": {
+    "ok": true,
+    "cases": [
+      "unused_unresolved_tail_does_not_block_identity_or_used_slot",
+      "used_unresolved_slot_reports_only_requested_feature",
+      "exception_captures_original_feature_context",
+      "validate_flush_root_save_and_direct_contexts_do_not_inherit_previous_actions",
+      "typed_layout_integrity_identity_deployment_and_unclassified_failures_remain_distinct",
+      "production_selector_isolation_preserves_other_real_read_results_without_fake_before",
+      "mixed_artifacts_and_mutation_attempted_state_abort_read_selector_continuation",
+      "partial_profile_integrity_and_expected_sha_precede_local_availability",
+      "production_core_identity_slot_and_function_read_owned_memory_without_unused_entry_gate",
+      "unresolved_retained_rva_and_uncertified_alias_do_not_shadow_verified_core_table",
+      "production_core_virtual_rejects_only_requested_unresolved_slot",
+      "actual_live_slot_mismatch_is_still_rejected",
+      "actual_this_adjustment_is_preserved",
+      "request_scope_does_not_leak"
+    ],
+    "native_vendor_called": false,
+    "Pro_opened_or_written": false,
+    "scope": "Final production assembly helpers and core readers over owned memory; not an alternate Pro release validation",
+    "engine_sha256": "a6076024a22da1e6bc07b03836f097922b28badee1cde48f9c80a0b58b20fe07"
+  },
+  "current_installation_location_report": {
+    "summary": {
+      "profiles": 123,
+      "located_entries": 8114,
+      "not_located_entries": 0,
+      "metadata_only_entries": 225,
+      "partial_entries": 0,
+      "functions_in_scope": 5874,
+      "function_resolution_methods": {
+        "identical-PE-content-cache": 5874
+      },
+      "unresolved_functions_in_scope": 0
+    },
+    "scope": "static current installation; this run used complete content-equivalence evidence, not alternate-vendor-release native execution",
+    "native_call_verified_by_this_report": false
+  },
+  "catalog_generation": {
+    "source_addresses": {
+      "entries": 535,
+      "confirmed": 535,
+      "source_ordinals": 16,
+      "address_kinds": {
+        "PE_RVA_constant": 31,
+        "PE_RVA_literal": 485,
+        "PE_data_RVA_literal": 8,
+        "reference_base_encoded_RVA": 11
+      },
+      "module_ownership_or_const_scope_gaps": 49
+    },
+    "modules": 17,
+    "profiles": 123,
+    "signatures": 5874,
+    "types": 265,
+    "catalog_gaps": 0,
+    "expanded_catalog_sha256": "547c3ffd6c880d04bb6bd693c18d91048f91308dc4fbe8a49a7edc2b4f4a9261",
+    "compressed_catalog_sha256": "ad7ef3f5e3e6851216879d803697067e53e7ca092a8e3d0e7cd4b7491f0dee63"
+  },
+  "original_software_acceptance": {
+    "schema": 1,
+    "scope": "one owned R9 fixture, current installed build only",
+    "connection": {
+      "status": "passed",
+      "project": "<local evidence path omitted>"
+    },
+    "engine": {
+      "adaptive_locator": true,
+      "feature_scoped_failure": true,
+      "scope_sha256": "b7f6f827f99495a76a9522d0ce20fc286e9191bf46e6cee1c940a27b2c619b7c",
+      "status": "passed",
+      "index_sha256": "30a2e71df8c4ec11dc4f7300e4958fc3ab0a46711983670d408adede019377f1",
+      "cross_build_contract": "mcgs-native-cross-build/v5",
+      "root_vtable_slots_checked_on_use": true,
+      "engine_sha256": "a6076024a22da1e6bc07b03836f097922b28badee1cde48f9c80a0b58b20fe07",
+      "promoted_files": 308
+    },
+    "partial_inspection": {
+      "status": "passed",
+      "known_page_and_geometry_preimages": true,
+      "unknown_feature_unavailable_without_before": true
+    },
+    "mutation": {
+      "after": [
+        25,
+        20,
+        205,
+        65
+      ],
+      "before": [
+        24,
+        20,
+        204,
+        65
+      ],
+      "status": "passed",
+      "control": "OfflineButton"
+    },
+    "create": {
+      "rectangle": [
+        540,
+        280,
+        690,
+        310
+      ],
+      "path": [
+        11
+      ],
+      "status": "passed",
+      "class": "CDrawLabel",
+      "name": "控件4"
+    },
+    "save": {
+      "status": "passed",
+      "root_save": true,
+      "page_save": true
+    },
+    "native_readback": {
+      "status": "passed",
+      "scope": "before and after reopen, target page identities and rectangles",
+      "after_reopen": "<local evidence path omitted>",
+      "full_typed_business_comparison": false,
+      "before_reopen": "<local evidence path omitted>"
+    },
+    "native_check": {
+      "warning_count": null,
+      "root_compile_valid_after": 1,
+      "original_worker_return_int32": 0,
+      "native_check_passed": true,
+      "status": "passed",
+      "original_worker_call_entered": true,
+      "error_count": null,
+      "original_worker_returned": true
+    },
+    "close_reopen": {
+      "actual_project": "<local evidence path omitted>",
+      "request_id": "lifecycle_v5_owned_0001",
+      "status": "passed",
+      "lifecycle_completed": true,
+      "note": "Original recovery prompt declined under existing owned-fixture authorization; no request replay.",
+      "normal_project_closed_then_reopened_verified": true
+    },
+    "file_readback": {
+      "audit": "<local evidence path omitted>",
+      "targets_match_native": true,
+      "scope": "closed-copy target fields and structural audit; other project records not compared",
+      "supported_archives_roundtrip": true,
+      "non_target_prior_controls_byte_equal": true,
+      "provider": "Microsoft.ACE.OLEDB.16.0",
+      "status": "passed",
+      "copy": "<local evidence path omitted>",
+      "target_receipt": "<local evidence path omitted>",
+      "non_target_count": 10,
+      "sha256": "abb00e40e5a64686b716f03462a12f0d891476cff8090a07b21f0c71d4b2db13"
+    },
+    "simulation": {
+      "status": "not_performed"
+    },
+    "communication": {
+      "status": "not_performed"
+    },
+    "limits": "Observed on current installed build only; no other Pro version tested.",
+    "page_open_timeout": {
+      "initial": "QueueTimeout, not cancellation",
+      "eventual": "passed",
+      "request_id": "direct_39b77fedae284217ba7118da0d9e5e7f"
+    }
+  },
+  "independent_review": {
+    "completed": true,
+    "review_corrections": [
+      "register CFG merge/loop hidden-entry role protection",
+      "RTTI slot-only identity cannot weaken string/callee evidence or gain privilege in nested contexts",
+      "actual thunk topology and complete callee contract isolation",
+      "legacy missing ctor displacement does not manufacture layout proof",
+      "partial artifact integrity precedes function availability",
+      "validate/flush/root-save/direct stages retain correct feature attribution",
+      "unresolved retained reference RVA never participates in a live root table match"
+    ]
+  },
+  "user_business_project_modified": false,
+  "all_older_vendor_releases_claimed_tested": false,
+  "not_performed": [
+    "individual native acceptance of all historical vendor releases",
+    "local simulation",
+    "physical device communication"
+  ],
+  "preserved_real_contracts": [
+    "actual addresses and owners",
+    "entry/return and calling convention requirements",
+    "object member widths/displacements and this adjustments",
+    "actual required virtual slots",
+    "required serialization/lifetime closures",
+    "own artifact integrity and current project/process identity",
+    "single native UI writer and uncertain request non-replay"
+  ]
+}

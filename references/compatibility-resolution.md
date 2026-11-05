@@ -2,6 +2,8 @@
 
 本页维护“某个消费入口实际能做什么”，不按Pro/Stu软件发行号准入。历史发布验证保持原含义；当前验证见[分项记录](compatibility-resolution-validation.json)。
 
+本页对应前轮消费入口与配额修复；后续分层定位和功能隔离见[自动适配说明](adaptive-native-location.md)及[独立验证](adaptive-native-location-validation.json)，不改写本页原验证范围。
+
 ## 先区分四类结果
 
 - 接线遗漏：同一个格式适配器必须接到所有实际入口，不能因一个审计分支通过就认为修改分支也已接通。
