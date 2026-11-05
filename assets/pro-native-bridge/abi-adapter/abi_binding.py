@@ -30,50 +30,13 @@ def _need(value, message):
 
 
 def actual_module_files(catalog, layout):
-    """Use the selected EXE and its imports, never an author's installation."""
-    editor = Path(layout.editor_executable).resolve()
-    image = PE32(editor)
-    result = {'editor': editor}
-    imported = image.import_modules
-    roots = [editor.parent, Path(layout.install_root), Path(layout.install_root) / 'Program']
-    windows = os.environ.get('WINDIR')
-    if windows:
-        roots.extend([Path(windows) / 'SysWOW64', Path(windows) / 'System32'])
-    installation_files = None
-    for alias, reference in catalog['reference_modules'].items():
-        if alias == 'editor':
-            continue
-        basename = reference.get('basename')
-        names = []
-        if alias == 'mfc':
-            names = [name for name in imported if re.fullmatch(r'mfc\d+u?\.dll', name, re.I)]
-        elif alias == 'common':
-            names = [name for name in imported if name.lower() == 'common.dll']
-        if basename and basename.lower() not in {name.lower() for name in names}:
-            names.append(basename)
-        declared = reference.get('install_relative_path')
-        relative = PureWindowsPath(declared) if isinstance(declared,str) else None
-        declared_file = (Path(layout.install_root) / Path(*relative.parts)) if relative and not relative.is_absolute() and '..' not in relative.parts else None
-        selected = next((root / name for name in names for root in roots if (root / name).is_file()), None)
-        if declared_file is not None and declared_file.is_file() and not (alias=='mfc' and names and names[0].casefold()!=(basename or '').casefold()):
-            selected = declared_file
-        if selected is None and basename:
-            if installation_files is None:
-                installation_files = {}
-                wanted_names={item.get('basename','').casefold() for item in catalog['reference_modules'].values()}
-                for file in Path(layout.install_root).rglob('*'):
-                    if file.is_file() and file.name.casefold() in wanted_names:
-                        installation_files.setdefault(file.name.casefold(),[]).append(file)
-            candidates = installation_files.get(basename.casefold(),[])
-            if len(candidates)==1:
-                selected = candidates[0]
-        if selected is not None:
-            result[alias] = selected.resolve()
-    return result
+    """Compatibility wrapper; select current program dependencies, not reference copies."""
+    from module_selection import select_module_files
+    return select_module_files(catalog, layout)['files']
 
 
 class TargetBinding:
-    def __init__(self, stage, manifest, layout, output, catalog_file=None):
+    def __init__(self, stage, manifest, layout, output, catalog_file=None, module_overrides=None):
         self.stage = Path(stage)
         self.output = Path(output)
         self.catalog_file = Path(catalog_file or DEFAULT_CATALOG).resolve()
@@ -103,7 +66,10 @@ class TargetBinding:
             _need(name in source_rows and source_rows[name]['sha256']==ordinal['source_sha256'],
                   'Source ordinal is not from the selected source manifest: '+name)
             self.source_ordinals.setdefault(name,[]).append(ordinal)
-        modules = actual_module_files(self.catalog, layout)
+        from module_selection import select_module_files
+        selection = select_module_files(self.catalog, layout, module_overrides)
+        modules = selection['files']
+        self.module_selection_report = selection['report']
         self.actual_module_paths = modules
         self.module_names = {row.get('basename','').casefold(): alias
                              for alias,row in self.catalog['reference_modules'].items() if row.get('basename')}
@@ -126,6 +92,7 @@ class TargetBinding:
         self.ordinal_changes = []
         self.ordinal_images = {}
         (self.output / 'adaptation.json').write_bytes(json_bytes(self.result))
+        (self.output / 'module-selection.json').write_bytes(json_bytes(self.module_selection_report))
 
     def module_file_value(self, value, key=None):
         if not isinstance(value,str):
@@ -263,16 +230,26 @@ class TargetBinding:
 
     def index(self, resolved, layout, copied):
         rows = []
+        helper = Path(__file__).with_name('NativeAbiTargetProfiles.cs').read_text(encoding='utf-8-sig')
+        declaration = re.search(r'LazyProfiles\s*=\s*new\s+HashSet<string>\s*\([^)]*\)\s*\{(.*?)\};', helper, re.S)
+        contract = re.search(r'const\s+string\s+LazyEntryContract\s*=\s*"([^"\r\n]+)"', helper)
+        _need(declaration is not None and contract is not None, 'Owned lazy profile reader contract is absent')
+        lazy_profiles = set(re.findall(r'"([^"\\]+)"', declaration.group(1)))
+        _need(lazy_profiles and all(path and '..' not in path.split('/') for path in lazy_profiles),
+              'Owned lazy profile declarations differ')
         by_relative = {}
         for item in copied:
             by_relative.setdefault(item['original_relative_file'], []).append(item)
         for relative, record in self.profile_rows.items():
-            root_entries = relative.replace('\\', '/') == 'static/read-tree-guard-profile.json'
-            partial_allowed = root_entries and bool(record.get('entry_resolutions'))
+            normalized = relative.replace('\\', '/')
+            root_entries = normalized == 'static/read-tree-guard-profile.json'
+            explicit_lazy_reader = normalized in lazy_profiles
+            partial_allowed = (root_entries or explicit_lazy_reader) and bool(record.get('entry_resolutions'))
             status = 'verified' if record['status'] == 'resolved' else 'partial' if partial_allowed else 'unresolved'
             for item in by_relative.get(relative, []):
                 rows.append({'file': item['planned_file'], 'profile': relative, 'status': status,
                              'sha256': digest(resolved[relative]), 'allow_partial_entries': partial_allowed,
+                             'entry_validation_contract': contract.group(1) if explicit_lazy_reader else None,
                              'details': json.dumps(record['unresolved_fields'], ensure_ascii=True, separators=(',', ':'))})
         modules = []
         for alias, item in self.result['modules'].items():
@@ -285,6 +262,7 @@ class TargetBinding:
 
     def summary(self):
         return {'catalog_sha256': self.result['catalog_sha256'],
+                'module_selection': self.module_selection_report,
                 'profiles': {state: sum(row['status'] == state for row in self.profile_rows.values())
                              for state in ('resolved', 'partial', 'unresolved')},
                 'source_addresses': {state: sum(row['status'] == state for row in self.source_changes)

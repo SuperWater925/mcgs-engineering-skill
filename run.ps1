@@ -1,4 +1,11 @@
 $ErrorActionPreference = 'Stop'
+if($args.Count -gt 0 -and $args[0] -eq 'native-engine-select'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $selectionArgs=@()
+ if($args.Count -gt 1){$selectionArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'assets/pro-native-bridge/bootstrap/select_engine.py') @selectionArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-abi'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $locatorArgs=@()

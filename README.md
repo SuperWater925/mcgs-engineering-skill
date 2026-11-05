@@ -10,7 +10,7 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本次将 Pro 在线调用改为按当前程序解析函数位置，使用者不需要作者电脑上的参考 EXE/DLL。此前补齐的 Pro 离线新增原生按钮及共用工具见[离线工厂](references/offline-factories.md)；安装路径、数量配额和 ACE 回退的记录见[可迁移性复查](references/portability-review.md)。
+本次补齐九组跨构建误拦截：遗漏的虚表槽与别名地址、末尾重定位、无关接口依赖、参考 MFC 大小、导入提示、DLL 选择、旧引擎更新、冷接多安装身份及离线家族识别。规则见[跨构建适配](references/cross-build-compatibility.md)。使用者不需要作者参考 EXE/DLL，也不因这些接口缺口被要求升级到模板来源版本。
 
 ## 功能范围
 
@@ -98,7 +98,16 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-### 本轮在线函数动态定位（2026-11-05）
+### 本轮九项跨构建修复（2026-11-05）
+
+- 集中完成实现后，地址与元数据、延迟绑定、部署更新、家族识别分别完成 51、27、7、10 项针对性检查。复查追加的数组、MFC 角色、证明依赖及模块发现顺序问题均已收口；失败与修正经过保留。
+- 162 份源码生成的 x86 业务引擎已校对实际程序集和编译 scope；161 份生成源码、另一个 Layout 及 308 份部署文件 SHA 回读一致。通过公开 `native-engine-select` 在已有桥中切换，未重启 Pro。
+- 自有 Pro 工程的一次几何修改、新建原生文字、统一保存、原生回读和独立文件 BLOB/归档回读通过；一次原厂检查已进入并返回 0，调用后编译有效标志为 1。错误、警告数量仍未知，文件解析器未暴露控件实例 ID，不据此猜值。
+- 冷部署完成自有源码编译与实际 TYPELIB、GUID、回调和包装器资源回读；未注册 COM、修改 Startup 或执行原厂冷启动。关闭重开、本机模拟和设备通信本轮未执行。
+
+详见[九项修复验证](references/cross-build-fixes-validation.json)。这是针对性修复证据，不代表每个历史发行版、任意编译器代码形态或未知对象布局均已实际验收。
+
+### 此前在线函数动态定位（2026-11-05）
 
 - 当前程序的 17 个模块、123 份派生接口资料及 543 处源码地址、17 处导出序号、6 处内嵌检查完成解析。161 份源码编译通过；实际 DLL 读取派生资料及校验引用的回归通过。
 - 自有 PE 的地址重排、不同内容、导出序号移动与歧义反例分别验证。相同完整文件的定位缓存与内容变化后的动态解析分别记录，接收者无需作者参考 EXE/DLL。
@@ -145,7 +154,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.11.05-dynamic-functions --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.05-cross-build-fixes --out local-artifacts/release
 ```
 
 静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。

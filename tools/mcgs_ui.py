@@ -22,6 +22,7 @@ sys.dont_write_bytecode = True
 NATIVE = Path(__file__).resolve().parents[1] / 'scripts' / 'native'
 sys.path.insert(0, str(NATIVE))
 from mcs_window_archive import WindowArchive, Reader
+from mcgs_family import identify_family
 from 原生界面样式 import CommonEnvelope, MultiState, GenericMetadata, GroupArchive, set_font, fonts
 from mcs_button_control import ButtonArchive, bind_click
 from mcs_input_text import LabelRecord, InputRecord, InputMetadata, unit_slot
@@ -835,9 +836,7 @@ class Export:
         self.family = self.index.get('project_family', 'unrecognized')
         if self.family not in ('Stu', 'Pro') and ('System', 'MCGSVER') in self.rows:
             version = unwrapped(self.raw('System', 'MCGSVER', 'lbContext')).decode('utf-16le').rstrip('\0')
-            brand = re.search(r'(?<![A-Za-z])mcgs[\s_-]*(pro|stu)(?![A-Za-z])', version, re.I)
-            if brand:
-                self.family = 'Pro' if brand.group(1).lower() == 'pro' else 'Stu'
+            self.family = identify_family(version)
 
     def raw(self, table, key, field):
         info = self.rows[table, str(key)][field]

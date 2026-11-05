@@ -270,7 +270,7 @@
       "file": "assets/pro-3.5-cli/scripts/mcgs_file.py",
       "source": "mcgs-offline-engineering-skill/mcgs-offline-engineering-McgsPro-3.5.1.6963/mcgs-offline-engineering/scripts/mcgs_file.py",
       "source_sha256": "7c3190b204bd0b8a446373beccf709620e4d176f8002e5c9ca1b8d4ffa5f2622",
-      "packaged_sha256": "71339d0c562eb74c129ca03f87306f5b2b4c988c94b14be836b4b03cc58acf97",
+      "packaged_sha256": "1dbd48fb232e551f7acdc28f56a949487d48609d70c7cc6539e2c4589c697f6d",
       "adaptation": "Original Pro3.5 CLI preserved, vendor blank template password fields verified all empty; contains no current MCS extraction.",
       "adaptation_20261029": "Shared runtime and content-based Stu/Pro adaptation; see unified-validation.md.",
       "adaptation_20261030": "Unified Stu/Pro content-based adapters, bounded editing and native runtime fixes; see unified-validation.md."
@@ -337,8 +337,8 @@
     "native_errors_zero_for_P01_P03_P06": true
   },
   "native_internal_delivery": {
-    "source_build_revision": "0105-current-program-functions-20261105",
-    "source_stage_manifest_sha256": "5f9b0160074e1ca7d0ae33a0eab7b8129badcabba6ed0dd7e17e09a5549c5538",
+    "source_build_revision": "0106-cross-build-fixes-20261105",
+    "source_stage_manifest_sha256": "1fd215c0f7fe9f22abecbff1a8eba836467393777e1c67b6a00ee920c8b5d620",
     "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
     "configuration": "seven explicit directory/transport fields, project per request",
     "legacy_native_routes_exposed": false,
@@ -347,7 +347,7 @@
     "deployment_document": "references/pro-native-deployment.md",
     "historical_source_build_revision": "0069",
     "historical_source_stage_manifest_sha256": "883e44e5205637fa6f2412bba076ae129f6413c9ce76b7ff92042e202d44fbb1",
-    "source_template_count": 159,
+    "source_template_count": 160,
     "separate_unbound_layout_required": true,
     "native_ui_increment_20261103": {
       "date": "2026-11-03",
@@ -520,6 +520,65 @@
       ],
       "historical_validation_hashes_preserved": true,
       "paused_engineering_resumed": false
+    },
+    "cross_build_fixes": {
+      "file": "references/cross-build-fixes-validation.json",
+      "sha256": "19a89eb2bf99a72941997b70068fb67fc935fcf4e2743ac30ffc6e3cf70ff9d0",
+      "cross_build_contract": "mcgs-native-cross-build/v2",
+      "legacy_validation_hashes_preserved": true,
+      "implemented_ids": [
+        "CV01",
+        "CV02",
+        "CV03",
+        "CV04",
+        "CV05",
+        "CV06",
+        "CV07",
+        "CV08",
+        "CV09"
+      ],
+      "current_tools": [
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_locator.py",
+          "sha256": "99fcde28e35cd2d7bbffa741d3fa9a0b453b1648ee1e32b63869e265a3c5ecad"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_binding.py",
+          "sha256": "14c65f8b2247c21b6da8973ad361723fc27febfc74197da17b8765df4f701fb2"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs",
+          "sha256": "de054d4070eee092256db9fe167f75e7434611af5c191a3a5ed512a916298b99"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/module_selection.py",
+          "sha256": "3ec8e1ed23d7d80b556abb2e0f35a98e553a71ac81162531301a3dd3d7f89a93"
+        },
+        {
+          "file": "assets/pro-native-bridge/bootstrap/select_engine.py",
+          "sha256": "2e3314a1a7bd67816cca843757711417a513dfa3838f062c79ea6e0c535d1357"
+        },
+        {
+          "file": "assets/pro-native-bridge/bootstrap/managed_pe.py",
+          "sha256": "a8a9d5aa56f51b87c212a1bde735ad833231e13f860d95949c680dd8234846ff"
+        },
+        {
+          "file": "assets/pro-native-bridge/delivery/bind_common_delivery.v5.py",
+          "sha256": "dde2a5577df61daff513770fe54f2380776537b4041541b61f0095f6bd775548"
+        },
+        {
+          "file": "scripts/native/mcgs_family.py",
+          "sha256": "c82d3fc6647a26f96b9bd5b75a20d5fecf6e85ff5f886de3ad4bef5141df74d8"
+        },
+        {
+          "file": "scripts/native/project_family.json",
+          "sha256": "c615610c3d5b3443c3e6e5deda706c2da1afe91266ace416b7633e886f36bebb"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+          "sha256": "21c5c70c0c9ebbf2ba97b2c88e2c8f0b431ea8d517a905b25fd3ac8d255ad981"
+        }
+      ]
     }
   },
   "exporter_System_SQL_NULL_row_identity": {
@@ -536,7 +595,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "7f7ca6785f908d4de3cf366e813408d6ece108142c95a238df18dfada79744c1"
+        "packaged_sha256": "66ef0cb64ee75b960663fc5d46548e7b3460755fea0fc3fe1261c23847c8e57d"
       },
       {
         "file": "references/pro-native-ui-workflow.md",

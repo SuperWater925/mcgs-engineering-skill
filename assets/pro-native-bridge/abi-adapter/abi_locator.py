@@ -24,8 +24,8 @@ RESULT_SCHEMA = 'mcgs-native-abi-adaptation/v1'
 ATTESTATION_SCHEMA = 'mcgs-native-resolved-profiles/v1'
 DEFAULT_CATALOG = Path(__file__).resolve().parent / 'catalogs/reference.json.gz'
 PROFILE_FIELD_MODULES = Path(__file__).resolve().parent / 'catalogs/profile-field-modules.json'
-BYTE_KEYS = ('expected_first_32_bytes', 'expected_first32', 'first32', 'bytes', 'expected_bytes', 'code_bytes')
-RELOC_KEYS = ('relocatable_dword_offsets_in_first32', 'relocation_offsets', 'reloc_offsets', 'relocations')
+BYTE_KEYS = ('expected_first_32_bytes', 'expected_first32', 'first32', 'bytes', 'expected_bytes', 'code_bytes', 'bytes_hex')
+RELOC_KEYS = ('relocatable_dword_offsets_in_first32', 'relocation_offsets', 'reloc_offsets', 'relocations', 'highlow_offsets')
 
 
 def digest(data):
@@ -219,6 +219,59 @@ def _virtual_zero_span(pe, address, length):
         return False
 
 
+def semantic_address_fields(row, path=()):
+    """Explicit native-consumer address shapes beyond *_rva names.
+
+    Slot dictionary keys remain indexes. Values are RVAs only in a declared
+    table/method contract; arbitrary numeric arrays, IDs and offsets are never
+    inferred to be addresses. Preferred-VA fields keep the reference-base
+    encoding used by their consumers, independently of guard rebasing.
+    """
+    table = any(key in row for key in ('vtable_rva', 'primary_vtable_rva')) or (
+        'rva' in row and (any(key in row for key in ('col_rva', 'rtti', 'slot_entry_rvas')) or
+                          path and str(path[-1]) in ('table', 'drawing_view')))
+    for key in ('entries', 'slots', 'vtable_entries'):
+        if table and isinstance(row.get(key), list):
+            for index, value in enumerate(row[key]):
+                if not isinstance(value, (dict, list)) and value is not None:
+                    yield (key, index), value, 'virtual-slot', None
+    # Some native profiles use singular *_rva for a declared array. These are
+    # slot/branch targets, not the slot-index keys or object-field offsets.
+    for key in ('entries_rva', 'slots_rva', 'vtable_entries_rva', 'targets_rva'):
+        if isinstance(row.get(key), list):
+            for index, value in enumerate(row[key]):
+                if not isinstance(value, (dict, list)) and value is not None:
+                    yield (key, index), value, 'function' if key == 'targets_rva' else 'virtual-slot', None
+    if 'picture_preload_vtable_rva' in row and isinstance(row.get('picture_preload_entries'), list):
+        for index, value in enumerate(row['picture_preload_entries']):
+            if value is not None:
+                yield ('picture_preload_entries', index), value, 'virtual-slot', None
+    if path and str(path[-1]) in ('methods', 'slots', 'metadata_slots'):
+        kind = 'function' if path[-1] == 'methods' else 'virtual-slot'
+        for key, value in row.items():
+            if not isinstance(value, (dict, list)) and value is not None:
+                yield (key,), value, kind, None
+    if 'runtime_class_rva' in row and 'factory_name' in row:
+        for key in ('primary', 'iobject'):
+            if key in row and not isinstance(row[key], (dict, list)):
+                yield (key,), row[key], 'vtable', None
+    if 'entry_va' in row and 'slot' in row and 'object_tables' in path:
+        yield ('entry_va',), row['entry_va'], 'virtual-slot', 'reference-preferred-VA'
+    if table and isinstance(row.get('col_fields'), list):
+        for index in (3, 4):
+            if index < len(row['col_fields']):
+                yield ('col_fields', index), row['col_fields'][index], 'RTTI-pointer', 'reference-preferred-VA'
+
+
+def _signature_imports(model):
+    for relocation in model.get('relocations', []):
+        if relocation.get('import'):
+            yield relocation['import']
+    for transfer in model.get('transfers', []):
+        for part in transfer.get('target_signature_chain', []):
+            yield from _signature_imports(part)
+
+
 def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
     """Extract sparse guard and RTTI catalogs from the published profile files.
 
@@ -243,7 +296,7 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
             owners = []
             for candidate, pe in modules.items():
                 try:
-                    rtti.describe_vtable(pe, address, 0);owners.append(candidate)
+                    rtti.describe_vtable(pe, address, 1);owners.append(candidate)
                 except (ValueError, IndexError):
                     pass
             table_owner_cache[address] = owners
@@ -297,7 +350,7 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
             continue
         if not isinstance(document, dict):
             continue
-        item = {'relative_path': relative, 'reference_sha256': digest(raw), 'fields': [], 'guards': [], 'raw_guards': [], 'virtual_guards': [], 'exports': [], 'entry_paths': [], 'reference_gaps': []}
+        item = {'relative_path': relative, 'reference_sha256': digest(raw), 'fields': [], 'guards': [], 'raw_guards': [], 'virtual_guards': [], 'exports': [], 'entry_paths': [], 'pe_metadata_fields': [], 'reference_gaps': []}
         row_hints, field_hints = {}, {}
         for path, row, inherited in _walk(document, modules=modules):
             alias = _hint(row, inherited, modules)
@@ -360,22 +413,26 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                             if not declaration:
                                 add_table(owner, address, None, relative + pointer(path + (key,)))
                         except (ValueError, TypeError): pass
-                if 'rva' in row and ('slot_entry_rvas' in row or 'vtable_guards' in path):
+                if 'rva' in row and (any(k in row for k in ('slot_entry_rvas', 'entries', 'slots')) or 'vtable_guards' in path):
                     try:
                         count = len(row['slot_entry_rvas']) if isinstance(row.get('slot_entry_rvas'), list) else None
                         add_table(alias, number(row['rva']), count, relative + pointer(path))
                     except (ValueError, TypeError):
                         pass
-            if alias and 'rva' in row and isinstance(row.get('ordinal'), int):
-                try:
-                    export_rva = number(row['rva']);ordinal = number(row['ordinal'])
-                    exported = modules[alias].exports_by_ordinal.get(ordinal)
-                    if exported and exported['rva'] == export_rva and not exported.get('forwarder'):
-                        item['exports'].append({'json_pointer': pointer(path), 'module': alias, 'reference_rva': export_rva,
-                            'reference_ordinal': ordinal, 'names': [n for n, e in modules[alias].exports.items()
-                                if not n.startswith('#') and e['ordinal'] == ordinal]})
-                except (ValueError, TypeError):
-                    pass
+            if alias and isinstance(row.get('ordinal'), int):
+                for address_key in ('rva', 'export_rva', 'target_rva'):
+                    if address_key not in row:
+                        continue
+                    try:
+                        export_rva = number(row[address_key]);ordinal = number(row['ordinal'])
+                        exported = modules[alias].exports_by_ordinal.get(ordinal)
+                        if exported and exported['rva'] == export_rva and not exported.get('forwarder'):
+                            item['exports'].append({'json_pointer': pointer(path), 'module': alias, 'reference_rva': export_rva,
+                                'reference_ordinal': ordinal, 'names': [n for n, e in modules[alias].exports.items()
+                                    if not n.startswith('#') and e['ordinal'] == ordinal]})
+                            break
+                    except (ValueError, TypeError):
+                        pass
         for path, row, inherited in _walk(document, modules=modules):
             prefix = pointer(path) if path else ''
             alias = next((row_hints[p] for p in sorted(row_hints, key=len, reverse=True)
@@ -384,18 +441,23 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                 if key == 'rva' or key.endswith('_rva'):
                     try: value_rva = number(value)
                     except (ValueError, TypeError, OverflowError): continue
-                    owner = field_hints.get(pointer(path + (key,)), alias)
+                    declaration = declared_field_owners.get((relative, pointer(path + (key,))))
+                    owner = declaration['module'] if declaration else field_hints.get(pointer(path + (key,)), alias)
                     if key.lower().endswith('iat_rva'):
                         owners = [m for m, pe in modules.items() if value_rva in pe.imports_by_iat]
                         owner = owner if owner in owners else owners[0] if len(owners) == 1 else None
                         if owner:
                             imported = modules[owner].imports_by_iat[value_rva]
                             target_module = _module_alias(imported['dll'], modules)
-                            imported_export = modules[target_module].exports_by_ordinal.get(imported['ordinal']) if target_module and imported.get('ordinal') is not None else None
+                            imported_pe = modules.get(target_module)
+                            imported_export = (imported_pe.exports.get(imported.get('name')) if imported.get('name') is not None else
+                                               imported_pe.exports_by_ordinal.get(imported.get('ordinal'))) if imported_pe else None
                             import_slots[owner, value_rva] = {'module': owner, 'reference_rva': value_rva,
                                 'dll': imported['dll'], 'name': imported.get('name'), 'ordinal': imported.get('ordinal'),
                                 'target_module': target_module,
-                                'reference_target_rva': imported_export['rva'] if imported_export and not imported_export.get('forwarder') else None}
+                                'reference_target_rva': imported_export['rva'] if imported_export and not imported_export.get('forwarder') else None,
+                                'target_names': [n for n, e in imported_pe.exports.items() if not n.startswith('#') and imported_export and
+                                                 e['rva'] == imported_export['rva'] and not e.get('forwarder')] if imported_pe else []}
                     item['fields'].append({'json_pointer': pointer(path + (key,)), 'module': owner,
                         'kind': 'IAT-slot' if key.lower().endswith('iat_rva') else 'rva', 'reference_rva': value_rva})
                 elif key.endswith('_rvas') and isinstance(value, list):
@@ -404,8 +466,82 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                         except (ValueError, TypeError, OverflowError): continue
                         item['fields'].append({'json_pointer': pointer(path + (key, index)), 'module': alias,
                             'kind': 'rva', 'reference_rva': value_rva})
-            if path and len(path) == 2 and path[0] in ('functions', 'vtable_guards'):
-                item['entry_paths'].append({'json_pointer': prefix, 'name': row.get('name')})
+            for suffix, value, kind, encoding in semantic_address_fields(row, path):
+                try: value_rva = number(value)
+                except (ValueError, TypeError, OverflowError): continue
+                if alias not in modules:
+                    continue
+                if encoding == 'reference-preferred-VA':
+                    value_rva -= modules[alias].image_base
+                if value_rva < 0:
+                    continue
+                field = {'json_pointer': pointer(path + suffix), 'module': alias,
+                         'kind': kind, 'reference_rva': value_rva}
+                if encoding:
+                    field['encoding'] = encoding
+                item['fields'].append(field)
+                if kind in ('function', 'virtual-slot'):
+                    add_signature(alias, value_rva, 32, prefix + pointer(suffix), relative + prefix)
+                elif kind == 'vtable':
+                    add_table(alias, value_rva, None, relative + prefix)
+            if path == ('allocator', 'mfc') and 'size_of_image' in row:
+                item['pe_metadata_fields'].append({'json_pointer': prefix + '/size_of_image',
+                                                  'module': alias, 'identity_key': 'image_size'})
+        # Explicit root aliases have separate RVA/ordinal names. Their module
+        # and export role come from audited native consumers, never a prefix
+        # heuristic or a global numeric-parser rewrite.
+        for declaration in owner_document['entries']:
+            if declaration['profile'] != relative:
+                continue
+            alias = declaration['module']
+            address_path = declaration['json_pointer']
+            if declaration.get('identity_key'):
+                item['pe_metadata_fields'].append({'json_pointer': address_path, 'module': alias,
+                                                  'identity_key': declaration['identity_key']})
+                continue
+            if declaration.get('kind') != 'export-function':
+                continue
+            ordinal_path = declaration.get('ordinal_pointer')
+            try:
+                old = number(get_at(document, address_path))
+                ordinal = number(get_at(document, ordinal_path)) if ordinal_path else None
+                exported = (modules[alias].exports_by_ordinal.get(ordinal) if ordinal_path else
+                            modules[alias].exports.get(declaration.get('export_name')))
+                if not exported or exported['rva'] != old or exported.get('forwarder'):
+                    raise ValueError('Declared native RVA/ordinal alias lacks the matching reference export role')
+                if ordinal_path:
+                    item['exports'].append({'json_pointer': '', 'rva_pointer': address_path, 'ordinal_pointer': ordinal_path,
+                        'module': alias, 'reference_rva': old, 'reference_ordinal': ordinal,
+                        'names': [n for n, e in modules[alias].exports.items() if not n.startswith('#') and
+                                  e['ordinal'] == ordinal and not e.get('forwarder')]})
+                add_signature(alias, old, 32, address_path, relative + address_path)
+            except (ValueError, TypeError, KeyError, IndexError) as exc:
+                gap = {'kind': 'reference_export_alias', 'profile': relative, 'json_pointer': ordinal_path or address_path,
+                       'module': alias, 'reason': str(exc)}
+                gaps.append(gap);item['reference_gaps'].append(gap)
+        # Partial profile readers validate the exact requested dictionary. All
+        # dictionary owners receive subtree status, including nested guards,
+        # classes and layout-only rows. No numeric value is rewritten here.
+        native_paths = [f['json_pointer'] for f in item['fields']] + [
+            g['json_pointer'] + '/' + g['byte_key'] for key in ('guards', 'raw_guards', 'virtual_guards') for g in item[key]]
+        structured_collections = ('functions', 'vtable_guards', 'guards', 'code_guards', 'data_guards', 'classes', 'tables', 'methods')
+        for path, row, _ in _walk(document):
+            if not path:
+                continue
+            prefix = pointer(path)
+            # These are key/value maps, not native row dictionaries. Their
+            # consumers enumerate every value as an RVA or every key as a slot.
+            if str(path[-1]) in ('methods', 'slots', 'metadata_slots') and all(not isinstance(v, (dict, list)) for v in row.values()):
+                continue
+            # Name->row collections (for example driver exports, table maps
+            # and operation maps) enumerate every member as a native row. The
+            # collection itself is not a row and must stay unmodified.
+            if row and all(isinstance(value, (dict, list)) for value in row.values()):
+                continue
+            if (len(path) == 2 and path[0] in structured_collections or
+                    any(p.startswith(prefix + '/') for p in native_paths)):
+                item['entry_paths'].append({'json_pointer': prefix, 'name': row.get('name', row.get('class_name', prefix))})
+        item['fields'] = list({f['json_pointer']: f for f in item['fields']}.values())
         if item['fields'] or item['guards']:
             profiles.append(item)
     if isinstance(explicit_fields, dict):
@@ -430,6 +566,27 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                 raise ValueError('Explicit field profile is not in the supplied profile root: ' + row['profile'])
             field = {'json_pointer': row['json_pointer'], 'module': alias, 'kind': row.get('kind', 'rva'), 'reference_rva': rva}
             profile['fields'] = [old for old in profile['fields'] if old['json_pointer'] != field['json_pointer']] + [field]
+    # Import operands need logical current-export roles when ordinals or the
+    # dependency basename move. Add the target function to the same conservative
+    # locator, rather than treating an ordinal as an address-independent alias.
+    pending_import_models = list(signatures.values());seen_import_models = set()
+    while pending_import_models:
+        model = pending_import_models.pop()
+        if id(model) in seen_import_models:
+            continue
+        seen_import_models.add(id(model))
+        for imported in _signature_imports(model):
+            target = _module_alias(imported['dll'], modules)
+            pe = modules.get(target)
+            exported = (pe.exports.get(imported.get('name')) if imported.get('name') is not None else
+                        pe.exports_by_ordinal.get(imported.get('ordinal'))) if pe else None
+            if exported and exported['rva'] and not exported.get('forwarder'):
+                imported['export_role'] = {'module': target, 'reference_rva': exported['rva'],
+                    'names': [n for n, e in pe.exports.items() if not n.startswith('#') and e['rva'] == exported['rva'] and not e.get('forwarder')]}
+                before = set(signatures)
+                if pe.is_executable(exported['rva']):
+                    add_signature(target, exported['rva'], 32, imported.get('name'), 'import-export-role')
+                pending_import_models.extend(signatures[k] for k in sorted(signatures.keys() - before))
     return {'schema': CATALOG_SCHEMA, 'catalog_scope': 'sparse selected guards and RTTI; no vendor sections',
         'normalization': {'architecture': 'PE32/I386', 'decoder': 'capstone', 'decoder_version_observed': xs.DECODER_VERSION,
             'HIGHLOW': 'PE relocation entries only', 'relative_calls_and_jumps': 'decoded operands plus target/body/import proof',
@@ -447,6 +604,23 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     identities = {alias: pe.identity() for alias, pe in actual.items()}
     equal_modules = {alias for alias in actual if alias in catalog['reference_modules'] and
         identities[alias]['sha256'] == catalog['reference_modules'][alias]['sha256']}
+    dependency_names = {}
+    for alias, pe in actual.items():
+        names = {pe.path.name.casefold()} if pe.path else set()
+        if getattr(pe, 'export_module_name', None):
+            names.add(pe.export_module_name.casefold())
+        for name in names:
+            dependency_names.setdefault(name, []).append((alias, pe))
+    dependencies = {name: rows[0] for name, rows in dependency_names.items() if len(rows) == 1}
+    proven_export_targets = {}
+    for pe in actual.values():
+        pe._abi_import_dependencies = dependencies
+        pe._abi_import_role_targets = proven_export_targets
+    # Unchanged export-table bytes can prove an ordinal's role immediately.
+    # Changed dependencies still need their actual function proof below.
+    for entry in catalog['signatures']:
+        if entry['module'] in equal_modules:
+            proven_export_targets.setdefault((entry['module'], entry['reference_rva']), set()).add(entry['reference_rva'])
     # The reference PE is only required to verify out-of-prefix branch bodies.
     # The portable catalog can instead carry target signatures in future schemas;
     # do not silently skip that proof when the reference file is not supplied.
@@ -463,6 +637,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     def suggest(alias, old, new, kind, proof_id):
         key = (alias, int(old));value = suggestions.setdefault(key, {})
         value.setdefault(int(new), []).append({'kind': kind, 'proof_id': proof_id})
+        if kind == 'function':
+            proven_export_targets.setdefault((alias, int(old)), set()).add(int(new))
 
     def complete_function(row, entry, current, context, method):
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
@@ -535,6 +711,7 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                         anchors.setdefault((alias, source), set()).add(target)
 
     pending = []
+    local_candidates = {}
     for entry in catalog['signatures']:
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
         row = {'id': identifier, 'module': alias, 'reference_rva': old, 'names': entry.get('names', [])}
@@ -557,8 +734,9 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         # is also checked for true ambiguity, never a reference-address fallback.
         if not role_anchors:
             candidates = sorted(set(candidates + xs.candidates(pe, entry, prefix_fallback=True)))
+        local_candidates[identifier] = [candidate for candidate in candidates if xs.local_match(entry, pe, candidate) is not None]
         matches = []
-        for candidate in candidates:
+        for candidate in local_candidates[identifier]:
             matched = xs.local_match(entry, pe, candidate)
             if matched is None:
                 continue
@@ -586,16 +764,27 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 continue
             alias, old = entry['module'], entry['reference_rva']
             values = suggestions.get((alias, old), {})
-            if len(values) != 1:
+            candidates = ([next(iter(values))] if len(values) == 1 else local_candidates.get(entry['id'], []))
+            matches = []
+            for current in candidates:
+                if not actual[alias].is_executable(current):
+                    continue
+                matched = xs.local_match(entry, actual[alias], current)
+                context = xs.verify_context(None, actual[alias], entry, matched, old, current) if matched else None
+                if context is not None:
+                    matches.append((current, context))
+            if len(matches) != 1:
                 continue
-            current = next(iter(values))
-            if not actual[alias].is_executable(current):
-                continue
-            matched = xs.local_match(entry, actual[alias], current)
-            context = xs.verify_context(None, actual[alias], entry, matched, old, current) if matched else None
-            if context is None:
-                continue
-            complete_function(row, entry, current, context, 'unique-decoded-callgraph-referent')
+            current, context = matches[0]
+            supporting_ids = sorted({proof['proof_id'] for proof in values[current]}) if len(values) == 1 else []
+            complete_function(row, entry, current, context, 'unique-decoded-callgraph-referent' if len(values) == 1 else 'decoded-x86-current-import-role')
+            if supporting_ids:
+                # This candidate was selected by a live caller/operand proof,
+                # rather than unique standalone signature identity. Keep its
+                # alternatives as dependencies instead of promoting it to an
+                # independent root proof that could survive its caller.
+                row['supporting_proof_ids'] = supporting_ids
+                result['proofs'][-1]['supporting_proof_ids'] = list(row['supporting_proof_ids'])
             progress = True
     # Exact whole-file equality is a cache-equivalence proof, never admission:
     # unknown files still take all dynamic paths above and remain partial where
@@ -609,6 +798,69 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         context = {'normalization_proofs': [{'kind': 'complete-PE-content-equivalence-cache',
             'same_content_sha256': catalog['reference_modules'][entry['module']]['sha256']}], 'referents': []}
         complete_function(row, entry, entry['reference_rva'], context, 'identical-PE-content-cache')
+    # An import proof cannot retain a transiently unique export body if a later
+    # signature produced conflicting evidence. Recheck those dependencies to a
+    # fixed point and withdraw their originating address suggestions on failure.
+    signatures_by_id = {entry['id']: entry for entry in catalog['signatures']}
+    functions_by_id = {row['id']: row for row in result['functions']}
+    invalidated = True
+    while invalidated:
+        invalidated = False
+        proven_export_targets.clear()
+        for row in result['functions']:
+            if row['status'] == 'resolved':
+                proven_export_targets.setdefault((row['module'], row['reference_rva']), set()).add(row['actual_rva'])
+        for row in result['functions']:
+            if row['status'] != 'resolved' or row['resolution_method'] == 'identical-PE-content-cache':
+                continue
+            entry = signatures_by_id[row['id']]
+            supporting = row.get('supporting_proof_ids', [])
+            dependency_lost = bool(supporting) and not any(
+                (identifier not in functions_by_id or functions_by_id[identifier]['status'] == 'resolved') and
+                any(proof['id'] == identifier and proof.get('status') != 'withdrawn' for proof in result['proofs'])
+                for identifier in supporting)
+            if dependency_lost:
+                independent = []
+                for candidate in local_candidates.get(row['id'], []):
+                    pe = actual[row['module']]
+                    matched = xs.local_match(entry, pe, candidate)
+                    context = xs.verify_context(None, pe, entry, matched, entry['reference_rva'], candidate) if matched else None
+                    if context is not None:
+                        independent.append(candidate)
+                if independent == [row['actual_rva']]:
+                    # Retain a genuinely unique standalone/export/RTTI proof
+                    # if one has become available; caller loss alone does not
+                    # override independent surviving identity evidence.
+                    row.pop('supporting_proof_ids', None)
+                    row['resolution_method'] = 'decoded-x86-independent-proof'
+                    for proof in result['proofs']:
+                        if proof['id'] == row['id']:
+                            proof.pop('supporting_proof_ids', None)
+                            proof['kind'] = row['resolution_method']
+                    dependency_lost = False
+            has_import_roles = any(imported.get('export_role') for imported in _signature_imports(entry))
+            import_valid = True
+            if has_import_roles and not dependency_lost:
+                pe = actual[row['module']]
+                matched = xs.local_match(entry, pe, row['actual_rva'])
+                import_valid = matched is not None and xs.verify_context(None, pe, entry, matched, entry['reference_rva'], row['actual_rva']) is not None
+            if not dependency_lost and import_valid:
+                continue
+            row.update(status='unresolved', reason='All originating caller/operand proofs were withdrawn' if dependency_lost else
+                       'Current import export-role proof became unavailable or conflicting')
+            for proof in result['proofs']:
+                if proof['id'] == row['id']:
+                    proof.update(status='withdrawn', reason=row['reason'])
+            invalidated = True
+            for key, values in list(suggestions.items()):
+                for value, proofs in list(values.items()):
+                    retained = [proof for proof in proofs if proof['proof_id'] != row['id']]
+                    if retained:
+                        values[value] = retained
+                    else:
+                        del values[value]
+                if not values:
+                    del suggestions[key]
     cache_addresses = [field for p in catalog['profiles'] for field in p['fields']] + catalog.get('explicit_addresses', [])
     for field in cache_addresses:
         alias, address = field.get('module'), field['reference_rva']
@@ -626,19 +878,12 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         alias, old = imported['module'], imported['reference_rva']
         if alias not in actual:
             continue
-        entries = [(rva, row) for rva, row in actual[alias].imports_by_iat.items()
-                   if row['dll'].lower() == imported['dll'].lower()]
-        candidates = []
-        if imported.get('name') is not None:
-            candidates = [rva for rva, row in entries if row.get('name') == imported['name']]
-        elif imported.get('target_module') in equal_modules:
-            candidates = [rva for rva, row in entries if row.get('ordinal') == imported['ordinal']]
-        elif imported.get('target_module') in actual and imported.get('reference_target_rva') is not None:
-            target = imported['target_module'];mapped = suggestions.get((target, imported['reference_target_rva']), {})
-            if len(mapped) == 1:
-                target_rva = next(iter(mapped))
-                candidates = [rva for rva, row in entries if row.get('ordinal') is not None and
-                    actual[target].exports_by_ordinal.get(row['ordinal'], {}).get('rva') == target_rva]
+        symbol = {key: imported.get(key) for key in ('dll', 'name', 'ordinal')}
+        if imported.get('target_module') and imported.get('reference_target_rva') is not None:
+            symbol['export_role'] = {'module': imported['target_module'],
+                'reference_rva': imported['reference_target_rva'], 'names': imported.get('target_names', [])}
+        candidates = [rva for rva, row in actual[alias].imports_by_iat.items()
+                      if xs.import_symbol_match(symbol, row, actual[alias])]
         if len(candidates) == 1:
             proof_id = f'{alias}:IAT:0x{old:x}'
             suggest(alias, old, candidates[0], 'current-import-identity', proof_id)
@@ -699,9 +944,23 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                     'reason': 'No unique current PE address proof; retained reference value is not an actual address'})
                 continue
             original = get_at(document, path)
-            set_at(document, path, _format_number(original, mapping['actual_rva']))
+            encoded = mapping['actual_rva'] + (catalog['reference_modules'][alias]['image_base']
+                       if field.get('encoding') == 'reference-preferred-VA' else 0)
+            set_at(document, path, _format_number(original, encoded))
             record['resolved_fields'].append({'json_pointer': path, 'module': alias, 'reference_rva': old,
                 'actual_rva': mapping['actual_rva'], 'proof_id': mapping['proof_id']})
+        for field in profile.get('pe_metadata_fields', []):
+            alias, path = field.get('module'), field['json_pointer']
+            identity = result['modules'].get(alias, {}).get('actual', {})
+            if field['identity_key'] not in identity:
+                record['unresolved_fields'].append({'json_pointer': path, 'module': alias,
+                    'reason': 'Selected current PE identity is unavailable for required module metadata'})
+                continue
+            current = identity[field['identity_key']]
+            set_at(document, path, _format_number(get_at(document, path), current))
+            record['resolved_fields'].append({'json_pointer': path, 'module': alias,
+                'actual_value': current, 'proof_id': alias + ':selected-current-PE-header',
+                'proof_kind': 'selected-current-PE-header-' + field['identity_key']})
         for guard in profile['guards']:
             located = functions.get(guard['guard_id'])
             if not located or located['status'] != 'resolved':
@@ -726,7 +985,8 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                 row[key] = offsets
         for export in profile.get('exports', []):
             alias, old = export['module'], export['reference_rva']
-            path = export['json_pointer'];mapping = result['rva_maps'].get(alias, {}).get(hex(old))
+            path = export['json_pointer'];ordinal_path = export.get('ordinal_pointer', path + '/ordinal')
+            mapping = result['rva_maps'].get(alias, {}).get(hex(old))
             if alias not in actual_pes and alias in result.get('local_actual_module_paths', {}):
                 actual_pes[alias] = PE32(result['local_actual_module_paths'][alias])
             candidates = []
@@ -745,12 +1005,12 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                     if old_export and old_export['rva'] == mapping['actual_rva'] and not old_export.get('forwarder'):
                         candidates = [export['reference_ordinal']]
             if len(candidates) == 1:
-                get_at(document, path)['ordinal'] = candidates[0]
-                record['resolved_fields'].append({'json_pointer': path + '/ordinal', 'module': alias,
+                set_at(document, ordinal_path, _format_number(get_at(document, ordinal_path), candidates[0]))
+                record['resolved_fields'].append({'json_pointer': ordinal_path, 'module': alias,
                     'reference_ordinal': export['reference_ordinal'], 'actual_ordinal': candidates[0],
                     'proof_id': mapping['proof_id'], 'proof_kind': 'resolved-function-and-current-export-table'})
             else:
-                record['unresolved_fields'].append({'json_pointer': path + '/ordinal', 'module': alias,
+                record['unresolved_fields'].append({'json_pointer': ordinal_path, 'module': alias,
                     'reason': 'Resolved function and current export table do not prove one export ordinal',
                     'candidate_ordinals': candidates})
         for guard in profile.get('virtual_guards', []):
@@ -766,8 +1026,16 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
             prefix = entry['json_pointer']
             details = [u for u in record['unresolved_fields'] if u['json_pointer'] == prefix or u['json_pointer'].startswith(prefix + '/')]
             resolved = [r for r in record['resolved_fields'] if r['json_pointer'].startswith(prefix + '/')]
+            direct_details = [u for u in details if '/' not in u['json_pointer'][len(prefix) + 1:]]
             state = {'status': 'unresolved' if details else 'resolved', 'details': details,
+                     'direct_status': 'unresolved' if direct_details else 'resolved', 'direct_details': direct_details,
+                     'profile': profile['relative_path'], 'entry': entry['name'],
+                     'no_native_address_fields': not any(f['json_pointer'].startswith(prefix + '/') for f in profile['fields']),
                      'proof_ids': sorted({r['proof_id'] for r in resolved})}
+            direct_rva = next((f for f in profile['fields'] if f['json_pointer'] == prefix + '/rva'), None)
+            if direct_rva is not None:
+                state['reference_rva'] = direct_rva['reference_rva']
+                state['module'] = direct_rva['module']
             get_at(document, prefix)['_abi_resolution'] = state
             record['entry_resolutions'].append({'json_pointer': prefix, 'name': entry['name'], **state})
         record['status'] = 'resolved' if not record['unresolved_fields'] else 'partial' if record['resolved_fields'] else 'unresolved'

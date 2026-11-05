@@ -67,7 +67,7 @@ namespace McgsInternalBridge {
    if(!files.TryGetValue(Path.GetFullPath(path),out row))return;
    string status=Text(row,"status");
    object allow;
-   bool partial=status=="partial"&&row.TryGetValue("allow_partial_entries",out allow)&&allow is bool&&(bool)allow;
+   bool partial=status=="partial"&&Text(row,"profile")=="static/read-tree-guard-profile.json"&&row.TryGetValue("allow_partial_entries",out allow)&&allow is bool&&(bool)allow;
    if(status!="verified"&&status!="unchanged"&&!partial) {
     object details;
     string explanation=row.TryGetValue("details",out details)?Convert.ToString(details,CultureInfo.InvariantCulture):"Unresolved native method or table";
@@ -76,11 +76,63 @@ namespace McgsInternalBridge {
    if(verifyBytes&&HashFile(path)!=Text(row,"sha256"))
     throw new InvalidDataException("Resolved native API profile changed after binding: "+Text(row,"profile"));
   }
-  internal static void CheckEntry(Dictionary<string,object> item,string kind) {
+  // Only these readers prove each consumed function/table before native access.
+  // Partial data is never admitted by generic File IO or by an arbitrary caller.
+  internal const string LazyEntryContract="mcgs-native-lazy-entry/v1";
+  static readonly HashSet<string> LazyProfiles=new HashSet<string>(StringComparer.Ordinal) {
+   "strategy-properties/strategy-write-guard-profile.json",
+   "static/native-page-duplicate-abi-profile.json","static/document-dirty-save-abi-profile.json",
+   "extensions/page/page-extension-abi-profile.json","extensions/page/page-size-abi-profile.json","extensions/page/page-delete-abi-profile.json",
+   "extensions/control/control-abi-guard-v2.json","extensions/control/standard-controls-abi-guard-v3.json",
+   "extensions/strategy/strategy-extension-read-guard.json","extensions/strategy/strategy-extension-write-guard.json",
+   "extensions/strategy/registration/registration-abi-guard.json","extensions/strategy/delete/strategy-delete-abi-profile.json",
+   "coverage-20261101/usable-edit-0001/page-control-prep/current-template-control-abi-profile.v2.json",
+   "coverage-20261101/references-view/live-label-abi-profile.json",
+   "coverage-20261101/usable-edit-0001/page-control-prep/native-control-placement-factory-abi-profile.v3.json",
+   "coverage-20261101/usable-edit-0001/page-control-prep/page-name-cache-abi-profile.v3.json"
+  };
+  internal static string ReadLazyAllText(string path,string expectedSha) {
+   Load();Dictionary<string,object> row;
+   if(!files.TryGetValue(Path.GetFullPath(path),out row))throw new InvalidDataException("Lazy native profile has no bound integrity index entry.");
+   string relative=Text(row,"profile").Replace('\\','/'),status=Text(row,"status");
+   if(!LazyProfiles.Contains(relative))throw new InvalidDataException("Native profile has no explicit lazy entry reader: "+relative);
+   if(status=="partial"){
+    object allow,contract;
+    if(!row.TryGetValue("allow_partial_entries",out allow)||!(allow is bool)||!(bool)allow||!row.TryGetValue("entry_validation_contract",out contract)||!(contract is string)||(string)contract!=LazyEntryContract)
+     throw new NativeAbiUnavailableException("Native partial profile lacks its explicit per-entry validation contract.",relative,"");
+   }else if(status!="verified"&&status!="unchanged")throw new NativeAbiUnavailableException("Current program API is unresolved for this feature.",relative,"");
+   byte[] bytes=File.ReadAllBytes(path);string actual;using(var sha=SHA256.Create())actual=BitConverter.ToString(sha.ComputeHash(bytes)).Replace("-","").ToLowerInvariant();
+   if(actual!=Text(row,"sha256")||actual!=expectedSha)throw new InvalidDataException("Resolved lazy native profile changed after binding: "+relative);
+   return new UTF8Encoding(false,true).GetString(bytes).TrimStart('\ufeff');
+  }
+  internal static void VerifyTemplateInventory(string path,string expectedSha) {
+   Load();Dictionary<string,object> row;
+   const string relative="coverage-20261101/controls/installed-control-abi-inventory.json";
+   // This file contributes provenance/integrity only. Every used native class/table is guarded from the template profile.
+   if(!files.TryGetValue(Path.GetFullPath(path),out row)||Text(row,"profile")!=relative||HashFile(path)!=Text(row,"sha256")||Text(row,"sha256")!=expectedSha)
+    throw new InvalidDataException("Installed CDraw class inventory changed.");
+  }
+
+  internal static void CheckEntry(Dictionary<string,object> item,string kind) {CheckEntry(item,kind,"static/read-tree-guard-profile.json");}
+  internal static void CheckEntry(Dictionary<string,object> item,string kind,string profile) {
    object raw;string name=item.ContainsKey("name")?Convert.ToString(item["name"],CultureInfo.InvariantCulture):kind;
    var state=item.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;
-   if(state==null||!state.ContainsKey("status")||(Convert.ToString(state["status"],CultureInfo.InvariantCulture)!="resolved"&&Convert.ToString(state["status"],CultureInfo.InvariantCulture)!="verified"))
-    throw new NativeAbiUnavailableException("Current program native "+kind+" was not uniquely located: "+name+". No particular Pro release is imposed by this tool; locate or adapt this entry.","static/read-tree-guard-profile.json",name);
+   if(state!=null&&state.TryGetValue("entry",out raw)&&raw is string)name=(string)raw;
+   bool matchingProfile=state!=null&&state.TryGetValue("profile",out raw)&&raw is string&&(string)raw==profile;
+   // Legacy root rows predate profile labels; their existing exact index and per-row status still apply.
+   if(profile=="static/read-tree-guard-profile.json"&&state!=null&&!state.ContainsKey("profile"))matchingProfile=true;
+   if(!matchingProfile||!state.ContainsKey("status")||(Convert.ToString(state["status"],CultureInfo.InvariantCulture)!="resolved"&&Convert.ToString(state["status"],CultureInfo.InvariantCulture)!="verified"))
+    throw new NativeAbiUnavailableException("Current program native "+kind+" was not uniquely located: "+name+". No particular Pro release is imposed by this tool; locate or adapt this entry.",profile,name);
+  }
+  internal static bool IsEntryResolved(Dictionary<string,object> item,string profile) {
+   object raw;var state=item.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;
+   return state!=null&&state.TryGetValue("profile",out raw)&&Object.Equals(raw,profile)&&state.TryGetValue("status",out raw)&&(Object.Equals(raw,"resolved")||Object.Equals(raw,"verified"));
+  }
+  internal static void CheckDirectEntry(Dictionary<string,object> item,string kind,string profile) {
+   object raw;var state=item.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;
+   string name=item.ContainsKey("class_name")?Convert.ToString(item["class_name"],CultureInfo.InvariantCulture):kind;
+   if(state==null||!state.TryGetValue("profile",out raw)||!Object.Equals(raw,profile)||!state.TryGetValue("direct_status",out raw)||(!Object.Equals(raw,"resolved")&&!Object.Equals(raw,"verified")))
+    throw new NativeAbiUnavailableException("Current program native "+kind+" direct address fields were not uniquely located: "+name,profile,name);
   }
   internal static int UnresolvedRva(string entry) {
    throw new NativeAbiUnavailableException("Current program native address was not uniquely located: "+entry+". No particular Pro release is imposed by this tool; locate or adapt this entry.","classified C# PE address",entry);
@@ -94,7 +146,7 @@ namespace McgsInternalBridge {
    return new Dictionary<string,object>();
   }
   internal static Dictionary<string,object> BindingMetadata() {
-   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false}};
+   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v2"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false}};
   }
   internal static bool MatchesLogicalOrdinalName(string module,string name,int actualOrdinal) {
    Load();
@@ -127,8 +179,9 @@ namespace McgsInternalBridge {
    uint delta=unchecked((uint)module.ToInt32()-Convert.ToUInt32(row["reference_preferred_base"],CultureInfo.InvariantCulture));
    foreach(object value in (IEnumerable)row["highlow_offsets"]) {
     int offset=Convert.ToInt32(value,CultureInfo.InvariantCulture);
-    if(offset<0||offset>expected.Length-4)throw new InvalidDataException("Current source guard relocation exceeds its byte range.");
-    Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(expected,offset)+delta)),0,expected,offset,4);
+    if(offset<0||offset>=expected.Length)throw new InvalidDataException("Current source guard relocation has no guarded byte.");
+    int count=Math.Min(4,expected.Length-offset);byte[] word=new byte[4];Array.Copy(expected,offset,word,0,count);
+    Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(word,0)+delta)),0,expected,offset,count);
    }
   }
   internal static IntPtr ModuleHandle(string logicalName) {

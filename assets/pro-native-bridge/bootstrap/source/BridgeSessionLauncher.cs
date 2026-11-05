@@ -17,7 +17,10 @@ internal static class BridgeSessionLauncher
         if(args.Length!=1||(args[0]!="--start"&&args[0]!="--plan"))return 2;
         BootstrapLayout.Check();
         if(args[0]=="--plan"){string output=Path.Combine(BootstrapLayout.RuntimeRoot,"launcher-plan-"+Guid.NewGuid().ToString("N")+".json");BootstrapLayout.OwnedRuntime(output);Directory.CreateDirectory(BootstrapLayout.RuntimeRoot);WriteJson(output,new Dictionary<string,object>{{"schema",1},{"action","plan"},{"bootstrap_scope_sha256",BootstrapLayout.ConfigurationSha256},{"editor",BootstrapLayout.EditorFile},{"runtime_root",BootstrapLayout.RuntimeRoot},{"startup_registry_path",BootstrapLayout.StartupRegistryPath},{"registry_written",false},{"process_started",false}});return 0;}
-        using (var gate = new Mutex(false, @"Local\McgsInternalBridgeSessionLauncher"))
+        // Share the gate only where the same editor or original Startup key can
+        // race. Independent installations have independent cold-launch gates.
+        string gateKey;using(var hash=System.Security.Cryptography.SHA256.Create())gateKey=BitConverter.ToString(hash.ComputeHash(Encoding.UTF8.GetBytes(BootstrapLayout.StartupRegistryPath.ToUpperInvariant()))).Replace("-","");
+        using (var gate = new Mutex(false, @"Local\McgsInternalBridgeSessionLauncher_"+gateKey))
         {
             bool owned = false;
             try
@@ -46,13 +49,13 @@ internal static class BridgeSessionLauncher
             string pro = BootstrapLayout.EditorFile;
             BootstrapLayout.Check();
             if (!File.Exists(pro)) throw new FileNotFoundException("Installed Pro engineering executable is missing.");
-            if (Process.GetProcessesByName("McgsSetPro").Length != 0)
-                throw new InvalidOperationException("Pro is already running. Close it normally before starting a bridge session.");
+            if (BoundEditorRunning())
+                throw new InvalidOperationException("The bound editor is already running. Close it normally before starting a cold bridge session.");
             if (!File.Exists(BootstrapLayout.Regular(Path.Combine(ownDir, "McgsInternalBridge.dll"))))
                 throw new FileNotFoundException("This launcher must remain next to the installed bridge bootstrap.");
             // The child inherits this token. Do not silently elevate; confirm that
             // the native wrapper can access only its already installed roots.
-            using(var machine=RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,RegistryView.Registry32))foreach(string root in new[]{@"Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}",@"Software\Classes\McgsInternalBridge.AddInObj",@"Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}"})using(var installed=machine.OpenSubKey(root,true)){if(installed==null)throw new InvalidOperationException("Install the exact private native-wrapper registration before starting the session.");}
+            using(var machine=RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,RegistryView.Registry32))foreach(string root in BootstrapLayout.ColdRegistrationRoots)using(var installed=machine.OpenSubKey(root,true)){if(installed==null)throw new InvalidOperationException("Install the exact private native-wrapper registration before starting the session.");}
             using (RegistryKey user = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
             using (RegistryKey key = user.OpenSubKey(startup, true))
             {
@@ -95,7 +98,7 @@ internal static class BridgeSessionLauncher
         catch (Exception error)
         {
             bool restored = false;
-            if (prepared && Process.GetProcessesByName("McgsSetPro").Length == 0)
+            if (prepared && BoundEditorDefinitelyClosed(record))
             {
                 try
                 {
@@ -121,5 +124,32 @@ internal static class BridgeSessionLauncher
     private static void WriteJson(string path, object value)
     {
         File.WriteAllText(path, new JavaScriptSerializer().Serialize(value), new UTF8Encoding(false));
+    }
+
+    private static bool BoundEditorRunning()
+    {
+        string expected=BootstrapLayout.EditorFile;
+        foreach(Process process in Process.GetProcessesByName(Path.GetFileNameWithoutExtension(expected)))using(process)
+        {
+            try
+            {
+                // Read PID/create identity around the path lookup so an exited
+                // or replaced process is never accepted as evidence of absence.
+                int pid=process.Id;DateTime created=process.StartTime.ToUniversalTime();
+                string actual=process.MainModule.FileName;
+                if(process.HasExited)continue;
+                if(pid!=process.Id||created!=process.StartTime.ToUniversalTime())throw new InvalidOperationException("Editor process identity changed while checking its path.");
+                if(BootstrapLayout.SamePath(actual,expected))return true;
+            }
+            catch(InvalidOperationException){if(process.HasExited)continue;throw;}
+            catch(Exception error){throw new InvalidOperationException("Cannot inspect candidate editor PID "+process.Id+"; preserve Startup Count until its actual identity is known.",error);}
+        }
+        return false;
+    }
+
+    private static bool BoundEditorDefinitelyClosed(Dictionary<string,object> record)
+    {
+        try{return !BoundEditorRunning();}
+        catch(Exception error){record["editor_identity_check_error"]=error.Message;return false;}
     }
 }

@@ -21,6 +21,7 @@ sys.path.insert(0, str(NATIVE))
 import mcgs_native_zip as nz
 import mcgs_recipe_strategy as st
 from mcs_window_archive import WindowArchive
+from mcgs_family import identify_family
 from 窗口事件归档 import 窗口事件
 import 对象归档 as objects
 
@@ -62,10 +63,7 @@ class Export:
                 self.index['project_version'] = version
                 # Read the product brand, never a software release number.
                 # Existing exports may differ in case, spacing or display prefix.
-                brand = re.search(r'(?<![A-Za-z])mcgs[\s_-]*(pro|stu)(?![A-Za-z])',
-                                  version.lstrip('\ufeff'), re.IGNORECASE)
-                if brand:
-                    self.index['project_family'] = 'Pro' if brand.group(1).lower() == 'pro' else 'Stu'
+                self.index['project_family'] = identify_family(version)
 
     def blob(self, table, key, field):
         info = self.rows[table, str(key)][field]

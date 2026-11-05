@@ -1,4 +1,4 @@
-﻿"""Bind staged sources/profiles to an explicit portable layout; never run Pro.
+"""Bind staged sources/profiles to an explicit portable layout; never run Pro.
 
 Use the sibling configuration and bound Layout source produced by device-entry/
 prepare_delivery_binding.py.  Output directories must be absent or empty; existing nonempty outputs are preserved.  The optional
@@ -41,15 +41,8 @@ def replace_once(text, old, new):
 
 
 def patch_common(name, text):
-    # Exact pins for all audited path-only hot profile inputs.
-    if name == 'strategy-properties__NativeStrategyProfile.cs':
-        text = replace_once(text, 'string file=Path.Combine(NativeOperations.TaskRoot,"strategy-properties","strategy-write-guard-profile.json");', 'string file=Path.Combine(NativeOperations.TaskRoot,"strategy-properties","strategy-write-guard-profile.json");NativeMemory.Require(NativeMemory.Hash(file)=="b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7","Frozen shared strategy ABI file differs.");')
-    if name == 'extensions__strategy__NativeStrategyExtensionProfile.cs':
-        text = replace_once(text, 'string file=Path.Combine(NativeOperations.TaskRoot,"extensions","strategy",profileName);', 'string file=Path.Combine(NativeOperations.TaskRoot,"extensions","strategy",profileName);string frozenReadProfileSha;switch(profileName.Replace((char)92,\'/\')){case "strategy-extension-read-guard.json":frozenReadProfileSha="ffbde9b8d445f31ef4563d65cd3b9adffece1e96abac4354f2b1395bf31dbb87";break;case "strategy-extension-write-guard.json":frozenReadProfileSha="5e55e8163445bef097868905d766405a4fe2d6b9c2ef43f796fdb9ec4d98c8fe";break;case "registration/registration-abi-guard.json":frozenReadProfileSha="e0a552d5a043915edac76af36b160d9c358055f5700814c237bd609d1a31de0d";break;case "delete/strategy-delete-abi-profile.json":frozenReadProfileSha="19da1e70c09b8e17820913d7e242c11c1bf7d173be3b2467cbb78fdf5b757899";break;default:throw new InvalidOperationException("Strategy read ABI path has no explicit compiled declaration.");}NativeMemory.Require(NativeMemory.Hash(file)==frozenReadProfileSha,"Frozen strategy read ABI file differs.");')
-    if name == 'NativePageDuplicateProfile.reusable.cs':
-        text = replace_once(text, 'var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));', 'NativeMemory.Require(NativeMemory.Hash(Path.Combine(directory,"document-dirty-save-abi-profile.json"))=="829e7df6560efe7594fc22a59b86d59005630601fd9b46340b78b201cfcc26a6","Frozen document dirty/save ABI file differs.");var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));')
-    if name == 'NativePreparedPageCopy.v2.cs':
-        text = replace_once(text, 'var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));', 'NativeMemory.Require(NativeMemory.Hash(Path.Combine(directory,"document-dirty-save-abi-profile.json"))=="829e7df6560efe7594fc22a59b86d59005630601fd9b46340b78b201cfcc26a6","Frozen document dirty/save ABI file differs.");var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));')
+    # Refactored lazy readers carry their real owned profile pins in raw source.
+    # The dependency DAG below repins those values after resolving this target.
     if name == "NativeOperations.functional.cs":
         if 'NativeRequestPipeline.Prepare(request)' in text:
             text = replace_once(text, 'PrepareRequest(Dictionary<string,object> request){return NativeRequestPipeline.Prepare(request);}',
@@ -161,8 +154,14 @@ def patch_common(name, text):
         "NativeUsableEditPermit.cs", "NativeEngineeringLargeReceipt.cs",
         "NativeEngineeringComparisonEvidence.cs", "NativeProjectLifecycle.cs"}
     if name == "NativePreparedPageCopy.v2.cs":
-        text = replace_once(text, 'Path.Combine(NativeOperations.TaskRoot,"static")',
-            'Path.Combine(NativeEngineeringDeliveryLayout.EvidenceRoot,"static")')
+        old_directory = 'Path.Combine(NativeOperations.TaskRoot,"static")'
+        if old_directory in text:
+            text = replace_once(text, old_directory,
+                'Path.Combine(NativeEngineeringDeliveryLayout.EvidenceRoot,"static")')
+        else:
+            need('new NativeLazyFunctionProfile(engine,"static/native-page-duplicate-abi-profile.json"' in text and
+                 'new NativeLazyFunctionProfile(engine,"static/document-dirty-save-abi-profile.json"' in text,
+                 'Page-copy ABI inputs have no explicit relocated reader')
     elif name not in runtime_owners:
         text = text.replace("NativeOperations.TaskRoot", "NativeEngineeringDeliveryLayout.EvidenceRoot")
     return text
@@ -208,7 +207,7 @@ def path_rewriter(old_task, old_install, new_task, new_install, new_program=None
     return path, source
 
 
-def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=None):
+def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=None, abi_module_overrides=None):
     stage, output = Path(stage).resolve(), Path(output).resolve()
     need(not output.exists() or (output.is_dir() and not any(output.iterdir())),
          "Bound source output is not empty; preserve its existing files")
@@ -237,7 +236,7 @@ def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=Non
     # and the existing content-addressed dependency graph are materialized.
     output.mkdir(parents=True, exist_ok=True)
     need(not any(output.iterdir()), "Bound source output gained existing files before native API resolution")
-    abi_target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog)
+    abi_target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog, abi_module_overrides)
     path, source_paths = path_rewriter(manifest["original_task_root"], manifest["original_install_root"],
                                      str(layout.engineering_root / "task-evidence"), config["install_root"], str(layout.program_root), str(layout.editor_executable))
     artifacts, original_by_hash = {}, {}
@@ -413,6 +412,11 @@ if __name__ == "__main__":
     parser.add_argument("--output-directory",required=True)
     parser.add_argument("--engine-file-name",required=True)
     parser.add_argument("--abi-catalog",help="Optional sparse reference catalog; defaults to the packaged catalog")
+    parser.add_argument("--actual-module",action="append",default=[],help="Actual dependency override alias=absolute-file; repeat per module")
     args=parser.parse_args()
+    import sys
+    sys.path.insert(0,str(Path(__file__).resolve().parent.parent / "abi-adapter"))
+    from module_selection import parse_module_overrides
+    module_overrides=parse_module_overrides(args.actual_module)
     print(json.dumps(bind(args.source_stage,args.scope_json,args.bound_layout_source,args.output_directory,
-                          args.engine_file_name,args.abi_catalog),ensure_ascii=True,indent=2))
+                          args.engine_file_name,args.abi_catalog,module_overrides),ensure_ascii=True,indent=2))

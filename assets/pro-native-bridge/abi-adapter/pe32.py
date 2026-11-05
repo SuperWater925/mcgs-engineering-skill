@@ -19,6 +19,19 @@ class PEFormatError(ValueError):
     """The supplied bytes do not provide an unambiguous PE32 file mapping."""
 
 
+def import_identity(entry: dict) -> dict:
+    """Keep import metadata observable while excluding a named lookup hint.
+
+    Export-role evidence is attached by the locator rather than the PE table,
+    so it is not part of the raw import descriptor's symbol identity.
+    """
+    identity = {key: value for key, value in entry.items() if key != 'export_role'}
+    identity['dll'] = identity.get('dll', '').casefold()
+    if identity.get('name') is not None:
+        identity.pop('hint', None)
+    return identity
+
+
 @dataclass(frozen=True)
 class Section:
     name: str

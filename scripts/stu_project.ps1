@@ -8,6 +8,7 @@ param(
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
 . (Join-Path $PSScriptRoot 'ace-runtime.ps1')
+. (Join-Path $PSScriptRoot 'project-family.ps1')
 $script:SelectedProvider=$null
 $script:RawTables=@('Alarm','Data','DDEConnection','DDEConnectionPoint','Stgy','System','Trigger','WndControl','WndDevice','WndUser')
 $script:KeyColumns=@{System='strName';Stgy='iStgyID';Trigger='iID';WndUser='iID';WndControl='iID'}
@@ -90,8 +91,7 @@ function Capture([string]$Path,[string]$ExportDirectory=''){
   $versionCommand=$conn.CreateCommand();$versionCommand.CommandText="SELECT [lbContext] FROM [System] WHERE [strName]='MCGSVER'"
   try{$versionValue=$versionCommand.ExecuteScalar();$version=if($versionValue -is [byte[]]){[Text.Encoding]::Unicode.GetString($versionValue).TrimEnd([char]0)}else{''}}finally{$versionCommand.Dispose()}
   $data['project_version']=$version
-  $brand=[regex]::Match($version.TrimStart([char]0xFEFF),'(?<![A-Za-z])mcgs[\s_-]*(pro|stu)(?![A-Za-z])',[Text.RegularExpressions.RegexOptions]::IgnoreCase)
-  $data['project_family']=if($brand.Success){if($brand.Groups[1].Value -ieq 'pro'){'Pro'}else{'Stu'}}else{'unrecognized'}
+  $data['project_family']=Get-McgsProjectFamily $version
   if([IO.Path]::GetExtension($Path) -ieq '.MCP' -and $data.project_family -ne 'Pro'){throw 'MCP extension does not match a verified McgsPro version record.'}
   if([IO.Path]::GetExtension($Path) -ieq '.MCS' -and $data.project_family -eq 'Pro'){throw 'MCS extension contains a Pro project; preserve its native family instead of renaming it.'}
  }finally{$conn.Dispose()}

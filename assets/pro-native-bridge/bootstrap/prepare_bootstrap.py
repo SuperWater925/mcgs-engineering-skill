@@ -10,13 +10,39 @@ import os
 from pathlib import Path
 import shutil
 import uuid
+import re
 from pe_image import pe32_identity
 
 HERE = Path(__file__).resolve().parent
-ROOTS = [r'Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}',
-         r'Software\Classes\McgsInternalBridge.AddInObj',
-         r'Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}']
 MARKER = 'CodexBridgeTransactionId'
+
+
+def cold_identity():
+    """Fresh own COM identity; never claim or migrate a prior installation."""
+    # COM ProgIDs are limited to 39 characters; this prefix plus ten hex digits
+    # is 38. GUIDs, rather than the short display suffix, own uniqueness.
+    stamp = uuid.uuid4().hex[:10]
+    name = 'AddInObj_' + stamp
+    return {'class_guid': str(uuid.uuid4()).upper(), 'type_library_guid': str(uuid.uuid4()).upper(),
+            'interface_guid': str(uuid.uuid4()).upper(), 'coclass_name': name,
+            'progid': 'McgsInternalBridge.' + name,
+            'native_wrapper_file_name': 'McgsInternalLoader_' + stamp + '.dll'}
+
+
+def registration_roots(identity):
+    return ['Software\\Classes\\CLSID\\{' + identity['class_guid'] + '}',
+            'Software\\Classes\\' + identity['progid'],
+            'Software\\Classes\\TypeLib\\{' + identity['type_library_guid'] + '}']
+
+
+def bind_cold_identity(content, identity):
+    """Coclass name matches TYPELIB name + ProgID used by native scanners."""
+    replacements = {'52119C44-5875-4DA6-9F72-E97D2E2182B4': identity['class_guid'],
+                    '4D2519E0-CC21-4F82-A19C-1AF9801C64E1': identity['type_library_guid'],
+                    'D0455345-A83C-4B72-A864-EFCE902C3816': identity['interface_guid']}
+    for old, new in replacements.items():
+        content = content.replace(old, new)
+    return re.sub(r'\bAddInObj\b', identity['coclass_name'], content)
 
 
 def sha(path):
@@ -60,22 +86,22 @@ def json_new(path, value):
     write_new(path, (json.dumps(value, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
 
 
-def registration(boot):
-    cls, prog, lib = ROOTS
+def registration(boot, identity):
+    cls, prog, lib = registration_roots(identity)
     dll = boot / 'McgsInternalBridge.dll'
     codebase = 'file:///' + str(dll).replace('\\', '/')
-    common = {'Class': 'McgsInternalBridge.AddInObj',
+    common = {'Class': identity['progid'],
               'Assembly': 'McgsInternalBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null',
               'RuntimeVersion': 'v4.0.30319', 'CodeBase': codebase}
     return [
-        {'key': cls, 'values': {'': 'McgsInternalBridge.AddInObj'}},
-        {'key': prog, 'values': {'': 'McgsInternalBridge.AddInObj'}},
+        {'key': cls, 'values': {'': identity['progid']}},
+        {'key': prog, 'values': {'': identity['progid']}},
         {'key': lib, 'values': {}},
-        {'key': prog + r'\CLSID', 'values': {'': '{52119C44-5875-4DA6-9F72-E97D2E2182B4}'}},
+        {'key': prog + r'\CLSID', 'values': {'': '{' + identity['class_guid'] + '}'}},
         {'key': cls + r'\InprocServer32', 'values': dict(common, **{
             '': str(Path(os.environ['WINDIR']) / 'SysWOW64/mscoree.dll'), 'ThreadingModel': 'Both'})},
-        {'key': cls + r'\ProgId', 'values': {'': 'McgsInternalBridge.AddInObj'}},
-        {'key': cls + r'\TypeLib', 'values': {'': '{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}'}},
+        {'key': cls + r'\ProgId', 'values': {'': identity['progid']}},
+        {'key': cls + r'\TypeLib', 'values': {'': '{' + identity['type_library_guid'] + '}'}},
         {'key': lib + r'\1.0', 'values': {'': 'McgsInternalBridge'}},
         {'key': cls + r'\InprocServer32\1.0.0.0', 'values': common},
         {'key': lib + r'\1.0\0', 'values': {}},
@@ -137,7 +163,10 @@ def main():
     (boot / 'bound-source').mkdir()
     contract_copy = boot / 'loader-capability.json'
     json_new(contract_copy, capability)
-    config = {'schema': 1, 'entry_mode': 'native_cold_addin', **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
+    identity = cold_identity()
+    roots = registration_roots(identity)
+    config = {'schema': 1, 'entry_mode': 'native_cold_addin', 'cold_com_identity': identity,
+              **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
               'loader_contract_file': str(contract_copy), 'loader_contract_sha256': sha(contract_copy),
               'editor_sha256': editor_sha, 'startup_registry_path': startup,
               'addins_ini_sha256': sha(paths['addins_ini_file'])}
@@ -147,6 +176,7 @@ def main():
     sources = []
     for source in sorted((HERE / 'source').glob('*.cs')):
         content = source.read_text(encoding='utf-8-sig')
+        content = bind_cold_identity(content, identity)
         if source.name == 'BootstrapLayout.cs':
             token = '__BOUND_CONFIGURATION_SHA256__'
             if content.count(token) != 1:
@@ -156,19 +186,20 @@ def main():
         write_new(target, content.encode('utf-8'))
         sources.append({'source_name': source.name, 'template_sha256': sha(source), 'bound_sha256': sha(target)})
     token = uuid.uuid4().hex
-    entries = registration(boot)
+    entries = registration(boot, identity)
     json_new(boot / 'hklm-registration-plan.json', {
-        'schema': 1, 'hive': 'HKLM', 'view': 'Registry32', 'requires_absent_roots': ROOTS,
+        'schema': 1, 'hive': 'HKLM', 'view': 'Registry32', 'requires_absent_roots': roots,
         'registration': entries, 'bootstrap_scope_sha256': config_sha,
-        'unknown_existing_registration_policy': 'reject; uninstall old owned task explicitly first'})
+        'unknown_existing_registration_policy': 'reject this deployment identity collision; preserve unrelated deployments'})
     owned_entries = json.loads(json.dumps(entries))
-    for root in ROOTS:
+    for root in roots:
         next(x for x in owned_entries if x['key'] == root)['values'][MARKER] = token
     json_new(boot / 'prepared-registration-contract.json', {
         'schema': 1, 'state': 'prepared_not_registered', 'hive': 'HKLM', 'view': 'Registry32',
-        'roots': ROOTS, 'transaction_id': token, 'expected_entries': owned_entries,
+        'roots': roots, 'transaction_id': token, 'expected_entries': owned_entries,
         'bootstrap_scope_sha256': config_sha, 'registry_written': False})
-    for name in ['build_bootstrap.ps1', 'install_bootstrap.ps1', 'remove_bootstrap.ps1', 'stage_engine.py', 'build_native_wrapper.py']:
+    for name in ['build_bootstrap.ps1', 'install_bootstrap.ps1', 'remove_bootstrap.ps1', 'stage_engine.py',
+                 'select_engine.py', 'managed_pe.py', 'build_native_wrapper.py']:
         shutil.copyfile(HERE / name, boot / name)
     report = {'schema': 1, 'status': 'prepared_source_and_plans_only', 'config_file': str(config_file),
               'config_sha256': config_sha, 'bootstrap_root': str(boot), 'sources': sources,

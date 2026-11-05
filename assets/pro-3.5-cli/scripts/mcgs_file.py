@@ -11,6 +11,7 @@ import subprocess
 import sys
 
 import native_format as f
+from mcgs_family import identify_family
 from mcs_input_text import InputRecord
 from mcs_window_archive import ControlRecord, WindowSettings
 from control_factory import make_control, page_events, record
@@ -243,7 +244,7 @@ def ensure_output(path):
 
 def check_family(data):
     version=f.binary(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00')
-    if not version.startswith('McgsPro '):raise ValueError('Expected a native McgsPro family project; software release is informational')
+    if identify_family(version) != 'Pro':raise ValueError('Expected a native McgsPro family project; software release is informational')
 
 
 def write_project(output,spec,source=None):

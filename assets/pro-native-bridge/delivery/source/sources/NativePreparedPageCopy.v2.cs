@@ -36,55 +36,19 @@ namespace McgsInternalBridge {
         sealed class Api {
             internal readonly NativeEngine Engine;
             internal readonly NativeStrategyProfile.Api Strategy;
-            readonly Dictionary<string,IntPtr> functions=new Dictionary<string,IntPtr>();
-            readonly Dictionary<string,IntPtr> modules=new Dictionary<string,IntPtr>();
-            readonly Dictionary<string,uint> preferred=new Dictionary<string,uint>();
-            readonly Dictionary<string,int> sizes=new Dictionary<string,int>();
-
+            readonly NativeLazyFunctionProfile duplicate,save;
             internal Api(NativeEngine engine) {
                 Engine=engine;Strategy=new NativeStrategyProfile.Api(engine);
                 NativeMemory.Require(IntPtr.Size==4 && EngineEntry.ExpectedUiThreadId>0 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,
                     "Page ABI requires the captured x86 host UI thread.");
-                var json=new JavaScriptSerializer();
-                string directory=Path.Combine(NativeOperations.TaskRoot,"static"); NativeMemory.Require(NativeMemory.Hash(Path.Combine(directory,"native-page-duplicate-abi-profile.json"))==CopyAbi,"Page-copy ABI proof changed.");
-                var profile=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"native-page-duplicate-abi-profile.json"),Encoding.UTF8));
-                foreach(object row in (IEnumerable)profile["modules"]) {
-                    var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);
-                    IntPtr handle=GetModuleHandleW(name);NativeMemory.Require(handle!=IntPtr.Zero,"Page ABI module is not already loaded: "+name);
-                    ProcessModule found=null;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==handle){found=loaded;break;}
-                    NativeMemory.Require(found!=null && NativeBinaryIdentity.Observe(Convert.ToString(item["sha256"]),NativeMemory.Hash(found.FileName),"NativePreparedPageCopy.v2:55:module"),"Page ABI module differs from its inspected image: "+name);
-                    modules.Add(name,handle);sizes.Add(name,found.ModuleMemorySize);preferred.Add(name,unchecked((uint)NativeEngine.Number(item["preferred_base"])));
-                }
-                NativeMemory.Require(modules["McgsSetPro.exe"]==Engine.ImageBase,"Page ABI and attached engine disagree.");
-                AddFunctions((IEnumerable)profile["functions"],false);
-                var save=json.Deserialize<Dictionary<string,object>>(File.ReadAllText(Path.Combine(directory,"document-dirty-save-abi-profile.json"),Encoding.UTF8));
-                NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(save["binary_sha256"]),Engine.ImageSha256,"NativePreparedPageCopy.v2:61:editor"),"Save profile is for a different editor image.");
-                AddFunctions((IEnumerable)save["functions"],true);
+                duplicate=new NativeLazyFunctionProfile(engine,"static/native-page-duplicate-abi-profile.json","9070009a8273a2d443d34e0f086ddda824b6d2cfb98d239343747447f83a029f","duplicate");
+                save=new NativeLazyFunctionProfile(engine,"static/document-dirty-save-abi-profile.json","42f97c2a89b4e3ed6526c205b9f1306f6837640b7862c69245e09f66f762efe4","save");
             }
-            void AddFunctions(IEnumerable entries,bool saveFormat) {
-                foreach(object row in entries) {
-                    var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);
-                    string module=saveFormat?"McgsSetPro.exe":Convert.ToString(item["module"]);
-                    int rva=NativeEngine.Number(item["rva"]);NativeMemory.Require(rva>=0 && rva<sizes[module],"Page function RVA is outside module.");
-                    IntPtr address=NativeMemory.Add(modules[module],rva);
-                    string bytesKey=saveFormat?"expected_first32":"first32",offsetKey="relocation_offsets";
-                    byte[] expected=ParseHex(Convert.ToString(item[bytesKey]));
-                    foreach(object offset in (IEnumerable)item[offsetKey]) {
-                        int at=NativeEngine.Number(offset);NativeMemory.Require(at>=0 && at+4<=expected.Length,"Invalid function relocation span.");
-                        uint value=unchecked(BitConverter.ToUInt32(expected,at)+NativeMemory.U(modules[module])-preferred[module]);
-                        Array.Copy(BitConverter.GetBytes(value),0,expected,at,4);
-                    }
-                    NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,expected.Length))==BitConverter.ToString(expected),"Page function signature differs: "+name);
-                    if(item.ContainsKey("ordinal"))NativeMemory.Require(GetProcAddressOrdinal(modules[module],new IntPtr(NativeEngine.Number(item["ordinal"])))==address,"Page MFC export differs: "+name);
-                    functions.Add(name,address);
-                }
-            }
-            static byte[] ParseHex(string text){var bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);return bytes;}
-            internal T Bind<T>(string name)where T:class{return BindAddress<T>(functions[name]);}
-            internal T BindAddress<T>(IntPtr address)where T:class {
-                bool inside=false;foreach(var module in modules){long delta=(long)NativeMemory.U(address)-NativeMemory.U(module.Value);if(delta>=0 && delta<sizes[module.Key])inside=true;}
-                NativeMemory.Require(inside,"Unverified page native function address.");NativeMemory.Readable(address,1);
-                return Marshal.GetDelegateForFunctionPointer(address,typeof(T))as T;
+            internal T Bind<T>(string name)where T:class {
+                // Owner identity never pulls in the save or archive feature.
+                if(name=="Host_GetApp")return Strategy.Bind<T>("GetAfxApp");
+                if(name=="C0DocManage_OnSaveDocument"||name=="C0DocManage_SetModified")return save.Bind<T>(name);
+                return duplicate.Bind<T>(name);
             }
             internal void Type(IntPtr instance,string expected,int expectedVtable) {
                 NativeMemory.Require(instance!=IntPtr.Zero && NativeMemory.Ptr(instance,0)==Engine.Address(expectedVtable),"Page context vtable differs: "+expected);
@@ -222,9 +186,9 @@ namespace McgsInternalBridge {
             readonly NativePreparedPageOperations.WindowNameCache nameCache;readonly WindowArchive archive;readonly Void0 seek;readonly VoidInt setRoot;readonly NativeEngine.ThisInt modified;readonly BoolPointer saveData;readonly RenamePage rename;readonly CStringAssign assign;
             OwnedMemoryFile file;OwnedArchive store,load;NativeStrategyProfile.CString oldName,newName;string requestedName;IntPtr copy,copyDoc;int newId=-1;bool applied,disposed;
             internal Prepared(Api a,NativePageControlAbi s,Dictionary<string,object> request){api=a;shared=s;action=request;NativeMemory.Require(NativePageControlPreparation.Text(action,"abi_profile_sha256")==CopyAbi,"Page-copy action ABI binding differs.");
-                nameCache=new NativePreparedPageOperations.WindowNameCache(shared);archive=api.Bind<WindowArchive>("C0ManListUser_ArchiveWindow");seek=api.Bind<Void0>("Native_CFile_SeekToBegin");setRoot=api.Strategy.Bind<VoidInt>("RootSetModified");modified=api.Strategy.Bind<NativeEngine.ThisInt>("RootIsModified");saveData=shared.Bind<BoolPointer>("size","WindowSaveData");rename=shared.Bind<RenamePage>("page","WindowServiceRename");assign=api.Strategy.Bind<CStringAssign>("CStringAssignWide");api.Strategy.Bind<Void0>("CStringDtor");
+                nameCache=new NativePreparedPageOperations.WindowNameCache(shared);nameCache.Prepare(false,false);archive=api.Bind<WindowArchive>("C0ManListUser_ArchiveWindow");seek=api.Bind<Void0>("Native_CFile_SeekToBegin");setRoot=api.Strategy.Bind<VoidInt>("RootSetModified");modified=api.Strategy.Bind<NativeEngine.ThisInt>("RootIsModified");saveData=shared.Bind<BoolPointer>("size","WindowSaveData");
                 owner=FindOwner(api,shared.Context);api.Virtual(owner.List,92,WindowArchiveThunk);pages=Pages(api,shared.Context);foreach(var row in pages)names.Add(row.Key,NativeStrategyProfile.ReadName(api.Strategy,row.Value));sourceId=NativePageControlPreparation.Number(NativePageControlPreparation.Map(action["target"]),"page_id");
-                try{before=Capture(api,shared,action);NativePageControlPreparation.Before(action,before);var after=NativePageControlPreparation.Map(action["after"]);object name;if(after.TryGetValue("page_name",out name)&&name!=null){requestedName=Convert.ToString(name);NativePageControlPreparation.Name(requestedName);foreach(string existing in names.Values)NativeMemory.Require(!String.Equals(existing,requestedName,StringComparison.OrdinalIgnoreCase),"Copied page name already exists.");oldName=new NativeStrategyProfile.CString(api.Strategy,"");newName=new NativeStrategyProfile.CString(api.Strategy,requestedName);}
+                try{before=Capture(api,shared,action);NativePageControlPreparation.Before(action,before);var after=NativePageControlPreparation.Map(action["after"]);object name;if(after.TryGetValue("page_name",out name)&&name!=null){nameCache.Prepare(false,true);rename=shared.Bind<RenamePage>("page","WindowServiceRename");assign=api.Strategy.Bind<CStringAssign>("CStringAssignWide");requestedName=Convert.ToString(name);NativePageControlPreparation.Name(requestedName);foreach(string existing in names.Values)NativeMemory.Require(!String.Equals(existing,requestedName,StringComparison.OrdinalIgnoreCase),"Copied page name already exists.");oldName=new NativeStrategyProfile.CString(api.Strategy,"");newName=new NativeStrategyProfile.CString(api.Strategy,requestedName);}
                     file=new OwnedMemoryFile(api);store=new OwnedArchive(api);load=new OwnedArchive(api);store.Start(file.Storage,0);
                 }catch{Dispose();throw;}
             }
