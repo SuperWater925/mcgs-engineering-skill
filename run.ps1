@@ -1,4 +1,11 @@
 $ErrorActionPreference = 'Stop'
+if($args.Count -gt 0 -and $args[0] -eq 'native-abi'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $locatorArgs=@()
+ if($args.Count -gt 1){$locatorArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'assets/pro-native-bridge/abi-adapter/abi_locator.py') @locatorArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'new-window'){
  $windowArgs=@()
  if($args.Count -gt 1){$windowArgs=@($args[1..($args.Count-1)])}

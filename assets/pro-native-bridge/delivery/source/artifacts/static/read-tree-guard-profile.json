@@ -5,7 +5,7 @@
     "sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
     "image_base": "0x400000",
     "pointer_size": 4,
-    "version_policy": "Software release versions are observations only. This exact internal ABI profile is guarded by architecture, SHA and code/RTTI signatures; new binaries require local evidence extraction rather than a release-version whitelist.",
+    "version_policy": "Reference-only ABI evidence. Software versions and vendor whole-file hashes do not admit or reject targets. Function/table locations are resolved from the selected program; module hashes identify observations and exact-content caches.",
     "dll_characteristics": "0x8140",
     "dynamic_base": true,
     "signature_comparison": "If loaded ImageBase differs, adjust every HIGHLOW relocation dword listed in function signatures and normalize all vtable/COL pointers to module-relative RVAs. Raw expected bytes are from preferred-base file."

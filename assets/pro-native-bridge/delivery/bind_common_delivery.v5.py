@@ -15,6 +15,21 @@ import re
 from delivery_file_support import digest, regular, load, write_new, json_bytes, SHA
 
 
+# These exact constants belong to the bound-only profile integrity checks in
+# patch_common. They identify *named owned dependencies*, not vendor builds.
+# The staged sources may not contain the constants until patch_common runs;
+# include them in the same DAG as manifest provenance aliases before repinning.
+COMMON_PROFILE_PIN_CONTRACTS = {
+    "b55d593e93721b73f61226f00b7211b3efa7516542164e21b5aefe0bba6603a7": "strategy-properties/strategy-write-guard-profile.json",
+    "ffbde9b8d445f31ef4563d65cd3b9adffece1e96abac4354f2b1395bf31dbb87": "extensions/strategy/strategy-extension-read-guard.json",
+    "5e55e8163445bef097868905d766405a4fe2d6b9c2ef43f796fdb9ec4d98c8fe": "extensions/strategy/strategy-extension-write-guard.json",
+    "e0a552d5a043915edac76af36b160d9c358055f5700814c237bd609d1a31de0d": "extensions/strategy/registration/registration-abi-guard.json",
+    "19da1e70c09b8e17820913d7e242c11c1bf7d173be3b2467cbb78fdf5b757899": "extensions/strategy/delete/strategy-delete-abi-profile.json",
+    "829e7df6560efe7594fc22a59b86d59005630601fd9b46340b78b201cfcc26a6": "static/document-dirty-save-abi-profile.json",
+    "4b6f931919835cce377247f1edbb07d7df2cb64a1a11336de526f289aa26a505": "static/read-tree-guard-profile.json",
+}
+
+
 def need(value, message):
     if not value:
         raise ValueError(message)
@@ -193,7 +208,7 @@ def path_rewriter(old_task, old_install, new_task, new_install, new_program=None
     return path, source
 
 
-def bind(stage, config_file, layout_source, output, engine_name):
+def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=None):
     stage, output = Path(stage).resolve(), Path(output).resolve()
     need(not output.exists() or (output.is_dir() and not any(output.iterdir())),
          "Bound source output is not empty; preserve its existing files")
@@ -215,6 +230,14 @@ def bind(stage, config_file, layout_source, output, engine_name):
     layout = validate_mapping(config, config_file, scope_sha)
     need(output.is_relative_to(layout.runtime_root) and not output.is_relative_to(layout.engineering_root),
          "Build outputs must be inside the declared runtime, outside immutable engineering payload")
+    adapter = Path(__file__).resolve().parent.parent / "abi-adapter"
+    sys.path.insert(0, str(adapter))
+    from abi_binding import TargetBinding, patch_runtime_source
+    # Resolve files from this scope's selected installation before path changes
+    # and the existing content-addressed dependency graph are materialized.
+    output.mkdir(parents=True, exist_ok=True)
+    need(not any(output.iterdir()), "Bound source output gained existing files before native API resolution")
+    abi_target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog)
     path, source_paths = path_rewriter(manifest["original_task_root"], manifest["original_install_root"],
                                      str(layout.engineering_root / "task-evidence"), config["install_root"], str(layout.program_root), str(layout.editor_executable))
     artifacts, original_by_hash = {}, {}
@@ -223,24 +246,31 @@ def bind(stage, config_file, layout_source, output, engine_name):
         file = regular(stage / "artifacts" / relative)
         data = file.read_bytes()
         need(digest(data) == row["sha256"], "Staged ABI/static dependency changed")
+        data = abi_target.overrides.get(relative, data)
         text = data.decode("utf-8-sig")
         if file.suffix == ".json":
             original = json.loads(text)
-            def visit(value):
+            def visit(value, key=None):
                 if isinstance(value, dict):
-                    return {k: visit(v) for k,v in value.items()}
+                    return {k: visit(v,k) for k,v in value.items()}
                 if isinstance(value, list):
                     return [visit(v) for v in value]
-                return path(value)
+                return abi_target.module_file_value(path(value),key)
             rewritten = json_bytes(visit(original)).decode("utf-8")
         else:
-            rewritten = source_paths(text)
+            rewritten = source_paths(abi_target.source_module_paths(text,manifest["original_install_root"]))
         artifacts[relative] = {"old_sha": row["sha256"], "text": rewritten, "source": file}
         original_by_hash.setdefault(row["sha256"], relative)
         for alias in row.get("origin_sha256_aliases",[]):
             need(isinstance(alias,str) and re.fullmatch("[a-f0-9]{64}",alias),"Invalid exact ABI-only provenance hash alias")
             need(alias not in original_by_hash or original_by_hash[alias]==relative,"ABI provenance hash alias collides")
             original_by_hash[alias]=relative
+
+    for pin, relative in COMMON_PROFILE_PIN_CONTRACTS.items():
+        need(relative in artifacts, "Named bound integrity dependency is absent: " + relative)
+        need(pin not in original_by_hash or original_by_hash[pin] == relative,
+             "Named bound integrity pin conflicts with another selected dependency: " + relative)
+        original_by_hash[pin] = relative
 
     # Exact content-addressed dependency DAG. No hash is removed or replaced
     # by a wildcard; all changed path-bearing artifacts receive new SHA pins.
@@ -255,7 +285,18 @@ def bind(stage, config_file, layout_source, output, engine_name):
             old = match.group(0)
             other = original_by_hash.get(old)
             return old if other is None else digest(materialize(other))
-        text = SHA.sub(changed, row["text"])
+        if row["source"].suffix == ".json":
+            def rehash(value, provenance=False):
+                if isinstance(value,dict):
+                    return {key:rehash(item,provenance or key=="_mcgs_abi_resolution") for key,item in value.items()}
+                if isinstance(value,list):
+                    return [rehash(item,provenance) for item in value]
+                return SHA.sub(changed,value) if isinstance(value,str) and not provenance else value
+            # Resolver provenance records the *reference* digest. It is not a
+            # dependency pin to the current file and must not create a self-DAG.
+            text=json_bytes(rehash(json.loads(row["text"]))).decode("utf-8")
+        else:
+            text = SHA.sub(changed, row["text"])
         data = text.encode("utf-8")
         resolving.remove(relative)
         resolved[relative] = data
@@ -269,12 +310,23 @@ def bind(stage, config_file, layout_source, output, engine_name):
         file = regular(stage / "sources" / row["name"])
         data = file.read_bytes()
         need(digest(data) == row["sha256"], "Selected staged C# changed")
-        text = source_paths(patch_common(row["name"], data.decode("utf-8-sig")))
+        text = abi_target.patch_addresses(row["name"], data.decode("utf-8-sig"))
+        before_common_pins=set(SHA.findall(text))
+        text=patch_common(row["name"],text)
+        for introduced in set(SHA.findall(text))-before_common_pins:
+            need(introduced in changed_sha,
+                 "Added bound profile integrity check has no named dependency mapping: " + row["name"] + ":" + introduced)
+        text = abi_target.source_module_paths(patch_runtime_source(row["name"], text),manifest["original_install_root"])
+        text = source_paths(text)
         text = SHA.sub(lambda m: changed_sha.get(m.group(0), m.group(0)), text)
+        for pin, relative in COMMON_PROFILE_PIN_CONTRACTS.items():
+            need(pin not in text or changed_sha[pin] == pin,
+                 "Bound profile integrity pin was not regenerated from its final dependency: " + relative)
         prepared_sources.append((row, text.encode("utf-8")))
 
     output.mkdir(parents=True, exist_ok=True)
-    need(not any(output.iterdir()), "Bound source output gained existing files before writing; preserve them")
+    need({item.name for item in output.iterdir()} == {"abi-resolution"},
+         "Bound source output gained unrelated files before writing; preserve them")
     copied, patched = [], []
     original_engineering = PureWindowsPath(manifest["original_engineering_relative_root"])
     # A separate immutable evidence tree preserves legacy relative ABI paths
@@ -298,10 +350,28 @@ def bind(stage, config_file, layout_source, output, engine_name):
             write_new(staged_file, data)
             copied.append({"planned_file": str(target), "staged_file": str(staged_file),
                            "sha256": digest(data), "original_relative_file": relative})
+    # Index hashes are the final DAG hashes, including resolved profiles and
+    # relocated child dependencies. Hash() still returns actual file digests.
+    index_data = json_bytes(abi_target.index(resolved, layout, copied))
+    need(len(index_data) <= 16*1024*1024, "Current native API index exceeds the runtime JSON parser's byte-safe capacity")
+    index_relative = "abi-target-profile-index.json"
+    index_staged = output / "payload-evidence" / index_relative
+    write_new(index_staged, index_data)
+    copied.append({"planned_file":str(layout.engineering_root / "task-evidence" / index_relative),
+                   "staged_file":str(index_staged),"sha256":digest(index_data),
+                   "original_relative_file":index_relative})
     for row, value in prepared_sources:
         destination = output / "sources" / row["name"]
         write_new(destination,value)
         patched.append({"name": row["name"], "original_sha256": row["sha256"], "sha256": digest(value)})
+    helper_file = regular(adapter / "NativeAbiTargetProfiles.cs")
+    helper_raw = helper_file.read_bytes()
+    helper_text = helper_raw.decode("utf-8-sig")
+    helper_text = replace_once(helper_text, "__BOUND_ABI_PROFILE_INDEX_SHA256__", digest(index_data))
+    helper_value = helper_text.encode("utf-8")
+    write_new(output / "sources" / helper_file.name, helper_value)
+    patched.append({"name":helper_file.name,"original_sha256":digest(helper_raw),
+                    "sha256":digest(helper_value),"added_target_resolution_runtime":True})
     write_new(output / "sources" / "NativeEngineeringDeliveryLayout.cs", layout_source.read_bytes())
     write_new(output / config_file.name, config_file.read_bytes())
     assembly = output / engine_name
@@ -314,7 +384,12 @@ def bind(stage, config_file, layout_source, output, engine_name):
         "project_identity":"per engineering request.expected_project; existing owned MCP only",
         "selected_sources":patched,"layout_source_sha256":digest(layout_source.read_bytes()),
         "relocated_owned_dependencies":copied,"assembly":str(assembly),
-        "guard_bytes_RTTI_native_imports_and_non_path_values_changed":False,
+        "guard_bytes_RTTI_native_imports_and_non_path_values_changed":True,
+        "native_api_resolution":abi_target.summary(),
+        "native_api_profile_index_sha256":digest(index_data),
+        "compiled_profile_integrity_pins":[{"profile":relative,"sha256":digest(resolved[relative])}
+                                          for relative in sorted(set(COMMON_PROFILE_PIN_CONTRACTS.values()))],
+        "object_field_offsets_and_existing_call_contracts_changed":False,
         "new_profile_hashes_fully_repinned":True,"historical_routes_exposed":False,
         "exposed_engineering_operations":["engineering-edit-inspect","engineering-edit-batch",
             "engineering-project-lifecycle-read","engineering-project-close-reopen-original"],
@@ -337,6 +412,7 @@ if __name__ == "__main__":
     parser.add_argument("--bound-layout-source",required=True)
     parser.add_argument("--output-directory",required=True)
     parser.add_argument("--engine-file-name",required=True)
+    parser.add_argument("--abi-catalog",help="Optional sparse reference catalog; defaults to the packaged catalog")
     args=parser.parse_args()
     print(json.dumps(bind(args.source_stage,args.scope_json,args.bound_layout_source,args.output_directory,
-                          args.engine_file_name),ensure_ascii=True,indent=2))
+                          args.engine_file_name,args.abi_catalog),ensure_ascii=True,indent=2))

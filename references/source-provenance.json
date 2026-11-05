@@ -337,8 +337,8 @@
     "native_errors_zero_for_P01_P03_P06": true
   },
   "native_internal_delivery": {
-    "source_build_revision": "0104-portability-20261104",
-    "source_stage_manifest_sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728",
+    "source_build_revision": "0105-current-program-functions-20261105",
+    "source_stage_manifest_sha256": "5f9b0160074e1ca7d0ae33a0eab7b8129badcabba6ed0dd7e17e09a5549c5538",
     "bootstrap_source_manifest_sha256": "79ca2a96f06c03107f6826d5f9d9103723a13338231ca82c37698e386e7e368d",
     "configuration": "seven explicit directory/transport fields, project per request",
     "legacy_native_routes_exposed": false,
@@ -455,6 +455,71 @@
       "real_Pro_business_acceptance_performed": false,
       "author_vendor_whole_file_SHA_admission": false,
       "paused_engineering_resumed": false
+    },
+    "dynamic_function_update": {
+      "file": "references/pro-native-dynamic-functions-validation.json",
+      "sha256": "02ce7d131f37d9c714a4d0562e8095f08d98dc48a4373a7cd94cb78b227412a5",
+      "reference_locations_are_provenance_not_unchecked_call_targets": true,
+      "current_target_profiles_and_dependency_pins_recomputed": true,
+      "software_version_whitelist": false,
+      "author_vendor_whole_file_SHA_admission": false,
+      "actual_object_layout_checks_retained": true,
+      "artifacts": [
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_binding.py",
+          "sha256": "cb6ac64269adf5babc97765659337a35e5183d350c850da32c2bb0aa140f6748"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/abi_locator.py",
+          "sha256": "0ed910ddfda10eefae7931bc06f539b10efe19a47537e851230eed2dd89e3177"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/catalogs/profile-field-modules.json",
+          "sha256": "b11ad23ff28b4e91f6f6e67b567453a0e6d279cb183653d3ceabe53b2b64c3d3"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+          "sha256": "7e6eadd20f11732b27f3123dc45f49102e9f0843d7bac1edca21d8b134b81036"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json",
+          "sha256": "b8cf61f4bde1d576d087991359a39b953e9cb3980347c5e3e237930dc509318c"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/inventory.py",
+          "sha256": "2822e11acb7bbf3e3e3a85f240484941aab0479290ea112f663f177f6d551b3e"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs",
+          "sha256": "2c52396d01a7e1abad20ea3a5d6d638de15dd9668905c9a0f69fd6dfad70a545"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/pe32.py",
+          "sha256": "6c2b5cb8842dfc6fefa4bd7ee80c3d853572e7abaf3a2fdb1317d0e2cf019304"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/README.md",
+          "sha256": "0b58b4731a339811a2ec9a2c11071c2614c2fc3a186feec288da27e0d05fa2b1"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/requirements.txt",
+          "sha256": "c85028672006007826ce07fbf03731c8ed1995e0254a2fff10bea05dadc07c34"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/rtti.py",
+          "sha256": "2b3f7dd6bbaf3688370890feef0b9859ee081650d1dab6c8380009998a972d14"
+        },
+        {
+          "file": "assets/pro-native-bridge/abi-adapter/x86_signature.py",
+          "sha256": "d0df74f057d0945dfc5e5cc3feb4dc42dd170c1cab5890deb837f548aadc20a2"
+        },
+        {
+          "file": "assets/pro-native-bridge/delivery/bind_common_delivery.v5.py",
+          "sha256": "db1b7f046656d7a83a62b124ace3ec04c44aaa407b59f9e515f8b56ddbf182d1"
+        }
+      ],
+      "historical_validation_hashes_preserved": true,
+      "paused_engineering_resumed": false
     }
   },
   "exporter_System_SQL_NULL_row_identity": {
@@ -471,7 +536,7 @@
       {
         "file": "SKILL.md",
         "previous_sha256": "d2272af068de8650a4c4f6303a04aba9b789971a8d775f9c51a99b254f3094d3",
-        "packaged_sha256": "9bad1651f33f44261b6dbfaa46f7047f13ca3659dbaebebe8a9a532cb2a0f145"
+        "packaged_sha256": "7f7ca6785f908d4de3cf366e813408d6ece108142c95a238df18dfada79744c1"
       },
       {
         "file": "references/pro-native-ui-workflow.md",

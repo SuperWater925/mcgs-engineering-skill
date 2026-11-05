@@ -31,6 +31,9 @@ $TaskRoot = '<本次任务目录的绝对路径>'
 $Native = Join-Path $SkillRoot 'assets\pro-native-bridge'
 $PythonExecutable = if ($env:MCGS_PYTHON) { (Get-Command $env:MCGS_PYTHON -ErrorAction Stop).Source } else { (Get-Command python -ErrorAction Stop).Source }
 $env:MCGS_PYTHON = $PythonExecutable
+# 首次使用动态函数定位时，在同一解释器安装准备依赖；已有可用依赖无需重复安装。
+& $PythonExecutable -m pip install -r "$Native\abi-adapter\requirements.txt"
+if ($LASTEXITCODE -ne 0) { throw '当前Python的在线定位依赖未就绪。' }
 $DotNetFrameworkX86Csc = Join-Path $env:WINDIR 'Microsoft.NET\Framework\v4.0.30319\csc.exe'
 $ActualProExecutable = (Resolve-Path -LiteralPath '<本机Pro真实EXE的完整路径>').Path
 if (-not (Test-Path -LiteralPath $DotNetFrameworkX86Csc -PathType Leaf)) { throw '缺少.NET Framework x86 csc.exe，先补齐本机编译环境。' }
@@ -67,7 +70,7 @@ $LayoutSha = (Get-FileHash -LiteralPath $Layout -Algorithm SHA256).Hash.ToLowerI
   --output-directory $NewLayoutDirectory
 if ($LASTEXITCODE -ne 0) { throw 'binding失败；保留输出。' }
 
-# 3. 绑定本版源码/ABI资料，再编译x86自有engine。
+# 3. 从本次选定程序定位函数/RTTI，生成当前ABI资料并绑定源码，再编译x86自有engine。
 $NewScopeJson = Join-Path $NewLayoutDirectory $NewEngineScopeFileName
 & $PythonExecutable "$Native\delivery\bind_common_delivery.v5.py" `
   --source-stage "$Native\delivery\source" --scope-json $NewScopeJson `

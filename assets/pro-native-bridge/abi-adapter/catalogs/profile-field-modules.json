@@ -1,0 +1,38 @@
+{
+  "schema": "mcgs-native-profile-field-modules/v1",
+  "purpose": "Module ownership proved by existing native call sites; no addresses or object offsets are supplied.",
+  "entries": [
+    {
+      "profile": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/memory-driver-prep/memory-driver-conditional-store-abi-profile.json",
+      "json_pointer": "/stream_embedded_bytearray_vtable_rva",
+      "module": "mfc",
+      "kind": "vtable-without-required-MSVC-RTTI",
+      "source": "NativeUsableDeviceBatch.MemoryDriverCache.cs",
+      "method": "MemoryStreamRaw",
+      "proof": "NativeMemory.Add(api.Core.Mfc,N(p,field))"
+    },
+    {
+      "profile": "coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/memory-driver-prep/memory-driver-conditional-store-abi-profile.json",
+      "json_pointer": "/backend_pointer_array_vtable_rva",
+      "module": "mfc",
+      "kind": "vtable-without-required-MSVC-RTTI",
+      "source": "NativeUsableDeviceBatch.MemoryDriverCache.cs",
+      "method": "MemoryBackendRaw",
+      "proof": "NativeMemory.Add(api.Core.Mfc,N(p,field))"
+    },
+    {
+      "profile": "coverage-20261101/usable-edit-0001/page-control-prep/slider-fill-visual-abi-profile.v4.json",
+      "json_pointer": "/owned_layout/byte_array_mfc_vtable_rva",
+      "module": "mfc",
+      "kind": "vtable-without-required-MSVC-RTTI",
+      "proof": "Published field explicitly names the MFC byte-array vtable; matches both established memory-stream MFC field declarations."
+    },
+    {
+      "profile": "coverage-20261101/usable-edit-0001/page-control-prep/slider-fill-visual-abi-profile.v4.json",
+      "json_pointer": "/provider/itanium_vtable_rva",
+      "module": "drawsliderfill.dll",
+      "kind": "Itanium-vtable",
+      "proof": "Published provider explicitly declares an Itanium table; it is not an MSVC COL table."
+    }
+  ]
+}

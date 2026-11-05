@@ -6,6 +6,7 @@ remain explicitly unevaluated.
 """
 import argparse
 import importlib.util
+import importlib.metadata
 import json
 import os
 from pathlib import Path
@@ -13,6 +14,27 @@ import re
 import shutil
 import subprocess
 import sys
+
+
+def locator_dependency_check():
+    """Check the decoder contract without opening or calling the editor."""
+    try:
+        import capstone
+        decoder = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+        decoder.detail = True
+        instructions = list(decoder.disasm(bytes.fromhex('e800000000c3'), 0x1000))
+        if len(instructions) != 2 or instructions[0].mnemonic != 'call':
+            raise ValueError('x86 instruction decoding contract differs')
+        if instructions[0].imm_offset != 1 or instructions[0].imm_size != 4:
+            raise ValueError('Relative-call operand boundaries are unavailable')
+        return {'status': 'passed', 'package': 'capstone',
+                'version': importlib.metadata.version('capstone'),
+                'x86_instruction_boundaries_verified': True,
+                'target_Pro_called': False}
+    except (ImportError, OSError, ValueError, AttributeError) as error:
+        return {'status': 'failed', 'package': 'capstone',
+                'reason': type(error).__name__ + ': ' + str(error),
+                'prepare': 'Install assets/pro-native-bridge/abi-adapter/requirements.txt with the same Python executable used by run.ps1. Offline editing does not require this package.'}
 
 
 def command_check(executable, arguments, version=False):
@@ -68,6 +90,7 @@ def preflight(options):
                    'executable': sys.executable, 'version': list(sys.version_info[:3]),
                    'execution_verified': True, 'minimum': '3.11'},
     }
+    checks['native_function_locator'] = locator_dependency_check()
     powershell = options.powershell_executable or os.environ.get('MCGS_PWSH') or shutil.which('pwsh')
     csc = Path(os.environ.get('WINDIR', r'C:\Windows')) / 'Microsoft.NET/Framework/v4.0.30319/csc.exe'
     if windows:
@@ -102,6 +125,8 @@ def preflight(options):
         'permissions': {'target_process_access': 'not_evaluated',
                         'COM_registration': 'not_evaluated', 'task_output_write': 'not_evaluated'},
         'ACE_required_for_this_preflight': False,
+        'native_function_location': 'derived_from_selected_program_during_binding',
+        'reference_function_RVAs_used_without_resolution': False,
         'Pro_started_or_called': False, 'COM_registered': False, 'project_accessed_or_written': False,
         'meaning': 'ready_to_prepare covers the selected file and build prerequisites only; '
                    'target-process/COM/output permissions, connection, and actual business ABI remain unverified',
