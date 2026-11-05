@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 506,
-  "descriptor_sha256": "45b4d3f494d78c797a40ddb44025ea61f94a96454a40c7052df297fda7ced022",
+  "file_count": 520,
+  "descriptor_sha256": "a1322446c90aebd8a2b5fc55ab1bd38ea9aab536e3e01567bf0aef853f55e005",
   "files": [
     {
       "file": ".gitattributes",
@@ -128,6 +128,66 @@
       "file": "assets/pro-3.5-cli/THIRD_PARTY_LICENSE.txt",
       "bytes": 1085,
       "sha256": "7bfe03fb9b14e598b46acf609996e5d04411af1ff6a2d62270e080dcb4f812a6"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/abi_binding.py",
+      "bytes": 23938,
+      "sha256": "cb6ac64269adf5babc97765659337a35e5183d350c850da32c2bb0aa140f6748"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/abi_locator.py",
+      "bytes": 52606,
+      "sha256": "0ed910ddfda10eefae7931bc06f539b10efe19a47537e851230eed2dd89e3177"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/catalogs/profile-field-modules.json",
+      "bytes": 1869,
+      "sha256": "b11ad23ff28b4e91f6f6e67b567453a0e6d279cb183653d3ceabe53b2b64c3d3"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+      "bytes": 2063325,
+      "sha256": "7e6eadd20f11732b27f3123dc45f49102e9f0843d7bac1edca21d8b134b81036"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json",
+      "bytes": 415242,
+      "sha256": "b8cf61f4bde1d576d087991359a39b953e9cb3980347c5e3e237930dc509318c"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/inventory.py",
+      "bytes": 44578,
+      "sha256": "2822e11acb7bbf3e3e3a85f240484941aab0479290ea112f663f177f6d551b3e"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs",
+      "bytes": 10653,
+      "sha256": "2c52396d01a7e1abad20ea3a5d6d638de15dd9668905c9a0f69fd6dfad70a545"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/pe32.py",
+      "bytes": 18102,
+      "sha256": "6c2b5cb8842dfc6fefa4bd7ee80c3d853572e7abaf3a2fdb1317d0e2cf019304"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/README.md",
+      "bytes": 5172,
+      "sha256": "0b58b4731a339811a2ec9a2c11071c2614c2fc3a186feec288da27e0d05fa2b1"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/requirements.txt",
+      "bytes": 17,
+      "sha256": "c85028672006007826ce07fbf03731c8ed1995e0254a2fff10bea05dadc07c34"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/rtti.py",
+      "bytes": 6109,
+      "sha256": "2b3f7dd6bbaf3688370890feef0b9859ee081650d1dab6c8380009998a972d14"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/x86_signature.py",
+      "bytes": 16386,
+      "sha256": "d0df74f057d0945dfc5e5cc3feb4dc42dd170c1cab5890deb837f548aadc20a2"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/build_bootstrap.ps1",
@@ -271,8 +331,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/bind_common_delivery.v5.py",
-      "bytes": 27886,
-      "sha256": "036139b538de4889f50bf0d6a6b77aaeb895238a34f9632302f38a30912fbd12"
+      "bytes": 33657,
+      "sha256": "db1b7f046656d7a83a62b124ace3ec04c44aaa407b59f9e515f8b56ddbf182d1"
     },
     {
       "file": "assets/pro-native-bridge/delivery/delivery_file_support.py",
@@ -1221,8 +1281,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/static/read-tree-guard-profile.json",
-      "bytes": 15245,
-      "sha256": "088abacc4c94aa1ca7b456ce03bef7229cd945a8d93b459fc0c38a59f6ed9a3e"
+      "bytes": 15253,
+      "sha256": "7a578787c02961311e156cbbc0fa7efe779c1edd5948f353723317cd08f81e4e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/strategy-properties/property-key-resource-map.json",
@@ -1241,8 +1301,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json",
-      "bytes": 68225,
-      "sha256": "401a2ebc7b85793adf4700af80d24e3f8561010d96866d1083d7fbbc28e3e728"
+      "bytes": 68422,
+      "sha256": "5f9b0160074e1ca7d0ae33a0eab7b8129badcabba6ed0dd7e17e09a5549c5538"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/bootstrap__NativeTrialActions.cs",
@@ -2136,8 +2196,8 @@
     },
     {
       "file": "CHANGELOG.md",
-      "bytes": 9148,
-      "sha256": "8df60f63b199ea3d8d431f6860093a5c7e376724a08487f060c93e213dc41892"
+      "bytes": 10259,
+      "sha256": "1ed4e7a72c918a2da338c2da44adfbb7125626660f940944f42d9110d8fac4b3"
     },
     {
       "file": "CONTRIBUTING.md",
@@ -2151,8 +2211,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 14727,
-      "sha256": "9f0f490b6fbd56d9bfa515f605b71b9bd7fb2ac4b9fe68e1bf09524b969c31fe"
+      "bytes": 16648,
+      "sha256": "347d82424ea7909a92ec8e1805b2e6ae93e005e8e71872aed9be0ef00c2494e6"
     },
     {
       "file": "references/bounded-edits.md",
@@ -2176,8 +2236,8 @@
     },
     {
       "file": "references/environment-and-tools.md",
-      "bytes": 8727,
-      "sha256": "ee13dcf9f36120078edcabfbf4576bc753a92c0ab98ce7d59e71dfe491162b77"
+      "bytes": 8846,
+      "sha256": "b392a237b53b730df3f300f6828a4ce22e49deabbc577325b0b78da6af521f83"
     },
     {
       "file": "references/installation-validation.json",
@@ -2241,8 +2301,8 @@
     },
     {
       "file": "references/pro-native-binary-compatibility.md",
-      "bytes": 3125,
-      "sha256": "a6d9a43cb2b811a523b44e85636d11b774de2baa953713dcce903b05c2c69e61"
+      "bytes": 3416,
+      "sha256": "c2f9bc75acf69b20375f557efaa18e9614da235c0815a18910be63c98a4f45d6"
     },
     {
       "file": "references/pro-native-build-admission-validation.json",
@@ -2251,13 +2311,23 @@
     },
     {
       "file": "references/pro-native-deployment.md",
-      "bytes": 19164,
-      "sha256": "f753d539cbc7be69aed66f0aa07ae6858e798f8dddf68255892c81ed06def8a8"
+      "bytes": 19493,
+      "sha256": "06555392cce7d4a7528a0ce41fc9fc5de52f0a5af23c0d98835d31d7c3b69c56"
     },
     {
       "file": "references/pro-native-device-reopen.md",
       "bytes": 2825,
       "sha256": "1e88a84cc631646873d1f8975c88f5d47145c30d4ca434f7f77863b7bbb63059"
+    },
+    {
+      "file": "references/pro-native-dynamic-functions-validation.json",
+      "bytes": 39627,
+      "sha256": "02ce7d131f37d9c714a4d0562e8095f08d98dc48a4373a7cd94cb78b227412a5"
+    },
+    {
+      "file": "references/pro-native-dynamic-functions.md",
+      "bytes": 4323,
+      "sha256": "c1c55854334af06443c5fd987ff1041fcff4c51f2b8936c006ddd4c50e0177f9"
     },
     {
       "file": "references/pro-native-engineering.md",
@@ -2316,8 +2386,8 @@
     },
     {
       "file": "references/source-provenance.json",
-      "bytes": 34788,
-      "sha256": "4df4aecb87c618193b4fd8daa31d42869ccd7ac01c18e609df8184f2d2f277f6"
+      "bytes": 37892,
+      "sha256": "b936d18dc8031bc106587a2c874c2e1bb334da452ff67c8ef84bd5e6a817f90f"
     },
     {
       "file": "references/statistics-and-export.md",
@@ -2351,8 +2421,8 @@
     },
     {
       "file": "run.ps1",
-      "bytes": 1818,
-      "sha256": "7dc6640ac4cb7dc46f23ec8fadf80174981607515f4a27cd87f610582d207934"
+      "bytes": 2192,
+      "sha256": "c04d562ab20d81b8a5ade029f2838e727dbd3cbfafb79f25bf16742908717120"
     },
     {
       "file": "scripts/ace-runtime.ps1",
@@ -2471,8 +2541,8 @@
     },
     {
       "file": "scripts/pro_native_doctor.py",
-      "bytes": 6629,
-      "sha256": "7e99d9cf32bfff227d3464dc2b2bdafcf9acd71a3f2d618d48ad8cecea171c1e"
+      "bytes": 8124,
+      "sha256": "f757ed529d9e340dae1d07a98107328269a7b5b35587808a202011dcf03b1022"
     },
     {
       "file": "scripts/pro_native_engineering.py",
@@ -2486,8 +2556,8 @@
     },
     {
       "file": "SKILL.md",
-      "bytes": 13710,
-      "sha256": "9bad1651f33f44261b6dbfaa46f7047f13ca3659dbaebebe8a9a532cb2a0f145"
+      "bytes": 14586,
+      "sha256": "7f7ca6785f908d4de3cf366e813408d6ece108142c95a238df18dfada79744c1"
     },
     {
       "file": "tools/mcgs_ui.py",

@@ -6,9 +6,11 @@
 
 在线连接与业务入口不再用作者 EXE/DLL/驱动的整文件指纹作准入白名单。厂商文件 SHA 差异作为观测信息返回；函数、RTTI、虚表和对象布局仍按实际接口核对。连接成功与业务适配分别记录，离线模板版本不构成升级要求。详见[构建与接口匹配](references/pro-native-binary-compatibility.md)。
 
+在线业务引擎绑定时，按当前 EXE/DLL 动态定位函数、RTTI 和虚表，生成本次调用资料，不直接套用参考构建的固定 RVA。根接口按当前请求实际使用的函数核对；未解析项报告具体接口，不要求统一升级到作者版本。机制与范围见[当前程序函数定位](references/pro-native-dynamic-functions.md)。
+
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本次补齐 Pro 离线新增原生按钮及 Stu/Pro 共用的控件、页面与样式工具，规格和分项验收见[离线工厂](references/offline-factories.md)。此前移除数量配额、补齐安装路径绑定与 ACE 回退的记录见[可迁移性复查](references/portability-review.md)。
+本次将 Pro 在线调用改为按当前程序解析函数位置，使用者不需要作者电脑上的参考 EXE/DLL。此前补齐的 Pro 离线新增原生按钮及共用工具见[离线工厂](references/offline-factories.md)；安装路径、数量配额和 ACE 回退的记录见[可迁移性复查](references/portability-review.md)。
 
 ## 功能范围
 
@@ -75,7 +77,7 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 - Windows、PowerShell 7、Python 3.11+。
 - 离线数据库读写需要与 PowerShell 位数匹配的 Microsoft ACE OLEDB 16.0 或 12.0；优先 16.0，实际失败再试 12.0。纯在线组态无需先安装 ACE。
 - Pro 新建数据库另需同位数 `ADOX.Catalog`，不再使用独立 32 位 PowerShell 5.1 / Jet OLEDB 环境。
-- 核心命令无 pip 依赖；Stu/Pro 离线预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
+- 离线核心命令无 pip 依赖；在线准备的动态函数定位使用同一 Python 中的 Capstone，依赖见 `assets/pro-native-bridge/abi-adapter/requirements.txt`。已准备好的桥的普通请求无需重复定位。Stu/Pro 离线预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
 - 原厂 McgsStu / McgsPro、驱动、控件和字体用于最终验证，由使用者安装。
 
 `assets/pro-3.5-cli/` 仅保留兼容路径及模板来源，不是版本门槛，也不再注册第二个技能。详见[环境说明](references/environment-and-tools.md)。
@@ -96,7 +98,16 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-### 本轮 Pro 离线能力补齐
+### 本轮在线函数动态定位（2026-11-05）
+
+- 当前程序的 17 个模块、123 份派生接口资料及 543 处源码地址、17 处导出序号、6 处内嵌检查完成解析。161 份源码编译通过；实际 DLL 读取派生资料及校验引用的回归通过。
+- 自有 PE 的地址重排、不同内容、导出序号移动与歧义反例分别验证。相同完整文件的定位缓存与内容变化后的动态解析分别记录，接收者无需作者参考 EXE/DLL。
+- 独立 Pro 测试副本完成一次控件几何修改、原厂保存和原生回读；一次原厂检查正常返回 0，调用后编译有效标志为 1，错误和警告数量未取得。独立文件内容回读受原厂排他锁阻塞，未完成；关闭重开、本机模拟及设备通信本轮未执行。
+- 首次打开测试页后，布局/打印尺寸属性从 0 变为 212，严格后验未通过，保留为独立观察。未放宽比较或回写旧值；确认当前目标页已活动后，以新前像完成上述修改。该打开步骤不计通过。
+
+分项证据见[本轮定位与原厂结果](references/pro-native-dynamic-functions-validation.json)。这些结果不代表逐个实际验收了所有旧发行版，也不证明未知对象布局自动兼容。
+
+### 此前 Pro 离线能力补齐（2026-11-04）
 
 - 7 份主要工程与 2 份补充样例完成适用的文件验证，Stu/Pro 共 22 项样式组合通过；新增控件、精确克隆和已有控件修改分别核对。
 - 自有 Pro 测试副本含 2 页、9 个控件和 7 个变量，实际原厂检查、保存、一次关闭重开及新上下文回读通过。检查调用正常返回且当时编译有效标志为 1；错误、警告数量未取得，保持未知。重开后控件、变量、页面事件和按钮动作相同，12 张表的结构及全部字段/BLOB 内容相同。
@@ -134,7 +145,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 python scripts/check_repository.py --update-manifest
 python scripts/check_repository.py
 pwsh -NoProfile -File scripts/check_powershell.ps1
-python scripts/build_release.py --version v2026.11.04-offline-parity --out local-artifacts/release
+python scripts/build_release.py --version v2026.11.05-dynamic-functions --out local-artifacts/release
 ```
 
 静态检查覆盖语法、JSON、链接和指纹，不证明原厂编译或在线业务通过。打包器先验证清单，再输出单技能根目录 ZIP 和 SHA256 文件。格式与写入器改动仍须附对应回环、差异和原厂证据，明确实际已测与待验证范围。

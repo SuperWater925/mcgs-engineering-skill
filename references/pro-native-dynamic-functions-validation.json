@@ -1,0 +1,1177 @@
+{
+  "schema": "mcgs-native-dynamic-functions-validation/v1",
+  "date": "2026-11-05",
+  "release_tag": "v2026.11.05-dynamic-functions",
+  "scope": "Derive native functions and PE addresses from the selected program instead of executing reference-build locations directly.",
+  "software_version_whitelist": false,
+  "author_vendor_whole_file_SHA_admission": false,
+  "all_older_Pro_releases_native_tested": false,
+  "author_reference_EXE_or_DLL_required_on_recipient_machine": false,
+  "shared_Python_environment": true,
+  "decoder_dependency": "capstone>=5.0,<6",
+  "catalog": {
+    "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+    "sha256": "7e6eadd20f11732b27f3123dc45f49102e9f0843d7bac1edca21d8b134b81036",
+    "storage": "gzip with deterministic timestamp",
+    "expanded_json_sha256": "77395e39638a52889c9a289cf1ed0fb3e5447bf62e61b5117ae44edd6a2487fa",
+    "production_binding_catalog_hash_is_expanded_JSON": true,
+    "module_count": 17,
+    "profile_count": 123,
+    "states": {
+      "resolved": 123,
+      "partial": 0,
+      "unresolved": 0
+    },
+    "current_target_uses_content_equivalence_cache": true,
+    "changed_content_dynamic_resolution_tested_separately": true
+  },
+  "PE_reader_tests": {
+    "passed": true,
+    "case_count": 19,
+    "cases": [
+      {
+        "name": "reference-sections-relocs-exports-imports-RTTI",
+        "passed": true
+      },
+      {
+        "name": "actual-sections-relocs-exports-imports-RTTI",
+        "passed": true
+      },
+      {
+        "name": "ambiguous-sections-relocs-exports-imports-RTTI",
+        "passed": true
+      },
+      {
+        "name": "field_changed-sections-relocs-exports-imports-RTTI",
+        "passed": true
+      },
+      {
+        "name": "real-RVA-base-order-and-relative-immediate-changes",
+        "passed": true
+      },
+      {
+        "name": "unanchored-duplicate-function-really-ambiguous",
+        "passed": true
+      },
+      {
+        "name": "object-field-displacement-is-an-actual-code-difference",
+        "passed": true
+      },
+      {
+        "name": "x64-machine-rejected",
+        "passed": true
+      },
+      {
+        "name": "PE32plus-rejected",
+        "passed": true
+      },
+      {
+        "name": "truncated-MZ-header-rejected",
+        "passed": true
+      },
+      {
+        "name": "raw-section-out-of-file-rejected",
+        "passed": true
+      },
+      {
+        "name": "virtual-zero-fill-not-invented-as-file-bytes",
+        "passed": true
+      },
+      {
+        "name": "negative-RVA-rejected",
+        "passed": true
+      },
+      {
+        "name": "CString-caller-bound-honored",
+        "passed": true
+      },
+      {
+        "name": "malformed-reloc-block-rejected",
+        "passed": true
+      },
+      {
+        "name": "export-ordinal-table-out-of-range-rejected",
+        "passed": true
+      },
+      {
+        "name": "bound-import-uncertainty-not-misread-as-ordinal",
+        "passed": true
+      },
+      {
+        "name": "current-real-McgsSetPro.exe-read-only",
+        "passed": true
+      },
+      {
+        "name": "current-real-mfc110u.dll-read-only",
+        "passed": true
+      }
+    ]
+  },
+  "function_location_tests": {
+    "passed": true,
+    "case_count": 16,
+    "cases": [
+      {
+        "name": "real-current-PE-core-all-functions",
+        "passed": true
+      },
+      {
+        "name": "real-current-PE-core-all-RTTI",
+        "passed": true
+      },
+      {
+        "name": "real-current-core-profile-addresses-complete",
+        "passed": true
+      },
+      {
+        "name": "RVA-reordered-PE-all-functions",
+        "passed": true
+      },
+      {
+        "name": "moved-Foo",
+        "passed": true
+      },
+      {
+        "name": "moved-Bar",
+        "passed": true
+      },
+      {
+        "name": "moved-Thunk",
+        "passed": true
+      },
+      {
+        "name": "moved-Loose",
+        "passed": true
+      },
+      {
+        "name": "global-HIGHLOW-operand-derived",
+        "passed": true
+      },
+      {
+        "name": "both-RTTI-interface-roles",
+        "passed": true
+      },
+      {
+        "name": "ordinary-object-offset-unchanged",
+        "passed": true
+      },
+      {
+        "name": "actual-module-hash-differs-still-resolves",
+        "passed": true
+      },
+      {
+        "name": "HIGHLOW-rebased-to-reference-preferred-base",
+        "passed": true
+      },
+      {
+        "name": "true-ambiguity-not-reference-address-fallback",
+        "passed": true
+      },
+      {
+        "name": "partial-file-real-SHA-and-entry-gaps",
+        "passed": true
+      },
+      {
+        "name": "changed-object-field-displacement-not-wildcarded",
+        "passed": true
+      }
+    ]
+  },
+  "profile_derivation_tests": {
+    "passed": true,
+    "case_count": 12,
+    "cases": [
+      {
+        "name": "all-declared-installation-PE-dependencies-found",
+        "passed": true
+      },
+      {
+        "name": "catalog-has-no-author-absolute-path",
+        "passed": true
+      },
+      {
+        "name": "final-classified-source-count",
+        "passed": true
+      },
+      {
+        "name": "reference-extraction-gaps-are-explicit",
+        "passed": true
+      },
+      {
+        "name": "all-installed-reference-functions-located",
+        "passed": true
+      },
+      {
+        "name": "all-installed-reference-RTTI-roles-located",
+        "passed": true
+      },
+      {
+        "name": "all-classified-source-addresses-mapped",
+        "passed": true
+      },
+      {
+        "name": "all-derived-profile-files-have-true-hashes",
+        "passed": true
+      },
+      {
+        "name": "all-installed-profiles-resolved",
+        "passed": true
+      },
+      {
+        "name": "core-profile-complete",
+        "passed": true
+      },
+      {
+        "name": "changed-file-moved-function-and-export-ordinal-resolve-without-reference-PE",
+        "passed": true
+      },
+      {
+        "name": "changed-file-did-not-use-content-equivalence-cache",
+        "passed": true
+      }
+    ]
+  },
+  "supplemental_source_address_tests": {
+    "passed": true,
+    "case_count": 9,
+    "cases": [
+      {
+        "name": "original493-source-spans-retained",
+        "passed": true
+      },
+      {
+        "name": "necessary-address-delta-only",
+        "passed": true
+      },
+      {
+        "name": "all67-new-source-spans-and-current-PE-export-targets-read-back",
+        "passed": true
+      },
+      {
+        "name": "eleven-array-elements-keep-subtraction-base-and-int-type",
+        "passed": true
+      },
+      {
+        "name": "encoded-array-arithmetic-independent-of-target-preferred-base",
+        "passed": true
+      },
+      {
+        "name": "added-reference-addresses-have-no-extraction-gap",
+        "passed": true
+      },
+      {
+        "name": "all67-new-address-and-ordinal-targets-resolve",
+        "passed": true
+      },
+      {
+        "name": "all-new-function-signatures-resolve",
+        "passed": true
+      },
+      {
+        "name": "previous-function-and-RTTI-evidence-unchanged",
+        "passed": true
+      }
+    ]
+  },
+  "production_binding_and_compile": {
+    "schema": "mcgs-native-bound-validation/v1",
+    "run": "production-0002",
+    "file_result": "passed",
+    "required_compiled_profile_IO": "passed",
+    "source_count": 161,
+    "module_count": 17,
+    "profile_count": 123,
+    "profile_states": {
+      "resolved": 123,
+      "partial": 0,
+      "unresolved": 0
+    },
+    "classified_source_addresses": 543,
+    "resolved_source_addresses": 543,
+    "verified_source_ordinals": 17,
+    "verified_full_source_guards": 6,
+    "final_dependency_files": 308,
+    "profile_integrity_contracts": [
+      {
+        "profile": "strategy-properties/strategy-write-guard-profile.json",
+        "compiled_sha256": "0ad26649eabd0fe22e385d6c06cc7636598029886c99bcf475f595397eb68885",
+        "source_occurrences": 1,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "extensions/strategy/strategy-extension-read-guard.json",
+        "compiled_sha256": "67c0ee68324eac6ad78fd09d61a599d558a035d5d23fd4edf0c4f0d627993376",
+        "source_occurrences": 1,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "extensions/strategy/strategy-extension-write-guard.json",
+        "compiled_sha256": "db8ca133631eace960168b06387f5f9202db52c8da722a7ef6840c0e1b2352cd",
+        "source_occurrences": 4,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "extensions/strategy/registration/registration-abi-guard.json",
+        "compiled_sha256": "fbcc53abf32205a196ce5cb776d9d8233382fcf0c7e505eba3d18701203a9978",
+        "source_occurrences": 3,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "extensions/strategy/delete/strategy-delete-abi-profile.json",
+        "compiled_sha256": "2ce99f44e70adc32647c618ad691f09c766c1388d159a094a43bfbf15ace46de",
+        "source_occurrences": 3,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "static/document-dirty-save-abi-profile.json",
+        "compiled_sha256": "141fbdb45344f9eb6aeeedfa7d30056545f65b362002f5d26a509a05c578a233",
+        "source_occurrences": 2,
+        "historical_pin_remaining": false
+      },
+      {
+        "profile": "static/read-tree-guard-profile.json",
+        "compiled_sha256": "99057c8d0ebe04647cbc3761e77e1b79dbd91fe565decb028a05e0ece2da0742",
+        "source_occurrences": 1,
+        "historical_pin_remaining": false
+      }
+    ],
+    "index_bytes": 128797,
+    "index_sha256": "a67c7a4e3c17bf7c8229efcf2d3cab58ddeff7194b2b83b458fe2c1ab199e0c6",
+    "engine_sha256": "0864826f238e23ad2e80281fe4b0d274b151c519673a49fecc78c34dae04d04e",
+    "scope_sha256": "450cb3b37e34a3a5dfd796d017d5f5e2b781cb06074a44328a3f00ac8212e988",
+    "bound_manifest_sha256": "4a68558b7104dfc08178b1af1affa7cd2c48ece1d807e327ee387dea378b8d5c",
+    "source_manifest_sha256": "5f9b0160074e1ca7d0ae33a0eab7b8129badcabba6ed0dd7e17e09a5549c5538",
+    "catalog_sha256": "77395e39638a52889c9a289cf1ed0fb3e5447bf62e61b5117ae44edd6a2487fa",
+    "bind_seconds": 8.1941433,
+    "compile_seconds": 0.7348013,
+    "compile_result": "passed_with_existing_CS0649_warning",
+    "first_native_inspect": "failed_profile_integrity_pin_sync",
+    "first_native_failure_record": "binder-first-native-failure.json",
+    "ordinal_source_validation_record": "source-ordinal-validation.json",
+    "native_calls_executed": false,
+    "promoted": true,
+    "passed": true,
+    "profile_IO_runtime_executed": true,
+    "promotion_observation": "308 fresh owned payload files promoted before this managed verification",
+    "managed_current_engine_contract_and_IO": {
+      "passed": true,
+      "assertions": 30,
+      "breakdown": {
+        "binding_metadata_and_entry_contract": 10,
+        "physical_profile_hash_and_readback": 14,
+        "logical_ordinal_roles": 6
+      },
+      "profile_integrity_files": 7,
+      "logical_ordinal_roles": 3,
+      "report": "dependency-integrity-runtime-validation.json"
+    },
+    "source_ordinal_validation": {
+      "passed": true,
+      "groups": 17,
+      "real_source_spans_exercised_under_moved_ordinals": 11,
+      "actual_helper_assertions": 19,
+      "report": "source-ordinal-validation.json",
+      "RVA_mapping_test_boundary": "Injected fixture location DTO; production source patcher and actual PE export lookup executed"
+    },
+    "independent_source_consumer_audit": {
+      "source_count": 159,
+      "extra_omissions_beyond_final_inventory_groups": 0,
+      "scope": [
+        "module-relative and absolute PE address consumers",
+        "indirect constructor-field, branch, array and local-variable locations",
+        "native delegate creation and GetProcAddress ordinals",
+        "metadata ordinal dictionary consumers and logical ordinal names",
+        "remaining numeric literals >= 0x1000",
+        "bootstrap and hot-attach callers",
+        "software FileVersion/ProductVersion gates"
+      ],
+      "report": "source-consumer-audit.json"
+    },
+    "native_acceptance_scope": "File binding, compiled managed methods and immutable dependency IO only; vendor inspect/check/save/reopen are separate evidence.",
+    "staged_or_activated_by_this_validator": false
+  },
+  "initial_engine_managed_contract_tests": {
+    "phase": "Initial compiled binding before the dependency-pin and source-ordinal supplement.",
+    "result": {
+      "passed": true,
+      "assertions": 10,
+      "actual_compiled_product_methods": [
+        "BindingMetadata",
+        "CheckEntry",
+        "Metadata",
+        "UnresolvedRva"
+      ],
+      "native_engine_constructed": false,
+      "profile_IO_executed": false,
+      "native_calls_executed": false
+    }
+  },
+  "source_consumer_review": {
+    "date": "2026-11-05",
+    "source_count": 159,
+    "read_only": true,
+    "native_calls_executed": false,
+    "scope": [
+      "module-relative and absolute PE address consumers",
+      "indirect constructor-field, branch, array and local-variable locations",
+      "native delegate creation and GetProcAddress ordinals",
+      "metadata ordinal dictionary consumers and logical ordinal names",
+      "remaining numeric literals >= 0x1000",
+      "bootstrap and hot-attach callers",
+      "software FileVersion/ProductVersion gates"
+    ],
+    "additional_omission_groups_beyond_final_inventory_work": 0,
+    "integration_findings": [
+      "Scalar logical MfcOrdinal name must be separate from the current physical export ordinal",
+      "Metadata mfcMethods[1039] consumers must follow current ordinal dictionary keys"
+    ],
+    "software_release_number_admission_found": false,
+    "not_claimed": "Static consumer audit does not prove unknown native object layouts."
+  },
+  "source_ordinal_tests": {
+    "schema": "mcgs-source-ordinal-regression/v1",
+    "vendor_process_started_or_called": false,
+    "vendor_files_read_or_packaged": false,
+    "self_owned_PE_images_executed": false,
+    "RVA_map_input": "Injected DTO simulates uniquely located source roles; source patcher and PE export lookup are production code.",
+    "cases": [
+      {
+        "name": "owned-fixture-copied-and-target-ordinals-changed",
+        "passed": true,
+        "details": {
+          "input_sha256": "af5a6c4597864987d24d18deb6530e21318b8c32179209ef84615949be739915",
+          "output_sha256": "f260d9e132ba410b3558b6ff5b067e4078dfa87bb5fa678485f5b349ca27c623",
+          "reference_ordinal": 1,
+          "actual_ordinal": 18,
+          "reference_rva": 4144,
+          "actual_rva": 12576
+        }
+      },
+      {
+        "name": "actual-production-patcher-rewrites-GetProcAddress-ordinal",
+        "passed": true,
+        "details": {
+          "before": "return GetProcAddressOrdinal(mfc,new IntPtr(1));",
+          "after": "return GetProcAddressOrdinal(mfc,new IntPtr(18));",
+          "changes": [
+            {
+              "source": "OwnedOrdinalFixture.cs",
+              "span": [
+                44,
+                45
+              ],
+              "module": "mfc",
+              "reference_ordinal": 1,
+              "reference_rva": 4144,
+              "actual_ordinal": 18,
+              "actual_rva": 12576,
+              "status": "verified",
+              "proof": "Unique actual ordinal for the located target"
+            }
+          ]
+        }
+      },
+      {
+        "name": "exact-source-SHA-before-patch:NativeAlarmDefinitionEditing.v4.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "exact-source-SHA-before-patch:NativeLabelMetadataReadonlyProfile.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "exact-source-SHA-before-patch:NativeLabelScalarCachedReadonlyProfile.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "exact-source-SHA-before-patch:NativeLabelScalarReadonlyProfile.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "all-real-source-ordinal-spans-use-current-PE-exports",
+        "passed": true,
+        "details": [
+          {
+            "source": "NativeAlarmDefinitionEditing.v4.cs",
+            "span": [
+              7777,
+              7781
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1502,
+            "reference_rva": 35353,
+            "actual_ordinal": 18,
+            "actual_rva": 12576,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelMetadataReadonlyProfile.cs",
+            "span": [
+              10782,
+              10786
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1502,
+            "reference_rva": 35353,
+            "actual_ordinal": 18,
+            "actual_rva": 12576,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelMetadataReadonlyProfile.cs",
+            "span": [
+              10823,
+              10827
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1504,
+            "reference_rva": 969002,
+            "actual_ordinal": 19,
+            "actual_rva": 12800,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelMetadataReadonlyProfile.cs",
+            "span": [
+              10913,
+              10917
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1039,
+            "reference_rva": 288468,
+            "actual_ordinal": 20,
+            "actual_rva": 12320,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelMetadataReadonlyProfile.cs",
+            "span": [
+              16286,
+              16290
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1039,
+            "reference_rva": 288468,
+            "actual_ordinal": 20,
+            "actual_rva": 12320,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+            "span": [
+              14205,
+              14209
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1502,
+            "reference_rva": 35353,
+            "actual_ordinal": 18,
+            "actual_rva": 12576,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+            "span": [
+              14220,
+              14224
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1504,
+            "reference_rva": 969002,
+            "actual_ordinal": 19,
+            "actual_rva": 12800,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+            "span": [
+              14235,
+              14239
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1039,
+            "reference_rva": 288468,
+            "actual_ordinal": 20,
+            "actual_rva": 12320,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarReadonlyProfile.cs",
+            "span": [
+              13421,
+              13425
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1502,
+            "reference_rva": 35353,
+            "actual_ordinal": 18,
+            "actual_rva": 12576,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarReadonlyProfile.cs",
+            "span": [
+              13436,
+              13440
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1504,
+            "reference_rva": 969002,
+            "actual_ordinal": 19,
+            "actual_rva": 12800,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          },
+          {
+            "source": "NativeLabelScalarReadonlyProfile.cs",
+            "span": [
+              13451,
+              13455
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1039,
+            "reference_rva": 288468,
+            "actual_ordinal": 20,
+            "actual_rva": 12320,
+            "status": "verified",
+            "proof": "Unique actual ordinal for the located target"
+          }
+        ]
+      },
+      {
+        "name": "real-GetProcAddress-argument-and-Metadata-keys-rewritten",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "real-scalar-numeric-and-logical-name-rewrite:NativeLabelScalarCachedReadonlyProfile.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "real-scalar-numeric-and-logical-name-rewrite:NativeLabelScalarReadonlyProfile.cs",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "ambiguous-ordinal-is-lazy-unresolved-with-no-old-number-fallback",
+        "passed": true,
+        "details": [
+          {
+            "source": "OwnedOrdinalFixture.cs",
+            "span": [
+              44,
+              45
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1,
+            "reference_rva": 4144,
+            "actual_ordinal": null,
+            "actual_rva": 12576,
+            "status": "unresolved",
+            "proof": null
+          }
+        ]
+      },
+      {
+        "name": "missing-RVA-map-is-lazy-unresolved-with-no-old-number-fallback",
+        "passed": true,
+        "details": [
+          {
+            "source": "OwnedOrdinalFixture.cs",
+            "span": [
+              44,
+              45
+            ],
+            "module": "mfc",
+            "reference_ordinal": 1,
+            "reference_rva": 4144,
+            "actual_ordinal": null,
+            "actual_rva": null,
+            "status": "unresolved",
+            "proof": null
+          }
+        ]
+      },
+      {
+        "name": "unique-named-export-disambiguates-multiple-ordinal-aliases",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "ambiguous-named-aliases-stay-unresolved",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "forwarded-export-never-becomes-a-direct-source-ordinal",
+        "passed": true,
+        "details": null
+      },
+      {
+        "name": "actual-helper-and-derived-consumer-predicates-compile-x86",
+        "passed": true,
+        "details": {
+          "exit_code": 0,
+          "output": ""
+        }
+      },
+      {
+        "name": "actual-helper-managed-index-and-role-regressions",
+        "passed": true,
+        "details": {
+          "passed": true,
+          "assertions": 19,
+          "checks": [
+            "x86 isolated managed harness",
+            "actual helper accepts historical role 1502",
+            "compiled Scalar A accepts role 1502",
+            "compiled Scalar B accepts role 1502",
+            "actual helper rejects actual ordinal as historical role 18",
+            "actual helper accepts historical role 1504",
+            "compiled Scalar A accepts role 1504",
+            "compiled Scalar B accepts role 1504",
+            "actual helper rejects actual ordinal as historical role 19",
+            "actual helper accepts historical role 1039",
+            "compiled Scalar A accepts role 1039",
+            "compiled Scalar B accepts role 1039",
+            "actual helper rejects actual ordinal as historical role 20",
+            "wrong role rejected",
+            "wrong module rejected",
+            "unknown actual number rejected",
+            "unresolved index record rejected",
+            "metadata dictionary uses mapped profile ordinal",
+            "unresolved expression throws before native call"
+          ],
+          "native_calls_executed": false
+        }
+      }
+    ],
+    "passed": true,
+    "source_catalog_sha256": "b8cf61f4bde1d576d087991359a39b953e9cb3980347c5e3e237930dc509318c",
+    "production_binding_sha256": "0a73b57cc64e18c6f9055f9447f77e301c833d9a362f570b93ef3ddef74076e6",
+    "production_helper_sha256": "2c52396d01a7e1abad20ea3a5d6d638de15dd9668905c9a0f69fd6dfad70a545",
+    "exact_source_ordinal_spans_tested": 11,
+    "x86_managed_helper_assertions": 19,
+    "source_ordinal_changes": [
+      {
+        "source": "NativeAlarmDefinitionEditing.v4.cs",
+        "span": [
+          7777,
+          7781
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1502,
+        "reference_rva": 35353,
+        "actual_ordinal": 18,
+        "actual_rva": 12576,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelMetadataReadonlyProfile.cs",
+        "span": [
+          10782,
+          10786
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1502,
+        "reference_rva": 35353,
+        "actual_ordinal": 18,
+        "actual_rva": 12576,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelMetadataReadonlyProfile.cs",
+        "span": [
+          10823,
+          10827
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1504,
+        "reference_rva": 969002,
+        "actual_ordinal": 19,
+        "actual_rva": 12800,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelMetadataReadonlyProfile.cs",
+        "span": [
+          10913,
+          10917
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1039,
+        "reference_rva": 288468,
+        "actual_ordinal": 20,
+        "actual_rva": 12320,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelMetadataReadonlyProfile.cs",
+        "span": [
+          16286,
+          16290
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1039,
+        "reference_rva": 288468,
+        "actual_ordinal": 20,
+        "actual_rva": 12320,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+        "span": [
+          14205,
+          14209
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1502,
+        "reference_rva": 35353,
+        "actual_ordinal": 18,
+        "actual_rva": 12576,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+        "span": [
+          14220,
+          14224
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1504,
+        "reference_rva": 969002,
+        "actual_ordinal": 19,
+        "actual_rva": 12800,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarCachedReadonlyProfile.cs",
+        "span": [
+          14235,
+          14239
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1039,
+        "reference_rva": 288468,
+        "actual_ordinal": 20,
+        "actual_rva": 12320,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarReadonlyProfile.cs",
+        "span": [
+          13421,
+          13425
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1502,
+        "reference_rva": 35353,
+        "actual_ordinal": 18,
+        "actual_rva": 12576,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarReadonlyProfile.cs",
+        "span": [
+          13436,
+          13440
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1504,
+        "reference_rva": 969002,
+        "actual_ordinal": 19,
+        "actual_rva": 12800,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      },
+      {
+        "source": "NativeLabelScalarReadonlyProfile.cs",
+        "span": [
+          13451,
+          13455
+        ],
+        "module": "mfc",
+        "reference_ordinal": 1039,
+        "reference_rva": 288468,
+        "actual_ordinal": 20,
+        "actual_rva": 12320,
+        "status": "verified",
+        "proof": "Unique actual ordinal for the located target"
+      }
+    ],
+    "scope_limit": "Source ordinal rewrite and managed logical-role index behavior only; not vendor runtime or native call semantic validation."
+  },
+  "production_dependency_IO_tests": {
+    "passed": true,
+    "assertions": 30,
+    "actual_compiled_product_methods": [
+      "BindingMetadata",
+      "CheckEntry",
+      "Metadata",
+      "UnresolvedRva",
+      "NativeMemory.Hash",
+      "ReadAllText",
+      "MatchesLogicalOrdinalName"
+    ],
+    "native_engine_constructed": false,
+    "profile_IO_executed": true,
+    "profile_integrity_files": 7,
+    "logical_ordinal_roles": 3,
+    "native_calls_executed": false
+  },
+  "catalog_storage_equivalence": {
+    "schema": "mcgs-native-catalog-storage-validation/v1",
+    "status": "storage_equivalence_passed",
+    "native_engine_recompiled": false,
+    "manufacturer_process_started_or_called": false,
+    "project_accessed_or_changed": false,
+    "previous_functional_groups_repeated": false,
+    "checks": [
+      {
+        "name": "original-expanded-json-sha-matches-frozen-evidence",
+        "passed": true
+      },
+      {
+        "name": "existing-canonical-catalog-sha-semantics-unchanged",
+        "passed": true
+      },
+      {
+        "name": "gzip-expands-to-identical-original-json-bytes",
+        "passed": true
+      },
+      {
+        "name": "gzip-timestamp-is-zero",
+        "passed": true
+      },
+      {
+        "name": "gzip-storage-is-deterministic",
+        "passed": true
+      },
+      {
+        "name": "plain-and-gzip-loader-return-identical-data",
+        "passed": true
+      },
+      {
+        "name": "actual-locate-cli-json-and-gzip-results-identical",
+        "passed": true
+      },
+      {
+        "name": "format-fixture-still-dynamically-locates-moved-code",
+        "passed": true
+      },
+      {
+        "name": "TargetBinding-default-reads-packaged-gzip",
+        "passed": true
+      },
+      {
+        "name": "TargetBinding-passes-identical-expanded-document-to-resolver",
+        "passed": true
+      },
+      {
+        "name": "TargetBinding-preserves-expanded-catalog-sha",
+        "passed": true
+      },
+      {
+        "name": "exact-source-and-history-target-stay-in-owned-roots",
+        "passed": true
+      },
+      {
+        "name": "original-moved-outside-repository-with-identical-sha",
+        "passed": true
+      },
+      {
+        "name": "new-default-works-without-uncompressed-file-in-repository",
+        "passed": true
+      }
+    ],
+    "passed": true,
+    "storage_file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+    "storage_sha256": "7e6eadd20f11732b27f3123dc45f49102e9f0843d7bac1edca21d8b134b81036",
+    "storage_bytes": 2063325,
+    "expanded_json_sha256": "77395e39638a52889c9a289cf1ed0fb3e5447bf62e61b5117ae44edd6a2487fa",
+    "expanded_json_bytes": 64893994,
+    "original_uncompressed_preserved_outside_repository": true,
+    "native_engine_inputs_and_expanded_catalog_semantics_changed": false,
+    "targeted_fixture": "own moved-RVA PE; JSON versus gzip CLI output equivalence",
+    "TargetBinding_scope": "actual default gzip loading and identical resolver input; subsequent resolver/materializer mocked",
+    "source_sha256": {
+      "abi_locator.py": "0ed910ddfda10eefae7931bc06f539b10efe19a47537e851230eed2dd89e3177",
+      "abi_binding.py": "cb6ac64269adf5babc97765659337a35e5183d350c850da32c2bb0aa140f6748",
+      "README.md": "0b58b4731a339811a2ec9a2c11071c2614c2fc3a186feec288da27e0d05fa2b1"
+    }
+  },
+  "native_acceptance": {
+    "schema": 1,
+    "scope": "one private test project on one local installation",
+    "connection": {
+      "ui_thread_connection": true,
+      "status": "passed"
+    },
+    "native_function_binding": {
+      "engine_sha256": "0864826f238e23ad2e80281fe4b0d274b151c519673a49fecc78c34dae04d04e",
+      "profile_index_sha256": "a67c7a4e3c17bf7c8229efcf2d3cab58ddeff7194b2b83b458fe2c1ab199e0c6",
+      "reference_RVAs_used_directly": false,
+      "status": "passed",
+      "mode": "current_program_resolved"
+    },
+    "page_view_open": {
+      "detail": "one page attribute at zero-based index 15 changed from 0 to 212; fresh read confirmed exact page internally active; no replay",
+      "status": "failed_postcondition",
+      "native_call_entered": true,
+      "other_compared_fields_changed": false
+    },
+    "minimal_mutation": {
+      "field": "button rectangle",
+      "native_readback": [
+        21,
+        20,
+        201,
+        65
+      ],
+      "status": "passed",
+      "before": [
+        20,
+        20,
+        200,
+        65
+      ],
+      "readback_timing": "after native save",
+      "intended": [
+        21,
+        20,
+        201,
+        65
+      ]
+    },
+    "native_save": {
+      "returned": true,
+      "status": "passed",
+      "entered": true,
+      "page_save_called": true,
+      "return_value": 1,
+      "native_save_return_verified": true
+    },
+    "file_readback": {
+      "opening_changed_file_sha256": true,
+      "opening_change_cause": "unknown",
+      "status": "not_completed",
+      "reason": "exclusive file lock while editor remains open",
+      "independent_file_contents_verified": false,
+      "save_receipt_file_sha256": "84f0f927712b45b4bd76fc5e96a30451ec5dfc2c2a1c0c6a6d54285013dc7a18"
+    },
+    "native_check": {
+      "compile_valid_after": 1,
+      "legacy_recursive_receipt_checker": "failed due to duplicate nested matches; direct receipt path checked",
+      "returned": true,
+      "native_check_passed": true,
+      "return_value": 0,
+      "entered": true,
+      "error_count": "unknown",
+      "status": "passed",
+      "warning_count": "unknown"
+    },
+    "close_reopen": "not_performed",
+    "simulation": "not_performed",
+    "physical_communication": "not_performed"
+  },
+  "page_open_observation": {
+    "schema": "mcgs-native-page-open-observation/v1",
+    "review_mode": "read existing source, profiles and recorded receipts only",
+    "native_call_invoked_by_reviewer": false,
+    "product_changed_by_reviewer": false,
+    "retry_performed_by_reviewer": false,
+    "native_open_postcheck": "failed",
+    "field": {
+      "snapshot_array": "page.attributes",
+      "zero_based_index": 15,
+      "native_document_offset": "0x2A4",
+      "native_I4_property_index": 19,
+      "paired_dimension_offset": "0x2A8",
+      "paired_dimension_property_index": 20,
+      "layout_selection_offset": "0x2A0",
+      "layout_selection_property_index": 18
+    },
+    "recorded_observation": {
+      "before_value": 0,
+      "after_value": 212,
+      "other_16_attribute_values_equal": true,
+      "page_width": 800,
+      "page_height": 480,
+      "layout_selection_value": 0,
+      "later_read_target_open": true,
+      "page_modified_state_changed": false,
+      "controls_or_geometry_changed_by_open": false,
+      "internal_active_identity_independently_asserted_by_this_review": false
+    },
+    "existing_contract_evidence": [
+      {
+        "source": "delivery/source/sources/NativePageControlPreparation.cs",
+        "line": 77,
+        "fact": "Attributes reads 17 DWORDs from doc+0x268 in order, so index15 is doc+0x2A4."
+      },
+      {
+        "source": "delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-abi-profile.v2.json",
+        "json_pointer": "/layout/I4_properties/19",
+        "fact": "The existing native property contract assigns property19 to offset676 (0x2A4)."
+      },
+      {
+        "source": "delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-static-proof.json",
+        "function": "0xADDA10",
+        "reference_instruction_region": "0xADE240..0xADE35D",
+        "fact": "Original property commit switches on doc+0x2A0 and writes the dimension pair doc+0x2A4/0x2A8; fixed cases include 297x420, 210x297 and 148x210."
+      }
+    ],
+    "interpretation": {
+      "supported": "Native layout dimension property, consistent with layout/print-size initialization after first opening the designer.",
+      "initialization_causality_is_observation_not_full_call_chain_proof": true,
+      "exact_OpenPage_callee_that_wrote_the_field_proven": false,
+      "pure_transient_cache_semantics_proven": false,
+      "exact_unit_and_persistence_semantics_proven_by_this_review": false,
+      "internal_active_state_not_inferred_from_target_open_alone": true
+    },
+    "handling_boundary": {
+      "do_not_restore_zero": true,
+      "do_not_relax_original_open_comparison": true,
+      "do_not_mark_original_open_postcheck_passed": true,
+      "use_fresh_current_preimage_for_later_independent_edit": true,
+      "later_geometry_save_and_native_check_must_be_reported_separately": true
+    }
+  },
+  "initial_native_read_before_dependency_fix": {
+    "status": "failed_before_write",
+    "error": "Frozen document dirty/save ABI file differs",
+    "write_attempted": false,
+    "cause": "Managed profile-hardening digests were missing from the derived dependency DAG.",
+    "failed_request_replayed": false
+  },
+  "limitations": [
+    "Function location alone does not prove unknown native object layouts or every product feature.",
+    "This round does not repeat historical whole-page construction, close/reopen, simulation or device communication.",
+    "The current-target production result and self-owned moved-PE fixtures are distinct evidence."
+  ],
+  "user_paused_project_accessed": false,
+  "vendor_binaries_or_user_projects_packaged": false
+}

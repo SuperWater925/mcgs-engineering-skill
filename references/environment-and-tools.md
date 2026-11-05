@@ -7,7 +7,7 @@
 
 共同基础为 Windows、PowerShell 7、Python 3.11+；仅离线数据库命令另需与进程位数相同的 Microsoft ACE OLEDB 16.0 或 12.0，纯在线无需 ACE。离线入口优先16.0，失败才试12.0；这两个是数据库提供程序版本，不表示工程有16张/12张表。项目实际为12张业务表，必须动态枚举，不能据此只比较某几张表。
 
-Python3.11+用于纯字节归档解码、候选准备和Pro CLI；共同数据库命令只依赖PowerShell/.NET和ACE；Pro新建还使用同位数ADOX.Catalog创建Jet 4兼容格式数据库，但不使用Jet OLEDB提供程序或32位宿主。优先显式传入本机已有Python路径；找不到时可在Codex中调用`mcp__codex_app__load_workspace_dependencies`定位已捆绑运行时。不要把作者机器的Python绝对路径写成迁移前提。无pip依赖。
+Python3.11+用于纯字节归档解码、候选准备和Pro CLI；共同数据库命令只依赖PowerShell/.NET和ACE；Pro新建还使用同位数ADOX.Catalog创建Jet 4兼容格式数据库，但不使用Jet OLEDB提供程序或32位宿主。优先显式传入本机已有Python路径；找不到时可在Codex中调用`mcp__codex_app__load_workspace_dependencies`定位已捆绑运行时。不要把作者机器的Python绝对路径写成迁移前提。离线核心命令无pip依赖；在线准备的动态函数定位另用Capstone，安装到同一个Python，不建第二套环境。
 
 原厂McgsStu / McgsPro及相匹配的控件、驱动、字体用于最终检查与模拟，由接收者安装；本技能不分发它们。不要下载未知DLL补齐依赖。
 
