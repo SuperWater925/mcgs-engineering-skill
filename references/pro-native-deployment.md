@@ -114,7 +114,21 @@ if ($LASTEXITCODE -ne 0) { throw 'layout核对失败。' }
 
 复用实际 TaskRoot、RuntimeRoot、BootstrapRoot、队列和历史结果；不要重跑上节创建新任务/首次 stage 的命令。选新的 binding/bound 输出目录、独立 EngineeringRoot 和版本化 transport 文件（例如 `bridge_client_0102.py`），按上节对应的 binding → compile → promotion 段生成新 engine / 同名 scope，不覆盖已加载DLL或在用资料。已有 Bootstrap 不随 engine 更新替换；启用新版后台调度需按[流水线兼容规则](pro-native-pipeline.md)接入新版 Bootstrap。
 
-核新 DLL / scope SHA 后，按既有 file-only 选择流程更新当前 RuntimeRoot 的 active-engine；保留当前 bootstrap_scope_sha256，不能误填 engine 的 engineering_delivery_scope_sha256。每次工程请求单独给路径，默认 direct 在调用内读取当前 PID、线程与目标前像。切换后仅做一次实际工程 inspect，确认 scope attestation、大结果 payload 和当前身份，不为更新重跑全部业务功能：
+使用公开 `native-engine-select` 入口更新已有连接。先读当前选择；默认执行文件更新，显式加 `--plan` 才只预览，不需要重跑首次 stage：
+
+```powershell
+$CurrentSelection = & "$SkillRoot\run.ps1" native-engine-select --bootstrap-root $BootstrapRoot --status | ConvertFrom-Json
+$EngineSha = (Get-FileHash -LiteralPath $BuiltDll -Algorithm SHA256).Hash.ToLowerInvariant()
+$ScopeSha = (Get-FileHash -LiteralPath $ScopeJson -Algorithm SHA256).Hash.ToLowerInvariant()
+& "$SkillRoot\run.ps1" native-engine-select `
+  --bootstrap-root $BootstrapRoot --engine-file $BuiltDll --engine-scope-file $ScopeJson `
+  --engine-sha256 $EngineSha --engine-scope-sha256 $ScopeSha `
+  --manifest-sha256 $CurrentSelection.manifest_sha256
+```
+
+该步骤读取实际桥配置、核新 DLL 的编译 scope 合同，将新名称 DLL / scope 写入已有 engines 目录，保留选择前像后原子更新 active-engine，并回读；相同文件已选中时返回实际幂等状态。它不调用原厂对象，也不注册或启动新桥。发生未知结果先 `--status` 核实际选择，不重复工程写入。当前引擎名不能复用为另一份内容。
+
+工具保留当前 bootstrap_scope_sha256，不能误填 engine 的 engineering_delivery_scope_sha256。每次工程请求单独给路径，默认 direct 在调用内读取当前 PID、线程与目标前像。切换后仅做一次实际工程 inspect，确认 scope attestation、大结果 payload、`cross_build_contract=mcgs-native-cross-build/v2` 和当前身份，不为更新重跑全部业务功能：
 
 ```powershell
 & "$SkillRoot\run.ps1" native-engineering `

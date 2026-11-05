@@ -187,6 +187,12 @@ def profile_kind(parts, value):
     if any(token in key for token in ('reloc', 'highlow')): return 'PE_relocation_description'
     if 'image_base' in key or 'preferred_base' in key: return 'preferred_PE_image_base'
     if 'rva' in key: return 'PE_RVA'
+    if len(parts) > 1 and str(parts[-2]) in ('entries', 'slot_entry_rvas', 'vtable_entries', 'picture_preload_entries', 'slots', 'metadata_slots'):
+        return 'native_virtual_slot_RVA_candidate'
+    if len(parts) > 1 and str(parts[-2]) == 'methods' and not isinstance(value, (dict, list)):
+        return 'native_method_RVA_candidate'
+    if key in ('primary', 'iobject') and not isinstance(value, (dict, list)):
+        return 'native_table_RVA_candidate'
     if key in ('va', 'va_at_preferred_base', 'address', 'start_va', 'end_va'):
         return 'VA_or_address_candidate'
     if any(token in key for token in ('expected_first', 'bytes', 'prefix_hex', 'signature_hex')):

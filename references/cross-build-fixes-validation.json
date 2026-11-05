@@ -1,0 +1,1406 @@
+{
+  "schema": "mcgs-cross-build-fixes-validation/v1",
+  "date": "2026-11-05",
+  "release_tag": "v2026.11.05-cross-build-fixes",
+  "implementation_status": {
+    "CV01": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "2958 template slot targets plus other explicitly classified native fields",
+      "evidence_scope": "ABI fixtures and native control create/readback"
+    },
+    "CV02": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "trailing HIGHLOW visible-byte normalization",
+      "evidence_scope": "production normalizer fixture; no driver communication"
+    },
+    "CV03": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "minimal identity and per-used dependency resolution",
+      "evidence_scope": "managed partial/unresolved and native inspect/geometry/create"
+    },
+    "CV04": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "current MFC PE image metadata",
+      "evidence_scope": "module metadata fixtures and native placement allocation"
+    },
+    "CV05": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "hint-independent named import identity and proven export roles",
+      "evidence_scope": "import mismatch and revoked-proof descendant fixtures"
+    },
+    "CV06": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "actual module selection and explicit overrides",
+      "evidence_scope": "late plugin/new-old MFC/CRT/invalid optional module fixtures"
+    },
+    "CV07": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "existing-engine atomic file-only selection",
+      "evidence_scope": "fixture CAS/idempotency and actual existing bridge update"
+    },
+    "CV08": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "deployment-scoped cold identities and actual EXE paths",
+      "evidence_scope": "two-instance source fixtures, own cold build and TYPELIB readback"
+    },
+    "CV09": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "shared product-family rules across four entry points",
+      "evidence_scope": "10 text variants, PS/Python equality and raw version preservation"
+    }
+  },
+  "software_release_number_whitelist": false,
+  "author_vendor_whole_file_SHA_admission": false,
+  "all_older_releases_native_tested": false,
+  "catalog": {
+    "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
+    "storage_sha256": "21c5c70c0c9ebbf2ba97b2c88e2c8f0b431ea8d517a905b25fd3ac8d255ad981",
+    "expanded_json_sha256": "64e4b9611d5b764469ebdf780712d5ddf93bd75328c9413bbdfb3cb79991129a",
+    "generation": {
+      "source_addresses": {
+        "entries": 537,
+        "confirmed": 537,
+        "source_ordinals": 17,
+        "address_kinds": {
+          "PE_RVA_constant": 31,
+          "PE_RVA_literal": 487,
+          "PE_data_RVA_literal": 8,
+          "reference_base_encoded_RVA": 11
+        },
+        "module_ownership_or_const_scope_gaps": 50
+      },
+      "modules": 17,
+      "profiles": 123,
+      "signatures": 5874,
+      "types": 265,
+      "catalog_gaps": 0,
+      "expanded_catalog_sha256": "64e4b9611d5b764469ebdf780712d5ddf93bd75328c9413bbdfb3cb79991129a",
+      "compressed_catalog_sha256": "21c5c70c0c9ebbf2ba97b2c88e2c8f0b431ea8d517a905b25fd3ac8d255ad981"
+    }
+  },
+  "ABI_validation": {
+    "passed": 51,
+    "checks": [
+      "partial HIGHLOW tail offsets retained",
+      "partial HIGHLOW tail guard length retained",
+      "partial HIGHLOW visible bytes correctly normalized",
+      "unrelocated object/member bytes remain exact",
+      "named import lookup hint excluded only from symbol identity",
+      "named import different name rejected",
+      "unproved renamed dependency rejected",
+      "changed ordinal and module require proven selected export body",
+      "old ordinal does not override different current export role",
+      "conflicting export-body proof rejected",
+      "plain ordinal still checked",
+      "sparse slot dictionary indexes are not treated as RVAs",
+      "sparse slot values classified as native addresses",
+      "ordinary numeric layout excluded",
+      "all 2958 template virtual targets classified",
+      "all 116 template entries arrays classified",
+      "additional production slots and methods are classified",
+      "MFC allocator image size registered as current PE metadata",
+      "native bytes_hex and highlow_offsets consumer guards classified",
+      "allocator metadata derives actual image size",
+      "guard reference preferred base preserved",
+      "partial profile validates only resolved requested row",
+      "class direct state independent from unrelated operation gap",
+      "derived profile SHA is actual bytes",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-document-close-abi-profile.json/mfc_close_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-document-close-abi-profile.json/mfc_close_ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-prog-source-normalization-abi-profile.json/mfc_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-prog-source-normalization-abi-profile.json/mfc_ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/0/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/0/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/1/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/1/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/2/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/2/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/3/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/3/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/4/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/4/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/5/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/5/ordinal proven export alias registered",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/6/target_rva owner is MFC",
+      "coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json/mfc_imports/6/ordinal proven export alias registered",
+      "/project-lifecycle-abi-profile.json current MFC image size registered",
+      "/recipe-native-named-persistence-profile.v2.json current MFC image size registered",
+      "engine target RVA fields use actual import dependency owner",
+      "export name-to-row collection never receives metadata",
+      "conflicting current import role withdraws caller",
+      "withdrawal propagates to import-free generic callee",
+      "withdrawal propagates through second generic descendant",
+      "withdrawn generic functions leave no address mappings",
+      "independent unique function proof survives caller withdrawal"
+    ],
+    "native_vendor_calls_performed": false
+  },
+  "managed_validation": {
+    "schema": "cv03-managed-contract-validation/v1",
+    "status": "passed",
+    "managed_only": true,
+    "vendor_or_ui_calls": false,
+    "production_engine_compiled": false,
+    "production_files_changed_for_harness_failure": false,
+    "rerun_scope": "CV03 managed fixture group only; two fixture executables, not the bound production engine",
+    "attempts": [
+      {
+        "attempt": "managed-0001",
+        "status": "failed",
+        "reported_by": "parent unified validation invocation",
+        "production_change": false,
+        "managed_only": true,
+        "vendor_calls": false,
+        "completed_subgroups": {
+          "adapter": {
+            "status": "passed",
+            "stdout": "not persisted by original runner"
+          },
+          "helper": {
+            "status": "passed",
+            "stdout": "not persisted by original runner"
+          }
+        },
+        "failed_subgroup": "index_integrity",
+        "error": "System.Exception: Expected InvalidDataException: index SHA",
+        "confirmed_cause": "Harness called BindingMetadata(), which deliberately does not load or validate index bytes. The corruption check never reached an integrity-enforcing reader.",
+        "correction": "After index corruption, retain an IO-free metadata assertion and call CheckProfile(good.json,true) so Load() verifies the bound index SHA.",
+        "prior_result_file_missing": true
+      },
+      {
+        "attempt": "managed-0002",
+        "command": "python -B -X utf8 cv03_managed_contract_tests.py --repo .\\repo --output .\\validation\\managed-0002",
+        "managed_only": true,
+        "vendor_calls": false,
+        "status": "passed",
+        "compiler_output": [
+          "",
+          ""
+        ],
+        "adapter": "adapter-contract-checks=16",
+        "helper": "lazy-reader-contract-checks=9",
+        "index_integrity": "index-integrity=2"
+      }
+    ],
+    "passing_checks": {
+      "adapter_integrity_and_partial_entry_contracts": 16,
+      "lazy_reader_dependency_and_actual_byte_guard_contracts": 9,
+      "io_free_metadata_and_index_corruption_negative": 2,
+      "total": 27
+    },
+    "artifacts": {
+      "harness": {
+        "path": "<local path omitted>",
+        "sha256": "b84a6a9d271f2e625b8cdd57c35f9a116f0e24fb52bc09d80aea59ccc9372fa2"
+      },
+      "production_adapter": {
+        "path": "<local path omitted>",
+        "sha256": "de054d4070eee092256db9fe167f75e7434611af5c191a3a5ed512a916298b99"
+      },
+      "production_lazy_reader": {
+        "path": "<local path omitted>",
+        "sha256": "be3e05c78d707f04b4ad585b3dc25ba77856c2471e1048687c08c719d2341217"
+      }
+    },
+    "notes": [
+      "Prior negative test failed because BindingMetadata deliberately does not read the index. No production change was needed.",
+      "The corrected negative calls CheckProfile after corrupting the test index and still verifies BindingMetadata remains IO-free.",
+      "The runner now writes intermediate/final reports on failure so completed subgroup outcomes are preserved.",
+      "No native delegate, P/Invoke, vendor executable, Pro UI, or production engine invocation occurred."
+    ]
+  },
+  "deployment_validation": {
+    "schema": 1,
+    "passed": true,
+    "cases": [
+      "CV06 adjacent/import/renamed-MFC-Qt-CRT/explicit-map/optional-PE64-unavailable",
+      "CV06 invalid-authoritative-map-isolated",
+      "CV06 late-plugin-MFC140-CRT140-replaces-earlier-fallback-without-old-MFC-or-MSVCP-CRT110-evidence",
+      "CV06 late-dynamic-import-conflict-withdraws-fallback-and-explicit-map-resolves",
+      "CV07 compiled-scope-metadata-match-and-mismatch",
+      "CV07 plan/preimage-refusal/direct/atomic-backup/idempotent/status",
+      "CV08 scoped-cold-GUID-ProgID-coclass-wrapper/source-chain"
+    ],
+    "native_called": false,
+    "compiled": false,
+    "vendor_code_loaded": false,
+    "registry_written": false,
+    "project_touched": false,
+    "prior_attempts": [
+      {
+        "attempt": "deployment-0001",
+        "passed": false,
+        "failure": "CV06 late-plugin MFC140 assertion failed: System32/SysWOW64 candidate rank13 preceded importer-adjacent candidate rank20.",
+        "old_outputs_preserved": true,
+        "fix": "Preserve local EXE/install ranks10..12, rank importer-adjacent20, defer System runtime candidates to25+index.",
+        "retest": "deployment-0002 completed all seven deployment cases."
+      }
+    ]
+  },
+  "family_validation": {
+    "passed": true,
+    "cases": [
+      {
+        "case": 0,
+        "expected": "Pro",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 1,
+        "expected": "Pro",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 2,
+        "expected": "Pro",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 3,
+        "expected": "Pro",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 4,
+        "expected": "Pro",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 5,
+        "expected": "Stu",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 6,
+        "expected": "Stu",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 7,
+        "expected": "unrecognized",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 8,
+        "expected": "unrecognized",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      },
+      {
+        "case": 9,
+        "expected": "unrecognized",
+        "python_entry_points_agree": true,
+        "original_version_bytes_preserved": true
+      }
+    ],
+    "powershell_shared_contract_agrees": true,
+    "database_or_vendor_software_accessed": false
+  },
+  "own_cold_build": {
+    "schema": 1,
+    "passed": true,
+    "validation_kind": "own-cold-build-and-file-readback",
+    "utc": "2026-11-05T06:01:18.817309+00:00",
+    "registry_written": false,
+    "com_registered": false,
+    "bridge_activated": false,
+    "vendor_modules_loaded": false,
+    "manufacturer_cold_start": false,
+    "editor_started": false,
+    "bridge_callback_executed": false,
+    "project_touched": false,
+    "installation_performed": false,
+    "steps": [
+      {
+        "step": "file-only-prepare",
+        "returncode": 0
+      },
+      {
+        "step": "own-cold-build-once",
+        "returncode": 0
+      },
+      {
+        "step": "compiled-TYPELIB-wrapper-identity-readback",
+        "passed": true
+      }
+    ],
+    "compiled": true,
+    "bootstrap_scope_sha256": "99f54072ddc2bd03bfe0e9868cc3e67314658e7969ae33421a9f6ba5a368a1c1",
+    "synthetic_editor": {
+      "file": "<local path omitted>",
+      "sha256": "5f8b3afeb57463e9dfa3a6a7630af5a9e4b9bd70e7920084acf594bc09005c66",
+      "started": false
+    },
+    "cold_com_identity": {
+      "class_guid": "5C544C43-068B-4963-BD35-64AA0B3A3010",
+      "type_library_guid": "6FF4AA76-4953-489E-8E89-463F4E5B6331",
+      "interface_guid": "09248B9E-A595-4DB0-8CF2-3C38284CA2DF",
+      "coclass_name": "AddInObj_8f3bc7763c",
+      "progid": "McgsInternalBridge.AddInObj_8f3bc7763c",
+      "native_wrapper_file_name": "McgsInternalLoader_8f3bc7763c.dll"
+    },
+    "registration_roots": [
+      "Software\\Classes\\CLSID\\{5C544C43-068B-4963-BD35-64AA0B3A3010}",
+      "Software\\Classes\\McgsInternalBridge.AddInObj_8f3bc7763c",
+      "Software\\Classes\\TypeLib\\{6FF4AA76-4953-489E-8E89-463F4E5B6331}"
+    ],
+    "compiled_bootstrap_identity": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "99f54072ddc2bd03bfe0e9868cc3e67314658e7969ae33421a9f6ba5a368a1c1"
+    },
+    "typelib": {
+      "file": "<local path omitted>",
+      "sha256": "b437a2bbbc525c246170b5b6da00967d644f1ad719a1bb1101fd8f5283896bfc",
+      "bytes": 2348,
+      "embedded_in_bridge": true,
+      "embedded_in_wrapper": true,
+      "resource": "TYPELIB/#1",
+      "metadata": {
+        "file": "<local path omitted>",
+        "read_only": true,
+        "registered": false,
+        "name": "McgsInternalBridge",
+        "documentation": null,
+        "guid": "6ff4aa76-4953-489e-8e89-463f4e5b6331",
+        "syskind": "SYS_WIN32",
+        "major": 1,
+        "minor": 0,
+        "types": [
+          {
+            "name": "IAddInObj",
+            "guid": "09248b9e-a595-4db0-8cf2-3c38284ca2df",
+            "kind": "TKIND_DISPATCH",
+            "flags": "TYPEFLAG_FDISPATCHABLE",
+            "documentation": null,
+            "functions": [
+              {
+                "name": "SvrMenuCommand",
+                "memid": 1,
+                "invoke_kind": "INVOKE_FUNC",
+                "callconv": "CC_STDCALL",
+                "vtable_offset": 0,
+                "parameters": [
+                  {
+                    "name": "name",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_BSTR"
+                    }
+                  },
+                  {
+                    "name": "query",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_I4"
+                    }
+                  },
+                  {
+                    "name": "data",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  }
+                ],
+                "return": "VT_I4"
+              },
+              {
+                "name": "SvrStgySetOperator",
+                "memid": 2,
+                "invoke_kind": "INVOKE_FUNC",
+                "callconv": "CC_STDCALL",
+                "vtable_offset": 0,
+                "parameters": [
+                  {
+                    "name": "name",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_BSTR"
+                    }
+                  },
+                  {
+                    "name": "notes",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_BSTR"
+                    }
+                  },
+                  {
+                    "name": "icon",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_I4"
+                    }
+                  },
+                  {
+                    "name": "data",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  },
+                  {
+                    "name": "saved",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  },
+                  {
+                    "name": "query",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_I4"
+                    }
+                  }
+                ],
+                "return": "VT_I4"
+              },
+              {
+                "name": "SvrStgyRunOperator",
+                "memid": 3,
+                "invoke_kind": "INVOKE_FUNC",
+                "callconv": "CC_STDCALL",
+                "vtable_offset": 0,
+                "parameters": [
+                  {
+                    "name": "data",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  },
+                  {
+                    "name": "saved",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  }
+                ],
+                "return": "VT_I4"
+              },
+              {
+                "name": "SvrCheck",
+                "memid": 4,
+                "invoke_kind": "INVOKE_FUNC",
+                "callconv": "CC_STDCALL",
+                "vtable_offset": 0,
+                "parameters": [
+                  {
+                    "name": "data",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_DISPATCH"
+                    }
+                  },
+                  {
+                    "name": "flag",
+                    "flags": "PARAMFLAG_FIN, PARAMFLAG_FOUT",
+                    "type": {
+                      "kind": "VT_PTR",
+                      "element": "VT_I4"
+                    }
+                  }
+                ],
+                "return": "VT_I4"
+              }
+            ],
+            "implemented_types": [
+              {
+                "name": "IDispatch",
+                "flags": "0"
+              }
+            ]
+          },
+          {
+            "name": "AddInObj_8f3bc7763c",
+            "guid": "5c544c43-068b-4963-bd35-64aa0b3a3010",
+            "kind": "TKIND_COCLASS",
+            "flags": "TYPEFLAG_FCANCREATE",
+            "documentation": null,
+            "functions": [],
+            "implemented_types": [
+              {
+                "name": "IAddInObj",
+                "flags": "IMPLTYPEFLAG_FDEFAULT"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "native_wrapper": {
+      "file": "<local path omitted>",
+      "sha256": "0b63e4d5bbfe093e3b0354409f918000dcd73c4d82ff52adb547d30adf43b44d",
+      "identity": {
+        "sha256": "0b63e4d5bbfe093e3b0354409f918000dcd73c4d82ff52adb547d30adf43b44d",
+        "file_size": 17920,
+        "machine": "I386",
+        "machine_code": 332,
+        "format": "PE32",
+        "is_dll": true,
+        "image_base": 1744830464,
+        "image_size": 32768,
+        "entry_rva": 4096,
+        "section_count": 5,
+        "HIGHLOW_relocation_count": 289,
+        "other_relocation_types": {},
+        "export_count": 1,
+        "import_slot_count": 5,
+        "whole_file_sha_admission": false
+      },
+      "DllRegisterServer_present": true,
+      "DllRegisterServer_invoked": false,
+      "registration_roots_match": true,
+      "evidence_file": "<local path omitted>"
+    },
+    "build_manifest_file": "<local path omitted>",
+    "build_manifest": {
+      "schema": 1,
+      "state": "built_own_sources_only_not_installed",
+      "bootstrap_scope_sha256": "99f54072ddc2bd03bfe0e9868cc3e67314658e7969ae33421a9f6ba5a368a1c1",
+      "files": [
+        {
+          "relative_path": "McgsInternalBridge.dll",
+          "sha256": "7985255bef4f18db9b5658207a128c0bb6d2c8662ef973ce0942019dcb07512e",
+          "bytes": 53760
+        },
+        {
+          "relative_path": "McgsInternalBridge.tlb",
+          "sha256": "b437a2bbbc525c246170b5b6da00967d644f1ad719a1bb1101fd8f5283896bfc",
+          "bytes": 2348
+        },
+        {
+          "relative_path": "McgsBridgeSession.exe",
+          "sha256": "88c6dde2813918c5cf4bd2b9e918db8cc5769782c4264ad34a5ffebe8dd1704a",
+          "bytes": 22016
+        },
+        {
+          "relative_path": "McgsInternalBridge.bridge.json",
+          "sha256": "99f54072ddc2bd03bfe0e9868cc3e67314658e7969ae33421a9f6ba5a368a1c1",
+          "bytes": 2080
+        },
+        {
+          "relative_path": "loader-capability.json",
+          "sha256": "99fde9726590e6ad9b1b79f8decc884481090ea188360b414a1284f834c0e67d",
+          "bytes": 999
+        },
+        {
+          "relative_path": "hklm-registration-plan.json",
+          "sha256": "eb306b0e8d730f48af7af30967d4b1928832e40e4fcf63bee30a80b632a69438",
+          "bytes": 3364
+        },
+        {
+          "relative_path": "prepared-registration-contract.json",
+          "sha256": "1e82ed115365ca5ed8da4bae902fb5e64d460976863313c0a041bd572b370e89",
+          "bytes": 3578
+        },
+        {
+          "relative_path": "native-wrapper\\McgsInternalLoader_8f3bc7763c.dll",
+          "sha256": "0b63e4d5bbfe093e3b0354409f918000dcd73c4d82ff52adb547d30adf43b44d",
+          "bytes": 17920
+        }
+      ],
+      "typelib_callbacks_verified": true,
+      "vendor_code_loaded": false,
+      "bridge_callback_executed": false,
+      "registry_written": false,
+      "deployed": false,
+      "host_started": false,
+      "new_machine_native_compatibility_verified": false,
+      "utc": "2026-11-05T06:01:20.1563938Z"
+    },
+    "boundary": "Own compile/TYPELIB resource/file readback only; no manufacturer cold-load, COM registration, installation, launcher or project acceptance."
+  },
+  "production_engine": {
+    "passed": true,
+    "production_binding": "passed",
+    "production_compilation": "compiled_assembly_observed_and_metadata_verified",
+    "source_count": 162,
+    "engine_bytes": 2295296,
+    "engine_sha256": "dc69dc2fe69e7f5dffab5ba067a2d05d4013212197862de336bd21d3aaab7cda",
+    "index_sha256": "d655de661f5997697cdd5ba0f36b5cf99aafaca2f07386b13ea273818553a935",
+    "scope_sha256": "5db59e9cd9625bdeaafd3d861f08dbaf32c002fc1f08b4b2d746ee50ac678ec5",
+    "bound_manifest_sha256": "4f3e277c1aa5323321e08cd05932a526c9d9d3cfe9a01a1f8fb7b481f6ff4198",
+    "compiled_scope_identity": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "5db59e9cd9625bdeaafd3d861f08dbaf32c002fc1f08b4b2d746ee50ac678ec5"
+    },
+    "compiler_exit_status": null,
+    "compiler_exit_status_reason": "Compiler produced a valid managed assembly; caller stdout decode failed on native CP936 before the exit status was persisted. The compiler is not repeated.",
+    "compiler_warning_count": "unknown",
+    "prior_failures": [
+      "binding-run1 obsolete page-copy path rewrite anchor fixed",
+      "compile invocation first omitted required -Csc; same unchanged bound source compiled with explicit compiler",
+      "compile output logger used UTF8 on CP936; actual valid DLL preserved and checked before any retry"
+    ],
+    "native_calls_executed": false,
+    "promoted": false,
+    "staged": false
+  },
+  "actual_bound_file_readback": {
+    "passed": true,
+    "selected_source_hashes_verified": 161,
+    "layout_source_verified": true,
+    "total_compiled_CSharp_sources": 162,
+    "payload_file_hashes_verified": 308,
+    "profile_states": {
+      "resolved": 123,
+      "partial": 0,
+      "unresolved": 0
+    },
+    "source_address_states": {
+      "resolved": 537,
+      "unresolved": 0
+    },
+    "file_only": true
+  },
+  "native_acceptance": {
+    "schema": 1,
+    "scope": "one owned fixture and one local Pro process",
+    "connection": {
+      "project": "R9-owned-fixture.MCP",
+      "status": "passed"
+    },
+    "update": {
+      "selection": "actual_engine_selection_updated",
+      "engine_sha256": "dc69dc2fe69e7f5dffab5ba067a2d05d4013212197862de336bd21d3aaab7cda",
+      "cross_build_contract": "mcgs-native-cross-build/v2",
+      "promotion_count": 308,
+      "index_sha256": "d655de661f5997697cdd5ba0f36b5cf99aafaca2f07386b13ea273818553a935",
+      "status": "passed",
+      "scope_sha256": "5db59e9cd9625bdeaafd3d861f08dbaf32c002fc1f08b4b2d746ee50ac678ec5"
+    },
+    "mutation": {
+      "control": "OfflineButton",
+      "after": [
+        22,
+        20,
+        202,
+        65
+      ],
+      "before": [
+        21,
+        20,
+        201,
+        65
+      ],
+      "status": "passed"
+    },
+    "create": {
+      "original_placement_allocator_called": true,
+      "rectangle": [
+        30,
+        280,
+        180,
+        310
+      ],
+      "path": [
+        8
+      ],
+      "name": "控件0",
+      "original_placement_constructor_called": true,
+      "status": "passed",
+      "class": "CDrawLabel"
+    },
+    "save": {
+      "page_save": true,
+      "status": "passed",
+      "root_save": true
+    },
+    "native_readback": {
+      "geometry_and_created_control_confirmed": true,
+      "status": "passed"
+    },
+    "file_readback": {
+      "independent_mcp_bytes_sha256": "c0f2e4056f9a72f8066336bbfe4523751fd74385ed5fd8204469c1f566444746",
+      "status": "passed",
+      "archive_roundtrip_equal": true,
+      "close_reopen": "not_performed",
+      "page_control_count": 9,
+      "project_variable_count": 7,
+      "button": {
+        "rectangle": [
+          22,
+          20,
+          202,
+          65
+        ],
+        "name": "OfflineButton",
+        "path": [
+          0
+        ],
+        "type_id": 20519
+      },
+      "page_name": "OfflineFixture",
+      "page_id": 1,
+      "fields_blob_read": "passed",
+      "created_label": {
+        "name": "控件0",
+        "native_readback_instance_id": -2,
+        "native_instance_id": "not_exposed_by_file_parser",
+        "rectangle": [
+          30,
+          280,
+          180,
+          310
+        ],
+        "type_id": 20488,
+        "path": [
+          8
+        ]
+      }
+    },
+    "native_check": {
+      "status": "passed",
+      "return_int32": 0,
+      "worker_returned": true,
+      "error_count": null,
+      "compile_valid_after": 1,
+      "native_check_passed": true,
+      "worker_entered": true,
+      "warning_count": null
+    },
+    "simulation": "not_performed",
+    "physical_communication": "not_performed"
+  },
+  "source_candidate_review": {
+    "schema": "mcgs-native-source-candidate-audit/v1",
+    "method": "read-only lexical call-argument extraction plus manual source provenance review; no tests, compilation, catalog regeneration or native calls",
+    "source_catalog_sha256": "373c4b41470e8b5566d3874b0cd973132e6d7d8fefa0e54d8eedcc1c4e71ba50",
+    "candidate_field": "unresolved_source_candidates",
+    "counts": {
+      "lexical_candidates": 50,
+      "source_files": 27,
+      "profile_supplied_addresses": 46,
+      "relative_layout_offsets": 4,
+      "unclassified_fixed_PE_literals": 0,
+      "actual_omissions_found": 0
+    },
+    "interpretation": "These are lexical module-ownership unknowns of NativeMemory.Add expressions, not 50 unsupported interfaces or unresolved production bindings. The 46 profile-supplied addresses are handled by per-profile mapping; the four relative offsets preserve object/RTTI layout contracts.",
+    "nested_fixed_base_evidence": {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProtectedCopy.cs",
+      "reference_rva": 16495992,
+      "already_classified_source_entries": 2,
+      "proof": [
+        {
+          "start": 1253,
+          "end": 1261,
+          "address_kind": "PE_RVA_literal",
+          "status": "confirmed"
+        },
+        {
+          "start": 2788,
+          "end": 2796,
+          "address_kind": "PE_RVA_literal",
+          "status": "confirmed"
+        }
+      ]
+    },
+    "candidates": [
+      {
+        "candidate_index": 0,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
+        "line": 30,
+        "call": "NativeMemory.Add",
+        "base_expression": "bases[S(r,\"module\")]",
+        "address_or_offset_argument": "N(r,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 1,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
+        "line": 30,
+        "call": "NativeMemory.Add",
+        "base_expression": "bases[S(r,\"module\")]",
+        "address_or_offset_argument": "N(r,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 2,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlSliderFillVisual.v2.cs",
+        "line": 18,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "Num(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 3,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
+        "line": 54,
+        "call": "NativeMemory.Add",
+        "base_expression": "module.BaseAddress",
+        "address_or_offset_argument": "Num(m[\"export_rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 4,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeDataGroupsAndArrays.cs",
+        "line": 21,
+        "call": "NativeMemory.Add",
+        "base_expression": "S(g,\"module\")==\"mfc110u.dll\"?mfc:a.Engine.ImageBase",
+        "address_or_offset_argument": "N(g,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 5,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeDataPrototypeEditing.v3.cs",
+        "line": 21,
+        "call": "NativeMemory.Add",
+        "base_expression": "S(f,\"module\")==\"mfc110u.dll\"?mfc:a.Engine.ImageBase",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 6,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeHistoryStoreProjection.cs",
+        "line": 17,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 7,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarCachedReadonlyProfile.cs",
+        "line": 80,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = Num(g[\"rva\"]); AddGuard receives profile/inherited code_guards rows.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 8,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarCachedReadonlyProfile.cs",
+        "line": 82,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Num(b[\"export_rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 9,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarCachedReadonlyProfile.cs",
+        "line": 83,
+        "call": "NativeMemory.Add",
+        "base_expression": "Engine.Address(Num(t[\"type_descriptor_rva\"]))",
+        "address_or_offset_argument": "8",
+        "classification": "relative_layout_offset",
+        "evidence": "8 is the MSVC x86 TypeDescriptor name offset, after Engine.Address resolves profile type_descriptor_rva.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 10,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarCachedReadonlyProfile.cs",
+        "line": 86,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = Num(guards[name][\"rva\"]); guards were populated from profile rows by AddGuard.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 11,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarReadonlyProfile.cs",
+        "line": 74,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = Num(g[\"rva\"]); AddGuard receives profile/inherited code_guards rows.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 12,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarReadonlyProfile.cs",
+        "line": 76,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Num(b[\"export_rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 13,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarReadonlyProfile.cs",
+        "line": 77,
+        "call": "NativeMemory.Add",
+        "base_expression": "Engine.Address(Num(t[\"type_descriptor_rva\"]))",
+        "address_or_offset_argument": "8",
+        "classification": "relative_layout_offset",
+        "evidence": "8 is the MSVC x86 TypeDescriptor name offset, after Engine.Address resolves profile type_descriptor_rva.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 14,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeLabelScalarReadonlyProfile.cs",
+        "line": 80,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = Num(guards[name][\"rva\"]); guards were populated from profile rows by AddGuard.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 15,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePageEventDefinitionCatalog.v2.cs",
+        "line": 13,
+        "call": "NativeMemory.Add",
+        "base_expression": "editor?e.ImageBase:mfc",
+        "address_or_offset_argument": "ParseHex(f[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 16,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureContainedReferences.v2.cs",
+        "line": 78,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = Number(row[\"target_rva\"]); row is a profile imports entry; module is selected by row[\"file\"].",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 17,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+        "line": 37,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Number(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 18,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+        "line": 37,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Number(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 19,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+        "line": 38,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Number(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 20,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+        "line": 39,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[Convert.ToString(importRow[\"target_module\"])]",
+        "address_or_offset_argument": "Number(importRow[\"target_rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 21,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeProjectLifecycle.cs",
+        "line": 39,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(g[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 22,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeProjectLifecycle.cs",
+        "line": 40,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(g[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 23,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePropertyKeyWarmupProfile.cs",
+        "line": 63,
+        "call": "NativeMemory.Add",
+        "base_expression": "moduleBase",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = NativeEngine.Number(g[\"rva\"]); g is a profile code_guards row; moduleBase comes from modules[g[\"module\"]].BaseAddress.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 24,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePropertyKeyWarmupProfile.cs",
+        "line": 64,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[owner].BaseAddress",
+        "address_or_offset_argument": "NativeEngine.Number(g[\"iat_rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 25,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativePropertyKeyWarmupProfile.cs",
+        "line": 70,
+        "call": "NativeMemory.Add",
+        "base_expression": "Engine.Address(NativeEngine.Number(Map(Profile[\"globals\"])[\"resource_string_cache_rva\"]))",
+        "address_or_offset_argument": "0x40",
+        "classification": "relative_layout_offset",
+        "evidence": "0x40 is the resource cache object/member offset, after Engine.Address resolves profile resource_string_cache_rva.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 26,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeRecipePersistenceContract.cs",
+        "line": 26,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(row,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 27,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyCanonicalOwnership.cs",
+        "line": 11,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[name]",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 28,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyCanonicalSourceEditing.cs",
+        "line": 11,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 29,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDocumentClosing.v4.cs",
+        "line": 23,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 30,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProgSourceNormalization.cs",
+        "line": 14,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "rva",
+        "classification": "profile_supplied_address",
+        "evidence": "rva = N(row[\"rva\"]); row is a profile guards entry; module selects MFC/editor from row[\"module\"].",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 31,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProtectedCopy.cs",
+        "line": 8,
+        "call": "NativeMemory.Add",
+        "base_expression": "api.Native.Engine.Address(0xFBB578)",
+        "address_or_offset_argument": "0x204",
+        "classification": "relative_layout_offset",
+        "evidence": "0x204 is an application object/member offset; the nested Engine.Address(0xFBB578) fixed PE base is already independently classified in source-addresses.json.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 32,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
+        "line": 136,
+        "call": "NativeMemory.Add",
+        "base_expression": "S(f,\"module\")==\"mfc110u.dll\"?Mfc:Engine.ImageBase",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 33,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+        "line": 55,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[name]",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 34,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+        "line": 57,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[Convert.ToString(row[\"module\"])]",
+        "address_or_offset_argument": "N(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 35,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+        "line": 12,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 36,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+        "line": 17,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"int_array_vtable_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 37,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+        "line": 21,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"double_array_vtable_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 38,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+        "line": 23,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"info_vtable_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 39,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+        "line": 23,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"channel_vtable_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 40,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+        "line": 15,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"channel_global_key_vector_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 41,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+        "line": 15,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"channel_global_key_count_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 42,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+        "line": 15,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "Convert.ToInt32(x)",
+        "classification": "profile_supplied_address",
+        "evidence": "keySlots = L(layout[\"channel_wire_key_rvas\"]); x is one element of that driver profile RVA array.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 43,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+        "line": 19,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(layout,\"channel_item_vtable_rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 44,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
+        "line": 22,
+        "call": "NativeMemory.Add",
+        "base_expression": "S(f,\"module\")==\"mfc110u.dll\"?Core.Mfc:Core.Engine.ImageBase",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 45,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
+        "line": 23,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 46,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InstalledDriverAdd.v4.cs",
+        "line": 14,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 47,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InstalledDriverAdd.v4.cs",
+        "line": 17,
+        "call": "NativeMemory.Add",
+        "base_expression": "module",
+        "address_or_offset_argument": "N(f,\"rva\")",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 48,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
+        "line": 53,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Num(row[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      },
+      {
+        "candidate_index": 49,
+        "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableStrategySourceBatch.cs",
+        "line": 44,
+        "call": "NativeMemory.Add",
+        "base_expression": "modules[module]",
+        "address_or_offset_argument": "Convert.ToInt32(g[\"rva\"])",
+        "classification": "profile_supplied_address",
+        "evidence": "The address argument is read from a profile/guard/layout field; the selected module is dynamic runtime context, not an unclassified source PE literal.",
+        "unclassified_fixed_PE_literal_found": false
+      }
+    ],
+    "actual_omissions": []
+  },
+  "source_omission_review": {
+    "initial_six_issues_closed": true,
+    "late_plugin_dependency_graph_issue_closed": true,
+    "new_confirmed_omissions_after_final_review": 0,
+    "review_was_source_only": true
+  },
+  "limits": {
+    "manufacturer_cold_start": "not_performed",
+    "close_reopen": "not_performed",
+    "simulation": "not_performed",
+    "physical_communication": "not_performed",
+    "native_check_error_and_warning_counts": "unknown",
+    "created_control_instance_id_from_file_parser": "not_exposed",
+    "production_compiler_exit_status": "not_persisted_after_output_decode_error; valid assembly checked and actually loaded/executed",
+    "unknown_native_object_layouts_or_arbitrary_compiler_output": "require actual adaptation"
+  },
+  "paused_user_project_accessed": false,
+  "vendor_binaries_or_user_projects_packaged": false
+}

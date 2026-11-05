@@ -8,6 +8,7 @@ from __future__ import annotations
 import struct
 import bisect
 from collections import defaultdict
+from pe32 import import_identity
 
 try:
     import capstone
@@ -18,12 +19,54 @@ except ImportError as exc:
 DECODER_VERSION = capstone.__version__
 
 
-def relocation_range(pe, start, end):
+def relocation_range(pe, start, end, *, intersecting=False):
     ordered = getattr(pe, '_abi_ordered_relocations', None)
     if ordered is None:
         ordered = sorted(pe.relocations)
         pe._abi_ordered_relocations = ordered
-    return ordered[bisect.bisect_left(ordered, start):bisect.bisect_right(ordered, end - 4)]
+    # Instruction models require whole operands. A byte guard instead needs
+    # every HIGHLOW word touching its window, including a truncated tail.
+    first, last = (start - 3, end - 1) if intersecting else (start, end - 4)
+    return ordered[bisect.bisect_left(ordered, first):bisect.bisect_right(ordered, last)]
+
+
+def import_symbol_match(reference, actual, pe=None):
+    """Compare symbol identity; a named import's lookup hint is not identity.
+
+    Ordinal changes and renamed DLLs need a selected logical dependency plus
+    a named export or a uniquely proven current export body. Exact unresolved
+    ordinal imports retain their ordinal and DLL checks.
+    """
+    if not isinstance(reference, dict) or not isinstance(actual, dict):
+        return None
+    same_dll = reference.get('dll', '').casefold() == actual.get('dll', '').casefold()
+    named = reference.get('name') is not None
+    if named and import_identity(reference) == import_identity(actual):
+        return 'named-import-symbol'
+    role = reference.get('export_role')
+    if role:
+        if pe is None:
+            return None
+        dependencies = getattr(pe, '_abi_import_dependencies', {})
+        imported = dependencies.get(actual.get('dll', '').casefold())
+        if imported and imported[0] == role['module']:
+            alias, target = imported
+            current = (target.exports.get(actual.get('name')) if actual.get('name') is not None else
+                       target.exports_by_ordinal.get(actual.get('ordinal')))
+            if current and not current.get('forwarder') and current.get('rva'):
+                names = role.get('names', [])
+                if any(target.exports.get(name, {}).get('rva') == current['rva'] and
+                       not target.exports[name].get('forwarder') for name in names):
+                    return 'selected-dependency-named-export-role'
+                proven = getattr(pe, '_abi_import_role_targets', {}).get((alias, role['reference_rva']), set())
+                if len(proven) == 1 and current['rva'] in proven:
+                    return 'selected-dependency-proven-export-body'
+        # A cataloged ordinal role cannot fall back to the old ordinal number
+        # after the dependency changed; the export target must be proved.
+        return None
+    if same_dll and not named and reference.get('ordinal') is not None and import_identity(reference) == import_identity(actual):
+        return 'exact-ordinal-import-symbol'
+    return None
 
 
 def decoder():
@@ -248,9 +291,9 @@ def verify_context(reference_pe, actual_pe, reference, actual, reference_rva, ac
             return None
         old, new = ref['reference_target_rva'], got['reference_target_rva']
         if ref.get('import'):
-            if ref['import'] != got.get('import'):
+            role = import_symbol_match(ref['import'], got.get('import'), actual_pe)
+            if role is None:
                 return None
-            role = 'import-symbol'
         elif ref.get('RTTI_vtable_anchor'):
             if ref['RTTI_vtable_anchor'] != got.get('RTTI_vtable_anchor'):
                 return None
@@ -328,9 +371,14 @@ def normalized_guard_bytes(pe, rva, length, reference_preferred_base):
     """Preserve existing C# HIGHLOW delta semantics without double rebasing."""
     data = bytearray(pe.read(rva, length))
     positions = []
-    for site in relocation_range(pe, rva, rva + length):
+    for site in relocation_range(pe, rva, rva + length, intersecting=True):
         off = site - rva
-        value = struct.unpack_from('<I', data, off)[0]
-        struct.pack_into('<I', data, off, (value - pe.image_base + reference_preferred_base) & 0xffffffff)
+        # Read the complete source word, rebase once, then restore only bytes
+        # present in the guard. Packing into the short guard loses trailing
+        # HIGHLOWs or extends its length, both of which change the contract.
+        value = struct.unpack('<I', pe.read(site, 4))[0]
+        canonical = struct.pack('<I', (value - pe.image_base + reference_preferred_base) & 0xffffffff)
+        first, last = max(0, off), min(length, off + 4)
+        data[first:last] = canonical[first - off:last - off]
         positions.append(off)
     return bytes(data), positions

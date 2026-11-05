@@ -84,8 +84,7 @@ namespace McgsInternalBridge {
         internal static void EnsureUiPump(string callback,int query,object datObj) {
             BootstrapLayout.CheckHost();
             if(IntPtr.Size!=4)throw new InvalidOperationException("Bridge requires the 32-bit native editor host.");
-            if(!String.Equals(Path.GetFileName(Process.GetCurrentProcess().MainModule.FileName),"McgsSetPro.exe",StringComparison.OrdinalIgnoreCase))
-                throw new InvalidOperationException("Bridge callback is outside McgsSetPro.exe.");
+            // CheckHost verifies the explicitly bound full EXE path and identity.
             if(Thread.CurrentThread.GetApartmentState()!=ApartmentState.STA)throw new InvalidOperationException("Native callback is not STA.");
             int thread=GetCurrentThreadId();
             if(UiThreadId!=0&&UiThreadId!=thread)throw new InvalidOperationException("Callback changed native UI thread.");

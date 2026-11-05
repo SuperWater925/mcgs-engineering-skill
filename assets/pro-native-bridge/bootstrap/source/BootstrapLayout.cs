@@ -3,6 +3,7 @@
 using System;using System.Collections.Generic;using System.Diagnostics;
 using System.Globalization;using System.IO;using System.Reflection;
 using System.Security.Cryptography;using System.Text;
+using System.Text.RegularExpressions;
 using System.Web.Script.Serialization;
 namespace McgsInternalBridge {
  internal static class BootstrapLayout {
@@ -17,6 +18,13 @@ namespace McgsInternalBridge {
   internal static string EditorFile{get{return Text("editor_executable");}}
   internal static string EditorSha256{get{return Text("editor_sha256");}}
   internal static string StartupRegistryPath{get{return Text("startup_registry_path");}}
+  internal static string[] ColdRegistrationRoots{get{
+   Load();object raw;if(!data.TryGetValue("cold_com_identity",out raw))return new[]{@"Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}",@"Software\Classes\McgsInternalBridge.AddInObj",@"Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}"};
+   var identity=raw as Dictionary<string,object>;Need(identity!=null,"Cold COM identity must be an object.");
+   string cls=Convert.ToString(Field(identity,"class_guid")),lib=Convert.ToString(Field(identity,"type_library_guid")),prog=Convert.ToString(Field(identity,"progid"));
+   Guid parsed;Need(Guid.TryParseExact(cls,"D",out parsed)&&Guid.TryParseExact(lib,"D",out parsed)&&Regex.IsMatch(prog,@"\AMcgsInternalBridge\.AddInObj_[a-f0-9]{10}\z"),"Cold COM identity is not deployment scoped.");
+   return new[]{@"Software\Classes\CLSID\{"+cls+"}",@"Software\Classes\"+prog,@"Software\Classes\TypeLib\{"+lib+"}"};
+  }}
   internal static string EngineRoot{get{return Path.Combine(BootstrapRoot,"engines");}}
   static string Text(string key){Load();return (string)data[key];}
   internal static string Hash(string file){using(var h=SHA256.Create())using(var f=new FileStream(file,FileMode.Open,FileAccess.Read,FileShare.Read))return Hex(h.ComputeHash(f));}

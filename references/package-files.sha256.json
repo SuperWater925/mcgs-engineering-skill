@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 520,
-  "descriptor_sha256": "a1322446c90aebd8a2b5fc55ab1bd38ea9aab536e3e01567bf0aef853f55e005",
+  "file_count": 529,
+  "descriptor_sha256": "8428c10540b976f2bb06dab6257075090ef4596bf7688b2d872d3ba73171191e",
   "files": [
     {
       "file": ".gitattributes",
@@ -111,8 +111,8 @@
     },
     {
       "file": "assets/pro-3.5-cli/scripts/mcgs_file.py",
-      "bytes": 18815,
-      "sha256": "71339d0c562eb74c129ca03f87306f5b2b4c988c94b14be836b4b03cc58acf97"
+      "bytes": 18855,
+      "sha256": "1dbd48fb232e551f7acdc28f56a949487d48609d70c7cc6539e2c4589c697f6d"
     },
     {
       "file": "assets/pro-3.5-cli/scripts/native_format.py",
@@ -131,43 +131,48 @@
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/abi_binding.py",
-      "bytes": 23938,
-      "sha256": "cb6ac64269adf5babc97765659337a35e5183d350c850da32c2bb0aa140f6748"
+      "bytes": 23392,
+      "sha256": "14c65f8b2247c21b6da8973ad361723fc27febfc74197da17b8765df4f701fb2"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/abi_locator.py",
-      "bytes": 52606,
-      "sha256": "0ed910ddfda10eefae7931bc06f539b10efe19a47537e851230eed2dd89e3177"
+      "bytes": 70487,
+      "sha256": "99fcde28e35cd2d7bbffa741d3fa9a0b453b1648ee1e32b63869e265a3c5ecad"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/profile-field-modules.json",
-      "bytes": 1869,
-      "sha256": "b11ad23ff28b4e91f6f6e67b567453a0e6d279cb183653d3ceabe53b2b64c3d3"
+      "bytes": 14939,
+      "sha256": "cd62d00b385d51c233f5e240e2012697a9171fc312cfa080b3e4c73a03bc7e6a"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
-      "bytes": 2063325,
-      "sha256": "7e6eadd20f11732b27f3123dc45f49102e9f0843d7bac1edca21d8b134b81036"
+      "bytes": 2670621,
+      "sha256": "21c5c70c0c9ebbf2ba97b2c88e2c8f0b431ea8d517a905b25fd3ac8d255ad981"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json",
-      "bytes": 415242,
-      "sha256": "b8cf61f4bde1d576d087991359a39b953e9cb3980347c5e3e237930dc509318c"
+      "bytes": 422494,
+      "sha256": "373c4b41470e8b5566d3874b0cd973132e6d7d8fefa0e54d8eedcc1c4e71ba50"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/inventory.py",
-      "bytes": 44578,
-      "sha256": "2822e11acb7bbf3e3e3a85f240484941aab0479290ea112f663f177f6d551b3e"
+      "bytes": 45045,
+      "sha256": "f81c35ef935d0c1c201d12ecbf8c1649b13934599790f53e59d83006535f49e9"
+    },
+    {
+      "file": "assets/pro-native-bridge/abi-adapter/module_selection.py",
+      "bytes": 15468,
+      "sha256": "3ec8e1ed23d7d80b556abb2e0f35a98e553a71ac81162531301a3dd3d7f89a93"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs",
-      "bytes": 10653,
-      "sha256": "2c52396d01a7e1abad20ea3a5d6d638de15dd9668905c9a0f69fd6dfad70a545"
+      "bytes": 15937,
+      "sha256": "de054d4070eee092256db9fe167f75e7434611af5c191a3a5ed512a916298b99"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/pe32.py",
-      "bytes": 18102,
-      "sha256": "6c2b5cb8842dfc6fefa4bd7ee80c3d853572e7abaf3a2fdb1317d0e2cf019304"
+      "bytes": 18616,
+      "sha256": "48ce95de36f650363d5fbc67bbd8d60f4e1b0879c52070abbcd1beec176d8239"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/README.md",
@@ -186,28 +191,33 @@
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/x86_signature.py",
-      "bytes": 16386,
-      "sha256": "d0df74f057d0945dfc5e5cc3feb4dc42dd170c1cab5890deb837f548aadc20a2"
+      "bytes": 19225,
+      "sha256": "35e65ce8e5d930377c1144e9346b603cb9b6c8c7724448149e566c4e23f765fb"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/build_bootstrap.ps1",
-      "bytes": 5891,
-      "sha256": "d1a6455f87efc9326f699bb4999632a6f5effd595d33cf29d79ff94a5145a032"
+      "bytes": 6556,
+      "sha256": "8a52d29c960b52933f67c6cb1bb889fcc295402c76aa212e0bf6f4af62bddf3a"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/build_native_wrapper.py",
-      "bytes": 19716,
-      "sha256": "29e9975d671044e65a583738be701c53a4b47c87789b7568ec3c1fea01b0f74c"
+      "bytes": 22389,
+      "sha256": "10980e28165f5540f0ccd573096d87ccd81f0eb7dcf83e00f8df1722953a0cd5"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/install_bootstrap.ps1",
-      "bytes": 9416,
-      "sha256": "c1aad62da4b22489a10eb9b849fcf14d1f2ef603016fb6ddeefc2b4488085d83"
+      "bytes": 11089,
+      "sha256": "82d6c0edca6510e5c6340eb6ea16faed9386ded813ef52dfe2d63ae2833c9cbc"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/loader-capability.current.json",
       "bytes": 1369,
       "sha256": "93b2d1659ef96fae512fc064417fc0e5779179f543a7e2bee0028a3288ee567c"
+    },
+    {
+      "file": "assets/pro-native-bridge/bootstrap/managed_pe.py",
+      "bytes": 9370,
+      "sha256": "a8a9d5aa56f51b87c212a1bde735ad833231e13f860d95949c680dd8234846ff"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/offline-build-verification.json",
@@ -216,8 +226,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/package-source-manifest.json",
-      "bytes": 3485,
-      "sha256": "929ff6847c52246ce397cb724c70a83adf835a2b0ccff3b4a4fb71be48690ff3"
+      "bytes": 4000,
+      "sha256": "60b08972b80b319a0a9cf7220d4175fa82acf5b48fc955c14c83eb4de11c7435"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/pe_image.py",
@@ -226,33 +236,38 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/prepare_bootstrap.py",
-      "bytes": 10572,
-      "sha256": "7aca1fac9efbab7a7684057dd62c60261b91b5b3fd1ddbf581b916f50fd36f99"
+      "bytes": 12072,
+      "sha256": "9a963d6b132f7c6edbb31ed81575c04dcd60f3c791ff2af5776b9bea30c56b1f"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/README.md",
-      "bytes": 9868,
-      "sha256": "9518d3c5147f10f72648de837cbd0023e828c7e9877bfc990647414a9c7f23b1"
+      "bytes": 12702,
+      "sha256": "b2cc6b36ba5965f76476979675fbfc05a39fa2b186a6bacf1272db01870e5453"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/remove_bootstrap.ps1",
-      "bytes": 4926,
-      "sha256": "2ff40beb5722c90298ed0a220bd1e8b230db48a3cc2fcfde9dad667fd2dd57af"
+      "bytes": 6621,
+      "sha256": "cbf1e0c9a55366df3340ad5f2921b9d16ffed345b14a51e48e341d77685bc140"
+    },
+    {
+      "file": "assets/pro-native-bridge/bootstrap/select_engine.py",
+      "bytes": 13451,
+      "sha256": "2e3314a1a7bd67816cca843757711417a513dfa3838f062c79ea6e0c535d1357"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/Bootstrap.cs",
-      "bytes": 13086,
-      "sha256": "b3f32aa6d94e3d6118daf7d5274c67d85935b9be557929e183f6859c60ec341f"
+      "bytes": 12920,
+      "sha256": "9cd56383eacdf3c01120d71e5e5b028223d16961054498b05a9fbc9ab3057835"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/BootstrapLayout.cs",
-      "bytes": 8836,
-      "sha256": "1e6cf823dc6906b299e9be4da4fc83a278cfb8b1482333901e545e3dbcdb23af"
+      "bytes": 9820,
+      "sha256": "1b59091a9a5c088a5ba374b2db4cf2a658d8c2aa14a137282bff72808b3d76a6"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/BridgeSessionLauncher.cs",
-      "bytes": 7151,
-      "sha256": "0d808a9d6bd3c4931fbc0c7ced9fc7d1253bfe6452f66f3c01b971fab53dc465"
+      "bytes": 8809,
+      "sha256": "05a22ef0a4d3779a8160125ad5e4819afe4f499d04a5aaffed32d4be2e754292"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/DurableQueuePump.cs",
@@ -286,8 +301,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/stage_engine.py",
-      "bytes": 3741,
-      "sha256": "63068fe303e4bbbf10f2a21b84c1fc1a4b5ff971127cfcade41b105dfc6b2d80"
+      "bytes": 3882,
+      "sha256": "321d64950bebad30cb49fbaf936c53ad211dea35ed4287574e92d294f2757c90"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/upstream-source-hashes.json",
@@ -331,8 +346,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/bind_common_delivery.v5.py",
-      "bytes": 33657,
-      "sha256": "db1b7f046656d7a83a62b124ace3ec04c44aaa407b59f9e515f8b56ddbf182d1"
+      "bytes": 31736,
+      "sha256": "dde2a5577df61daff513770fe54f2380776537b4041541b61f0095f6bd775548"
     },
     {
       "file": "assets/pro-native-bridge/delivery/delivery_file_support.py",
@@ -1301,8 +1316,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json",
-      "bytes": 68422,
-      "sha256": "5f9b0160074e1ca7d0ae33a0eab7b8129badcabba6ed0dd7e17e09a5549c5538"
+      "bytes": 68568,
+      "sha256": "1fd215c0f7fe9f22abecbff1a8eba836467393777e1c67b6a00ee920c8b5d620"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/bootstrap__NativeTrialActions.cs",
@@ -1386,8 +1401,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "bytes": 16517,
-      "sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79"
+      "bytes": 15180,
+      "sha256": "a2cc6225f29be8f78c1e103c93d78fd85b798ac7aacd372c4d31f368a92bc0c3"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyTriggerCursorProbe.cs",
@@ -1501,13 +1516,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
-      "bytes": 25186,
-      "sha256": "8123339264a39d0eac0585b3096ed6b31350df456a65ba6dce09f18ab084e703"
+      "bytes": 28650,
+      "sha256": "bdf6033ba8d7cf418c77b1d5a96335c44895aa38449d239bf1adbfd2e22492a8"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "bytes": 33221,
-      "sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b"
+      "bytes": 33854,
+      "sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionEditing.cs",
@@ -1640,6 +1655,11 @@
       "sha256": "bccfc87479834c211376181b5bd23254c8d07602227344eec8689795dd791d97"
     },
     {
+      "file": "assets/pro-native-bridge/delivery/source/sources/NativeLazyFunctionProfile.cs",
+      "bytes": 9615,
+      "sha256": "be3e05c78d707f04b4ad585b3dc25ba77856c2471e1048687c08c719d2341217"
+    },
+    {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
       "bytes": 16578,
       "sha256": "c89f8ff7d48a8ab724a87b86e4015e20e529958d96d23e7f058fb731aa356648"
@@ -1676,8 +1696,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "bytes": 14029,
-      "sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838"
+      "bytes": 12921,
+      "sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
@@ -1686,8 +1706,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "bytes": 31265,
-      "sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1"
+      "bytes": 27368,
+      "sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventDefinitionCatalog.v2.cs",
@@ -1756,18 +1776,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "bytes": 29742,
-      "sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a"
+      "bytes": 25726,
+      "sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "bytes": 24334,
-      "sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52"
+      "bytes": 25506,
+      "sha256": "72fc54056dd52b0e5d21a301ff72ccf99c1045a840d37e6b88bbec36d059efc9"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
-      "bytes": 19843,
-      "sha256": "73495c915dc2d0f199a98a54e02956febdf2a7897040debac479fda529110ef6"
+      "bytes": 19990,
+      "sha256": "03c68b66f0bce816d52c904f29773f509d832dd75b1e62f07e19de6d22ac694c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedRootSave.cs",
@@ -1776,8 +1796,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "bytes": 21054,
-      "sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e"
+      "bytes": 21112,
+      "sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeProjectCompileDiagnostics.cs",
@@ -2096,8 +2116,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "bytes": 45179,
-      "sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27"
+      "bytes": 42261,
+      "sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/build_hook_pe.py",
@@ -2121,8 +2141,8 @@
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/source-manifest.json",
-      "bytes": 4283,
-      "sha256": "e829c396a77c0cb4a5615b5bb6bf8cce97210c4b3d89d2131df83fe4d294d481"
+      "bytes": 4798,
+      "sha256": "05f0d65414157358b7212275fa443f68fd75e51e2c59caf1b316b92be18ae0db"
     },
     {
       "file": "assets/pro-native-bridge/hot-attach/source/HotAttachClient.cs",
@@ -2196,8 +2216,8 @@
     },
     {
       "file": "CHANGELOG.md",
-      "bytes": 10259,
-      "sha256": "1ed4e7a72c918a2da338c2da44adfbb7125626660f940944f42d9110d8fac4b3"
+      "bytes": 11563,
+      "sha256": "dff4d5ecd6dd9c19575ed9e9413d973e27c24458bbf2250e4e3e889955473b73"
     },
     {
       "file": "CONTRIBUTING.md",
@@ -2211,13 +2231,23 @@
     },
     {
       "file": "README.md",
-      "bytes": 16648,
-      "sha256": "347d82424ea7909a92ec8e1805b2e6ae93e005e8e71872aed9be0ef00c2494e6"
+      "bytes": 17996,
+      "sha256": "a14b2bfdcc66fd10ce4703774be7e107ced889df4ead8572f3b0ff518661033e"
     },
     {
       "file": "references/bounded-edits.md",
       "bytes": 4123,
       "sha256": "60e644df8ddb4c314bdb4c9d9f6013bda2426fcd143ee8a411e3bc317eddc56f"
+    },
+    {
+      "file": "references/cross-build-compatibility.md",
+      "bytes": 4207,
+      "sha256": "3db4daa3b5031f3b9e09b152c6152894f1a3be48c587b7475892313d29e453b8"
+    },
+    {
+      "file": "references/cross-build-fixes-validation.json",
+      "bytes": 63842,
+      "sha256": "19a89eb2bf99a72941997b70068fb67fc935fcf4e2743ac30ffc6e3cf70ff9d0"
     },
     {
       "file": "references/database-and-transactions.md",
@@ -2311,8 +2341,8 @@
     },
     {
       "file": "references/pro-native-deployment.md",
-      "bytes": 19493,
-      "sha256": "06555392cce7d4a7528a0ce41fc9fc5de52f0a5af23c0d98835d31d7c3b69c56"
+      "bytes": 20638,
+      "sha256": "1e1d1ce8ae3a03d87387c3dabdfeb5a82eab890580afef6467dbc7a889dbffaf"
     },
     {
       "file": "references/pro-native-device-reopen.md",
@@ -2326,8 +2356,8 @@
     },
     {
       "file": "references/pro-native-dynamic-functions.md",
-      "bytes": 4323,
-      "sha256": "c1c55854334af06443c5fd987ff1041fcff4c51f2b8936c006ddd4c50e0177f9"
+      "bytes": 4492,
+      "sha256": "d623fffad3b14c5bf9bbfa416f40c0e7c720c04d1360806dfffabfecf0b945e0"
     },
     {
       "file": "references/pro-native-engineering.md",
@@ -2386,8 +2416,8 @@
     },
     {
       "file": "references/source-provenance.json",
-      "bytes": 37892,
-      "sha256": "b936d18dc8031bc106587a2c874c2e1bb334da452ff67c8ef84bd5e6a817f90f"
+      "bytes": 40250,
+      "sha256": "0030876da3b07c1d7d195a35152fb1f51266e7c2e537eeb0a8075eda07ce8489"
     },
     {
       "file": "references/statistics-and-export.md",
@@ -2421,8 +2451,8 @@
     },
     {
       "file": "run.ps1",
-      "bytes": 2192,
-      "sha256": "c04d562ab20d81b8a5ade029f2838e727dbd3cbfafb79f25bf16742908717120"
+      "bytes": 2582,
+      "sha256": "7276585cf5ac68da918ca36a57f3e56a90644a96d2de81953ed43d773543c157"
     },
     {
       "file": "scripts/ace-runtime.ps1",
@@ -2448,6 +2478,11 @@
       "file": "scripts/native/control_patch.py",
       "bytes": 6750,
       "sha256": "a81a4910f38438084aa47ce44af0e7117d6e19774ed311f83d4b653c0b2f1ff7"
+    },
+    {
+      "file": "scripts/native/mcgs_family.py",
+      "bytes": 728,
+      "sha256": "c82d3fc6647a26f96b9bd5b75a20d5fecf6e85ff5f886de3ad4bef5141df74d8"
     },
     {
       "file": "scripts/native/mcgs_native_zip.py",
@@ -2488,6 +2523,11 @@
       "file": "scripts/native/mcs_window_archive.py",
       "bytes": 7445,
       "sha256": "551222ad4a871ec493082eb354ff5b8c10ac61a36f01a642c3c0663330437ed7"
+    },
+    {
+      "file": "scripts/native/project_family.json",
+      "bytes": 87,
+      "sha256": "c615610c3d5b3443c3e6e5deda706c2da1afe91266ace416b7633e886f36bebb"
     },
     {
       "file": "scripts/native/原生界面样式.py",
@@ -2531,8 +2571,8 @@
     },
     {
       "file": "scripts/native_tool.py",
-      "bytes": 33603,
-      "sha256": "c15df057ed3600d9734d0f2055fe8e28c32c448a53e915e91688cd6185523c40"
+      "bytes": 33427,
+      "sha256": "d1b9f0b3b9eb156515648fe07c760fea79e8ffca88d0aac3f61fe2f75f0c5a34"
     },
     {
       "file": "scripts/native_ui_rules.py",
@@ -2550,19 +2590,24 @@
       "sha256": "377071a2eec5d77f49024f1a2e27f58e11c57ea45af498e99047d47119a8e936"
     },
     {
+      "file": "scripts/project-family.ps1",
+      "bytes": 703,
+      "sha256": "f252b3f28c81382f9518810ce5476a2132cbb0c6f9f1afe0e63427290b05efd3"
+    },
+    {
       "file": "scripts/stu_project.ps1",
-      "bytes": 23326,
-      "sha256": "64fde50794663ebe98391cc2047cc755ffbb9e1e67f920635e306dc622503dd3"
+      "bytes": 23153,
+      "sha256": "82fab2fa20b28f331e208984a42bd56130c5d3301b1474eb444e22ae864bb408"
     },
     {
       "file": "SKILL.md",
-      "bytes": 14586,
-      "sha256": "7f7ca6785f908d4de3cf366e813408d6ece108142c95a238df18dfada79744c1"
+      "bytes": 15238,
+      "sha256": "66ef0cb64ee75b960663fc5d46548e7b3460755fea0fc3fe1261c23847c8e57d"
     },
     {
       "file": "tools/mcgs_ui.py",
-      "bytes": 54753,
-      "sha256": "1dcbfc5121886f6b58e7aaa8f225ecd238991232c63b9a5a4aa47d71ebae21b2"
+      "bytes": 54645,
+      "sha256": "093ef036f71cf22fe498ca38142184eafd9503049a01209d8ee81d5271b63b57"
     },
     {
       "file": "tools/文字容纳检查.py",

@@ -46,15 +46,17 @@ def main():
     if os.path.normcase(os.path.abspath(selected_editor))!=os.path.normcase(os.path.abspath(cfg['editor_executable'])):
         raise ValueError('Engine and bootstrap disagree on the selected editor executable')
     target=boot/'engines'/engine.name;target_scope=target.with_suffix('.scope.json')
+    runtime=Path(cfg['runtime_root'])
+    manifest=runtime/'active-engine.json'
+    if os.path.lexists(manifest):raise ValueError('Initial selection already exists; use select_engine.py for an existing bridge')
     if target.exists() or target_scope.exists():raise ValueError('Do not overwrite any engine/scope version')
     write_new(target,engine.read_bytes());write_new(target_scope,scope.read_bytes())
-    runtime=Path(cfg['runtime_root']);runtime.mkdir(parents=True,exist_ok=True)
+    runtime.mkdir(parents=True,exist_ok=True)
     for d in [runtime,*runtime.parents]:
         if d.stat(follow_symlinks=False).st_file_attributes & 0x400:raise ValueError('Runtime reparse ancestor')
-    manifest=runtime/'active-engine.json'
     value={'assembly':str(target),'sha256':digest(target),'bootstrap_scope_sha256':digest(config)}
-    # First deployment only. Later hot-engine selection remains a separate,
-    # reviewed file-only action; it must retain this bootstrap scope digest.
+    # First deployment only. Existing bridges use select_engine.py; it retains
+    # this bootstrap scope digest and atomically replaces only the selection.
     write_new(manifest,(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode())
     print(json.dumps({'schema':1,'status':'own_engine_staged_not_host_called','manifest':str(manifest),
                       'engine_sha256':digest(target),'engine_scope_sha256':digest(target_scope),

@@ -14,6 +14,8 @@ import json
 import struct
 import urllib.parse
 import argparse
+import re
+import uuid
 
 
 HERE = None
@@ -24,11 +26,8 @@ ALIGN = 0x1000
 FILE_ALIGN = 0x200
 HKLM = 0x80000002
 MARKER = 'CodexBridgeTransactionId'
-ROOTS = [
-    r'Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}',
-    r'Software\Classes\McgsInternalBridge.AddInObj',
-    r'Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}',
-]
+ROOTS = None
+WRAPPER_NAME = None
 IMPORTS = ['RegOpenKeyExW', 'RegQueryValueExW', 'RegCreateKeyExW',
            'RegSetValueExW', 'RegCloseKey']
 
@@ -76,12 +75,32 @@ class Assembler:
 
 
 def load_contract():
+    global ROOTS, WRAPPER_NAME
     tx_path = CONTRACT
     plan_path = BOOT / 'hklm-registration-plan.json'
     tx_raw, plan_raw = tx_path.read_bytes(), plan_path.read_bytes()
     tx, plan = json.loads(tx_raw), json.loads(plan_raw)
     if tx['state'] != 'prepared_not_registered' or tx['hive'] != 'HKLM' or tx['view'] != 'Registry32':
         raise ValueError('Unexpected transaction hive/view')
+    config_raw = (BOOT / 'McgsInternalBridge.bridge.json').read_bytes()
+    config = json.loads(config_raw)
+    if tx['bootstrap_scope_sha256'] != sha(config_raw) or plan['bootstrap_scope_sha256'] != sha(config_raw) or Path(config['bootstrap_root']).resolve() != BOOT:
+        raise ValueError('Registration contract/config binding differs')
+    identity = config.get('cold_com_identity')
+    if identity is None:
+        ROOTS = [r'Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}',
+                 r'Software\Classes\McgsInternalBridge.AddInObj',
+                 r'Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}']
+        WRAPPER_NAME = 'McgsInternalLoader.dll'
+    else:
+        cls, lib, interface = [str(uuid.UUID(identity[key])).upper() for key in ('class_guid', 'type_library_guid', 'interface_guid')]
+        progid, WRAPPER_NAME = identity['progid'], identity['native_wrapper_file_name']
+        if not re.fullmatch(r'McgsInternalBridge\.AddInObj_[a-f0-9]{10}', progid) or not re.fullmatch(r'McgsInternalLoader_[a-f0-9]{10}\.dll', WRAPPER_NAME):
+            raise ValueError('Invalid deployment-scoped cold COM identity')
+        if progid != 'McgsInternalBridge.' + identity['coclass_name']:
+            raise ValueError('Cold coclass and ProgID disagree')
+        ROOTS = ['Software\\Classes\\CLSID\\{'+cls+'}', 'Software\\Classes\\'+progid,
+                 'Software\\Classes\\TypeLib\\{'+lib+'}']
     if tx['roots'] != ROOTS or plan['requires_absent_roots'] != ROOTS:
         raise ValueError('Private root allowlist changed')
     token = tx['transaction_id']
@@ -121,7 +140,8 @@ def load_contract():
     return entries, token, {'transaction': str(tx_path), 'transaction_sha256': sha(tx_raw),
                             'plan': str(plan_path), 'plan_sha256': sha(plan_raw),
                             'stable_path': str(stable), 'stable_sha256': sha(stable.read_bytes()),
-                            'transaction_id': token, 'codebase': codebase}
+                            'transaction_id': token, 'codebase': codebase,
+                            'bootstrap_scope_sha256': sha(config_raw), 'cold_com_identity': identity}
 
 
 def build():
@@ -252,7 +272,7 @@ def build():
     text_rva = 0x1000
     rdata_rva = align(text_rva + len(a.code), ALIGN)
     # Export table precedes aligned UTF16 strings.
-    export_name = b'McgsInternalLoader.dll\0'
+    export_name = WRAPPER_NAME.encode('ascii') + b'\0'
     export_func = b'DllRegisterServer\0'
     export_size = 50 + len(export_name) + len(export_func)
     strings_offset = align(export_size, 4)
@@ -290,8 +310,24 @@ def build():
 
     rsrc_rva = align(idata_rva + len(idata), ALIGN)
     tlb = (BOOT / 'McgsInternalBridge.tlb').read_bytes()
-    if len(tlb) != 2328 or tlb[:4] != b'MSFT':
-        raise ValueError('Unexpected stable type library')
+    if not 256 <= len(tlb) <= 65536 or tlb[:4] != b'MSFT':
+        raise ValueError('Expected bounded own MSFT type library')
+    stable = (BOOT / 'McgsInternalBridge.dll').read_bytes()
+    if stable.count(tlb) != 1:
+        raise ValueError('Own DLL must contain the exact current type-library bytes once')
+    identity = sources['cold_com_identity']
+    if identity is not None:
+        metadata = json.loads((BOOT / 'bootstrap-embedded-typelib.json').read_text(encoding='utf-8-sig'))
+        coclasses = [row for row in metadata['types'] if row['kind'] == 'TKIND_COCLASS']
+        interfaces = [row for row in metadata['types'] if row['name'] == 'IAddInObj']
+        if (str(uuid.UUID(metadata['guid'])).upper() != identity['type_library_guid'] or
+                len(coclasses) != 1 or coclasses[0]['name'] != identity['coclass_name'] or
+                str(uuid.UUID(coclasses[0]['guid'])).upper() != identity['class_guid'] or
+                len(interfaces) != 1 or str(uuid.UUID(interfaces[0]['guid'])).upper() != identity['interface_guid']):
+            raise ValueError('Compiled TYPELIB identity differs from this deployment')
+        for key in ('type_library_guid', 'class_guid', 'interface_guid'):
+            if uuid.UUID(identity[key]).bytes_le not in tlb:
+                raise ValueError('Current TYPELIB omits its deployment GUID: ' + key)
     # Root named type TYPELIB -> numeric name 1 -> language 0 -> data.
     rsrc = bytearray(104)
     struct.pack_into('<IIHHHH', rsrc, 0, 0, 0, 0, 0, 1, 0)
@@ -346,7 +382,7 @@ def build():
                                raw_size, offset, 0, 0, 0, 0, flags)
         payload.extend(content.ljust(raw_size, b'\0')); offset += raw_size
     image = headers.ljust(header_size, b'\0') + payload
-    output = HERE / 'McgsInternalLoader.dll'
+    output = HERE / WRAPPER_NAME
     output.write_bytes(image)
     report = {
         'schema': 1, 'status': 'built_not_loaded_or_registered', 'path': str(output),

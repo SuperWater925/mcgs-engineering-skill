@@ -5,16 +5,16 @@
   "generic_numeric_parser_rewritten": false,
   "object_layout_offsets_rewritten": false,
   "counts": {
-    "entries": 543,
-    "confirmed": 543,
+    "entries": 537,
+    "confirmed": 537,
     "source_ordinals": 17,
     "address_kinds": {
       "PE_RVA_constant": 31,
-      "PE_RVA_literal": 493,
+      "PE_RVA_literal": 487,
       "PE_data_RVA_literal": 8,
       "reference_base_encoded_RVA": 11
     },
-    "module_ownership_or_const_scope_gaps": 54
+    "module_ownership_or_const_scope_gaps": 50
   },
   "entries": [
     {
@@ -1123,9 +1123,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
-      "source_sha256": "8123339264a39d0eac0585b3096ed6b31350df456a65ba6dce09f18ab084e703",
-      "start": 16953,
-      "end": 16960,
+      "source_sha256": "bdf6033ba8d7cf418c77b1d5a96335c44895aa38449d239bf1adbfd2e22492a8",
+      "start": 20417,
+      "end": 20424,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1136,18 +1136,18 @@
       ],
       "consumers": [
         {
-          "line": 90,
+          "line": 109,
           "call": "api.Shared.Slot",
-          "offset": 16908
+          "offset": 20372
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 10237,
-      "end": 10245,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 10680,
+      "end": 10688,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1158,18 +1158,18 @@
       ],
       "consumers": [
         {
-          "line": 51,
+          "line": 59,
           "call": "Engine.Address",
-          "offset": 10222
+          "offset": 10665
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 12649,
-      "end": 12657,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 13092,
+      "end": 13100,
       "original_literal": "0xD9041C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1180,18 +1180,18 @@
       ],
       "consumers": [
         {
-          "line": 60,
+          "line": 68,
           "call": "Engine.Address",
-          "offset": 12634
+          "offset": 13077
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 12840,
-      "end": 12847,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 13283,
+      "end": 13290,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1202,18 +1202,18 @@
       ],
       "consumers": [
         {
-          "line": 60,
+          "line": 68,
           "call": "Shared.Slot",
-          "offset": 12821
+          "offset": 13264
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 21330,
-      "end": 21338,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 21963,
+      "end": 21971,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1224,18 +1224,18 @@
       ],
       "consumers": [
         {
-          "line": 84,
+          "line": 92,
           "call": "api.Engine.Address",
-          "offset": 21311
+          "offset": 21944
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 21420,
-      "end": 21427,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 22053,
+      "end": 22060,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1246,18 +1246,18 @@
       ],
       "consumers": [
         {
-          "line": 84,
+          "line": 92,
           "call": "api.Shared.Slot",
-          "offset": 21397
+          "offset": 22030
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 21474,
-      "end": 21481,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 22107,
+      "end": 22114,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1268,18 +1268,18 @@
       ],
       "consumers": [
         {
-          "line": 84,
+          "line": 92,
           "call": "api.Shared.Slot",
-          "offset": 21429
+          "offset": 22062
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "a605f7f81514ba58477b41a3e484a431886af2f90eefa8d660986fdddde1fe4b",
-      "start": 23004,
-      "end": 23012,
+      "source_sha256": "4ff0a6b34c8670926fbfde69a5bbad9bc8386e020d542ac7431347e47c532be4",
+      "start": 23637,
+      "end": 23645,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1290,9 +1290,9 @@
       ],
       "consumers": [
         {
-          "line": 89,
+          "line": 97,
           "call": "api.Engine.Address",
-          "offset": 22985
+          "offset": 23618
         }
       ],
       "value_type": "int"
@@ -3520,6 +3520,28 @@
       "value_type": "int"
     },
     {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativeLazyFunctionProfile.cs",
+      "source_sha256": "be3e05c78d707f04b4ad585b3dc25ba77856c2471e1048687c08c719d2341217",
+      "start": 7170,
+      "end": 7178,
+      "original_literal": "0xD57684",
+      "module": "editor",
+      "address_kind": "PE_RVA_constant",
+      "reference_rva": 13989508,
+      "status": "confirmed",
+      "proof": [
+        "Literal/constant consumed by the known NativeEngine.Address RVA boundary; unique const declaration in this source"
+      ],
+      "consumers": [
+        {
+          "line": 91,
+          "call": "engine.Address",
+          "offset": 8354
+        }
+      ],
+      "value_type": "int"
+    },
+    {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistOpenViewsRefresh.cs",
       "source_sha256": "d77f90cd7827e4977fcfa44ea06c0c74f242c1b796daf018d854e770ac6b367a",
       "start": 5334,
@@ -3609,9 +3631,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 9854,
-      "end": 9862,
+      "source_sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895",
+      "start": 8769,
+      "end": 8777,
       "original_literal": "0xDED294",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3622,18 +3644,18 @@
       ],
       "consumers": [
         {
-          "line": 72,
+          "line": 76,
           "call": "Engine.Address",
-          "offset": 9839
+          "offset": 8754
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 11175,
-      "end": 11183,
+      "source_sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895",
+      "start": 10090,
+      "end": 10098,
       "original_literal": "0xDC4D94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3644,18 +3666,18 @@
       ],
       "consumers": [
         {
-          "line": 75,
+          "line": 79,
           "call": "Engine.Address",
-          "offset": 11160
+          "offset": 10075
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 11542,
-      "end": 11550,
+      "source_sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895",
+      "start": 10457,
+      "end": 10465,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3666,18 +3688,18 @@
       ],
       "consumers": [
         {
-          "line": 76,
+          "line": 80,
           "call": "Engine.Address",
-          "offset": 11527
+          "offset": 10442
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 13635,
-      "end": 13643,
+      "source_sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895",
+      "start": 12550,
+      "end": 12558,
       "original_literal": "0xDBC034",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3688,18 +3710,18 @@
       ],
       "consumers": [
         {
-          "line": 81,
+          "line": 85,
           "call": "Engine.Address",
-          "offset": 13620
+          "offset": 12535
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 13934,
-      "end": 13942,
+      "source_sha256": "b383456e69304d0e48f1dfcb8fcb0659833ad1abb9d01a0a9d52559e6efa3895",
+      "start": 12849,
+      "end": 12857,
       "original_literal": "0xDBD7E4",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3710,31 +3732,9 @@
       ],
       "consumers": [
         {
-          "line": 81,
+          "line": 85,
           "call": "Engine.Address",
-          "offset": 13919
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
-      "source_sha256": "73fddcd818066bd7c5aa97da15056ca81cf4fd55490f8dad87f9ba809b103838",
-      "start": 13998,
-      "end": 14004,
-      "original_literal": "0x4AB6",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 19126,
-      "status": "confirmed",
-      "proof": [
-        "Integer argument of a native RVA wrapper whose same-name/arity definitions agree on the module boundary"
-      ],
-      "consumers": [
-        {
-          "line": 81,
-          "call": "Slot",
-          "offset": 13983
+          "offset": 12834
         }
       ],
       "value_type": "int"
@@ -3851,7 +3851,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2104,
       "end": 2112,
       "original_literal": "0xD57684",
@@ -3864,16 +3864,16 @@
       ],
       "consumers": [
         {
-          "line": 127,
+          "line": 91,
           "call": "api.Engine.Address",
-          "offset": 10885
+          "offset": 6975
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2224,
       "end": 2232,
       "original_literal": "0xDBD7E4",
@@ -3886,16 +3886,16 @@
       ],
       "consumers": [
         {
-          "line": 145,
+          "line": 109,
           "call": "api.Type",
-          "offset": 12569
+          "offset": 8659
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2244,
       "end": 2252,
       "original_literal": "0xDED294",
@@ -3908,16 +3908,16 @@
       ],
       "consumers": [
         {
-          "line": 234,
+          "line": 198,
           "call": "api.Type",
-          "offset": 21654
+          "offset": 17757
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2274,
       "end": 2282,
       "original_literal": "0xDC4D94",
@@ -3930,16 +3930,16 @@
       ],
       "consumers": [
         {
-          "line": 180,
+          "line": 144,
           "call": "api.Type",
-          "offset": 15981
+          "offset": 12084
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2321,
       "end": 2329,
       "original_literal": "0xDBC034",
@@ -3952,16 +3952,16 @@
       ],
       "consumers": [
         {
-          "line": 136,
+          "line": 100,
           "call": "api.Type",
-          "offset": 11758
+          "offset": 7848
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2443,
       "end": 2450,
       "original_literal": "0x5539E",
@@ -3974,16 +3974,16 @@
       ],
       "consumers": [
         {
-          "line": 203,
+          "line": 167,
           "call": "api.Virtual",
-          "offset": 18644
+          "offset": 14747
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
       "start": 2470,
       "end": 2476,
       "original_literal": "0xE14C",
@@ -3996,23 +3996,23 @@
       ],
       "consumers": [
         {
-          "line": 145,
+          "line": 109,
           "call": "api.Virtual",
-          "offset": 12623
+          "offset": 8713
         },
         {
-          "line": 279,
+          "line": 243,
           "call": "api.Virtual",
-          "offset": 26565
+          "offset": 22668
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
-      "start": 16286,
-      "end": 16293,
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
+      "start": 12389,
+      "end": 12396,
       "original_literal": "0x3508A",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4023,18 +4023,18 @@
       ],
       "consumers": [
         {
-          "line": 182,
+          "line": 146,
           "call": "api.Virtual",
-          "offset": 16262
+          "offset": 12365
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
-      "start": 16319,
-      "end": 16326,
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
+      "start": 12422,
+      "end": 12429,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4045,18 +4045,18 @@
       ],
       "consumers": [
         {
-          "line": 182,
+          "line": 146,
           "call": "api.Virtual",
-          "offset": 16295
+          "offset": 12398
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "source_sha256": "8803997f8eea0145194f54b69e4701a5fd445b675deb9e0fcbf40ce2e0ca49e1",
-      "start": 16471,
-      "end": 16478,
+      "source_sha256": "97c54d15cd76406b6b829de021da0421b3a7f4921b06e519946996fcba910927",
+      "start": 12574,
+      "end": 12581,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4067,9 +4067,9 @@
       ],
       "consumers": [
         {
-          "line": 183,
+          "line": 147,
           "call": "api.Virtual",
-          "offset": 16434
+          "offset": 12537
         }
       ],
       "value_type": "int"
@@ -4780,7 +4780,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "source_sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a",
+      "source_sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e",
       "start": 2092,
       "end": 2100,
       "original_literal": "0xD57684",
@@ -4793,16 +4793,16 @@
       ],
       "consumers": [
         {
-          "line": 129,
+          "line": 93,
           "call": "api.Engine.Address",
-          "offset": 11048
+          "offset": 7011
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "source_sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a",
+      "source_sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e",
       "start": 2212,
       "end": 2220,
       "original_literal": "0xDBD7E4",
@@ -4815,16 +4815,16 @@
       ],
       "consumers": [
         {
-          "line": 147,
+          "line": 111,
           "call": "api.Type",
-          "offset": 12732
+          "offset": 8695
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "source_sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a",
+      "source_sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e",
       "start": 2232,
       "end": 2240,
       "original_literal": "0xDED294",
@@ -4837,16 +4837,16 @@
       ],
       "consumers": [
         {
-          "line": 154,
+          "line": 118,
           "call": "api.Type",
-          "offset": 13132
+          "offset": 9095
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "source_sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a",
+      "source_sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e",
       "start": 2309,
       "end": 2317,
       "original_literal": "0xDBC034",
@@ -4859,16 +4859,16 @@
       ],
       "consumers": [
         {
-          "line": 138,
+          "line": 102,
           "call": "api.Type",
-          "offset": 11921
+          "offset": 7884
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "source_sha256": "0b5255b469bd866ea8f56255ce6da7e1904dbf809cb4309df994e82816795d8a",
+      "source_sha256": "964e0d5151c2d99903ce27c2b2996cb51a43f0d71946aa19d724ed996c38524e",
       "start": 2458,
       "end": 2464,
       "original_literal": "0xE14C",
@@ -4881,133 +4881,23 @@
       ],
       "consumers": [
         {
-          "line": 147,
+          "line": 111,
           "call": "api.Virtual",
-          "offset": 12786
+          "offset": 8749
         },
         {
-          "line": 226,
+          "line": 190,
           "call": "api.Virtual",
-          "offset": 23372
+          "offset": 19204
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 2468,
-      "end": 2476,
-      "original_literal": "0x14E460",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 1369184,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 19,
-          "call": "api.Engine.Address",
-          "offset": 2449
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 2523,
-      "end": 2529,
-      "original_literal": "0x52EF",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 21231,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 19,
-          "call": "api.Engine.Address",
-          "offset": 2504
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 2585,
-      "end": 2592,
-      "original_literal": "0x52BCB",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 338891,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 19,
-          "call": "api.Engine.Address",
-          "offset": 2566
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 2996,
-      "end": 3002,
-      "original_literal": "0x52EF",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 21231,
-      "status": "confirmed",
-      "proof": [
-        "Integer argument of a native RVA wrapper whose same-name/arity definitions agree on the module boundary"
-      ],
-      "consumers": [
-        {
-          "line": 20,
-          "call": "api.Slot",
-          "offset": 2958
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 3041,
-      "end": 3048,
-      "original_literal": "0x52BCB",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 338891,
-      "status": "confirmed",
-      "proof": [
-        "Integer argument of a native RVA wrapper whose same-name/arity definitions agree on the module boundary"
-      ],
-      "consumers": [
-        {
-          "line": 20,
-          "call": "api.Slot",
-          "offset": 3004
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
-      "source_sha256": "1c2cfca7bfc350217a6dd39174613c91f32d4ab1950737e75607e5579c456f52",
-      "start": 5075,
-      "end": 5083,
+      "source_sha256": "72fc54056dd52b0e5d21a301ff72ccf99c1045a840d37e6b88bbec36d059efc9",
+      "start": 6135,
+      "end": 6143,
       "original_literal": "0xDED294",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5018,16 +4908,16 @@
       ],
       "consumers": [
         {
-          "line": 22,
+          "line": 31,
           "call": "api.Engine.Address",
-          "offset": 5056
+          "offset": 6116
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
-      "source_sha256": "73495c915dc2d0f199a98a54e02956febdf2a7897040debac479fda529110ef6",
+      "source_sha256": "03c68b66f0bce816d52c904f29773f509d832dd75b1e62f07e19de6d22ac694c",
       "start": 4181,
       "end": 4189,
       "original_literal": "0xDB35DC",
@@ -5049,9 +4939,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
-      "source_sha256": "73495c915dc2d0f199a98a54e02956febdf2a7897040debac479fda529110ef6",
-      "start": 9830,
-      "end": 9837,
+      "source_sha256": "03c68b66f0bce816d52c904f29773f509d832dd75b1e62f07e19de6d22ac694c",
+      "start": 9954,
+      "end": 9961,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5064,16 +4954,16 @@
         {
           "line": 52,
           "call": "api.Slot",
-          "offset": 9792
+          "offset": 9916
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
-      "source_sha256": "73495c915dc2d0f199a98a54e02956febdf2a7897040debac479fda529110ef6",
-      "start": 9858,
-      "end": 9864,
+      "source_sha256": "03c68b66f0bce816d52c904f29773f509d832dd75b1e62f07e19de6d22ac694c",
+      "start": 10005,
+      "end": 10011,
       "original_literal": "0x4AB6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5086,16 +4976,16 @@
         {
           "line": 52,
           "call": "api.Slot",
-          "offset": 9839
+          "offset": 9986
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
-      "source_sha256": "73495c915dc2d0f199a98a54e02956febdf2a7897040debac479fda529110ef6",
-      "start": 18099,
-      "end": 18107,
+      "source_sha256": "03c68b66f0bce816d52c904f29773f509d832dd75b1e62f07e19de6d22ac694c",
+      "start": 18246,
+      "end": 18254,
       "original_literal": "0xCF9B1C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5108,14 +4998,14 @@
         {
           "line": 76,
           "call": "api.Engine.Address",
-          "offset": 18080
+          "offset": 18227
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2558,
       "end": 2566,
       "original_literal": "0xD72D8C",
@@ -5137,7 +5027,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2567,
       "end": 2575,
       "original_literal": "0xD72EC4",
@@ -5159,7 +5049,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2589,
       "end": 2596,
       "original_literal": "0x459F8",
@@ -5181,7 +5071,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2644,
       "end": 2652,
       "original_literal": "0xD5DE6C",
@@ -5203,7 +5093,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2653,
       "end": 2661,
       "original_literal": "0xD5DFB4",
@@ -5225,7 +5115,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2674,
       "end": 2681,
       "original_literal": "0x24B63",
@@ -5247,7 +5137,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2682,
       "end": 2689,
       "original_literal": "0x50E93",
@@ -5269,7 +5159,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2733,
       "end": 2741,
       "original_literal": "0xD63CB4",
@@ -5291,7 +5181,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2742,
       "end": 2750,
       "original_literal": "0xD63DFC",
@@ -5313,7 +5203,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2762,
       "end": 2769,
       "original_literal": "0x24B63",
@@ -5335,7 +5225,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 2770,
       "end": 2777,
       "original_literal": "0x4B73B",
@@ -5357,7 +5247,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 4024,
       "end": 4031,
       "original_literal": "0x46CCC",
@@ -5379,7 +5269,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 4050,
       "end": 4056,
       "original_literal": "0x1ACD",
@@ -5401,7 +5291,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 4130,
       "end": 4137,
       "original_literal": "0x3EF27",
@@ -5423,7 +5313,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
       "start": 4175,
       "end": 4182,
       "original_literal": "0x3B895",
@@ -5445,9 +5335,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
-      "start": 9874,
-      "end": 9882,
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
+      "start": 9932,
+      "end": 9940,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5458,18 +5348,18 @@
       ],
       "consumers": [
         {
-          "line": 47,
+          "line": 52,
           "call": "api.Engine.Address",
-          "offset": 9855
+          "offset": 9913
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
-      "start": 10689,
-      "end": 10696,
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
+      "start": 10747,
+      "end": 10754,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5480,18 +5370,18 @@
       ],
       "consumers": [
         {
-          "line": 50,
+          "line": 55,
           "call": "api.Slot",
-          "offset": 10673
+          "offset": 10731
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
-      "start": 10736,
-      "end": 10743,
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
+      "start": 10794,
+      "end": 10801,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5502,18 +5392,18 @@
       ],
       "consumers": [
         {
-          "line": 50,
+          "line": 55,
           "call": "api.Slot",
-          "offset": 10698
+          "offset": 10756
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "09bd259045ee62626355ea2d65a152a2a4f8f13e34d97a8bd2c7b7b5962a8c8e",
-      "start": 13709,
-      "end": 13717,
+      "source_sha256": "83ce1818e3b24d4ab28a0453a96dc6a826a502ef2b97a85cfb62d855fb8f26c0",
+      "start": 13767,
+      "end": 13775,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5524,9 +5414,9 @@
       ],
       "consumers": [
         {
-          "line": 59,
+          "line": 64,
           "call": "api.Engine.Address",
-          "offset": 13690
+          "offset": 13748
         }
       ],
       "value_type": "int"
@@ -11289,7 +11179,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "source_sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79",
+      "source_sha256": "a2cc6225f29be8f78c1e103c93d78fd85b798ac7aacd372c4d31f368a92bc0c3",
       "start": 506,
       "end": 514,
       "original_literal": "0xDDD094",
@@ -11302,21 +11192,21 @@
       ],
       "consumers": [
         {
-          "line": 104,
+          "line": 91,
           "call": "engine.Address",
-          "offset": 9544
+          "offset": 8207
         },
         {
-          "line": 139,
+          "line": 126,
           "call": "engine.Address",
-          "offset": 14167
+          "offset": 12830
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "source_sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79",
+      "source_sha256": "a2cc6225f29be8f78c1e103c93d78fd85b798ac7aacd372c4d31f368a92bc0c3",
       "start": 524,
       "end": 532,
       "original_literal": "0xE3B4DC",
@@ -11329,23 +11219,23 @@
       ],
       "consumers": [
         {
-          "line": 107,
+          "line": 94,
           "call": "engine.Address",
-          "offset": 9855
+          "offset": 8518
         },
         {
-          "line": 141,
+          "line": 128,
           "call": "engine.Address",
-          "offset": 14370
+          "offset": 13033
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "source_sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79",
-      "start": 13475,
-      "end": 13483,
+      "source_sha256": "a2cc6225f29be8f78c1e103c93d78fd85b798ac7aacd372c4d31f368a92bc0c3",
+      "start": 12138,
+      "end": 12146,
       "original_literal": "0xFAE118",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11356,18 +11246,18 @@
       ],
       "consumers": [
         {
-          "line": 134,
+          "line": 121,
           "call": "engine.Address",
-          "offset": 13460
+          "offset": 12123
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "source_sha256": "740c7b6ea3649f2e2cf9def8b69e0219227bd417368e4702a96404c57b3bcc79",
-      "start": 13706,
-      "end": 13713,
+      "source_sha256": "a2cc6225f29be8f78c1e103c93d78fd85b798ac7aacd372c4d31f368a92bc0c3",
+      "start": 12369,
+      "end": 12376,
       "original_literal": "0x5293C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11378,9 +11268,9 @@
       ],
       "consumers": [
         {
-          "line": 135,
+          "line": 122,
           "call": "engine.Address",
-          "offset": 13691
+          "offset": 12354
         }
       ],
       "value_type": "int"
@@ -11673,29 +11563,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 4126,
-      "end": 4134,
-      "original_literal": "0xD57684",
-      "module": "editor",
-      "address_kind": "PE_RVA_constant",
-      "reference_rva": 13989508,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary; unique const declaration in this source"
-      ],
-      "consumers": [
-        {
-          "line": 105,
-          "call": "Engine.Address",
-          "offset": 9597
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
       "start": 4152,
       "end": 4160,
       "original_literal": "0xDDD094",
@@ -11708,16 +11576,16 @@
       ],
       "consumers": [
         {
-          "line": 205,
+          "line": 185,
           "call": "api.Engine.Address",
-          "offset": 19497
+          "offset": 16579
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
       "start": 4176,
       "end": 4184,
       "original_literal": "0xE3B4DC",
@@ -11730,18 +11598,18 @@
       ],
       "consumers": [
         {
-          "line": 209,
+          "line": 189,
           "call": "api.Engine.Address",
-          "offset": 19996
+          "offset": 17078
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8384,
-      "end": 8391,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 5625,
+      "end": 5632,
       "original_literal": "0x39F13",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11752,18 +11620,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8465,
-      "end": 8472,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 5706,
+      "end": 5713,
       "original_literal": "0x28BBE",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11774,18 +11642,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8551,
-      "end": 8558,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 5792,
+      "end": 5799,
       "original_literal": "0x28F1F",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11796,18 +11664,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8639,
-      "end": 8646,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 5880,
+      "end": 5887,
       "original_literal": "0x2B1AC",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11818,18 +11686,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8724,
-      "end": 8731,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 5965,
+      "end": 5972,
       "original_literal": "0x358FA",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11840,18 +11708,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8810,
-      "end": 8817,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 6051,
+      "end": 6058,
       "original_literal": "0x3508A",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11862,18 +11730,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8873,
-      "end": 8879,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 6114,
+      "end": 6120,
       "original_literal": "0x9665",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11884,18 +11752,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 8943,
-      "end": 8950,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 6184,
+      "end": 6191,
       "original_literal": "0x114A5",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11906,18 +11774,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 9014,
-      "end": 9021,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 6255,
+      "end": 6262,
       "original_literal": "0x15186",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11928,18 +11796,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 9085,
-      "end": 9092,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 6326,
+      "end": 6333,
       "original_literal": "0x4A54D",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11950,18 +11818,18 @@
       ],
       "consumers": [
         {
-          "line": 101,
+          "line": 83,
           "call": "Engine.Address",
-          "offset": 9235
+          "offset": 6476
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 20957,
-      "end": 20965,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 18039,
+      "end": 18047,
       "original_literal": "0xE3B4B8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11972,18 +11840,18 @@
       ],
       "consumers": [
         {
-          "line": 219,
+          "line": 199,
           "call": "api.Engine.Address",
-          "offset": 20938
+          "offset": 18020
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "source_sha256": "fcaccc346d22bb50274c12662e7a24f554d6c58cda67067f7ce22d9f0f857c27",
-      "start": 21157,
-      "end": 21165,
+      "source_sha256": "89764fd9564aa8df31359ab7ec43caadbcb5c6a83cce24a452ae6ee048003f52",
+      "start": 18239,
+      "end": 18247,
       "original_literal": "0xE3B56C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -11994,9 +11862,9 @@
       ],
       "consumers": [
         {
-          "line": 221,
+          "line": 201,
           "call": "api.Engine.Address",
-          "offset": 21138
+          "offset": 18220
         }
       ],
       "value_type": "int"
@@ -12409,13 +12277,6 @@
   ],
   "unresolved_source_candidates": [
     {
-      "source": "assets/pro-native-bridge/delivery/source/sources/extensions__strategy__NativeStrategyExtensionProfile.cs",
-      "line": 44,
-      "call": "NativeMemory.Add",
-      "base": "handles[module]",
-      "reason": "Variable/parameter module ownership not proven by local syntax"
-    },
-    {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
       "line": 30,
       "call": "NativeMemory.Add",
@@ -12438,7 +12299,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
-      "line": 35,
+      "line": 54,
       "call": "NativeMemory.Add",
       "base": "module.BaseAddress",
       "reason": "Variable/parameter module ownership not proven by local syntax"
@@ -12521,13 +12382,6 @@
       "reason": "Variable/parameter module ownership not proven by local syntax"
     },
     {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDuplicateProfile.reusable.cs",
-      "line": 69,
-      "call": "NativeMemory.Add",
-      "base": "modules[module]",
-      "reason": "Variable/parameter module ownership not proven by local syntax"
-    },
-    {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageEventDefinitionCatalog.v2.cs",
       "line": 13,
       "call": "NativeMemory.Add",
@@ -12567,13 +12421,6 @@
       "line": 39,
       "call": "NativeMemory.Add",
       "base": "modules[Convert.ToString(importRow[\"target_module\"])]",
-      "reason": "Variable/parameter module ownership not proven by local syntax"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
-      "line": 69,
-      "call": "NativeMemory.Add",
-      "base": "modules[module]",
       "reason": "Variable/parameter module ownership not proven by local syntax"
     },
     {
@@ -12775,13 +12622,6 @@
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeUsableStrategySourceBatch.cs",
       "line": 44,
-      "call": "NativeMemory.Add",
-      "base": "modules[module]",
-      "reason": "Variable/parameter module ownership not proven by local syntax"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/strategy-properties__NativeStrategyProfile.cs",
-      "line": 70,
       "call": "NativeMemory.Add",
       "base": "modules[module]",
       "reason": "Variable/parameter module ownership not proven by local syntax"

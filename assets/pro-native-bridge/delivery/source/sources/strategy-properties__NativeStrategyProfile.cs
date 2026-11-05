@@ -49,39 +49,21 @@ namespace McgsInternalBridge {
         const int RootDocVtableRva=0xD57684,ManagerVtableRva=0xDDD094,BlockVtableRva=0xE3B4DC;
         internal sealed class Api {
             internal readonly NativeEngine Engine;
-            readonly Dictionary<string,IntPtr> functions=new Dictionary<string,IntPtr>();
+            readonly NativeLazyFunctionProfile functions;
             internal Api(NativeEngine engine) {
                 Engine=engine;
                 NativeMemory.Require(IntPtr.Size==4,"Strategy ABI requires the actual x86 editor context.");
                 NativeMemory.Require(EngineEntry.ExpectedUiThreadId>0 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Strategy operation is outside the host UI thread.");
-                string file=Path.Combine(NativeOperations.TaskRoot,"strategy-properties","strategy-write-guard-profile.json");
-                var profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));
-                var modules=new Dictionary<string,IntPtr>();var preferred=new Dictionary<string,uint>();
-                foreach(object row in (IEnumerable)profile["modules"]) {
-                    var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);IntPtr handle=GetModuleHandleW(name);
-                    NativeMemory.Require(handle!=IntPtr.Zero,"Required native module is not already loaded: "+name);
-                    string path=null;foreach(ProcessModule module in Process.GetCurrentProcess().Modules)if(module.BaseAddress==handle){path=module.FileName;break;}
-                    NativeMemory.Require(path!=null && NativeBinaryIdentity.Observe(Convert.ToString(item["sha256"]),NativeMemory.Hash(path),"strategy-properties__NativeStrategyProfile:64:module"),"Actual module differs from derived private ABI: "+name);
-                    modules.Add(name,handle);preferred.Add(name,unchecked((uint)NativeEngine.Number(item["preferred_base"])));
-                }
-                NativeMemory.Require(modules["McgsSetPro.exe"]==engine.ImageBase,"Strategy profile and attached editor disagree.");
-                foreach(object row in (IEnumerable)profile["functions"]) {
-                    var item=(Dictionary<string,object>)row;string module=Convert.ToString(item["module"]),name=Convert.ToString(item["name"]);
-                    IntPtr at=NativeMemory.Add(modules[module],NativeEngine.Number(item["rva"]));
-                    if(item.ContainsKey("ordinal"))NativeMemory.Require(GetProcAddressOrdinal(modules[module],new IntPtr(NativeEngine.Number(item["ordinal"])))==at,"MFC ordinal export differs: "+name);
-                    if(item.ContainsKey("export_name"))NativeMemory.Require(GetProcAddress(modules[module],Convert.ToString(item["export_name"]))==at,"Native exported name differs: "+name);
-                    byte[] expected=HexBytes(Convert.ToString(item["expected_first_32_bytes"]));
-                    foreach(object offset in (IEnumerable)item["relocatable_dword_offsets_in_first32"]) {
-                        int o=NativeEngine.Number(offset);uint value=unchecked(BitConverter.ToUInt32(expected,o)+NativeMemory.U(modules[module])-preferred[module]);
-                        Array.Copy(BitConverter.GetBytes(value),0,expected,o,4);
-                    }
-                    NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(at,expected.Length))==BitConverter.ToString(expected),"Native strategy function bytes differ: "+name);
-                    functions.Add(name,at);
-                }
+                functions=NativeProjectIdentity.Functions(engine);
             }
-            static byte[] HexBytes(string value){var bytes=new byte[value.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(value.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);return bytes;}
-            internal IntPtr AddressOf(string key){return functions[key];}
-            internal T Bind<T>(string key)where T:class{return Marshal.GetDelegateForFunctionPointer(functions[key],typeof(T))as T;}
+            internal IntPtr AddressOf(string key){return functions.Address(key);}
+            internal T Bind<T>(string key)where T:class{
+                if(key=="RootIsModified"||key=="RootSetModified"){
+                    IntPtr doc=RootDoc();MatchVirtual(doc,key=="RootIsModified"?26:27,key);
+                    if(key=="RootSetModified")NativeMemory.Readable(NativeMemory.Add(doc,0x114),4);
+                }
+                return functions.Bind<T>(key);
+            }
             internal void MatchVirtual(IntPtr instance,int slot,string key){NativeMemory.Require(Engine.Virtual(instance,slot)==ExpectedThunk(key),"Native virtual method differs: "+key);}
             IntPtr ExpectedThunk(string key) {
                 int rva;
@@ -101,24 +83,22 @@ namespace McgsInternalBridge {
                 return Engine.Address(rva);
             }
             internal IntPtr RootDoc() {
-                IntPtr app=Engine.Bind<NativeEngine.CdeclPointer>(functions["GetAfxApp"])();NativeMemory.Require(app!=IntPtr.Zero,"No current MFC application.");
-                IntPtr doc=NativeMemory.Ptr(app,0x520);NativeMemory.Require(doc!=IntPtr.Zero && NativeMemory.Ptr(doc,0)==Engine.Address(RootDocVtableRva),"Current root document type differs.");
-                MatchVirtual(doc,26,"RootIsModified");MatchVirtual(doc,27,"RootSetModified");NativeMemory.Readable(NativeMemory.Add(doc,0x114),4);return doc;
+                return NativeProjectIdentity.RootDocument(Engine,functions);
             }
         }
         internal sealed class CString : IDisposable {
             readonly Api api;internal readonly IntPtr Storage;bool constructed;
             internal CString(Api value,string text) {
-                api=value;Storage=Marshal.AllocHGlobal(4);Marshal.WriteInt32(Storage,0);
+                api=value;api.Bind<Void0>("CStringDtor");api.Bind<Ptr0>("CStringDefaultCtor");api.Bind<Ptr1>("CStringAssignWide");Storage=Marshal.AllocHGlobal(4);Marshal.WriteInt32(Storage,0);
                 try {
                     api.Bind<Ptr0>("CStringDefaultCtor")(Storage);constructed=true;
                     IntPtr wide=Marshal.StringToHGlobalUni(text);
                     try{api.Bind<Ptr1>("CStringAssignWide")(Storage,wide);}finally{Marshal.FreeHGlobal(wide);}
                 }catch{Dispose();throw;}
             }
-            CString(Api value){api=value;Storage=Marshal.AllocHGlobal(4);Marshal.WriteInt32(Storage,0);}
+            CString(Api value){api=value;api.Bind<Void0>("CStringDtor");Storage=Marshal.AllocHGlobal(4);Marshal.WriteInt32(Storage,0);}
             internal static CString Name(Api api,IntPtr instance) {
-                var result=new CString(api);try{api.MatchVirtual(instance,9,"StartupName");api.Bind<Ptr1>("StartupName")(instance,result.Storage);result.constructed=true;return result;}catch{result.Dispose();throw;}
+                api.Bind<Ptr1>("StartupName");var result=new CString(api);try{api.MatchVirtual(instance,9,"StartupName");api.Bind<Ptr1>("StartupName")(instance,result.Storage);result.constructed=true;return result;}catch{result.Dispose();throw;}
             }
             internal static CString NameVirtual(Api api,IntPtr instance) {
                 api.Engine.Describe(instance);
@@ -126,7 +106,7 @@ namespace McgsInternalBridge {
             }
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]delegate IntPtr KeyFactory(IntPtr output,int propertyId);
             internal static CString PropertyKey(Api api,int propertyId) {
-                var result=new CString(api);try{api.Bind<KeyFactory>("PropertyKeyName")(result.Storage,propertyId);result.constructed=true;return result;}catch{result.Dispose();throw;}
+                api.Bind<KeyFactory>("PropertyKeyName");var result=new CString(api);try{api.Bind<KeyFactory>("PropertyKeyName")(result.Storage,propertyId);result.constructed=true;return result;}catch{result.Dispose();throw;}
             }
             internal string Read() {
                 IntPtr text=NativeMemory.Ptr(Storage,0);NativeMemory.Require(text!=IntPtr.Zero,"Native CString has no data.");var result=new StringBuilder();
@@ -138,7 +118,7 @@ namespace McgsInternalBridge {
         sealed class Matcher : IDisposable {
             readonly Api api;internal readonly IntPtr Storage;bool constructed;
             internal Matcher(Api value) {
-                api=value;Storage=Marshal.AllocHGlobal(2);
+                api=value;api.Bind<Void0>("MatcherDtor");api.Bind<MatcherConstructor>("MatcherCtor");Storage=Marshal.AllocHGlobal(2);
                 try{api.Bind<MatcherConstructor>("MatcherCtor")(Storage,0,1);constructed=true;NativeMemory.Require(Marshal.ReadByte(Storage)==0 && Marshal.ReadByte(Storage,1)==1,"Native TextOnly matcher differs.");}catch{Dispose();throw;}
             }
             public void Dispose(){try{if(constructed){constructed=false;api.Bind<Void0>("MatcherDtor")(Storage);}}finally{Marshal.FreeHGlobal(Storage);}}

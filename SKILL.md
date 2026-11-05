@@ -32,7 +32,9 @@ description: 在同一环境中离线检查、修改昆仑通态 McgsStu MCS 与
 
 在线新准备业务引擎时，先按[当前程序函数定位](references/pro-native-dynamic-functions.md)生成本次 EXE/DLL 的函数、RTTI 和虚表资料，再绑定调用。包内参考 RVA 不是当前调用地址，不能直接套用，也不能把旧离线模板来源 `3.5.1.6963` 当成在线版本要求。定位不唯一或未闭合时报告具体接口；根资料按请求使用的条目核对，不能因无关函数不同而要求整套软件升级。定位只在准备阶段执行，普通控件请求复用已准备资料。
 
-复制新版技能不会改变进程中已经加载的旧业务 DLL。若现有引擎的回执没有 `native_function_binding.mode=current_program_resolved`，沿用原桥和连接更新一次业务引擎及其派生资料；不因这次更新强制重建 Bootstrap、重启 Pro 或重新选择已明确的修改方式。
+复制新版技能不会改变进程中已经加载的旧业务 DLL。本版同时要求工具回执有 `native_function_binding.mode=current_program_resolved` 和 `cross_build_contract=mcgs-native-cross-build/v2`；后者区分已修复遗漏的引擎与早期动态地址引擎，不是 Pro 发行版本要求。缺少时，沿用原桥和连接，通过 `native-engine-select` 更新一次业务引擎及其派生资料；命令见[部署说明](references/pro-native-deployment.md#已有桥的同任务更新)。不因工具更新强制重建 Bootstrap、重启 Pro 或重新选择已明确的修改方式。
+
+跨构建准备要覆盖虚表槽、数组及别名地址、实际导入角色和模块映像元数据；不只改名字以 `_rva` 结尾的标量。工程身份读取与策略、复制、保存等接口分离，只在本次使用前验证对应条目。完整规则及剩余真实结构边界见[跨构建适配](references/cross-build-compatibility.md)。
 
 ## 软件写入前激活内部目标
 

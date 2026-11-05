@@ -20,49 +20,36 @@ namespace McgsInternalBridge {
         internal sealed class ReadApi {
             internal readonly NativeEngine Engine;
             internal readonly NativeStrategyProfile.Api Existing;
-            internal readonly CStringLength Length;
+            internal CStringLength Length {get{return functions.Bind<CStringLength>("CStringGetLength");}}
             readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();
-            readonly Dictionary<string,IntPtr> methods=new Dictionary<string,IntPtr>();
+            readonly NativeLazyFunctionProfile functions;
+            readonly string relative;
+            bool tablesLoaded;
             internal ReadApi(NativeEngine engine):this(engine,"strategy-extension-read-guard.json") {}
             internal ReadApi(NativeEngine engine,string profileName) {
                 Engine=engine;Existing=new NativeStrategyProfile.Api(engine);
-                string file=Path.Combine(NativeOperations.TaskRoot,"extensions","strategy",profileName);
-                var profile=new JavaScriptSerializer().Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));
-                NativeMemory.Require(Convert.ToInt32(profile["schema"])==1,"Unknown strategy read profile.");
-                var handles=new Dictionary<string,IntPtr>();var bases=new Dictionary<string,uint>();
-                foreach(object row in (IEnumerable)profile["modules"]) {
-                    var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);IntPtr handle=GetModuleHandleW(name);
-                    NativeMemory.Require(handle!=IntPtr.Zero,"Required module is not loaded: "+name);
-                    string path=null;foreach(ProcessModule module in Process.GetCurrentProcess().Modules)if(module.BaseAddress==handle){path=module.FileName;break;}
-                    NativeMemory.Require(path!=null && NativeBinaryIdentity.Observe(Convert.ToString(item["sha256"]),NativeMemory.Hash(path),"extensions__strategy__NativeStrategyExtensionProfile:37:module"),"Strategy read module SHA differs: "+name);
-                    handles.Add(name,handle);bases.Add(name,unchecked((uint)NativeEngine.Number(item["preferred_base"])));
+                string sha;
+                switch(profileName.Replace((char)92,'/')){
+                    case "strategy-extension-read-guard.json":sha="f2f48e10cbed6217ac968af7e2c94ef668ebe9650cf8300a7d4c350af83c51f7";break;
+                    case "strategy-extension-write-guard.json":sha="8dc56512ffa3340e2c210ba7eab0db1d36995a3390a535844a9a6319324e8ea6";break;
+                    case "registration/registration-abi-guard.json":sha="31479a50b9ee412815f30791be6610b05ecc50d868e23ad292f41be6eb99f403";break;
+                    case "delete/strategy-delete-abi-profile.json":sha="b03866d74291d74f13427e529d6a49e70da41f2e672c2beb602b10a8fe99dbd4";break;
+                    default:throw new InvalidOperationException("Strategy read ABI path has no explicit compiled declaration.");
                 }
-                NativeMemory.Require(handles["McgsSetPro.exe"]==engine.ImageBase,"Strategy read editor identity differs.");
-                IntPtr getLength=IntPtr.Zero;
-                foreach(object row in (IEnumerable)profile["functions"]) {
-                    var item=(Dictionary<string,object>)row;string module=Convert.ToString(item["module"]),name=Convert.ToString(item["name"]);
-                    IntPtr at=NativeMemory.Add(handles[module],NativeEngine.Number(item["rva"]));byte[] expected=Unhex(Convert.ToString(item["bytes"]));
-                    foreach(object offset in (IEnumerable)item["reloc_offsets"]) {
-                        int index=Convert.ToInt32(offset);uint value=unchecked(BitConverter.ToUInt32(expected,index)+NativeMemory.U(handles[module])-bases[module]);
-                        Array.Copy(BitConverter.GetBytes(value),0,expected,index,4);
-                    }
-                    NativeMemory.Require(Hex(NativeMemory.Bytes(at,expected.Length))==Hex(expected),"Strategy read ABI bytes differ: "+name);
-                    methods.Add(name,at);
-                    if(name=="CStringGetLength") {
-                        NativeMemory.Require(GetProcAddressOrdinal(handles[module],new IntPtr(Convert.ToInt32(item["ordinal"])))==at,"CString length ordinal differs.");getLength=at;
-                    }
-                }
-                NativeMemory.Require(getLength!=IntPtr.Zero,"Missing guarded CString length helper.");
-                Length=(CStringLength)Marshal.GetDelegateForFunctionPointer(getLength,typeof(CStringLength));
-                foreach(object row in (IEnumerable)profile["tables"]) {
-                    var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["name"]);IntPtr table=Engine.Address(NativeEngine.Number(item["rva"]));
-                    NativeMemory.Require(NativeMemory.Ptr(table,-4)==Engine.Address(NativeEngine.Number(item["col_rva"])),"Strategy read RTTI COL differs: "+name);
-                    int i=0;foreach(object entry in (IEnumerable)item["entries"]){IntPtr expected=entry==null?IntPtr.Zero:Engine.Address(NativeEngine.Number(entry));NativeMemory.Require(NativeMemory.Ptr(table,i*4)==expected,"Strategy read table differs: "+name+"/"+i);i++;}
-                    tables.Add(name,item);
-                }
+                relative="extensions/strategy/"+profileName.Replace((char)92,'/');
+                functions=new NativeLazyFunctionProfile(engine,relative,sha,"editor");
             }
-            internal bool HasTable(IntPtr instance,string name) {return NativeMemory.Ptr(instance,0)==Engine.Address(NativeEngine.Number(tables[name]["rva"]));}
-            internal IntPtr Method(string name){return methods[name];}
+            Dictionary<string,object> GuardTable(string name){
+                if(!tablesLoaded){var profile=functions.Profile;NativeMemory.Require(Convert.ToInt32(profile["schema"])==1,"Unknown strategy read profile.");foreach(object value in (IEnumerable)profile["tables"]){var row=(Dictionary<string,object>)value;tables.Add(Convert.ToString(row["name"]),row);}tablesLoaded=true;}
+                Dictionary<string,object> item;if(!tables.TryGetValue(name,out item))throw new NativeAbiUnavailableException("Missing requested strategy native table: "+name,relative,name);
+                NativeAbiTargetProfiles.CheckEntry(item,"vtable",relative);
+                IntPtr table=Engine.Address(NativeEngine.Number(item["rva"]));
+                NativeMemory.Require(NativeMemory.Ptr(table,-4)==Engine.Address(NativeEngine.Number(item["col_rva"])),"Strategy read RTTI COL differs: "+name);
+                int i=0;foreach(object entry in (IEnumerable)item["entries"]){IntPtr expected=entry==null?IntPtr.Zero:Engine.Address(NativeEngine.Number(entry));NativeMemory.Require(NativeMemory.Ptr(table,i*4)==expected,"Strategy read table differs: "+name+"/"+i);i++;}
+                return item;
+            }
+            internal bool HasTable(IntPtr instance,string name) {var table=GuardTable(name);return NativeMemory.Ptr(instance,0)==Engine.Address(NativeEngine.Number(table["rva"]));}
+            internal IntPtr Method(string name){return functions.Address(name);}
             internal void Table(IntPtr instance,string name) {NativeMemory.Require(HasTable(instance,name),"Strategy native object table differs: "+name);}
             internal string MfcType(IntPtr instance) {
                 IntPtr table=NativeMemory.Ptr(instance,0);Engine.Rva(table);IntPtr col=NativeMemory.Ptr(table,-4);Engine.Rva(col);

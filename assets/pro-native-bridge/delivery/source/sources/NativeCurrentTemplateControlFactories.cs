@@ -10,25 +10,44 @@ namespace McgsInternalBridge {
   [UnmanagedFunctionPointer(CallingConvention.ThisCall)]delegate IntPtr PlacementConstructor(IntPtr self,IntPtr rectangle);
   [UnmanagedFunctionPointer(CallingConvention.ThisCall)]delegate IntPtr BasePlacementConstructor(IntPtr self,int type,IntPtr rectangle);
   [DllImport("kernel32.dll",EntryPoint="GetProcAddress")]static extern IntPtr PlacementGetProcAddress(IntPtr module,IntPtr ordinal);
+  const string FactoryRelative="coverage-20261101/usable-edit-0001/page-control-prep/native-control-placement-factory-abi-profile.v3.json";
   static Dictionary<string,object> FactoryContract(Api api,string name) {
-   string path=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"page-control-prep","native-control-placement-factory-abi-profile.v3.json");NativeMemory.Require(NativeMemory.Hash(path)==FactoryProfileSha,"Native control factory ABI contract changed.");var profile=Load(path);
+   var profile=new NativeLazyFunctionProfile(api.Engine,FactoryRelative,FactoryProfileSha,"editor").Profile;
    NativeMemory.Require(Convert.ToInt32(profile["schema"])==1&&NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),api.Engine.ImageSha256,"NativeCurrentTemplateControlFactories:15:editor")&&Convert.ToString(profile["template_profile_sha256"])==ProfileSha&&Convert.ToInt32(profile["defaults_virtual_slot"])==28&&Convert.ToInt32(profile["defaults_reason"])==6,"Native control factory/defaults ABI differs.");
    NativeMemory.Require(Convert.ToBoolean(profile["placement_constructor_profile"]),"Native placement-constructor contract is absent.");
-   foreach(object row in (IEnumerable)profile["code_guards"])FactoryBytes(api.Engine,Map(row));PlacementAllocatorAddress(api,Map(profile["allocator"]));Dictionary<string,object> selected=null;
+   Dictionary<string,object> selected=null;
    foreach(object row in (IEnumerable)profile["classes"]){var c=Map(row);if(Convert.ToString(c["class_name"])==name){NativeMemory.Require(selected==null,"Installed native class name repeats.");selected=c;}}
    NativeMemory.Require(selected!=null&&!Convert.ToBoolean(selected["external_component_dependency"]),"Blank creation requires a built-in installed native class; external component activation needs its own context adapter.");
+   NativeAbiTargetProfiles.CheckDirectEntry(selected,"factory class",FactoryRelative);
+   var required=new HashSet<int>();var byReference=new Dictionary<int,Dictionary<string,object>>();
+   foreach(object value in (IEnumerable)profile["code_guards"]){var row=Map(value);var state=Map(row["_abi_resolution"]);object reference;if(state.TryGetValue("reference_rva",out reference))byReference.Add(Num(reference),row);}
+   var visited=new HashSet<int>();foreach(string operation in new string[]{"factory","defaults","placement_constructor"})RequireFactoryGuards(Map(selected[operation]),profile,byReference,required,visited);
+   var allocation=Map(profile["allocator"]);NativeAbiTargetProfiles.CheckEntry(allocation,"allocator",FactoryRelative);required.Add(Num(allocation["entry_rva"]));required.Add(Num(allocation["body_rva"]));
+   foreach(object value in (IEnumerable)profile["code_guards"]){var row=Map(value);if(NativeAbiTargetProfiles.IsEntryResolved(row,FactoryRelative)&&required.Remove(Num(row["rva"])))FactoryBytes(api.Engine,row);}
+   NativeMemory.Require(required.Count==0,"Requested native factory chain has no complete code guard coverage.");PlacementAllocatorAddress(api,allocation);
    NativeMemory.Require(Convert.ToBoolean(Map(selected["factory"])["abi_matches"])&&Convert.ToBoolean(Map(selected["defaults"])["abi_matches"]),"Native class factory/defaults ABI is not closed.");
    IntPtr runtime=api.Engine.Address(Num(selected["runtime_class_rva"]));NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Ptr(runtime,0),128)==name&&NativeMemory.I32(runtime,4)==Num(selected["size"])&&NativeMemory.I32(runtime,8)==Num(selected["runtime_class_schema"])&&NativeMemory.Ptr(runtime,12)==api.Engine.Address(Num(Map(selected["factory"])["entry_rva"])),"Installed native runtime class factory/size/schema differs.");
    IntPtr vt=api.Engine.Address(Num(selected["primary_vtable_rva"]));NativeMemory.Require(NativeMemory.Ptr(vt,28*4)==api.Engine.Address(Num(Map(selected["defaults"])["entry_rva"])),"Installed native primary28 defaults entry differs.");
    var placement=Map(selected["placement_constructor"]);NativeMemory.Require(Convert.ToBoolean(placement["abi_matches"])&&(Num(placement["return_stack_bytes"])==4||(name=="CDrawObj"&&Num(placement["return_stack_bytes"])==8)),"Installed class placement constructor ABI is not closed.");selected["allocator"]=profile["allocator"];return selected;
   }
+  // Historical disassembly VAs are used only as reference-role keys into attested guard rows.
+  // Every runtime address below comes from a resolved row; no reference VA becomes a native pointer.
+  static void RequireFactoryGuards(Dictionary<string,object> method,Dictionary<string,object> profile,Dictionary<int,Dictionary<string,object>> byReference,HashSet<int> required,HashSet<int> visited){
+   NativeAbiTargetProfiles.CheckEntry(method,"factory method",FactoryRelative);int body=Num(method["body_rva"]);required.Add(Num(method["entry_rva"]));required.Add(body);if(!visited.Add(body))return;
+   object raw;if(method.TryGetValue("chain_rvas",out raw))foreach(object value in (IEnumerable)raw)required.Add(Num(value));
+   var calls=new List<object>();if(method.TryGetValue("parent_calls",out raw))foreach(object value in (IEnumerable)raw)calls.Add(value);
+   if(method.TryGetValue("source_derivation",out raw)){var derivation=Map(raw);if(derivation.TryGetValue("calls",out raw))foreach(object value in (IEnumerable)raw)calls.Add(value);}
+   foreach(object value in calls){var call=Map(value);if(!call.TryGetValue("jump_chain",out raw))continue;foreach(object historical in (IEnumerable)raw){int reference=Num(historical)-0x400000;Dictionary<string,object> guard;if(!byReference.TryGetValue(reference,out guard))continue;NativeAbiTargetProfiles.CheckEntry(guard,"factory dependency code guard",FactoryRelative);int actual=Num(guard["rva"]);required.Add(actual);
+    foreach(object classValue in (IEnumerable)profile["classes"]){var cls=Map(classValue);foreach(string operation in new string[]{"factory","defaults","placement_constructor"}){var candidate=Map(cls[operation]);if(NativeAbiTargetProfiles.IsEntryResolved(candidate,FactoryRelative)&&(Num(candidate["entry_rva"])==actual||Num(candidate["body_rva"])==actual))RequireFactoryGuards(candidate,profile,byReference,required,visited);}}
+   }}
+  }
   static void FactoryBytes(NativeEngine engine,Dictionary<string,object> row) {
-   string text=Convert.ToString(row["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
+   NativeAbiTargetProfiles.CheckEntry(row,"factory code guard",FactoryRelative);string text=Convert.ToString(row["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
    foreach(object value in (IEnumerable)row["reloc_offsets"]){int at=Num(value);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"Native factory relocation differs.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-0x400000U)),0,bytes,at,4);}
    NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(engine.Address(Num(row["rva"])),bytes.Length)),"Native factory/defaults code signature differs.");
   }
   static IntPtr PlacementAllocatorAddress(Api api,Dictionary<string,object> allocation) {
-   NativeMemory.Require(Convert.ToString(allocation["calling_convention"])=="stdcall pointer(uint32 size)"&&Num(allocation["return_stack_bytes"])==4,"Original allocation wrapper ABI differs.");
+   NativeAbiTargetProfiles.CheckEntry(allocation,"allocator",FactoryRelative);NativeMemory.Require(Convert.ToString(allocation["calling_convention"])=="stdcall pointer(uint32 size)"&&Num(allocation["return_stack_bytes"])==4,"Original allocation wrapper ABI differs.");
    var m=Map(allocation["mfc"]);string expectedPath=Path.GetFullPath(Convert.ToString(m["path"]));ProcessModule module=null;
    foreach(ProcessModule item in Process.GetCurrentProcess().Modules)if(String.Equals(Path.GetFullPath(item.FileName),expectedPath,StringComparison.OrdinalIgnoreCase)){NativeMemory.Require(module==null||(module.BaseAddress==item.BaseAddress&&module.ModuleMemorySize==item.ModuleMemorySize),"Original allocator MFC module is ambiguous.");module=item;}
    NativeMemory.Require(module!=null&&module.ModuleMemorySize==Num(m["size_of_image"])&&NativeBinaryIdentity.Observe(Convert.ToString(m["sha256"]),NativeMemory.Hash(expectedPath),"NativeCurrentTemplateControlFactories:34:module"),"Original allocator MFC module/hash differs.");
@@ -37,9 +56,9 @@ namespace McgsInternalBridge {
    foreach(object item in (IEnumerable)g["reloc_offsets"]){int at=Num(item);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"Original MFC allocation relocation crosses its guard.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(module.BaseAddress)-(uint)Num(m["preferred_base"]))),0,bytes,at,4);}
    NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(expected,bytes.Length)),"Original allocator MFC1502 prefix differs.");return api.Engine.Address(Num(allocation["entry_rva"]));
   }
-  static Class InstalledClass(string name) {
-   var profile=Load(Path.Combine(NativeUsableEditPermit.DirectoryRoot,"page-control-prep","current-template-control-abi-profile.v2.json"));Class selected=null;
-   foreach(object raw in (IEnumerable)profile["classes"]){var row=Map(raw);if(Convert.ToString(row["class_name"])==name){NativeMemory.Require(selected==null,"Installed CDraw class repeats.");selected=new Class(row);}}
+  static Class InstalledClass(Api api,string name) {
+   var profile=new NativeLazyFunctionProfile(api.Engine,"coverage-20261101/usable-edit-0001/page-control-prep/current-template-control-abi-profile.v2.json",ProfileSha,"editor").Profile;Class selected=null;
+   foreach(object raw in (IEnumerable)profile["classes"]){var row=Map(raw);if(Convert.ToString(row["class_name"])==name){NativeMemory.Require(selected==null,"Installed CDraw class repeats.");NativeAbiTargetProfiles.CheckDirectEntry(row,"class",Api.TemplateRelative);NativeAbiTargetProfiles.CheckEntry(Map(row["primary"]),"vtable",Api.TemplateRelative);NativeAbiTargetProfiles.CheckEntry(Map(row["iobject"]),"vtable",Api.TemplateRelative);selected=new Class(row);}}
    NativeMemory.Require(selected!=null,"Installed CDraw class is absent.");return selected;
   }
   static Dictionary<string,object> CaptureFactory(Api api,Dictionary<string,object> action) {
@@ -68,7 +87,7 @@ namespace McgsInternalBridge {
   internal sealed class FactoryBatchScope:IDisposable {
    readonly Api api;readonly IntPtr page,doc,view,root;readonly int thread;readonly VI invalidate;readonly V0 update;
    internal bool historyEntered,completed,disposed;internal int appliedCount;
-   internal FactoryBatchScope(NativeEngine e,NativeContext c,string project,Dictionary<string,object> target){api=new Api(e,c,project);thread=NativeMemory.GetCurrentThreadId();page=api.Shared.Page(target);doc=NativeMemory.Ptr(page,0x14);view=api.View(doc);root=api.Shared.Shared.RootDoc();invalidate=api.ViewBind<VI>("InvalidateView");update=api.ViewBind<V0>("UpdateView");}
+   internal FactoryBatchScope(NativeEngine e,NativeContext c,string project,Dictionary<string,object> target){api=new Api(e,c,project);thread=NativeMemory.GetCurrentThreadId();page=api.Shared.Page(target);doc=NativeMemory.Ptr(page,0x14);view=api.View(doc);root=api.Shared.Shared.RootDoc();if(view!=IntPtr.Zero){invalidate=api.ViewBind<VI>("InvalidateView");update=api.ViewBind<V0>("UpdateView");}}
    internal bool HasView{get{return view!=IntPtr.Zero;}}
    internal void RequireTarget(NativeEngine engine,NativeContext context,IntPtr p,IntPtr d,IntPtr v,IntPtr r){NativeMemory.Require(!disposed&&!completed&&activeFactoryBatch==this&&NativeMemory.GetCurrentThreadId()==thread&&engine==api.Engine&&context==api.Context&&p==page&&d==doc&&v==view&&r==root&&api.View(doc)==view,"Factory batch page/document/view/thread changed.");api.Shared.Current();}
    internal bool NeedsHistory{get{return !historyEntered;}}
@@ -83,11 +102,11 @@ namespace McgsInternalBridge {
    readonly List<Dictionary<string,object>> requestedProperties=new List<Dictionary<string,object>>();readonly int[] rectangle;readonly int[] attributes;IntPtr rectBuffer;NativeTypedPropertyDispatcher dispatcher;bool applied,disposed,validated;readonly bool directCapture;
    internal PreparedFactory(Api value,Dictionary<string,object> a,string project) {
     api=value;action=a;NativeMemory.Require(Convert.ToString(a["kind"])=="control-native-create"&&Convert.ToString(a["abi_profile_sha256"])==FactoryProfileSha,"Native factory action kind/profile differs.");
-    var target=Map(a["target"]);string name=NativePageControlPreparation.Text(target,"class");contract=FactoryContract(api,name);cls=InstalledClass(name);directCapture=directFactoryCapture!=null&&directFactoryCapture.Matches(api.Engine,api.Context,project,a);before=directCapture?directFactoryCapture.Take():CaptureFactory(api,a);NativePageControlPreparation.Before(a,before);
+    var target=Map(a["target"]);string name=NativePageControlPreparation.Text(target,"class");contract=FactoryContract(api,name);cls=InstalledClass(api,name);directCapture=directFactoryCapture!=null&&directFactoryCapture.Matches(api.Engine,api.Context,project,a);before=directCapture?directFactoryCapture.Take():CaptureFactory(api,a);NativePageControlPreparation.Before(a,before);
     page=api.Shared.Page(target);doc=NativeMemory.Ptr(page,0x14);root=api.Shared.Shared.RootDoc();view=api.View(doc);batch=activeFactoryBatch;if(batch!=null)batch.RequireTarget(api.Engine,api.Context,page,doc,view,root);history=NativeHistoryStoreProjection.Prepare(api.Engine,doc);attributes=api.Shared.Attributes(doc);
     allocate=api.Engine.Bind<PlacementAllocate>(PlacementAllocatorAddress(api,Map(contract["allocator"])));var placement=Map(contract["placement_constructor"]);if(cls.Name=="CDrawObj")baseConstruct=api.Engine.Bind<BasePlacementConstructor>(api.Engine.Address(Num(placement["entry_rva"])));else construct=api.Engine.Bind<PlacementConstructor>(api.Engine.Address(Num(placement["entry_rva"])));defaults=api.Engine.Bind<VI>(api.Engine.Address(Num(Map(contract["defaults"])["entry_rva"])));
     var slots=new List<object>();foreach(object entry in (IEnumerable)cls.Object["entries"])slots.Add(entry);NativeMemory.Require(slots.Count>5,"Native control IObject setter slot is absent.");setterAddress=api.Engine.Address(Num(slots[5]));NativeMemory.Require(NativeMemory.Ptr(api.Engine.Address(Num(cls.Object["vtable_rva"])),20)==setterAddress,"Native control IObject setter table differs.");setter=api.Engine.Bind<SetterForFactory>(setterAddress);
-    setRectangle=api.Bind<RectSetter>(cls,"set_rect");add=api.Shared.Bind<VP>("standard","DocAdd");rootDirty=api.Shared.Shared.Bind<VI>("RootSetModified");docDirty=api.Shared.Bind<VI>("standard","DocSetModified");notify=api.ViewBind<BeforeModify>("DocBeforeModify");invalidate=api.ViewBind<VI>("InvalidateView");update=api.ViewBind<V0>("UpdateView");save=api.Shared.Bind<SaveData>("standard","WindowSaveData");api.Shared.Slot(api.Context.WindowService,12,0x21733);
+    setRectangle=api.Bind<RectSetter>(cls,"set_rect");add=api.Shared.Bind<VP>("standard","DocAdd");rootDirty=api.Shared.Shared.Bind<VI>("RootSetModified");docDirty=api.Shared.Bind<VI>("standard","DocSetModified");if(view!=IntPtr.Zero)notify=api.ViewBind<BeforeModify>("DocBeforeModify");if(view!=IntPtr.Zero){invalidate=api.ViewBind<VI>("InvalidateView");update=api.ViewBind<V0>("UpdateView");}save=api.Shared.Bind<SaveData>("standard","WindowSaveData");api.Shared.Slot(api.Context.WindowService,12,0x21733);
     var after=Map(a["after"]);rectangle=NativePageControlPreparation.Rect(after,"rectangle",attributes[2],attributes[3]);
     try {
      rectBuffer=Marshal.AllocHGlobal(16);for(int i=0;i<4;i++)Marshal.WriteInt32(rectBuffer,4*i,rectangle[i]);object raw;

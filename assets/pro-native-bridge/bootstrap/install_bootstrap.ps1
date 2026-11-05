@@ -1,4 +1,4 @@
-﻿param([Parameter(Mandatory=$true)][string]$PreparedRoot,[switch]$Commit)
+param([Parameter(Mandatory=$true)][string]$PreparedRoot,[switch]$Commit)
 # Default: print the exact installation plan. -Commit is a separate, explicit
 # future deployment command; neither prepare nor build invokes this script.
 $ErrorActionPreference='Stop'
@@ -6,6 +6,13 @@ $boot=(Resolve-Path -LiteralPath $PreparedRoot).Path
 function Hash([string]$p){(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash.ToLowerInvariant()}
 function Need([bool]$v,[string]$m){if(-not $v){throw $m}}
 function Regular([string]$p){Need (Test-Path -LiteralPath $p -PathType Leaf) "Missing input: $p";for($d=Get-Item -LiteralPath $p;$null -ne $d;$d=$(if($d -is [IO.FileInfo]){$d.Directory}else{$d.Parent})){Need (($d.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0) "Reparse input: $p"}}
+function BoundEditorProcesses([string]$p){
+ $full=[IO.Path]::GetFullPath($p)
+ foreach($proc in [Diagnostics.Process]::GetProcessesByName([IO.Path]::GetFileNameWithoutExtension($full))){try{
+  try{$idBefore=$proc.Id;$created=$proc.StartTime.ToUniversalTime();$actual=$proc.MainModule.FileName;if($proc.HasExited){continue};Need ($idBefore -eq $proc.Id -and $created -eq $proc.StartTime.ToUniversalTime()) 'Editor process identity changed during inspection.';if([IO.Path]::GetFullPath($actual) -ieq $full){[ordered]@{pid=$idBefore;created_utc=$created.ToString('o');executable=$actual}}}
+  catch{if($proc.HasExited){continue};throw "Cannot inspect candidate editor PID $($proc.Id): $($_.Exception.Message)"}
+ }finally{$proc.Dispose()}}
+}
 $configFile=Join-Path $boot 'McgsInternalBridge.bridge.json';Regular $configFile
 $cfg=Get-Content -LiteralPath $configFile -Raw -Encoding UTF8|ConvertFrom-Json
 $mf=Get-Content -LiteralPath (Join-Path $boot 'build-manifest.json') -Raw -Encoding UTF8|ConvertFrom-Json
@@ -14,12 +21,14 @@ Need ([IO.Path]::GetFullPath($cfg.bootstrap_root) -ieq $boot) 'Prepared bootstra
 foreach($r in $mf.files){$file=Join-Path $boot $r.relative_path;Regular $file;Need ((Hash $file) -eq $r.sha256) "Built file changed: $file"}
 $contract=Get-Content -LiteralPath (Join-Path $boot 'prepared-registration-contract.json') -Raw -Encoding UTF8|ConvertFrom-Json
 Need ($contract.state -eq 'prepared_not_registered' -and $contract.bootstrap_scope_sha256 -eq (Hash $configFile)) 'Registration contract changed.'
+$wrapperName='McgsInternalLoader.dll'
 $roots=@('Software\Classes\CLSID\{52119C44-5875-4DA6-9F72-E97D2E2182B4}','Software\Classes\McgsInternalBridge.AddInObj','Software\Classes\TypeLib\{4D2519E0-CC21-4F82-A19C-1AF9801C64E1}')
+if($null -ne $cfg.cold_com_identity){$identity=$cfg.cold_com_identity;Need ($identity.class_guid -cmatch '^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$' -and $identity.type_library_guid -cmatch '^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$' -and $identity.progid -cmatch '^McgsInternalBridge\.AddInObj_[a-f0-9]{10}$' -and $identity.native_wrapper_file_name -cmatch '^McgsInternalLoader_[a-f0-9]{10}\.dll$') 'Cold COM identity differs from its deployment scope.';$roots=@(('Software\Classes\CLSID\{'+$identity.class_guid+'}'),('Software\Classes\'+$identity.progid),('Software\Classes\TypeLib\{'+$identity.type_library_guid+'}'));$wrapperName=[string]$identity.native_wrapper_file_name}
 Need (($contract.roots -join '|') -ceq ($roots -join '|')) 'Private registry scope differs.'
-$source=Join-Path $boot 'native-wrapper\McgsInternalLoader.dll';$destination=Join-Path $cfg.addins_directory 'McgsInternalLoader.dll'
-$plan=[ordered]@{schema=1;action='install-own-bootstrap';bootstrap_scope_sha256=(Hash $configFile);copy_own_native_wrapper_from=$source;copy_own_native_wrapper_to=$destination;addins_ini=$cfg.addins_ini_file;ini_section='preload section named in loader-capability.json';ini_value='McgsInternalLoader.dll';registry_hive='HKLM';registry_view=32;private_registry_roots=$roots;requires_private_roots_absent_in_HKLM_and_HKCU=$true;requires_editor_closed=$true;automatic_elevation=$false;vendor_DLL_modified=$false;starts_Pro=$false;commit_requested=[bool]$Commit}
+$source=Join-Path (Join-Path $boot 'native-wrapper') $wrapperName;$destination=Join-Path $cfg.addins_directory $wrapperName
+$plan=[ordered]@{schema=1;action='install-own-bootstrap';bootstrap_scope_sha256=(Hash $configFile);copy_own_native_wrapper_from=$source;copy_own_native_wrapper_to=$destination;addins_ini=$cfg.addins_ini_file;ini_section='preload section named in loader-capability.json';ini_value=$wrapperName;registry_hive='HKLM';registry_view=32;private_registry_roots=$roots;requires_private_roots_absent_in_HKLM_and_HKCU=$true;requires_editor_closed=$true;editor_executable=$cfg.editor_executable;automatic_elevation=$false;vendor_DLL_modified=$false;starts_Pro=$false;commit_requested=[bool]$Commit}
 if(-not $Commit){$plan|ConvertTo-Json -Depth 12;return}
-Need ([Diagnostics.Process]::GetProcessesByName('McgsSetPro').Length -eq 0) 'Close Pro normally before bridge installation. No process will be killed.'
+Need (@(BoundEditorProcesses $cfg.editor_executable).Count -eq 0) 'Close the explicitly bound editor normally before bridge installation. No process will be killed.'
 Regular $cfg.editor_executable;Need ((Hash $cfg.editor_executable) -eq $cfg.editor_sha256) 'Engineering executable no longer matches its derived loader capability.'
 Regular $cfg.addins_ini_file
 Need ((Hash $cfg.addins_ini_file) -eq $cfg.addins_ini_sha256) 'Addins.ini changed since this explicit preparation; prepare a new plan.'
@@ -41,17 +50,18 @@ try{
  $lines=New-Object 'Collections.Generic.List[string]';$lines.AddRange([string[]][regex]::Split($text,'(?<=\n)'))
  $start=-1;$end=$lines.Count;$max=-1
  for($i=0;$i -lt $lines.Count;$i++){if($lines[$i].Trim() -ceq $section){Need ($start -eq -1) 'Duplicate original preload section.';$start=$i+1}}
- if($start -ge 0){for($i=$start;$i -lt $lines.Count;$i++){if($lines[$i].Trim().StartsWith('[')){$end=$i;break};$match=[regex]::Match($lines[$i],'^\s*([0-9]+)\s*=\s*(.*?)\s*$');if($match.Success){Need ($match.Groups[2].Value -ine 'McgsInternalLoader.dll') 'Existing preload bridge entry belongs to an earlier task.';$max=[Math]::Max($max,[int]$match.Groups[1].Value)}}}
+ if($start -ge 0){for($i=$start;$i -lt $lines.Count;$i++){if($lines[$i].Trim().StartsWith('[')){$end=$i;break};$match=[regex]::Match($lines[$i],'^\s*([0-9]+)\s*=\s*(.*?)\s*$');if($match.Success){Need ($match.Groups[2].Value -ine $wrapperName) 'Existing preload bridge entry already uses this deployment filename.';$max=[Math]::Max($max,[int]$match.Groups[1].Value)}}}
  Need ($max -lt 65535) 'Original preload numeric namespace is exhausted.'
  $newline="`r`n";if($text.Contains("`n") -and -not $text.Contains("`r`n")){$newline="`n"}
- if($start -lt 0){if($lines.Count -gt 0 -and $lines[$lines.Count-1].Length -gt 0 -and -not $lines[$lines.Count-1].EndsWith("`n")){$lines[$lines.Count-1]+=$newline};$lines.Add($section+$newline);$lines.Add('0=McgsInternalLoader.dll'+$newline)}
- else{if($end -gt 0 -and -not $lines[$end-1].EndsWith("`n")){$lines[$end-1]+=$newline};$lines.Insert($end,([string]($max+1)+'=McgsInternalLoader.dll'+$newline))}
+ if($start -lt 0){if($lines.Count -gt 0 -and $lines[$lines.Count-1].Length -gt 0 -and -not $lines[$lines.Count-1].EndsWith("`n")){$lines[$lines.Count-1]+=$newline};$lines.Add($section+$newline);$lines.Add('0='+$wrapperName+$newline)}
+ else{if($end -gt 0 -and -not $lines[$end-1].EndsWith("`n")){$lines[$end-1]+=$newline};$lines.Insert($end,([string]($max+1)+'='+$wrapperName+$newline))}
  $afterText=$lines -join '';[byte[]]$after=$bom+$encoding.GetBytes($afterText)
  New-Item -ItemType Directory -Path $journalDir|Out-Null
  [IO.File]::WriteAllBytes((Join-Path $journalDir 'Addins.ini.before'),$before)
  [IO.File]::WriteAllBytes((Join-Path $journalDir 'Addins.ini.after'),$after)
  $journal=[ordered]@{schema=1;state='prepared_before_any_install_write';transaction_id=$contract.transaction_id;bootstrap_scope_sha256=(Hash $configFile);roots_absent_before=$roots;expected_entries=$contract.expected_entries;wrapper_destination=$destination;wrapper_sha256=(Hash $source);ini_file=$cfg.addins_ini_file;ini_before_sha256=(Hash (Join-Path $journalDir 'Addins.ini.before'));ini_after_sha256=(Hash (Join-Path $journalDir 'Addins.ini.after'));no_vendor_DLL_modified=$true;host_started=$false;utc=[DateTime]::UtcNow.ToString('o')}
  WriteJournal $journal
+ Need (@(BoundEditorProcesses $cfg.editor_executable).Count -eq 0) 'The bound editor started during installation preparation; preserve the journal and stop.'
  [IO.File]::Copy($source,$destination,$false)
  [IO.File]::WriteAllBytes($cfg.addins_ini_file,$after)
  # Own marker first, then only exact REG_SZ values from the prepared contract.

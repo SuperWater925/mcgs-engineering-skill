@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "status": "SOURCE_READY_PORTABILITY_BOUND_COMPILE_AND_OWN_HOST_TESTED",
+  "status": "SOURCE_UPDATED_FINAL_UNIFIED_VALIDATION_PENDING",
   "install_relative_root": "assets/pro-native-bridge/hot-attach",
   "default_bootstrap_dependency": "../bootstrap",
   "allowlist": [
@@ -53,11 +53,11 @@
   "bootstrap_dependencies": [
     {
       "file": "../bootstrap/source/Bootstrap.cs",
-      "sha256": "b3f32aa6d94e3d6118daf7d5274c67d85935b9be557929e183f6859c60ec341f"
+      "sha256": "9cd56383eacdf3c01120d71e5e5b028223d16961054498b05a9fbc9ab3057835"
     },
     {
       "file": "../bootstrap/source/BootstrapLayout.cs",
-      "sha256": "1e6cf823dc6906b299e9be4da4fc83a278cfb8b1482333901e545e3dbcdb23af"
+      "sha256": "1b59091a9a5c088a5ba374b2db4cf2a658d8c2aa14a137282bff72808b3d76a6"
     },
     {
       "file": "../bootstrap/source/EngineLoader.cs",
@@ -73,7 +73,7 @@
     },
     {
       "file": "../bootstrap/build_native_wrapper.py",
-      "sha256": "29e9975d671044e65a583738be701c53a4b47c87789b7568ec3c1fea01b0f74c"
+      "sha256": "10980e28165f5540f0ccd573096d87ccd81f0eb7dcf83e00f8df1722953a0cd5"
     },
     {
       "file": "../bootstrap/loader-capability.current.json",
@@ -81,11 +81,19 @@
     },
     {
       "file": "../bootstrap/stage_engine.py",
-      "sha256": "63068fe303e4bbbf10f2a21b84c1fc1a4b5ff971127cfcade41b105dfc6b2d80"
+      "sha256": "321d64950bebad30cb49fbaf936c53ad211dea35ed4287574e92d294f2757c90"
     },
     {
       "file": "../bootstrap/pe_image.py",
       "sha256": "c4b1f16670f9c1da8cf716c55fc3192ade3f863e5934369997dfe0456af67574"
+    },
+    {
+      "file": "../bootstrap/select_engine.py",
+      "sha256": "2e3314a1a7bd67816cca843757711417a513dfa3838f062c79ea6e0c535d1357"
+    },
+    {
+      "file": "../bootstrap/managed_pe.py",
+      "sha256": "a8a9d5aa56f51b87c212a1bde735ad833231e13f860d95949c680dd8234846ff"
     }
   ],
   "exclude_everything_else": true,
@@ -112,5 +120,8 @@
   "real_Pro_verification_scope": "Ping-only connection layer, same original UI thread, no native project object read or manufacturer business method; not project or new-machine acceptance.",
   "Medium_HKCU_registration_verified": false,
   "current_revision": "0104-portability",
-  "current_revision_verification": "../../../references/pro-native-portability-validation.json"
+  "current_revision_verification": "../../../references/pro-native-portability-validation.json",
+  "historical_status": "SOURCE_READY_PORTABILITY_BOUND_COMPILE_AND_OWN_HOST_TESTED",
+  "current_source_revision": "2026-11-CV06-CV08-file-only-implementation",
+  "existing_engine_selection_command": "../bootstrap/select_engine.py"
 }
