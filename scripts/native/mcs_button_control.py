@@ -68,8 +68,7 @@ class Array:
     def parse(cls, r, strings=False):
         start = r.pos
         n = r.count()
-        if n > 65536:
-            raise FormatError("Unreasonable button array count")
+        r.count_extent(n,1 if strings else 4,"Button array")
         prefix = r.data[start:r.pos]
         return cls([CString.parse(r) if strings else r.u32() for _ in range(n)], prefix, strings, n)
 
@@ -96,8 +95,7 @@ def _font(r):
     start = r.pos
     r.u8()
     n = r.u32()
-    if n > 64:
-        raise FormatError(f"Unsupported font map at {start}: {n} languages")
+    r.count_extent(n,33,"Font language")
     for _ in range(n):
         r.u32()
         r.take(28)
@@ -115,7 +113,6 @@ def _picture(r):
         # Native embedded image: width, height, bounded serialized payload.
         # The payload may be SVG/bitmap/metafile; do not rewrite its internals.
         width,height,size=r.u32(),r.u32(),r.u32()
-        if size>64*1024*1024:raise FormatError('Embedded picture exceeds bounds')
         r.take(size)
     elif mode == 3:
         # Legacy zero-size image payload, NOT an image-disable marker.
@@ -135,8 +132,7 @@ def font_heights(data):
     r.u8()
     n = r.u32()
     heights = []
-    if n > 64:
-        raise FormatError("Unsupported font language count")
+    r.count_extent(n,33,"Font language")
     for _ in range(n):
         r.u32()
         heights.append(r.unpack("<i"))

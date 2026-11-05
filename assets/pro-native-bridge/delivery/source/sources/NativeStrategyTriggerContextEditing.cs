@@ -128,7 +128,7 @@ namespace McgsInternalBridge {
 
 
 
-   internal void Check(string name){Current();var f=guards[name];bool isMfc=S(f,"module")=="mfc110u.dll";IntPtr b=isMfc?Mfc:Engine.ImageBase;string h=S(f,"bytes");byte[] raw=new byte[h.Length/2];for(int i=0;i<raw.Length;i++)raw[i]=Byte.Parse(h.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);foreach(object x in(IEnumerable)f["reloc_offsets"]){int o=Convert.ToInt32(x);Need(o>=0&&o+4<=raw.Length,"Trigger code relocation crosses guard.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(raw,o)+NativeMemory.U(b)-(isMfc?0x10000000U:0x400000U))),0,raw,o,4);}Need(Hex(raw)==Hex(NativeMemory.Bytes(NativeMemory.Add(b,N(f,"rva")),raw.Length)),"Trigger context code differs: "+name);}
+   internal void Check(string name){Current();var f=guards[name];bool isMfc=S(f,"module")=="mfc110u.dll";IntPtr b=isMfc?Mfc:Engine.ImageBase;string h=S(f,"bytes");byte[] raw=new byte[h.Length/2];for(int i=0;i<raw.Length;i++)raw[i]=Byte.Parse(h.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);NativeCodeRelocation.RebaseDeltaInPlace(raw,(IEnumerable)f["reloc_offsets"],unchecked((uint)(NativeMemory.U(b)-(isMfc?0x10000000U:0x400000U))));Need(Hex(raw)==Hex(NativeMemory.Bytes(NativeMemory.Add(b,N(f,"rva")),raw.Length)),"Trigger context code differs: "+name);}
 
 
 

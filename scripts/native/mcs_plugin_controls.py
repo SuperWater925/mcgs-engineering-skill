@@ -57,7 +57,7 @@ class RecipeCore:
         r=Reader(data); header=r.take(20)
         if struct.unpack_from("<I",header,16)[0]!=22: raise FormatError("Unsupported Recipe schema")
         group=utf8_read(r); n=r.u32()
-        if n>1000: raise FormatError("Invalid recipe column count")
+        r.count_extent(n,40,"Recipe column")
         columns=[RecipeColumn.parse(r) for _ in range(n)]
         fields={}
         for key,kind in cls.SPEC:

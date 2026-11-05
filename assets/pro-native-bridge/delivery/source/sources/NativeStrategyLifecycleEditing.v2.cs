@@ -35,7 +35,7 @@ namespace McgsInternalBridge {
    }
    internal T Bind<T>(string name)where T:class{return Native.Engine.Bind<T>(methods[name]);}
    internal void Current(){Native.Current();Contexts.Current();DeleteApi.Current();CloseContract.Current();
-    foreach(object value in(IEnumerable)profile["guards"]){var row=M(value);byte[] raw=B(Convert.ToString(row["bytes"]));foreach(object rel in(IEnumerable)row["reloc_offsets"]){int i=N(rel);Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(raw,i)+NativeMemory.U(Native.Engine.ImageBase)-0x400000U)),0,raw,i,4);}NativeMemory.Require(H(raw)==H(NativeMemory.Bytes(Native.Engine.Address(N(row["rva"])),raw.Length)),"Actual loaded lifecycle method differs: "+Convert.ToString(row["name"]));}
+    foreach(object value in(IEnumerable)profile["guards"]){var row=M(value);byte[] raw=B(Convert.ToString(row["bytes"]));NativeCodeRelocation.RebaseDeltaInPlace(raw,(IEnumerable)row["reloc_offsets"],unchecked((uint)(NativeMemory.U(Native.Engine.ImageBase)-0x400000U)));NativeMemory.Require(H(raw)==H(NativeMemory.Bytes(Native.Engine.Address(N(row["rva"])),raw.Length)),"Actual loaded lifecycle method differs: "+Convert.ToString(row["name"]));}
    }
    internal Dictionary<int,Dictionary<string,object>> Db(){using(var cursor=LTrace("dao-allocate-construct-open",()=>new LifecycleCursor(this)))return LTrace("dao-all",()=>cursor.All());}
    internal List<object> DbRows(){var all=Db();var ids=new List<int>(all.Keys);ids.Sort();var list=new List<object>();foreach(int id in ids)list.Add(all[id]);return list;}

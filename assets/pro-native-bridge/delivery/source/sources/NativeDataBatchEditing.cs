@@ -40,7 +40,7 @@ namespace McgsInternalBridge {
       }
       if(item.Fields!=null)foreach(string key in new[]{"initial_text","metadata_text","comment"})if(item.Fields.ContainsKey(key)){IntPtr p=Marshal.StringToHGlobalUni(Text(item.Fields[key],key=="initial_text"?131072:4096));wide.Add(p);item.Wide.Add(key,p);}
      }
-     NativeMemory.Require(items.Count>0&&expectedNext<=Int32.MaxValue-creations,"Data batch is empty or would overflow native ID allocation.");deletionVector=Marshal.AllocHGlobal(12);deletionIndex=Marshal.AllocHGlobal(4);Marshal.WriteInt32(deletionVector,0,deletionIndex.ToInt32());Marshal.WriteInt32(deletionVector,4,NativeMemory.Add(deletionIndex,4).ToInt32());Marshal.WriteInt32(deletionVector,8,NativeMemory.Add(deletionIndex,4).ToInt32());api.Freeze();ValidateBefore();
+     NativeMemory.Require(items.Count>0&&expectedNext<=Int32.MaxValue-creations,"Data batch is empty or would overflow native ID allocation.");deletionVector=Marshal.AllocHGlobal(12);deletionIndex=Marshal.AllocHGlobal(4);Marshal.WriteInt32(deletionVector,0,deletionIndex.ToInt32());Marshal.WriteInt32(deletionVector,4,NativeMemory.Add(deletionIndex,4).ToInt32());Marshal.WriteInt32(deletionVector,8,NativeMemory.Add(deletionIndex,4).ToInt32());api.GuardDataList();api.Freeze();ValidateBefore();
     }catch{Dispose();throw;}
    }
    NativeStrategyProfile.CString Own(string text){var p=new NativeStrategyProfile.CString(api.Shared,text);strings.Add(p);NativeMemory.Require(p.Read()==text,"Owned native data batch text differs.");return p;}

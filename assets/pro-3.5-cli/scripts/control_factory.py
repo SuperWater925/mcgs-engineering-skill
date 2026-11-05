@@ -87,7 +87,8 @@ def resolve_clone(source_pages, descriptor, control_type):
     required = {'page_id', 'path', 'name', 'kind', 'sha256'}
     if not isinstance(descriptor, dict) or set(descriptor) != required:
         raise ValueError('clone_from requires page_id/path/name/kind/sha256')
-    pages = [p for p in source_pages if p['id'] == descriptor['page_id']]
+    pages = ([source_pages.page(descriptor['page_id'])] if hasattr(source_pages, 'page')
+             else [p for p in source_pages if p['id'] == descriptor['page_id']])
     if len(pages) != 1:
         raise ValueError('Clone page identity is absent or ambiguous')
     path = descriptor['path']

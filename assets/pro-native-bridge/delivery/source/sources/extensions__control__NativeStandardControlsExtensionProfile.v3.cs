@@ -58,7 +58,7 @@ namespace McgsInternalBridge {
             }
             void Verify(Dictionary<string,object> f) {
                 string value=Convert.ToString(f["first32"]);var bytes=new byte[value.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(value.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-                foreach(object offset in (IEnumerable)f["relocations"]){int at=NativeEngine.Number(offset);uint current=unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(Engine.ImageBase)-0x400000U);Array.Copy(BitConverter.GetBytes(current),0,bytes,at,4);}
+                NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)f["relocations"],unchecked((uint)(NativeMemory.U(Engine.ImageBase)-0x400000U)));
                 NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(Engine.Address(NativeEngine.Number(f["rva"])),bytes.Length)),"Standard-control native function bytes differ: "+f["name"]);
             }
             internal T Bind<T>(string name)where T:class {Project(Path.Combine(NativeOperations.TaskRoot,"fixtures","initial.MCP"));var f=functions[name];Verify(f);return Engine.Bind<T>(Engine.Address(NativeEngine.Number(f["rva"])));}

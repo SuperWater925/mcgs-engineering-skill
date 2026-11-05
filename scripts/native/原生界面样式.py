@@ -31,9 +31,9 @@ def animation(r):
         detail.update(off_text=r.cstring()[0],on_text=r.cstring()[0],fields=[r.u32() for _ in range(4)])
     elif name in ('CAniBrush','CAniTextColor'):
         n=r.count()
-        if n>10000:raise FormatError('Animation ranges exceed bounds')
+        r.count_extent(n,4,'Animation threshold')
         detail['thresholds']=[r.unpack('<f') for _ in range(n)]
-        n=r.count();detail['colors']=[r.u32() for _ in range(n)]
+        n=r.count();r.count_extent(n,4,'Animation color');detail['colors']=[r.u32() for _ in range(n)]
     elif name=='CAniVisible':detail['mode']=r.u32()
     elif name=='CAniBlink':
         # Native Serialize 0x4883a0: members 0x40..0x50, five DWORDs.
@@ -91,7 +91,7 @@ class CommonEnvelope:
         if style&0x100:r.take(8);r.cstring()
         ro=r.pos;r.take(16);po=r.pos;r.take(18);bo=r.pos;r.take(14)
         ast=r.pos;n=r.count();items=[]
-        if n>1000:raise FormatError('Animation count too large')
+        r.count_extent(n,11,'Animation')
         for _ in range(n):items.append(animation(r)[0])
         aend=r.pos;r.take(4)
         prefix=record.payload[:r.pos];name=CString.parse(r);meta=ByteArray.parse(r)
@@ -228,18 +228,18 @@ class MultiState:
             try:
                 common=CommonEnvelope.parse(record);r=Reader(common.content)
                 n=r.u32()
-                if n>1000:raise FormatError('Invalid multi-state count')
+                r.count_extent(n,4,'Multi-state threshold')
                 levels=[r.unpack('<f') for _ in range(n)]
                 n=r.u32()
-                if n>1000:raise FormatError('Invalid multi-state fill count')
+                r.count_extent(n,8,'Multi-state fill')
                 fills=[[r.u32(),r.u32()] for _ in range(n)]
                 collections=[]
                 for kind in ('image','text'):
                     n=r.u32();groups=[]
-                    if n>1000:raise FormatError('Invalid multi-state collection count')
+                    r.count_extent(n,4,'Multi-state collection')
                     for _ in range(n):
                         m=r.u32()
-                        if m>1000:raise FormatError('Invalid multi-state child count')
+                        r.count_extent(m,77+image_tail if kind=='image' else 107,'Multi-state child')
                         groups.append([MultiChild.parse(r,kind,image_tail) for _ in range(m)])
                     collections.append(groups)
                 if any(len(groups)!=len(levels) for groups in collections):
@@ -295,7 +295,7 @@ class GroupArchive:
     def parse(cls,record):
         if record.type_id!=0x503a:raise FormatError('Not native CDrawUnit group')
         common=CommonEnvelope.parse(record);r=Reader(common.content);n=r.u32();children=[]
-        if n>10000:raise FormatError('Group child count invalid')
+        r.count_extent(n,6,'Group child')
         for _ in range(n):
             start=r.pos;kind=r.u32();payload,prefix=r.byte_array()
             children.append(ControlRecord(kind,payload,prefix,start))
@@ -306,7 +306,7 @@ class GroupArchive:
 
 def set_plugin_font(raw,height=None,family=None,weight=None):
     r=Reader(raw);flag=r.u8();n=r.u32();out=bytes([flag])+struct.pack('<I',n)
-    if n>64:raise FormatError('Plugin font language count invalid')
+    r.count_extent(n,64,'Plugin font language')
     for _ in range(n):
         lang=r.take(4);b=bytearray(r.take(60))
         if height is not None:struct.pack_into('<i',b,0,-height)
@@ -321,7 +321,7 @@ def set_plugin_font(raw,height=None,family=None,weight=None):
 
 def fonts(raw):
     r=Reader(raw);flags=r.u8();n=r.u32();items=[]
-    if n>64:raise FormatError('Font language count invalid')
+    r.count_extent(n,33,'Font language')
     for _ in range(n):
         lang=r.u32();b=r.take(28);face=r.cstring()[0]
         v=struct.unpack('<5i8B',b)
@@ -331,7 +331,7 @@ def fonts(raw):
 
 def set_font(raw,height=None,family=None,weight=None):
     r=Reader(raw);flag=r.u8();n=r.u32();out=bytes([flag])+struct.pack('<I',n)
-    if n>64:raise FormatError('Font language count invalid')
+    r.count_extent(n,33,'Font language')
     for _ in range(n):
         lang=r.take(4);b=bytearray(r.take(28));face=CString.parse(r)
         if height is not None:

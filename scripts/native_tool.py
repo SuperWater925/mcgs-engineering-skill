@@ -26,10 +26,10 @@ from 窗口事件归档 import 窗口事件
 import 对象归档 as objects
 
 def unwrapped(raw):
-    return nz.unpack(raw) if raw.startswith(nz.MARKER) else raw
+    return nz.unpack_if_wrapped(raw)
 
 def wrapped_like(original, plain):
-    return nz.pack(plain) if original.startswith(nz.MARKER) else plain
+    return nz.pack_like(original, plain)
 
 def pro_format():
     path = Path(__file__).resolve().parents[1] / 'assets/pro-3.5-cli/scripts/native_format.py'
@@ -147,16 +147,16 @@ def _audit_basic(export):
     nodes, registry, _, _ = export.strategy_pair()
     result['strategy_count'], result['trigger_count'] = len(nodes), len(registry.triggers)
     result['two_strategy_containers_equal'] = True
-    obj_raw = export.blob('System', 'ObjData', 'lbContext')
+    obj_raw = unwrapped(export.blob('System', 'ObjData', 'lbContext'))
     version, obj = objects.parse(obj_raw)
     if objects.serialize(version, obj) != obj_raw:
         raise ValueError('ObjData round-trip failed')
     objects.validate_objects(obj)
     result['object_count'] = len(obj)
-    recipe_names = st.parse_recipe_index(export.blob('System', 'MCGS_RECIPE_DATA', 'lbContext'))
+    recipe_names = st.parse_recipe_index(unwrapped(export.blob('System', 'MCGS_RECIPE_DATA', 'lbContext')))
     recipe_count = 0
     for name in recipe_names:
-        raw = export.blob('System', 'MCGS_RECIPE_' + name, 'lbContext')
+        raw = unwrapped(export.blob('System', 'MCGS_RECIPE_' + name, 'lbContext'))
         definition = st.RecipeGroup.parse(raw)
         if definition.name != name or definition.serialize() != raw:
             raise ValueError('Recipe registration/definition mismatch')
@@ -165,7 +165,7 @@ def _audit_basic(export):
     for (table, key), row in export.rows.items():
         if table != 'WndUser':
             continue
-        raw = export.blob(table, key, 'lbObjects')
+        raw = unwrapped(export.blob(table, key, 'lbObjects'))
         try:
             window = WindowArchive.parse(raw)
             if window.to_bytes() != raw:

@@ -676,12 +676,22 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 'observed_layout_differences': [{'vtable_rva': t['vtable_rva'], 'col_offset': t['col_offset'], 'hierarchy': t['hierarchy']} for t in different],
                 'reason': 'Exact RTTI class/interface role and existing hierarchy layout is not unique'});continue
         new = exact[0]
-        if len(new['slot_entry_rvas']) < len(old['slot_entry_rvas']):
-            result['types'].append({'id': proof_id, 'module': alias, 'status': 'unresolved', 'reason': 'Actual table has fewer executable slots than the published contract'});continue
+        # COL, type and hierarchy identify this table independently of methods
+        # which this particular request may never call. A shorter trailing
+        # method list cannot invalidate that identity. Only slots actually
+        # present on both sides may provide function anchors; native callers
+        # still prove every slot they use against the live table.
+        reference_slots = len(old['slot_entry_rvas'])
+        actual_slots = len(new['slot_entry_rvas'])
+        slots = {'reference_count': reference_slots, 'actual_count': actual_slots,
+                 'shared_prefix_count': min(reference_slots, actual_slots),
+                 'missing_reference_tail_indexes': list(range(actual_slots, reference_slots)),
+                 'identity_is_not_proof_of_all_reference_slots': True}
         proof = {'id': proof_id, 'kind': 'RTTI-class-COL-hierarchy-vtable', 'module': alias,
-            'decorated_name': old['decorated_name'], 'reference': old, 'actual': new}
+            'decorated_name': old['decorated_name'], 'reference': old, 'actual': new, 'slot_coverage': slots}
         result['proofs'].append(proof)
-        result['types'].append({'id': proof_id, 'module': alias, 'status': 'resolved', 'reference': old, 'actual': new})
+        result['types'].append({'id': proof_id, 'module': alias, 'status': 'resolved', 'reference': old, 'actual': new,
+                                'slot_coverage': slots})
         for before, after, kind in rtti.address_pairs(old, new):
             suggest(alias, before, after, kind, proof_id)
         for before, after in zip(old['slot_entry_rvas'], new['slot_entry_rvas']):

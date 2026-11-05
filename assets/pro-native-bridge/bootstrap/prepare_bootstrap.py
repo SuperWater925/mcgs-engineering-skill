@@ -12,6 +12,7 @@ import shutil
 import uuid
 import re
 from pe_image import pe32_identity
+from cold_protocol import normalize as normalize_cold_protocol
 
 HERE = Path(__file__).resolve().parent
 MARKER = 'CodexBridgeTransactionId'
@@ -133,8 +134,8 @@ def main():
         if output.exists() and (not output.is_dir() or any(output.iterdir())):
             raise ValueError(label + ' is not empty; preserve existing files/claims and use the existing bridge or a fresh preparation subdirectory')
     startup = a.startup_registry_path
-    if not startup.casefold().startswith('software\\') or not startup.casefold().endswith('\\startup') or '\0' in startup:
-        raise ValueError('Supply the exact original existing per-user Startup key from loader evidence')
+    if not startup.casefold().startswith('software\\') or '\0' in startup:
+        raise ValueError('Supply the exact existing per-user Software key from loader evidence')
     capability = json.loads(paths['loader_contract_file'].read_text(encoding='utf-8-sig'))
     image = pe32_identity(paths['editor_executable'])
     protocol = capability.get('capabilities', {})
@@ -143,12 +144,14 @@ def main():
                 'dispatch_interface': 'IAddInObj', 'callback_dispatch_ids': [1, 2, 3, 4]}
     if capability.get('schema') != 1 or not isinstance(protocol, dict) or any(protocol.get(key) != value for key, value in required.items()):
         raise ValueError('Cold setup requires the declared Addin/TYPELIB/IAddInObj four-callback protocol')
+    cold_runtime = normalize_cold_protocol(protocol)
     reference_sha = capability.get('reference_binary_sha256', capability.get('binary_sha256'))
     reference_matches = reference_sha == image['binary_sha256']
     capability['reference_binary_sha256'] = reference_sha
     capability.update(image)
     capability['entry_mode'] = 'native_cold_addin'
     capability['configured_cold_addin_protocol'] = True
+    capability['configured_cold_runtime'] = cold_runtime
     capability['manufacturer_loader_runtime_verified'] = False
     capability['static_loader_contract_supported'] = bool(reference_matches and capability.get('static_loader_contract_supported') is True)
     if not reference_matches and 'native_loader_evidence' in capability:
@@ -169,7 +172,7 @@ def main():
               **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
               'loader_contract_file': str(contract_copy), 'loader_contract_sha256': sha(contract_copy),
               'editor_sha256': editor_sha, 'startup_registry_path': startup,
-              'addins_ini_sha256': sha(paths['addins_ini_file'])}
+              'addins_ini_sha256': sha(paths['addins_ini_file']), 'cold_runtime': cold_runtime}
     config_file = boot / 'McgsInternalBridge.bridge.json'
     json_new(config_file, config)
     config_sha = sha(config_file)
@@ -199,7 +202,7 @@ def main():
         'roots': roots, 'transaction_id': token, 'expected_entries': owned_entries,
         'bootstrap_scope_sha256': config_sha, 'registry_written': False})
     for name in ['build_bootstrap.ps1', 'install_bootstrap.ps1', 'remove_bootstrap.ps1', 'stage_engine.py',
-                 'select_engine.py', 'managed_pe.py', 'build_native_wrapper.py']:
+                 'select_engine.py', 'managed_pe.py', 'build_native_wrapper.py', 'cold-ini.ps1']:
         shutil.copyfile(HERE / name, boot / name)
     report = {'schema': 1, 'status': 'prepared_source_and_plans_only', 'config_file': str(config_file),
               'config_sha256': config_sha, 'bootstrap_root': str(boot), 'sources': sources,

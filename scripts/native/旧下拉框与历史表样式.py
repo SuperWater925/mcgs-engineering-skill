@@ -92,7 +92,7 @@ def parse_combo(data):
     """325.3 CDrawComboBox content, preserving list/data/selection/images."""
     result=NativeStyle(data); r=Reader(data)
     count=r.count()
-    if count>10000: raise FormatError('Unproven ComboBox item count')
+    r.count_extent(count,1,'ComboBox item')
     result.metadata['items']=[r.cstring()[0] for _ in range(count)]
     result.metadata['content_expression']=r.cstring()[0]
     result.metadata['content_cache']=r.cstring()[0]
@@ -116,7 +116,8 @@ def parse_save_data(data):
     result=NativeStyle(data);r=Reader(data)
     if r.take(10)!=bytes(10):raise FormatError('Unproven SaveData extension/list header')
     n=r.u32()
-    if not 0<n<=1000:raise FormatError('Unproven SaveData column count')
+    if n==0:raise FormatError('Empty SaveData column definition')
+    r.count_extent(n,21,'SaveData column')
     columns=[]
     for _ in range(n):
         columns.append(dict(width=r.u32(),alignment=r.u32(),texts=[r.cstring()[0] for _ in range(5)],words=[r.u32(),r.u32()]))

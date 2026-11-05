@@ -28,7 +28,7 @@ namespace McgsInternalBridge {
    foreach(object item in (IEnumerable)profile["functions"]) {
     var guard=(Dictionary<string,object>)item;string hex=Convert.ToString(guard["bytes"]);byte[] bytes=new byte[hex.Length/2];
     for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(hex.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-    foreach(object raw in (IEnumerable)guard["reloc_offsets"]){int offset=Convert.ToInt32(raw);NativeMemory.Require(offset>=0&&offset+4<=bytes.Length,"FontValue relocation differs.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,offset)+NativeMemory.U(engine.ImageBase)-preferred)),0,bytes,offset,4);}
+    NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)guard["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
     IntPtr address=engine.Address(NativeEngine.Number(guard["rva"]));NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length)),"Original FontValue native prefix differs: "+guard["name"]);methods.Add(Convert.ToString(guard["name"]),address);
    }
    // Resolve ALL constructors and cleanup/copy delegates before owned allocation.

@@ -64,11 +64,7 @@ namespace McgsInternalBridge {
    string relocKey=format=="strategy"?"relocatable_dword_offsets_in_first32":format=="duplicate"||format=="save"?"relocation_offsets":format=="control"?"relocations":"reloc_offsets";
    byte[] expected=HexBytes(Convert.ToString(row[bytesKey]));
    NativeMemory.Require(expected.Length>0&&rva>=0&&(long)rva+expected.Length<=sizes[module],"Native function guard exceeds its module: "+Relative+"/"+name);
-   foreach(object offset in (IEnumerable)row[relocKey]){
-    int at=NativeEngine.Number(offset);NativeMemory.Require(at>=0&&at<expected.Length,"Invalid native function relocation start.");
-    int count=Math.Min(4,expected.Length-at);byte[] word=new byte[4];Array.Copy(expected,at,word,0,count);
-    uint relocated=unchecked(BitConverter.ToUInt32(word,0)+NativeMemory.U(image)-preferred[module]);Array.Copy(BitConverter.GetBytes(relocated),0,expected,at,count);
-   }
+   NativeCodeRelocation.RebaseDeltaInPlace(expected,(IEnumerable)row[relocKey],unchecked((uint)(NativeMemory.U(image)-preferred[module])));
    IntPtr address=NativeMemory.Add(image,rva);
    NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,expected.Length))==BitConverter.ToString(expected),"Native function bytes differ: "+Relative+"/"+name);
    if(row.ContainsKey("ordinal"))NativeMemory.Require(GetProcAddressOrdinal(image,new IntPtr(NativeEngine.Number(row["ordinal"])))==address,"Native ordinal export differs: "+name);

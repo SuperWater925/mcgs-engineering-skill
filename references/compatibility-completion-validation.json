@@ -1,0 +1,508 @@
+{
+  "schema": "mcgs-compatibility-completion-validation/v1",
+  "date": "2026-11-05",
+  "release_tag": "v2026.11.05-compatibility-completion",
+  "cross_build_contract": "mcgs-native-cross-build/v3",
+  "implementation_status": {
+    "XR01": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "shared partial HIGHLOW consumption",
+      "evidence_scope": "managed 4096 full/partial oracle cases, whole-source compile and native create/geometry"
+    },
+    "XR02": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "actual module file/handle consumption",
+      "evidence_scope": "module-field and managed path/hash/ambiguity fixtures plus native engine use"
+    },
+    "XR03": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "per-operation data/recipe dependencies",
+      "evidence_scope": "production Api/Read/Inspect managed closure with unresolved recipe and actual Pro data-catalog"
+    },
+    "XR04": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "unrelated opaque CDraw preservation",
+      "evidence_scope": "production opaque common identity fixture, exact subtree guards, native known-target regression; no real new-vendor-control test"
+    },
+    "XR05": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "independent RTTI/table identity",
+      "evidence_scope": "production locator synthetic short/ambiguous/different-layout cases"
+    },
+    "XR06": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "source archive envelope handling",
+      "evidence_scope": "compressed Pro JSON and Stu audit, no-op wire preservation, owned ACE full readback"
+    },
+    "XR07": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "request-scoped offline parsing",
+      "evidence_scope": "unknown non-target page/ObjData and exact template cases; shared Candidate name lookup"
+    },
+    "XR08": {
+      "implemented": true,
+      "targeted_validation_passed": true,
+      "change": "actual annotation schema",
+      "evidence_scope": "owned ACE strComment schema with extra scalar/BLOB columns, shared transaction and exact old-row comparison"
+    }
+  },
+  "sample_assumptions": {
+    "SB01": {
+      "implemented": true,
+      "evidence": "extended window properties keep unknown trailing values and original opaque data"
+    },
+    "SB02": {
+      "implemented": true,
+      "evidence": "production list discovery at actual counts 2/7 and last position, uniqueness/header checks"
+    },
+    "SB03": {
+      "implemented": true,
+      "evidence": "custom section/encoding/BootCycle states 7/9, scan 5; actual own compile and install/remove plans; registry not written"
+    },
+    "SB05_offline": {
+      "implemented": true,
+      "evidence": "wire/stream-extent checks, valid 65MiB archive, malformed extents still rejected"
+    },
+    "native_architecture_and_object_layout": {
+      "status": "real_contract_preserved",
+      "meaning": "x86/MSVC, actual object fields/calling semantics and unknown archive schemas still need implementation"
+    }
+  },
+  "offline_validation": {
+    "status": "passed",
+    "results": [
+      {
+        "case": "test_zip_envelope",
+        "passed": true
+      },
+      {
+        "case": "test_pro_compressed_edit",
+        "passed": true
+      },
+      {
+        "case": "test_local_only_dependencies",
+        "passed": true
+      },
+      {
+        "case": "test_clone_reads_selected_page_only",
+        "passed": true
+      },
+      {
+        "case": "test_required_variable_dependency_rejected",
+        "passed": true
+      },
+      {
+        "case": "test_stu_wrapped_audit",
+        "passed": true
+      },
+      {
+        "case": "test_extended_window_properties",
+        "passed": true
+      },
+      {
+        "case": "test_unmodified_wire_forms_preserved",
+        "passed": true
+      },
+      {
+        "case": "test_stream_extent_counts",
+        "passed": true
+      },
+      {
+        "case": "test_candidate_ignores_unrelated_page_archive",
+        "passed": true
+      },
+      {
+        "case": "test_large_valid_archive",
+        "passed": true
+      },
+      {
+        "case": "database_legacy_new_window",
+        "passed": true,
+        "source_unchanged": true,
+        "actual_legacy_insert": true,
+        "extra_columns_preserved": true,
+        "all_old_rows_exact": true,
+        "actual_Pro_JSON_compressed_edit_and_full_file_readback": true
+      }
+    ],
+    "vendor_called": false,
+    "actual_database_fixture": true,
+    "large_archive_fixture": true,
+    "first_attempt": "offline-0001/result.json",
+    "repeat_scope": "Only owned database group; required project-family helper dot-source fixed",
+    "repeat_result": "offline-database-0002/result.json"
+  },
+  "relocation_module_validation": {
+    "passed": true,
+    "assertions": 37067,
+    "random_relocation_cases": 4096,
+    "vendor_calls": false,
+    "project_access": false,
+    "compiler_exit_code": 0,
+    "fixture_exit_code": 0,
+    "production_module_field_cases": 5,
+    "sources_sha256": {
+      "assets\\pro-native-bridge\\abi-adapter\\NativeAbiTargetProfiles.cs": "8354bcbaad9c09db51bbe40551b1140379229a588ec64e8f2dbc007436a7666a",
+      "assets\\pro-native-bridge\\delivery\\source\\sources\\NativeCodeRelocation.cs": "6821ae3676af8d08568bddb5c79640422fe8102a6e1611e89f2ed8799c43b9b8"
+    }
+  },
+  "native_scope_managed_validation": {
+    "compiled": true,
+    "compiler_exit_code": 0,
+    "Pro_called": false,
+    "production_data_source_sha256": "ea71ff9295644eefeba177d0cb8e6cc2e59622f377bd0229d420a81249df9b27",
+    "data_source_closure": "Unchanged production Api, Read and Inspect; untested Prepared class/declaration excluded from isolated fixture compilation. Whole-source compilation recorded separately.",
+    "runner_exit_code": 0,
+    "passed": true,
+    "result": {
+      "passed": true,
+      "checks": [
+        "production data catalog succeeds with unresolved recipe function and table",
+        "data catalog requests only module 2",
+        "data catalog never checks recipe or recipe MFC row",
+        "requested recipe fails at its own unresolved table",
+        "production data list discovered outside reference index 3 and count 5",
+        "UI list discovery does not preload data or recipe module",
+        "prewarmed data list remains usable after Freeze",
+        "actual list count 2 and last position selected",
+        "actual list count 7 and last position selected",
+        "duplicate matching list rejected",
+        "missing type rejected",
+        "aliased list pointer rejected",
+        "array header mutation rejected",
+        "unknown non-target preserves proven common Unit/IObject identity",
+        "opaque capture does not fabricate name or call unknown virtual getter",
+        "opaque common geometry captured exactly",
+        "opaque common state mutation visible to managed comparison",
+        "opaque wrong document rejected",
+        "same-text different common type descriptor rejected"
+      ],
+      "count": 19,
+      "vendor_calls": false,
+      "actual_process_memory_written": false,
+      "memory_source": "own managed dictionary; image ranges only from own fixture host"
+    }
+  },
+  "locator_validation": {
+    "passed": true,
+    "checks": [
+      "short table preserves independent RTTI/COL identity with no alternate function proof",
+      "missing tail slots remain unavailable and never receive guessed mappings",
+      "additional actual tail slots do not invent reference roles",
+      "ambiguous RTTI identities still rejected",
+      "actual object hierarchy mismatch still rejected"
+    ],
+    "vendor_calls": false,
+    "fixture_only": true
+  },
+  "cold_protocol_validation": {
+    "passed": true,
+    "checks": [
+      "configured section and startup value/states replace reference defaults",
+      "malformed protocol fields rejected without registry or vendor access",
+      "cp1252 preserves original text/bytes outside configured insertion and rejects duplicate",
+      "utf8 preserves original text/bytes outside configured insertion and rejects duplicate",
+      "utf16be preserves original text/bytes outside configured insertion and rejects duplicate",
+      "cp936 preserves original text/bytes outside configured insertion and rejects duplicate",
+      "ascii-cp936 preserves original text/bytes outside configured insertion and rejects duplicate",
+      "section-case preserves original text/bytes outside configured insertion and rejects duplicate"
+    ],
+    "registry_written": false,
+    "Pro_called": false
+  },
+  "own_cold_compile_and_plan": {
+    "passed": true,
+    "steps": [
+      {
+        "step": "own-cold-build",
+        "status": "completed_before_install_plan_failure",
+        "compiler_repeated": false
+      },
+      {
+        "step": "install-plan-retry",
+        "exit_code": 0
+      },
+      {
+        "step": "compile-policy-fixture",
+        "exit_code": 0
+      },
+      {
+        "step": "read-compiled-policy",
+        "exit_code": 0
+      }
+    ],
+    "compiled_policy": {
+      "name": "BootCycle",
+      "scan": 5,
+      "seven": true,
+      "nine": true,
+      "zero": false
+    },
+    "install_plan_uses_custom_policy": true,
+    "compiled_bootstrap_identity": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "e229c961e235610f238e02b0dfdf3f1b99856d3f004b91e4b9692722dde7ef29"
+    },
+    "TYPELIB_callbacks": 4,
+    "all_build_manifest_hashes_match": true,
+    "registry_written": false,
+    "COM_registered": false,
+    "manufacturer_cold_host_started": false,
+    "project_accessed": false,
+    "original_INI_unchanged": true
+  },
+  "own_remove_plan": {
+    "passed": true,
+    "empty_default_registry_value_preserved": true,
+    "plan_exit_code": 0,
+    "registry_written": false,
+    "files_removed": false,
+    "synthetic_journal_only": true
+  },
+  "production_engine": {
+    "passed": true,
+    "binding": {
+      "exit_code": 0,
+      "seconds": 38.5782
+    },
+    "compilation": {
+      "exit_code": 0,
+      "seconds": 0.975
+    },
+    "source_count": 165,
+    "engine_sha256": "771e1fb172202f383a621cbdc0002ee340c719aa76b97d9aa77e908c8e341af8",
+    "index_sha256": "56b984d77c543f9e262ebc327747a4187ef507a5865ef1811227b8fe86e13db3",
+    "scope_sha256": "3eb8af255fd487f941c1660a530212ed2531978f88808f2768f9af5af271c9d0",
+    "bound_manifest_sha256": "aecd8f2ea52f6dbca3ef1d16e3840c7bac8de54c0c5ea96757415c1e208792b4",
+    "native_calls_executed": false,
+    "promoted": false,
+    "scope_metadata": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "3eb8af255fd487f941c1660a530212ed2531978f88808f2768f9af5af271c9d0"
+    }
+  },
+  "bound_input_file_readback": {
+    "passed": true,
+    "selected_source_files_verified": 164,
+    "bound_layout_verified": true,
+    "total_compiled_CSharp_sources": 165,
+    "all_payload_file_hashes_match": true,
+    "payload_files_verified": 308,
+    "profiles": {
+      "resolved": 123,
+      "partial": 0,
+      "unresolved": 0
+    },
+    "source_addresses": {
+      "resolved": 537,
+      "unresolved": 0
+    },
+    "source_manifest_sha256": "d236ace18fd514552b55ee85e3656fd42cd87dcd1af4249bc2a8f9b101b70901",
+    "bound_manifest_sha256": "aecd8f2ea52f6dbca3ef1d16e3840c7bac8de54c0c5ea96757415c1e208792b4",
+    "engine_sha256": "771e1fb172202f383a621cbdc0002ee340c719aa76b97d9aa77e908c8e341af8",
+    "native_calls_executed": false
+  },
+  "native_acceptance": {
+    "schema": 1,
+    "scope": "one owned fixture and one Pro process",
+    "connection": {
+      "status": "passed",
+      "project": "<local path omitted>"
+    },
+    "engine": {
+      "status": "passed",
+      "engine_sha256": "771e1fb172202f383a621cbdc0002ee340c719aa76b97d9aa77e908c8e341af8",
+      "scope_sha256": "3eb8af255fd487f941c1660a530212ed2531978f88808f2768f9af5af271c9d0",
+      "native_function_binding": {
+        "mode": "current_program_resolved",
+        "cross_build_contract": "mcgs-native-cross-build/v3",
+        "entry_validation_contract": "mcgs-native-lazy-entry/v1",
+        "profile_index_sha256": "56b984d77c543f9e262ebc327747a4187ef507a5865ef1811227b8fe86e13db3",
+        "reference_RVAs_used_directly": false
+      },
+      "promotion_count": 308
+    },
+    "data_catalog": {
+      "status": "passed",
+      "write_attempted": false,
+      "catalog_before_keys": [
+        "abi_profile_sha256",
+        "module_id",
+        "records",
+        "native_write_attempted",
+        "full_serialization_preimage"
+      ]
+    },
+    "mutation": {
+      "status": "passed",
+      "control": "OfflineButton",
+      "before": [
+        22,
+        20,
+        202,
+        65
+      ],
+      "after": [
+        23,
+        20,
+        203,
+        65
+      ]
+    },
+    "create": {
+      "status": "passed",
+      "created": {
+        "class": "CDrawLabel",
+        "rtti": ".?AVCDrawLabel@@",
+        "type_id": 20488,
+        "size": 392,
+        "path": [
+          9
+        ],
+        "name": "控件1",
+        "native_id": -2,
+        "rectangle": [
+          200,
+          280,
+          350,
+          310
+        ],
+        "raw_DWORD60": 0,
+        "raw_DWORDB0": 0,
+        "children": [],
+        "caption": ""
+      }
+    },
+    "save": {
+      "status": "passed",
+      "page_save": true,
+      "root_save": true
+    },
+    "native_readback": {
+      "status": "passed"
+    },
+    "native_check": {
+      "status": "passed",
+      "return_int32": 0,
+      "worker_entered": true,
+      "worker_returned": true,
+      "native_check_passed": true,
+      "compile_valid_after": 1,
+      "error_count": null,
+      "warning_count": null
+    },
+    "file_readback": {
+      "status": "passed",
+      "provider": "Microsoft.ACE.OLEDB.16.0",
+      "project_sha256": "4eea4939bb07537f6e7764354ab8fb102e07c08c58f3b340fe473e233bbe1b4d",
+      "archive_roundtrip_equal": true,
+      "page_control_count": 10,
+      "button": {
+        "name": "OfflineButton",
+        "path": [
+          0
+        ],
+        "rectangle": [
+          23,
+          20,
+          203,
+          65
+        ]
+      },
+      "created_label": {
+        "name": "控件1",
+        "path": [
+          9
+        ],
+        "rectangle": [
+          200,
+          280,
+          350,
+          310
+        ]
+      },
+      "other_prior_control_records_byte_equal": true
+    },
+    "close_reopen": "not_performed",
+    "simulation": "not_performed",
+    "physical_communication": "not_performed"
+  },
+  "catalog_generation": {
+    "source_addresses": {
+      "entries": 537,
+      "confirmed": 537,
+      "source_ordinals": 17,
+      "address_kinds": {
+        "PE_RVA_constant": 31,
+        "PE_RVA_literal": 487,
+        "PE_data_RVA_literal": 8,
+        "reference_base_encoded_RVA": 11
+      },
+      "module_ownership_or_const_scope_gaps": 50
+    },
+    "modules": 17,
+    "profiles": 123,
+    "signatures": 5874,
+    "types": 265,
+    "catalog_gaps": 0,
+    "expanded_catalog_sha256": "7c7e7e59806c9529ee77f8890be2c676aed224096502468d29e2941f2fc22a1b",
+    "compressed_catalog_sha256": "75441365b0e29bd81843d2fe1c7c8fe0935d231803f167e06b8fd182ea5a0ed1"
+  },
+  "failed_attempts_and_corrections": [
+    {
+      "group": "offline owned database",
+      "reason": "shared transaction did not load product-family helper",
+      "correction": "dot-source shared helper",
+      "repeat_scope": "only failed owned DB group"
+    },
+    {
+      "group": "cold INI",
+      "reason": "cp936 alias not accepted by GetEncoding(string), followed by empty trailing split segment adding a blank line",
+      "correction": "registered code pages and numeric alias; preserve original trailing text",
+      "repeat_scope": "cold file-only group"
+    },
+    {
+      "group": "cold plan",
+      "reason": "PS custom object JSON parser rejects empty default registry value names",
+      "correction": "hashtable JSON and dictionary enumeration; added removal plan readback",
+      "compiler_repeated": false
+    },
+    {
+      "group": "production compile",
+      "reason": "mechanical relocation call used removed temporary word instead of expected guard buffer",
+      "correction": "correct argument, refresh source manifests/catalog and bind fresh output",
+      "repeat_scope": "production binding/compile only"
+    }
+  ],
+  "source_review": {
+    "independent_review_completed": true,
+    "adjacent_lazy_consumers_fixed": 8,
+    "historical_unopened_trial_routes_not_claimed_as_active": true,
+    "opaque_private_payload_not_claimed_fully_validated": true
+  },
+  "software_release_number_gate": false,
+  "author_vendor_file_SHA_gate": false,
+  "all_older_releases_native_tested": false,
+  "not_performed": [
+    "manufacturer cold-host activation",
+    "close/reopen",
+    "simulation",
+    "physical communication",
+    "real alternate-vendor-control opaque case"
+  ],
+  "native_check_error_count": "unknown",
+  "native_check_warning_count": "unknown",
+  "paused_user_project_accessed": false,
+  "vendor_binaries_or_user_projects_bundled": false
+}

@@ -41,6 +41,8 @@ internal static class BridgeSessionLauncher
         string log = Path.Combine(logs, "session-launch-result.json");
         string transactionPath = Path.Combine(logs, "session-start-" + DateTime.UtcNow.ToString("yyyyMMddTHHmmssfff") + "-" + Guid.NewGuid().ToString("N") + ".json");
         string startup = BootstrapLayout.StartupRegistryPath;
+        string startupValue = BootstrapLayout.StartupValueName;
+        int scanValue = BootstrapLayout.StartupScanValue;
         int original = -1;
         bool prepared = false;
         var record = new Dictionary<string, object>();
@@ -59,27 +61,27 @@ internal static class BridgeSessionLauncher
             using (RegistryKey user = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
             using (RegistryKey key = user.OpenSubKey(startup, true))
             {
-                if (key == null || key.GetValueKind("Count") != RegistryValueKind.DWord)
-                    throw new InvalidOperationException("Expected the existing native Startup Count DWORD; no key will be created.");
-                original = (int)key.GetValue("Count");
-                if (original != 0 && original != 1) throw new InvalidOperationException("Unexpected native startup state.");
+                if (key == null || key.GetValueKind(startupValue) != RegistryValueKind.DWord)
+                    throw new InvalidOperationException("Expected the configured existing startup DWORD; no key will be created.");
+                original = (int)key.GetValue(startupValue);
+                if (!BootstrapLayout.AcceptsStartupValue(original)) throw new InvalidOperationException("Current startup state differs from the configured loader protocol.");
                 record["bootstrap_scope_sha256"]=BootstrapLayout.ConfigurationSha256;
                 record["utc"] = DateTime.UtcNow.ToString("o");
                 record["registry_hive"] = "HKEY_CURRENT_USER";
                 record["registry_view"] = 32;
                 record["registry_path"] = startup;
-                record["value_name"] = "Count";
+                record["value_name"] = startupValue;
                 record["before"] = original;
-                record["requested"] = 0;
+                record["requested"] = scanValue;
                 record["pro_was_closed"] = true;
                 record["status"] = "prepared_before_write";
                 WriteJson(transactionPath, record);
-                key.SetValue("Count", 0, RegistryValueKind.DWord);
+                key.SetValue(startupValue, scanValue, RegistryValueKind.DWord);
                 prepared = true;
                 key.Flush();
-                if ((int)key.GetValue("Count") != 0) throw new IOException("Native startup preparation readback failed.");
+                if ((int)key.GetValue(startupValue) != scanValue) throw new IOException("Native startup preparation readback failed.");
             }
-            // Count0 selects one native cold scan. /BuildIni would append a second catalog after warm loading.
+            // The supplied loader protocol selects one native cold scan.
             Process child = Process.Start(new ProcessStartInfo(pro)
             {
                 WorkingDirectory = Path.GetDirectoryName(pro),
@@ -88,7 +90,7 @@ internal static class BridgeSessionLauncher
             record["status"] = "native_process_started";
             record["process_id"] = child.Id;
             record["native_arguments"] = "";
-            record["note"] = "Only the existing per-user native startup Count is prepared. Pro normally returns it to1 during startup. No cache serialization or executable patch.";
+            record["note"] = "Only the configured existing per-user startup DWORD was prepared. Native scanner completion is observed separately; no executable patch.";
             WriteJson(transactionPath, record);
             record["ok"] = true;
             record["transaction"] = transactionPath;
@@ -105,8 +107,8 @@ internal static class BridgeSessionLauncher
                     using (RegistryKey user = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
                     using (RegistryKey key = user.OpenSubKey(startup, true))
                     {
-                        if (key != null && key.GetValueKind("Count") == RegistryValueKind.DWord && (int)key.GetValue("Count") == 0)
-                        { key.SetValue("Count", original, RegistryValueKind.DWord); key.Flush(); restored = true; }
+                        if (key != null && key.GetValueKind(startupValue) == RegistryValueKind.DWord && (int)key.GetValue(startupValue) == scanValue)
+                        { key.SetValue(startupValue, original, RegistryValueKind.DWord); key.Flush(); restored = true; }
                     }
                 }
                 catch (Exception restoreError) { record["restore_error"] = restoreError.Message; }

@@ -13,7 +13,7 @@ function BoundEditorProcesses([string]$p){
  }finally{$proc.Dispose()}}
 }
 $file=(Resolve-Path -LiteralPath $InstallationJournal).Path;Regular $file
-$j=Get-Content -LiteralPath $file -Raw -Encoding UTF8|ConvertFrom-Json
+$j=Get-Content -LiteralPath $file -Raw -Encoding UTF8|ConvertFrom-Json -AsHashtable
 $dir=Split-Path -Parent $file;$boot=Split-Path -Parent $dir
 $cfgFile=Join-Path $boot 'McgsInternalBridge.bridge.json';Regular $cfgFile
 Need ((Hash $cfgFile) -eq $j.bootstrap_scope_sha256) 'Journal is not bound to this bootstrap configuration.'
@@ -29,14 +29,14 @@ if(-not $Commit){[ordered]@{action='remove-own-bootstrap';journal=$file;private_
 Need (@(BoundEditorProcesses $cfg.editor_executable).Count -eq 0) 'Close the explicitly bound editor normally before removing this bridge.'
 Regular $dest;Regular $j.ini_file;$backup=Join-Path $dir 'Addins.ini.before';Regular $backup
 Need ((Hash $dest) -eq $j.wrapper_sha256 -and (Hash $j.ini_file) -eq $j.ini_after_sha256 -and (Hash $backup) -eq $j.ini_before_sha256) 'Own DLL or INI changed; preserve it for review instead of deleting/restoring.'
-$expected=@{};foreach($entry in $j.expected_entries){Need (-not $expected.ContainsKey($entry.key)) 'Duplicate journal registry entry.';$expected.Add($entry.key,$entry.values)}
+$expected=@{};foreach($entry in $j.expected_entries){Need (-not $expected.ContainsKey($entry.key)) 'Duplicate journal registry entry.';$expected.Add($entry.key,$entry['values'])}
 $machine=[Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine,[Microsoft.Win32.RegistryView]::Registry32)
 function CheckTree([string]$path){
  Need ($expected.ContainsKey($path)) "Unplanned private registry subkey: $path"
  $key=$machine.OpenSubKey($path,$false);try{
   Need ($null -ne $key) "Private registry key missing: $path"
-  $planned=$expected[$path];$names=@($key.GetValueNames());Need ($names.Count -eq @($planned.PSObject.Properties).Count) "Unplanned/missing registry values: $path"
-  foreach($v in $planned.PSObject.Properties){Need ($key.GetValueKind($v.Name) -eq [Microsoft.Win32.RegistryValueKind]::String -and [string]$key.GetValue($v.Name) -ceq [string]$v.Value) "Owned registration value changed: $path"}
+  $planned=$expected[$path];$names=@($key.GetValueNames());Need ($names.Count -eq $planned.Count) "Unplanned/missing registry values: $path"
+  foreach($v in $planned.GetEnumerator()){Need ($key.GetValueKind($v.Key) -eq [Microsoft.Win32.RegistryValueKind]::String -and [string]$key.GetValue($v.Key) -ceq [string]$v.Value) "Owned registration value changed: $path"}
   foreach($sub in $key.GetSubKeyNames()){CheckTree ($path+'\'+$sub)}
  }finally{if($null -ne $key){$key.Dispose()}}
 }

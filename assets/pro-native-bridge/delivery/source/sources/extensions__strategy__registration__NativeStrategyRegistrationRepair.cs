@@ -34,7 +34,7 @@ namespace McgsInternalBridge {
                 Native=new NativeStrategyExtensionProfile.ReadApi(engine,"registration/registration-abi-guard.json");
                 var identity=(Dictionary<string,object>)Read(guard)["identity_getter"];identityGetter=engine.Address(NativeEngine.Number(identity["rva"]));string text=Convert.ToString(identity["expected_first_32_bytes"]);identityBytes=new byte[text.Length/2];
                 for(int i=0;i<identityBytes.Length;i++)identityBytes[i]=Byte.Parse(text.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-                foreach(object value in (IEnumerable)identity["relocatable_dword_offsets_in_first32"]){int at=Convert.ToInt32(value);NativeMemory.Require(at>=0 && at+4<=identityBytes.Length,"Registration identity relocation exceeds guarded prefix.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(identityBytes,at)+NativeMemory.U(engine.ImageBase)-0x400000U)),0,identityBytes,at,4);}
+                NativeCodeRelocation.RebaseDeltaInPlace(identityBytes,(IEnumerable)identity["relocatable_dword_offsets_in_first32"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-0x400000U)));
                 Root=Native.Existing.RootDoc();Current();
                 IntPtr app=Native.Existing.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(NativeMemory.Ptr(app,0x520)==Root,"Registration application root differs.");
                 IntPtr frame=NativeMemory.Ptr(app,0x524);NativeMemory.Require(NativeMemory.Ptr(frame,0)==engine.Address(0xDBC034),"Registration management frame differs.");

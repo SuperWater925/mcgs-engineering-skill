@@ -183,10 +183,7 @@ namespace McgsInternalBridge {
         static byte[] ParseHex(string text){var result=new byte[text.Length/2];for(int i=0;i<result.Length;i++)result[i]=Byte.Parse(text.Substring(i*2,2),NumberStyles.HexNumber);return result;}
         void VerifyFunction(Dictionary<string,object> item) {
             var expected=ParseHex(Convert.ToString(item["expected_first_32_bytes"]));
-            foreach(object offset in (IEnumerable)item["relocatable_dword_offsets_in_first32"]) {
-                int at=Number(offset);uint address=unchecked(BitConverter.ToUInt32(expected,at)+NativeMemory.U(ImageBase)-(uint)preferredBase);
-                Array.Copy(BitConverter.GetBytes(address),0,expected,at,4);
-            }
+            NativeCodeRelocation.RebaseDeltaInPlace(expected,(IEnumerable)item["relocatable_dword_offsets_in_first32"],unchecked((uint)(NativeMemory.U(ImageBase)-(uint)preferredBase)));
             byte[] actual=NativeMemory.Bytes(Address(Number(item["rva"])),expected.Length);
             NativeMemory.Require(BitConverter.ToString(actual)==BitConverter.ToString(expected),"Internal function signature differs: "+item["name"]);
         }

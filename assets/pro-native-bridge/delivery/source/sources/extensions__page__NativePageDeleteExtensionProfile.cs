@@ -40,7 +40,7 @@ namespace McgsInternalBridge {
                 foreach(object value in (IEnumerable)profile["functions"]) {
                     var row=(Dictionary<string,object>)value;string hex=Convert.ToString(row["bytes"]),name=Convert.ToString(row["name"]);byte[] bytes=new byte[hex.Length/2];
                     for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(hex.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-                    foreach(object offset in (IEnumerable)row["reloc_offsets"]){int at=Convert.ToInt32(offset);NativeMemory.Require(at>=0 && at+4<=bytes.Length,"Delete ABI relocation exceeds prefix.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-preferred)),0,bytes,at,4);}
+                    NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)row["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
                     IntPtr address=engine.Address(NativeEngine.Number(row["rva"]));NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length))==BitConverter.ToString(bytes),"Page delete ABI differs: "+name);functions.Add(name,address);
                 }
                 NativeMemory.Require(NativeMemory.I32(engine.Address(0xCF9AD0),4)==0xB8,"CDBWndUser native CRuntimeClass size differs.");

@@ -28,6 +28,10 @@ class Reader:
     def count(self):
         n=self.u16()
         return self.u32() if n==0xffff else n
+    def count_extent(self,n,minimum_bytes,label="Item"):
+        if minimum_bytes<=0 or n<0 or n>(len(self.data)-self.pos)//minimum_bytes:
+            raise FormatError(f"{label} count exceeds remaining stream extent")
+        return n
     def byte_array(self):
         start=self.pos; size=self.count(); value=self.take(size)
         return value, self.data[start:self.pos-size]
@@ -93,14 +97,16 @@ class WindowSettings:
         r=Reader(trailer); size=r.u32(); pwd_size=r.u32(); pwd=r.take(pwd_size); core=r.take(size)
         if r.pos!=len(trailer): raise FormatError("Unexpected bytes after window settings")
         p=Reader(core)
-        n=p.count(); props=[OleVariant.parse(p) for _ in range(n)]
+        n=p.count()
+        if n>(len(p.data)-p.pos)//2:raise FormatError("Window property count exceeds stream extent")
+        props=[OleVariant.parse(p) for _ in range(n)]
         return cls(pwd,props,core[p.pos:])
     def to_bytes(self):
         core=write_count(len(self.properties))+b"".join(v.to_bytes() for v in self.properties)+self.event_tail
         return struct.pack("<2I",len(core),len(self.password_data))+self.password_data+core
     def clone(self,window_id,name):
         result=copy.deepcopy(self)
-        if len(result.properties)!=21 or result.properties[0].vt!=3 or result.properties[1].vt!=8: raise FormatError("Unsupported window schema")
+        if len(result.properties)<2 or result.properties[0].vt!=3 or result.properties[1].vt!=8: raise FormatError("Unsupported window identity property positions/types")
         result.properties[0].value=window_id; result.properties[1].value=name
         return result
 
@@ -155,7 +161,7 @@ class WindowArchive:
         marker,_,_=r.cstring()
         if marker!="MCGS-SET DOCUMENT;VERSION 01.00": raise FormatError("Unexpected document marker")
         prefix=data[:r.pos]; count=r.u32()
-        if count>100000: raise FormatError("Unreasonable object count")
+        if count>(len(data)-r.pos)//6: raise FormatError("Object count exceeds stream extent")
         controls=[]
         for _ in range(count):
             offset=r.pos; kind=r.u32(); payload,prefix_len=r.byte_array()
