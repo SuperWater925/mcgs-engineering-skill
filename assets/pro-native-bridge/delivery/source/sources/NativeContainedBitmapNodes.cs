@@ -8,7 +8,7 @@ namespace McgsInternalBridge {
   }
   internal static List<ContainedBitmapNode> ContainedBitmapNodes(NativeEngine e,NativeContext c,string project,IntPtr root){
    var result=new List<ContainedBitmapNode>();if(root==IntPtr.Zero)return result;
-   var api=new Api(e,c,project);Node tree=api.Tree(root,NativeMemory.Ptr(root,0x64),new int[]{0},new HashSet<uint>(),0);
+   var api=new Api(e,c,project);Node tree=api.Tree(root,NativeMemory.Ptr(root,0x64),new int[]{0},new HashSet<uint>(),0);RequireKnownSubtree(tree,"contained bitmap ownership read");
    foreach(Node node in Flatten(new List<Node>{tree}))if(node.Class.Name=="CDrawBitmap"){
     NativeMemory.Require(node.Class.TypeId==0x5009&&node.Class.Size==0x188,"Contained Bitmap member layout differs.");
     result.Add(new ContainedBitmapNode{Full=node.Full,Image=NativeMemory.Add(node.Full,0xE4),Path=node.Path,Name=NativeStrategyProfile.ReadName(api.Shared.Shared,NativeMemory.Add(node.Full,4))});

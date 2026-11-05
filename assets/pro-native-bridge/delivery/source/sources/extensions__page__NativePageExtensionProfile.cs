@@ -31,10 +31,7 @@ namespace McgsInternalBridge {
                 foreach(object value in (IEnumerable)Profile["functions"]) {
                     var row=(Dictionary<string,object>)value;string name=Convert.ToString(row["name"]),hex=Convert.ToString(row["bytes"]);
                     var bytes=new byte[hex.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(hex.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-                    foreach(object offset in (IEnumerable)row["reloc_offsets"]) {
-                        int at=Convert.ToInt32(offset);NativeMemory.Require(at>=0 && at+4<=bytes.Length,"Page signature relocation exceeds prefix.");
-                        uint current=unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-preferred);Array.Copy(BitConverter.GetBytes(current),0,bytes,at,4);
-                    }
+                    NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)row["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
                     IntPtr address=engine.Address(NativeEngine.Number(row["rva"]));
                     NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length))==BitConverter.ToString(bytes),"Page extension ABI prefix differs: "+name);functions.Add(name,address);
                 }

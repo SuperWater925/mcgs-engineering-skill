@@ -4,7 +4,8 @@ import zlib
 
 
 MARKER=b'MCGSZIPE'
-MAX_PLAIN=64*1024*1024
+# The two on-wire lengths are unsigned DWORDs, not a sample-size quota.
+MAX_PLAIN=0xffffffff
 
 
 def unpack(raw):
@@ -30,3 +31,13 @@ def pack(plain):
     raw=MARKER+struct.pack('<2I',len(plain),len(plain))+zlib.compress(plain,1)
     if unpack(raw)!=plain:raise ValueError('MCGSZIPE压缩封装回环失败')
     return raw
+
+
+def unpack_if_wrapped(raw):
+    return unpack(raw) if raw.startswith(MARKER) else raw
+
+
+def pack_like(original, plain):
+    """Keep original bytes for no-ops and retain the actual envelope on edits."""
+    if unpack_if_wrapped(original)==plain:return original
+    return pack(plain) if original.startswith(MARKER) else plain

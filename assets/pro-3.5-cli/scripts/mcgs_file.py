@@ -9,6 +9,7 @@ import shutil
 import struct
 import subprocess
 import sys
+from collections.abc import Mapping
 
 import native_format as f
 from mcgs_family import identify_family
@@ -70,7 +71,7 @@ def title(value):
 
 
 def set_variables(data, additions, updates):
-    row=system(data,'ObjData'); rows=f.variables(f.binary(row['lbContext']))
+    row=system(data,'ObjData'); rows=f.variables(f.archive(row['lbContext']))
     templates=json.loads((HOME/'assets/primitives.json').read_text(encoding='utf-8'))
     validate_initial = {item['name'] for item in additions}
     validate_initial.update(item['name'] for item in updates if 'initial' in item)
@@ -100,8 +101,20 @@ def set_variables(data, additions, updates):
             if not __import__('math').isfinite(value) or (r['kind']==1 and value not in (0,1)):
                 raise ValueError('Invalid numeric initial value')
     if additions or updates:
-        row['lbContext']=f.wrap(f.pack_variables(rows))
+        row['lbContext']=f.wrap_like(row['lbContext'],f.pack_variables(rows))
     return {r['name']:r for r in rows}
+
+
+class VariableCatalog(Mapping):
+    """Read ObjData only when an operation actually resolves a variable."""
+    def __init__(self,data):
+        self.data=data;self.loaded=None
+    def _values(self):
+        if self.loaded is None:self.loaded=set_variables(self.data,[],[])
+        return self.loaded
+    def __getitem__(self,key):return self._values()[key]
+    def __iter__(self):return iter(self._values())
+    def __len__(self):return len(self._values())
 
 
 def control(item, variables, primitives, source_pages=()):
@@ -122,9 +135,20 @@ def page_columns(data):
 def template_pages(data):
     result = []
     for row in data['WndUser']['rows']:
-        _, values, _ = f.window(f.binary(row['lbObjects']))
+        _, values, _ = f.window(f.archive(row['lbObjects']),validate_settings=False)
         result.append({'id': row['iID'], 'controls': [record(kind, payload) for kind, payload in values]})
     return result
+
+
+class SourcePages:
+    """Resolve only explicitly requested clone pages from the original snapshot."""
+    def __init__(self,rows):self.rows=rows;self.loaded={}
+    def page(self,ident):
+        if ident not in self.loaded:
+            row=one(r for r in self.rows if r['iID']==ident)
+            _,values,_=f.window(f.archive(row['lbObjects']),validate_settings=False)
+            self.loaded[ident]={'id':ident,'controls':[record(kind,payload) for kind,payload in values]}
+        return self.loaded[ident]
 
 
 def root_startup(blob, prefix_size, page_name, page_id):
@@ -143,7 +167,7 @@ def create_data(spec):
     data=json.loads((HOME/'assets/blank-project.json').read_text(encoding='utf-8'))
     presets=json.loads((HOME/'assets/primitives.json').read_text(encoding='utf-8'))
     variables=set_variables(data,spec.get('variables',[]),[])
-    base=data['WndUser']['rows'][0];header,_,trailer=f.window(f.binary(base['lbObjects']))
+    base=data['WndUser']['rows'][0];header,_,trailer=f.window(f.archive(base['lbObjects']))
     pages=[]
     for ident,item in enumerate(spec['pages'],1):
         if set(item)-{'name','controls','events'}:raise ValueError('Unknown page property')
@@ -152,22 +176,22 @@ def create_data(spec):
         row=copy.deepcopy(base);row.update(iID=ident,strName=name,iCompileFlag=0)
         new_trailer=f.page_properties(trailer,ident=ident,name=name)
         new_trailer=page_events(new_trailer,item.get('events',{}),fresh=True)
-        row['lbObjects']=f.wrap(f.pack_window(header,controls,new_trailer))
+        row['lbObjects']=f.wrap_like(base['lbObjects'],f.pack_window(header,controls,new_trailer))
         pages.append(row)
     if not pages or len({r['strName'] for r in pages})!=len(pages):raise ValueError('Unique nonempty page list required')
     data['WndUser']['rows']=pages
     root=data['WndControl']['rows'][0]
-    root['lbObjects']=f.wrap(root_startup(f.binary(root['lbObjects']),presets['root_prefix_size'],pages[0]['strName'],1))
+    root['lbObjects']=f.wrap_like(root['lbObjects'],root_startup(f.archive(root['lbObjects']),presets['root_prefix_size'],pages[0]['strName'],1))
     return data
 
 
 def inspect_data(data):
-    result={'version':f.binary(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00'),
+    result={'version':f.archive(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00'),
             'variables':[], 'pages':[]}
-    for row in f.variables(f.binary(system(data,'ObjData')['lbContext'])):
+    for row in f.variables(f.archive(system(data,'ObjData')['lbContext'])):
         result['variables'].append({k:row[k] for k in ('id','name','kind','initial','note','unit')})
     for row in data['WndUser']['rows']:
-        _,records,_=f.window(f.binary(row['lbObjects'])); controls=[]
+        _,records,_=f.window(f.archive(row['lbObjects'])); controls=[]
         for index,(kind,b) in enumerate(records):
             c={'index':index,'kind':hex(kind),'sha256':hashlib.sha256(b).hexdigest()}
             try:
@@ -182,13 +206,14 @@ def inspect_data(data):
 
 def edit_data(data,spec):
     if set(spec)-{'source_sha256','add_variables','variables','pages','add_pages'}:raise ValueError('Unknown edit property')
-    originals=copy.deepcopy(data['WndUser']['rows']); source_pages=template_pages(data)
-    variables=set_variables(data,spec.get('add_variables',[]),spec.get('variables',[]))
+    originals=copy.deepcopy(data['WndUser']['rows']); source_pages=SourcePages(originals)
+    variables=(set_variables(data,spec.get('add_variables',[]),spec.get('variables',[]))
+               if spec.get('add_variables') or spec.get('variables') else VariableCatalog(data))
     primitives=json.loads((HOME/'assets/primitives.json').read_text(encoding='utf-8'))
     for page in spec.get('pages',[]):
         if set(page)-{'id','controls','add_controls','events'}:raise ValueError('Unknown page edit')
         row=one(r for r in data['WndUser']['rows'] if r['iID']==page['id'])
-        header,records,trailer=f.window(f.binary(row['lbObjects']))
+        header,records,trailer=f.window(f.archive(row['lbObjects']),validate_settings='events' in page)
         for change in page.get('controls',[]):
             if set(change)!={'name','sha256','edits'}:raise ValueError('Name, sha256 and edits required')
             hits=[]
@@ -208,7 +233,7 @@ def edit_data(data,spec):
             except (ValueError,UnicodeError,struct.error):pass
         if len(set(names))!=len(names):raise ValueError('Duplicate control name')
         if 'events' in page:trailer=page_events(trailer,page['events'])
-        row['lbObjects']=f.wrap(f.pack_window(header,records,trailer));row['iCompileFlag']=0
+        row['lbObjects']=f.wrap_like(row['lbObjects'],f.pack_window(header,records,trailer,validate_settings='events' in page));row['iCompileFlag']=0
     ids={r['iID'] for r in data['WndUser']['rows']};names={r['strName'].casefold() for r in data['WndUser']['rows']}
     for page in spec.get('add_pages',[]):
         if set(page)-{'id','name','template_page_id','controls','events'}:raise ValueError('Unknown new page property')
@@ -216,14 +241,14 @@ def edit_data(data,spec):
         template=one(r for r in originals if r['iID']==page['template_page_id'])
         ident=page.get('id',max(ids,default=0)+1);name=title(page['name'])
         if type(ident)is not int or not 0<ident<=2147483647 or ident in ids or name.casefold() in names:raise ValueError('New page ID/name is invalid or repeated')
-        header,_,trailer=f.window(f.binary(template['lbObjects']))
+        header,_,trailer=f.window(f.archive(template['lbObjects']))
         settings=WindowSettings.parse(trailer).clone(ident,name)
         trailer=page_events(settings.to_bytes(),page.get('events',{}),fresh=True)
         records=[control(c,variables,primitives,source_pages) for c in page.get('controls',[])]
         if len({f.common(b)['name'] for _,b in records})!=len(records):raise ValueError('Duplicate new page control name')
         row=copy.deepcopy(template);row.update(iID=ident,strName=name,iCompileFlag=0,iDeleteFlag=0)
         row[page_columns(data)[2]]=''
-        row['lbObjects']=f.wrap(f.pack_window(header,records,trailer))
+        row['lbObjects']=f.wrap_like(template['lbObjects'],f.pack_window(header,records,trailer))
         data['WndUser']['rows'].append(row);ids.add(ident);names.add(name.casefold())
     return data
 
@@ -243,7 +268,7 @@ def ensure_output(path):
 
 
 def check_family(data):
-    version=f.binary(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00')
+    version=f.archive(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00')
     if identify_family(version) != 'Pro':raise ValueError('Expected a native McgsPro family project; software release is informational')
 
 

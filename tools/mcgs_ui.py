@@ -41,11 +41,11 @@ def sha(raw):
 
 
 def unwrapped(raw):
-    return nz.unpack(raw) if raw.startswith(nz.MARKER) else raw
+    return nz.unpack_if_wrapped(raw)
 
 
 def wrapped_like(original, plain):
-    return nz.pack(plain) if original.startswith(nz.MARKER) else plain
+    return nz.pack_like(original, plain)
 
 
 def pro_format():
@@ -1122,8 +1122,9 @@ class Candidate:
         props = window.settings().properties
         wid, name = props[0].value, props[1].value
         assert ('WndUser', str(wid)) not in self.export.rows, ('窗口号已存在', wid)
-        names = {self.export.window(i).settings().properties[1].value for i in self.export.window_ids()}
-        assert name not in names, ('窗口名已存在', name)
+        names = [self.export.rows['WndUser', str(i)]['strName'] for i in self.export.window_ids()]
+        assert all(isinstance(value, str) for value in names), 'WndUser 窗口名字段不是文字'
+        assert name.casefold() not in {value.casefold() for value in names}, ('窗口名已存在', name)
         template_id = template_id if template_id is not None else getattr(window, '_template_window_id', None)
         if template_id is None:
             raise ValueError('新窗口须提供 template_id 或由 new_window/clone_window 生成')
@@ -1132,7 +1133,11 @@ class Candidate:
         data = wrapped_like(self.export.raw('WndUser', template_id, 'lbObjects'), window.to_bytes())
         blob_name = blob_name or f'WndUser_{wid}_新增.bin'
         (self.out / blob_name).write_bytes(data)
-        values.update(iID=wid, strName=name, strNote=note, lbObjects=dict(blob=blob_name, sha256=sha(data)))
+        note_field = 'strNote' if 'strNote' in values else ('strComment' if 'strComment' in values else None)
+        if note_field is None:
+            raise ValueError('当前 WndUser 缺少实际注释字段 strNote/strComment')
+        values.update(iID=wid, strName=name, lbObjects=dict(blob=blob_name, sha256=sha(data)))
+        values[note_field] = note
         for flag in ('iDeleteFlag', 'iCompileFlag'):
             if flag in values:
                 values[flag] = 0

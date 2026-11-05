@@ -11,7 +11,7 @@ namespace McgsInternalBridge {
    IntPtr document=NativeMemory.Ptr(root,0x64);
    // Tree validates installed concrete RTTI/vtables/type/size and follows only
    // the raw owning Cell/Unit CObList. NULL is a valid resource document owner.
-   Node tree=api.Tree(root,document,new int[]{0},new HashSet<uint>(),0);
+   Node tree=api.Tree(root,document,new int[]{0},new HashSet<uint>(),0);RequireKnownSubtree(tree,"complete vector-resource payload read");
    NativeOperationTrace.SetPhase("picture-vector-raw-owning-tree-returned");
    return RawPictureDrawNode(api,tree);
   }

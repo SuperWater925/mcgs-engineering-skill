@@ -7,6 +7,13 @@
   "capabilities": {
     "cold_start_existing_startup_count_zero": true,
     "addins_ini_preload_section": "预装载构件",
+    "addins_ini_encoding": "auto",
+    "addins_ini_no_bom_encoding": "cp936",
+    "startup": {
+      "value_name": "Count",
+      "accepted_values": [0, 1],
+      "scan_value": 0
+    },
     "native_scanner_requires_DllRegisterServer": true,
     "type_library_resource": "TYPELIB/#1",
     "class_interface_count": 1,

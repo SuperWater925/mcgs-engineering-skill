@@ -39,8 +39,8 @@ class 游标:
             length = self.u32() if word == 65535 else word
         else:
             length = first
-        if length > 2_000_000:
-            raise 结构未支持(f"字符串长度不可信：offset={start}, length={length}")
+        if length > (len(self.data)-self.pos)//(2 if unicode_flag else 1):
+            raise 结构未支持(f"字符串长度超过剩余流：offset={start}, length={length}")
         raw = self.read(length * (2 if unicode_flag else 1))
         text = raw.decode("utf-16le", errors="surrogatepass") if unicode_flag else raw.decode("cp936")
         return 字串(text, self.data[start:self.pos], unicode_flag)
@@ -108,8 +108,8 @@ def parse_scalar(reader):
     middle = [reader.u32() for _ in range(7)]
     initial = reader.string()
     suffix = [reader.u32() for _ in range(7)]
-    if suffix[6] > 10000:
-        raise 结构未支持("组成员数量超出研究边界")
+    if suffix[6] > len(reader.data)-reader.pos:
+        raise 结构未支持("组成员数量超过剩余流")
     members = [reader.string() for _ in range(suffix[6])]
     extension_start=reader.pos
     enabled=reader.u32()

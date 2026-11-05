@@ -43,7 +43,7 @@ namespace McgsInternalBridge {
   }
   static void FactoryBytes(NativeEngine engine,Dictionary<string,object> row) {
    NativeAbiTargetProfiles.CheckEntry(row,"factory code guard",FactoryRelative);string text=Convert.ToString(row["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-   foreach(object value in (IEnumerable)row["reloc_offsets"]){int at=Num(value);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"Native factory relocation differs.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-0x400000U)),0,bytes,at,4);}
+   bytes=NativeCodeRelocation.Rebase(bytes,(IEnumerable)row["reloc_offsets"],NativeMemory.U(engine.ImageBase),0x400000U);
    NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(engine.Address(Num(row["rva"])),bytes.Length)),"Native factory/defaults code signature differs.");
   }
   static IntPtr PlacementAllocatorAddress(Api api,Dictionary<string,object> allocation) {
@@ -53,7 +53,7 @@ namespace McgsInternalBridge {
    NativeMemory.Require(module!=null&&module.ModuleMemorySize==Num(m["size_of_image"])&&NativeBinaryIdentity.Observe(Convert.ToString(m["sha256"]),NativeMemory.Hash(expectedPath),"NativeCurrentTemplateControlFactories:34:module"),"Original allocator MFC module/hash differs.");
    IntPtr expected=NativeMemory.Add(module.BaseAddress,Num(m["export_rva"]));NativeMemory.Require(NativeMemory.U(expected)>=NativeMemory.U(module.BaseAddress)&&(ulong)NativeMemory.U(expected)<(ulong)NativeMemory.U(module.BaseAddress)+(uint)module.ModuleMemorySize&&PlacementGetProcAddress(module.BaseAddress,new IntPtr(Num(m["ordinal"])))==expected&&NativeMemory.Ptr(api.Engine.Address(Num(allocation["operator_new_iat_rva"])),0)==expected,"Original allocator MFC1502 export/IAT differs.");
    var g=Map(m["guard"]);string hex=Convert.ToString(g["bytes"]);byte[] bytes=new byte[hex.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(hex.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-   foreach(object item in (IEnumerable)g["reloc_offsets"]){int at=Num(item);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"Original MFC allocation relocation crosses its guard.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(module.BaseAddress)-(uint)Num(m["preferred_base"]))),0,bytes,at,4);}
+   bytes=NativeCodeRelocation.Rebase(bytes,(IEnumerable)g["reloc_offsets"],NativeMemory.U(module.BaseAddress),unchecked((uint)Num(m["preferred_base"])));
    NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(expected,bytes.Length)),"Original allocator MFC1502 prefix differs.");return api.Engine.Address(Num(allocation["entry_rva"]));
   }
   static Class InstalledClass(Api api,string name) {

@@ -80,6 +80,7 @@ namespace McgsInternalBridge {
   // Partial data is never admitted by generic File IO or by an arbitrary caller.
   internal const string LazyEntryContract="mcgs-native-lazy-entry/v1";
   static readonly HashSet<string> LazyProfiles=new HashSet<string>(StringComparer.Ordinal) {
+   "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-native-abi-profile.json",
    "strategy-properties/strategy-write-guard-profile.json",
    "static/native-page-duplicate-abi-profile.json","static/document-dirty-save-abi-profile.json",
    "extensions/page/page-extension-abi-profile.json","extensions/page/page-size-abi-profile.json","extensions/page/page-delete-abi-profile.json",
@@ -146,7 +147,7 @@ namespace McgsInternalBridge {
    return new Dictionary<string,object>();
   }
   internal static Dictionary<string,object> BindingMetadata() {
-   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v2"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false}};
+   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v3"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false}};
   }
   internal static bool MatchesLogicalOrdinalName(string module,string name,int actualOrdinal) {
    Load();
@@ -176,33 +177,43 @@ namespace McgsInternalBridge {
    if(canonical!=Text(row,"bytes_at_reference_preferred_base"))throw new InvalidDataException("Bound source guard differs from its current target index: "+id);
    IntPtr module=ModuleHandle(Text(row,"module"));
    if(module==IntPtr.Zero)throw new InvalidDataException("Current source guard module is not loaded.");
-   uint delta=unchecked((uint)module.ToInt32()-Convert.ToUInt32(row["reference_preferred_base"],CultureInfo.InvariantCulture));
-   foreach(object value in (IEnumerable)row["highlow_offsets"]) {
-    int offset=Convert.ToInt32(value,CultureInfo.InvariantCulture);
-    if(offset<0||offset>=expected.Length)throw new InvalidDataException("Current source guard relocation has no guarded byte.");
-    int count=Math.Min(4,expected.Length-offset);byte[] word=new byte[4];Array.Copy(expected,offset,word,0,count);
-    Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(word,0)+delta)),0,expected,offset,count);
+   NativeCodeRelocation.RebaseInPlace(expected,(IEnumerable)row["highlow_offsets"],unchecked((uint)module.ToInt32()),Convert.ToUInt32(row["reference_preferred_base"],CultureInfo.InvariantCulture));
+  }
+  static Dictionary<string,object> ModuleRow(string logicalName) {
+   Load();string basename=String.IsNullOrEmpty(logicalName)?"":Path.GetFileName(logicalName);bool rooted=!String.IsNullOrEmpty(logicalName)&&Path.IsPathRooted(logicalName);Dictionary<string,object> found=null;
+   foreach(var row in modules) {
+    object raw;bool matches;
+    if(rooted&&row.TryGetValue("actual_file",out raw)&&raw is string)matches=Path.GetFullPath(logicalName).Equals(Path.GetFullPath((string)raw),StringComparison.OrdinalIgnoreCase);
+    else matches=basename.Equals(Text(row,"logical_name"),StringComparison.OrdinalIgnoreCase)||basename.Equals(Text(row,"reference_basename"),StringComparison.OrdinalIgnoreCase)||basename.Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase);
+    if(!matches)continue;
+    if(found!=null&&!Object.ReferenceEquals(found,row))throw new InvalidDataException("Native logical module selection is ambiguous: "+logicalName);
+    found=row;
    }
+   return found;
+  }
+  internal static string ModuleFile(string logicalName) {
+   var row=ModuleRow(logicalName);if(row==null)throw new NativeAbiUnavailableException("Native module has no current bound file: "+logicalName,"selected modules",logicalName);
+   object raw;string path=null;
+   if(row.TryGetValue("actual_file",out raw)&&raw is string)path=Path.GetFullPath((string)raw);
+   else foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(Path.GetFileName(loaded.FileName).Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase)){
+    if(path!=null&&!path.Equals(Path.GetFullPath(loaded.FileName),StringComparison.OrdinalIgnoreCase))throw new InvalidDataException("Legacy native module path is ambiguous: "+logicalName);
+    path=Path.GetFullPath(loaded.FileName);
+   }
+   if(path==null||!File.Exists(path))throw new InvalidDataException("Native module file is unavailable for this target's API binding: "+logicalName);
+   lock(Sync){string key=Text(row,"logical_name");if(!verifiedModules.Contains(key)){if(HashFile(path)!=Text(row,"actual_sha256"))throw new InvalidDataException("Native module file changed since this target's API binding: "+logicalName);verifiedModules.Add(key);}}
+   return path;
   }
   internal static IntPtr ModuleHandle(string logicalName) {
-   Load();string basename=String.IsNullOrEmpty(logicalName)?"":Path.GetFileName(logicalName);
-   foreach(var row in modules) {
-    if(!basename.Equals(Text(row,"logical_name"),StringComparison.OrdinalIgnoreCase)&&!basename.Equals(Text(row,"reference_basename"),StringComparison.OrdinalIgnoreCase)&&!basename.Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase))continue;
-    bool editor=Convert.ToBoolean(row["is_editor"],CultureInfo.InvariantCulture);
-    IntPtr handle=editor?Process.GetCurrentProcess().MainModule.BaseAddress:GetModuleHandle(Text(row,"actual_basename"));
-    if(handle==IntPtr.Zero)return handle;
-    string expected=Text(row,"actual_sha256"),key=Text(row,"logical_name");
-    lock(Sync) {
-     if(!verifiedModules.Contains(key)) {
-      string file=null;
-      foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==handle){file=loaded.FileName;break;}
-      if(file==null||HashFile(file)!=expected)throw new InvalidDataException("Loaded native module changed since this target's API binding: "+key);
-      verifiedModules.Add(key);
-     }
-    }
-    return handle;
+   var row=ModuleRow(logicalName);if(row==null)return GetModuleHandle(logicalName);
+   string file=ModuleFile(logicalName);IntPtr handle=IntPtr.Zero;bool otherPath=false;
+   foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules){if(Path.GetFullPath(loaded.FileName).Equals(file,StringComparison.OrdinalIgnoreCase)){
+     if(handle!=IntPtr.Zero&&handle!=loaded.BaseAddress)throw new InvalidDataException("Selected native module is loaded more than once: "+logicalName);
+     handle=loaded.BaseAddress;
+    }else if(Path.GetFileName(loaded.FileName).Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase))otherPath=true;
    }
-   return GetModuleHandle(logicalName);
+   if(handle==IntPtr.Zero&&otherPath)throw new InvalidDataException("A different native module path is loaded for this target: "+logicalName);
+   if(Convert.ToBoolean(row["is_editor"],CultureInfo.InvariantCulture)&&handle!=Process.GetCurrentProcess().MainModule.BaseAddress)throw new InvalidDataException("Selected native editor differs from the attached host.");
+   return handle;
   }
   internal static string ReadAllText(string path) {CheckProfile(path,true);return File.ReadAllText(path);}
   internal static string ReadAllText(string path,Encoding encoding) {CheckProfile(path,true);return File.ReadAllText(path,encoding);}

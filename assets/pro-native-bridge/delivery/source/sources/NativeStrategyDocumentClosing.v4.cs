@@ -19,7 +19,7 @@ namespace McgsInternalBridge {
    }
    internal void Current(){Api.Current();Contexts.Current();
     foreach(object value in(IEnumerable)profile["guards"]){var row=M(value);bool mf=Convert.ToString(row["module"])=="mfc110u.dll";IntPtr module=mf?Mfc:Api.Engine.ImageBase;byte[] bytes=B(Convert.ToString(row["bytes"]));if(mf)NativeMemory.Require(N(row["rva"])>=0&&N(row["rva"])<=mfcImageBytes-bytes.Length,"Guarded strategy close body crosses the loaded MFC module.");
-     foreach(object rel in(IEnumerable)row["reloc_offsets"]){int i=N(rel);NativeMemory.Require(i>=0&&i+4<=bytes.Length,"Strategy close relocation differs.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,i)+NativeMemory.U(module)-(mf?0x10000000U:0x400000U))),0,bytes,i,4);}
+     NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)row["reloc_offsets"],unchecked((uint)(NativeMemory.U(module)-(mf?0x10000000U:0x400000U))));
      NativeMemory.Require(H(bytes)==H(NativeMemory.Bytes(NativeMemory.Add(module,N(row["rva"])),bytes.Length)),"Actual loaded strategy close code differs.");
     }
     NativeMemory.Require(ExportOrdinal(Mfc,new IntPtr(N(profile["mfc_close_ordinal"])))==NativeMemory.Add(Mfc,N(profile["mfc_close_rva"]))&&NativeMemory.Ptr(Api.Engine.Address(N(profile["document_close_iat_rva"])),0)==NativeMemory.Add(Mfc,N(profile["mfc_close_rva"])),"Actual native strategy Doc35 close IAT differs.");

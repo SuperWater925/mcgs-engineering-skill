@@ -103,6 +103,10 @@ class TargetBinding:
             return value
         if windows.is_absolute() or Path(value).is_absolute():
             return str(self.actual_module_paths[alias])
+        if key == 'relative_file':
+            # This field denotes a PE provider, not a business path. Consumers
+            # must use the selected file even if its directory/name changed.
+            return str(self.actual_module_paths[alias])
         if key in ('file_name','filename','base_name','basename') and value.casefold() in self.module_names:
             return self.actual_module_paths[alias].name
         return value
@@ -255,6 +259,7 @@ class TargetBinding:
         for alias, item in self.result['modules'].items():
             modules.append({'logical_name': alias, 'reference_basename': (item.get('reference') or {}).get('basename') or alias,
                             'actual_basename': item['actual']['basename'], 'actual_sha256': item['actual']['sha256'],
+                            'actual_file': str(self.actual_module_paths[alias]),
                             'is_editor': alias == 'editor'})
         return {'schema': 'mcgs-native-bound-profile-index/v1', 'catalog_sha256': self.result['catalog_sha256'],
                 'files': rows, 'modules': modules, 'source_guards':self.guard_changes,'source_ordinals':self.ordinal_changes,

@@ -14,7 +14,7 @@ def parse_current_save_data(data):
     r=Reader(data)
     if r.take(6)!=bytes(6):raise ValueError('当前SaveData前6B头不匹配，禁止猜边界')
     n=r.u32()
-    if not 0<=n<=1000:raise ValueError('当前SaveData原生字段数量越界')
+    r.count_extent(n,5,'当前SaveData原生字段')
     fields=[]
     for _ in range(n):
         start=r.pos

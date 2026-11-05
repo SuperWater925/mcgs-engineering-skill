@@ -11,11 +11,12 @@ param(
 # 新增窗口受限事务：在 run.ps1 apply 的更新白名单之外，只多允许“新增 WndUser 行”（六列齐全、窗口号和窗口名都不重复）。
 # 不删行、不改旧行标量。只写到一个新文件；事务内与提交后都做全表比对。不带 -Commit 时只做预检，不复制、不写。
 # 清单由 tools/mcgs_ui.py 的 Candidate 生成：update 与 run.ps1 apply 同格式；insert 为
-#   {action:'insert', table:'WndUser', key_column:'iID', key:N, values:{iID:N, strName, strNote, lbObjects:{blob,sha256}, iDeleteFlag:0, iCompileFlag:0}}
+#   {action:'insert', table:'WndUser', key_column:'iID', key:N, values:{iID:N, strName, strNote或strComment, lbObjects:{blob,sha256}, iDeleteFlag:0, iCompileFlag:0}}
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
 if($PSVersionTable.PSVersion.Major -lt 7){throw '必须使用 PowerShell 7。'}
 . (Join-Path $PSScriptRoot '..\scripts\ace-runtime.ps1')
+. (Join-Path $PSScriptRoot '..\scripts\project-family.ps1')
 $技能脚本=[IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\scripts\stu_project.ps1'))
 $Provider='auto';$script:SelectedProvider=$null
 $script:RawTables=@('Alarm','Data','DDEConnection','DDEConnectionPoint','Stgy','System','Trigger','WndControl','WndDevice','WndUser')
@@ -28,7 +29,7 @@ foreach($函数名 in @('FullPath','Sha','SharedHash','ValueFingerprint','Sensit
 }
 $键列=@{System='strName';Stgy='iStgyID';Trigger='iID';WndUser='iID';WndControl='iID'}
 $可写字段=@{System=@('lbContext');Stgy=@('lbObjects');Trigger=@('lbContext');WndUser=@('lbObjects');WndControl=@('lbObjects')}
-$新增列=@('iID','strName','strNote','lbObjects','iDeleteFlag','iCompileFlag')
+$新增基础列=@('iID','strName','lbObjects','iDeleteFlag','iCompileFlag')
 $输入快照=FullPath $输入快照;$事务清单=FullPath $事务清单;$输出工程=FullPath $输出工程;$报告路径=FullPath $报告路径
 if([IO.Path]::GetExtension($输入快照) -notin @('.MCS','.MCP') -or [IO.Path]::GetExtension($输出工程) -ine [IO.Path]::GetExtension($输入快照)){throw '输入为原生 .MCS/.MCP，输出须保持同一家族扩展名。'}
 if($输出工程 -ieq $输入快照){throw '输出必须是新文件，不能就地改。'}
@@ -45,6 +46,8 @@ $前=$基线.fingerprints
 $窗口结构=@($基线.tables|Where-Object table -eq 'WndUser')
 if($窗口结构.Count -ne 1){throw '未找到唯一 WndUser 结构。'}
 $实际列=@($窗口结构[0].columns|ForEach-Object name)
+$注释列=if('strNote' -in $实际列){'strNote'}elseif('strComment' -in $实际列){'strComment'}else{throw 'WndUser 缺少实际注释字段 strNote/strComment。'}
+$新增列=@($新增基础列)+@($注释列)
 if(@($新增列|Where-Object {$_ -notin $实际列}).Count){throw 'WndUser 缺少已知窗口字段。'}
 $额外列=@($实际列|Where-Object {$_ -notin $新增列})
 function 模板原行([int]$Id){
@@ -93,8 +96,9 @@ foreach($op in $清单.operations){
   $名指纹=ValueFingerprint $名
   if($已有窗口名.ContainsKey($名指纹) -or $新增名.ContainsKey($名指纹)){throw "窗口名已存在：$名"}
   $新增名[$名指纹]=$true
-  $值=[ordered]@{iID=[int]$op.values.iID;strName=$名;strNote=[string]$op.values.strNote;
+  $值=[ordered]@{iID=[int]$op.values.iID;strName=$名;
    lbObjects=(ManifestBlob $op.values.lbObjects $清单目录);iDeleteFlag=[int]0;iCompileFlag=[int]0}
+  $值[$注释列]=[string]$op.values[$注释列]
   if($额外列.Count){
    if(-not $op.Contains('template_key') -or -not $前.WndUser.Contains([string]$op.template_key)){throw '额外窗口字段需当前工程真实 template_key。'}
    $原行=模板原行 ([int]$op.template_key)

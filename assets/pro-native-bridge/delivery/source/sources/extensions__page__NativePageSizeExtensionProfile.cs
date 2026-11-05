@@ -28,7 +28,7 @@ namespace McgsInternalBridge {
                 NativeMemory.Require(Convert.ToInt32(profile["schema"])==1 && NativeBinaryIdentity.Observe(Convert.ToString(profile["binary_sha256"]),engine.ImageSha256,"extensions__page__NativePageSizeExtensionProfile:28:editor"),"Page-size editor image differs.");uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
                 foreach(object value in (IEnumerable)profile["functions"]) {
                     var row=(Dictionary<string,object>)value;string hex=Convert.ToString(row["bytes"]);byte[] bytes=new byte[hex.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(hex.Substring(i*2,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-                    foreach(object offset in (IEnumerable)row["reloc_offsets"]){int at=Convert.ToInt32(offset);NativeMemory.Require(at>=0 && at+4<=bytes.Length,"Size ABI relocation exceeds its prefix.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-preferred)),0,bytes,at,4);}
+                    NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)row["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
                     IntPtr address=engine.Address(NativeEngine.Number(row["rva"]));NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length))==BitConverter.ToString(bytes),"Page-size native prefix differs: "+row["name"]);functions.Add(Convert.ToString(row["name"]),address);
                 }
             }

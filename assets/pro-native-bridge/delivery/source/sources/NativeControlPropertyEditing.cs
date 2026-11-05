@@ -24,7 +24,7 @@ namespace McgsInternalBridge {
     var profile=ReadJson(file);uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
     foreach(object value in (IEnumerable)profile["functions"]) {
      var f=Map(value);string text=Convert.ToString(f["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-     foreach(object n in (IEnumerable)f["reloc_offsets"]){int at=Convert.ToInt32(n);NativeMemory.Require(at>=0&&at+4<=bytes.Length,"Live control ABI relocation differs.");Array.Copy(BitConverter.GetBytes(unchecked(BitConverter.ToUInt32(bytes,at)+NativeMemory.U(engine.ImageBase)-preferred)),0,bytes,at,4);}
+     NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)f["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
      IntPtr address=engine.Address(NativeEngine.Number(f["rva"]));NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length)),"Live control ABI differs: "+f["name"]);methods.Add(Convert.ToString(f["name"]),address);
     }
    }

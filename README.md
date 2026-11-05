@@ -10,7 +10,7 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本次补齐九组跨构建误拦截：遗漏的虚表槽与别名地址、末尾重定位、无关接口依赖、参考 MFC 大小、导入提示、DLL 选择、旧引擎更新、冷接多安装身份及离线家族识别。规则见[跨构建适配](references/cross-build-compatibility.md)。使用者不需要作者参考 EXE/DLL，也不因这些接口缺口被要求升级到模板来源版本。
+本版继续接通跨构建适配的实际调用链：统一代码重定位与模块路径，拆分变量/配方和离线页面依赖，保留非目标未知控件，并兼容压缩封套、旧注释列及扩展窗口属性。既有桥更新到 v3 业务引擎即可复用连接。实现规则见[适配补全](references/compatibility-completion.md)，实际证据见[本轮验证](references/compatibility-completion-validation.json)。
 
 ## 功能范围
 
@@ -98,7 +98,9 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCP' -Manifest 
 
 ## 验证范围
 
-### 本轮九项跨构建修复（2026-11-05）
+当前八组适配补全、附带样本假设、文件/托管/数据库与原厂结果见[本轮分项记录](references/compatibility-completion-validation.json)。每项记录实际执行范围，未执行的关闭重开、模拟或通信不计通过。
+
+### 此前九项跨构建修复（2026-11-05）
 
 - 集中完成实现后，地址与元数据、延迟绑定、部署更新、家族识别分别完成 51、27、7、10 项针对性检查。复查追加的数组、MFC 角色、证明依赖及模块发现顺序问题均已收口；失败与修正经过保留。
 - 162 份源码生成的 x86 业务引擎已校对实际程序集和编译 scope；161 份生成源码、另一个 Layout 及 308 份部署文件 SHA 回读一致。通过公开 `native-engine-select` 在已有桥中切换，未重启 Pro。
