@@ -34,7 +34,7 @@ namespace McgsInternalBridge {
    }
    NativeMemory.Require(NativeMemory.I32(a,8)==0&&NativeMemory.I32(b,8)==1,"BasicProxy lifted/pressed state selectors differ.");
    IntPtr array=NativeMemory.Add(s.Full,0x394),data=NativeMemory.Ptr(array,4);int count=NativeMemory.I32(array,8);
-   NativeMemory.Require(count>=2&&count<=4096&&data!=IntPtr.Zero,"Original Button shared-style condition array is invalid.");NativeMemory.Readable(data,8);int raw=NativeMemory.I32(data,4);
+   NativeMemory.Require(count>=2&&data!=IntPtr.Zero,"Original Button shared-style condition array is invalid.");NativeMemory.Readable(data,8);int raw=NativeMemory.I32(data,4);
    NativeMemory.Require(NativeMemory.Ptr(array,4)==data&&NativeMemory.I32(array,8)==count,"Button condition array changed during read.");
    return new Dictionary<string,object>{{"native_shared_visual_condition",raw==1},{"condition_element1_raw_int32",raw},{"condition_array_count",count},{"lift_owner",NativeMemory.Hex(a)},{"press_owner",NativeMemory.Hex(b)},{"selected_owner",NativeMemory.Hex(s.Selected)},{"condition_rule","Original771140: Button+394.GetAt(1)==1"},{"allowed_visual_keys",new[]{"字体","字符颜色","填充颜色","边线颜色","显示文本"}}};
   }

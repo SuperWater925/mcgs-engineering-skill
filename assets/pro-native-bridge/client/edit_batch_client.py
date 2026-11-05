@@ -22,7 +22,10 @@ from native_delivery_config import current as delivery_layout
 _LAYOUT = delivery_layout()
 TASK = _LAYOUT.task_root
 RUNTIME = _LAYOUT.runtime_root
-CLIENT_SHA = "6314e35b3420c544e149e4f0432e6db903b3ac493c14031b10c87ac37cf0669a"
+CLIENT_SHA = "298e62cf5798acc03d82af5dd5b5751703a1e65348e12a485780239c01fe3417"
+# The native JavaScriptSerializer and x86 arrays use signed Int32 lengths.
+# This is a representation boundary, not a sampled engineering payload quota.
+CLR_MAX_LENGTH = (1 << 31) - 1
 
 
 @lru_cache(maxsize=1)
@@ -40,8 +43,8 @@ def load_client():
 
 def read_json(path):
     data = Path(path).read_bytes()
-    if len(data) > 16 * 1024 * 1024:
-        raise ValueError("Bounded JSON input exceeds16MiB")
+    if len(data) > CLR_MAX_LENGTH:
+        raise ValueError("JSON input exceeds the native Int32 length representation")
     result = json.loads(data.decode("utf-8-sig"))
     if not isinstance(result, dict):
         raise ValueError("Expected JSON object")
@@ -49,14 +52,9 @@ def read_json(path):
 
 
 def owned_file(path, must_exist=True):
-    path = Path(os.path.abspath(path))
+    path = Path(path).expanduser().resolve(strict=False)
     if not path.is_relative_to(TASK):
         raise ValueError("Permit/output must stay in the owned task directory")
-    for parent in (path, *path.parents):
-        if parent == TASK.parent:
-            break
-        if parent.exists() and (parent.is_symlink() or os.lstat(parent).st_file_attributes & 0x400):
-            raise ValueError("Reparse paths are not accepted")
     if must_exist and not path.is_file():
         raise ValueError("Expected existing regular file")
     return path
@@ -92,9 +90,9 @@ def expand_receipt(receipt, request_id, request_sha):
         raise ValueError("Complete engineering receipt names another request")
     expected = _LAYOUT.working_root / "reply-payloads" / (request_id + ".json")
     path = owned_file(reference["file"])
-    if path != expected or type(reference["byte_length"]) is not int or not 0 < reference["byte_length"] <= 16 * 1024 * 1024:
+    if path != expected or type(reference["byte_length"]) is not int or not 0 < reference["byte_length"] <= CLR_MAX_LENGTH:
         raise ValueError("Complete engineering receipt path or bound differs")
-    data = load_client()._read(path, maximum=16 * 1024 * 1024)
+    data = load_client()._read(path, maximum=reference["byte_length"])
     if len(data) != reference["byte_length"] or hashlib.sha256(data).hexdigest() != reference["sha256"]:
         raise ValueError("Complete engineering receipt length or SHA differs")
     full = json.loads(data.decode("utf-8-sig"))
@@ -124,8 +122,8 @@ def submit(request, request_id, timeout):
     request = dict(request, schema=1, request_id=request_id,
         engineering_delivery_scope_sha256=_LAYOUT.configuration_sha256)
     payload = client._encoded(request)
-    if len(payload) > 64 * 1024:
-        raise ValueError("Queue request exceeds64KiB; use a specification_file for large action data")
+    if len(payload) > CLR_MAX_LENGTH:
+        raise ValueError("Queue request exceeds the native Int32 length representation")
     payload_sha = hashlib.sha256(payload).hexdigest()
     root = RUNTIME.absolute()
     root.mkdir(parents=True, exist_ok=True)
@@ -210,7 +208,7 @@ def submit(request, request_id, timeout):
 
 def input_file(path):
     """Logical request input may be anywhere; it is not an authorization document."""
-    path = Path(path).absolute()
+    path = Path(path).expanduser().resolve(strict=True)
     if not path.is_file():
         raise ValueError("Expected an existing specification file")
     return path
@@ -225,10 +223,10 @@ def execute(project, specification_path, request_id=None, timeout=30, specificat
         # native verifies the bytes against it before parsing or applying.
         if not isinstance(specification_sha256, str) or not re.fullmatch(r"[0-9a-f]{64}", specification_sha256):
             raise ValueError("Specification SHA must be64 lowercase hex characters")
-        if not 0 < path.stat().st_size <= 16 * 1024 * 1024:
-            raise ValueError("Bounded JSON input must be nonempty and at most16MiB")
+        if not 0 < path.stat().st_size <= CLR_MAX_LENGTH:
+            raise ValueError("JSON input must be nonempty and fit the native Int32 length representation")
         specification_sha = specification_sha256
-    return submit({"op": "engineering-edit-batch", "expected_project": str(Path(project).absolute()),
+    return submit({"op": "engineering-edit-batch", "expected_project": str(Path(project).expanduser().resolve(strict=True)),
                    "specification_file": str(path), "specification_sha256": specification_sha},
                   request_id or ("direct_" + uuid.uuid4().hex), timeout)
 
@@ -244,8 +242,8 @@ def prepare(snapshot_path, specification_path, output):
     if not all(key in snapshot for key in required) or snapshot["ok"] is not True:
         raise ValueError("Need a successful engineering-edit-inspect receipt, including native C# digest")
     actions = specification.get("actions")
-    if not isinstance(actions, list) or not 1 <= len(actions) <= 64:
-        raise ValueError("Specification needs1..64 prepared actions")
+    if not isinstance(actions, list) or not actions:
+        raise ValueError("Specification needs a nonempty prepared action list")
     seen = set()
     observed = {row["action_id"]: row for row in snapshot.get("action_preimages", [])}
     for action in actions:
@@ -333,7 +331,7 @@ def main():
         if output is not None and output.exists():
             raise FileExistsError(output)
         if args.command == "inspect":
-            request = {"op": "engineering-edit-inspect", "expected_project": str(Path(args.project).absolute())}
+            request = {"op": "engineering-edit-inspect", "expected_project": str(Path(args.project).expanduser().resolve(strict=True))}
             if args.spec:
                 specification_path = input_file(args.spec)
                 _, specification_sha = read_json(specification_path)
@@ -343,7 +341,7 @@ def main():
                 raise ValueError("Direct apply needs --project and --spec")
             specification_path = input_file(args.spec)
             _, specification_sha = read_json(specification_path)
-            request = {"op": "engineering-edit-batch", "expected_project": str(Path(args.project).absolute()),
+            request = {"op": "engineering-edit-batch", "expected_project": str(Path(args.project).expanduser().resolve(strict=True)),
                        "specification_file": str(specification_path), "specification_sha256": specification_sha}
         else:
             permit_path = owned_file(args.permit)

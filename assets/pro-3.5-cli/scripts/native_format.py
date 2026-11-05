@@ -8,7 +8,8 @@ import sys
 _native = Path(__file__).resolve().parents[3] / 'scripts/native'
 if str(_native) not in sys.path:
     sys.path.insert(0, str(_native))
-from mcs_window_archive import ControlRecord, WindowSettings, write_count
+from mcs_window_archive import ControlRecord, WindowSettings, write_count, write_cstring
+from mcgs_text import narrow_encoding
 from 原生界面样式 import CommonEnvelope
 from mcs_input_text import InputRecord
 import mcgs_native_zip as native_zip
@@ -57,16 +58,13 @@ def string(b, p):
                 n = int.from_bytes(take(2), 'little')
         if n == 65535:
             n = int.from_bytes(take(4), 'little')
-    return take(n*width).decode('utf-16le' if width == 2 else 'gbk'), p
+    return take(n*width).decode('utf-16le' if width == 2 else narrow_encoding()), p
 
 
 def text(value):
     if not isinstance(value, str) or '\x00' in value:
         raise ValueError('Text must be a string without NUL')
-    b = value.encode('utf-16le'); n = len(b)//2
-    if n >= 65535:
-        raise ValueError('Text too long')
-    return b'\xff\xfe\xff' + (bytes([n]) if n < 255 else b'\xff'+struct.pack('<H', n)) + b
+    return write_cstring(value)
 
 
 class WindowRecords(list):
@@ -114,8 +112,8 @@ def pack_window(header, records, trailer, *, validate_settings=True):
 
 
 def bounds(value):
-    if not isinstance(value, list) or len(value) != 4 or any(type(x) is not int or abs(x)>32768 for x in value):
-        raise ValueError('Bounds require four bounded integers')
+    if not isinstance(value, list) or len(value) != 4 or any(type(x) is not int or not -0x80000000<=x<=0x7fffffff for x in value):
+        raise ValueError('Bounds require four native Int32 values')
     if value[0] >= value[2] or value[1] >= value[3]:
         raise ValueError('Positive control dimensions required')
     return struct.pack('<4i', *value)
@@ -128,7 +126,7 @@ def common(b):
     name_pos = len(parsed.prefix)
     name = parsed.name.value
     end = name_pos + len(parsed.name.to_bytes())
-    if not name or len(name)>256:
+    if not name:
         raise ValueError('Unsupported control name')
     return {'bounds': list(parsed.rect), 'bounds_pos': parsed.rect_offset,
             'name': name, 'name_pos': name_pos, 'name_end': end}
@@ -148,7 +146,7 @@ def page_properties(trailer, *, ident=None, name=None, width=None, height=None):
         if val is None:continue
         if index>=len(settings.properties) or settings.properties[index].vt!=kind:
             raise ValueError('Requested page property position/type is not supported')
-        if index in (6,7) and (type(val)is not int or not 1<=val<=16384):raise ValueError('Invalid page size')
+        if index in (6,7) and (type(val)is not int or not 1<=val<=0x7fffffff):raise ValueError('Invalid native Int32 page size')
         settings.properties[index].value=val
     return settings.to_bytes()
 

@@ -36,9 +36,9 @@ namespace McgsInternalBridge {
    assign=api.Bind<AssignWide>("CStringAssignWide");
    try {
     foreach(var row in properties) {
-     NativeMemory.Require(values.Count<256 && row.ContainsKey("native_key") && row.ContainsKey("native_type_tag") && row.ContainsKey("value"),"Typed property needs native_key/native_type_tag/value, at most256 entries.");
+     NativeMemory.Require( row.ContainsKey("native_key") && row.ContainsKey("native_type_tag") && row.ContainsKey("value"),"Typed property needs native_key/native_type_tag/value, with exact key/tag/value fields.");
      string key=Convert.ToString(row["native_key"],CultureInfo.InvariantCulture);
-     NativeMemory.Require(!String.IsNullOrEmpty(key)&&key.Length<=256&&key.IndexOf('\0')<0&&!values.ContainsKey(key),"Typed property key is empty, repeated or unbounded.");
+     NativeMemory.Require(!String.IsNullOrEmpty(key)&&key.IndexOf('\0')<0&&!values.ContainsKey(key),"Typed property key is empty, repeated or unbounded.");
      var value=new Value{Key=key,Tag=Convert.ToInt32(row["native_type_tag"],CultureInfo.InvariantCulture)};
      values.Add(key,value); // Keep ownership even if later preparation fails.
      switch(value.Tag) {
@@ -91,7 +91,7 @@ namespace McgsInternalBridge {
   }
   static IntPtr Wide(object raw) {
    NativeMemory.Require(raw is string,"Native text/enum property requires a JSON string, not an inferred conversion.");
-   string text=(string)raw;NativeMemory.Require(text.Length<=131072&&text.IndexOf('\0')<0,"Native text property is unbounded or contains NUL.");
+   string text=(string)raw;NativeMemory.Require(text.Length<=Int32.MaxValue/2-1&&text.IndexOf('\0')<0,"Native text property is unbounded or contains NUL.");
    // Reject unpaired surrogates before unmanaged allocation.
    new System.Text.UnicodeEncoding(false,false,true).GetBytes(text);
    return Marshal.StringToHGlobalUni(text);

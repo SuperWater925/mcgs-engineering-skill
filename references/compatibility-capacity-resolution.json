@@ -1,0 +1,1362 @@
+{
+  "schema": "native-capacity-review/v4",
+  "count": 149,
+  "validation_run": false,
+  "items": [
+    {
+      "id": 1,
+      "before_condition": "默认direct规格文件≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
+      "audit_source_line": 6,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 2,
+      "before_condition": "后台准备输入≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeRequestPipeline.cs",
+      "audit_source_line": 20,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 3,
+      "before_condition": "legacy/内部Plan≤64动作；action_id≤96；非默认direct总数",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableEditPermit.cs",
+      "audit_source_line": 48,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 4,
+      "before_condition": "公共单次raw span≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeChunkedRawMemory.cs",
+      "audit_source_line": 5,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 5,
+      "before_condition": "inspect公共CString容量≤1048576；名字调用限4095",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableEditSnapshot.cs",
+      "audit_source_line": 5,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 6,
+      "before_condition": "活跃page-copy：图元depth≤16、structure≤512",
+      "status": "retained-implementation-depth-bound",
+      "reason": "page-copy已有递归/结构协议的16层仍须保留；512结构数量已换CLR表示范围。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageCopy.v2.cs",
+      "audit_source_line": 125,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 7,
+      "before_condition": "page-create宽高≤16384",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.v2.cs",
+      "audit_source_line": 50,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 8,
+      "before_condition": "页名缓存记录≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
+      "audit_source_line": 30,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 9,
+      "before_condition": "页名缓存多分支合计≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
+      "audit_source_line": 31,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 10,
+      "before_condition": "页名缓存tree depth≤64",
+      "status": "retained-implementation-depth-bound",
+      "reason": "NameCache递归读取仍64层，实际count/total配额已去掉。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedPageOperations.NameCache.cs",
+      "audit_source_line": 32,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 11,
+      "before_condition": "page-designer-open文档枚举≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageViewOperations.cs",
+      "audit_source_line": 42,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 12,
+      "before_condition": "原厂Maximum必须等于20（确认应改为真实能力）",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageViewOperations.cs",
+      "audit_source_line": 48,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 13,
+      "before_condition": "页属性vector容量≤1048576、stride≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "共用Header改为elementSize>0、actual count*elementSize<=Int32.MaxValue，并验证active可读内存；不再16MiB样本上界。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
+      "audit_source_line": 33,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 14,
+      "before_condition": "页属性组件/条目≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
+      "audit_source_line": 37,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 15,
+      "before_condition": "单次撤销/重做steps≤64",
+      "status": "changed-operation-interface",
+      "reason": "undo/redo steps64门槛已移除；仍要求正数、真实历史链和原厂调用结果。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageHistoryEditing.cs",
+      "audit_source_line": 29,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 16,
+      "before_condition": "属性key raw bytes≤4096",
+      "status": "audit-misclassification-corrected",
+      "reason": "原审计“key raw bytes4096”误标。NativeTypedPropertyCollector.cs旧35行是13个固定callback thunk的代码bytes，紧邻VirtualAlloc(4096)/VirtualProtect(4096)，必须保留真实分配边界；并非属性key长度。CString key按实际长度/capacity/终止符读取。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
+      "audit_source_line": 35,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 17,
+      "before_condition": "属性CString容量≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
+      "audit_source_line": 46,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 18,
+      "before_condition": "属性组件递归depth<16",
+      "status": "retained-implementation-depth-bound",
+      "reason": "真实原厂getter回调递归仍16层；cycle/active owner验证保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
+      "audit_source_line": 51,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 19,
+      "before_condition": "属性采集rows≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
+      "audit_source_line": 58,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 20,
+      "before_condition": "单次typed属性values≤256",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyDispatcher.cs",
+      "audit_source_line": 39,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 21,
+      "before_condition": "属性key≤256字符",
+      "status": "changed-operation-interface",
+      "reason": "输入key256去掉，以UTF16 CLR可表示范围、NUL禁止、当前getter已存在的key/owner/tag核对。Dispatcher自身4096代码块仍保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyDispatcher.cs",
+      "audit_source_line": 41,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 22,
+      "before_condition": "typed属性文本≤131072字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyDispatcher.cs",
+      "audit_source_line": 94,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 23,
+      "before_condition": "FontValue rows≤32；height≤4096；face31为真实LOGFONT字段另列",
+      "status": "derived-real-extent-with-wire-fields",
+      "reason": "Font rows样本32及height±4096已去；face31+NUL和weight0..1000是LOGFONT字段合同。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeOriginalFontValue.cs",
+      "audit_source_line": 43,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 24,
+      "before_condition": "相关控件操作name≤128字符",
+      "status": "changed-operation-interface",
+      "reason": "共享Name128样本上界去掉；沿用原名称语法、实际身份/原厂结果验证。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageControlPreparation.cs",
+      "audit_source_line": 30,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 25,
+      "before_condition": "标准控件factory caption≤4096字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
+      "audit_source_line": 53,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 26,
+      "before_condition": "label-caption-rect caption≤4095字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableLabelEditor.cs",
+      "audit_source_line": 113,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 27,
+      "before_condition": "按钮shared-style condition数组≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
+      "audit_source_line": 37,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 28,
+      "before_condition": "属性component number≤4095",
+      "status": "changed-operation-interface",
+      "reason": "occurrence4095去掉，按Int32索引表示及当前getter的实际匹配rows终校。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlComponentSelection.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 29,
+      "before_condition": "raw动画列表≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationListEditing.cs",
+      "audit_source_line": 13,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 30,
+      "before_condition": "raw动画bytearray≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationListEditing.cs",
+      "audit_source_line": 14,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 31,
+      "before_condition": "owned动画数组≤4096、stride≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnedValues.cs",
+      "audit_source_line": 28,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 32,
+      "before_condition": "owned动画bytearray≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnedValues.cs",
+      "audit_source_line": 32,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 33,
+      "before_condition": "owned动画变更values≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnedValues.cs",
+      "audit_source_line": 34,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 34,
+      "before_condition": "owned动画文本≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAnimationOwnedValues.cs",
+      "audit_source_line": 35,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 35,
+      "before_condition": "control-animation批items≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
+      "audit_source_line": 33,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 36,
+      "before_condition": "control-animation引用/条件数组≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
+      "audit_source_line": 35,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 37,
+      "before_condition": "control-animation文本≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
+      "audit_source_line": 36,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 38,
+      "before_condition": "曲线/表格集合count≤4096、cap≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionEditing.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 39,
+      "before_condition": "曲线/表格变更items≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionEditing.cs",
+      "audit_source_line": 32,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 40,
+      "before_condition": "按钮动作数组capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
+      "audit_source_line": 23,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 41,
+      "before_condition": "按钮动作文本≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
+      "audit_source_line": 42,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 42,
+      "before_condition": "页事件vector cap≤1048576、stride≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "事件共用Header用actual count*elementSize与可读内存，不再16MiB单element上界。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventListEditing.v4.cs",
+      "audit_source_line": 30,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 43,
+      "before_condition": "页事件批items≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventListEditing.v4.cs",
+      "audit_source_line": 43,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 44,
+      "before_condition": "页事件文本≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventListEditing.v4.cs",
+      "audit_source_line": 46,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 45,
+      "before_condition": "页事件source≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePageEventSourceEditing.v2.cs",
+      "audit_source_line": 24,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 46,
+      "before_condition": "动态Provider目录count≤10000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
+      "audit_source_line": 38,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 47,
+      "before_condition": "控件事件参数文本≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
+      "audit_source_line": 65,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 48,
+      "before_condition": "滑块显示tree depth≤64",
+      "status": "retained-implementation-depth-bound",
+      "reason": "Slider renderer当前递归tree64层，数组/bytes数量已按实际范围。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlSliderFillVisual.v2.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 49,
+      "before_condition": "滑块显示组件collection≤128",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlSliderFillVisual.v2.cs",
+      "audit_source_line": 20,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 50,
+      "before_condition": "滑块显示owned bytearray≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeControlSliderFillVisual.v2.cs",
+      "audit_source_line": 30,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 51,
+      "before_condition": "多态按钮native数组≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
+      "audit_source_line": 21,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 52,
+      "before_condition": "多态按钮buffer/capacity≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
+      "audit_source_line": 22,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 53,
+      "before_condition": "多态按钮tree count≤2048、depth≤128",
+      "status": "retained-implementation-depth-bound",
+      "reason": "MulButton当前递归tree128层；count、私有vector/capacity上界已去掉。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
+      "audit_source_line": 25,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 54,
+      "before_condition": "多态按钮图像成员≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
+      "audit_source_line": 28,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 55,
+      "before_condition": "data batch items≤1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataBatchEditing.cs",
+      "audit_source_line": 35,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 56,
+      "before_condition": "recipe catalog records≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataEngineering.cs",
+      "audit_source_line": 58,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 57,
+      "before_condition": "recipe列≤65536、capacity≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataEngineering.cs",
+      "audit_source_line": 61,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 58,
+      "before_condition": "recipe行≤65536、row/cell容量≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataEngineering.cs",
+      "audit_source_line": 62,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 59,
+      "before_condition": "group members≤50000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataGroupsAndArrays.cs",
+      "audit_source_line": 36,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 60,
+      "before_condition": "array-name-plan count≤50000、padding≤64、template≤128字符",
+      "status": "changed-operation-interface",
+      "reason": "array-name-plan padding64/template128工具上界去掉；输出仍由真实原厂名称语法/UTF8预算和逐个唯一性验证，不伪造更长合法名称。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataGroupsAndArrays.cs",
+      "audit_source_line": 45,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 61,
+      "before_condition": "group/array string vector容量≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataLogicalCatalog.cs",
+      "audit_source_line": 7,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 62,
+      "before_condition": "数组原型names≤50000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataPrototypeEditing.v3.cs",
+      "audit_source_line": 33,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 63,
+      "before_condition": "原型reference edges≤100000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeDataPrototypeEditing.v3.cs",
+      "audit_source_line": 39,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 64,
+      "before_condition": "matrix edit单批columns≤256",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipeMatrixEditing.cs",
+      "audit_source_line": 39,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 65,
+      "before_condition": "matrix edit单批values≤16384、目标列数≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipeMatrixEditing.cs",
+      "audit_source_line": 44,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 66,
+      "before_condition": "recipe save持久化blob≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeRecipePersistenceContract.cs",
+      "audit_source_line": 38,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 67,
+      "before_condition": "raw alarm输入hex text≤524288字符",
+      "status": "derived-real-extent",
+      "reason": "raw alarm输入hex样本上界已去；保留偶数hex、Int32表示、完整列表与字段宽度/原厂语义。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
+      "audit_source_line": 20,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 68,
+      "before_condition": "alarm definitions≤16384",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmDefinitionEditing.v4.cs",
+      "audit_source_line": 39,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 69,
+      "before_condition": "alarm raw list对应字节≤16384条",
+      "status": "derived-real-extent",
+      "reason": "alarm vector不再16384*ItemBytes容量配额；用实际begin/end/capacity、ItemBytes步幅、checked active span和可读内存。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmRawCapture.cs",
+      "audit_source_line": 9,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 70,
+      "before_condition": "alarm文本≤131072、capacity≤16777216字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmRawCapture.cs",
+      "audit_source_line": 10,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 71,
+      "before_condition": "typed alarm definitions≤16384",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeAlarmTypedSpecification.cs",
+      "audit_source_line": 17,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 72,
+      "before_condition": "picture map records≤10000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
+      "audit_source_line": 15,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 73,
+      "before_condition": "picture ordered names≤10000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
+      "audit_source_line": 16,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 74,
+      "before_condition": "picture cached bytearray≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
+      "audit_source_line": 17,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 75,
+      "before_condition": "picture frames≤10000",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
+      "audit_source_line": 18,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 76,
+      "before_condition": "图片导入文件≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+      "audit_source_line": 58,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 77,
+      "before_condition": "图片原厂serialization stream≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
+      "audit_source_line": 102,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 78,
+      "before_condition": "contained图片列表≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureContainedReferences.v2.cs",
+      "audit_source_line": 18,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 79,
+      "before_condition": "contained嵌套depth≤16、Images<8192",
+      "status": "retained-implementation-depth-bound",
+      "reason": "Images8192计数上界已去；保留当前递归实现16层以及image identity/alias/cycle、实际容器边界。递归深度不冒称wire容量。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureContainedReferences.v2.cs",
+      "audit_source_line": 41,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 80,
+      "before_condition": "contained redirect links≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureContainedReferences.v2.cs",
+      "audit_source_line": 93,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 81,
+      "before_condition": "contained图像成员≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeContainedImageMembers.cs",
+      "audit_source_line": 14,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 82,
+      "before_condition": "vector carrier创建pagecount≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
+      "audit_source_line": 22,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 83,
+      "before_condition": "language map depth<128",
+      "status": "retained-implementation-depth-bound",
+      "reason": "Linguist树当前递归128层；count<=max已去掉。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 21,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 84,
+      "before_condition": "language vector capacity≤1048576",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 22,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 85,
+      "before_condition": "language text map≤65536、每text translations≤2048",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 23,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 86,
+      "before_condition": "language definitions≤2048",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 24,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 87,
+      "before_condition": "configured language IDs≤2048",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 25,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 88,
+      "before_condition": "language单批texts≤4096、content≤1048576字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistEditing.v2.cs",
+      "audit_source_line": 31,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 89,
+      "before_condition": "language management tree count≤65536、depth<128",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistManagementEditing.v3.cs",
+      "audit_source_line": 30,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 90,
+      "before_condition": "language管理数组≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistManagementEditing.v3.cs",
+      "audit_source_line": 44,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 91,
+      "before_condition": "language管理IDs≤2048",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistManagementEditing.v3.cs",
+      "audit_source_line": 49,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 92,
+      "before_condition": "language refresh documents≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeLinguistOpenViewsRefresh.cs",
+      "audit_source_line": 17,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 93,
+      "before_condition": "设备树depth≤16、总节点≤1024、children≤128、capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DeviceTree.v3.cs",
+      "audit_source_line": 26,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 94,
+      "before_condition": "设备树path索引≤17",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DeviceTree.v3.cs",
+      "audit_source_line": 33,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 95,
+      "before_condition": "设备新增后children≤128、depth≤16、总节点≤1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DeviceTree.v3.cs",
+      "audit_source_line": 58,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 96,
+      "before_condition": "设备name≤255字符",
+      "status": "changed-operation-interface",
+      "reason": "Device Name255工具上界去掉；实际CString表示、NUL和原厂重复名/结果核对保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
+      "audit_source_line": 37,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 97,
+      "before_condition": "设备CString capacity≤16777216",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
+      "audit_source_line": 38,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 98,
+      "before_condition": "设备直接children≤128",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
+      "audit_source_line": 59,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 99,
+      "before_condition": "设备监控列表≤4096条",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.v10.cs",
+      "audit_source_line": 62,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 100,
+      "before_condition": "installed-driver-add已有设备<1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InstalledDriverAdd.v4.cs",
+      "audit_source_line": 27,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 101,
+      "before_condition": "driver GET property vector capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
+      "audit_source_line": 29,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 102,
+      "before_condition": "driver GET output最多256 properties、1024 enum options",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
+      "audit_source_line": 32,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 103,
+      "before_condition": "driver changes≤256、text≤65536字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverProperties.v6.cs",
+      "audit_source_line": 42,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 104,
+      "before_condition": "in-place driver changes≤256、text≤65536字符",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.InPlaceProperties.v2.cs",
+      "audit_source_line": 24,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 105,
+      "before_condition": "driver borrowed cache bytes≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+      "audit_source_line": 11,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 106,
+      "before_condition": "driver typed array count/capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+      "audit_source_line": 13,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 107,
+      "before_condition": "driver stream count/capacity≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+      "audit_source_line": 14,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 108,
+      "before_condition": "IoT UTF8 string≤65536bytes、cap≤16MiB、vector≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverCache.v7.cs",
+      "audit_source_line": 21,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 109,
+      "before_condition": "H5U narrow text≤65536bytes、capacity≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+      "audit_source_line": 13,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 110,
+      "before_condition": "H5U channel/automatic vector capacity≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+      "audit_source_line": 14,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 111,
+      "before_condition": "H5U global keys≤256；各key vector≤256",
+      "status": "derived-real-extent",
+      "reason": "H5U globalCount和逐key Vector不再256/max参数门槛；按原生begin/end/capacity、stride及实际key索引/STORE字段验证。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+      "audit_source_line": 15,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 112,
+      "before_condition": "H5U word/scales vector≤65536；STORE config≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.DriverH5UCache.v3.cs",
+      "audit_source_line": 21,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 113,
+      "before_condition": "monidevdrv stream/external extent≤16MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.MemoryDriverCache.cs",
+      "audit_source_line": 9,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 114,
+      "before_condition": "monidevdrv backend pointer array≤4096、capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableDeviceBatch.MemoryDriverCache.cs",
+      "audit_source_line": 10,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 115,
+      "before_condition": "working source≤131072 UTF16字符",
+      "status": "derived-real-extent",
+      "reason": "working source与source_utf16le_hex两种输入均取消样本上界；全UTF16 body、4字符hex单元、完整hash/源一致性仍保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 31,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 116,
+      "before_condition": "working arrays capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 86,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 117,
+      "before_condition": "working每策略rows≤1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 87,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 118,
+      "before_condition": "working每cell conditions≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 88,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 119,
+      "before_condition": "working docs≤4096、每doc views≤64；全inspect也受影响",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 89,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 120,
+      "before_condition": "working compiled bytearray≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyWorkingModelEditing.cs",
+      "audit_source_line": 92,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 121,
+      "before_condition": "owned node STORE archive≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyNodeEditing.cs",
+      "audit_source_line": 17,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 122,
+      "before_condition": "owned node clone stream≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyNodeEditing.cs",
+      "audit_source_line": 18,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 123,
+      "before_condition": "新增前rows<1024、Conditions<4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyNodeEditing.cs",
+      "audit_source_line": 32,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 124,
+      "before_condition": "lifecycle Trigger binary≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecycleStorage.v2.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 125,
+      "before_condition": "lifecycle Trigger rows≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecycleStorage.v2.cs",
+      "audit_source_line": 23,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 126,
+      "before_condition": "lifecycle创建后打开要求已有views<20",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecyclePrepared.v3.cs",
+      "audit_source_line": 22,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 127,
+      "before_condition": "lifecycle重开要求views<20",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyLifecyclePrepared.v3.cs",
+      "audit_source_line": 48,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 128,
+      "before_condition": "adoption打开要求views<20",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyAdoptionCompletion.cs",
+      "audit_source_line": 23,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 129,
+      "before_condition": "canonical documents≤4096、每doc view≤64",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyCanonicalOwnership.cs",
+      "audit_source_line": 18,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 130,
+      "before_condition": "原厂registered palette count≤4096、capacity≤65536",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProductCapabilities.cs",
+      "audit_source_line": 17,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 131,
+      "before_condition": "strategy provider map≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyProviderTemplates.cs",
+      "audit_source_line": 31,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 132,
+      "before_condition": "typed parameter array≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTypedParameterFields.v3.cs",
+      "audit_source_line": 11,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 133,
+      "before_condition": "working source batch edits≤1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategySourceBatchEditing.cs",
+      "audit_source_line": 13,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 134,
+      "before_condition": "旧canonical prepare≤128 items；默认direct每action单项",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeUsableStrategySourceBatch.cs",
+      "audit_source_line": 89,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 135,
+      "before_condition": "当前公开delete compiled cache≤131072bytes",
+      "status": "changed-operation-interface",
+      "reason": "公开delete不再使用旧Prog-only ByteArray快照；改用typed graph/context当前完整投影。旧helper保留不等于公开路径仍131072。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDeleteExtensionProfile.reusable.cs",
+      "audit_source_line": 67,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 136,
+      "before_condition": "当前公开delete每row conditions≤32",
+      "status": "changed-operation-interface",
+      "reason": "公开delete不再使用旧IF-only Conditions helper；typed graph读取按实际conditions数组。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDeleteExtensionProfile.reusable.cs",
+      "audit_source_line": 68,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 137,
+      "before_condition": "当前公开delete Trigger binary≤1MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDeleteExtensionProfile.reusable.cs",
+      "audit_source_line": 79,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 138,
+      "before_condition": "当前公开delete DAO全Trigger行≤32",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyDeleteExtensionProfile.reusable.cs",
+      "audit_source_line": 81,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 139,
+      "before_condition": "adoption diagnostic records≤16384",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyAdoptionDiagnostic.cs",
+      "audit_source_line": 16,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 140,
+      "before_condition": "adoption failure buffer capacity≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyAdoptionDiagnostic.cs",
+      "audit_source_line": 23,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 141,
+      "before_condition": "trigger context文本≤131072字符",
+      "status": "derived-real-extent",
+      "reason": "Trigger文本按UTF16 CLR表示，类型/字段/本次目标与完整源语义保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
+      "audit_source_line": 101,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 142,
+      "before_condition": "trigger context records≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
+      "audit_source_line": 211,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 143,
+      "before_condition": "reference graph count≤262144",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
+      "audit_source_line": 43,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 144,
+      "before_condition": "reference对象树depth≤32、count≤16384、capacity≤65536",
+      "status": "retained-implementation-depth-bound",
+      "reason": "Reference对象树当前递归仍32层；count/capacity样本配额已按实际容器、checked内存范围处理。未实现迭代前不直接取消深度保护。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
+      "audit_source_line": 49,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 145,
+      "before_condition": "reference Prog compiler items≤1024",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceProgCompiler.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 146,
+      "before_condition": "reference path≤8192字符",
+      "status": "derived-real-extent",
+      "reason": "重定向路径文本换UTF16 CLR表示；字段语法/原厂引用规则保留。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceRedirection.cs",
+      "audit_source_line": 16,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 147,
+      "before_condition": "reference sync owner IDs≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
+      "audit_source_line": 19,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 148,
+      "before_condition": "reference sync vector≤1048576、span≤64MiB",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
+      "audit_source_line": 21,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    },
+    {
+      "id": 149,
+      "before_condition": "reference sync entries≤4096",
+      "status": "derived-real-extent",
+      "reason": "样本count/size/容量上界改为实际容器数量、checked字段跨度、所有权/cycle、可读内存和CLR表示范围；原数值不是软件发行号。此状态是源码核对，不是原厂验收。",
+      "source_file": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
+      "audit_source_line": 25,
+      "note": "行号来自修复前审计，当前源码行号已变化。"
+    }
+  ],
+  "audit_correction": {
+    "id": 16,
+    "previous_label": "raw property key bytes4096",
+    "actual": "owned callback executable thunk buffer allocation4096",
+    "does_not_limit_key_bytes": true
+  },
+  "summary": {
+    "derived-real-extent": 131,
+    "retained-implementation-depth-bound": 8,
+    "changed-operation-interface": 8,
+    "audit-misclassification-corrected": 1,
+    "derived-real-extent-with-wire-fields": 1
+  },
+  "validation_semantics": "Per-condition source review; actual whole-assembly and owned Pro evidence is separate. Not 149 old-version native test cases."
+}

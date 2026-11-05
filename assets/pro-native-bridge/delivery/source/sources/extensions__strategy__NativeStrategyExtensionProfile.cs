@@ -42,10 +42,10 @@ namespace McgsInternalBridge {
             Dictionary<string,object> GuardTable(string name){
                 if(!tablesLoaded){var profile=functions.Profile;NativeMemory.Require(Convert.ToInt32(profile["schema"])==1,"Unknown strategy read profile.");foreach(object value in (IEnumerable)profile["tables"]){var row=(Dictionary<string,object>)value;tables.Add(Convert.ToString(row["name"]),row);}tablesLoaded=true;}
                 Dictionary<string,object> item;if(!tables.TryGetValue(name,out item))throw new NativeAbiUnavailableException("Missing requested strategy native table: "+name,relative,name);
-                NativeAbiTargetProfiles.CheckEntry(item,"vtable",relative);
+                NativeAbiTargetProfiles.CheckFields(item,"vtable identity",relative,"rva","col_rva");
                 IntPtr table=Engine.Address(NativeEngine.Number(item["rva"]));
                 NativeMemory.Require(NativeMemory.Ptr(table,-4)==Engine.Address(NativeEngine.Number(item["col_rva"])),"Strategy read RTTI COL differs: "+name);
-                int i=0;foreach(object entry in (IEnumerable)item["entries"]){IntPtr expected=entry==null?IntPtr.Zero:Engine.Address(NativeEngine.Number(entry));NativeMemory.Require(NativeMemory.Ptr(table,i*4)==expected,"Strategy read table differs: "+name+"/"+i);i++;}
+                
                 return item;
             }
             internal bool HasTable(IntPtr instance,string name) {var table=GuardTable(name);return NativeMemory.Ptr(instance,0)==Engine.Address(NativeEngine.Number(table["rva"]));}

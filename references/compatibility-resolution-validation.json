@@ -1,0 +1,629 @@
+{
+  "schema": "mcgs-compatibility-resolution-validation/v1",
+  "date": "2026-11-05",
+  "release_tag": "v2026.11.05-operation-scoped-compatibility",
+  "status": "unified_validation_recorded",
+  "previous_release_commit": "673de3ae28da61a5d91f62cabc944d0380f57e0d",
+  "software_release_number_used_as_admission": false,
+  "author_vendor_whole_file_sha_used_as_admission": false,
+  "implementation": {
+    "O-A01": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A02": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A03": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A04": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A05": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A06": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A07": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-A08": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B01": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B02": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B03": {
+      "status": "scope-corrected-real-layout-retained",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B04": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B05": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B06": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B07": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B08": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B09": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "O-B10": {
+      "status": "implemented",
+      "targeted_validation": "offline group behavior and actual ACE readback where applicable"
+    },
+    "N01": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "N02": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "N03": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "N04": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "N05": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "N06": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "B-A1": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "B-A2": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "B-A3": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "B-A4": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "B-A5": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "C01": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "C02": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "C03": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "D01": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    },
+    "D02": {
+      "status": "implemented-with-explicit-real-ABI-boundaries",
+      "evidence_scope": "source/whole-assembly/targeted managed and owned native results recorded separately"
+    }
+  },
+  "offline_validation": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "test_controls_scoped_and_wrapped",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_template_and_name_targeting",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_event_reserved_preservation",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_font_text_and_wire_ranges",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_mfc_large_references_and_narrow_strings",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_recipe_tail_and_repeated_class_maps",
+        "passed": true,
+        "evidence": null,
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "case": "test_local_style_and_preview_isolation",
+        "passed": true,
+        "evidence": null,
+        "initial_passed": false
+      },
+      {
+        "case": "test_powershell_codec_and_parameter_contracts",
+        "passed": true,
+        "evidence": {
+          "ace_opened": false,
+          "parameter_types": [
+            5,
+            7,
+            72,
+            14,
+            205
+          ],
+          "invalid_zlib_tail_rejected": true,
+          "actual_column_size_enforced": true,
+          "shared_wrapped_version": true,
+          "safe_identifiers": true
+        },
+        "evidence_source": "initial unified pass; not repeated"
+      },
+      {
+        "passed": true,
+        "case": "test_database_capture_and_extended_page",
+        "evidence": {
+          "compressed_version": true,
+          "reordered_key": true,
+          "non_ascii_table": true,
+          "unkeyed_multiplicity": true,
+          "extra_fields": [
+            "extra double",
+            "extra date",
+            "extra guid",
+            "extra decimal"
+          ],
+          "file_readback": "file_readback_passed",
+          "source_unchanged": true,
+          "native_original_check": "not_run"
+        },
+        "initial_passed": false
+      }
+    ],
+    "source_written": false,
+    "owned_database_written": true,
+    "vendor_called": false,
+    "native_original_check": "not_run",
+    "close_reopen": "not_run",
+    "simulation": "not_run"
+  },
+  "module_and_entry_validation": {
+    "passed": true,
+    "checks": [
+      "delay import names and ordinals False",
+      "delay load is not a different symbol identity False",
+      "delay import names and ordinals True",
+      "delay load is not a different symbol identity True",
+      "unknown delay attributes still rejected",
+      "forwarded named export terminal owner",
+      "ordinal forwarder chain",
+      "forwarder cycle refused",
+      "missing forwarder owner never guessed",
+      "renamed ordinal role follows forwarder proof",
+      "unnamed changed ordinal is not guessed through a forwarder",
+      "debug Unicode MFC discovery",
+      "dependency graph crosses external roots and 4096 nodes without truncation",
+      "two logical roles may explicitly share one module file",
+      "new explicit per-entry reader contract recorded"
+    ],
+    "managed": {
+      "passed": true,
+      "assertions": 10,
+      "vendor_code_loaded": false,
+      "project_opened": false
+    },
+    "vendor_calls": false,
+    "project_access": false,
+    "registry_written": false
+  },
+  "cold_own_source_build_and_plan": {
+    "passed": true,
+    "own_cold_sources_compiled": true,
+    "typelib_readback": true,
+    "hive": "HKCU",
+    "x64_compiler_absent": true,
+    "wrapper_built_not_invoked": true,
+    "install_plan_only": true,
+    "registry_written": false,
+    "vendor_code_loaded": false,
+    "project_opened": false
+  },
+  "client_validation": {
+    "passed": true,
+    "cases": [
+      "stage_1050_steps_and_65_actions",
+      "input_and_queue_read_over_16MiB",
+      "full_receipt_over_16MiB",
+      "receipt_tampering_rejected",
+      "canonical_path",
+      "empty_actions_rejected"
+    ],
+    "native_called": false,
+    "queue_published": false,
+    "seconds": 0.325
+  },
+  "production_engine": {
+    "passed": true,
+    "binding": {
+      "exit_code": 0,
+      "seconds": 300.031
+    },
+    "compilation": {
+      "exit_code": 0,
+      "seconds": 1.003
+    },
+    "source_count": 165,
+    "engine_sha256": "8d2ef2b9f4605eb9ead89c41043b57cb7a72c0d47920e93477bd805b4c49e2f6",
+    "scope_sha256": "ba3730abf2acf7d2b2f88db8aaed70ac58911cd936dd41928640bcd6585098e0",
+    "index_sha256": "727d2da3f01bbc10a98b9b7ef28effe44fce1ed201a4cc47dc58794fa8b8ef2f",
+    "bound_manifest_sha256": "5151ad4224b29ef8b6b9b3e74860260893f709142d2f0cfcf6b64289b7696349",
+    "scope_metadata": {
+      "machine": "I386",
+      "format": "PE32",
+      "managed": true,
+      "compiled_scope_sha256": "ba3730abf2acf7d2b2f88db8aaed70ac58911cd936dd41928640bcd6585098e0"
+    },
+    "native_called": false,
+    "engine_activated": false
+  },
+  "static_contract_index_regression": {
+    "passed": true,
+    "all_copied_non_native_contracts_indexed": true,
+    "partial_abi_not_relaxed": true,
+    "native_called": false
+  },
+  "production_assembly_validation": {
+    "ok": true,
+    "cases": [
+      "actual_committed_memory_over_1MiB_and_overflow_rejection",
+      "native_array_above_sample_counts_keeps_identity_capacity_and_alias_guards",
+      "deep_iterative_tree_and_projection_keep_cycle_rejection",
+      "project_alias_uses_file_identity_and_rejects_equal_content_copy"
+    ],
+    "vendor_software_called": false,
+    "engineering_project_opened_or_modified": false,
+    "legacy_or_unknown_abi_acceptance_claimed": false,
+    "evidence_scope": "compiled final production assembly, actual owned memory and files; no original Pro, old-version or device validation"
+  },
+  "original_software_acceptance": {
+    "schema": 1,
+    "scope": "one owned fixture and one fresh Pro process",
+    "connection": {
+      "status": "passed",
+      "identity_receipt": "<local evidence path omitted>",
+      "project": "<local evidence path omitted>",
+      "prior_failed_codebase_attempt": "<local evidence path omitted>"
+    },
+    "engine": {
+      "status": "passed",
+      "engine_sha256": "8d2ef2b9f4605eb9ead89c41043b57cb7a72c0d47920e93477bd805b4c49e2f6",
+      "field_resolution_validation": true,
+      "maximum_payload_path_length": 228,
+      "cross_build_contract": "mcgs-native-cross-build/v4",
+      "index_sha256": "727d2da3f01bbc10a98b9b7ef28effe44fce1ed201a4cc47dc58794fa8b8ef2f",
+      "promoted_files": 308,
+      "operation_entry_validation": true,
+      "scope_sha256": "ba3730abf2acf7d2b2f88db8aaed70ac58911cd936dd41928640bcd6585098e0",
+      "selected_module_equivalent_copy": true
+    },
+    "mutation": {
+      "status": "passed",
+      "control": "OfflineButton",
+      "after": [
+        24,
+        20,
+        204,
+        65
+      ],
+      "before": [
+        23,
+        20,
+        203,
+        65
+      ]
+    },
+    "create": {
+      "name": "控件2",
+      "status": "passed",
+      "class": "CDrawLabel",
+      "rectangle": [
+        370,
+        280,
+        520,
+        310
+      ],
+      "path": [
+        10
+      ]
+    },
+    "save": {
+      "page_save": true,
+      "root_save": true,
+      "status": "passed"
+    },
+    "native_readback": {
+      "button_rectangle": [
+        24,
+        20,
+        204,
+        65
+      ],
+      "scope": "before and after reopen: native page target identities and rectangles; full typed business comparison not claimed",
+      "status": "passed",
+      "label_rectangle": [
+        370,
+        280,
+        520,
+        310
+      ],
+      "after_reopen_receipt": "<local evidence path omitted>"
+    },
+    "native_check": {
+      "warning_count": null,
+      "status": "passed",
+      "root_compile_valid_after": 1,
+      "original_worker_returned": true,
+      "original_worker_return_int32": 0,
+      "native_check_passed": true,
+      "original_worker_call_entered": true,
+      "error_count": null
+    },
+    "close_reopen": {
+      "note": "Original request timed out while UI was pending; after authorized cancel Save As and decline recovery, same request returned successfully without resubmission.",
+      "status": "passed",
+      "request_id": "lifecycle_d08ad6666f394fb3af1ca1845b1485f9",
+      "lifecycle_completed": true,
+      "normal_project_closed_then_reopened_verified": true,
+      "actual_project": "<local evidence path omitted>",
+      "post_root": "0x02966380",
+      "pre_root": "0x1404F8F8"
+    },
+    "file_readback": {
+      "copy": "<local evidence path omitted>",
+      "status": "passed",
+      "scope": "closed-copy structural and target field audit; non-target prior page control records byte-equal against prelaunch backup",
+      "supported_archives_roundtrip": true,
+      "page1_controls": 11,
+      "page2_controls": 1,
+      "provider": "Microsoft.ACE.OLEDB.16.0",
+      "audit": "<local evidence path omitted>",
+      "sha256": "6428a3b5b1af480c1dd7c40c1e37a136311218b0206795a0a7d5b9a5c626ac60",
+      "target_receipt": "<local evidence path omitted>",
+      "targets_match_native": true,
+      "non_target_prior_controls_byte_equal": true
+    },
+    "simulation": {
+      "status": "not_performed"
+    },
+    "communication": {
+      "status": "not_performed"
+    },
+    "prelaunch_sha256": "4f567e1331c6a596578cf700b1def54381d4d2124adbdc4282c88e5adec13042",
+    "post_open_sha256": "5ece301196f2aad3910ac6086b3eb2d32752589b272fbae7940a5d4492136e51",
+    "note": "Original startup changed file hash; prelaunch backup retained. No attribution to a specific mechanism."
+  },
+  "lazy_profile_collection_validation": {
+    "ok": true,
+    "actual_profiles": 218,
+    "synthetic_profiles": 3,
+    "normalized_records": 7930,
+    "entry_contracts_preserved": 3713,
+    "non_callable_metadata_records": 941,
+    "shapes": {
+      "functions:list": 138,
+      "code_guards:list": 44,
+      "modules:list": 29,
+      "modules:map": 3,
+      "functions:map": 29,
+      "methods:map": 11,
+      "methods:list": 13,
+      "imports:list": 8,
+      "mfc_imports:list": 3,
+      "code_guards:map": 1,
+      "imports:map": 1
+    }
+  },
+  "hot_attach_codebase_managed_validation": {
+    "ok": true,
+    "cases": [
+      "actual_own_bootstrap_sha_matches_existing_config",
+      "registration_retains_exact_six_expected_server_values",
+      "codebase_uses_exact_CLR_AssemblyName_representation",
+      "actual_non_ASCII_path_exercises_legacy_encoding_difference",
+      "other_registration_values_unchanged",
+      "legacy_candidate_is_only_exact_historical_AbsoluteUri",
+      "strict_accepts_current_CLR_string",
+      "migration_accepts_already_current_CLR_string",
+      "strict_rejects_historical_percent_encoding",
+      "migration_accepts_exact_historical_string",
+      "migration_rejects_any_unplanned_URI_suffix",
+      "migration_does_not_generalize_URI_equivalence",
+      "migration_rejects_other_bootstrap_path",
+      "migration_rejects_wrong_registry_type",
+      "strict_rejects_wrong_registry_type",
+      "migration_rejects_missing_value",
+      "matching_does_not_coerce_non_string_registry_data",
+      "non_CodeBase_fields_have_no_legacy_alternative",
+      "ownership_scope_still_requires_exact_string",
+      "only_configured_own_CLSID_key_is_selected"
+    ],
+    "client_sha256": "721e5070818561f3c7a80e21e060dac10a1e4cb63691986e338e42277fe56f36",
+    "bootstrap_sha256": "c43b3aad31c1e82e3e1b7e77edcfc637b9710059b2271b5c7369b227017c5896",
+    "actual_CLR_codebase": "<local evidence path omitted>",
+    "exact_legacy_codebase": "<local evidence path omitted>",
+    "registry_read_or_written": false,
+    "COM_activated": false,
+    "Pro_called": false,
+    "scope": "Compiled exact own-client Values/matcher logic, actual same-session bootstrap metadata; not registry migration execution.",
+    "source": "<local evidence path omitted>",
+    "source_sha256": "d6af6f85c0cea96533e1ea65ecb92f9e6f704b9a24d49dee882a9aeb796acacc"
+  },
+  "catalog_generation": {
+    "source_addresses": {
+      "entries": 535,
+      "confirmed": 535,
+      "source_ordinals": 16,
+      "address_kinds": {
+        "PE_RVA_constant": 31,
+        "PE_RVA_literal": 485,
+        "PE_data_RVA_literal": 8,
+        "reference_base_encoded_RVA": 11
+      },
+      "module_ownership_or_const_scope_gaps": 49
+    },
+    "modules": 17,
+    "profiles": 123,
+    "signatures": 5874,
+    "types": 265,
+    "catalog_gaps": 0,
+    "expanded_catalog_sha256": "c67dbc3d23be8d1237c0864e6501384758e8835dc1e10d13a5fbe2360e824b39",
+    "compressed_catalog_sha256": "026cdb6069903ecddd05497862bf575b535cdaedc4c38cb4d924ecbf11430ff4"
+  },
+  "capacity": {
+    "conditions_reviewed": 149,
+    "status_counts": {
+      "derived-real-extent": 131,
+      "retained-implementation-depth-bound": 8,
+      "changed-operation-interface": 8,
+      "audit-misclassification-corrected": 1,
+      "derived-real-extent-with-wire-fields": 1
+    },
+    "file": "references/compatibility-capacity-resolution.json",
+    "sha256": "d4b452862bfa7681adbe04e7731198a2753f15e8a3184fefbd1685a6c65287b7",
+    "149_old_version_test_cases_claimed": false
+  },
+  "independent_review": {
+    "completed": true,
+    "synthetic_preservation_cases_passed": 6,
+    "corrections": [
+      "opaque/animation/builtin action destructive reference projection",
+      "strategy export path/length/SHA verification",
+      "equivalent module owner adjacent consumers",
+      "request-scoped module lookup avoids quadratic file hashing",
+      "strategy deletion uses existing complete supported typed persistence projection"
+    ]
+  },
+  "failed_attempts_and_corrections": [
+    {
+      "group": "offline actual ACE",
+      "issue": "PowerShell binary conditional unrolled byte[] to Object[]",
+      "correction": "explicit byte[] parameter; only failed DB group rerun"
+    },
+    {
+      "group": "preview dependency",
+      "issue": "Pillow absent from selected Python",
+      "correction": "installed into same Python user site; only failed preview group rerun"
+    },
+    {
+      "group": "owned DB fixture",
+      "issue": "baseline export subdirectory assumption",
+      "correction": "continued existing successful Capture; no replay"
+    },
+    {
+      "group": "binding",
+      "issue": "source classification SHA after final source edits",
+      "correction": "refreshed owned source manifest and classified catalog"
+    },
+    {
+      "group": "compile",
+      "issue": "three Int32.MaxValue*1024 constant overflows from quota edit",
+      "correction": "actual Int32 bound retained without trailing multiplier"
+    },
+    {
+      "group": "build wrapper",
+      "issue": "compiler output used local console code page",
+      "correction": "keep original bytes; decode logs without mistaking successful compile for failure"
+    },
+    {
+      "group": "owned final-assembly fixture",
+      "issue": "fixture foreach syntax and missing bound scope attestation",
+      "correction": "fixed fixture only; production assembly unchanged; final owned cases passed"
+    },
+    {
+      "group": "real Pro page read before mutation",
+      "issue": "promoted static contract missing from bound integrity index",
+      "correction": "index every frozen promoted artifact; static rows remain hash checked, unresolved ABI not relaxed; new unique engine and payload"
+    },
+    {
+      "group": "real Pro page read before mutation",
+      "issue": "lazy methods map was cast as a row list",
+      "correction": "normalize actual list/map records without changing entry contracts; scalar and semantic metadata never become callable"
+    },
+    {
+      "group": "actual profile managed scan",
+      "issue": "unused duplicate function names blocked full profile loading",
+      "correction": "preserve both declarations; report ambiguity only for the requested name, without guessing an address"
+    },
+    {
+      "group": "resuming native acceptance",
+      "issue": "prior test process was no longer running after user pause",
+      "correction": "fresh owned bridge/session and actual process identity; uncertain requests not replayed"
+    },
+    {
+      "group": "actual hot attachment deployment",
+      "issue": "percent-encoded COM CodeBase failed CLR activation for a Chinese path",
+      "correction": "use CLR/RegAsm CodeBase; verified independent activation and exact own-scope legacy migration; original failed receipt preserved"
+    }
+  ],
+  "all_older_vendor_releases_claimed_tested": false,
+  "user_business_project_modified": false,
+  "preserved_real_boundaries": [
+    "x86/MSVC/MFC layouts and calling semantics",
+    "unknown private archive/plugin/driver codecs",
+    "required full lifetime/serialization closures",
+    "explicit recursive implementation depth limits",
+    "CLR/Win32/file/COM actual resource and permission conditions",
+    "Stu online not implemented"
+  ],
+  "physical_device_communication": "not_performed",
+  "all_older_releases_native_tested": false
+}

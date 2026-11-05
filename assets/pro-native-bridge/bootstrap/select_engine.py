@@ -18,7 +18,7 @@ import uuid
 
 from managed_pe import verify_scope_binding
 
-NAME = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll\Z')
+NAME = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]*\.dll\Z')
 SHA = re.compile(r'[a-f0-9]{64}\Z')
 
 
@@ -38,19 +38,13 @@ def encoded(value):
 def absolute(value):
     path = Path(value)
     need(path.is_absolute() and '\0' not in str(path), 'Use explicit absolute file/directory paths')
-    path = Path(os.path.abspath(path))
-    for item in (path, *path.parents):
-        if os.path.lexists(item):
-            info = os.lstat(item)
-            need(not stat.S_ISLNK(info.st_mode) and not getattr(info, 'st_file_attributes', 0) & 0x400,
-                 'Reparse path is outside this deployment contract: '+str(item))
-    return path
+    return path.resolve()
 
 
-def regular(path, maximum=512*1024*1024):
+def regular(path, maximum=None):
     path = absolute(path)
     before = path.stat()
-    need(stat.S_ISREG(before.st_mode) and 0 < before.st_size <= maximum, 'Expected bounded regular file: '+str(path))
+    need(stat.S_ISREG(before.st_mode) and before.st_size > 0 and (maximum is None or before.st_size <= maximum), 'Expected regular file: '+str(path))
     raw = path.read_bytes()
     after = path.stat()
     identity = lambda value: (value.st_dev, value.st_ino, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
@@ -62,7 +56,7 @@ def same(first, second):
     return os.path.normcase(str(absolute(first))) == os.path.normcase(str(absolute(second)))
 
 
-def read_json(path, maximum=65536):
+def read_json(path, maximum=None):
     raw = regular(path, maximum)
     value = json.loads(raw.decode('utf-8-sig'))
     need(isinstance(value, dict), 'Expected JSON object: '+str(path))
@@ -81,7 +75,7 @@ def verify_bootstrap(boot):
     boot = absolute(boot)
     cfg, config_raw = read_json(boot/'McgsInternalBridge.bridge.json')
     config_sha = digest(config_raw)
-    built, _ = read_json(boot/'build-manifest.json', 2*1024*1024)
+    built, _ = read_json(boot/'build-manifest.json')
     need(cfg.get('schema') == 1 and built.get('bootstrap_scope_sha256') == config_sha,
          'Prepared bridge build/config binding differs')
     need(same(cfg['bootstrap_root'], boot), 'BootstrapRoot differs from the current bound configuration')
@@ -113,7 +107,7 @@ def verify_bootstrap(boot):
 
 
 def verify_selection(context):
-    selected, raw = read_json(context['manifest'], 8192)
+    selected, raw = read_json(context['manifest'])
     need(selected.get('bootstrap_scope_sha256') == context['config_sha'], 'Active engine belongs to another bridge configuration')
     path = absolute(selected.get('assembly', ''))
     need(path.parent == context['boot']/'engines' and NAME.fullmatch(path.name), 'Active engine path escapes the current engine directory')
@@ -121,7 +115,7 @@ def verify_selection(context):
     need(isinstance(expected, str) and SHA.fullmatch(expected), 'Active engine SHA256 is missing or invalid')
     need(digest(regular(path)) == expected, 'Currently selected engine SHA differs from its manifest')
     if 'engine_scope_sha256' in selected:
-        scope_raw = regular(path.with_suffix('.scope.json'), 65536)
+        scope_raw = regular(path.with_suffix('.scope.json'))
         need(digest(scope_raw) == selected['engine_scope_sha256'], 'Currently selected engine scope differs from its manifest')
         verify_scope_binding(regular(path), selected['engine_scope_sha256'])
     return selected, raw
@@ -141,7 +135,7 @@ def verify_scope(raw, context):
          'Frozen engineering payload and current runtime must exist and be disjoint')
     transport = absolute(scope['transport_client_file'])
     need(transport.is_relative_to(absolute(scope['task_root'])) or transport.is_relative_to(engineering), 'Transport escapes the declared task/payload roots')
-    need(SHA.fullmatch(scope['transport_client_sha256']) and digest(regular(transport, 1024*1024)) == scope['transport_client_sha256'],
+    need(SHA.fullmatch(scope['transport_client_sha256']) and digest(regular(transport)) == scope['transport_client_sha256'],
          'Selected scope transport identity differs')
     return scope
 
@@ -160,7 +154,7 @@ def select_engine(args):
         need(SHA.fullmatch(getattr(args, key)), 'Expected a lowercase SHA256: '+key)
     engine, scope = absolute(args.engine_file), absolute(args.engine_scope_file)
     need(NAME.fullmatch(engine.name) and scope.name == engine.stem+'.scope.json', 'Use a fresh DLL basename with its exact sibling scope filename')
-    engine_raw, scope_raw = regular(engine), regular(scope, 65536)
+    engine_raw, scope_raw = regular(engine), regular(scope)
     need(digest(engine_raw) == args.engine_sha256 and digest(scope_raw) == args.engine_scope_sha256, 'Selected input DLL/scope SHA differs')
     verify_scope(scope_raw, context)
     pe = verify_scope_binding(engine_raw, args.engine_scope_sha256)
@@ -173,7 +167,7 @@ def select_engine(args):
     # native work or relying on a previous success receipt.
     already = same(selected['assembly'], target) and selected['sha256'] == args.engine_sha256
     if already:
-        need(regular(target) == engine_raw and regular(target_scope, 65536) == scope_raw, 'Selected version has changed; never overwrite an engine filename')
+        need(regular(target) == engine_raw and regular(target_scope) == scope_raw, 'Selected version has changed; never overwrite an engine filename')
         status.update(status='already_selected_verified', engine_scope_sha256=args.engine_scope_sha256, changed=False)
         return status
     need(digest(old_raw) == args.manifest_sha256, 'Active-engine preimage changed; read actual status before selecting again')
@@ -204,7 +198,7 @@ def select_engine(args):
             need(regular(file) == raw, 'Deployed engine/scope readback differs')
         write_new(backup, old_raw)
         write_new(temp, desired_raw)
-        need(regular(context['manifest'], 8192) == old_raw, 'Active-engine preimage changed before atomic selection')
+        need(regular(context['manifest']) == old_raw, 'Active-engine preimage changed before atomic selection')
         os.replace(temp, context['manifest'])
         actual, actual_raw = verify_selection(context)
         need(actual_raw == desired_raw, 'Atomic engine selection readback differs; inspect actual status before any retry')
@@ -213,7 +207,7 @@ def select_engine(args):
     finally:
         # Do not clean immutable outputs/backups or an unknown lock. Temporary
         # outputs remain evidence on failure; no automatic rollback is attempted.
-        if os.path.lexists(lock) and regular(lock, 65536) == lock_raw:
+        if os.path.lexists(lock) and regular(lock) == lock_raw:
             lock.unlink()
 
 

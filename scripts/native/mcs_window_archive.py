@@ -11,6 +11,7 @@ import hashlib
 import json
 import struct
 import sys
+from mcgs_text import narrow_encoding, NativeCString
 
 ROOT = Path(__file__).resolve().parent
 
@@ -46,14 +47,18 @@ class Reader:
                     if n==0xffff: n=self.u32()
             elif n==0xffff: n=self.u32()
         raw=self.take(n*(2 if wide else 1))
-        value=raw.decode("utf-16le" if wide else "cp936",errors="strict")
-        return value, self.data[start:self.pos], wide
+        value=raw.decode("utf-16le" if wide else narrow_encoding(),errors="strict")
+        wire=self.data[start:self.pos]
+        return NativeCString(value,wire,wide), wire, wide
 
 def write_count(n):
     return struct.pack("<H",n) if n<0xffff else b"\xff\xff"+struct.pack("<I",n)
 
 def write_cstring(value, wide=True):
-    raw=value.encode("utf-16le" if wide else "cp936")
+    if isinstance(value,NativeCString) and value.wire:
+        reader=Reader(value.wire)
+        if reader.cstring()[0]==value and reader.pos==len(value.wire):return value.wire
+    raw=value.encode("utf-16le" if wide else narrow_encoding())
     n=len(raw)//(2 if wide else 1)
     prefix=(b"\xff\xfe\xff" if wide else b"")
     if n<0xff: prefix+=struct.pack("<B",n)
@@ -104,10 +109,18 @@ class WindowSettings:
     def to_bytes(self):
         core=write_count(len(self.properties))+b"".join(v.to_bytes() for v in self.properties)+self.event_tail
         return struct.pack("<2I",len(core),len(self.password_data))+self.password_data+core
+    def field(self,name):
+        # These positions are the native serialization contract, not a
+        # release number. Validate the requested semantic field before use.
+        layout={'id':(0,3),'name':(1,8),'width':(6,3),'height':(7,3),'background':(15,3)}
+        if name not in layout:raise FormatError('Unknown window property role: '+str(name))
+        index,kind=layout[name]
+        if index>=len(self.properties) or self.properties[index].vt!=kind:
+            raise FormatError('Unsupported native window '+name+' property layout')
+        return self.properties[index]
     def clone(self,window_id,name):
         result=copy.deepcopy(self)
-        if len(result.properties)<2 or result.properties[0].vt!=3 or result.properties[1].vt!=8: raise FormatError("Unsupported window identity property positions/types")
-        result.properties[0].value=window_id; result.properties[1].value=name
+        result.field('id').value=window_id; result.field('name').value=name
         return result
 
 @dataclass

@@ -32,7 +32,7 @@ def write_new(path, data):
 
 def prepare(args):
     engine_name = args.engine_file_name
-    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll", engine_name):
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.dll", engine_name):
         raise ValueError("engine-file-name must be a single explicit DLL filename")
     output = _absolute(args.output_directory)
     if os.path.lexists(output) and (not output.is_dir() or any(output.iterdir())):

@@ -218,7 +218,7 @@ def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=Non
     layout_text = layout_source.read_text(encoding="utf-8-sig")
     need(layout_text.count('ExpectedConfigurationSha256="'+scope_sha+'"') == 1,
          "Layout source is not bound to this exact sibling configuration")
-    need(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll", engine_name), "Engine file name differs")
+    need(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.dll", engine_name), "Engine file name differs")
     need(config_file.name == Path(engine_name).with_suffix(".scope.json").name,
          "Configuration must have the eventual engine sibling name")
     # Import the original, independently staged strict filesystem contract.
@@ -392,7 +392,7 @@ def bind(stage, config_file, layout_source, output, engine_name, abi_catalog=Non
         "new_profile_hashes_fully_repinned":True,"historical_routes_exposed":False,
         "exposed_engineering_operations":["engineering-edit-inspect","engineering-edit-batch",
             "engineering-project-lifecycle-read","engineering-project-close-reopen-original"],
-        "lifecycle_requires_own_dedicated_scope_bound_permit":True,
+        "lifecycle_requires_own_dedicated_scope_bound_permit":False,
         "legacy_owned_proof_files_mirrored_at_task_boundary":False,
         "immutable_evidence_root":str(layout.engineering_root / "task-evidence"),
         "original_task_profiles_overwritten":False,

@@ -61,7 +61,7 @@ def read_font(r):
     start=r.pos
     r.u8()
     count=r.u32()
-    if count>32:raise FormatError("字体语言数量超出已验证范围")
+    r.count_extent(count,33,'Font language')
     for _ in range(count):
         r.u32()
         r.take(28) # 5 LONG + 8 BYTE，faceName另存CString。
@@ -70,7 +70,7 @@ def read_font(r):
 
 
 def change_font_height(raw,height):
-    if not isinstance(height,int) or not 1<=height<=500:raise ValueError("字体像素高度超范围")
+    if type(height)is not int or not 1<=height<=0x7fffffff:raise ValueError("字体像素高度须可由原生LONG存储")
     result=bytearray(raw)
     r=Reader(raw);r.u8();count=r.u32()
     for _ in range(count):

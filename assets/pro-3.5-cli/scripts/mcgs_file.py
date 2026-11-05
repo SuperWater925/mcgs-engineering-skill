@@ -65,8 +65,8 @@ def canonical(data):
 
 
 def title(value):
-    if not isinstance(value,str) or not value or len(value.encode('utf-16le'))//2>32 or '\x00' in value:
-        raise ValueError('Object names require 1..32 characters without NUL')
+    if not isinstance(value,str) or not value or '\x00' in value:
+        raise ValueError('Object names require nonempty text without NUL; actual database fields determine storage capacity')
     return value
 
 

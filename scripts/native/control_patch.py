@@ -19,7 +19,7 @@ def edit(record,changes,variables=None):
     if cm.to_record().payload!=record.payload:raise ValueError('Control original roundtrip differs')
     if 'bounds' in changes:
         rect=changes['bounds']
-        if not isinstance(rect,list) or len(rect)!=4 or any(type(x)is not int or abs(x)>32768 for x in rect) or rect[0]>=rect[2] or rect[1]>=rect[3]:raise ValueError('Invalid positive control bounds')
+        if not isinstance(rect,list) or len(rect)!=4 or any(type(x)is not int or not -0x80000000<=x<=0x7fffffff for x in rect) or rect[0]>=rect[2] or rect[1]>=rect[3]:raise ValueError('Invalid Int32 positive control bounds')
         if record.type_id in (0x5028,0x502a):
             m=MultiState.parse(record);m.resize(rect);record=m.to_record()
         elif record.type_id in (0x5008,0x5025,0x5027):cm.set_rect(rect);record=cm.to_record()

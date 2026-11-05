@@ -54,15 +54,11 @@ def sha(path):
 def absolute(value):
     if os.name != 'nt':
         raise ValueError('Prepare this Windows native bridge on Windows')
-    drive, tail = os.path.splitdrive(value)
-    if len(drive) != 2 or drive[1] != ':' or not tail.startswith(('\\', '/')):
-        raise ValueError('An explicit local drive absolute path is required: ' + value)
-    path = Path(os.path.abspath(value))
+    if not Path(value).is_absolute():
+        raise ValueError('An explicit absolute path is required: ' + value)
+    path = Path(value).resolve()
     if path == Path(path.anchor):
         raise ValueError('A volume root is not an owned workspace')
-    for item in [path, *path.parents]:
-        if item.exists() and (item.stat(follow_symlinks=False).st_file_attributes & 0x400):
-            raise ValueError('Reparse point is outside this preparation contract: ' + str(item))
     return path
 
 
@@ -71,7 +67,7 @@ def inside(path, root):
 
 
 def regular(path):
-    if not path.is_file() or path.is_symlink():
+    if not path.is_file():
         raise ValueError('Input is not a regular file: ' + str(path))
     return path
 
@@ -90,7 +86,7 @@ def json_new(path, value):
 def registration(boot, identity):
     cls, prog, lib = registration_roots(identity)
     dll = boot / 'McgsInternalBridge.dll'
-    codebase = 'file:///' + str(dll).replace('\\', '/')
+    codebase = dll.as_uri()
     common = {'Class': identity['progid'],
               'Assembly': 'McgsInternalBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null',
               'RuntimeVersion': 'v4.0.30319', 'CodeBase': codebase}
@@ -100,7 +96,7 @@ def registration(boot, identity):
         {'key': lib, 'values': {}},
         {'key': prog + r'\CLSID', 'values': {'': '{' + identity['class_guid'] + '}'}},
         {'key': cls + r'\InprocServer32', 'values': dict(common, **{
-            '': str(Path(os.environ['WINDIR']) / 'SysWOW64/mscoree.dll'), 'ThreadingModel': 'Both'})},
+            '': str(Path(os.environ['WINDIR']) / ('SysWOW64' if (Path(os.environ['WINDIR']) / 'SysWOW64/mscoree.dll').is_file() else 'System32') / 'mscoree.dll'), 'ThreadingModel': 'Both'})},
         {'key': cls + r'\ProgId', 'values': {'': identity['progid']}},
         {'key': cls + r'\TypeLib', 'values': {'': '{' + identity['type_library_guid'] + '}'}},
         {'key': lib + r'\1.0', 'values': {'': 'McgsInternalBridge'}},
@@ -117,6 +113,8 @@ def main():
                  'editor-executable', 'addins-directory', 'addins-ini-file',
                  'startup-registry-path', 'loader-contract-file']:
         p.add_argument('--' + name, required=True)
+    p.add_argument('--registration-hive', choices=('HKCU', 'HKLM'), default='HKLM',
+                   help='Private COM registration scope; HKCU avoids machine-write permission for an ordinary non-elevated host')
     a = p.parse_args()
     paths = {key: absolute(getattr(a, key)) for key in [
         'task_root', 'runtime_root', 'bootstrap_root', 'install_root',
@@ -172,7 +170,8 @@ def main():
               **{k: str(v) for k, v in paths.items() if k != 'loader_contract_file'},
               'loader_contract_file': str(contract_copy), 'loader_contract_sha256': sha(contract_copy),
               'editor_sha256': editor_sha, 'startup_registry_path': startup,
-              'addins_ini_sha256': sha(paths['addins_ini_file']), 'cold_runtime': cold_runtime}
+              'addins_ini_sha256': sha(paths['addins_ini_file']), 'cold_runtime': cold_runtime,
+              'cold_registry_hive': a.registration_hive}
     config_file = boot / 'McgsInternalBridge.bridge.json'
     json_new(config_file, config)
     config_sha = sha(config_file)
@@ -191,14 +190,14 @@ def main():
     token = uuid.uuid4().hex
     entries = registration(boot, identity)
     json_new(boot / 'hklm-registration-plan.json', {
-        'schema': 1, 'hive': 'HKLM', 'view': 'Registry32', 'requires_absent_roots': roots,
+        'schema': 1, 'hive': a.registration_hive, 'view': 'Registry32', 'requires_absent_roots': roots,
         'registration': entries, 'bootstrap_scope_sha256': config_sha,
         'unknown_existing_registration_policy': 'reject this deployment identity collision; preserve unrelated deployments'})
     owned_entries = json.loads(json.dumps(entries))
     for root in roots:
         next(x for x in owned_entries if x['key'] == root)['values'][MARKER] = token
     json_new(boot / 'prepared-registration-contract.json', {
-        'schema': 1, 'state': 'prepared_not_registered', 'hive': 'HKLM', 'view': 'Registry32',
+        'schema': 1, 'state': 'prepared_not_registered', 'hive': a.registration_hive, 'view': 'Registry32',
         'roots': roots, 'transaction_id': token, 'expected_entries': owned_entries,
         'bootstrap_scope_sha256': config_sha, 'registry_written': False})
     for name in ['build_bootstrap.ps1', 'install_bootstrap.ps1', 'remove_bootstrap.ps1', 'stage_engine.py',

@@ -71,6 +71,6 @@ pwsh -NoProfile -File .\run.ps1 edit --source 'D:\工程\当前.mcp' --spec 'D:\
 
 ## Pro 原生桥与同一环境
 
-[原生工程入口](pro-native-engineering.md)复用本技能的 Python 与一次性文件队列；宿主中的 helper 为匹配 Pro 位数的原生接口适配，不另建 Jet/32位 PowerShell 环境。目录由编译绑定的显式 `.scope.json` 给出，工程由 request.expected_project 给出。冻结资料与可写 runtime 分离，16MiB 完整回执使用本地文件哈希关联，小 queue envelope 不删字段假装完整。实际 DLL/ABI 不匹配则拒绝对应操作，软件发行版本不另设白名单。
+[原生工程入口](pro-native-engineering.md)复用本技能的 Python 与一次性文件队列；宿主中的 helper 为匹配 Pro 位数的原生接口适配，不另建 Jet/32位 PowerShell 环境。目录由编译绑定的显式 `.scope.json` 给出，工程由 request.expected_project 给出。冻结资料与可写 runtime 分离，完整回执使用本地文件长度与哈希关联，不再按16MiB样本拒绝；实际容量仍受x86/.NET与内存限制，小 queue envelope不删字段假装完整。实际 DLL/ABI 不匹配则拒绝对应操作，软件发行版本不另设白名单。
 
 原生首次部署、已有桥升级及完整包内工具路径见[部署与保存合同](pro-native-deployment.md)。Stu不启动此桥，继续共用的离线环境。

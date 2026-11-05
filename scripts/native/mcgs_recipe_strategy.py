@@ -11,10 +11,18 @@ import json
 from pathlib import Path
 import struct
 from typing import Any
+from mcs_window_archive import Reader as CStringReader, write_cstring
 
 
 class FormatError(ValueError):
     pass
+
+
+class ArchivedString(str):
+    """Keep the original CString width/length form when its text is unchanged."""
+    def __new__(cls,value,wire=b''):
+        result=super().__new__(cls,value);result.wire=wire;return result
+    def __getnewargs__(self):return str(self),self.wire
 
 
 @dataclass
@@ -53,14 +61,9 @@ class Reader:
         return self.u32() if count == 0xFFFF else count
 
     def string(self) -> str:
-        if self.take(3) != b"\xff\xfe\xff":
-            raise FormatError(f"Expected MFC Unicode CString at {self.pos - 3:#x}")
-        length = self.u8()
-        if length == 0xFF:
-            length = self.u16()
-            if length == 0xFFFF:
-                length = self.u32()
-        return self.take(length * 2).decode("utf-16le", errors="strict")
+        reader=CStringReader(self.data,self.pos)
+        value,wire,_=reader.cstring();self.pos=reader.pos
+        return ArchivedString(value,wire)
 
     def byte_array(self) -> bytes:
         return self.take(self.count())
@@ -70,16 +73,18 @@ class Reader:
 
     def object(self) -> Node | None:
         tag = self.u16()
+        large=tag==0x7fff
+        if large:tag=self.u32()
         if tag == 0:
             return None
-        if tag == 0xFFFF:
+        if not large and tag == 0xFFFF:
             schema = self.u16()
             name = self.take(self.u16()).decode("ascii")
             self.classes[self.next_map_index] = (name, schema)
             self.next_map_index += 1
-        elif tag & 0x8000:
+        elif tag & (0x80000000 if large else 0x8000):
             try:
-                name, schema = self.classes[tag & 0x7FFF]
+                name, schema = self.classes[tag & (0x7fffffff if large else 0x7fff)]
             except KeyError as error:
                 raise FormatError(f"Unknown class reference {tag:#x} at {self.pos - 2:#x}") from error
         else:
@@ -125,19 +130,11 @@ class Writer:
             self.u32(value)
 
     def string(self, value: str):
-        encoded = value.encode("utf-16le")
-        length = len(encoded) // 2
-        self.put(b"\xff\xfe\xff")
-        if length < 0xFF:
-            self.u8(length)
-        elif length < 0xFFFF:
-            self.u8(0xFF)
-            self.u16(length)
-        else:
-            self.u8(0xFF)
-            self.u16(0xFFFF)
-            self.u32(length)
-        self.put(encoded)
+        if isinstance(value,ArchivedString) and value.wire:
+            reader=CStringReader(value.wire)
+            if reader.cstring()[0]==value and reader.pos==len(value.wire):
+                self.put(value.wire);return
+        self.put(write_cstring(value))
 
     def byte_array(self, value: bytes):
         self.count(len(value))
@@ -154,16 +151,16 @@ class Writer:
             return
         if id(node) in self.objects:
             index = self.objects[id(node)]
-            if index >= 0x8000:
-                raise FormatError("Large MFC object reference not supported")
-            self.u16(index)
+            if not 0<index<0x80000000:raise FormatError('MFC object map index exceeds on-wire capacity')
+            if index<0x7fff:self.u16(index)
+            else:self.u16(0x7fff);self.u32(index)
             return
         key = (node.class_name, node.schema)
         if key in self.classes:
             index = self.classes[key]
-            if index >= 0x7FFF:
-                raise FormatError("Large MFC class reference not supported")
-            self.u16(0x8000 | index)
+            if not 0<index<0x7fffffff:raise FormatError('MFC class map index exceeds on-wire capacity')
+            if index<0x7fff:self.u16(0x8000|index)
+            else:self.u16(0x7fff);self.u32(0x80000000|index)
         else:
             self.classes[key] = self.next_map_index
             self.next_map_index += 1
@@ -289,7 +286,7 @@ class RecipeGroup:
     name: str
     fields: list[RecipeField]
     records: list[list[str]]
-    log_tail: tuple[int, ...]
+    log_tail: tuple[int, ...] | bytes
 
     @classmethod
     def parse(cls, data: bytes):
@@ -298,8 +295,10 @@ class RecipeGroup:
         fields = [RecipeField(reader.string(), reader.string(), reader.u32()) for _ in range(field_count)]
         records = [[reader.string() for _ in range(reader.count())] for _ in range(reader.u32())]
         remaining=len(data)-reader.pos
-        if remaining not in (0,12):raise FormatError('Unknown recipe trailing field layout')
-        tail = tuple(reader.u32() for _ in range(remaining//4))
+        # Records have explicit counts. Bytes beyond the known records belong
+        # to the same group BLOB and can be retained without interpreting an
+        # unknown newer logging tail.
+        tail = tuple(reader.u32() for _ in range(remaining//4)) if remaining in (0,12) else reader.take(remaining)
         reader.finish()
         if any(len(record) != field_count for record in records):
             raise FormatError("Recipe record width mismatch")
@@ -321,8 +320,9 @@ class RecipeGroup:
             writer.count(len(record))
             for value in record:
                 writer.string(value)
-        for word in self.log_tail:
-            writer.u32(word)
+        if isinstance(self.log_tail,bytes):writer.put(self.log_tail)
+        else:
+            for word in self.log_tail:writer.u32(word)
         return bytes(writer.data)
 
 

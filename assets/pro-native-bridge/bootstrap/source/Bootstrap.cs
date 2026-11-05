@@ -109,7 +109,7 @@ namespace McgsInternalBridge {
                 requestSignal=new EventWaitHandle(false,EventResetMode.AutoReset,@"Local\McgsInternalBridgeWake_"+BootstrapLayout.ConfigurationSha256);
                 RecordEvent("queue_notification_started",new Dictionary<string,object>{{"poll_fallback_ms",250},{"prepare_thread_id",GetCurrentThreadId()}});
                 durablePump=new DurableQueuePump(RuntimeRoot,DispatchFromWorker,
-                    delegate{return new Dictionary<string,object>{{"native_thread_id",UiThreadId},{"process_id",Process.GetCurrentProcess().Id},{"bridge_bootstrap_scope_sha256",BootstrapLayout.ConfigurationSha256},{"queue_prepare_thread_id",GetCurrentThreadId()},{"queue_publish_thread_id",GetCurrentThreadId()},{"queue_wake_source",dispatchWakeSource},{"queue_event_pump_runs",eventPumpRuns},{"queue_poll_pump_runs",pollPumpRuns},{"queue_pipeline","background-prepare/ui-dispatch/background-publish"}};},
+                    delegate{return new Dictionary<string,object>{{"native_thread_id",UiThreadId},{"process_id",Process.GetCurrentProcess().Id},{"bridge_bootstrap_scope_sha256",BootstrapLayout.ConfigurationSha256},{"queue_prepare_thread_id",GetCurrentThreadId()},{"queue_publish_thread_id",GetCurrentThreadId()},{"queue_wake_source",dispatchWakeSource},{"queue_event_pump_runs",eventPumpRuns},{"queue_poll_pump_runs",pollPumpRuns},{"queue_pipeline","background-prepare/ui-dispatch/background-publish"},{"queue_payload_contract","clr-int32-utf8/v1"},{"queue_json_recursion_limit",256}};},
                     delegate(string source,Exception error){RecordError(source,error);});
                 while(true){
                     BootstrapLayout.Check();

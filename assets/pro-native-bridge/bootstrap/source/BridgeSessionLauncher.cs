@@ -57,7 +57,7 @@ internal static class BridgeSessionLauncher
                 throw new FileNotFoundException("This launcher must remain next to the installed bridge bootstrap.");
             // The child inherits this token. Do not silently elevate; confirm that
             // the native wrapper can access only its already installed roots.
-            using(var machine=RegistryKey.OpenBaseKey(RegistryHive.LocalMachine,RegistryView.Registry32))foreach(string root in BootstrapLayout.ColdRegistrationRoots)using(var installed=machine.OpenSubKey(root,true)){if(installed==null)throw new InvalidOperationException("Install the exact private native-wrapper registration before starting the session.");}
+            using(var machine=RegistryKey.OpenBaseKey(BootstrapLayout.ColdRegistryHive=="HKCU"?RegistryHive.CurrentUser:RegistryHive.LocalMachine,RegistryView.Registry32))foreach(string root in BootstrapLayout.ColdRegistrationRoots)using(var installed=machine.OpenSubKey(root,true)){if(installed==null)throw new InvalidOperationException("Install the exact private native-wrapper registration before starting the session.");}
             using (RegistryKey user = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Registry32))
             using (RegistryKey key = user.OpenSubKey(startup, true))
             {

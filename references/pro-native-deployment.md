@@ -128,7 +128,7 @@ $ScopeSha = (Get-FileHash -LiteralPath $ScopeJson -Algorithm SHA256).Hash.ToLowe
 
 该步骤读取实际桥配置、核新 DLL 的编译 scope 合同，将新名称 DLL / scope 写入已有 engines 目录，保留选择前像后原子更新 active-engine，并回读；相同文件已选中时返回实际幂等状态。它不调用原厂对象，也不注册或启动新桥。发生未知结果先 `--status` 核实际选择，不重复工程写入。当前引擎名不能复用为另一份内容。
 
-工具保留当前 bootstrap_scope_sha256，不能误填 engine 的 engineering_delivery_scope_sha256。每次工程请求单独给路径，默认 direct 在调用内读取当前 PID、线程与目标前像。切换后仅做一次实际工程 inspect，确认 scope attestation、大结果 payload、`cross_build_contract=mcgs-native-cross-build/v2` 和当前身份，不为更新重跑全部业务功能：
+工具保留当前 bootstrap_scope_sha256，不能误填 engine 的 engineering_delivery_scope_sha256。每次工程请求单独给路径，默认 direct 在调用内读取当前 PID、线程与目标前像。切换后仅做一次实际工程 inspect，确认 scope attestation、大结果 payload、本次所需接口的实际能力和当前身份，并记录`cross_build_contract`；不按旧修订号精确准入，不为更新重跑全部业务功能：
 
 ```powershell
 & "$SkillRoot\run.ps1" native-engineering `
@@ -147,6 +147,8 @@ FreshReceipt 使用 runtime 内的新文件。未知/超时结果保留 claim，
 ## 可选冷启动部署
 
 仅在选择原厂 Addins/桥接启动器兼容路线时，按 `bootstrap\README.md` 的 prepare、build、安装计划、Commit、launcher 和精确移除顺序操作。普通进程热接不要求这些 Addins/Startup 配置或重新启动。冷启动路线按真实安装资料指定原 EXE、Addins 目录/INI、Startup registry path、task/runtime/bootstrap 根。冷接按显式 Addin、TYPELIB 和四回调协议配置，不要求作者 EXE 指纹相等；实际加载与业务结果另行核实，不能按产品版本猜入口。prepare/build 只处理自有源码，不注册、启动或打开工程；install 的 Commit 和 launcher 的 start 是独立明确操作。
+
+普通非提升Pro可在prepare时显式传`--registration-hive HKCU`；需要机器级私有注册时传`HKLM`，省略保持历史HKLM默认。该选择随本次配置绑定到安装、原生包装器和移除回执，不为切换注册位置重写旧安装；完整可执行例子见[冷接准备命令](../assets/pro-native-bridge/bootstrap/README.md#file-only-preparation-and-build)。
 
 冷启动 bootstrap prepare 要求新的 RuntimeRoot/BootstrapRoot，之后才建 RuntimeRoot 供 engine 绑定；原队列不能这样重建。该路线首次 stage_engine 后正常启动原应用，由原生回调建立 UI 线程队列。冷启动部署工具已做自有离线编译与 TYPELIB 检查，未据此声称任意电脑原厂加载、UAC/COM 环境均已验收。
 

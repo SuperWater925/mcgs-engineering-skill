@@ -242,8 +242,11 @@ def edit_value(record, rect, kind, align=None):
 
 def edit_nav(record, s):
     m = MultiState.parse(record)
-    assert m.to_record().payload == record.payload and len(m.fills) == 2 and len(m.texts) == 2
-    for state, key in ((0, 'normal'), (1, 'active')):
+    assert m.to_record().payload == record.payload
+    states=s.get('states', {0: 'normal', 1: 'active'})
+    if not isinstance(states,dict) or any(type(i)is not int or not 0<=i<len(m.fills) or i>=len(m.texts) for i in states):
+        raise ValueError('nav states must explicitly select existing fill/text states')
+    for state, key in states.items():
         assert m.fills[state][0] == 0x10002
         m.fills[state][1] = c(s[key + '_fill'])
         for child in m.texts[state]:
@@ -507,8 +510,12 @@ def neutral(record, renamed=False):
 def business_sources(window):
     """All source text / expressions reachable in a window archive."""
     out = []
-    ev = 窗口事件.解析(window.settings().event_tail)
-    out += [('window_event', ev.打开), ('window_event', ev.循环), ('window_event', ev.退出)]
+    tail=window.settings().event_tail
+    try:
+        ev = 窗口事件.解析(tail)
+        out += [('window_event', ev.打开), ('window_event', ev.循环), ('window_event', ev.退出)]
+    except (ValueError,UnicodeError,struct.error,IndexError):
+        out.append(('window_event_opaque',tail.hex()))
     for rec in window.controls:
         out += control_sources(rec)
     return out
@@ -523,6 +530,21 @@ def control_sources(rec, prefix=''):
         return [(prefix + ':opaque:' + hex(rec.type_id), rec.payload.hex())]
 
 
+def reference_sources(window):
+    """Require a readable source projection only for destructive operations.
+
+    Opaque bytes suffice for nondestructive preservation, but cannot prove that
+    a control has no incoming script/expression reference.
+    """
+    sources = business_sources(window)
+    opaque = [key for key, _ in sources if key == 'window_event_opaque'
+              or ':opaque:' in key or key.endswith(':event_opaque')
+              or key.endswith(':reference_opaque')]
+    if opaque:
+        raise ValueError('删除需要完整可读的控件/事件引用投影：' + ', '.join(opaque))
+    return sources
+
+
 def _control_sources(rec, prefix=''):
     out = []
     try:
@@ -534,37 +556,60 @@ def _control_sources(rec, prefix=''):
         cm = CommonEnvelope.parse(rec)
         name = prefix + cm.name.value
         out.append((name + ':anim', anim_bytes(cm).hex()))
+        # The raw array is a preservation proof, not searchable source text.
+        # Include actual expressions/action strings for reference checks.
+        pending = list(cm.animations)
+        while pending:
+            item = pending.pop()
+            if isinstance(item, str):
+                out.append((name + ':animation_source', item))
+            elif isinstance(item, dict):
+                pending.extend(item.values())
+            elif isinstance(item, (list, tuple)):
+                pending.extend(item)
         if rec.type_id == 0x503a:
             for ch in GroupArchive.parse(rec).children:
                 out += control_sources(ch, name + '/')
         try:
             for e in GenericMetadata.parse(cm.metadata.value).events:
                 out.append((name + ':event', e.source.value))
-        except Exception:
-            pass
+        except (ValueError, UnicodeError, struct.error, IndexError):
+            out.append((name + ':event_opaque', cm.metadata.value.hex()))
         if rec.type_id == 0x5027:
             b = ButtonArchive.parse(cm.project_without_animations())
             out += [(name + ':release', b.release_script.value), (name + ':enabled', b.enabled_expression.value),
                     (name + ':press', b.metadata.properties.press_script.value)]
+            properties = b.metadata.properties
+            out += [(name + ':action_down', properties.action_text_down.value),
+                    (name + ':action_up', properties.action_text_up.value),
+                    (name + ':preserved_action', properties.preserved_text.value)]
+            for texts in (b.action_texts, properties.texts_down, properties.texts_up):
+                out.extend((name + ':builtin_action', getattr(text, 'value', text)) for text in texts.items)
         elif rec.type_id == 0x5025:
             q = InputRecord.parse(cm.project_without_animations())
             out += [(name + ':var', q.variable), (name + ':enabled', q.enabled_expression)]
         elif rec.type_id in (0x5028, 0x502a):
-            out.append((name + ':tail', MultiState.parse(rec).tail.hex()))
+            tail = MultiState.parse(rec).tail
+            out.append((name + ':tail', tail.hex()))
+            if tail:
+                out.append((name + ':reference_opaque', tail.hex()))
         elif rec.type_id == 0x503d:
             pc = PluginControl.parse(rec if not cm.animations else cm.project_without_animations())
             if 'DrawRecipe' in pc.path:
                 q = RecipeCore.parse(pc.core)
                 out += [(name + ':group', q.group), (name + ':visible', q.fields['visible_expression'])]
                 out += [(name + ':col', f'{col.binding}|{col.title}|{col.values[0]}|{col.values[1]}|{col.values[3:]}') for col in q.columns]
+            else:
+                out.append((name + ':reference_opaque', pc.core.hex()))
+        elif rec.type_id not in (0x5002, 0x5004, 0x5008, 0x5009, 0x503a):
+            out.append((name + ':reference_opaque', cm.content.hex()))
     return out
 
 
 def strategy_text(export):
     """All strategy source text (for reference checks before deletion)."""
-    ix = json.loads((export / 'index.json').read_text('utf-8-sig'))
-    row = next(r for r in ix['rows'] if r['table'] == 'Stgy' and str(r['row_key']) == '0')
-    raw = (export / row['lbObjects']['file']).read_bytes()
+    owner = export if isinstance(export, Export) else Export(export)
+    raw = owner.raw('Stgy', '0', 'lbObjects')
     nodes = st.parse_strategy_array(unwrapped(raw))
     texts = []
     for node in nodes:
@@ -649,8 +694,8 @@ BUTTON_KINDS.update(link=dict(fill=CARD, border=LINE, ink=BRAND_DARK, font=18))
 
 def set_decimals(record, places):
     """小数位：解析嵌套元数据后定位两处同源属性，不假定计数前缀长度。"""
-    if type(places) is not int or not 0 <= places <= 15:
-        raise ValueError('小数位须为 0..15 的整数')
+    if type(places) is not int or not 0 <= places <= 0xffffffff:
+        raise ValueError('小数位须可由原生DWORD存储')
     cm = CommonEnvelope.parse(record)
     projected = cm.project_without_animations()
     q = InputRecord.parse(projected)
@@ -865,9 +910,11 @@ class Export:
         return w
 
     def window_by_name(self, name):
-        hits = [wid for wid in self.window_ids() if self.window(wid).settings().properties[1].value == name]
+        hits = [wid for wid in self.window_ids() if self.rows['WndUser',str(wid)].get('strName') == name]
         assert len(hits) == 1, (name, hits)
-        return hits[0]
+        wid=hits[0]
+        assert self.window(wid).settings().field('name').value==name, ('窗口行名与归档名不一致',wid,name)
+        return wid
 
     def objects(self):
         """返回 (version, 对象列表, 是否 MCGSZIPE 压缩)。"""
@@ -1001,7 +1048,7 @@ class Templates:
     @classmethod
     def pick(cls, export, named=None, kinds=KINDS):
         named = dict(named or {})
-        out, source = {}, {}
+        out, source, skipped = {}, {}, []
         for kind in kinds:
             if kind in named:
                 wid, name = named[kind]
@@ -1021,7 +1068,13 @@ class Templates:
         for wid in export.window_ids():
             if all(k in out for k in kinds):
                 break
-            w = export.window(wid)
+            try:
+                w = export.window(wid)
+            except (ValueError,UnicodeError,struct.error,IndexError) as error:
+                # A non-target candidate with an unknown envelope is not a
+                # requirement of the selected template or Pro fallback.
+                skipped.append(dict(window=wid,reason=str(error),scope='non-target template candidate'))
+                continue
             for rec in w.controls:
                 for kind in kinds:
                     if kind not in out:
@@ -1042,6 +1095,7 @@ class Templates:
             raise LookupError(f'工程里找不到可用的模板：{missing}；请用 named 指定')
         out['_source'] = source
         out['_family'] = export.family
+        out['_unsupported_template_candidates'] = skipped
         return out
 
 
@@ -1052,9 +1106,10 @@ def new_window(template_window, window_id, name, controls, opening=None, loop=No
     要别的公共层就换一个已经带那些公共层的模板窗口。
     """
     s = template_window.settings()
-    ev = 窗口事件.解析(s.event_tail)
     ns = s.clone(window_id, name)
-    if any(v is not None for v in (opening, loop, leaving, period_ms)):
+    change_events=any(v is not None for v in (opening, loop, leaving, period_ms))
+    if change_events:
+        ev = 窗口事件.解析(s.event_tail)
         ns.event_tail = 设置窗口事件(s.event_tail,
                               ev.打开 if opening is None else opening,
                               ev.循环 if loop is None else loop,
@@ -1070,7 +1125,10 @@ def new_window(template_window, window_id, name, controls, opening=None, loop=No
     assert back.to_bytes() == data
     props = back.settings().properties
     assert (props[0].value, props[1].value) == (window_id, name)
-    assert 窗口事件.解析(back.settings().event_tail).扩展 == ev.扩展
+    if change_events:
+        assert 窗口事件.解析(back.settings().event_tail).扩展 == ev.扩展
+    else:
+        assert back.settings().event_tail==s.event_tail
     return back
 
 

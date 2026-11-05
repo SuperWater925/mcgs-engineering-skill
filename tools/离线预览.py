@@ -21,6 +21,7 @@ NATIVE=Path(__file__).resolve().parents[1]/'scripts'/'native'
 sys.path.insert(0,str(NATIVE))
 from 原生界面样式 import CommonEnvelope,MultiState,GroupArchive,GenericMetadata,MultiButtonTail,fonts
 from mcs_window_archive import WindowArchive,Reader,ControlRecord
+from mcgs_text import narrow_encoding
 from mcs_button_control import ButtonArchive,_picture
 from mcs_input_text import LabelRecord,InputRecord
 from mcs_plugin_controls import PluginControl,RecipeCore,XYCore
@@ -38,10 +39,10 @@ import mcgs_native_zip as nativezip
 def plugin_fonts(raw,plugin=False):
     """外部构件字体表：u8 标志 + u32 个数 + 每项 u32 语言、LOGFONT 前 28 字节与字体名。"""
     r=Reader(raw);flags=r.u8();n=r.u32();result=[]
-    assert n<=32
+    r.count_extent(n,64 if plugin else 33,'Plugin font language')
     for _ in range(n):
         lang=r.u32();data=r.take(60 if plugin else 28)
-        family=data[28:].split(b'\0',1)[0].decode('cp936') if plugin else r.cstring()[0]
+        family=data[28:].split(b'\0',1)[0].decode(narrow_encoding()) if plugin else r.cstring()[0]
         vals=struct.unpack('<5i8B',data[:28])
         keys=('height_raw','width','escapement','orientation','weight','italic','underline','strikeout','charset','out_precision','clip_precision','quality','pitch_and_family')
         item=dict(zip(keys,vals));item.update(language=lang,height=abs(vals[0]),family=family,map_flags=flags)
@@ -176,10 +177,10 @@ def convert_svg_batch(items):
 
 
 class Project:
-    def __init__(self,export,full=None,active_rules=None,window_ids=None):
+    def __init__(self,export,full=None,active_rules=None,window_ids=None,language_id=None):
         started=time.perf_counter()
         self.export=Path(export);self.full=Path(full) if full else self.export
-        self.active_rules=list(active_rules or [])
+        self.active_rules=list(active_rules or []);self.language_id=language_id
         for rule in self.active_rules:
             assert isinstance(rule.get('caption'),str) and all(isinstance(w,int) for w in rule.get('windows',[])),rule
         index_path=next((self.export/n for n in ('index.json','完整结构索引.json','结构索引.json') if (self.export/n).is_file()),None)
@@ -195,11 +196,19 @@ class Project:
         def load_window(wid):
             if wid in self.windows or wid not in window_rows:return
             row=window_rows[wid]
-            raw=self.native_export.raw('WndUser',wid,'lbObjects')
-            plain=nativezip.unpack(raw) if raw.startswith(nativezip.MARKER) else raw
-            a=WindowArchive.parse(plain);assert a.to_bytes()==plain
-            s=a.settings();props=[q.value for q in s.properties];ev=窗口事件.解析(s.event_tail)
-            extension=ev.扩展
+            try:
+                raw=self.native_export.raw('WndUser',wid,'lbObjects')
+                plain=nativezip.unpack_if_wrapped(raw)
+                a=WindowArchive.parse(plain);assert a.to_bytes()==plain
+                s=a.settings()
+                props={name:s.field(name).value for name in ('id','name','width','height','background')}
+            except (ValueError,UnicodeError,struct.error,IndexError,AssertionError) as error:
+                self.read_errors.append(dict(window=wid,reason=str(error),check='window_envelope_or_settings'))
+                return
+            try:extension=窗口事件.解析(s.event_tail).扩展
+            except (ValueError,UnicodeError,struct.error,IndexError) as error:
+                extension=b''
+                self.shared_window_layout_limits.append(dict(window=wid,reason='Unknown event prefix; shared parents unresolved: '+str(error)))
             if len(extension)>=16 and extension[:8]==bytes.fromhex('0400000000000600'):
                 parents=[struct.unpack_from('<i',extension,8)[0]]
             elif len(extension)>=20 and extension[:8]==bytes.fromhex('0400000000000e00'):
@@ -208,7 +217,7 @@ class Project:
                 parents=[]
                 self.shared_window_layout_limits.append(dict(window=wid,extension_bytes=len(extension),
                     reason='Unknown native shared-window extension; no parent IDs guessed'))
-            w=dict(id=wid,name=props[1],width=props[6],height=props[7],bg=props[15],parents=parents,controls=a.controls,source_sha=sha(raw))
+            w=dict(id=wid,name=props['name'],width=props['width'],height=props['height'],bg=props['background'],parents=parents,controls=a.controls,source_sha=sha(raw))
             self.windows[w['id']]=w
             for parent in parents:load_window(parent)
         for wid in window_rows if window_ids is None else window_ids:load_window(wid)
@@ -258,10 +267,16 @@ class Project:
             pos=self.language.find(needle,pos)
             if pos<0:break
             try:
-                n,lang=struct.unpack_from('<2I',self.language,pos+4)
-                if 1<=n<=32 and lang==0:
-                    text=Reader(self.language,pos+12).cstring()[0]
-                    if len(text)<1000:self.strings[key]=text;return text
+                r=Reader(self.language,pos+4);n=r.u32();r.count_extent(n,5,'Language translation')
+                translations={}
+                for _ in range(n):
+                    lang=r.u32();translated=r.cstring()[0]
+                    if lang in translations:raise ValueError('Duplicate translation language')
+                    translations[lang]=translated
+                if translations:
+                    chosen=self.language_id if self.language_id is not None else (0 if 0 in translations else next(iter(translations)))
+                    if chosen in translations:
+                        self.strings[key]=translations[chosen];return self.strings[key]
             except Exception:pass
             pos+=1
         return '资源 '+key
@@ -344,7 +359,6 @@ def render_project(project,out,window_ids=None):
             if c.get('native_images') is not None:
                 image_checks.append(dict(control=ident,rect=c['rect'],slots=c['native_images'],hazards=c['image_semantic_hazards'],stored_two_state_style=c.get('stored_two_state_style'),image_mirror_consistent=c.get('image_mirror_consistent')))
             if x>=im.width or y>=im.height or r<0 or b<0:return
-            if r-x>25000 or b-y>25000:return
             drawn.append(dict(window=c['window'],name=name,type=hex(c['type']),rect=c['rect']))
             ff=c.get('font',{});h=ff.get('height',24);family=ff.get('family','微软雅黑');ink=c.get('ink',PALETTE['ink'])
             if kind=='picture':
@@ -521,7 +535,7 @@ def render_project(project,out,window_ids=None):
         full=Image.open(page['image']).convert('RGB');thumb=Image.new('RGB',(tw,th),'white');full.thumbnail((tw,th-34));thumb.paste(full,((tw-full.width)//2,34))
         structural=' · 结构窗' if not page['own_control_count'] else ''
         text(thumb,[8,0,tw-8,32],f'{page["id"]:02d} {page["name"]}'+structural,20,PALETTE['ink']);thumbs.append(thumb)
-    contact=Image.new('RGB',(cols*tw,math.ceil(len(thumbs)/cols)*th),'#D7E2EB')
+    contact=Image.new('RGB',(cols*tw,max(1,math.ceil(len(thumbs)/cols))*th),'#D7E2EB')
     for n,thumb in enumerate(thumbs):contact.paste(thumb,((n%cols)*tw,(n//cols)*th))
     sheet=out/('全部窗口_公共层合成总览.png' if window_ids is None else '指定窗口_公共层合成总览.png');contact.save(sheet)
     used_assets=set(n for p in results for n in p['pictures_used'])
@@ -555,8 +569,9 @@ if __name__=='__main__':
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--windows',type=int,nargs='+',help='只画这些窗口号（公共层会一起合成）')
     p.add_argument('--active-map',type=Path,help='导航激活规则 JSON：[{"caption":"设备","windows":[2],"layer":1}, ...]')
+    p.add_argument('--language-id',type=int,help='明确选择语言ID；省略时优先0，否则使用实际首个翻译')
     a=p.parse_args()
     if a.output.exists() and any(a.output.iterdir()):raise SystemExit('输出目录必须是新目录或空目录')
     rules=json.loads(a.active_map.read_text('utf-8-sig')) if a.active_map else []
-    r=render_project(Project(a.export_dir,a.full_dir,rules,a.windows),a.output,a.windows)
+    r=render_project(Project(a.export_dir,a.full_dir,rules,a.windows,a.language_id),a.output,a.windows)
     print(json.dumps(dict(windows=r['window_count'],contact_sheet=r['contact_sheet'],read_errors=r['read_errors'],assets=r['picture_assets_loaded'],language_table_loaded=r['language_table_loaded'],phase=r['phase']),ensure_ascii=False,indent=2))

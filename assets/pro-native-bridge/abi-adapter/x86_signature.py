@@ -8,7 +8,7 @@ from __future__ import annotations
 import struct
 import bisect
 from collections import defaultdict
-from pe32 import import_identity
+from pe32 import import_identity, resolve_export
 
 try:
     import capstone
@@ -49,17 +49,16 @@ def import_symbol_match(reference, actual, pe=None):
             return None
         dependencies = getattr(pe, '_abi_import_dependencies', {})
         imported = dependencies.get(actual.get('dll', '').casefold())
-        if imported and imported[0] == role['module']:
+        if imported and (imported[0] == role['module'] or role['module'] in getattr(imported[1], '_abi_module_aliases', ())):
             alias, target = imported
-            current = (target.exports.get(actual.get('name')) if actual.get('name') is not None else
-                       target.exports_by_ordinal.get(actual.get('ordinal')))
-            if current and not current.get('forwarder') and current.get('rva'):
+            current = resolve_export(target, actual.get('name'), actual.get('ordinal'), dependencies)
+            if current:
                 names = role.get('names', [])
-                if any(target.exports.get(name, {}).get('rva') == current['rva'] and
-                       not target.exports[name].get('forwarder') for name in names):
+                named_targets = [resolve_export(target, name, dependencies=dependencies) for name in names]
+                if any(item and item['pe'] is current['pe'] and item['rva'] == current['rva'] for item in named_targets):
                     return 'selected-dependency-named-export-role'
                 proven = getattr(pe, '_abi_import_role_targets', {}).get((alias, role['reference_rva']), set())
-                if len(proven) == 1 and current['rva'] in proven:
+                if current['pe'] is target and len(proven) == 1 and current['rva'] in proven:
                     return 'selected-dependency-proven-export-body'
         # A cataloged ordinal role cannot fall back to the old ordinal number
         # after the dependency changed; the export target must be proved.

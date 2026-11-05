@@ -41,7 +41,7 @@ def text(value):
 
 def rectangle(value, line=False):
     if (not isinstance(value, list) or len(value) != 4 or
-            any(type(x) is not int or abs(x) > 32768 for x in value) or
+            any(type(x) is not int or not -0x80000000<=x<=0x7fffffff for x in value) or
             (value[0] == value[2] and value[1] == value[3] if line else value[0] >= value[2] or value[1] >= value[3])):
         raise ValueError('Bounds require four integers with positive dimensions')
     return value
@@ -154,8 +154,8 @@ def edit_control(kind, payload, edits, variables=None):
         cm.set_rect(rectangle(edits['bounds'], kind == 0x5002))
     if 'name' in edits:
         name = text(edits['name'])
-        if not name or len(name.encode('utf-16le')) // 2 > 32:
-            raise ValueError('Control name requires 1..32 UTF-16 units')
+        if not name:
+            raise ValueError('Control name must not be empty')
         cm.name.value = name
     for key in ('fill', 'border', 'text_color'):
         if key in edits and (type(edits[key]) is not int or not 0 <= edits[key] <= 0xffffff):

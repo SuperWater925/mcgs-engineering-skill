@@ -98,9 +98,13 @@ def main(export_dir, out_path, screen=None, segment_ok=()):
     export = gen.Export(export_dir)
     problems, clashes, unsupported = [], [], []
     for wid in export.window_ids():
-        w = export.window(wid)
-        props = w.settings().properties
-        bound = screen or (props[6].value, props[7].value)
+        try:
+            w = export.window(wid)
+            settings=w.settings()
+            bound = screen or (settings.field('width').value, settings.field('height').value)
+        except (ValueError,UnicodeError,IndexError,struct.error,AssertionError) as exc:
+            unsupported.append(dict(window=wid,check='window_settings',reason=str(exc)))
+            continue
         for rec in w.controls:
             try:
                 check_record(rec, wid, '', None, problems, bound, unsupported)

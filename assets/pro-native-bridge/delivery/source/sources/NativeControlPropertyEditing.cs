@@ -13,24 +13,19 @@ namespace McgsInternalBridge {
   [DllImport("user32.dll")][return:MarshalAs(UnmanagedType.Bool)]static extern bool IsWindow(IntPtr hwnd);
   internal sealed class Api {
    internal readonly NativePageControlAbi Common;internal readonly NativeEngine Engine;internal readonly NativeContext Context;
-   readonly Dictionary<string,IntPtr> methods=new Dictionary<string,IntPtr>();
+   readonly NativeLazyFunctionProfile methods;
    internal Api(NativeEngine engine,NativeContext context,string project) {
     Engine=engine;Context=context;Common=new NativePageControlAbi(engine,context,project);
     string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"typed-properties","control-properties-abi-profile.json");
-    NativeMemory.Require(NativeMemory.Hash(file)==AbiProfileSha,"Control property ABI contract changed.");
+    NativeMemory.Require(NativeLazyFunctionProfile.SourceHash(file)==AbiProfileSha,"Control property ABI contract changed.");
     var contract=ReadJson(file);NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(contract["binary_sha256"]),engine.ImageSha256,"NativeControlPropertyEditing:21:editor"),"Control property ABI belongs to another installed image.");
     file=Path.Combine(NativeOperations.TaskRoot,Convert.ToString(contract["original_live_profile_file"]).Replace('/',Path.DirectorySeparatorChar));
-    NativeMemory.Require(NativeMemory.Hash(file)==Convert.ToString(contract["original_live_profile_sha256"]),"Control history/refresh ABI proof changed.");
-    var profile=ReadJson(file);uint preferred=unchecked((uint)NativeEngine.Number(profile["preferred_base"]));
-    foreach(object value in (IEnumerable)profile["functions"]) {
-     var f=Map(value);string text=Convert.ToString(f["bytes"]);byte[] bytes=new byte[text.Length/2];for(int i=0;i<bytes.Length;i++)bytes[i]=Byte.Parse(text.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);
-     NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)f["reloc_offsets"],unchecked((uint)(NativeMemory.U(engine.ImageBase)-preferred)));
-     IntPtr address=engine.Address(NativeEngine.Number(f["rva"]));NativeMemory.Require(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(address,bytes.Length)),"Live control ABI differs: "+f["name"]);methods.Add(Convert.ToString(f["name"]),address);
-    }
+    NativeMemory.Require(NativeLazyFunctionProfile.SourceHash(file)==Convert.ToString(contract["original_live_profile_sha256"]),"Control history/refresh ABI proof changed.");
+    string relative=Path.GetFullPath(file).Substring(Path.GetFullPath(NativeOperations.TaskRoot).TrimEnd('\\').Length+1).Replace('\\','/');methods=new NativeLazyFunctionProfile(engine,relative,Convert.ToString(contract["original_live_profile_sha256"]),"editor");
    }
-   internal T Bind<T>(string name)where T:class{Common.Current();return Engine.Bind<T>(methods[name]);}
+   internal T Bind<T>(string name)where T:class{Common.Current();return methods.Bind<T>(name);}
   }
-  static Dictionary<string,object> ReadJson(string file){return new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));}
+  static Dictionary<string,object> ReadJson(string file){return new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(NativeLazyFunctionProfile.ReadText(file));}
   static Dictionary<string,object> Map(object value){return NativePageControlPreparation.Map(value);}
   static List<Dictionary<string,object>> CloneRows(List<Dictionary<string,object>> rows){return new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<List<Dictionary<string,object>>>(NativePageControlPreparation.Json(rows));}
   static List<IntPtr> GroupChildren(Api api,IntPtr complete,IntPtr doc) {

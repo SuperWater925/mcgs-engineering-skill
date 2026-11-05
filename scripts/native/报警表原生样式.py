@@ -34,7 +34,7 @@ class AlarmStyle:
                           ('title_background',4),('title_text',4),('focus_border',4),('ge8',4)]:field(name,size)
         for role in ('title_font','body_font'):
             n=struct.unpack_from('<I',data,p)[0];p+=4
-            if n<5 or n>4101 or p+n>len(data):raise ValueError('Invalid AlarmTableView font extent')
+            if n<5 or p+n>len(data):raise ValueError('Invalid AlarmTableView font extent')
             # Native font map has a flags byte, DWORD language count and
             # 64-byte language+LOGFONTA records. One/two language maps occur
             # in both families; preserve source header and opaque newer tail.

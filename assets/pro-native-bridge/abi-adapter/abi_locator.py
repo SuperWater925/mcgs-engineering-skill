@@ -15,7 +15,7 @@ import re
 import sys
 
 sys.dont_write_bytecode = True
-from pe32 import PE32
+from pe32 import PE32, resolve_export
 import rtti
 import x86_signature as xs
 
@@ -611,7 +611,15 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             names.add(pe.export_module_name.casefold())
         for name in names:
             dependency_names.setdefault(name, []).append((alias, pe))
-    dependencies = {name: rows[0] for name, rows in dependency_names.items() if len(rows) == 1}
+    dependencies = {}
+    for name, rows in dependency_names.items():
+        owners = {str(pe.path.resolve()) if pe.path else id(pe) for _, pe in rows}
+        if len(owners) == 1:
+            dependencies[name] = rows[0]
+    for alias, pe in actual.items():
+        pe._abi_module_alias = alias
+        pe._abi_module_aliases = tuple(a for a, other in actual.items()
+                                      if other.path == pe.path and identities[a]['sha256'] == identities[alias]['sha256'])
     proven_export_targets = {}
     for pe in actual.values():
         pe._abi_import_dependencies = dependencies
@@ -1039,7 +1047,7 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
             direct_details = [u for u in details if '/' not in u['json_pointer'][len(prefix) + 1:]]
             state = {'status': 'unresolved' if details else 'resolved', 'details': details,
                      'direct_status': 'unresolved' if direct_details else 'resolved', 'direct_details': direct_details,
-                     'profile': profile['relative_path'], 'entry': entry['name'],
+                     'profile': profile['relative_path'], 'entry': entry['name'], 'json_pointer': prefix,
                      'no_native_address_fields': not any(f['json_pointer'].startswith(prefix + '/') for f in profile['fields']),
                      'proof_ids': sorted({r['proof_id'] for r in resolved})}
             direct_rva = next((f for f in profile['fields'] if f['json_pointer'] == prefix + '/rva'), None)

@@ -47,7 +47,7 @@ namespace McgsInternalBridge {
             internal Api(NativeEngine engine,NativeContext context) {
                 Engine=engine;Context=context;Fixture=NativeEngineeringProjectScope.ExpectedProjectPath;
                 string guard=Path.Combine(NativeOperations.TaskRoot,"extensions","strategy","strategy-extension-write-guard.json");
-                NativeMemory.Require(NativeMemory.Hash(guard)==AbiSha,"Strategy lifecycle ABI guard differs.");
+                NativeMemory.Require(NativeLazyFunctionProfile.SourceHash(guard)==AbiSha,"Strategy lifecycle ABI guard differs.");
                 Read=new NativeStrategyExtensionProfile.ReadApi(engine,"strategy-extension-write-guard.json");
                 currentApplication=Read.Existing.Bind<NativeEngine.CdeclPointer>("GetAfxApp");
                 currentApplicationAddress=Marshal.GetFunctionPointerForDelegate(currentApplication);
@@ -60,7 +60,7 @@ namespace McgsInternalBridge {
                 CheckCurrentApplicationPrefix();Root=Read.Existing.RootDoc();
                 NativeMemory.Require(NativeMemory.Ptr(Root,0x2D4)==context.ObjectModel,"Strategy lifecycle object model differs from the current document.");
                 Manager=engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(3);NativeMemory.Require(NativeMemory.Ptr(Manager,0)==engine.Address(0xDDD094),"Strategy manager differs.");
-                var profile=Load(guard);foreach(object row in (IEnumerable)profile["native_factories"]){var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["method"]);factories.Add(name,item);Factory(name);}
+                var profile=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(NativeLazyFunctionProfile.ReadText(guard));foreach(object row in (IEnumerable)profile["native_factories"]){var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["method"]);factories.Add(name,item);}
                 Current();NativeMemory.Require(Bind<Int0>("DatabaseIsOpen")(NativeMemory.Add(Root,0x25C))==1,"Current native project database is not already open; do not repair/reopen it.");
                 IntPtr rowClass=engine.Address(0xCFEF38);NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Ptr(rowClass,0),64)=="CDBTrigger" && NativeMemory.I32(rowClass,4)==0xBC,"Native Trigger recordset class/size differs.");
             }
@@ -87,7 +87,7 @@ namespace McgsInternalBridge {
                 IntPtr current=entry;for(int i=0;i<8;i++){engine.Rva(current);NativeMemory.Readable(current,5);if(Marshal.ReadByte(current)!=0xE9)return current;current=NativeMemory.Add(current,checked(5+Marshal.ReadInt32(current,1)));}throw new InvalidOperationException("Native factory jump chain exceeds guard bound.");
             }
             internal IntPtr Factory(string name) {
-                var item=factories[name];IntPtr runtime=Engine.Address(NativeEngine.Number(item["runtime_class_rva"])),table=Engine.Address(NativeEngine.Number(item["primary_vtable_rva"]));
+                var item=factories[name];NativeLazyFunctionProfile.CheckRow(item,"strategy factory");IntPtr runtime=Engine.Address(NativeEngine.Number(item["runtime_class_rva"])),table=Engine.Address(NativeEngine.Number(item["primary_vtable_rva"]));
                 NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Ptr(runtime,0),64)==Convert.ToString(item["class_name"]) && NativeMemory.I32(runtime,4)==Convert.ToInt32(item["size"]) && NativeMemory.I32(runtime,8)==Convert.ToInt32(item["schema"]),"Native factory class name/size/schema differs: "+name);
                 IntPtr getter=NativeMemory.Ptr(table,0);NativeMemory.Require(getter==Engine.Address(NativeEngine.Number(item["runtime_class_getter_entry_rva"])) && Resolve(Engine,getter)==Read.Method(Convert.ToString(item["runtime_class_getter_method"])),"Native factory primary GetRuntimeClass mapping differs: "+name);
                 IntPtr factory=NativeMemory.Ptr(runtime,12);NativeMemory.Require(factory==Engine.Address(NativeEngine.Number(item["factory_entry_rva"])) && Resolve(Engine,factory)==Read.Method(name) && Resolve(Engine,factory)==Engine.Address(NativeEngine.Number(item["resolved_body_rva"])),"Native CRuntimeClass pfn entry/body differs: "+name);

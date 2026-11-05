@@ -2,10 +2,12 @@
 using System;using System.Collections;using System.Collections.Generic;using System.IO;
 namespace McgsInternalBridge {
  internal static partial class NativeUsableEditPermit {
-  static string RawCString(IntPtr storage,int maximum){IntPtr data=NativeMemory.Ptr(storage,0);int length=NativeMemory.I32(data,-12),capacity=NativeMemory.I32(data,-8);Require(length>=0&&length<=maximum&&capacity>=length&&capacity<=1048576,"Snapshot CString bounds differ.");byte[] raw=NativeChunkedRawMemory.Read(data,checked(length*2+2));Require(raw[raw.Length-2]==0&&raw[raw.Length-1]==0,"Snapshot CString terminator differs.");char[] units=new char[length];for(int i=0;i<length;i++)units[i]=(char)(raw[2*i]|raw[2*i+1]<<8);return new string(units);}
+  static string RawCString(IntPtr storage,int maximum){IntPtr data=NativeMemory.Ptr(storage,0);int length=NativeMemory.I32(data,-12),capacity=NativeMemory.I32(data,-8);Require(length>=0&&capacity>=length&&capacity<=Int32.MaxValue/2-1,"Snapshot CString bounds differ.");byte[] raw=NativeChunkedRawMemory.Read(data,checked(length*2+2));Require(raw[raw.Length-2]==0&&raw[raw.Length-1]==0,"Snapshot CString terminator differs.");char[] units=new char[length];for(int i=0;i<length;i++)units[i]=(char)(raw[2*i]|raw[2*i+1]<<8);return new string(units);}
   static string TypeName(NativeEngine e,IntPtr complete,string requiredBase){
-   IntPtr vt=NativeMemory.Ptr(complete,0);e.Rva(vt);IntPtr col=NativeMemory.Ptr(vt,-4);e.Rva(col);Require(NativeMemory.I32(col,0)==0&&NativeMemory.I32(col,4)==0,"Snapshot primary COL differs.");IntPtr td=NativeMemory.Ptr(col,12);e.Rva(td);string name=NativeMemory.Ascii(NativeMemory.Add(td,8),256);IntPtr hierarchy=NativeMemory.Ptr(col,16);e.Rva(hierarchy);int count=NativeMemory.I32(hierarchy,8);Require(count>0&&count<=128,"Snapshot RTTI hierarchy bound.");IntPtr bases=NativeMemory.Ptr(hierarchy,12);e.Rva(bases);bool found=false;
-   for(int i=0;i<count;i++){IntPtr descriptor=NativeMemory.Ptr(bases,i*4);e.Rva(descriptor);IntPtr type=NativeMemory.Ptr(descriptor,0);e.Rva(type);if(NativeMemory.Ascii(NativeMemory.Add(type,8),256)==requiredBase&&NativeMemory.I32(descriptor,8)==0)found=true;}Require(found,"Snapshot object does not expose the guarded common base: "+requiredBase);return name;
+   IntPtr vt=NativeMemory.Ptr(complete,0);NativeOpaqueDrawState.ImageRange(NativeMemory.Add(vt,-4),8);IntPtr col=NativeMemory.Ptr(vt,-4);NativeOpaqueDrawState.ImageRange(col,20);Require(NativeMemory.I32(col,0)==0&&NativeMemory.I32(col,4)==0,"Snapshot primary COL differs.");
+   IntPtr td=NativeMemory.Ptr(col,12);NativeOpaqueDrawState.ImageRange(td,9);string name=NativeMemory.Ascii(NativeMemory.Add(td,8),256);IntPtr hierarchy=NativeMemory.Ptr(col,16);NativeOpaqueDrawState.ImageRange(hierarchy,16);int count=NativeMemory.I32(hierarchy,8);Require(count>0,"Snapshot RTTI hierarchy is empty.");IntPtr bases=NativeMemory.Ptr(hierarchy,12);NativeOpaqueDrawState.ImageRange(bases,checked(checked(count*4)));bool found=false;
+   for(int i=0;i<count;i++){IntPtr descriptor=NativeMemory.Ptr(bases,checked(checked(i*4)));NativeOpaqueDrawState.ImageRange(descriptor,24);IntPtr type=NativeMemory.Ptr(descriptor,0);NativeOpaqueDrawState.ImageRange(type,9);if(NativeMemory.Ascii(NativeMemory.Add(type,8),256)==requiredBase&&NativeMemory.I32(descriptor,8)==0&&NativeMemory.I32(descriptor,12)==-1)found=true;}
+   Require(found,"Snapshot object does not expose the guarded common base: "+requiredBase);return name;
   }
   sealed class DrawReadFrame {internal IntPtr List,Node,Tail,Previous;internal int Count,Index;internal string Parent;internal byte[] Header;}
   static DrawReadFrame DrawFrame(NativeEngine e,IntPtr list,string parent){
@@ -22,6 +24,26 @@ namespace McgsInternalBridge {
   }
   internal static List<Dictionary<string,object>> CurrentDrawControls(NativeEngine engine,IntPtr document,int pageId){var raw=new List<object>();ReadDrawList(engine,NativeMemory.Add(document,0x2BC),document,pageId,null,raw,new HashSet<uint>(),new HashSet<uint>(),0);var result=new List<Dictionary<string,object>>();foreach(object v in raw)result.Add(Map(v));return result;}
   internal static string ReadCurrentCString(IntPtr storage,int maximum){return RawCString(storage,maximum);}
+  internal static Dictionary<string,object> CaptureIdentity(NativeEngine engine,NativeContext context){
+   Require(IntPtr.Size==4&&EngineEntry.ExpectedUiThreadId>0&&NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Identity snapshot requires the captured native UI thread.");
+   IntPtr root=NativeMemory.Ptr(engine.Address(0xFBB578),0x520);
+   Require(root!=IntPtr.Zero&&NativeMemory.Ptr(root,0)==engine.Address(0xD57684)&&NativeMemory.Ptr(root,0x2D4)==context.ObjectModel&&SamePath(RawCString(NativeMemory.Add(root,0x24),Int32.MaxValue/2-1),Fixture),"Snapshot current requested project/root differs.");
+   return new Dictionary<string,object>{{"schema",2},{"scope","current process/project/root identity; each requested adapter supplies its exact target preimage"},{"project_path",Fixture},{"disk_sha256",NativeMemory.Hash(Fixture)},{"root",NativeMemory.Hex(root)},{"root_modified",NativeMemory.I32(root,0x48)},{"compile_valid",NativeMemory.I32(root,0x114)},{"complete_project_summary",false},{"unrelated_page_controls_or_strategy_nodes_read",false}};
+  }
+  internal static Dictionary<string,object> CaptureLifecycle(NativeEngine engine,NativeContext context){
+   var result=CaptureIdentity(engine,context);
+   var functions=new NativeLazyFunctionProfile(engine,"coverage-20261101/usable-edit-0001/project-services-prep/page-view-open-abi-profile.v2.json",NativePageViewOperations.AbiProfileSha,"editor");
+   var first=functions.Bind<NativePageViewOperations.First>("TemplateFirstDoc");var next=functions.Bind<NativePageViewOperations.Next>("TemplateNextDoc");
+   IntPtr frame=NativeMemory.Ptr(engine.Address(0xFBB578),0x20);Require(frame!=IntPtr.Zero,"Lifecycle original document frame is absent.");
+   var templateType=Map(functions.Profile["template"]);NativeAbiTargetProfiles.CheckDirectEntry(templateType,"document template","coverage-20261101/usable-edit-0001/project-services-prep/page-view-open-abi-profile.v2.json");
+   var documents=new List<object>();var strategyDocuments=new List<object>();var seenDocuments=new HashSet<uint>();
+   foreach(int offset in new[]{0x3D8,0x3DC,0x3E0,0x3E4}){
+    IntPtr template=NativeMemory.Ptr(frame,offset);Require(template!=IntPtr.Zero&&NativeMemory.Ptr(template,0)==engine.Address(NativeEngine.Number(templateType["vtable_rva"])),"Lifecycle original document template type differs.");
+    var positions=new HashSet<uint>();IntPtr position=first(template);
+    while(position!=IntPtr.Zero){Require(positions.Add(NativeMemory.U(position)),"Lifecycle document enumeration repeats a position.");IntPtr doc=next(template,ref position);Require(doc!=IntPtr.Zero&&seenDocuments.Add(NativeMemory.U(doc)),"Lifecycle document is NULL or appears in multiple owning templates.");NativeMemory.Readable(doc,0x4C);var row=new Dictionary<string,object>{{"template_offset",offset},{"document",NativeMemory.Hex(doc)},{"loaded",true},{"document_dirty",NativeMemory.I32(doc,0x48)}};documents.Add(row);if(offset==0x3E4)strategyDocuments.Add(row);}
+   }
+   result["pages"]=documents;result["sources"]=new Dictionary<string,object>{{"open_working_documents",strategyDocuments},{"strategy_private_nodes_read",false}};result["scope"]="current project identity plus original template document dirty states; no control RTTI or strategy payload snapshot";return result;
+  }
   static Dictionary<string,object> CaptureSources(NativeEngine engine,NativeContext context){return NativeStrategyWorkingModelEditing.InspectAll(engine,context,Fixture);}
   static Dictionary<string,object> CaptureLegacySources(NativeEngine engine,NativeContext context){
    var api=new NativeStrategyExtensionProfile.ReadApi(engine);IntPtr manager=engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(3);Require(NativeMemory.Ptr(manager,0)==engine.Address(0xDDD094),"Snapshot strategy manager differs.");

@@ -26,7 +26,7 @@ namespace McgsInternalBridge {
    readonly V0 command,update;readonly VI invalidate;readonly SaveData save;bool applied,disposed;
    internal Prepared(NativeControlPropertyEditing.Api value,Dictionary<string,object> a) {
     api=value;action=a;NativeMemory.Require(Convert.ToString(a["kind"])=="page-history"&&Convert.ToString(a["abi_profile_sha256"])==AbiProfileSha,"Page history action kind/ABI differs.");before=State(api,a);NativePageControlPreparation.Before(a,before);
-    var after=Map(a["after"]);operation=Convert.ToString(after["operation"]);steps=Convert.ToInt32(after["steps"]);NativeMemory.Require((operation=="undo"||operation=="redo")&&steps>=1&&steps<=64,"Page history needs undo/redo and1..64 explicit steps.");
+    var after=Map(a["after"]);operation=Convert.ToString(after["operation"]);steps=Convert.ToInt32(after["steps"]);NativeMemory.Require((operation=="undo"||operation=="redo")&&steps>=1,"Page history needs undo/redo and a positive explicit step count.");
     NativeMemory.Require(Convert.ToBoolean(before[operation=="undo"?"can_undo":"can_redo"]),"Requested native history is unavailable.");
     command=api.Bind<V0>(operation=="undo"?"UndoCommand":"RedoCommand");invalidate=api.Bind<VI>("InvalidateView");update=api.Bind<V0>("UpdateView");save=api.Common.Bind<SaveData>("standard","WindowSaveData");api.Common.Slot(api.Context.WindowService,12,0x21733);
    }

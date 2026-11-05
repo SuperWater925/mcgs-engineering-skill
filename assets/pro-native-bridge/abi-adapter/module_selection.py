@@ -11,6 +11,7 @@ import os
 from pathlib import Path, PureWindowsPath
 import re
 import stat
+from collections import deque
 
 from pe32 import PE32
 
@@ -34,12 +35,9 @@ def parse_module_overrides(values, known_aliases=None):
 
 
 def _regular_image(path, *, editor=False):
-    path = Path(os.path.abspath(path))
-    for item in (path, *path.parents):
-        if os.path.lexists(item):
-            info = os.lstat(item)
-            if stat.S_ISLNK(info.st_mode) or getattr(info, 'st_file_attributes', 0) & 0x400:
-                raise ValueError('Module has a reparse ancestor: ' + str(item))
+    # Bind the actual target of a legitimate symlink/junction. The selected
+    # bytes and the loaded module are still checked against this identity.
+    path = Path(path).resolve(strict=True)
     if not stat.S_ISREG(path.stat().st_mode):
         raise ValueError('Module is not a regular file')
     image = PE32(path)
@@ -52,7 +50,7 @@ def _regular_image(path, *, editor=False):
 
 def _family(name):
     name = name.casefold()
-    if re.fullmatch(r'mfc\d+u?\.dll', name):
+    if re.fullmatch(r'mfc\d+u?d?\.dll', name):
         return 'mfc'
     match = re.fullmatch(r'(msvcr|msvcp|vcruntime|ucrtbase)(?:\d+(?:_\d+)?)?d?\.dll', name)
     if match:
@@ -75,14 +73,21 @@ def _import_names(alias, reference, imported):
 
 def _dependency_imports(editor, image, roots, install):
     """Inspect the local import graph before considering reference fallbacks."""
-    pending = [(editor, image)]
+    pending = deque([(editor, image)])
     seen = {os.path.normcase(str(editor))}
-    names, rows = [], []
+    names, rows, name_keys = [], [], set()
     while pending:
-        importer, current = pending.pop(0)
-        for name in current.import_modules:
-            if name.casefold() not in {item.casefold() for item in names}:
+        importer, current = pending.popleft()
+        forwarded = []
+        for exported in current.exports_by_ordinal.values():
+            value = exported.get('forwarder')
+            if value and '.' in value:
+                module = value.rsplit('.', 1)[0]
+                forwarded.append(module if module.casefold().endswith('.dll') else module + '.dll')
+        for name in dict.fromkeys([*current.import_modules, *forwarded]):
+            if name.casefold() not in name_keys:
                 names.append(name)
+                name_keys.add(name.casefold())
             # Never interpret an import string as an arbitrary filesystem path.
             if PureWindowsPath(name).name != name or name in ('.', '..'):
                 rows.append({'importer': str(importer), 'name': name, 'status': 'non-basename-import'})
@@ -91,21 +96,17 @@ def _dependency_imports(editor, image, roots, install):
             path = next((root/name for root in search if os.path.lexists(root/name)), None)
             if path is None:
                 continue
-            path = Path(os.path.abspath(path))
+            path = Path(path).resolve()
             key = os.path.normcase(str(path))
             if key in seen:
                 continue
             seen.add(key)
-            if len(seen) > 4096:
-                rows.append({'status': 'bounded-graph-limit', 'limit': 4096})
-                return names, rows
             try:
                 path, dependency = _regular_image(path)
                 rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'read'})
-                # No need to walk the whole OS; only installation-side imports
-                # contribute additional vendor component discovery.
-                if path.is_relative_to(install):
-                    pending.append((path, dependency))
+                # Cycle detection bounds traversal by the finite actual graph,
+                # including explicit dependencies outside the installation.
+                pending.append((path, dependency))
             except (OSError, ValueError) as error:
                 rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'unavailable', 'error': str(error)})
     return names, rows
@@ -139,6 +140,12 @@ def select_module_files(catalog, layout, module_overrides=None):
     if windows:
         # x86 System32 redirects on 64-bit Windows; SysWOW64 is explicit first.
         roots.extend(root for root in (Path(windows) / 'SysWOW64', Path(windows) / 'System32') if root not in roots)
+    # PATH supplies additional explicit loader search directories; it is still
+    # candidate evidence, never proof that Windows selected a particular file.
+    for item in os.environ.get('PATH', '').split(os.pathsep):
+        path = Path(item.strip('"'))
+        if path.is_absolute() and path.is_dir() and path not in roots:
+            roots.append(path.resolve())
     files = {'editor': editor}
     rows = {'editor': {'status': 'selected', 'source': 'bound-editor', 'path': str(editor),
                        'sha256': image.identity()['sha256'], 'candidates': []}}
@@ -197,7 +204,30 @@ def select_module_files(catalog, layout, module_overrides=None):
             if alias in overrides:
                 add(overrides[alias], 'explicit-map', 0)
             else:
-                names = _import_names(alias, reference, imported)
+                # Reference importers identify a module's logical role. Avoid
+                # flattening an unrelated plugin's different CRT into the
+                # central runtime role when its actual importer is available.
+                importer_roles = {item['module'] for item in catalog.get('import_slots', ())
+                                  if item.get('target_module') == alias}
+                role_names, role_paths = [], []
+                for owner in sorted(importer_roles):
+                    owner_path = files.get(owner)
+                    if owner_path is None:
+                        continue
+                    try:
+                        owner_image = base_images.get(owner_path) or PE32(owner_path)
+                    except (OSError, ValueError):
+                        continue
+                    matched = _import_names(alias, reference, owner_image.import_modules)
+                    role_names.extend(matched)
+                    for name in matched:
+                        if PureWindowsPath(name).name == name:
+                            adjacent = Path(owner_path).parent / name
+                            if adjacent.is_file():
+                                role_paths.append(adjacent)
+                names = list(dict.fromkeys(role_names)) or _import_names(alias, reference, imported)
+                for path in role_paths:
+                    add(path, 'logical-importer-adjacent', 5)
                 basename = reference.get('basename')
                 for index, root in enumerate(roots):
                     for name in names:
@@ -239,6 +269,20 @@ def select_module_files(catalog, layout, module_overrides=None):
             if present:
                 best = min(candidate['rank'] for candidate in present)
                 chosen = [candidate for candidate in present if candidate['rank'] == best]
+                # Several directory aliases/equal copies are interchangeable
+                # on disk; runtime still requires one loaded content owner.
+                if len(chosen) > 1:
+                    equal = []
+                    for candidate in chosen:
+                        try:
+                            path, candidate_image = _regular_image(candidate['path'])
+                            equal.append((path, candidate_image.identity()['sha256']))
+                        except (OSError, ValueError):
+                            equal = []
+                            break
+                    if equal and len({sha for _, sha in equal}) == 1:
+                        chosen = [chosen[0]]
+                        row['equivalent_candidate_paths'] = [str(path) for path, _ in equal]
                 if len(chosen) != 1:
                     row['reason'] = 'Several equally preferred module candidates; supply an explicit alias=path mapping'
                     row['ambiguity'] = [candidate['path'] for candidate in chosen]
@@ -278,6 +322,18 @@ def select_module_files(catalog, layout, module_overrides=None):
             history[state] = len(root_history)
             root_history.append(dict(discovery_roots))
         imported, dependency_rows = next_imported, next_rows
+    # Keep non-catalogued terminal libraries as explicit PE owners for forwarder
+    # proof. They do not acquire old profile layouts or new callable adapters.
+    selected_paths = {os.path.normcase(str(Path(path).resolve())) for path in files.values()}
+    for dependency in dependency_rows:
+        if dependency.get('status') != 'read' or not dependency.get('path'):
+            continue
+        path = Path(dependency['path']).resolve()
+        if os.path.normcase(str(path)) in selected_paths:
+            continue
+        alias = 'dependency:' + str(path).casefold()
+        files[alias] = path
+        selected_paths.add(os.path.normcase(str(path)))
     return {'files': files, 'report': {'schema': 'mcgs-native-module-selection/v1', 'modules': rows,
                                      'dependency_imports': dependency_rows,
                                      'dependency_discovery_passes': discovery_passes,

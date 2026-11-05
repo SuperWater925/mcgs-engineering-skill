@@ -105,7 +105,7 @@ namespace McgsInternalBridge {
             NativeMemory.Require(lists==5,"Expected the five native management lists.");
             IntPtr listData=NativeMemory.Ptr(array,4);NativeMemory.Readable(listData,4*lists);diagnostic["list_array_data"]=NativeMemory.Hex(listData);
             var entries=new List<Dictionary<string,object>>();
-            for(int i=0;i<lists;i++){var item=DescribePointer(api,NativeMemory.Ptr(listData,i*4));item["index"]=i;entries.Add(item);}
+            for(int i=0;i<lists;i++){var item=DescribePointer(api,NativeMemory.Ptr(listData,checked(i*4)));item["index"]=i;entries.Add(item);}
             diagnostic["list_entries"]=entries;
             IntPtr list=NativeMemory.Ptr(listData,2*4);
             api.Type(list,".?AVC0ManListUser@@",WindowListVtable);api.Virtual(list,92,WindowArchiveThunk);
@@ -122,7 +122,7 @@ namespace McgsInternalBridge {
         }
 
         static void Snapshot(Api api,IntPtr parent,int depth,List<string> structure,List<Dictionary<string,object>> identities,HashSet<uint> visited,HashSet<int> pageIds,bool requireUniqueIds) {
-            NativeMemory.Require(depth<=16 && structure.Count<=512 && visited.Add(NativeMemory.U(parent)),"Page subtree is cyclic or exceeds its trial bound.");
+            NativeMemory.Require(depth<=16 && structure.Count<=Int32.MaxValue/4 && visited.Add(NativeMemory.U(parent)),"Page subtree is cyclic or exceeds its trial bound.");
             foreach(IntPtr child in api.Engine.Children(parent)) {
                 var data=api.Engine.Describe(child);string name=NativeStrategyProfile.ReadName(api.Strategy,child);int id=NativeStrategyProfile.ReadId(api.Strategy,child);
                 NativeMemory.Require(id>=0 || id==-2,"Unexpected negative control identity sentinel.");
@@ -165,7 +165,7 @@ namespace McgsInternalBridge {
         static string PersistedSource(NativePageControlAbi shared,Dictionary<string,object> target,int id){
             var proof=NativePageControlPreparation.Map(target["source_export_index"]);string path=Path.GetFullPath(NativePageControlPreparation.Text(proof,"file")),root=Path.GetFullPath(NativeOperations.TaskRoot).TrimEnd('\\')+"\\";
             NativeMemory.Require(path.StartsWith(root,StringComparison.OrdinalIgnoreCase)&&File.Exists(path)&&(File.GetAttributes(path)&(FileAttributes.Directory|FileAttributes.ReparsePoint))==0&&NativeMemory.Hash(path)==NativePageControlPreparation.Text(proof,"sha256"),"Page-copy source export proof path/hash differs.");
-            var index=new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));NativeMemory.Require(Convert.ToString(index["sha256"])==NativeMemory.Hash(shared.Project)&&Convert.ToBoolean(index["source_unchanged"]),"Page-copy source export is not the current stable physical preimage.");string found=null;
+            var index=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));NativeMemory.Require(Convert.ToString(index["sha256"])==NativeMemory.Hash(shared.Project)&&Convert.ToBoolean(index["source_unchanged"]),"Page-copy source export is not the current stable physical preimage.");string found=null;
             foreach(object value in (IEnumerable)index["rows"]){var row=NativePageControlPreparation.Map(value);if(Convert.ToString(row["table"])!="WndUser"||Convert.ToInt32(row["iID"])!=id)continue;NativeMemory.Require(found==null&&Convert.ToString(row["strName"])==NativePageControlPreparation.Text(target,"page_name")&&Convert.ToInt32(row["iDeleteFlag"])==0,"Page-copy source export row differs.");var blob=NativePageControlPreparation.Map(row["lbObjects"]);string name=Convert.ToString(blob["file"]);NativeMemory.Require(Path.GetFileName(name)==name,"Page-copy blob is not a local export filename.");found=Convert.ToString(blob["sha256"]);NativeMemory.Require(NativeMemory.Hash(Path.Combine(Path.GetDirectoryName(path),name))==found,"Page-copy source full archive proof differs.");}
             NativeMemory.Require(found!=null,"Page-copy source export row is absent.");return found;
         }

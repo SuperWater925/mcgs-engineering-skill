@@ -43,7 +43,7 @@ namespace McgsInternalBridge {
     indexPath=Path.Combine(NativeEngineeringDeliveryLayout.EvidenceRoot,IndexName);
     if(ExpectedIndexSha256.Length!=64||HashFile(indexPath)!=ExpectedIndexSha256)
      throw new InvalidDataException("Current native API index differs from this engine. Bind the engine and index together from the current program.");
-    var map=new JavaScriptSerializer{MaxJsonLength=16*1024*1024,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(File.ReadAllText(indexPath,new UTF8Encoding(false,true)));
+    var map=new JavaScriptSerializer{MaxJsonLength=int.MaxValue,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(File.ReadAllText(indexPath,new UTF8Encoding(false,true)));
     if(Text(map,"schema")!="mcgs-native-bound-profile-index/v1")throw new InvalidDataException("Current native API index schema differs.");
     var found=new Dictionary<string,Dictionary<string,object>>(StringComparer.OrdinalIgnoreCase);
     foreach(object item in (IEnumerable)map["files"]) {
@@ -76,8 +76,10 @@ namespace McgsInternalBridge {
    if(verifyBytes&&HashFile(path)!=Text(row,"sha256"))
     throw new InvalidDataException("Resolved native API profile changed after binding: "+Text(row,"profile"));
   }
-  // Only these readers prove each consumed function/table before native access.
-  // Partial data is never admitted by generic File IO or by an arbitrary caller.
+  // Historic explicit readers; other consumers may opt in only by calling
+  // ReadLazyAllText and checking every consumed function/table before access.
+  // Generic File IO remains strict: an unreadable unused entry is not silently
+  // admitted to a consumer which has not implemented operation-level checks.
   internal const string LazyEntryContract="mcgs-native-lazy-entry/v1";
   static readonly HashSet<string> LazyProfiles=new HashSet<string>(StringComparer.Ordinal) {
    "coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-native-abi-profile.json",
@@ -96,7 +98,6 @@ namespace McgsInternalBridge {
    Load();Dictionary<string,object> row;
    if(!files.TryGetValue(Path.GetFullPath(path),out row))throw new InvalidDataException("Lazy native profile has no bound integrity index entry.");
    string relative=Text(row,"profile").Replace('\\','/'),status=Text(row,"status");
-   if(!LazyProfiles.Contains(relative))throw new InvalidDataException("Native profile has no explicit lazy entry reader: "+relative);
    if(status=="partial"){
     object allow,contract;
     if(!row.TryGetValue("allow_partial_entries",out allow)||!(allow is bool)||!(bool)allow||!row.TryGetValue("entry_validation_contract",out contract)||!(contract is string)||(string)contract!=LazyEntryContract)
@@ -135,6 +136,27 @@ namespace McgsInternalBridge {
    if(state==null||!state.TryGetValue("profile",out raw)||!Object.Equals(raw,profile)||!state.TryGetValue("direct_status",out raw)||(!Object.Equals(raw,"resolved")&&!Object.Equals(raw,"verified")))
     throw new NativeAbiUnavailableException("Current program native "+kind+" direct address fields were not uniquely located: "+name,profile,name);
   }
+  internal static void CheckFields(Dictionary<string,object> item,string kind,string profile,params string[] fields) {
+   var paths=new string[fields.Length];for(int i=0;i<fields.Length;i++){if(String.IsNullOrEmpty(fields[i])||!item.ContainsKey(fields[i]))throw new InvalidDataException("Native field reader requested an absent field: "+fields[i]);paths[i]="/"+fields[i].Replace("~","~0").Replace("/","~1");}
+   CheckPaths(item,kind,profile,paths);
+  }
+  internal static void CheckPaths(Dictionary<string,object> item,string kind,string profile,params string[] paths) {
+   object raw;var state=item.TryGetValue("_abi_resolution",out raw)?raw as Dictionary<string,object>:null;
+   string name=item.ContainsKey("name")?Convert.ToString(item["name"],CultureInfo.InvariantCulture):kind;
+   if(state==null||!state.TryGetValue("profile",out raw)||!Object.Equals(raw,profile)||!state.TryGetValue("json_pointer",out raw)||!(raw is string))
+    throw new NativeAbiUnavailableException("Native field reader lacks its bound entry identity: "+name,profile,name);
+   string prefix=(string)raw;
+   foreach(string pathPart in paths){
+    if(String.IsNullOrEmpty(pathPart)||pathPart[0]!='/')throw new InvalidDataException("Native entry path must be an explicit relative JSON pointer.");
+    string pointer=prefix+pathPart;
+    object selected=item;foreach(string encoded in pathPart.Substring(1).Split('/')){string key=encoded.Replace("~1","/").Replace("~0","~");var map=selected as Dictionary<string,object>;if(map!=null){if(!map.TryGetValue(key,out selected))throw new InvalidDataException("Native entry path is absent: "+pathPart);}else{var list=selected as IList;int index;if(list==null||!Int32.TryParse(key,NumberStyles.None,CultureInfo.InvariantCulture,out index)||index<0||index>=list.Count)throw new InvalidDataException("Native entry array index is absent: "+pathPart);selected=list[index];}}
+    object details;if(!state.TryGetValue("details",out details)||!(details is IEnumerable))throw new InvalidDataException("Native field reader has no resolution details.");
+    foreach(object value in(IEnumerable)details){var detail=value as Dictionary<string,object>;if(detail==null)throw new InvalidDataException("Native field resolution detail is not an object.");
+     object path;if(!detail.TryGetValue("json_pointer",out path)||!(path is string))throw new InvalidDataException("Native field resolution detail has no path.");
+     if((string)path==pointer||((string)path).StartsWith(pointer+"/",StringComparison.Ordinal)||pointer.StartsWith((string)path+"/",StringComparison.Ordinal))throw new NativeAbiUnavailableException("Native "+kind+" field was not uniquely located: "+name+pathPart,profile,name+pathPart);
+    }
+   }
+  }
   internal static int UnresolvedRva(string entry) {
    throw new NativeAbiUnavailableException("Current program native address was not uniquely located: "+entry+". No particular Pro release is imposed by this tool; locate or adapt this entry.","classified C# PE address",entry);
   }
@@ -147,7 +169,7 @@ namespace McgsInternalBridge {
    return new Dictionary<string,object>();
   }
   internal static Dictionary<string,object> BindingMetadata() {
-   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v3"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false}};
+   return new Dictionary<string,object>{{"mode","current_program_resolved"},{"cross_build_contract","mcgs-native-cross-build/v4"},{"entry_validation_contract",LazyEntryContract},{"profile_index_sha256",ExpectedIndexSha256},{"reference_RVAs_used_directly",false},{"operation_entry_validation",true},{"selected_module_equivalent_copy",true},{"field_resolution_validation",true}};
   }
   internal static bool MatchesLogicalOrdinalName(string module,string name,int actualOrdinal) {
    Load();
@@ -181,12 +203,18 @@ namespace McgsInternalBridge {
   }
   static Dictionary<string,object> ModuleRow(string logicalName) {
    Load();string basename=String.IsNullOrEmpty(logicalName)?"":Path.GetFileName(logicalName);bool rooted=!String.IsNullOrEmpty(logicalName)&&Path.IsPathRooted(logicalName);Dictionary<string,object> found=null;
+   // Logical roles take precedence over another role's coincident basename.
+   // This also permits explicitly mapped roles to share one merged module.
+   if(!rooted)foreach(var row in modules)if(basename.Equals(Text(row,"logical_name"),StringComparison.OrdinalIgnoreCase))return row;
    foreach(var row in modules) {
     object raw;bool matches;
     if(rooted&&row.TryGetValue("actual_file",out raw)&&raw is string)matches=Path.GetFullPath(logicalName).Equals(Path.GetFullPath((string)raw),StringComparison.OrdinalIgnoreCase);
     else matches=basename.Equals(Text(row,"logical_name"),StringComparison.OrdinalIgnoreCase)||basename.Equals(Text(row,"reference_basename"),StringComparison.OrdinalIgnoreCase)||basename.Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase);
     if(!matches)continue;
-    if(found!=null&&!Object.ReferenceEquals(found,row))throw new InvalidDataException("Native logical module selection is ambiguous: "+logicalName);
+    if(found!=null&&!Object.ReferenceEquals(found,row)){
+     object a,b;bool same=found.TryGetValue("actual_file",out a)&&row.TryGetValue("actual_file",out b)&&a is string&&b is string&&Path.GetFullPath((string)a).Equals(Path.GetFullPath((string)b),StringComparison.OrdinalIgnoreCase)&&Text(found,"actual_sha256")==Text(row,"actual_sha256");
+     if(!same)throw new InvalidDataException("Native logical module selection is ambiguous: "+logicalName);
+    }
     found=row;
    }
    return found;
@@ -205,13 +233,22 @@ namespace McgsInternalBridge {
   }
   internal static IntPtr ModuleHandle(string logicalName) {
    var row=ModuleRow(logicalName);if(row==null)return GetModuleHandle(logicalName);
-   string file=ModuleFile(logicalName);IntPtr handle=IntPtr.Zero;bool otherPath=false;
+   string file=ModuleFile(logicalName);IntPtr handle=IntPtr.Zero;
    foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules){if(Path.GetFullPath(loaded.FileName).Equals(file,StringComparison.OrdinalIgnoreCase)){
      if(handle!=IntPtr.Zero&&handle!=loaded.BaseAddress)throw new InvalidDataException("Selected native module is loaded more than once: "+logicalName);
      handle=loaded.BaseAddress;
-    }else if(Path.GetFileName(loaded.FileName).Equals(Text(row,"actual_basename"),StringComparison.OrdinalIgnoreCase))otherPath=true;
+    }
    }
-   if(handle==IntPtr.Zero&&otherPath)throw new InvalidDataException("A different native module path is loaded for this target: "+logicalName);
+   // Activation contexts and directory aliases may load an equivalent copy.
+   // Accept it only when exactly one live module has the selected full content;
+   // a basename alone, or two equal copies with distinct bases, is not proof.
+   if(handle==IntPtr.Zero){
+    foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules){string actual;try{actual=HashFile(loaded.FileName);}catch(IOException){continue;}catch(UnauthorizedAccessException){continue;}
+     if(actual!=Text(row,"actual_sha256"))continue;
+     if(handle!=IntPtr.Zero&&handle!=loaded.BaseAddress)throw new InvalidDataException("Equivalent native module content has multiple loaded owners: "+logicalName);
+     handle=loaded.BaseAddress;
+    }
+   }
    if(Convert.ToBoolean(row["is_editor"],CultureInfo.InvariantCulture)&&handle!=Process.GetCurrentProcess().MainModule.BaseAddress)throw new InvalidDataException("Selected native editor differs from the attached host.");
    return handle;
   }

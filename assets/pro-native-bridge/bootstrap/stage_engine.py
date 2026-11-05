@@ -13,9 +13,6 @@ def digest(p):
 
 def regular(p):
     if not p.is_file(): raise ValueError('Missing regular file: ' + str(p))
-    for x in [p, *p.parents]:
-        if x.exists() and x.stat(follow_symlinks=False).st_file_attributes & 0x400:
-            raise ValueError('Reparse path: ' + str(x))
 
 
 def write_new(p, b):
@@ -28,15 +25,15 @@ def main():
     p.add_argument('--bootstrap-root',required=True)
     p.add_argument('--engine-file',required=True)
     p.add_argument('--engine-scope-file',required=True)
-    a=p.parse_args();boot=Path(os.path.abspath(a.bootstrap_root))
+    a=p.parse_args();boot=Path(a.bootstrap_root).resolve()
     config=boot/'McgsInternalBridge.bridge.json';regular(config)
     cfg=json.loads(config.read_text(encoding='utf-8-sig'))
     built=json.loads((boot/'build-manifest.json').read_text(encoding='utf-8-sig'))
     if built['bootstrap_scope_sha256']!=digest(config):raise ValueError('Prepared build/config binding differs')
     if Path(cfg['bootstrap_root']).resolve()!=boot: raise ValueError('Bootstrap root differs')
-    engine=Path(os.path.abspath(a.engine_file));scope=Path(os.path.abspath(a.engine_scope_file))
+    engine=Path(a.engine_file).resolve();scope=Path(a.engine_scope_file).resolve()
     for f in [engine,scope]:regular(f)
-    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]{0,120}\.dll',engine.name):raise ValueError('Use a single fresh DLL basename matching the binding filename')
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*\.dll',engine.name):raise ValueError('Use a single fresh DLL basename matching the binding filename')
     if scope.name!=engine.stem+'.scope.json':raise ValueError('Scope must have the exact engine sibling filename')
     sc=json.loads(scope.read_text(encoding='utf-8-sig'))
     for key in ['task_root','runtime_root','install_root']:
@@ -52,8 +49,6 @@ def main():
     if target.exists() or target_scope.exists():raise ValueError('Do not overwrite any engine/scope version')
     write_new(target,engine.read_bytes());write_new(target_scope,scope.read_bytes())
     runtime.mkdir(parents=True,exist_ok=True)
-    for d in [runtime,*runtime.parents]:
-        if d.stat(follow_symlinks=False).st_file_attributes & 0x400:raise ValueError('Runtime reparse ancestor')
     value={'assembly':str(target),'sha256':digest(target),'bootstrap_scope_sha256':digest(config)}
     # First deployment only. Existing bridges use select_engine.py; it retains
     # this bootstrap scope digest and atomically replaces only the selection.

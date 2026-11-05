@@ -98,7 +98,7 @@ namespace McgsInternalBridge {
 
 
 
-  static List<object>L(object value){Need(value is IEnumerable&&!(value is string)&&!(value is IDictionary),"Trigger context words require arrays.");var r=new List<object>();foreach(object x in(IEnumerable)value)r.Add(x);return r;}static uint U(object v){Need(v is int||v is uint||v is long,"Trigger words require exact uint32 integers.");long n=Convert.ToInt64(v);Need(n>=0&&n<=UInt32.MaxValue,"Trigger word exceeds uint32.");return(uint)n;}static string Note(string s){Need(s!=null&&s.Length<=131072&&s.IndexOf('\0')<0,"Trigger note is not bounded complete UTF16.");new UnicodeEncoding(false,false,true).GetBytes(s);return s;}
+  static List<object>L(object value){Need(value is IEnumerable&&!(value is string)&&!(value is IDictionary),"Trigger context words require arrays.");var r=new List<object>();foreach(object x in(IEnumerable)value)r.Add(x);return r;}static uint U(object v){Need(v is int||v is uint||v is long,"Trigger words require exact uint32 integers.");long n=Convert.ToInt64(v);Need(n>=0&&n<=UInt32.MaxValue,"Trigger word exceeds uint32.");return(uint)n;}static string Note(string s){Need(s!=null&&s.Length<=Int32.MaxValue/2-1&&s.IndexOf('\0')<0,"Trigger note is not bounded complete UTF16.");new UnicodeEncoding(false,false,true).GetBytes(s);return s;}
 
 
 
@@ -113,12 +113,12 @@ namespace McgsInternalBridge {
 
 
 
-   internal readonly VIP RootSet;internal readonly VP Copy,RowWrite,RowLoad,Assign;internal readonly VI ContextDirty,RootDirty;internal readonly V0 RecordEdit,RecordUpdate,RecordClose,RecordDtor,RecordFirst,RecordNext;internal readonly PP RecordCtor;internal readonly Open RecordOpen;internal readonly IP RecordFind,FieldNull;internal readonly I0 RecordBof,RecordEof;
+   internal VIP RootSet{get{return Bind<VIP>("RootSetContext");}}   internal VP Copy{get{return Bind<VP>("ContextCopy");}}   internal VP RowWrite{get{return Bind<VP>("ContextSerializeToRow");}}   internal VP RowLoad{get{return Bind<VP>("ContextDeserializeFromRow");}}   internal VI ContextDirty{get{return Bind<VI>("ContextSetDirty");}}   internal VI RootDirty{get{return Base.Read.Existing.Bind<VI>("RootSetModified");}}   internal VP Assign{get{return Base.Read.Existing.Bind<VP>("CStringAssignCopy");}}   internal V0 RecordEdit{get{return Bind<V0>("RecordEdit");}}   internal V0 RecordUpdate{get{return Bind<V0>("RecordUpdate");}}   internal IP FieldNull{get{return Bind<IP>("TriggerFieldIsNull");}}   internal PP RecordCtor{get{return Base.Bind<PP>("TriggerRecordCtor");}}   internal Open RecordOpen{get{return Base.Bind<Open>("RecordOpen");}}   internal IP RecordFind{get{return Base.Bind<IP>("RecordFind");}}   internal V0 RecordClose{get{return Base.Bind<V0>("RecordClose");}}   internal V0 RecordDtor{get{return Base.Bind<V0>("TriggerRecordDtor");}}   internal I0 RecordBof{get{return Extra<I0>("RecordBof",0x65570);}}   internal I0 RecordEof{get{return Extra<I0>("RecordEof",0x655B0);}}   internal V0 RecordFirst{get{return Extra<V0>("RecordFirst",0x656D0);}}   internal V0 RecordNext{get{return Extra<V0>("RecordNext",0x656A0);}}
 
 
 
 
-   internal Api(NativeEngine e,NativeContext c,string project){Engine=e;Context=c;Project=Path.GetFullPath(project);Base=new NativeStrategyLifecycleProfile.Api(e,c);Current();string path=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"strategy-prep","trigger-context-prep","strategy-trigger-context-abi-profile.v3.json");Need(File.Exists(path)&&NativeMemory.Hash(path)==AbiProfileSha,"Trigger context profile differs.");var p=new JavaScriptSerializer{MaxJsonLength=4*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(path,Encoding.UTF8));Need(NativeBinaryIdentity.Observe(S(p,"image_sha256"),e.ImageSha256,"NativeStrategyTriggerContextEditing:121:editor")&&NativeMemory.Hash(Path.Combine(NativeOperations.TaskRoot,"extensions","strategy","strategy-extension-write-guard.json"))==S(p,"base_reader_sha256"),"Trigger context base/image differs.");foreach(ProcessModule mod in Process.GetCurrentProcess().Modules)if(Path.GetFullPath(mod.FileName).Equals(Path.GetFullPath(@"C:\unbound-install-root\Program\mfc110u.dll"),StringComparison.OrdinalIgnoreCase)){Need(Mfc==IntPtr.Zero||Mfc==mod.BaseAddress,"Trigger MFC owner ambiguous.");Mfc=mod.BaseAddress;}Need(Mfc!=IntPtr.Zero&&NativeBinaryIdentity.Observe(S(p,"mfc_sha256"),NativeMemory.Hash(@"C:\unbound-install-root\Program\mfc110u.dll"),"NativeStrategyTriggerContextEditing:121:module"),"Trigger original MFC is not already exact/loaded.");foreach(object x in(IEnumerable)p["guards"]){var f=M(x);guards.Add(S(f,"name"),f);Check(S(f,"name"));}foreach(object x in(IEnumerable)p["types"]){var t=M(x);Types.Add(S(t,"rtti"),t);ValidateFactory(t);}RootSet=Bind<VIP>("RootSetContext");Copy=Bind<VP>("ContextCopy");RowWrite=Bind<VP>("ContextSerializeToRow");RowLoad=Bind<VP>("ContextDeserializeFromRow");ContextDirty=Bind<VI>("ContextSetDirty");RootDirty=Base.Read.Existing.Bind<VI>("RootSetModified");Assign=Base.Read.Existing.Bind<VP>("CStringAssignCopy");RecordEdit=Bind<V0>("RecordEdit");RecordUpdate=Bind<V0>("RecordUpdate");Need(Export(Mfc,new IntPtr(8039))==NativeMemory.Add(Mfc,0x1E1BDB),"Trigger field-null ordinal differs.");FieldNull=Bind<IP>("TriggerFieldIsNull");RecordCtor=Base.Bind<PP>("TriggerRecordCtor");RecordOpen=Base.Bind<Open>("RecordOpen");RecordFind=Base.Bind<IP>("RecordFind");RecordClose=Base.Bind<V0>("RecordClose");RecordDtor=Base.Bind<V0>("TriggerRecordDtor");RecordBof=Extra<I0>("RecordBof",0x65570);RecordEof=Extra<I0>("RecordEof",0x655B0);RecordFirst=Extra<V0>("RecordFirst",0x656D0);RecordNext=Extra<V0>("RecordNext",0x656A0);}
+   internal Api(NativeEngine e,NativeContext c,string project){Engine=e;Context=c;Project=Path.GetFullPath(project);Base=new NativeStrategyLifecycleProfile.Api(e,c);Current();string path=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"strategy-prep","trigger-context-prep","strategy-trigger-context-abi-profile.v3.json");Need(File.Exists(path)&&NativeLazyFunctionProfile.SourceHash(path)==AbiProfileSha,"Trigger context profile differs.");var p=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(NativeLazyFunctionProfile.ReadText(path));Need(NativeBinaryIdentity.Observe(S(p,"image_sha256"),e.ImageSha256,"NativeStrategyTriggerContextEditing:121:editor")&&NativeLazyFunctionProfile.SourceHash(Path.Combine(NativeOperations.TaskRoot,"extensions","strategy","strategy-extension-write-guard.json"))==S(p,"base_reader_sha256"),"Trigger context base/image differs.");foreach(ProcessModule mod in Process.GetCurrentProcess().Modules)if(NativeLazyFunctionProfile.SameModule(mod,Path.GetFullPath(@"C:\unbound-install-root\Program\mfc110u.dll"))){Need(Mfc==IntPtr.Zero||Mfc==mod.BaseAddress,"Trigger MFC owner ambiguous.");Mfc=mod.BaseAddress;}Need(Mfc!=IntPtr.Zero&&NativeBinaryIdentity.Observe(S(p,"mfc_sha256"),NativeMemory.Hash(@"C:\unbound-install-root\Program\mfc110u.dll"),"NativeStrategyTriggerContextEditing:121:module"),"Trigger original MFC is not already exact/loaded.");foreach(object x in(IEnumerable)p["guards"]){var f=M(x);guards.Add(S(f,"name"),f);}foreach(object x in(IEnumerable)p["types"]){var t=M(x);Types.Add(S(t,"rtti"),t);}}
 
 
 
@@ -128,12 +128,12 @@ namespace McgsInternalBridge {
 
 
 
-   internal void Check(string name){Current();var f=guards[name];bool isMfc=S(f,"module")=="mfc110u.dll";IntPtr b=isMfc?Mfc:Engine.ImageBase;string h=S(f,"bytes");byte[] raw=new byte[h.Length/2];for(int i=0;i<raw.Length;i++)raw[i]=Byte.Parse(h.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);NativeCodeRelocation.RebaseDeltaInPlace(raw,(IEnumerable)f["reloc_offsets"],unchecked((uint)(NativeMemory.U(b)-(isMfc?0x10000000U:0x400000U))));Need(Hex(raw)==Hex(NativeMemory.Bytes(NativeMemory.Add(b,N(f,"rva")),raw.Length)),"Trigger context code differs: "+name);}
+   internal void Check(string name){Current();var f=guards[name];NativeLazyFunctionProfile.CheckRow(f,"trigger method");bool isMfc=S(f,"module")=="mfc110u.dll";IntPtr b=isMfc?Mfc:Engine.ImageBase;string h=S(f,"bytes");byte[] raw=new byte[h.Length/2];for(int i=0;i<raw.Length;i++)raw[i]=Byte.Parse(h.Substring(2*i,2),NumberStyles.HexNumber,CultureInfo.InvariantCulture);NativeCodeRelocation.RebaseDeltaInPlace(raw,(IEnumerable)f["reloc_offsets"],unchecked((uint)(NativeMemory.U(b)-(isMfc?0x10000000U:0x400000U))));Need(Hex(raw)==Hex(NativeMemory.Bytes(NativeMemory.Add(b,N(f,"rva")),raw.Length)),"Trigger context code differs: "+name);}
 
 
 
 
-   T Bind<T>(string name)where T:class{Check(name);var f=guards[name];IntPtr at=NativeMemory.Add(S(f,"module")=="mfc110u.dll"?Mfc:Engine.ImageBase,N(f,"rva"));return Marshal.GetDelegateForFunctionPointer(at,typeof(T))as T;}
+   T Bind<T>(string name)where T:class{Check(name);var f=guards[name];NativeLazyFunctionProfile.CheckRow(f,"trigger method");IntPtr at=NativeMemory.Add(S(f,"module")=="mfc110u.dll"?Mfc:Engine.ImageBase,N(f,"rva"));return Marshal.GetDelegateForFunctionPointer(at,typeof(T))as T;}
 
 
 
@@ -143,17 +143,18 @@ namespace McgsInternalBridge {
 
 
 
-   internal void ValidateFactory(Dictionary<string,object> t){IntPtr rt=Engine.Address(N(t,"runtime_class_rva")),vt=Engine.Address(N(t,"vtable_rva"));Need(NativeMemory.I32(rt,4)==N(t,"size")&&NativeMemory.I32(rt,8)==0&&NativeMemory.Ascii(NativeMemory.Ptr(rt,0),64)=="CTrigger"+S(t,"name")&&NativeMemory.Ptr(rt,12)==Engine.Address(N(t,"factory_entry_rva")),"Trigger exact native runtime factory differs.");IntPtr col=Engine.Address(N(t,"col_rva")),td=Engine.Address(N(t,"type_rva"));Need(NativeMemory.Ptr(vt,-4)==col&&NativeMemory.I32(col,4)==0&&NativeMemory.Ptr(col,12)==td&&NativeMemory.Ascii(NativeMemory.Add(td,8),128)==S(t,"rtti"),"Trigger complete COL/offset/type differs.");int i=0;foreach(object z in(IEnumerable)t["entries_rva"])Need(NativeMemory.Ptr(vt,4*i++)==Engine.Address(Convert.ToInt32(z)),"Trigger complete vtable differs.");Need(i==15,"Trigger primary interface size differs.");}
+   internal void ValidateType(Dictionary<string,object> t){NativeLazyFunctionProfile.CheckIdentity(t,"runtime_class_rva","vtable_rva","col_rva","type_rva");IntPtr rt=Engine.Address(N(t,"runtime_class_rva")),vt=Engine.Address(N(t,"vtable_rva"));Need(NativeMemory.I32(rt,4)==N(t,"size")&&NativeMemory.I32(rt,8)==0&&NativeMemory.Ascii(NativeMemory.Ptr(rt,0),64)=="CTrigger"+S(t,"name"),"Trigger runtime class layout differs.");IntPtr col=Engine.Address(N(t,"col_rva")),td=Engine.Address(N(t,"type_rva"));Need(NativeMemory.Ptr(vt,-4)==col&&NativeMemory.I32(col,4)==0&&NativeMemory.Ptr(col,12)==td&&NativeMemory.Ascii(NativeMemory.Add(td,8),128)==S(t,"rtti"),"Trigger complete COL/offset/type differs.");}
+   internal void ValidateFactory(Dictionary<string,object> t){ValidateType(t);NativeLazyFunctionProfile.CheckIdentity(t,"factory_entry_rva");Need(NativeMemory.Ptr(Engine.Address(N(t,"runtime_class_rva")),12)==Engine.Address(N(t,"factory_entry_rva")),"Trigger exact native runtime factory differs.");}
 
 
 
 
-   internal Dictionary<string,object> Type(IntPtr p){Current();string rtti=Base.Read.MfcType(p);Need(Types.ContainsKey(rtti),"Uncovered trigger subtype.");var t=Types[rtti];ValidateFactory(t);Need(NativeMemory.Ptr(p,0)==Engine.Address(N(t,"vtable_rva"))&&NativeMemory.I32(p,12)==N(t,"native_type"),"Trigger class/type differs.");return t;}
+   internal Dictionary<string,object> Type(IntPtr p){Current();string rtti=Base.Read.MfcType(p);Need(Types.ContainsKey(rtti),"Uncovered trigger subtype.");var t=Types[rtti];ValidateType(t);Need(NativeMemory.Ptr(p,0)==Engine.Address(N(t,"vtable_rva"))&&NativeMemory.I32(p,12)==N(t,"native_type"),"Trigger class/type differs.");return t;}
 
 
 
 
-   internal Factory Maker(Dictionary<string,object> t){Check(S(t,"name")+"Factory");return Engine.Bind<Factory>(Engine.Address(N(t,"factory_rva")));}internal VI Destroyer(Dictionary<string,object> t){Check(S(t,"name")+"DeletingDtor");return Engine.Bind<VI>(Engine.Address(N(t,"deleting_dtor_rva")));}
+   internal Factory Maker(Dictionary<string,object> t){ValidateFactory(t);Check(S(t,"name")+"Factory");return Engine.Bind<Factory>(Engine.Address(N(t,"factory_rva")));}internal VI Destroyer(Dictionary<string,object> t){Check(S(t,"name")+"DeletingDtor");return Engine.Bind<VI>(Engine.Address(N(t,"deleting_dtor_rva")));}
 
 
 
@@ -208,7 +209,7 @@ namespace McgsInternalBridge {
 
 
 
-   internal List<object> All(){var result=new List<object>();Call(delegate{Need(api.RecordBof(Storage)==0,"Trigger table is unavailable/empty.");api.RecordFirst(Storage);var seen=new HashSet<int>();while(api.RecordEof(Storage)==0){Need(result.Count<4096&&seen.Add(NativeMemory.I32(Storage,0x98)),"Trigger row bound/id uniqueness differs.");result.Add(Value());api.RecordNext(Storage);}});result.Sort(delegate(object x,object y){return N(M(x),"id").CompareTo(N(M(y),"id"));});return result;}
+   internal List<object> All(){var result=new List<object>();Call(delegate{Need(api.RecordBof(Storage)==0,"Trigger table is unavailable/empty.");api.RecordFirst(Storage);var seen=new HashSet<int>();while(api.RecordEof(Storage)==0){Need(seen.Add(NativeMemory.I32(Storage,0x98)),"Trigger row bound/id uniqueness differs.");result.Add(Value());api.RecordNext(Storage);}});result.Sort(delegate(object x,object y){return N(M(x),"id").CompareTo(N(M(y),"id"));});return result;}
 
 
 
@@ -278,7 +279,7 @@ namespace McgsInternalBridge {
 
 
 
-   void ConfigurePrivate(){api.Assign(NativeMemory.Add(owned,0x10),note.Storage);for(int i=0;i<3;i++)Marshal.WriteInt32(owned,0x14+i*4,unchecked((int)U(baseWords[i])));for(int i=0;i<loopWords.Count;i++)Marshal.WriteInt32(owned,0x24+i*4,unchecked((int)U(loopWords[i])));if(loopWords.Count>0&&U(loopWords[0])==0)Marshal.WriteInt32(owned,0x30,unchecked((int)U(loopWords[3])-1));}
+   void ConfigurePrivate(){api.Assign(NativeMemory.Add(owned,0x10),note.Storage);for(int i=0;i<3;i++)Marshal.WriteInt32(owned,0x14+checked(i*4),unchecked((int)U(baseWords[i])));for(int i=0;i<loopWords.Count;i++)Marshal.WriteInt32(owned,0x24+checked(i*4),unchecked((int)U(loopWords[i])));if(loopWords.Count>0&&U(loopWords[0])==0)Marshal.WriteInt32(owned,0x30,unchecked((int)U(loopWords[3])-1));}
 
 
 

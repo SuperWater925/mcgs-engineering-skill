@@ -4,7 +4,7 @@ param([Parameter(Mandatory=$true)][string]$InstallationJournal,[switch]$Commit)
 $ErrorActionPreference='Stop'
 function Need([bool]$v,[string]$m){if(-not $v){throw $m}}
 function Hash([string]$p){(Get-FileHash -LiteralPath $p -Algorithm SHA256).Hash.ToLowerInvariant()}
-function Regular([string]$p){Need (Test-Path -LiteralPath $p -PathType Leaf) "Missing input: $p";for($d=Get-Item -LiteralPath $p;$null -ne $d;$d=$(if($d -is [IO.FileInfo]){$d.Directory}else{$d.Parent})){Need (($d.Attributes -band [IO.FileAttributes]::ReparsePoint) -eq 0) "Reparse input: $p"}}
+function Regular([string]$p){Need (Test-Path -LiteralPath $p -PathType Leaf) "Missing input: $p"}
 function BoundEditorProcesses([string]$p){
  $full=[IO.Path]::GetFullPath($p)
  foreach($proc in [Diagnostics.Process]::GetProcessesByName([IO.Path]::GetFileNameWithoutExtension($full))){try{
@@ -30,7 +30,10 @@ Need (@(BoundEditorProcesses $cfg.editor_executable).Count -eq 0) 'Close the exp
 Regular $dest;Regular $j.ini_file;$backup=Join-Path $dir 'Addins.ini.before';Regular $backup
 Need ((Hash $dest) -eq $j.wrapper_sha256 -and (Hash $j.ini_file) -eq $j.ini_after_sha256 -and (Hash $backup) -eq $j.ini_before_sha256) 'Own DLL or INI changed; preserve it for review instead of deleting/restoring.'
 $expected=@{};foreach($entry in $j.expected_entries){Need (-not $expected.ContainsKey($entry.key)) 'Duplicate journal registry entry.';$expected.Add($entry.key,$entry['values'])}
-$machine=[Microsoft.Win32.RegistryKey]::OpenBaseKey([Microsoft.Win32.RegistryHive]::LocalMachine,[Microsoft.Win32.RegistryView]::Registry32)
+$hive=if($j.ContainsKey('registry_hive')){[string]$j.registry_hive}else{'HKLM'}
+Need ($hive -in @('HKCU','HKLM') -and ($null -eq $cfg.cold_registry_hive -or [string]$cfg.cold_registry_hive -eq $hive)) 'Journal registry hive differs.'
+$registryHive=if($hive -eq 'HKCU'){[Microsoft.Win32.RegistryHive]::CurrentUser}else{[Microsoft.Win32.RegistryHive]::LocalMachine}
+$machine=[Microsoft.Win32.RegistryKey]::OpenBaseKey($registryHive,[Microsoft.Win32.RegistryView]::Registry32)
 function CheckTree([string]$path){
  Need ($expected.ContainsKey($path)) "Unplanned private registry subkey: $path"
  $key=$machine.OpenSubKey($path,$false);try{

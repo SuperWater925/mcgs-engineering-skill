@@ -76,7 +76,7 @@ namespace McgsInternalBridge {
             NativeOperationTrace.SetPhase("native-project-identity");
             // datObj remains in the stable loader signature only; identity and business calls use native state.
             string actual=NativePageDuplicateProfile.CurrentProjectPath(engine);
-            NativeMemory.Require(!String.IsNullOrEmpty(actual) && Path.GetFullPath(actual).Equals(expected,StringComparison.OrdinalIgnoreCase),"Current native project identity does not match isolated trial.");
+            NativeMemory.Require(!String.IsNullOrEmpty(actual) && NativeEngineeringProjectScope.SameFile(actual,expected),"Current native project identity does not match isolated trial.");
             NativeEngineeringProjectScope.BindNativeIdentity(actual);var context=engine.Attach();
             NativeOperationTrace.SetPhase("attached");
             Dictionary<string,object> result=null;
@@ -124,7 +124,7 @@ namespace McgsInternalBridge {
         }
         internal static string Hex(IntPtr value){return "0x"+U(value).ToString("X8");}
         internal static void Readable(IntPtr pointer,int length) {
-            Require(pointer!=IntPtr.Zero && length>=0 && length<=1024*1024,"Invalid native read range.");
+            Require(pointer!=IntPtr.Zero && length>=0,"Invalid native read range.");
             ulong cursor=U(pointer),end=cursor+(uint)length;Require(end<=UInt32.MaxValue,"Native read overflow.");
             while(cursor<end) {
                 MemoryInfo info;UIntPtr size=VirtualQuery(new IntPtr(unchecked((int)(uint)cursor)),out info,new UIntPtr((uint)Marshal.SizeOf(typeof(MemoryInfo))));
@@ -164,7 +164,7 @@ namespace McgsInternalBridge {
             preferredBase=Number(binary["image_base"]);ImageSha256=NativeMemory.Hash(executable);
             NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(binary["sha256"]),ImageSha256,"NativeOperations.functional:165:editor"),"Loaded editor differs from the locally derived internal ABI profile; extract its actual structure first.");
             int pe=NativeMemory.I32(ImageBase,0x3C);NativeMemory.Require(NativeMemory.I32(ImageBase,pe)==0x4550,"Invalid editor PE image.");
-            imageSize=NativeMemory.I32(ImageBase,pe+24+56);NativeMemory.Require(imageSize>0 && imageSize<256*1024*1024,"Invalid editor image size.");
+            imageSize=NativeMemory.I32(ImageBase,pe+24+56);NativeMemory.Require(imageSize>0 && imageSize==Process.GetCurrentProcess().MainModule.ModuleMemorySize,"Invalid editor image size.");
             foreach(object entry in (IEnumerable)profile["functions"]) {
                 var item=(Dictionary<string,object>)entry;functions.Add(Convert.ToString(item["name"]),item);VerifyFunction(item);
             }

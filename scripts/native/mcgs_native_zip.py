@@ -41,3 +41,17 @@ def pack_like(original, plain):
     """Keep original bytes for no-ops and retain the actual envelope on edits."""
     if unpack_if_wrapped(original)==plain:return original
     return pack(plain) if original.startswith(MARKER) else plain
+
+
+if __name__ == '__main__':
+    import argparse
+    import base64
+    import sys
+    parser=argparse.ArgumentParser(description='Shared native envelope codec; no database access.')
+    parser.add_argument('--unpack-base64',action='store_true',required=True)
+    parser.parse_args()
+    try:
+        raw=base64.b64decode(sys.stdin.buffer.read(),validate=True)
+        sys.stdout.buffer.write(base64.b64encode(unpack_if_wrapped(raw)))
+    except (ValueError,zlib.error) as error:
+        parser.exit(1,str(error)+'\n')
