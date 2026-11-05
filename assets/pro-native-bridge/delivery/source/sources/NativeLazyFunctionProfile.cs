@@ -96,42 +96,68 @@ namespace McgsInternalBridge {
   internal bool Has(string name){Load();return functions.ContainsKey(name)&&!ambiguousFunctions.Contains(name);}
   IntPtr Module(string name){
    IntPtr handle;if(handles.TryGetValue(name,out handle))return handle;
-   handle=NativeAbiTargetProfiles.ModuleHandle(name);NativeMemory.Require(handle!=IntPtr.Zero,"Required native module is not already loaded: "+name);
+   handle=NativeAbiTargetProfiles.ModuleHandle(name);if(handle==IntPtr.Zero)throw NativeAbiTargetProfiles.Problem("deployment","Required native module is not already loaded: "+name,Relative,name);
    ProcessModule found=null;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==handle){found=loaded;break;}
-   NativeMemory.Require(found!=null,"Required native module has no loaded image: "+name);
+   if(found==null)throw NativeAbiTargetProfiles.Problem("deployment","Required native module has no loaded image: "+name,Relative,name);
    Dictionary<string,object> row;
    uint imageBase;
    if(moduleRows.TryGetValue(name,out row)){
     NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(row["sha256"]),NativeMemory.Hash(found.FileName),"NativeLazyFunctionProfile:"+Relative+":"+name),"Native module observation failed: "+name);
     imageBase=unchecked((uint)NativeEngine.Number(row["preferred_base"]));
    }else{
-    NativeMemory.Require(handle==Engine.ImageBase,"Profile has no explicit ABI module declaration: "+name);
+    if(handle!=Engine.ImageBase)throw new NativeAbiUnavailableException("Profile has no explicit ABI module declaration: "+name,Relative,name);
     object value;imageBase=profile.TryGetValue("preferred_base",out value)?unchecked((uint)NativeEngine.Number(value)):0x400000U;
    }
-   if(name.Equals("McgsSetPro.exe",StringComparison.OrdinalIgnoreCase))NativeMemory.Require(handle==Engine.ImageBase,"Native profile and attached editor disagree.");
+   if(name.Equals("McgsSetPro.exe",StringComparison.OrdinalIgnoreCase))NativeAbiTargetProfiles.RequireIdentity(handle==Engine.ImageBase,"Native profile and attached editor disagree.",Relative,name);
    handles.Add(name,handle);preferred.Add(name,imageBase);sizes.Add(name,found.ModuleMemorySize);return handle;
   }
   Dictionary<string,object> CodeGuard(string module,int rva){foreach(string key in new[]{"code_guards","functions"}){object raw;if(!profile.TryGetValue(key,out raw))continue;foreach(var row in ProfileRows(raw,key,false)){object address,owner;if(!row.TryGetValue("rva",out address)||EngineNumber(address)!=rva||!row.ContainsKey("bytes"))continue;string role=row.TryGetValue("module",out owner)?Convert.ToString(owner):"McgsSetPro.exe";if(role==module)return row;}}throw new NativeAbiUnavailableException("Requested native method has no byte guard in its own profile.",Relative,module+":"+rva);}
   static int EngineNumber(object value){return NativeEngine.Number(value);}
-  void GuardMethodChain(string module,int first){var seen=new HashSet<int>();int rva=first;while(true){NativeMemory.Require(seen.Add(rva),"Requested native method has a jump cycle.");var guard=CodeGuard(module,rva);NativeAbiTargetProfiles.CheckEntry(guard,"requested method body",Relative);byte[] bytes=HexBytes(Convert.ToString(guard["bytes"]));IntPtr image=Module(module);NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)guard["reloc_offsets"],unchecked(NativeMemory.U(image)-preferred[module]));NativeMemory.Require(rva>=0&&(long)rva+bytes.Length<=sizes[module]&&BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(NativeMemory.Add(image,rva),bytes.Length)),"Requested native method bytes differ.");if(bytes.Length>=5&&bytes[0]==0xE9){rva=checked(rva+5+BitConverter.ToInt32(bytes,1));continue;}if(bytes.Length>=6&&bytes[0]==0xFF&&bytes[1]==0x25){IntPtr slot=new IntPtr(unchecked((int)BitConverter.ToUInt32(bytes,2)));object imports;if(profile.TryGetValue("mfc_imports",out imports)||profile.TryGetValue("imports",out imports)){bool matched=false;foreach(var row in ProfileRows(imports,"imports",false)){object raw;if(!row.TryGetValue("iat_rva",out raw)||NativeMemory.Add(Engine.ImageBase,EngineNumber(raw))!=slot)continue;NativeAbiTargetProfiles.CheckEntry(row,"requested method import",Relative);IntPtr owner=Module("mfc110u.dll"),target=NativeMemory.Add(owner,EngineNumber(row["target_rva"]));NativeMemory.Require(NativeMemory.Ptr(slot,0)==target,"Requested native method IAT differs.");if(row.TryGetValue("ordinal",out raw))NativeMemory.Require(GetProcAddressOrdinal(owner,new IntPtr(EngineNumber(raw)))==target,"Requested native method ordinal differs.");matched=true;}NativeMemory.Require(matched,"Requested native method import lacks a matching profile role.");}else throw new NativeAbiUnavailableException("Requested method is an import thunk without an import role contract.",Relative,module+":"+rva);}return;}}
+  void GuardMethodChain(string module,int first){
+   var seen=new HashSet<int>();int rva=first;
+   while(true){
+    NativeMemory.Require(seen.Add(rva),"Requested native method has a jump cycle.");var guard=CodeGuard(module,rva);
+    NativeAbiTargetProfiles.CheckFields(guard,"requested method body",Relative,"rva","bytes","reloc_offsets");
+    byte[] bytes=HexBytes(Convert.ToString(guard["bytes"]));IntPtr image=Module(module);
+    NativeCodeRelocation.RebaseDeltaInPlace(bytes,(IEnumerable)guard["reloc_offsets"],unchecked(NativeMemory.U(image)-preferred[module]));
+    NativeAbiTargetProfiles.RequireArtifact(rva>=0&&(long)rva+bytes.Length<=sizes[module],"Requested method guard exceeds its bound module.",Relative,module+":"+rva);
+    NativeAbiTargetProfiles.RequireIdentity(BitConverter.ToString(bytes)==BitConverter.ToString(NativeMemory.Bytes(NativeMemory.Add(image,rva),bytes.Length)),"Current bound method bytes changed.",Relative,module+":"+rva);
+    if(bytes.Length>=5&&bytes[0]==0xE9){rva=checked(rva+5+BitConverter.ToInt32(bytes,1));continue;}
+    if(bytes.Length>=6&&bytes[0]==0xFF&&bytes[1]==0x25){
+     IntPtr slot=new IntPtr(unchecked((int)BitConverter.ToUInt32(bytes,2)));object imports;
+     if(profile.TryGetValue("mfc_imports",out imports)||profile.TryGetValue("imports",out imports)){
+      bool matched=false;foreach(var row in ProfileRows(imports,"imports",false)){
+       object raw;if(!row.TryGetValue("iat_rva",out raw)||NativeMemory.Add(Engine.ImageBase,EngineNumber(raw))!=slot)continue;
+       var fields=new List<string>{"iat_rva","target_rva"};if(row.ContainsKey("ordinal"))fields.Add("ordinal");NativeAbiTargetProfiles.CheckFields(row,"requested method import",Relative,fields.ToArray());
+       IntPtr owner=Module("mfc110u.dll"),target=NativeMemory.Add(owner,EngineNumber(row["target_rva"]));
+       NativeAbiTargetProfiles.RequireIdentity(NativeMemory.Ptr(slot,0)==target,"Requested native method IAT differs.",Relative,module+":"+rva);
+       if(row.TryGetValue("ordinal",out raw))NativeAbiTargetProfiles.RequireIdentity(GetProcAddressOrdinal(owner,new IntPtr(EngineNumber(raw)))==target,"Requested native method ordinal differs.",Relative,module+":"+rva);matched=true;
+      }
+      if(!matched)throw new NativeAbiUnavailableException("Requested native method import lacks a matching profile role.",Relative,module+":"+rva);
+     }else throw new NativeAbiUnavailableException("Requested method is an import thunk without an import role contract.",Relative,module+":"+rva);
+    }
+    return;
+   }
+  }
   internal IntPtr Address(string name){
-   NativeMemory.Require(IntPtr.Size==4&&EngineEntry.ExpectedUiThreadId>0&&NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Native function access requires the captured x86 host UI thread.");
+   NativeAbiTargetProfiles.RequireIdentity(IntPtr.Size==4&&EngineEntry.ExpectedUiThreadId>0&&NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Native function access requires the captured x86 host UI thread.",Relative,name);
    Load();Dictionary<string,object> row;
    if(ambiguousFunctions.Contains(name))throw new NativeAbiUnavailableException("Native profile has multiple callable rows with this name; a profile-specific role is required: "+name,Relative,name);
    if(!functions.TryGetValue(name,out row))throw new NativeAbiUnavailableException("Native profile has no requested function: "+name,Relative,name);
-   NativeAbiTargetProfiles.CheckEntry(row,"function",Relative);
-   object value;string module=row.TryGetValue("module",out value)?Convert.ToString(value):"McgsSetPro.exe";
-   IntPtr image=Module(module);int rva=NativeEngine.Number(row["rva"]);
    string bytesKey=format=="strategy"?"expected_first_32_bytes":format=="duplicate"?"first32":format=="save"?"expected_first32":format=="control"?"first32":"bytes";
    string relocKey=format=="strategy"?"relocatable_dword_offsets_in_first32":format=="duplicate"||format=="save"?"relocation_offsets":format=="control"?"relocations":"reloc_offsets";
+   var fields=new List<string>{"rva"};if(row.ContainsKey("module"))fields.Add("module");if(row.ContainsKey(bytesKey)){fields.Add(bytesKey);fields.Add(relocKey);}if(row.ContainsKey("ordinal"))fields.Add("ordinal");if(row.ContainsKey("export_name"))fields.Add("export_name");
+   NativeAbiTargetProfiles.CheckFields(row,"function",Relative,fields.ToArray());
+   object value;string module=row.TryGetValue("module",out value)?Convert.ToString(value):"McgsSetPro.exe";
+   IntPtr image=Module(module);int rva=NativeEngine.Number(row["rva"]);
    if(!row.ContainsKey(bytesKey)){GuardMethodChain(module,rva);return NativeMemory.Add(image,rva);}
    byte[] expected=HexBytes(Convert.ToString(row[bytesKey]));
-   NativeMemory.Require(expected.Length>0&&rva>=0&&(long)rva+expected.Length<=sizes[module],"Native function guard exceeds its module: "+Relative+"/"+name);
+   NativeAbiTargetProfiles.RequireArtifact(expected.Length>0&&rva>=0&&(long)rva+expected.Length<=sizes[module],"Native function guard exceeds its module: "+Relative+"/"+name,Relative,name);
    NativeCodeRelocation.RebaseDeltaInPlace(expected,(IEnumerable)row[relocKey],unchecked((uint)(NativeMemory.U(image)-preferred[module])));
    IntPtr address=NativeMemory.Add(image,rva);
-   NativeMemory.Require(BitConverter.ToString(NativeMemory.Bytes(address,expected.Length))==BitConverter.ToString(expected),"Native function bytes differ: "+Relative+"/"+name);
-   if(row.ContainsKey("ordinal"))NativeMemory.Require(GetProcAddressOrdinal(image,new IntPtr(NativeEngine.Number(row["ordinal"])))==address,"Native ordinal export differs: "+name);
-   if(row.ContainsKey("export_name"))NativeMemory.Require(GetProcAddress(image,Convert.ToString(row["export_name"]))==address,"Native named export differs: "+name);
+   NativeAbiTargetProfiles.RequireIdentity(BitConverter.ToString(NativeMemory.Bytes(address,expected.Length))==BitConverter.ToString(expected),"Current bound function bytes changed: "+Relative+"/"+name,Relative,name);
+   if(row.ContainsKey("ordinal"))NativeAbiTargetProfiles.RequireIdentity(GetProcAddressOrdinal(image,new IntPtr(NativeEngine.Number(row["ordinal"])))==address,"Native ordinal export differs: "+name,Relative,name);
+   if(row.ContainsKey("export_name"))NativeAbiTargetProfiles.RequireIdentity(GetProcAddress(image,Convert.ToString(row["export_name"]))==address,"Native named export differs: "+name,Relative,name);
    return address;
   }
   internal T Bind<T>(string name)where T:class{return Marshal.GetDelegateForFunctionPointer(Address(name),typeof(T))as T;}

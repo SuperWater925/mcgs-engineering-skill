@@ -12,6 +12,7 @@ import hashlib
 import json
 from pathlib import Path, PureWindowsPath
 import re
+import struct
 import sys
 
 sys.dont_write_bytecode = True
@@ -639,8 +640,16 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         'capabilities': {'code_and_RTTI_locations_are_not_object_layout_or_call_semantics': True,
             'existing_object_layout_contracts_preserved': True, 'object_layout_verified': False,
             'calling_semantics_verified': False, 'evidence_flags_are_not_new_global_permission_gates': True},
+        'adaptation_policy': {'strict_evidence_first': True,
+            'automatic_fallback': 'independently-identified-structure-preserving-x86',
+            'unrelated_hierarchy_and_callee_metadata_not_global_gates': True,
+            'unresolved_entries_block_only_the_consuming_feature': True,
+            'unresolved_reference_addresses_callable': False},
         'local_actual_module_paths': {alias: str(Path(path).resolve()) for alias, path in actual_modules.items()}}
-    suggestions, anchors = {}, {}
+    suggestions, anchors, anchor_identities, candidate_suggestions, table_members = {}, {}, {}, {}, {}
+    signature_models = {}
+    for model in catalog['signatures']:
+        signature_models.setdefault((model['module'], model['reference_rva']), []).append(model)
 
     def suggest(alias, old, new, kind, proof_id):
         key = (alias, int(old));value = suggestions.setdefault(key, {})
@@ -648,42 +657,184 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         if kind == 'function':
             proven_export_targets.setdefault((alias, int(old)), set()).add(int(new))
 
-    def complete_function(row, entry, current, context, method):
+    def complete_function(row, entry, current, context, method, *, identity=None, adaptive_evidence=None):
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
         pe = actual[alias]
-        canonical, reloc = xs.normalized_guard_bytes(pe, current, entry['guard_length'], catalog['reference_modules'][alias]['image_base'])
-        raw = pe.read(current, entry['guard_length'])
+        try:
+            canonical, reloc = xs.normalized_guard_bytes(pe, current, entry['guard_length'], catalog['reference_modules'][alias]['image_base'])
+            raw = pe.read(current, entry['guard_length'])
+        except (ValueError, struct.error) as exc:
+            row.update(status='unresolved', failure_category='guard_extent_unavailable',
+                candidate_rvas=[current], required_guard_length=entry['guard_length'],
+                reason='Located function cannot provide the unchanged consumer guard extent: '+str(exc))
+            return False
+        terminal = terminal_contract(entry, current, identity, adaptive_evidence)
+        if terminal['required'] and not terminal['satisfied']:
+            row.update(status='unresolved', failure_category='terminal_body_contract_unresolved',
+                candidate_rvas=[current], terminal_body_contract=terminal,
+                reason='Entry role was located, but its known complete terminal body contract was not preserved')
+            return False
         row.update(status='resolved', actual_rva=current,
             actual_guard_bytes=raw.hex(), guard_bytes_at_reference_preferred_base=canonical.hex(),
             actual_relocation_offsets=reloc, proof_id=identifier, resolution_method=method,
-            identity_anchors={'RTTI_slot': bool(anchors.get((alias, old))), 'named_export': entry.get('exports', [])},
+            identity_anchors={'RTTI_slot': current in anchors.get((alias, old), set()),
+                'named_export': [name for name in entry.get('exports', []) if name in pe.exports and
+                                 not pe.exports[name].get('forwarder') and pe.exports[name]['rva'] == current]},
             normalization=context['normalization_proofs'])
+        if 'reason' in row:
+            row['initial_locator_observation'] = row.pop('reason')
+        row.pop('candidate_rvas', None)
+        row['failure_category'] = None
+        row['address_proof_scope'] = 'direct-function-location'
+        row['virtual_slot_numbers_adapted'] = False
+        if terminal['required']:
+            row['terminal_body_contract'] = terminal
+        if identity is not None:
+            row['adaptive_identity'] = copy.deepcopy(identity)
+            row['adaptive_evidence'] = copy.deepcopy(adaptive_evidence or {})
         result['proofs'].append({'id': identifier, 'kind': method, 'module': alias,
             'reference_rva': old, 'actual_rva': current, 'object_displacements_preserved': True,
+            'address_proof_scope': 'direct-function-location', 'virtual_slot_numbers_adapted': False,
             'normalization': context['normalization_proofs']})
         suggest(alias, old, current, 'function', identifier)
         for ref in context['referents']:
-            suggest(alias, ref['reference_rva'], ref['actual_rva'], ref['kind'], identifier)
+            if pe.is_executable(ref['actual_rva']):
+                # Nested branch contexts may contain only a short body prefix.
+                # Even a strict CALL/code-pointer comparison is therefore a
+                # candidate for the callee's own complete catalog signature,
+                # never an independently callable address proof.
+                values = candidate_suggestions.setdefault((alias, int(ref['reference_rva'])), {})
+                values.setdefault(int(ref['actual_rva']), set()).add(identifier)
+            else:
+                suggest(alias, ref['reference_rva'], ref['actual_rva'], ref['kind'], identifier)
+        for ref in context.get('candidate_referents', []):
+            if ref.get('kind') == 'code-reference' and pe.is_executable(ref['actual_rva']):
+                values = candidate_suggestions.setdefault((alias, int(ref['reference_rva'])), {})
+                values.setdefault(int(ref['actual_rva']), set()).add(identifier)
+        if terminal['required']:
+            values = candidate_suggestions.setdefault((alias, terminal['reference_body_rva']), {})
+            values.setdefault(terminal['actual_body_rva'], set()).add(identifier)
+        return True
 
-    type_cache = {}
+    def match_candidate(entry, current, identity=None, *, verify_targets=True, allow_adaptive=True):
+        alias = entry['module'];pe = actual[alias]
+        matched = xs.local_match(entry, pe, current)
+        context = xs.verify_context(reference.get(alias), pe, entry, matched,
+                                    entry['reference_rva'], current,
+                                    verify_targets=verify_targets) if matched else None
+        if context is not None:
+            selected = {'actual': matched, 'context': context, 'adaptive': False}
+            if identity is not None:
+                selected['identity'] = identity
+            return selected
+        if allow_adaptive and identity is not None:
+            relaxed = xs.adaptive_match(entry, pe, current, identity_proof=identity)
+            if relaxed is not None:
+                return {**relaxed, 'adaptive': True, 'identity': identity}
+        return None
+
+    def anchor_identity(alias, old, current):
+        proofs = anchor_identities.get((alias, old), {}).get(current, [])
+        # Named API identity can justify localized diagnostic/helper changes;
+        # a same-numbered RTTI slot alone cannot establish method semantics.
+        selected = next((proof for proof in proofs if proof['kind']=='named-export'), proofs[0] if proofs else None)
+        return copy.deepcopy(selected) if selected is not None else None
+
+    def terminal_contract(entry, current, identity=None, adaptive_evidence=None):
+        """Close a known thunk body with its own longest supplied contract.
+
+        This is an inline PE witness, not a callable body-address proof and not
+        a dependency on the body's row.  It prevents a short 24-byte context
+        from overriding a known longer body contract without wrapper/body
+        callable-proof cycles.  Actual CALLs are never treated as entry JMPs.
+        """
+        old_body = None
+        if entry.get('first_is_direct_thunk'):
+            transfer = entry['transfers'][0]
+            chain = transfer.get('target_signature_chain', [])
+            if transfer.get('target_context_status') == 'complete' and chain:
+                old_body = chain[-1]['reference_rva']
+        if adaptive_evidence and adaptive_evidence.get('reference_body_rva') != entry['reference_rva']:
+            old_body = adaptive_evidence.get('reference_body_rva')
+        models = [model for model in signature_models.get((entry['module'], old_body), [])
+                  if model['id'] != entry['id']]
+        if old_body is None or old_body == entry['reference_rva'] or not models:
+            return {'required': False, 'satisfied': True}
+        longest = max(model['match_length'] for model in models)
+        models = [model for model in models if model['match_length'] == longest]
+        pe = actual[entry['module']]
+        new_body = adaptive_evidence.get('actual_body_rva') if adaptive_evidence else None
+        if new_body is None:
+            cursor, seen = current, set()
+            while cursor not in seen and pe.is_executable(cursor):
+                seen.add(cursor)
+                section = pe.section_for_rva(cursor)
+                remaining = section.raw_size - (cursor-section.rva)
+                try:
+                    part = xs.decode_signature(pe, cursor, min(32, remaining))
+                except (ValueError, struct.error):
+                    break
+                if not part['first_is_direct_thunk']:
+                    new_body = cursor;break
+                cursor = part['transfers'][0]['reference_target_rva']
+        witness = {'required': True, 'satisfied': False, 'reference_body_rva': old_body,
+                   'actual_body_rva': new_body, 'contract_ids': [model['id'] for model in models],
+                   'complete_supplied_match_length': longest,
+                   'scope': 'preparation-time-current-PE-terminal-contract',
+                   'body_address_mapping_emitted': False, 'callable_body_row_dependency': False}
+        if new_body is None or not pe.is_executable(new_body):
+            witness['reason'] = 'Current entry has no verified terminal reached through actual direct JMPs'
+            return witness
+        body_identity = {**identity, 'actual_rva': new_body, 'relation': 'actual-entry-terminal-body'} if identity else None
+        for model in models:
+            selected = match_candidate(model, new_body, body_identity)
+            if selected is None:
+                continue
+            try:
+                xs.normalized_guard_bytes(pe, new_body, model['guard_length'],
+                                          catalog['reference_modules'][entry['module']]['image_base'])
+            except (ValueError, struct.error):
+                continue
+            witness.update(satisfied=True, verified_contract_id=model['id'],
+                           normalization=selected['context']['normalization_proofs'])
+            return witness
+        witness['reason'] = 'Known complete terminal model or its unchanged guard extent is not available'
+        return witness
+
+    type_cache, thunk_member_cache = {}, {}
     for entry in catalog['types']:
         alias, old = entry['module'], entry['reference'];proof_id = entry['id']
         if alias not in actual:
-            result['types'].append({'id': proof_id, 'module': alias, 'status': 'unresolved', 'reason': 'Actual module not supplied'});continue
+            result['types'].append({'id': proof_id, 'module': alias, 'status': 'unresolved',
+                'failure_category': 'module_unavailable', 'blocked_scope': 'consuming-feature',
+                'reason': 'Actual module not supplied'});continue
         key = (alias, old['decorated_name'])
+        role_only = False;role_evidence = None
         if prefer_content_cache and alias in equal_modules:
             exact, different = [copy.deepcopy(old)], []
         else:
             if key not in type_cache:
                 type_cache[key] = rtti.locate_type(actual[alias], old['decorated_name'])
             exact, different = rtti.pair_table(old, type_cache[key]['tables'])
+            # A primary/interface identity is narrower than the complete
+            # inheritance metadata.  Extra unrelated bases do not make every
+            # getter/setter unavailable.  Their private fields and actual
+            # methods still require their independent contracts below.
+            if not exact:
+                exact, different = rtti.pair_table_roles(old, type_cache[key]['tables'])
+                role_only = bool(exact)
         if len(exact) != 1:
             result['types'].append({'id': proof_id, 'module': alias, 'status': 'ambiguous' if len(exact) > 1 else 'unresolved',
+                'failure_category': 'table_identity_ambiguous' if len(exact) > 1 else 'table_role_not_located',
+                'blocked_scope': 'consuming-feature',
                 'decorated_name': old['decorated_name'], 'reference_vtable_rva': old['vtable_rva'],
                 'candidate_vtable_rvas': [t['vtable_rva'] for t in exact],
                 'observed_layout_differences': [{'vtable_rva': t['vtable_rva'], 'col_offset': t['col_offset'], 'hierarchy': t['hierarchy']} for t in different],
-                'reason': 'Exact RTTI class/interface role and existing hierarchy layout is not unique'});continue
+                'adaptation_attempts': ['exact-RTTI-hierarchy', 'stable-RTTI-table-subobject-role'],
+                'reason': 'Current RTTI class/interface subobject role is not unique; private fields were not inferred'});continue
         new = exact[0]
+        if role_only:
+            role_evidence = rtti.table_role_proof(old, new)
         # COL, type and hierarchy identify this table independently of methods
         # which this particular request may never call. A shorter trailing
         # method list cannot invalidate that identity. Only slots actually
@@ -695,52 +846,92 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                  'shared_prefix_count': min(reference_slots, actual_slots),
                  'missing_reference_tail_indexes': list(range(actual_slots, reference_slots)),
                  'identity_is_not_proof_of_all_reference_slots': True}
-        proof = {'id': proof_id, 'kind': 'RTTI-class-COL-hierarchy-vtable', 'module': alias,
+        proof = {'id': proof_id, 'kind': 'RTTI-stable-table-subobject-role' if role_only else 'RTTI-class-COL-hierarchy-vtable', 'module': alias,
             'decorated_name': old['decorated_name'], 'reference': old, 'actual': new, 'slot_coverage': slots}
+        if role_evidence is not None:
+            proof['role_evidence'] = role_evidence
         result['proofs'].append(proof)
         result['types'].append({'id': proof_id, 'module': alias, 'status': 'resolved', 'reference': old, 'actual': new,
-                                'slot_coverage': slots})
-        for before, after, kind in rtti.address_pairs(old, new):
+                                'resolution_method': proof['kind'], 'slot_coverage': slots,
+                                'unrelated_hierarchy_changes_observed': role_only,
+                                'private_member_layout_verified': False})
+        address_pairs = rtti.role_address_pairs(old, new) if role_only else rtti.address_pairs(old, new)
+        for before, after, kind in address_pairs:
             suggest(alias, before, after, kind, proof_id)
-        for before, after in zip(old['slot_entry_rvas'], new['slot_entry_rvas']):
+        members = set(new['slot_entry_rvas'])
+        for start in (() if prefer_content_cache and alias in equal_modules else new['slot_entry_rvas']):
+            if (alias, start) in thunk_member_cache:
+                members.update(thunk_member_cache[alias, start]);continue
+            cursor, seen = start, set()
+            while cursor not in seen:
+                seen.add(cursor)
+                try:
+                    part = xs.decode_signature(actual[alias], cursor, 32)
+                except (ValueError, struct.error):
+                    break
+                if not part['first_is_direct_thunk']:
+                    break
+                cursor = part['transfers'][0]['reference_target_rva']
+                if not actual[alias].is_executable(cursor):
+                    break
+                members.add(cursor)
+            thunk_member_cache[alias, start] = seen
+            members.update(seen)
+        for slot_index, (before, after) in enumerate(zip(old['slot_entry_rvas'], new['slot_entry_rvas'])):
+            table_members.setdefault((alias, before), set()).update(members)
             anchors.setdefault((alias, before), set()).add(after)
-            if prefer_content_cache and alias in equal_modules:
-                continue
-            # Published virtual slots often point at E9 entry thunks, while
-            # named profile functions refer to their bodies. Preserve that
-            # composite identity instead of treating a generic body as unique.
-            slot_signature = next((s for s in catalog['signatures'] if s['module'] == alias and s['reference_rva'] == before), None)
-            if slot_signature and slot_signature['first_is_direct_thunk']:
-                transfer = slot_signature['transfers'][0]
-                parts = [slot_signature] + transfer.get('target_signature_chain', [])
-                cursor = after;chain_pairs = [];valid = transfer.get('target_context_status') == 'complete'
-                for part in parts:
-                    matched = xs.local_match(part, actual[alias], cursor)
-                    if matched is None:
-                        valid = False;break
-                    context = xs.verify_context(None, actual[alias], part, matched, part['reference_rva'], cursor, verify_targets=False)
-                    if context is None:
-                        valid = False;break
-                    chain_pairs.append((part['reference_rva'], cursor))
-                    if part['first_is_direct_thunk']:
-                        cursor = matched['transfers'][0]['reference_target_rva']
-                if valid:
-                    for source, target in chain_pairs:
-                        anchors.setdefault((alias, source), set()).add(target)
+            identity = {'kind': 'rtti-slot', 'proof_id': proof_id, 'independent': True,
+                        'actual_rva': after, 'decorated_name': old['decorated_name'],
+                        'col_offset': old['col_offset'], 'slot_index': slot_index,
+                        'table_identity_does_not_prove_method_or_private_fields': True}
+            anchor_identities.setdefault((alias, before), {}).setdefault(after, []).append(identity)
+            # Do not promote the reference thunk's intermediate bodies to
+            # independent RTTI identities.  The actual entry may have lost its
+            # JMP and start with CALL; body correspondence belongs to the
+            # entry's returned actual_body_rva candidate and must pass the
+            # body's own full catalog signature with a caller dependency.
 
     pending = []
     local_candidates = {}
+    identity_candidates = {}
     for entry in catalog['signatures']:
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
-        row = {'id': identifier, 'module': alias, 'reference_rva': old, 'names': entry.get('names', [])}
+        row = {'id': identifier, 'module': alias, 'reference_rva': old, 'names': entry.get('names', []),
+               'blocked_scope': 'consuming-feature', 'adaptation_attempts': []}
         if alias not in actual:
-            row.update(status='unresolved', reason='Actual module not supplied');result['functions'].append(row);continue
+            row.update(status='unresolved', failure_category='module_unavailable', reason='Actual module not supplied');result['functions'].append(row);continue
         pe = actual[alias]
         role_anchors = set(anchors.get((alias, old), set()))
         export_anchors = [pe.exports[name]['rva'] for name in entry.get('exports', [])
                           if name in pe.exports and not pe.exports[name].get('forwarder')]
+        if len(set(export_anchors)) > 1:
+            row.update(status='ambiguous', failure_category='export_alias_roles_diverged',
+                candidate_rvas=sorted(set(export_anchors)),
+                reason='Reference export aliases now name different functions; this shared RVA needs per-role adaptation')
+            result['functions'].append(row);continue
+        if role_anchors and export_anchors and not role_anchors.intersection(export_anchors):
+            # A named direct-call entry may remain stable while its virtual
+            # slot moved.  Preserve that observation, but do not turn a slot
+            # ABI change into a global ban on the named direct function.
+            row['RTTI_slot_mismatch_observed'] = {'slot_candidates': sorted(role_anchors),
+                                                  'named_export_candidates': sorted(set(export_anchors)),
+                                                  'virtual_slot_mapping_not_inferred': True}
+            row['adaptation_attempts'].append('named-export-identity-with-observed-slot-difference')
+            role_anchors = set(export_anchors)
+        for current in set(export_anchors):
+            names = sorted(name for name in entry.get('exports', [])
+                           if name in pe.exports and not pe.exports[name].get('forwarder') and
+                           pe.exports[name]['rva'] == current)
+            export_id = identifier + ':named-export:' + ','.join(names)
+            export_identity = {'kind': 'named-export', 'proof_id': export_id, 'independent': True,
+                               'actual_rva': current, 'names': names}
+            anchor_identities.setdefault((alias, old), {}).setdefault(current, []).append(export_identity)
+            result['proofs'].append({'id': export_id, 'kind': 'current-named-export-identity',
+                                    'module': alias, 'actual_rva': current, 'names': names,
+                                    'identity_is_not_a_function_layout_proof': True})
         if export_anchors:
             role_anchors = role_anchors.intersection(export_anchors) if role_anchors else set(export_anchors)
+        identity_candidates[identifier] = set(role_anchors)
         if prefer_content_cache and alias in equal_modules:
             context = {'normalization_proofs': [{'kind': 'complete-PE-content-equivalence-cache',
                 'same_content_sha256': catalog['reference_modules'][alias]['sha256']}], 'referents': []}
@@ -753,49 +944,102 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         if not role_anchors:
             candidates = sorted(set(candidates + xs.candidates(pe, entry, prefix_fallback=True)))
         local_candidates[identifier] = [candidate for candidate in candidates if xs.local_match(entry, pe, candidate) is not None]
-        matches = []
-        for candidate in local_candidates[identifier]:
-            matched = xs.local_match(entry, pe, candidate)
-            if matched is None:
-                continue
-            context = xs.verify_context(reference.get(alias), pe, entry, matched, old, candidate)
-            if context is None:
-                continue
-            matches.append((candidate, context))
+        primary_candidates = candidates[:]
+        strict_matches = []
+        for candidate in candidates:
+            selected = match_candidate(entry, candidate, anchor_identity(alias, old, candidate), allow_adaptive=False)
+            if selected is not None:
+                strict_matches.append((candidate, selected))
+        row['adaptation_attempts'].append('exact-decoded-instructions-and-context')
+        if role_anchors:
+            row['adaptation_attempts'].append('independent-identity-structure-preserving-fallback')
+        if role_anchors and not export_anchors:
+            # A direct-call function can remain unchanged while unrelated
+            # virtual methods were inserted before its old slot.  A full,
+            # unique strict body proof can locate it independently; this does
+            # not claim the old slot number is valid for a virtual caller.
+            fallback = sorted((set(xs.candidates(pe, entry) +
+                                   xs.candidates(pe, entry, prefix_fallback=True)) - set(candidates)) &
+                              table_members.get((alias, old), set()))
+            for candidate in fallback:
+                if xs.local_match(entry, pe, candidate) is not None:
+                    local_candidates[identifier].append(candidate)
+                selected = match_candidate(entry, candidate, allow_adaptive=False)
+                if selected is not None:
+                    strict_matches.append((candidate, selected))
+            candidates = sorted(set(candidates + fallback))
+            row['adaptation_attempts'].append('same-class-strict-method-search-before-slot-adaptation')
+        # Complete same-class strict identity outranks an old slot number's
+        # relaxed structural candidate.  A newly inserted B must not mask A
+        # merely because their push/call/ret skeletons look alike.
+        matches = strict_matches[:]
+        if not matches:
+            for candidate in primary_candidates:
+                identity = anchor_identity(alias, old, candidate)
+                if identity is None:
+                    continue
+                selected = match_candidate(entry, candidate, identity)
+                if selected is not None:
+                    matches.append((candidate, selected))
         if len(matches) != 1:
             row.update(status='ambiguous' if len(matches) > 1 else 'missing',
+                failure_category='function_identity_ambiguous' if len(matches) > 1 else 'function_structure_not_located',
                 candidate_rvas=[v[0] for v in matches], candidates_examined=len(candidates),
                 reason='Normalized instruction/body/RTTI/export proof is not unique' if matches else
-                    'No instruction-aware candidate preserves the reference contract; ordinary field offsets were not masked')
+                    'No independently identified candidate preserves required instruction/field/stack roles; unresolved reference value is not callable')
             result['functions'].append(row);pending.append((row, entry));continue
-        current, context = matches[0]
+        current, selected = matches[0]
         row['candidates_examined'] = len(candidates)
-        complete_function(row, entry, current, context, 'decoded-x86-function')
+        completed = complete_function(row, entry, current, selected['context'],
+            'identity-anchored-adaptive-x86' if selected['adaptive'] else 'decoded-x86-function',
+            identity=selected.get('identity'), adaptive_evidence=selected.get('evidence'))
         result['functions'].append(row)
+        if not completed and row.get('failure_category') == 'terminal_body_contract_unresolved':
+            pending.append((row, entry))
     # A uniquely identified caller's same decoded CALL/absolute operand can
     # constrain a generic callee. Iterate the proof graph, without old-RVA bias.
     progress = True
     while progress:
         progress = False
         for row, entry in pending:
-            if row['status'] == 'resolved':
+            if row['status'] == 'resolved' or row.get('failure_category') == 'guard_extent_unavailable':
                 continue
             alias, old = entry['module'], entry['reference_rva']
             values = suggestions.get((alias, old), {})
-            candidates = ([next(iter(values))] if len(values) == 1 else local_candidates.get(entry['id'], []))
+            advisory = candidate_suggestions.get((alias, old), {})
+            constrained = values if values else advisory
+            candidates = ([next(iter(constrained))] if len(constrained) == 1 else
+                          sorted(set(local_candidates.get(entry['id'], [])) | identity_candidates.get(entry['id'], set())))
             matches = []
             for current in candidates:
                 if not actual[alias].is_executable(current):
                     continue
-                matched = xs.local_match(entry, actual[alias], current)
-                context = xs.verify_context(None, actual[alias], entry, matched, old, current) if matched else None
-                if context is not None:
-                    matches.append((current, context))
+                identity = anchor_identity(alias, old, current)
+                supporting_ids = []
+                if len(constrained) == 1 and current in constrained:
+                    supporting_ids = (sorted({proof['proof_id'] for proof in values[current]}) if values else
+                                      sorted(advisory[current]))
+                    supporting_ids = [value for value in supporting_ids if value != entry['id']]
+                    if identity is None and supporting_ids:
+                        identity = {'kind': 'proven-caller-role', 'proof_id': supporting_ids[0],
+                                    'independent': True, 'actual_rva': current,
+                                    'supporting_proof_ids': supporting_ids,
+                                    'candidate_is_not_callable_until_own_structure_matches': True}
+                selected = match_candidate(entry, current, identity)
+                if selected is not None:
+                    matches.append((current, selected, supporting_ids))
             if len(matches) != 1:
                 continue
-            current, context = matches[0]
-            supporting_ids = sorted({proof['proof_id'] for proof in values[current]}) if len(values) == 1 else []
-            complete_function(row, entry, current, context, 'unique-decoded-callgraph-referent' if len(values) == 1 else 'decoded-x86-current-import-role')
+            current, selected, supporting_ids = matches[0]
+            row['adaptation_attempts'].append('proven-caller-target-candidate' if constrained else 'current-import-role-fixed-point')
+            completed = complete_function(row, entry, current, selected['context'],
+                'caller-anchored-adaptive-x86' if selected['adaptive'] else
+                'unique-decoded-callgraph-referent' if len(constrained) == 1 else 'decoded-x86-current-import-role',
+                identity=selected.get('identity'), adaptive_evidence=selected.get('evidence'))
+            if not completed:
+                continue
+            if selected.get('identity', {}).get('kind') in ('named-export', 'rtti-slot'):
+                supporting_ids = []
             if supporting_ids:
                 # This candidate was selected by a live caller/operand proof,
                 # rather than unique standalone signature identity. Keep its
@@ -839,18 +1083,27 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 for identifier in supporting)
             if dependency_lost:
                 independent = []
-                for candidate in local_candidates.get(row['id'], []):
-                    pe = actual[row['module']]
-                    matched = xs.local_match(entry, pe, candidate)
-                    context = xs.verify_context(None, pe, entry, matched, entry['reference_rva'], candidate) if matched else None
-                    if context is not None:
-                        independent.append(candidate)
-                if independent == [row['actual_rva']]:
+                candidates = sorted(set(local_candidates.get(row['id'], [])) |
+                                    identity_candidates.get(row['id'], set()))
+                for candidate in candidates:
+                    identity = anchor_identity(row['module'], entry['reference_rva'], candidate)
+                    selected = match_candidate(entry, candidate, identity)
+                    if selected is not None:
+                        independent.append((candidate, selected))
+                if [candidate for candidate, _ in independent] == [row['actual_rva']]:
                     # Retain a genuinely unique standalone/export/RTTI proof
                     # if one has become available; caller loss alone does not
                     # override independent surviving identity evidence.
                     row.pop('supporting_proof_ids', None)
-                    row['resolution_method'] = 'decoded-x86-independent-proof'
+                    selected = independent[0][1]
+                    row['resolution_method'] = ('identity-anchored-adaptive-x86-independent' if selected['adaptive']
+                                                else 'decoded-x86-independent-proof')
+                    if selected.get('identity') is not None:
+                        row['adaptive_identity'] = selected['identity']
+                        row['adaptive_evidence'] = selected.get('evidence', {})
+                    else:
+                        row.pop('adaptive_identity', None)
+                        row.pop('adaptive_evidence', None)
                     for proof in result['proofs']:
                         if proof['id'] == row['id']:
                             proof.pop('supporting_proof_ids', None)
@@ -859,12 +1112,17 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             has_import_roles = any(imported.get('export_role') for imported in _signature_imports(entry))
             import_valid = True
             if has_import_roles and not dependency_lost:
-                pe = actual[row['module']]
-                matched = xs.local_match(entry, pe, row['actual_rva'])
-                import_valid = matched is not None and xs.verify_context(None, pe, entry, matched, entry['reference_rva'], row['actual_rva']) is not None
-            if not dependency_lost and import_valid:
+                import_valid = match_candidate(entry, row['actual_rva'], row.get('adaptive_identity')) is not None
+            terminal_valid = True
+            if row.get('terminal_body_contract', {}).get('required') and not dependency_lost:
+                terminal_valid = terminal_contract(entry, row['actual_rva'], row.get('adaptive_identity'),
+                                                   row.get('adaptive_evidence'))['satisfied']
+            if not dependency_lost and import_valid and terminal_valid:
                 continue
-            row.update(status='unresolved', reason='All originating caller/operand proofs were withdrawn' if dependency_lost else
+            row.update(status='unresolved', failure_category='identity_dependency_withdrawn' if dependency_lost else
+                       'terminal_body_contract_unresolved' if not terminal_valid else 'import_role_unavailable',
+                       reason='All originating caller/operand proofs were withdrawn' if dependency_lost else
+                       'Known complete terminal body contract became unavailable' if not terminal_valid else
                        'Current import export-role proof became unavailable or conflicting')
             for proof in result['proofs']:
                 if proof['id'] == row['id']:
@@ -927,6 +1185,9 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         'mapped_addresses': sum(len(m) for m in result['rva_maps'].values()), 'whole_file_sha_used_as_admission': False,
         'functions_using_dynamic_proof': sum(f.get('resolution_method') != 'identical-PE-content-cache' and f['status'] == 'resolved' for f in result['functions']),
         'functions_using_content_equivalence_cache': sum(f.get('resolution_method') == 'identical-PE-content-cache' for f in result['functions']),
+        'functions_using_identity_anchored_adaptation': sum(f['status'] == 'resolved' and 'adaptive-x86' in f.get('resolution_method', '') for f in result['functions']),
+        'tables_using_stable_role_adaptation': sum(t['status'] == 'resolved' and t.get('unrelated_hierarchy_changes_observed', False) for t in result['types']),
+        'unsupported_entries_do_not_disable_other_features': True,
         'all_code_locations_resolved': all(f['status'] == 'resolved' for f in result['functions'])}
     return result
 
@@ -945,6 +1206,17 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
         'local_actual_module_paths': result.get('local_actual_module_paths', {}),
         'resolved_profile_root': str(out), 'vendor_whole_file_sha_admission': False}
     functions = {f['id']: f for f in result['functions']}
+    functions_by_address = {}
+    for item in result['functions']:
+        if 'reference_rva' in item:
+            functions_by_address.setdefault((item['module'], item['reference_rva']), []).append(item)
+
+    def address_diagnostics(alias, address):
+        rows = functions_by_address.get((alias, address), [])
+        return [{'entry': item['id'], 'status': item['status'],
+                 'failure_category': item.get('failure_category'),
+                 'adaptation_attempts': item.get('adaptation_attempts', []),
+                 'reason': item.get('reason')} for item in rows if item['status'] != 'resolved']
     actual_pes = {}
     for profile in catalog['profiles']:
         source = (root / profile['relative_path']).resolve()
@@ -959,6 +1231,8 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
             mapping = result['rva_maps'].get(alias, {}).get(hex(old))
             if mapping is None:
                 record['unresolved_fields'].append({'json_pointer': path, 'module': alias, 'reference_rva': old,
+                    'failure_category': 'address_not_located', 'blocked_scope': 'consuming-entry',
+                    'locator_diagnostics': address_diagnostics(alias, old),
                     'reason': 'No unique current PE address proof; retained reference value is not an actual address'})
                 continue
             original = get_at(document, path)
@@ -983,6 +1257,10 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
             located = functions.get(guard['guard_id'])
             if not located or located['status'] != 'resolved':
                 record['unresolved_fields'].append({'json_pointer': guard['json_pointer'] + '/' + guard['byte_key'],
+                    'failure_category': (located or {}).get('failure_category', 'function_guard_not_located'),
+                    'blocked_scope': 'consuming-entry',
+                    'locator_diagnostics': [{'entry': guard['guard_id'], 'status': (located or {}).get('status', 'missing'),
+                        'adaptation_attempts': (located or {}).get('adaptation_attempts', [])}],
                     'reason': 'Function byte guard was not uniquely resolved'})
                 continue
             row = get_at(document, guard['json_pointer'])
@@ -997,7 +1275,13 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                 continue
             if alias not in actual_pes:
                 actual_pes[alias] = PE32(result['local_actual_module_paths'][alias])
-            canonical, offsets = xs.normalized_guard_bytes(actual_pes[alias], mapping['actual_rva'], guard['length'], catalog['reference_modules'][alias]['image_base'])
+            try:
+                canonical, offsets = xs.normalized_guard_bytes(actual_pes[alias], mapping['actual_rva'], guard['length'], catalog['reference_modules'][alias]['image_base'])
+            except (ValueError, struct.error) as exc:
+                record['unresolved_fields'].append({'json_pointer': guard['json_pointer'] + '/' + guard['byte_key'],
+                    'failure_category': 'guard_extent_unavailable', 'blocked_scope': 'consuming-entry',
+                    'reason': 'Current data guard cannot provide the unchanged consumer extent: '+str(exc)})
+                continue
             row = get_at(document, guard['json_pointer']);row[guard['byte_key']] = canonical.hex()
             for key in guard['relocation_keys']:
                 row[key] = offsets
@@ -1050,6 +1334,8 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                      'profile': profile['relative_path'], 'entry': entry['name'], 'json_pointer': prefix,
                      'no_native_address_fields': not any(f['json_pointer'].startswith(prefix + '/') for f in profile['fields']),
                      'proof_ids': sorted({r['proof_id'] for r in resolved})}
+            state['blocked_scope'] = 'consuming-entry'
+            state['failure_categories'] = sorted({item.get('failure_category', 'required_contract_unresolved') for item in details})
             direct_rva = next((f for f in profile['fields'] if f['json_pointer'] == prefix + '/rva'), None)
             if direct_rva is not None:
                 state['reference_rva'] = direct_rva['reference_rva']
@@ -1059,7 +1345,8 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
         record['status'] = 'resolved' if not record['unresolved_fields'] else 'partial' if record['resolved_fields'] else 'unresolved'
         document['_mcgs_abi_resolution'] = {'schema': ATTESTATION_SCHEMA, 'status': record['status'],
             'reference_sha256': profile['reference_sha256'], 'unresolved_fields': record['unresolved_fields'],
-            'retained_unresolved_values_are_reference_only': True, 'guard_bytes_preferred_base_policy': 'reference module preferred base'}
+            'retained_unresolved_values_are_reference_only': True, 'guard_bytes_preferred_base_policy': 'reference module preferred base',
+            'unresolved_entries_do_not_disable_other_features': True}
         target = (out / profile['relative_path']).resolve()
         if not target.is_relative_to(out):
             raise ValueError('Resolved profile path escapes output')

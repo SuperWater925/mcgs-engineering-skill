@@ -91,6 +91,7 @@ def type_anchor(pe, rva):
             import rtti
             model = rtti.describe_vtable(pe, rva)
             cache[rva] = {'decorated_name': model['decorated_name'], 'col_offset': model['col_offset'],
+                'constructor_displacement_offset': model['constructor_displacement_offset'],
                 'bases': [[b['decorated_name'], b['contained'], b['pmd'], b['attributes']] for b in model['hierarchy']['bases']]}
         except (ValueError, struct.error):
             cache[rva] = None
@@ -381,3 +382,13 @@ def normalized_guard_bytes(pe, rva, length, reference_preferred_base):
         data[first:last] = canonical[first - off:last - off]
         positions.append(off)
     return bytes(data), positions
+
+
+def adaptive_match(reference, actual_pe, rva, *, identity_proof):
+    """Try proved structural variants only after an independent role selected rva.
+
+    It is deliberately separate from local_match/verify_context so existing
+    strict callers never silently inherit weaker identity assumptions.
+    """
+    from adaptive_x86 import match
+    return match(reference, actual_pe, rva, identity_proof=identity_proof)

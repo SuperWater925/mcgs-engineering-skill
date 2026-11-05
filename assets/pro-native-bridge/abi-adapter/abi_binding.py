@@ -253,10 +253,16 @@ class TargetBinding:
             explicit_lazy_reader = bool(record.get('entry_resolutions'))
             partial_allowed = root_entries or explicit_lazy_reader
             status = 'verified' if record['status'] == 'resolved' else 'partial' if partial_allowed else 'unresolved'
+            entries = [{key: entry[key] for key in ('name', 'json_pointer', 'status', 'direct_status',
+                                                   'no_native_address_fields', 'failure_category',
+                                                   'feature_scope', 'adaptation_attempts') if key in entry}
+                       for entry in record.get('entry_resolutions', [])]
             for item in by_relative.get(relative, []):
                 rows.append({'file': item['planned_file'], 'profile': relative, 'status': status,
                              'sha256': digest(resolved[relative]), 'allow_partial_entries': partial_allowed,
                              'entry_validation_contract': contract.group(1) if explicit_lazy_reader else None,
+                             'availability_scope': 'checked_entry_or_fields' if partial_allowed else 'complete_profile_required',
+                             'entry_statuses': entries,
                              'details': json.dumps(record['unresolved_fields'], ensure_ascii=True, separators=(',', ':'))})
         # Static contracts have no native addresses to locate, but consumers
         # still need the exact promoted bytes in the bound integrity index.
@@ -279,7 +285,8 @@ class TargetBinding:
                             'is_editor': alias == 'editor'})
         return {'schema': 'mcgs-native-bound-profile-index/v1', 'catalog_sha256': self.result['catalog_sha256'],
                 'files': rows, 'modules': modules, 'source_guards':self.guard_changes,'source_ordinals':self.ordinal_changes,
-                'object_layout_offsets_changed': False, 'vendor_whole_file_sha_admission': False}
+                'object_layout_offsets_changed': False, 'vendor_whole_file_sha_admission': False,
+                'feature_scoped_failure': True, 'adaptive_locator': True}
 
     def summary(self):
         return {'catalog_sha256': self.result['catalog_sha256'],
@@ -301,26 +308,16 @@ def patch_runtime_source(name, text):
         _need(text.count(old) == 1, 'Native ABI lazy-check contract differs: ' + name + ': ' + old[:70])
         text = text.replace(old, new)
     if name == 'NativeOperations.functional.cs':
-        once('internal static string Hash(string path){',
-             'internal static string Hash(string path){NativeAbiTargetProfiles.CheckProfile(path,false);')
+        # A SHA computation does not consume an address. Keep Hash pure so a
+        # partial profile cannot reject a later explicit per-entry reader here.
+        # Actual reads below still enforce the bound profile/index integrity.
         once('{"error_type",e.GetType().Name}',
              '{"error_type",e.GetType().Name},{"native_abi",NativeAbiTargetProfiles.Metadata(e)},{"native_function_binding",NativeAbiTargetProfiles.BindingMetadata()}')
         once('var result=NativeOperations.Dispatch(request,datObj);',
              'var result=NativeOperations.Dispatch(request,datObj);result["native_function_binding"]=NativeAbiTargetProfiles.BindingMetadata();')
-        once('functions.Add(Convert.ToString(item["name"]),item);VerifyFunction(item);',
-             'functions.Add(Convert.ToString(item["name"]),item);')
-        once('tables.Add(Convert.ToString(item["name"]),item);VerifyTable(item);',
-             'tables.Add(Convert.ToString(item["name"]),item);')
-        once('readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();',
-             'readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();readonly HashSet<string> abiFunctionsVerified=new HashSet<string>();readonly HashSet<string> abiTablesVerified=new HashSet<string>();')
-        once('internal IntPtr Function(string name){return Address(Number(functions[name]["rva"]));}',
-             'internal IntPtr Function(string name){var item=functions[name];if(!abiFunctionsVerified.Contains(name)){VerifyFunction(item);abiFunctionsVerified.Add(name);}return Address(Number(item["rva"]));}')
-        once('void VerifyFunction(Dictionary<string,object> item) {',
-             'void VerifyFunction(Dictionary<string,object> item) {NativeAbiTargetProfiles.CheckEntry(item,"function");')
-        once('void VerifyTable(Dictionary<string,object> item) {',
-             'void VerifyTable(Dictionary<string,object> item) {NativeAbiTargetProfiles.CheckEntry(item,"vtable");')
-        once('internal void RequireTable(IntPtr instance,string name) {',
-             'internal void RequireTable(IntPtr instance,string name) {if(!abiTablesVerified.Contains(name)){VerifyTable(tables[name]);abiTablesVerified.Add(name);}')
+        # Core functions and table slots are lazy in the reusable source itself.
+        # Binding only changes classified addresses/guards and owned file IO;
+        # it must not inject an eager whole-table gate back into the constructor.
     elif name == 'NativeControlPropertyBatch.cs':
         once('NativeMemory.Require(BitConverter.ToString(expected)==BitConverter.ToString(NativeMemory.Bytes(api.Engine.Address(rva),expected.Length))',
              'NativeAbiTargetProfiles.RelocateSourceGuard(rva,expected);NativeMemory.Require(BitConverter.ToString(expected)==BitConverter.ToString(NativeMemory.Bytes(api.Engine.Address(rva),expected.Length))')

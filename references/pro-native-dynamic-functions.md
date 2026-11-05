@@ -10,7 +10,7 @@
 
 `native-doctor` 检查准备依赖；`native-abi` 提供只读定位工具。生产绑定入口默认按当前目标解析并使用派生资料。换了实际程序文件后，重新生成该目标的资料；同一目标不按每个控件重新扫描，也不要求每次重启 Pro。
 
-旧桥可继续传输请求，旧业务 DLL 则不会因为复制新版技能自动变化。回执中的 `native_function_binding.mode=current_program_resolved` 标识当前引擎采用派生资料；还应核 `cross_build_contract=mcgs-native-cross-build/v3`，区分已修复后续遗漏的版本。缺少时，按原连接生成新版业务引擎，再用[已有桥更新命令](pro-native-deployment.md#已有桥的同任务更新)选择，不重建在用 Bootstrap 或清除历史请求。
+旧桥可继续传输请求，旧业务 DLL 则不会因为复制新版技能自动变化。记录回执中的 `native_function_binding`、`cross_build_contract`及实际按条目、自动定位和功能隔离能力，不按精确工具修订字符串准入。本次所需能力缺少时，按原连接生成新版业务引擎，再用[已有桥更新命令](pro-native-deployment.md#已有桥的同任务更新)选择，不重建在用 Bootstrap 或清除历史请求。当前分层定位与逐项报告规则见[自动适配](adaptive-native-location.md)。
 
 ## 资料和调用的关系
 

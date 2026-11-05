@@ -35,7 +35,7 @@ namespace McgsInternalBridge {
    var result=new List<Dictionary<string,object>>();Dictionary<string,object> spec;if(!NativeRequestPipeline.TryInspection(request,out spec)){
    object raw;if(!request.TryGetValue("inspection_file",out raw))return result;
    string file=DirectInputFile(Convert.ToString(raw));NativeMemory.Require(NativeMemory.Hash(file)==Convert.ToString(request["inspection_sha256"]),"Inspection selectors file differs.");
-   spec=new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));}
+   spec=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue,RecursionLimit=256}.Deserialize<Dictionary<string,object>>(File.ReadAllText(file,Encoding.UTF8));}
    foreach(object value in (IEnumerable)spec["actions"]){result.Add(Map(value));}return result;
   }
   static Dictionary<string,object> ReadSourceAction(NativeEngine engine,NativeContext context,Dictionary<string,object> action) {
@@ -49,6 +49,7 @@ namespace McgsInternalBridge {
    NativeMemory.Require(program!=null,"Logical strategy program is absent.");return new Dictionary<string,object>{{"source_utf16le_hex",program["source_utf16le_hex"]},{"source_utf16le_sha256",program["source_utf16le_sha256"]}};
   }
   internal static Dictionary<string,object> ReadAction(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> action) {
+   NativeAbiTargetProfiles.SelectFeature(action,"read-target");
    if(Kind(action)==NativeDomainProjectCheck.Kind)return NativeDomainProjectCheck.Read(engine,context,project,action);
    if(Kind(action)==NativeProjectCompileDiagnostics.Kind)return NativeProjectCompileDiagnostics.Read(engine,context,project,action);
    if(Kind(action)==NativePictureResources.VectorCreateKind)return NativePictureResources.ReadVectorCreate(engine,context,project,action);
@@ -98,22 +99,31 @@ namespace McgsInternalBridge {
    if(IsPersistence(kind))return NativePersistenceEditing.Read(engine,context,project,action);
    if(kind==NativePreparedPageOperations.ReconcileCreatedRowKind)return NativePreparedPageOperations.ReadCreatedRowCompletion(engine,context,project,action);
    if(IsPageControl(kind))return NativePageControlPreparation.Read(engine,context,project,action);
-   Dictionary<string,object> result=null;AdditionalRead(engine,context,project,action,ref result);NativeMemory.Require(result!=null,"No compiled reader for engineering kind: "+kind);return result;
+   Dictionary<string,object> result=null;AdditionalRead(engine,context,project,action,ref result);if(result==null)throw NativeAbiTargetProfiles.Problem("unsupported_feature","No compiled reader for engineering kind: "+kind,"compiled engineering readers",kind);return result;
   }
   internal static Dictionary<string,object> Inspect(Dictionary<string,object> request,NativeEngine engine,NativeContext context) {
-   string project=NativeEngineeringProjectScope.ExpectedProjectPath;var preimages=new List<object>();var kinds=new HashSet<string>(Kinds(),StringComparer.Ordinal);foreach(string read in new string[]{NativeRecipePersistenceContract.ReadKind,"reference-graph","data-catalog","recipe-catalog","data-array-name-plan","device-catalog","picture-catalog","language-catalog","page-event-definitions","strategy-provider-catalog","strategy-product-capability-catalog",NativeProjectCompileDiagnostics.Kind,NativeStrategyWorkingModelEditing.AdoptionDiagnosticKind,NativeLinguistManagementEditing.ReadKind})kinds.Add(read);
+   string project=NativeEngineeringProjectScope.ExpectedProjectPath;var preimages=new List<object>();var unavailable=new List<object>();var observations=new List<object>();var kinds=new HashSet<string>(Kinds(),StringComparer.Ordinal);foreach(string read in new string[]{NativeRecipePersistenceContract.ReadKind,"reference-graph","data-catalog","recipe-catalog","data-array-name-plan","device-catalog","picture-catalog","language-catalog","page-event-definitions","strategy-provider-catalog","strategy-product-capability-catalog",NativeProjectCompileDiagnostics.Kind,NativeStrategyWorkingModelEditing.AdoptionDiagnosticKind,NativeLinguistManagementEditing.ReadKind})kinds.Add(read);
    foreach(var action in InspectionActions(request)){
-    string kind=Kind(action);NativeMemory.Require(kinds.Contains(kind),"Requested reader has no compiled implementation.");NativeOperationTrace.SetPhase("engineering-inspect-begin-"+Convert.ToString(action["action_id"])+"-"+kind);var before=ReadAction(engine,context,project,action);NativeOperationTrace.SetPhase("engineering-inspect-returned-"+Convert.ToString(action["action_id"]));object abi;
-    if(!before.TryGetValue("abi_profile_sha256",out abi))abi=IsSource(kind)?NativeUsableStrategySourceBatch.AbiProfileSha:kind=="label-caption-rect"?NativeUsableLabelEditor.AbiProfileSha:action["abi_profile_sha256"];
-    preimages.Add(new Dictionary<string,object>{{"action_id",action["action_id"]},{"kind",kind},{"target",action["target"]},{"abi_profile_sha256",abi},{"before",before}});
+    string kind=Kind(action);
+    var observation=NativeAbiTargetProfiles.InspectFeature(action,delegate{
+     if(!kinds.Contains(kind))throw NativeAbiTargetProfiles.Problem("unsupported_feature","Requested reader has no compiled implementation: "+kind,"compiled engineering kinds",kind);
+     NativeOperationTrace.SetPhase("engineering-inspect-begin-"+Convert.ToString(action["action_id"])+"-"+kind);var before=ReadAction(engine,context,project,action);NativeOperationTrace.SetPhase("engineering-inspect-returned-"+Convert.ToString(action["action_id"]));object abi;
+     if(!before.TryGetValue("abi_profile_sha256",out abi))abi=IsSource(kind)?NativeUsableStrategySourceBatch.AbiProfileSha:kind=="label-caption-rect"?NativeUsableLabelEditor.AbiProfileSha:action["abi_profile_sha256"];
+     return new Dictionary<string,object>{{"action_id",action["action_id"]},{"kind",kind},{"target",action["target"]},{"abi_profile_sha256",abi},{"before",before}};
+    });
+    if(Object.Equals(observation["status"],"preimage_read")){
+     preimages.Add(observation["preimage"]);
+     observations.Add(new Dictionary<string,object>{{"action_id",action["action_id"]},{"kind",kind},{"status","preimage_read"},{"read_completed",true},{"write_support_claimed",false}});
+    }else{var issue=observation["issue"];unavailable.Add(issue);observations.Add(issue);}
    }
    // Lazy page loading and native cache construction belong before this current digest.
-   NativeOperationTrace.SetPhase("engineering-inspect-current-summary");var summary=NativeUsableEditPermit.Capture(engine,context);NativeOperationTrace.SetPhase("engineering-inspect-summary-returned");
+   NativeAbiTargetProfiles.SelectFeature(null,"inspection-current-summary");NativeOperationTrace.SetPhase("engineering-inspect-current-summary");var summary=NativeUsableEditPermit.Capture(engine,context);NativeOperationTrace.SetPhase("engineering-inspect-summary-returned");
    return new Dictionary<string,object>{{"ok",true},{"op","engineering-edit-inspect"},{"process_id",Process.GetCurrentProcess().Id},{"creation_filetime",Process.GetCurrentProcess().StartTime.ToFileTimeUtc()},{"native_thread_id",NativeMemory.GetCurrentThreadId()},
-    {"editor_image_sha256",engine.ImageSha256},{"native_summary",summary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(summary)},{"compiled_kinds",Kinds()},{"action_preimages",preimages},
+    {"editor_image_sha256",engine.ImageSha256},{"native_summary",summary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(summary)},{"compiled_kinds",Kinds()},{"action_preimages",preimages},{"inspection_completed",true},{"all_requested_features_available",unavailable.Count==0},{"partial_inspection",unavailable.Count!=0},{"unsupported_actions",unavailable},{"feature_observations",observations},
     {"current_scope","Current native Pro project; dynamic counts; actual structural ABI checks"},{"write_attempted",false},{"candidate_functional_acceptance_pending",true},{"complete_serialization_preimage_claimed",false},{"binary_validation_reuse",NativeEngineeringFileHashes.Status()}};
   }
   static Unit PrepareAction(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action) {
+   NativeAbiTargetProfiles.SelectFeature(action,"prepare-target");
    if(Kind(action)==NativePictureResources.VectorCreateKind)return PreparedAdditional(e,c,p,action,NativePictureResources.PrepareVectorCreate(e,c,p,action));
    string k=Kind(action);if(k==NativeCurrentTemplateControlOperations.GeometryBatchKind){var b=NativeCurrentTemplateControlOperations.PrepareGeometryBatch(e,c,p,action);return new Unit{Kind=k,Resource=b,Validate=delegate{NativePageControlPreparation.Before(action,NativeCurrentTemplateControlOperations.ReadGeometryBatch(e,c,p,action));},Apply=b.Apply,Flush=b.Flush};}if(k==NativeDomainProjectCheck.Kind){var a=NativeDomainProjectCheck.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}Unit extension=null;AdditionalPrepare(e,c,p,action,ref extension);if(extension!=null)return extension;
    if(IsWorkingStrategy(action)){var a=NativeStrategyWorkingModelEditing.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=delegate{NativePageControlPreparation.Same(action["before"],NativeStrategyWorkingModelEditing.Read(e,c,p,action),"Native strategy working-model preimage changed before Claim.");},Apply=a.Apply,Flush=a.Flush};}
@@ -140,7 +150,7 @@ namespace McgsInternalBridge {
    if(IsPersistence(k)){var a=NativePersistenceEditing.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    if(k==NativePreparedPageOperations.ReconcileCreatedRowKind){var a=NativePreparedPageOperations.PrepareCreatedRowCompletion(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=delegate{NativePageControlPreparation.Same(action["before"],NativePreparedPageOperations.ReadCreatedRowCompletion(e,c,p,action),"Prepared native page completion preimage changed before Claim.");},Apply=a.Apply,Flush=a.Flush};}
    if(IsPageControl(k)){var a=NativePageControlPreparation.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=delegate{NativePageControlPreparation.Same(action["before"],ReadAction(e,c,p,action),"Prepared page/control preimage changed before Claim.");},Apply=a.Apply,Flush=a.Flush};}
-   Unit result=null;AdditionalPrepare(e,c,p,action,ref result);NativeMemory.Require(result!=null,"No compiled prepared adapter for kind: "+k);return result;
+   Unit result=null;AdditionalPrepare(e,c,p,action,ref result);if(result==null)throw NativeAbiTargetProfiles.Problem("unsupported_feature","No compiled prepared adapter for kind: "+k,"compiled engineering adapters",k);return result;
   }
   internal static bool IsFinalPersistencePlan(NativeUsableEditPermit.Plan plan){if(!plan.Commit||!plan.RootSaveAllowed)return false;foreach(var action in plan.Actions)if(!IsPersistence(Kind(action)))return false;return plan.Actions.Count>0;}
   static void CheckIndependentPlan(NativeUsableEditPermit.Plan plan) {
@@ -180,7 +190,7 @@ namespace McgsInternalBridge {
    var phaseTimes=new Dictionary<string,object>();result["phase_timings_ms"]=phaseTimes;var totalClock=Stopwatch.StartNew();var phaseClock=Stopwatch.StartNew();
    try {
     string project=NativeEngineeringProjectScope.ExpectedProjectPath;var summary=directSummary??NativeUsableEditPermit.Capture(engine,context);plan=directDocument!=null?NativeUsableEditPermit.LoadDirectPlan(directDocument,engine,context,summary,Kinds()):NativeUsableEditPermit.LoadPlan(request,engine,context,summary,Kinds());CheckIndependentPlan(plan);plan.ValidatePersistenceScopesBeforeClaim();/* Commit authorizes only the exact child scopes; RootSave is a separate explicit capability. */
-    NativePageDuplicateProfile.PreparedRootSave rootSave=plan.Commit&&plan.RootSaveAllowed?new NativePageDuplicateProfile.PreparedRootSave(engine,project):null;
+    NativePageDuplicateProfile.PreparedRootSave rootSave=null;if(plan.Commit&&plan.RootSaveAllowed){NativeAbiTargetProfiles.SelectFeature(null,"prepare-root-save");rootSave=new NativePageDuplicateProfile.PreparedRootSave(engine,project);}
     phaseTimes["plan_and_save_context"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
     // Content actions precede the grouped strategy unit, so it can preserve its full source catalog.
     HashSet<int> openStrategyIds=null;
@@ -200,17 +210,17 @@ namespace McgsInternalBridge {
     if(hasDelete){var a=NativeUsableStrategyDeleteBatch.Prepare(engine,context,plan);units.Add(new Unit{Kind="strategy-delete",Resource=a,Validate=a.ValidateBefore,Apply=delegate(NativeUsableEditPermit.Lease l){a.Apply(l);return a.Status();},Flush=delegate(NativeUsableEditPermit.Lease l){a.Flush(l);return a.Status();}});}
     foreach(Unit unit in units){var related=unit.Resource as INativePreparedRelatedPersistence;if(related!=null)related.ValidatePersistence(plan);}
     phaseTimes["prepare"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
-    lease=plan.Claim(delegate{foreach(Unit unit in units)unit.Validate();});
+    lease=plan.Claim(delegate{foreach(Unit unit in units){NativeAbiTargetProfiles.SelectFeatureGroup(unit.Kind,"validate-prepared-unit");unit.Validate();}});
     phaseTimes["validate_current_targets"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
     // Independent content units can all modify before their consolidated child flushes.
-    foreach(Unit unit in units){var report=unit.Apply(lease);reports.Add(new Dictionary<string,object>{{"unit",unit.Kind},{"apply",report}});}
+    foreach(Unit unit in units){NativeAbiTargetProfiles.SelectFeatureGroup(unit.Kind,"apply-prepared-unit");var report=unit.Apply(lease);reports.Add(new Dictionary<string,object>{{"unit",unit.Kind},{"apply",report}});}
     phaseTimes["apply_verify_refresh"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
-    if(plan.Commit){foreach(Unit unit in units)reports.Add(new Dictionary<string,object>{{"unit",unit.Kind},{"flush",unit.Flush(lease)}});if(rootSave!=null)result["root_save"]=rootSave.Execute(lease);}
+    if(plan.Commit){foreach(Unit unit in units){NativeAbiTargetProfiles.SelectFeatureGroup(unit.Kind,"flush-prepared-unit");reports.Add(new Dictionary<string,object>{{"unit",unit.Kind},{"flush",unit.Flush(lease)}});}if(rootSave!=null){NativeAbiTargetProfiles.SelectFeature(null,"root-save");result["root_save"]=rootSave.Execute(lease);}}
     phaseTimes["flush_and_save"]=phaseClock.Elapsed.TotalMilliseconds;
     result["ok"]=true;result["status"]=plan.Commit?"native-batch-completed-pending-consolidated-acceptance":"native-edits-completed-persistence-deferred";result["explicit_child_flushes_requested"]=plan.Commit;result["root_save_requested"]=plan.Commit&&plan.RootSaveAllowed;result["persistence_scope"]=!plan.Commit?"all explicit persistence deferred":plan.RootSaveAllowed?"scoped children plus one root save":"scoped child persistence only";result["original_autosave_is_separate"]=true;result["native_actions_may_update_their_own_database_records"]=true;result["native_configuration_check_verified"]=false;result["close_reopen_verified"]=false;
     if(plan.Actions.Count==1&&Kind(plan.Actions[0])==NativeDomainProjectCheck.Kind){NativeMemory.Require(reports.Count==1,"Original project-check unit/report count differs.");var checkReport=Map(Map(reports[0])["apply"]);bool completed=Object.Equals(checkReport["original_worker_returned"],true),passed=Object.Equals(checkReport["native_check_passed"],true);result["status"]="original-full-project-check-worker-returned";result["persistence_scope"]="original worker-defined side effects only; no bridge Flush/RootSave";result["native_configuration_check_completed"]=completed;result["native_configuration_check_passed"]=passed;result["native_configuration_check_verified"]=completed&&passed;result["native_configuration_check_return_int32"]=checkReport["original_worker_return_int32"];result["error_count"]=null;result["warning_count"]=null;result["error_warning_counts_known"]=false;result["headless"]=false;result["original_worker_ui_preserved"]=true;}
-   }catch(Exception error){result["error"]=error.GetType().Name+": "+error.Message;result["managed_stack"]=error.StackTrace;result["comparison_evidence"]=NativeEngineeringComparisonEvidence.Metadata(error);result["phase"]=NativeOperationTrace.Phase;result["native_result_may_be_partial"]=NativeOperationTrace.MutationAttempted;}
-   finally{for(int i=units.Count-1;i>=0;i--)try{units[i].Dispose();}catch(Exception error){result["ok"]=false;result["owned_cleanup_error"]=error.GetType().Name+": "+error.Message;}phaseTimes["request_total_including_cleanup"]=totalClock.Elapsed.TotalMilliseconds;}
+   }catch(Exception error){result["error"]=error.GetType().Name+": "+error.Message;result["managed_stack"]=error.StackTrace;result["comparison_evidence"]=NativeEngineeringComparisonEvidence.Metadata(error);NativeAbiTargetProfiles.RecordFailure(result,error);result["phase"]=NativeOperationTrace.Phase;result["native_result_may_be_partial"]=NativeOperationTrace.MutationAttempted;}
+   finally{for(int i=units.Count-1;i>=0;i--)try{NativeAbiTargetProfiles.SelectFeatureGroup(units[i].Kind,"dispose-prepared-unit");units[i].Dispose();}catch(Exception error){result["ok"]=false;result["owned_cleanup_error"]=error.GetType().Name+": "+error.Message;}phaseTimes["request_total_including_cleanup"]=totalClock.Elapsed.TotalMilliseconds;}
    if(lease!=null)result["permit_status"]=lease.Status();else if(plan!=null)result["permit_status"]=plan.ClaimStatus();result["write_attempted"]=NativeOperationTrace.MutationAttempted;result["binary_validation_reuse"]=NativeEngineeringFileHashes.Status();return result;
   }
  }

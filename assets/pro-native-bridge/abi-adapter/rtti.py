@@ -125,6 +125,104 @@ def pair_table(reference, actual_tables):
     return exact, differing
 
 
+def _role_bases(model):
+    """Read the actual PMD roles, accepting the compact operand-anchor form."""
+    values = model.get('hierarchy', {}).get('bases', model.get('bases', []))
+    rows = []
+    for value in values:
+        if isinstance(value, dict):
+            row = value
+        elif isinstance(value, (tuple, list)) and len(value) == 4:
+            row = {'decorated_name': value[0], 'contained': value[1],
+                   'pmd': value[2], 'attributes': value[3]}
+        else:
+            return []
+        pmd = row.get('pmd')
+        if not isinstance(pmd, (tuple, list)) or len(pmd) != 3:
+            return []
+        rows.append({'decorated_name': row.get('decorated_name'), 'pmd': list(pmd),
+                     'attributes': row.get('attributes')})
+    return rows
+
+
+def table_role_proof(reference, actual):
+    """Identify one unchanged table subobject without requiring unrelated bases.
+
+    A stable class name alone is insufficient.  The COL and constructor offsets,
+    self PMD and flags must match.  A secondary table additionally needs an
+    explicit unchanged nonvirtual base role at that COL offset.  Virtual-base
+    roles which cannot be derived from these records retain the exact-hierarchy
+    path.  This proves table identity, never private member layout or every slot.
+    """
+    name = reference.get('decorated_name')
+    if not name or actual.get('decorated_name') != name:
+        return None
+    if ('constructor_displacement_offset' not in reference or
+            'constructor_displacement_offset' not in actual):
+        return None
+    if (actual.get('col_offset') != reference.get('col_offset') or
+            actual['constructor_displacement_offset'] != reference['constructor_displacement_offset']):
+        return None
+    before, after = _role_bases(reference), _role_bases(actual)
+    old_self = [row for row in before if row['decorated_name'] == name]
+    new_self = [row for row in after if row['decorated_name'] == name]
+    if len(old_self) != 1 or new_self != old_self:
+        return None
+    required = old_self[:]
+    offset = reference.get('col_offset')
+    if offset != 0:
+        # mdisp is a complete subobject offset only when pdisp=-1.  Do not
+        # reinterpret virtual PMDs or the hierarchy's row order as that role.
+        old_roles = [row for row in before
+                     if row['decorated_name'] != name and row['pmd'][0] == offset and row['pmd'][1] == -1]
+        stable = [row for row in old_roles if after.count(row) == 1]
+        if not stable:
+            return None
+        required.extend(stable)
+    return {'kind': 'RTTI-stable-table-subobject-role', 'decorated_name': name,
+            'col_offset': offset,
+            'constructor_displacement_offset': reference['constructor_displacement_offset'],
+            'required_base_roles': required,
+            'unrelated_hierarchy_rows_not_required': True,
+            'private_object_fields_verified': False, 'virtual_slots_verified': False}
+
+
+def anchor_role_proof(reference, actual):
+    """The same role check for decoded RTTI-pointer operands."""
+    if not isinstance(reference, dict) or not isinstance(actual, dict):
+        return None
+    return table_role_proof(reference, actual)
+
+
+def pair_table_roles(reference, actual_tables):
+    compatible, differing = [], []
+    for row in actual_tables:
+        (compatible if table_role_proof(reference, row) else differing).append(row)
+    return compatible, differing
+
+
+def role_address_pairs(reference, actual):
+    """Map only addresses belonging to the proven role, never zipped bases.
+
+    A changed hierarchy has a different record/array layout.  Its addresses are
+    deliberately not promoted to a whole-hierarchy proof.  A consumer needing
+    those arrays must independently adapt the fields it actually uses.
+    """
+    if table_role_proof(reference, actual) is None:
+        return []
+    pairs = [(reference[key], actual[key], key)
+             for key in ('type_descriptor_rva', 'col_rva', 'vtable_rva')]
+    for old in reference['hierarchy']['bases']:
+        matching = [new for new in actual['hierarchy']['bases']
+                    if new['decorated_name'] == old['decorated_name'] and
+                    new['pmd'] == old['pmd'] and new['attributes'] == old['attributes']]
+        if len(matching) == 1:
+            # contained counts describe the changed subtree, not the identity
+            # of its type descriptor.  Do not map its BCD record by this proof.
+            pairs.append((old['type_descriptor_rva'], matching[0]['type_descriptor_rva'], 'stable-base-type-descriptor'))
+    return pairs
+
+
 def address_pairs(reference, actual):
     pairs = []
     for key in ('type_descriptor_rva', 'col_rva', 'vtable_rva'):
