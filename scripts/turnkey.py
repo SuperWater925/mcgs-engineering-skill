@@ -45,16 +45,18 @@ def load_module(name, path):
     return module
 
 
-def bundle(root=None):
-    if not root and os.environ.get('MCGS_BUNDLE_ROOT'):
-        root = os.environ['MCGS_BUNDLE_ROOT']
-    if not root and (SKILL / 'turnkey-location.json').is_file():
-        root = read(SKILL / 'turnkey-location.json')['bundle_root']
-    root = Path(root).resolve() if root else SKILL.parent
-    value = read(root / 'bundle.json')
-    if value.get('schema') != 'mcgs-turnkey-bundle/v1':
-        raise ValueError('Complete bundle.json is required; a source-only skill ZIP is not a turnkey runtime')
-    return root, value
+_bundle_helper = None
+
+
+def bundle_helper():
+    global _bundle_helper
+    if _bundle_helper is None:
+        _bundle_helper = load_module('mcgs_turnkey_bundle', SKILL / 'scripts/turnkey_bundle.py')
+    return _bundle_helper
+
+
+def bundle(root=None, allow_download=False, cache_dir=None):
+    return bundle_helper().resolve(SKILL, explicit_root=root, allow_download=allow_download, cache_dir=cache_dir)
 
 
 def contained(root, relative):
@@ -128,8 +130,16 @@ def probe_queue(runtime, python):
                 'error': str(error), 'automatic_retry': False}
 
 
-def inventory(root, family=None, editor=None):
-    root, info = bundle(root)
+def inventory(root=None, family=None, editor=None, cache_dir=None):
+    # Installed editors can be inventoried from any skill installation. This
+    # read-only command does not require, fetch or fabricate a complete bundle.
+    recovery = None
+    try:
+        root, info = bundle(root, cache_dir=cache_dir)
+    except bundle_helper().BundleUnavailable as error:
+        if root is not None:
+            raise
+        root, info, recovery = None, {'products': []}, error.report
     module = load_module('mcgs_turnkey_installation', SKILL / 'scripts/turnkey_installation.py')
     explicit = ()
     if editor:
@@ -141,7 +151,10 @@ def inventory(root, family=None, editor=None):
         installations = [item for item in installations if item['family'].casefold() == family.casefold()]
     return {'schema': 1, 'status': 'installation_inventory', 'installations': installations,
             'observations': discovered['observations'],
-            'products': info['products'], 'version_policy': 'choice_not_admission'}
+            'products': info['products'], 'version_policy': 'choice_not_admission',
+            'bundle_available': root is not None, 'bundle_root': str(root) if root else None,
+            'bundle_recovery': recovery, 'download_performed': False,
+            'software_changed': False}
 
 
 def processes(editor):
@@ -209,7 +222,7 @@ def processes(editor):
     return result
 
 
-def prepare_online(root, editor, install_root=None, pid=None):
+def prepare_online(root, editor, install_root=None, pid=None, preparation_timeout=0):
     root, info = bundle(root)
     editor = Path(editor).resolve(strict=True)
     install_root = Path(install_root).resolve(strict=True) if install_root else editor.parent.parent
@@ -286,7 +299,10 @@ def prepare_online(root, editor, install_root=None, pid=None):
         return {**state, 'status': 'preparation_interrupted',
                 'meaning': 'Inspect the recorded files and phase before resuming; no automatic retry or compiler fallback'}
     state = {'schema': 1, 'status': 'preparing', 'phase': 'bridge_materialization',
-             'target': target, 'task_root': str(task), 'receiver_compilation_required': False}
+             'target': target, 'task_root': str(task), 'receiver_compilation_required': False,
+             'preparation_progress_file': str(task / 'preparation-progress.json'),
+             'preparation_timeout_seconds': preparation_timeout,
+             'meaning': 'Precompiled engine still requires local interface analysis. Read the progress file; do not restart an uncertain existing preparation.'}
     save(journal, state)
     runtime, payload, boot = task / 'runtime', task / 'payload', task / 'bootstrap'
     for path in (runtime, payload, task / 'tools'):
@@ -302,6 +318,10 @@ def prepare_online(root, editor, install_root=None, pid=None):
     hot_data = read(hot)
     state.update(phase='business_materialization', hot_attach_config=str(hot), client=hot_data['client'])
     save(journal, state)
+    print(json.dumps({'phase': 'business_materialization', 'task_root': str(task),
+                      'progress_file': state['preparation_progress_file'],
+                      'meaning': 'Local interface analysis is running; inspect this progress file instead of starting another binding.'},
+                     ensure_ascii=False), file=sys.stderr, flush=True)
     scope = {'schema': 1, 'task_root': str(task), 'engineering_root': str(payload),
              'runtime_root': str(runtime), 'install_root': str(install_root),
              'transport_client_file': str(transport), 'transport_client_sha256': digest(transport),
@@ -311,7 +331,9 @@ def prepare_online(root, editor, install_root=None, pid=None):
     engine = contained(root, info['business_engine'])
     prepared = run_json([py, asset / 'portable-engine/materialize.py',
         '--scope-base-json', scope_base, '--engine-file', engine, '--engine-sha256', digest(engine),
-        '--output-directory', runtime / 'business-prepared'], env, timeout=900)
+        '--output-directory', runtime / 'business-prepared',
+        '--progress-file', task / 'preparation-progress.json'], env,
+        timeout=preparation_timeout or None)
     state.update(phase='engine_staging', engine_preparation=prepared)
     save(journal, state)
     staged = run_json([py, asset / 'bootstrap/stage_engine.py', '--bootstrap-root', boot,
@@ -332,9 +354,10 @@ def prepare_online(root, editor, install_root=None, pid=None):
 
 def install_skill(root, destination=None):
     root, info = bundle(root)
-    source = contained(root, info['skill_directory'])
+    source = SKILL if source_matches_engine(root, info) else contained(root, info['skill_directory'])
     destination = Path(destination).expanduser().resolve() if destination else Path.home() / '.codex/skills/mcgs-engineering'
     if destination == source:
+        save(destination / 'turnkey-location.json', {'schema': 1, 'bundle_root': str(root), 'release': info['release']})
         return {'status': 'skill_already_at_destination', 'directory': str(destination)}
     if destination.exists():
         backup = destination.with_name(destination.name + '.backup-' + time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:6])
@@ -346,25 +369,91 @@ def install_skill(root, destination=None):
     return {'status': 'skill_installed', 'directory': str(destination), 'previous_backup': str(backup) if backup else None}
 
 
+def source_matches_engine(root, info):
+    """Compare our own release data contract, never vendor version or hash."""
+    try:
+        engine = contained(root, info['business_engine'])
+        release = read(engine.parent / 'portable-engine-manifest.json')
+        return (digest(SKILL / 'assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json') == release['source_manifest_sha256']
+                and digest(SKILL / 'assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json') == release['source_catalog_sha256'])
+    except (OSError, ValueError, KeyError):
+        return False
+
+
+def delegate_to_bundle(root, info, args):
+    """Run the source and runtime shipped with the selected precompiled engine.
+
+    The receiving skill may be anywhere (including WorkBuddy). Reuse its newer
+    Python entry when its own source-data contract matches the engine; otherwise
+    use the matching bundled entry. Either way, use bundled Python/Capstone.
+    """
+    selected_skill = contained(root, info.get('skill_directory', 'skill'))
+    script = Path(__file__).resolve() if source_matches_engine(root, info) else selected_skill / 'scripts/turnkey.py'
+    python = contained(root, info['python'])
+    if script.resolve() == Path(__file__).resolve() and Path(sys.executable).resolve() == python:
+        return None
+    argv = [python, '-B', '-X', 'utf8', script,
+            '--bundle-root', root, args.command]
+    parameters = {
+        'verify': ('full',),
+        'setup': ('family', 'editor', 'interactive', 'mode'),
+        'prepare-online': ('editor', 'install_root', 'pid', 'preparation_timeout'),
+        'install-skill': ('destination',),
+    }
+    for name in parameters.get(args.command, ()):
+        if name == 'preparation_timeout' and script.resolve() != Path(__file__).resolve() and 'preparation-timeout' not in script.read_text(encoding='utf-8-sig'):
+            continue
+        value = getattr(args, name, None)
+        if value is None or value is False:
+            continue
+        argv.append('--' + name.replace('_', '-'))
+        if value is not True:
+            argv.append(str(value))
+    return subprocess.run(list(map(os.fspath, argv)), env=runtime_env(root, info)).returncode
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--bundle-root')
+    parser.add_argument('--no-download', action='store_true', help='Discover local bundles only; never compile as fallback')
+    parser.add_argument('--cache-dir', help='Shared complete-bundle cache; optional short local directory')
     sub = parser.add_subparsers(dest='command', required=True)
+    sub.add_parser('fetch-bundle', help='Locate or download and verify the published complete bundle; no software installation')
     v = sub.add_parser('verify'); v.add_argument('--full', action='store_true')
     i = sub.add_parser('inventory'); i.add_argument('--family', choices=('pro', 'stu')); i.add_argument('--editor')
     s = sub.add_parser('setup'); s.add_argument('--family', choices=('pro', 'stu'), required=True); s.add_argument('--editor'); s.add_argument('--interactive', action='store_true'); s.add_argument('--mode', choices=('offline', 'online'))
     p = sub.add_parser('prepare-online'); p.add_argument('--editor', required=True); p.add_argument('--install-root'); p.add_argument('--pid', type=int)
+    p.add_argument('--preparation-timeout', type=float, default=0,
+                   help='Pure-file interface preparation timeout in seconds; 0 waits with progress, native request timeouts are unchanged')
     ins = sub.add_parser('install-skill'); ins.add_argument('--destination')
+    for entry in sub.choices.values():
+        entry.add_argument('--bundle-root', default=argparse.SUPPRESS)
+        entry.add_argument('--no-download', action='store_true', default=argparse.SUPPRESS)
+        entry.add_argument('--cache-dir', default=argparse.SUPPRESS)
     args = parser.parse_args()
-    root, info = bundle(args.bundle_root)
+    if args.command == 'prepare-online' and args.preparation_timeout < 0:
+        parser.error('Preparation timeout must be zero or positive')
+    if args.command == 'inventory':
+        result = inventory(args.bundle_root, args.family, args.editor, args.cache_dir)
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+    can_fetch = args.command in ('fetch-bundle', 'setup', 'prepare-online') and not args.no_download
+    root, info = bundle(args.bundle_root, allow_download=can_fetch, cache_dir=args.cache_dir)
+    if args.command == 'fetch-bundle':
+        result = {'status': 'complete_bundle_ready', 'bundle_root': str(root), 'release': info['release'],
+                  'runtime': {key: str(contained(root, info[key])) for key in ('python', 'powershell')},
+                  'receiver_compilation_required': False, 'software_changed': False, 'project_written': False}
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+    delegated = delegate_to_bundle(root, info, args)
+    if delegated is not None:
+        return delegated
     if args.command == 'verify':
         result = verify(root, args.full)
-    elif args.command == 'inventory':
-        result = inventory(root, args.family, args.editor)
     elif args.command == 'install-skill':
         result = install_skill(root, args.destination)
     elif args.command == 'prepare-online':
-        result = prepare_online(root, args.editor, args.install_root, args.pid)
+        result = prepare_online(root, args.editor, args.install_root, args.pid, args.preparation_timeout)
     else:
         module = load_module('mcgs_turnkey_installation', SKILL / 'scripts/turnkey_installation.py')
         result = module.setup_bundle(root, args.family, explicit_editor=args.editor, interactive=args.interactive)
@@ -374,12 +463,14 @@ def main():
         result['mode_options'] = ['offline'] if args.family == 'stu' else ['offline', 'online']
         result['project_written'] = False
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    return 0
 
 
 if __name__ == '__main__':
     try:
-        main()
+        raise SystemExit(main())
     except (OSError, ValueError, KeyError, RuntimeError, subprocess.SubprocessError) as error:
-        print(json.dumps({'status': 'not_complete', 'error': type(error).__name__ + ': ' + str(error),
-                          'unknown_mutations_must_not_be_retried': True}, ensure_ascii=False, indent=2))
+        report = getattr(error, 'report', None) or {'status': 'not_complete', 'error': type(error).__name__ + ': ' + str(error),
+                          'unknown_mutations_must_not_be_retried': True}
+        print(json.dumps(report, ensure_ascii=False, indent=2))
         raise SystemExit(1)

@@ -36,7 +36,7 @@ def actual_module_files(catalog, layout):
 
 
 class TargetBinding:
-    def __init__(self, stage, manifest, layout, output, catalog_file=None, module_overrides=None):
+    def __init__(self, stage, manifest, layout, output, catalog_file=None, module_overrides=None, progress_callback=None):
         self.stage = Path(stage)
         self.output = Path(output)
         self.catalog_file = Path(catalog_file or DEFAULT_CATALOG).resolve()
@@ -67,13 +67,13 @@ class TargetBinding:
                   'Source ordinal is not from the selected source manifest: '+name)
             self.source_ordinals.setdefault(name,[]).append(ordinal)
         from module_selection import select_module_files
-        selection = select_module_files(self.catalog, layout, module_overrides)
+        selection = select_module_files(self.catalog, layout, module_overrides, progress_callback=progress_callback)
         modules = selection['files']
         self.module_selection_report = selection['report']
         self.actual_module_paths = modules
         self.module_names = {row.get('basename','').casefold(): alias
                              for alias,row in self.catalog['reference_modules'].items() if row.get('basename')}
-        self.result = resolve_catalog(self.catalog, modules)
+        self.result = resolve_catalog(self.catalog, modules, progress_callback=progress_callback)
         self.attestation = write_resolved_profiles(self.catalog, self.result, self.output / 'profiles',
                                                   profile_root=self.stage / 'artifacts')
         self.profile_rows = {row['relative_path']: row for row in self.attestation['reference_profiles']}

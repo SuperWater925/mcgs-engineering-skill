@@ -19,6 +19,7 @@ sys.dont_write_bytecode = True
 from pe32 import PE32, resolve_export
 import rtti
 import x86_signature as xs
+from preparation_progress import PreparationProgress
 
 CATALOG_SCHEMA = 'mcgs-native-reference-catalog/v1'
 RESULT_SCHEMA = 'mcgs-native-abi-adaptation/v1'
@@ -597,11 +598,17 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
         'profile_field_module_declarations': owner_document, 'import_slots': list(import_slots.values()), 'catalog_gaps': gaps}
 
 
-def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_content_cache=True):
+def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_content_cache=True, progress_callback=None):
     if catalog.get('schema') != CATALOG_SCHEMA:
         raise ValueError('Unsupported reference catalog schema')
-    actual = _modules(actual_modules)
+    progress_report = PreparationProgress(progress_callback)
+    progress_report('module_loading', 0, len(actual_modules), force=True)
+    actual = {}
+    for index, (alias, path) in enumerate(actual_modules.items()):
+        actual[alias] = PE32(path)
+        progress_report('module_loading', index + 1, len(actual_modules), module=alias)
     reference = _modules(reference_modules) if reference_modules else {}
+    progress_report('module_loading', len(actual_modules), len(actual_modules), force=True)
     identities = {alias: pe.identity() for alias, pe in actual.items()}
     equal_modules = {alias for alias in actual if alias in catalog['reference_modules'] and
         identities[alias]['sha256'] == catalog['reference_modules'][alias]['sha256']}
@@ -716,9 +723,11 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             values.setdefault(terminal['actual_body_rva'], set()).add(identifier)
         return True
 
-    def match_candidate(entry, current, identity=None, *, verify_targets=True, allow_adaptive=True):
+    not_decoded = object()
+
+    def match_candidate(entry, current, identity=None, *, verify_targets=True, allow_adaptive=True, local_actual=not_decoded):
         alias = entry['module'];pe = actual[alias]
-        matched = xs.local_match(entry, pe, current)
+        matched = xs.local_match(entry, pe, current) if local_actual is not_decoded else local_actual
         context = xs.verify_context(reference.get(alias), pe, entry, matched,
                                     entry['reference_rva'], current,
                                     verify_targets=verify_targets) if matched else None
@@ -802,7 +811,9 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         return witness
 
     type_cache, thunk_member_cache = {}, {}
-    for entry in catalog['types']:
+    progress_report('RTTI_tables', 0, len(catalog['types']), force=True)
+    for type_index, entry in enumerate(catalog['types']):
+        progress_report('RTTI_tables', type_index, len(catalog['types']), module=entry['module'], entry_id=entry['id'])
         alias, old = entry['module'], entry['reference'];proof_id = entry['id']
         if alias not in actual:
             result['types'].append({'id': proof_id, 'module': alias, 'status': 'unresolved',
@@ -891,10 +902,13 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             # entry's returned actual_body_rva candidate and must pass the
             # body's own full catalog signature with a caller dependency.
 
+    progress_report('RTTI_tables', len(catalog['types']), len(catalog['types']), force=True)
     pending = []
     local_candidates = {}
     identity_candidates = {}
-    for entry in catalog['signatures']:
+    progress_report('functions', 0, len(catalog['signatures']), force=True)
+    for function_index, entry in enumerate(catalog['signatures']):
+        progress_report('functions', function_index, len(catalog['signatures']), module=entry['module'], entry_id=entry['id'])
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
         row = {'id': identifier, 'module': alias, 'reference_rva': old, 'names': entry.get('names', []),
                'blocked_scope': 'consuming-feature', 'adaptation_attempts': []}
@@ -943,11 +957,16 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         # is also checked for true ambiguity, never a reference-address fallback.
         if not role_anchors:
             candidates = sorted(set(candidates + xs.candidates(pe, entry, prefix_fallback=True)))
-        local_candidates[identifier] = [candidate for candidate in candidates if xs.local_match(entry, pe, candidate) is not None]
+        local_candidates[identifier] = []
         primary_candidates = candidates[:]
         strict_matches = []
-        for candidate in candidates:
-            selected = match_candidate(entry, candidate, anchor_identity(alias, old, candidate), allow_adaptive=False)
+        for candidate_index, candidate in enumerate(candidates):
+            progress_report('function_candidates', function_index, len(catalog['signatures']),
+                            module=alias, entry_id=identifier, candidates_completed=candidate_index, candidates_total=len(candidates))
+            local_actual = xs.local_match(entry, pe, candidate)
+            if local_actual is not None:
+                local_candidates[identifier].append(candidate)
+            selected = match_candidate(entry, candidate, anchor_identity(alias, old, candidate), allow_adaptive=False, local_actual=local_actual)
             if selected is not None:
                 strict_matches.append((candidate, selected))
         row['adaptation_attempts'].append('exact-decoded-instructions-and-context')
@@ -961,10 +980,13 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             fallback = sorted((set(xs.candidates(pe, entry) +
                                    xs.candidates(pe, entry, prefix_fallback=True)) - set(candidates)) &
                               table_members.get((alias, old), set()))
-            for candidate in fallback:
-                if xs.local_match(entry, pe, candidate) is not None:
+            for candidate_index, candidate in enumerate(fallback):
+                progress_report('same_class_candidates', function_index, len(catalog['signatures']),
+                                module=alias, entry_id=identifier, candidates_completed=candidate_index, candidates_total=len(fallback))
+                local_actual = xs.local_match(entry, pe, candidate)
+                if local_actual is not None:
                     local_candidates[identifier].append(candidate)
-                selected = match_candidate(entry, candidate, allow_adaptive=False)
+                selected = match_candidate(entry, candidate, allow_adaptive=False, local_actual=local_actual)
                 if selected is not None:
                     strict_matches.append((candidate, selected))
             candidates = sorted(set(candidates + fallback))
@@ -998,10 +1020,16 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             pending.append((row, entry))
     # A uniquely identified caller's same decoded CALL/absolute operand can
     # constrain a generic callee. Iterate the proof graph, without old-RVA bias.
+    progress_report('functions', len(catalog['signatures']), len(catalog['signatures']), force=True)
     progress = True
+    fixed_point_round = 0
+    progress_report('caller_proof_fixed_point', 0, len(pending), force=True)
     while progress:
         progress = False
-        for row, entry in pending:
+        fixed_point_round += 1
+        for pending_index, (row, entry) in enumerate(pending):
+            progress_report('caller_proof_fixed_point', pending_index, len(pending), iteration=fixed_point_round,
+                            module=entry['module'], entry_id=entry['id'])
             if row['status'] == 'resolved' or row.get('failure_category') == 'guard_extent_unavailable':
                 continue
             alias, old = entry['module'], entry['reference_rva']
@@ -1066,13 +1094,18 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     signatures_by_id = {entry['id']: entry for entry in catalog['signatures']}
     functions_by_id = {row['id']: row for row in result['functions']}
     invalidated = True
+    validation_round = 0
+    progress_report('proof_dependency_validation', 0, len(result['functions']), force=True)
     while invalidated:
         invalidated = False
+        validation_round += 1
         proven_export_targets.clear()
         for row in result['functions']:
             if row['status'] == 'resolved':
                 proven_export_targets.setdefault((row['module'], row['reference_rva']), set()).add(row['actual_rva'])
-        for row in result['functions']:
+        for validation_index, row in enumerate(result['functions']):
+            progress_report('proof_dependency_validation', validation_index, len(result['functions']),
+                            iteration=validation_round, module=row['module'], entry_id=row['id'])
             if row['status'] != 'resolved' or row['resolution_method'] == 'identical-PE-content-cache':
                 continue
             entry = signatures_by_id[row['id']]
@@ -1189,6 +1222,12 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         'tables_using_stable_role_adaptation': sum(t['status'] == 'resolved' and t.get('unrelated_hierarchy_changes_observed', False) for t in result['types']),
         'unsupported_entries_do_not_disable_other_features': True,
         'all_code_locations_resolved': all(f['status'] == 'resolved' for f in result['functions'])}
+    decode_caches = [getattr(pe, '_abi_signature_decode_cache', {}) for pe in actual.values()]
+    progress_report('native_resolution_complete', len(result['functions']), len(result['functions']), force=True,
+                    functions_resolved=result['summary']['functions_resolved'],
+                    decode_calls=sum(cache.get('calls', 0) for cache in decode_caches),
+                    decode_cache_hits=sum(cache.get('hits', 0) for cache in decode_caches),
+                    actual_decodes=sum(cache.get('decodes', 0) for cache in decode_caches))
     return result
 
 

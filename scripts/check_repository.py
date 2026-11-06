@@ -17,6 +17,7 @@ from urllib.parse import unquote, urlsplit
 MANIFEST = 'references/package-files.sha256.json'
 EXCLUDED_DIRS = {'.git', '__pycache__', '.venv', 'local-artifacts'}
 EXCLUDED_SUFFIXES = {'.pyc', '.pyo'}
+EXCLUDED_FILES = {'turnkey-location.json'}  # Per-machine runtime location, never source/release content.
 
 
 def package_files(root: Path) -> list[Path]:
@@ -26,7 +27,7 @@ def package_files(root: Path) -> list[Path]:
         for name in names:
             path = Path(current) / name
             rel = path.relative_to(root).as_posix()
-            if rel == '.git' or path.suffix.lower() in EXCLUDED_SUFFIXES:
+            if rel == '.git' or rel in EXCLUDED_FILES or path.suffix.lower() in EXCLUDED_SUFFIXES:
                 continue
             if path.is_symlink():
                 raise ValueError(f'Symlink is not a packaged file: {rel}')

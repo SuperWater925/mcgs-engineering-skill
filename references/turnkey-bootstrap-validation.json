@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "date": "2026-11-06",
+  "scope": "source-skill complete-bundle acquisition and file-only preparation",
+  "source_entry": {
+    "workbuddy_shaped_directory_checks_passed": 12,
+    "inventory_without_bundle_and_without_download_passed": true,
+    "missing_bundle_structured_recovery_passed": true,
+    "explicit_invalid_root_not_silently_replaced": true,
+    "native_doctor_does_not_fall_back_to_compiler": true,
+    "fetch_reuses_real_verified_bundle_cache": true,
+    "custom_cache_registered_for_shared_environment": true,
+    "bundled_python_from_source_entry_passed": true,
+    "Pro_and_Stu_setup_passed": true,
+    "Stu_stays_offline_only": true,
+    "prepare_did_not_start_paused_Pro": true,
+    "source_install_keeps_new_bootstrap": true
+  },
+  "bundle_bootstrap": {
+    "isolated_checks_passed": 14,
+    "latest_release_metadata_digest_checked": true,
+    "real_published_archive_reused_without_redownload": true,
+    "complete_bundle_files_sha_verified": 3489,
+    "real_local_extraction_and_verification_seconds": 10.901,
+    "subsequent_local_discovery_seconds": 0.0048,
+    "vendor_installer_or_compiler_executed": false
+  },
+  "preparation_progress": {
+    "isolated_checks_passed": 12,
+    "atomic_phase_and_count_JSON": true,
+    "actual_errors_and_partial_outputs_preserved": true,
+    "stdout_remains_final_JSON": true,
+    "default_pure_file_timeout_seconds": 0,
+    "zero_means_no_automatic_timeout": true,
+    "native_request_timeout_changed": false
+  },
+  "resolver_memoization": {
+    "matcher_regression_checks_passed": 56,
+    "locator_regression_checks_passed": 20,
+    "cache_semantic_checks_passed": 13,
+    "callback_does_not_change_resolution_result": true,
+    "actual_readonly_module_selection_seconds": 78.745,
+    "actual_distinct_PE_parses": 352,
+    "actual_PE_cache_hits": 6695,
+    "selected_module_paths_and_sha_same_as_previous_evidence": true,
+    "full_dependency_evidence_graph_same": true,
+    "candidate_or_ABI_acceptance_rules_changed": false,
+    "older_customer_binary_available": false,
+    "customer_95_minute_bottleneck_proven": false,
+    "old_189_second_result_used_identical_file_content_path": true,
+    "cross_version_elapsed_time_claim": "not_measured"
+  },
+  "native_project_acceptance_this_round": {
+    "Pro_started_or_written": false,
+    "manufacturer_project_check": "not_performed",
+    "save_close_reopen": "not_performed",
+    "local_simulation": "not_performed",
+    "device_communication": "not_performed"
+  }
+}

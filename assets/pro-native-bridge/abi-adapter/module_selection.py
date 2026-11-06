@@ -14,6 +14,7 @@ import stat
 from collections import deque
 
 from pe32 import PE32
+from preparation_progress import PreparationProgress
 
 
 def parse_module_overrides(values, known_aliases=None):
@@ -48,6 +49,51 @@ def _regular_image(path, *, editor=False):
     return path, image
 
 
+class _PreparationImages:
+    """Reuse parsing only within one selection while file identities stay fixed.
+
+    No cached observation is carried to a later invocation or used to admit a
+    vendor build. A replacement during this invocation remains an explicit
+    unavailable-file result instead of mixing two versions of a dependency.
+    """
+    def __init__(self, progress_callback=None):
+        self.rows = {}
+        self.hits = 0
+        self.parses = 0
+        self.progress = PreparationProgress(progress_callback)
+
+    @staticmethod
+    def identity(path):
+        info = path.stat()
+        if not stat.S_ISREG(info.st_mode):
+            raise ValueError('Module is not a regular file')
+        return (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns)
+
+    def load(self, path, *, editor=False):
+        path = Path(path).resolve(strict=True)
+        identity = self.identity(path)
+        key = os.path.normcase(str(path))
+        cached = self.rows.get(key)
+        if cached is not None:
+            if cached[0] != identity:
+                raise ValueError('Module file identity changed during this preparation: ' + str(path))
+            image = cached[1]
+            self.hits += 1
+        else:
+            image = PE32(path)
+            if self.identity(path) != identity:
+                raise ValueError('Module file identity changed while parsing: ' + str(path))
+            self.rows[key] = (identity, image)
+            self.parses += 1
+        if editor and image.is_dll:
+            raise ValueError('The selected editor must be an EXE, not a DLL')
+        if not editor and not image.is_dll:
+            raise ValueError('The selected dependency must be a PE32/I386 DLL')
+        self.progress('module_discovery', self.parses, None,
+                      image_cache_hits=self.hits, current_module=path.name)
+        return path, image
+
+
 def _family(name):
     name = name.casefold()
     if re.fullmatch(r'mfc\d+u?d?\.dll', name):
@@ -71,7 +117,7 @@ def _import_names(alias, reference, imported):
     return list(dict.fromkeys(matches))
 
 
-def _dependency_imports(editor, image, roots, install):
+def _dependency_imports(editor, image, roots, install, *, image_loader=None):
     """Inspect the local import graph before considering reference fallbacks."""
     pending = deque([(editor, image)])
     seen = {os.path.normcase(str(editor))}
@@ -102,7 +148,7 @@ def _dependency_imports(editor, image, roots, install):
                 continue
             seen.add(key)
             try:
-                path, dependency = _regular_image(path)
+                path, dependency = (image_loader or _regular_image)(path)
                 rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'read'})
                 # Cycle detection bounds traversal by the finite actual graph,
                 # including explicit dependencies outside the installation.
@@ -112,7 +158,7 @@ def _dependency_imports(editor, image, roots, install):
     return names, rows
 
 
-def select_module_files(catalog, layout, module_overrides=None):
+def select_module_files(catalog, layout, module_overrides=None, *, progress_callback=None):
     """Return valid files plus per-alias unavailable/ambiguity diagnostics.
 
     The explicitly bound editor is mandatory. Optional dependencies never abort
@@ -132,7 +178,9 @@ def select_module_files(catalog, layout, module_overrides=None):
     editor = Path(layout.editor_executable or Path(layout.install_root) / 'Program' / 'McgsSetPro.exe')
     if 'editor' in overrides and os.path.normcase(os.path.abspath(overrides['editor'])) != os.path.normcase(os.path.abspath(editor)):
         raise ValueError('Editor override must equal the explicitly bound editor executable')
-    editor, image = _regular_image(editor, editor=True)
+    images = _PreparationImages(progress_callback)
+    images.progress('module_discovery', 0, None, force=True)
+    editor, image = images.load(editor, editor=True)
     install = Path(os.path.abspath(layout.install_root))
     roots = list(dict.fromkeys((editor.parent, install, install / 'Program')))
     local_roots = tuple(roots)
@@ -156,7 +204,7 @@ def select_module_files(catalog, layout, module_overrides=None):
         if alias == 'editor':
             continue
         try:
-            path, dependency = _regular_image(path)
+            path, dependency = images.load(path)
             base_images[path] = dependency
         except (OSError, ValueError):
             # Its per-alias row below records the exact invalid candidate.
@@ -165,7 +213,7 @@ def select_module_files(catalog, layout, module_overrides=None):
     def collect_imports(seed_images):
         names, evidence = [], []
         for path, dependency in seed_images.items():
-            found, graph = _dependency_imports(path, dependency, roots, install)
+            found, graph = _dependency_imports(path, dependency, roots, install, image_loader=images.load)
             names.extend(name for name in found if name.casefold() not in {item.casefold() for item in names})
             evidence.extend(graph)
         return names, evidence
@@ -215,7 +263,7 @@ def select_module_files(catalog, layout, module_overrides=None):
                     if owner_path is None:
                         continue
                     try:
-                        owner_image = base_images.get(owner_path) or PE32(owner_path)
+                        owner_image = base_images.get(owner_path) or images.load(owner_path, editor=owner == 'editor')[1]
                     except (OSError, ValueError):
                         continue
                     matched = _import_names(alias, reference, owner_image.import_modules)
@@ -275,7 +323,7 @@ def select_module_files(catalog, layout, module_overrides=None):
                     equal = []
                     for candidate in chosen:
                         try:
-                            path, candidate_image = _regular_image(candidate['path'])
+                            path, candidate_image = images.load(candidate['path'])
                             equal.append((path, candidate_image.identity()['sha256']))
                         except (OSError, ValueError):
                             equal = []
@@ -289,7 +337,7 @@ def select_module_files(catalog, layout, module_overrides=None):
                 else:
                     candidate = chosen[0]
                     try:
-                        path, selected = _regular_image(candidate['path'])
+                        path, selected = images.load(candidate['path'])
                         files[alias] = path
                         selected_images[alias] = selected
                         row.update(status='selected', source=candidate['source'], path=str(path), sha256=selected.identity()['sha256'])
@@ -334,7 +382,11 @@ def select_module_files(catalog, layout, module_overrides=None):
         alias = 'dependency:' + str(path).casefold()
         files[alias] = path
         selected_paths.add(os.path.normcase(str(path)))
+    images.progress('module_discovery_complete', images.parses, images.parses, force=True,
+                    image_cache_hits=images.hits)
     return {'files': files, 'report': {'schema': 'mcgs-native-module-selection/v1', 'modules': rows,
+                                     'preparation_image_cache': {'unique_files_parsed': images.parses, 'cache_hits': images.hits,
+                                                                 'scope': 'single_selection_stable_file_identity'},
                                      'dependency_imports': dependency_rows,
                                      'dependency_discovery_passes': discovery_passes,
                                      'dependency_roots': [{'alias': alias, 'path': str(path)} for alias, path in sorted(discovery_roots.items())],

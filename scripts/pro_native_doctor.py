@@ -102,6 +102,17 @@ def preflight(options):
             candidate = Path(__file__).resolve().parents[2]
             if (candidate / 'bundle.json').is_file():
                 bundle = str(candidate)
+        if bundle is None:
+            try:
+                helper = Path(__file__).with_name('turnkey_bundle.py')
+                spec = importlib.util.spec_from_file_location('mcgs_doctor_bundle', helper)
+                module = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(module)
+                found = module.available_bundle(Path(__file__).resolve().parents[1])
+                if found:
+                    bundle = str(found[0])
+            except (OSError, ValueError, KeyError, ImportError, TypeError):
+                pass
         if bundle:
             try:
                 root = Path(bundle).resolve()
@@ -126,8 +137,15 @@ def preflight(options):
             except (OSError, ValueError, KeyError, TypeError) as error:
                 checks['x86_framework_csc'] = {'status': 'failed', 'required': False,
                     'reason': 'Portable distribution artifact check failed: ' + str(error)}
-        else:
+        elif getattr(options, 'source_build', False):
             checks['x86_framework_csc'] = command_check(str(csc), ['/nologo', '/help'])
+        else:
+            checks['x86_framework_csc'] = {'status': 'passed', 'required': False,
+                'reason': 'Normal use consumes a precompiled complete bundle; no compiler fallback'}
+            checks['precompiled_distribution'] = {'status': 'not_selected',
+                'reason': 'Complete bundle is not locally available. Run run.ps1 turnkey fetch-bundle, then repeat this read-only check.',
+                'recovery_command': 'run.ps1 turnkey fetch-bundle',
+                'software_reinstallation_required': False}
     else:
         checks['powershell'] = {'status': 'not_evaluated', 'reason': 'Windows is required'}
         checks['x86_framework_csc'] = {'status': 'not_evaluated', 'reason': 'Windows is required'}
@@ -171,6 +189,7 @@ def main():
     parser.add_argument('--editor-executable', help='Explicit actual PE32/I386 Pro image; no release/hash whitelist')
     parser.add_argument('--powershell-executable', help='Actual PowerShell 7 executable; otherwise MCGS_PWSH/PATH')
     parser.add_argument('--bundle-root', help='Complete bundle with publisher-precompiled engine/bridge; Csc is then unnecessary')
+    parser.add_argument('--source-build', action='store_true', help='Developer-only legacy source compilation preflight; not normal receiver setup')
     options = parser.parse_args()
     report, code = preflight(options)
     print(json.dumps(report, ensure_ascii=False, indent=2))
