@@ -8,14 +8,14 @@ $localRoot=if($env:LOCALAPPDATA){$env:LOCALAPPDATA}else{Join-Path ([Environment]
 $pointers=@((Join-Path $PSScriptRoot 'turnkey-location.json'),(Join-Path $localRoot 'mcgs-engineering/bundles/current.json'))
 foreach($pointer in $pointers){
  if(Test-Path -LiteralPath $pointer){
-  try{$location=(Get-Content -LiteralPath $pointer -Raw|ConvertFrom-Json).bundle_root;if($location){$bundleCandidates.Add([string]$location)}}catch{}
+  try{$location=(Get-Content -LiteralPath $pointer -Raw -Encoding UTF8|ConvertFrom-Json).bundle_root;if($location){$bundleCandidates.Add([string]$location)}}catch{}
  }
 }
 foreach($candidate in $bundleCandidates){
  try{
   $descriptor=Join-Path $candidate 'bundle.json'
   if(-not(Test-Path -LiteralPath $descriptor -PathType Leaf)){continue}
-  $bundle=Get-Content -LiteralPath $descriptor -Raw|ConvertFrom-Json
+  $bundle=Get-Content -LiteralPath $descriptor -Raw -Encoding UTF8|ConvertFrom-Json
   if($bundle.schema -ne 'mcgs-turnkey-bundle/v1'){continue}
   $candidatePython=Join-Path $candidate $bundle.python
   $candidatePwsh=Join-Path $candidate $bundle.powershell
