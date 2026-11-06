@@ -10,6 +10,8 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
+首次使用推荐[完整整合包下载](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey)，按[开箱配置说明](references/turnkey-start-zh.md)运行：统一便携运行时、预编译自有在线引擎/热接桥，以及单独许可的完整 Pro/Stu 安装介质。整合包中本机只分析实际接口并生成资料，不重新编译引擎；软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。完整介质仅随 Release 完整附件提供，不进入本 Git 源仓库；源代码技能 ZIP 不含编译后的引擎和运行时。
+
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
 当前在线定位增加有角色依据的等价代码适配，移除摘要计算与未使用根槽的整份资料门槛；多项只读检查逐项返回前像或未适配原因。`native-abi report`可查看具体接口，静态定位成功不等于原厂调用已验证。范围见[分层自动适配](references/adaptive-native-location.md)及[对应验证](references/adaptive-native-location-validation.json)。
@@ -50,7 +52,7 @@ Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](referen
 
 在线采用“后台准备 → 原 UI 线程批量执行 → 后台回执”：纯数据准备、日志和不同派生文件输出可以并行，同一工程的原生修改、保存和资源释放仍由单一 UI 线程执行。更改前先激活 Pro 内部目标页面或编辑器，不强制最大化或抢 Windows 焦点。更新技能不会自动恢复已暂停的工程。
 
-首次部署、热接入和已有桥升级见[连接与部署](references/pro-native-deployment.md)；界面施工见[在线界面工作流](references/pro-native-ui-workflow.md)；线程、批次及旧桥兼容范围见[后台流水线](references/pro-native-pipeline.md)。包内交付自有源码与绑定工具，不含可直接套用到任意电脑的厂商 DLL 或本机绑定结果。
+首次部署、热接入和已有桥升级见[连接与部署](references/pro-native-deployment.md)；界面施工见[在线界面工作流](references/pro-native-ui-workflow.md)；线程、批次及旧桥兼容范围见[后台流水线](references/pro-native-pipeline.md)。源代码技能交付自有源码与绑定工具；完整整合包另含预编译自有引擎，实际接口数据仍在接收电脑分析。
 
 ## 安装
 
@@ -72,7 +74,7 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 
 从旧版迁移时，先保全并比较本地修改，将旧 `mcgs-offline-edit` 安装目录备份移到 `skills` 目录之外，再安装新包唯一根目录 `mcgs-engineering`；不要同时保留两个技能。本版不保留旧调用别名，改用 `$mcgs-engineering`。已有在线运行资料不自动搬动，也无需因技能更名重建运行 scope。
 
-安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线用 `pwsh -NoProfile -File .\run.ps1 native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。`native-engineering --help` 仅表示命令入口可读，`native-doctor` 通过只表示选定文件与构建前提通过，不代表已经连接或业务接口全部适配。首次在线接入需本机的 .NET Framework x86 编译器及实际 Pro 安装；按[首次在线准备](references/pro-native-deployment.md#首次热接的文件准备)生成并编译自有桥和业务引擎，仅复制技能目录不会自动建立连接。便携安装与隔离连接的实际范围见[安装验证记录](references/installation-validation.json)。
+安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线用 `pwsh -NoProfile -File .\run.ps1 native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。`native-engineering --help` 仅表示命令入口可读，`native-doctor` 通过只表示选定文件及准备前提通过，不代表已经连接或业务接口全部适配。完整整合包优先用 `McgsRun.cmd turnkey prepare-online`，直接复用预编译引擎，无需接收方编译器；只下载源代码技能的开发者沿用[源码准备](references/pro-native-deployment.md#首次热接的文件准备)。仅复制 SKILL.md 不会自动建立连接。历史安装验证见[安装验证记录](references/installation-validation.json)。
 
 ## 共用环境
 
@@ -181,4 +183,4 @@ python scripts/build_release.py --version v2026.11.05-cross-build-fixes --out lo
 
 ## 许可
 
-本项目不是昆仑通态官方工具。代码按 [MIT](LICENSE) 发布；Pro 适配器原始第三方许可见 [THIRD_PARTY_LICENSE.txt](assets/pro-3.5-cli/THIRD_PARTY_LICENSE.txt)。包中不含厂商二进制、客户工程或账号。
+本项目不是昆仑通态官方工具。自有代码按 [MIT](LICENSE) 发布；Pro 适配器原始第三方许可见 [THIRD_PARTY_LICENSE.txt](assets/pro-3.5-cli/THIRD_PARTY_LICENSE.txt)。源码技能包不含厂商二进制、客户工程或账号；完整整合包的安装介质和运行时各按其[第三方许可](references/turnkey-third-party.md)分发。

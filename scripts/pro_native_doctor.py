@@ -5,6 +5,7 @@ can be used for preparation. Connection permissions and business ABI matching
 remain explicitly unevaluated.
 """
 import argparse
+import hashlib
 import importlib.util
 import importlib.metadata
 import json
@@ -96,7 +97,37 @@ def preflight(options):
     if windows:
         checks['powershell'] = command_check(powershell, ['-NoProfile', '-NonInteractive', '-Command',
             '[Console]::Out.Write($PSVersionTable.PSVersion.ToString())'], version=True)
-        checks['x86_framework_csc'] = command_check(str(csc), ['/nologo', '/help'])
+        bundle = getattr(options, 'bundle_root', None) or os.environ.get('MCGS_BUNDLE_ROOT')
+        if bundle is None:
+            candidate = Path(__file__).resolve().parents[2]
+            if (candidate / 'bundle.json').is_file():
+                bundle = str(candidate)
+        if bundle:
+            try:
+                root = Path(bundle).resolve()
+                metadata = json.loads((root / 'bundle.json').read_text(encoding='utf-8-sig'))
+                listing = json.loads((root / 'bundle-files.json').read_text(encoding='utf-8-sig'))
+                indexed = {row['file']: row for row in listing['files']}
+                files = [metadata['business_engine']]
+                bridge = root / metadata['bridge_artifacts'] / 'portable-bridge-manifest.json'
+                bridge_data = json.loads(bridge.read_text(encoding='utf-8-sig'))
+                files += [str(Path(metadata['bridge_artifacts']) / row['file']).replace('\\', '/') for row in bridge_data['artifacts']]
+                for relative in files:
+                    path = (root / relative).resolve()
+                    if not path.is_relative_to(root) or not path.is_file():
+                        raise ValueError('Missing packaged own artifact: ' + relative)
+                    with path.open('rb') as stream:
+                        digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+                    if digest != indexed[relative]['sha256']:
+                        raise ValueError('Packaged own artifact differs: ' + relative)
+                checks['x86_framework_csc'] = {'status': 'passed', 'required': False,
+                    'reason': 'Verified publisher-precompiled portable artifacts; receiver compilation is unnecessary',
+                    'compiled_artifacts_verified': files}
+            except (OSError, ValueError, KeyError, TypeError) as error:
+                checks['x86_framework_csc'] = {'status': 'failed', 'required': False,
+                    'reason': 'Portable distribution artifact check failed: ' + str(error)}
+        else:
+            checks['x86_framework_csc'] = command_check(str(csc), ['/nologo', '/help'])
     else:
         checks['powershell'] = {'status': 'not_evaluated', 'reason': 'Windows is required'}
         checks['x86_framework_csc'] = {'status': 'not_evaluated', 'reason': 'Windows is required'}
@@ -139,6 +170,7 @@ def main():
     parser.add_argument('--install-root', help='Actual installation root; default image is Program/McgsSetPro.exe below it')
     parser.add_argument('--editor-executable', help='Explicit actual PE32/I386 Pro image; no release/hash whitelist')
     parser.add_argument('--powershell-executable', help='Actual PowerShell 7 executable; otherwise MCGS_PWSH/PATH')
+    parser.add_argument('--bundle-root', help='Complete bundle with publisher-precompiled engine/bridge; Csc is then unnecessary')
     options = parser.parse_args()
     report, code = preflight(options)
     print(json.dumps(report, ensure_ascii=False, indent=2))

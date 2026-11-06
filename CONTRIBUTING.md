@@ -26,7 +26,7 @@
 3. 实际读写 Stu/Pro 数据库均使用匹配进程位数的 ACE 16.0/12.0；Pro 新建另需同位数 ADOX.Catalog，见 [环境说明](references/environment-and-tools.md)。预览工具另需 Pillow。
 4. 测试输入、输出、报告和临时文件放在仓库外，或放进已忽略的 `local-artifacts/`。不要使用正在编辑或运行的唯一工程作实验。
 
-在线开发先读[部署说明](references/pro-native-deployment.md)、[在线工作流](references/pro-native-ui-workflow.md)和[后台流水线](references/pro-native-pipeline.md)。普通启动 Pro 可热接入，已有桥直接复用；不要为每个任务重启软件。包内自有源码需按本次目录绑定编译，不提交本机 scope、运行 claim、用户回执或绑定 DLL。
+在线开发先读[部署说明](references/pro-native-deployment.md)、[在线工作流](references/pro-native-ui-workflow.md)和[后台流水线](references/pro-native-pipeline.md)。普通启动 Pro 可热接入，已有桥直接复用；不要为每个任务重启软件。发布方可编译通用引擎/桥，完整包接收者只物化本机资料而不重新编译；源代码开发仍可维护旧绑定模式。不提交本机 scope、运行 claim、用户回执、绑定 DLL 或厂商安装介质；本地完整包单独组装在仓库外。
 
 纯数据准备和不同派生文件写入可用后台线程；所有原生工程对象访问、修改、保存及释放必须留在原 UI 线程。先激活 Pro 内部目标编辑器，不抢 Windows 焦点，不要求电脑操作技能。沿用用户已授权范围与模式，不新增许可文件或逐批审批；维护工具不会自动恢复用户暂停的工程。
 

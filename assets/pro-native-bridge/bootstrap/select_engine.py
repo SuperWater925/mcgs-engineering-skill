@@ -15,8 +15,11 @@ from pathlib import Path
 import re
 import stat
 import uuid
+import sys
 
 from managed_pe import verify_scope_binding
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent/'portable-engine'))
+from portable_support import PORTABLE_FIELDS, validate_portable_scope
 
 NAME = re.compile(r'[A-Za-z0-9][A-Za-z0-9_.-]*\.dll\Z')
 SHA = re.compile(r'[a-f0-9]{64}\Z')
@@ -118,13 +121,14 @@ def verify_selection(context):
         scope_raw = regular(path.with_suffix('.scope.json'))
         need(digest(scope_raw) == selected['engine_scope_sha256'], 'Currently selected engine scope differs from its manifest')
         verify_scope_binding(regular(path), selected['engine_scope_sha256'])
+        verify_scope(scope_raw, context)
     return selected, raw
 
 
 def verify_scope(raw, context):
     scope = json.loads(raw.decode('utf-8-sig'))
     keys = {'schema', 'task_root', 'engineering_root', 'runtime_root', 'install_root', 'transport_client_file', 'transport_client_sha256'}
-    need(isinstance(scope, dict) and keys <= set(scope) <= keys|{'editor_executable'} and scope['schema'] == 1,
+    need(isinstance(scope, dict) and keys <= set(scope) <= keys|{'editor_executable'}|PORTABLE_FIELDS and scope['schema'] == 1,
          'Engine scope schema differs')
     for key in ('task_root', 'runtime_root', 'install_root'):
         need(same(scope[key], context['cfg'][key]), 'Engine and current bridge disagree on '+key)
@@ -137,6 +141,7 @@ def verify_scope(raw, context):
     need(transport.is_relative_to(absolute(scope['task_root'])) or transport.is_relative_to(engineering), 'Transport escapes the declared task/payload roots')
     need(SHA.fullmatch(scope['transport_client_sha256']) and digest(regular(transport)) == scope['transport_client_sha256'],
          'Selected scope transport identity differs')
+    validate_portable_scope(scope)
     return scope
 
 
