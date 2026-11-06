@@ -7,7 +7,8 @@ No native code is loaded or called.
 from __future__ import annotations
 import struct
 import bisect
-from collections import defaultdict
+import copy
+from collections import defaultdict, OrderedDict
 from pe32 import import_identity, resolve_export
 
 try:
@@ -119,7 +120,7 @@ def string_anchor(pe, rva):
     return None
 
 
-def decode_signature(pe, rva, guard_length=32):
+def _decode_signature(pe, rva, guard_length=32):
     if not pe.is_executable(rva):
         raise ValueError('Signature address is not in an executable PE section')
     guard = pe.read(rva, guard_length)
@@ -196,6 +197,48 @@ def decode_signature(pe, rva, guard_length=32):
             'instruction_offsets': [ins.address - rva for ins in instructions],
             'relocations': relocations, 'transfers': transfers,
             'first_is_direct_thunk': bool(instructions[0].id == x86.X86_INS_JMP and transfers and transfers[0]['instruction_index'] == 0)}
+
+
+def decode_signature(pe, rva, guard_length=32):
+    """Memoize byte-derived decoding; callers always own their mutable result.
+
+    Context/role verification is deliberately not cached: its proof graph can
+    grow or be withdrawn during resolution. Eviction only saves memory and
+    never drops a candidate or changes any matching rule.
+    """
+    data = getattr(pe, 'data', None)
+    if not isinstance(data, bytes):
+        return _decode_signature(pe, rva, guard_length)
+    state = getattr(pe, '_abi_signature_decode_cache', None)
+    if state is None or state['data'] is not data:
+        state = {'data': data, 'rows': OrderedDict(), 'tokens': 0,
+                 'calls': 0, 'hits': 0, 'decodes': 0, 'evictions': 0}
+        pe._abi_signature_decode_cache = state
+    state['calls'] += 1
+    key = (rva, guard_length)
+    cached = state['rows'].get(key)
+    if cached is None:
+        state['decodes'] += 1
+        try:
+            value = _decode_signature(pe, rva, guard_length)
+            cached = (True, value, max(1, len(value['tokens'])))
+        except (ValueError, struct.error) as error:
+            cached = (False, (type(error), error.args), 1)
+        state['rows'][key] = cached
+        state['tokens'] += cached[2]
+        # These are memo storage budgets, not parser or function limits. A
+        # larger model is still returned normally and is simply not retained.
+        while len(state['rows']) > 4096 or state['tokens'] > 65536:
+            unused_key, evicted = state['rows'].popitem(last=False)
+            state['tokens'] -= evicted[2]
+            state['evictions'] += 1
+    else:
+        state['hits'] += 1
+        state['rows'].move_to_end(key)
+    if not cached[0]:
+        error_type, arguments = cached[1]
+        raise error_type(*arguments)
+    return copy.deepcopy(cached[1])
 
 
 def attach_reference_contexts(pe, signature):

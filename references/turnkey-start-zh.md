@@ -16,6 +16,15 @@
 
 ## 交给智能体的命令
 
+若安装的是 GitHub 源码或轻量技能 ZIP，直接在技能目录执行：
+
+```powershell
+pwsh -NoProfile -File .\run.ps1 turnkey inventory --family pro
+pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle
+```
+
+`inventory` 无需完整包，不联网下载。`fetch-bundle` 自动发现已配置的包或下载已校验的 Release 完整附件，在本机共享缓存解压；这一步不会安装/卸载 Pro 或改工程。Codex、Claude、WorkBuddy 等沿用相同入口，不要求其 skills 上级目录存在 bundle.json。可用 `--cache-dir C:\MCGS-AI` 指定较短缓存目录；已有 ZIP 可设置环境变量 `MCGS_BUNDLE_ARCHIVE`，已有解压目录可用 `--bundle-root`。`--no-download` 只查本地并返回明确下载指引。`setup` / `prepare-online` 缺完整包时会先执行同样的获取流程，不回退到重新编译引擎。
+
 在完整包根目录执行 `McgsRun.cmd turnkey inventory --family pro`。完整校验用 `McgsRun.cmd turnkey verify --full`。命令不会启动厂商安装器或修改工程。
 
 普通方式打开 Pro 后，在线准备：
@@ -25,6 +34,8 @@
 ```
 
 路径替换为对方实际安装路径；同一编辑器打开多个进程时加 `--pid` 选择。先发现并复用已有桥；没有才热接，不要求桥接启动器重启软件。入口返回 `scope_config`、`scope_sha256` 和实际连接状态。随后通过 `McgsRun.cmd native-engineering` 正常调用原技能业务接口。包内 DLL 原字节复用，接收方只生成 JSON/定位资料，不运行编译器。不要让智能体重新研发或重新编译引擎。
+
+免编译仍需分析当前软件。不同版本的动态定位耗时不能用相同文件内容快速路径的实测代替，不保证几分钟完成。纯文件准备的默认等待不设15分钟上限，stderr先给出进度文件路径，可读取 `preparation-progress.json` 看当前阶段/计数；若明确需要限制，可加 `--preparation-timeout 7200`（秒）。超时后检查已有输出，不能自动重跑。此参数不改变原生工程请求的超时或重放规则，也不自动续跑对方已经停止的准备目录。
 
 在线准备本身不会修改工程，也不代表原厂工程检查通过。写入前激活 Pro 内部目标画面/策略/数据库编辑器；不抢 Windows 焦点、不最大化。超时先读实际状态，不自动重试未知请求。
 

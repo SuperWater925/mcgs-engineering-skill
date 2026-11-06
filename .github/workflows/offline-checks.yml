@@ -28,5 +28,7 @@ jobs:
       - name: PowerShell 语法
         shell: pwsh
         run: ./scripts/check_powershell.ps1
+      - name: 源码安装的完整包发现与获取合同
+        run: python scripts/test_turnkey_bundle.py --work local-artifacts/bootstrap-fixtures
       - name: 技能包与压缩内容校验
         run: python scripts/build_release.py --version v0.0.0-check --out local-artifacts/ci-release

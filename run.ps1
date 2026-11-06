@@ -1,13 +1,31 @@
 $ErrorActionPreference = 'Stop'
-$bundleRoot=Split-Path $PSScriptRoot -Parent
-if(-not(Test-Path -LiteralPath (Join-Path $bundleRoot 'bundle.json'))){
- $pointer=Join-Path $PSScriptRoot 'turnkey-location.json'
- if(Test-Path -LiteralPath $pointer){$bundleRoot=(Get-Content -LiteralPath $pointer -Raw|ConvertFrom-Json).bundle_root}
+$bundleRoot=$null
+$bundleCandidates=[Collections.Generic.List[string]]::new()
+if($env:MCGS_BUNDLE_ROOT){$bundleCandidates.Add($env:MCGS_BUNDLE_ROOT)}
+$bundleCandidates.Add($PSScriptRoot)
+$bundleCandidates.Add((Split-Path $PSScriptRoot -Parent))
+$localRoot=if($env:LOCALAPPDATA){$env:LOCALAPPDATA}else{Join-Path ([Environment]::GetFolderPath('UserProfile')) 'AppData/Local'}
+$pointers=@((Join-Path $PSScriptRoot 'turnkey-location.json'),(Join-Path $localRoot 'mcgs-engineering/bundles/current.json'))
+foreach($pointer in $pointers){
+ if(Test-Path -LiteralPath $pointer){
+  try{$location=(Get-Content -LiteralPath $pointer -Raw|ConvertFrom-Json).bundle_root;if($location){$bundleCandidates.Add([string]$location)}}catch{}
+ }
 }
-if($bundleRoot -and (Test-Path -LiteralPath (Join-Path $bundleRoot 'bundle.json'))){
- $bundle=Get-Content -LiteralPath (Join-Path $bundleRoot 'bundle.json') -Raw|ConvertFrom-Json
- $env:MCGS_PYTHON=Join-Path $bundleRoot $bundle.python
- $env:MCGS_PWSH=Join-Path $bundleRoot $bundle.powershell
+foreach($candidate in $bundleCandidates){
+ try{
+  $descriptor=Join-Path $candidate 'bundle.json'
+  if(-not(Test-Path -LiteralPath $descriptor -PathType Leaf)){continue}
+  $bundle=Get-Content -LiteralPath $descriptor -Raw|ConvertFrom-Json
+  if($bundle.schema -ne 'mcgs-turnkey-bundle/v1'){continue}
+  $candidatePython=Join-Path $candidate $bundle.python
+  $candidatePwsh=Join-Path $candidate $bundle.powershell
+  if(-not(Test-Path -LiteralPath $candidatePython -PathType Leaf) -or -not(Test-Path -LiteralPath $candidatePwsh -PathType Leaf)){continue}
+  $bundleRoot=$candidate;break
+ }catch{}
+}
+if($bundleRoot){
+ $env:MCGS_PYTHON=$candidatePython
+ $env:MCGS_PWSH=$candidatePwsh
  $env:MCGS_BUNDLE_ROOT=$bundleRoot
  if($PSVersionTable.PSVersion.Major -lt 7){
   & $env:MCGS_PWSH -NoProfile -File $PSCommandPath @args

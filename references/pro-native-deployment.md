@@ -2,6 +2,8 @@
 
 ## 完整整合包优先入口
 
+安装的是源码技能（包括 WorkBuddy）也优先执行 `run.ps1 turnkey fetch-bundle` 自动定位/获取完整附件，再执行 `run.ps1 turnkey prepare-online`。`inventory` 本身不依赖完整包。不要把源码路径的上级当成 bundle 根目录，不因缺包要求重装 Pro、手建 bundle.json 或回退到 Csc。默认 `native-doctor` 缺完整包给获取指引；仅源码维护预检使用 `--source-build`。完整包免编译仍需本地接口定位；纯文件准备默认无15分钟上限并落进度，不能承诺跨版本几分钟完成。
+
 完整包含 `bundle.json` 和预编译自有引擎/桥时，按[开箱配置](turnkey-start-zh.md)执行 `McgsRun.cmd turnkey prepare-online --editor <当前EXE> --install-root <当前安装根>`。目标端只从实际程序生成函数/RTTI/布局和目录 JSON，使用同一 DLL，不调用 Csc。先发现并复用同进程现有桥，普通启动可热接，不要求重启。`native-doctor` 在完整包内改核已编译自有产物，不把编译器缺失作为门槛。下文手动绑定编译仅供源代码开发/旧部署维护，不要求完整包接收者再做一遍引擎。
 
 版本不一致只提示选择，继续本机版本会分析当前文件；选择原目录重装才进入带外部备份及实际目录回验的安装计划。Stu 在线未实现，不因整合包带 Stu 安装器就宣称可在线调用。

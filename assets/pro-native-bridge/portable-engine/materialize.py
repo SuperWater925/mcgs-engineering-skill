@@ -7,12 +7,73 @@ entries retain feature-local failures instead of an author-version whitelist.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path, PureWindowsPath
 import re
+import sys
 import time
+import uuid
 
 from portable_support import ROOT, BINDING_SCHEMA, CONTRACT, PORTABLE_FIELDS, binder_module, digest, encoded, need, reference_aliases, source_key, validate_portable_scope, write_new
+
+
+class PreparationProgress:
+    """Atomic, file-only preparation snapshots; never an online-ready receipt."""
+    def __init__(self, path):
+        self.path = Path(path).resolve()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.started = time.perf_counter()
+        self.started_utc = datetime.now(timezone.utc).isoformat()
+        self.previous = None
+        self.last_echo = 0.0
+
+    def __call__(self, row):
+        if not isinstance(row, dict) or not isinstance(row.get("phase"), str):
+            raise ValueError("Preparation progress must provide a phase dictionary")
+        self.emit(row["phase"], **{key: value for key, value in row.items()
+                                   if key not in {"schema", "status", "phase", "started_at_utc",
+                                                  "updated_at_utc", "elapsed_seconds", "materialization_complete",
+                                                  "vendor_invoked", "host_invoked", "compiled", "automatic_retry"}})
+
+    def emit(self, phase, status="running", **details):
+        elapsed = time.perf_counter() - self.started
+        value = {"schema": "mcgs-portable-engine-progress/v1", "status": status,
+                 "phase": phase, "started_at_utc": self.started_utc,
+                 "updated_at_utc": datetime.now(timezone.utc).isoformat(),
+                 "elapsed_seconds": round(elapsed, 3),
+                 "materialization_complete": status == "completed",
+                 "vendor_invoked": False, "host_invoked": False, "compiled": False,
+                 "automatic_retry": False, **details}
+        temporary = self.path.with_name(self.path.name + "." + uuid.uuid4().hex + ".tmp")
+        try:
+            with temporary.open("xb") as stream:
+                stream.write(encoded(value))
+                stream.flush()
+                os.fsync(stream.fileno())
+            os.replace(temporary, self.path)
+        finally:
+            if temporary.exists():
+                temporary.unlink()
+        if self.previous is None or self.previous.get("phase") != phase or status != "running" or elapsed - self.last_echo >= 5:
+            count = ""
+            if "completed" in value and "total" in value:
+                count = " {}/{}".format(value["completed"], value["total"])
+            print("[prepare] {}{} ({:.1f}s)".format(phase, count, elapsed), file=sys.stderr, flush=True)
+            self.last_echo = elapsed
+        self.previous = value
+
+    def failed(self, error):
+        previous = self.previous or {}
+        self.emit("failed", status="failed", last_phase=previous.get("phase"),
+                  error={"type": type(error).__name__, "message": str(error)},
+                  partial_work_preserved=True)
+
+
+def _report(progress, phase, **details):
+    if progress is not None:
+        progress.emit(phase, **details)
 
 
 def resolve_source_tables(target):
@@ -82,8 +143,8 @@ def resolve_source_tables(target):
     return addresses, guards, ordinals
 
 
-def materialize(scope_base_json, engine_file, engine_sha256, output_directory, source_stage=None,
-                engine_file_name=None, abi_catalog=None, actual_modules=None):
+def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, source_stage=None,
+                 engine_file_name=None, abi_catalog=None, actual_modules=None, progress=None):
     started = time.perf_counter()
     legacy = binder_module()
     from abi_binding import TargetBinding
@@ -113,9 +174,15 @@ def materialize(scope_base_json, engine_file, engine_sha256, output_directory, s
     need(own_image.string_constant(own_type, "SourceCatalogSha256") == digest((ROOT / "abi-adapter/catalogs/source-addresses.json").read_bytes()), "Published OWN engine and source map release differ")
     output.mkdir(parents=True, exist_ok=True)
     resolution_started = time.perf_counter()
-    target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog, actual_modules)
+    _report(progress, "native_data_resolution")
+    callbacks = {"progress_callback": progress} if progress is not None else {}
+    target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog, actual_modules, **callbacks)
+    _report(progress, "source_address_tables")
     addresses, guards, ordinals = resolve_source_tables(target)
     resolution_seconds = time.perf_counter() - resolution_started
+    _report(progress, "profile_materialization", source_addresses=len(addresses),
+            source_guards=len(guards), source_ordinals=len(ordinals),
+            total=len(manifest["owned_artifacts"]))
     aliases = reference_aliases(stage, manifest, legacy.COMMON_PROFILE_PIN_CONTRACTS)
     path, source_paths = legacy.path_rewriter(manifest["original_task_root"], manifest["original_install_root"],
                                               str(layout.evidence_root), str(layout.install_root), str(layout.program_root), str(layout.editor_executable))
@@ -168,6 +235,7 @@ def materialize(scope_base_json, engine_file, engine_sha256, output_directory, s
         return raw
     for relative in artifacts:
         materialize_artifact(relative)
+    _report(progress, "artifact_write", total=len(resolved))
     copied = []
     old_engineering = PureWindowsPath(manifest["original_engineering_relative_root"])
     destinations = {}
@@ -184,6 +252,7 @@ def materialize(scope_base_json, engine_file, engine_sha256, output_directory, s
             write_new(destination, raw)
             destinations[destination] = digest(raw)
             copied.append({"planned_file": str(destination), "sha256": digest(raw), "original_relative_file": relative})
+    _report(progress, "binding_write", artifacts_written=len(copied))
     index_file = layout.evidence_root / "abi-target-profile-index.json"
     index_raw = encoded(target.index(resolved, layout, copied))
     need(len(index_raw) <= 16 * 1024 * 1024, "Native data index exceeds managed parser bound")
@@ -224,6 +293,34 @@ def materialize(scope_base_json, engine_file, engine_sha256, output_directory, s
     return result
 
 
+def materialize(scope_base_json, engine_file, engine_sha256, output_directory, source_stage=None,
+                engine_file_name=None, abi_catalog=None, actual_modules=None, progress_file=None):
+    """Prepare files with optional atomic progress, preserving the original API.
+
+    A running snapshot after a killed process is partial work, not permission
+    to replay preparation or a native engineering request.
+    """
+    progress = PreparationProgress(progress_file) if progress_file is not None else None
+    try:
+        _report(progress, "validation")
+        result = _materialize(scope_base_json, engine_file, engine_sha256, output_directory,
+                              source_stage, engine_file_name, abi_catalog, actual_modules, progress)
+        if progress is not None:
+            progress.emit("completed", status="completed", engine_file=result["engine_file"],
+                          materialization_manifest=str(Path(output_directory) / "materialization-manifest.json"),
+                          meaning="File preparation completed; host connection and native project checks were not performed")
+        return result
+    except BaseException as error:
+        if progress is not None:
+            try:
+                progress.failed(error)
+            except (OSError, ValueError, TypeError):
+                # Preserve the actual preparation failure if diagnostic output
+                # itself became unavailable; no successful result is emitted.
+                pass
+        raise
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--scope-base-json", required=True)
@@ -233,10 +330,11 @@ if __name__ == "__main__":
     parser.add_argument("--source-stage", default=str(ROOT / "delivery/source"))
     parser.add_argument("--engine-file-name")
     parser.add_argument("--abi-catalog")
+    parser.add_argument("--progress-file", help="Atomic preparation-phase JSON; does not start or inspect Pro")
     parser.add_argument("--actual-module", action="append", default=[])
     args = parser.parse_args()
     binder_module()
     from module_selection import parse_module_overrides
     print(json.dumps(materialize(args.scope_base_json, args.engine_file, args.engine_sha256, args.output_directory,
                                  args.source_stage, args.engine_file_name, args.abi_catalog,
-                                 parse_module_overrides(args.actual_module)), ensure_ascii=False, indent=2))
+                                 parse_module_overrides(args.actual_module), args.progress_file), ensure_ascii=False, indent=2))

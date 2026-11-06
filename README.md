@@ -10,7 +10,7 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-首次使用推荐[完整整合包下载](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey)，按[开箱配置说明](references/turnkey-start-zh.md)运行：统一便携运行时、预编译自有在线引擎/热接桥，以及单独许可的完整 Pro/Stu 安装介质。整合包中本机只分析实际接口并生成资料，不重新编译引擎；软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。完整介质仅随 Release 完整附件提供，不进入本 Git 源仓库；源代码技能 ZIP 不含编译后的引擎和运行时。
+首次使用推荐[完整整合包下载](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest)，按[开箱配置说明](references/turnkey-start-zh.md)运行：统一便携运行时、预编译自有在线引擎/热接桥，以及单独许可的完整 Pro/Stu 安装介质。已安装源码技能（包括 WorkBuddy）可直接运行 `run.ps1 turnkey fetch-bundle` 自动获取；`inventory` 无需完整包，`setup/prepare-online` 缺包时自动获取，不要求 skills 上级目录存在 bundle.json，不退回重建引擎。软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。完整介质仅随 Release 完整附件提供；源码技能 ZIP 本身不含编译后的引擎和运行时。
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
@@ -72,9 +72,9 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 
 目标已存在时，先比较并保全本地修改。保留整个目录结构，不只复制 `SKILL.md`。Codex 中调用 `$mcgs-engineering`，Claude Code 中描述任务，或直接执行命令。
 
-从旧版迁移时，先保全并比较本地修改，将旧 `mcgs-offline-edit` 安装目录备份移到 `skills` 目录之外，再安装新包唯一根目录 `mcgs-engineering`；不要同时保留两个技能。本版不保留旧调用别名，改用 `$mcgs-engineering`。已有在线运行资料不自动搬动，也无需因技能更名重建运行 scope。
+旧仓库 `mcgs-offline-edit-skill` 地址已由 GitHub 重定向到本仓库。先核提交和实际文件；两者相同时无需重装技能或 Pro，也不用停止绑定。仅在真正迁移旧技能或清理重复安装时，先保全本地修改，将旧副本备份到 `skills` 外，保留一个 `$mcgs-engineering`。已有在线运行资料不自动搬动，技能或仓库更名不要求重建 scope。
 
-安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线用 `pwsh -NoProfile -File .\run.ps1 native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。`native-engineering --help` 仅表示命令入口可读，`native-doctor` 通过只表示选定文件及准备前提通过，不代表已经连接或业务接口全部适配。完整整合包优先用 `McgsRun.cmd turnkey prepare-online`，直接复用预编译引擎，无需接收方编译器；只下载源代码技能的开发者沿用[源码准备](references/pro-native-deployment.md#首次热接的文件准备)。仅复制 SKILL.md 不会自动建立连接。历史安装验证见[安装验证记录](references/installation-validation.json)。
+安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线先用 `pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle`，再用 `native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。源码技能也走自动获取预编译包；缺包时预检给获取指引，不要求重新编译。完整包可用 `McgsRun.cmd turnkey prepare-online`。`native-engineering --help` 只表示命令入口可读；预检通过不代表已连接或业务接口全部适配。维护源码构建时另读[源码准备](references/pro-native-deployment.md#首次热接的文件准备)，预检加 `--source-build`。仅复制 SKILL.md 不会自动建立连接。历史安装验证见[安装验证记录](references/installation-validation.json)。
 
 ## 共用环境
 
