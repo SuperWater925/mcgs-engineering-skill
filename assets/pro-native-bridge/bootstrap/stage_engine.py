@@ -3,7 +3,11 @@
 No Pro or transport call. Existing engine names and active manifests are never overwritten.
 """
 import argparse, hashlib, json, os, re
+import sys
 from pathlib import Path
+from managed_pe import verify_scope_binding
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent/'portable-engine'))
+from portable_support import validate_portable_scope
 
 
 def digest(p):
@@ -36,6 +40,8 @@ def main():
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*\.dll',engine.name):raise ValueError('Use a single fresh DLL basename matching the binding filename')
     if scope.name!=engine.stem+'.scope.json':raise ValueError('Scope must have the exact engine sibling filename')
     sc=json.loads(scope.read_text(encoding='utf-8-sig'))
+    pe=verify_scope_binding(engine.read_bytes(),digest(scope))
+    validate_portable_scope(sc)
     for key in ['task_root','runtime_root','install_root']:
         if os.path.normcase(os.path.abspath(sc[key]))!=os.path.normcase(os.path.abspath(cfg[key])):
             raise ValueError('Engine and bootstrap disagree on '+key)
@@ -49,7 +55,7 @@ def main():
     if target.exists() or target_scope.exists():raise ValueError('Do not overwrite any engine/scope version')
     write_new(target,engine.read_bytes());write_new(target_scope,scope.read_bytes())
     runtime.mkdir(parents=True,exist_ok=True)
-    value={'assembly':str(target),'sha256':digest(target),'bootstrap_scope_sha256':digest(config)}
+    value={'assembly':str(target),'sha256':digest(target),'bootstrap_scope_sha256':digest(config),'engine_scope_sha256':digest(scope)}
     # First deployment only. Existing bridges use select_engine.py; it retains
     # this bootstrap scope digest and atomically replaces only the selection.
     write_new(manifest,(json.dumps(value,ensure_ascii=False,indent=2)+'\n').encode())

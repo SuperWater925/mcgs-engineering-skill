@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "release": "mcgs-portable-bridge/v6",
+  "assembly_name": "McgsPortableBridge_v6",
+  "assembly_guid": "658E47B8-6E54-4683-B8B1-054BEE7E0985",
+  "class_guid": "C81CD5F3-FD35-46C3-911F-304F48417645",
+  "interface_guid": "D0A82013-C890-46F2-93B3-C9C3CDA53685",
+  "bridge_file": "McgsPortableBridge_v6.dll",
+  "hook_file": "McgsPortableHook_v6.dll",
+  "client_file": "McgsPortableAttach_v6.exe",
+  "mapping_bytes": 131072,
+  "config_path_offset": 256,
+  "config_sha_offset": 65792,
+  "mapping_prefix": "Local\\McgsPortableAttach_v6_",
+  "discovery_prefix": "Local\\McgsPortableBridge_v6_"
+}

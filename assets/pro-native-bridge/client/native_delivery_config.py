@@ -12,7 +12,8 @@ import threading
 TRANSPORT_SHA256 = "298e62cf5798acc03d82af5dd5b5751703a1e65348e12a485780239c01fe3417"
 CLR_MAX_LENGTH = (1 << 31) - 1
 _FIELDS = {"schema", "task_root", "engineering_root", "runtime_root", "install_root", "transport_client_file", "transport_client_sha256"}
-_OPTIONAL_FIELDS = {"editor_executable"}
+_PORTABLE_FIELDS = {"portable_engine_contract", "portable_binding_file", "portable_binding_sha256"}
+_OPTIONAL_FIELDS = {"editor_executable"} | _PORTABLE_FIELDS
 _current = None
 _verified_files = {}
 _verification_lock = threading.RLock()
@@ -98,6 +99,8 @@ class DeliveryLayout:
     transport_client_file: Path
     transport_client_sha256: str
     editor_executable: Path | None = None
+    portable_binding_file: Path | None = None
+    portable_binding_sha256: str | None = None
 
     @property
     def program_root(self):
@@ -119,6 +122,8 @@ class DeliveryLayout:
         if not _not_reparse(self.evidence_root).is_dir():
             raise ValueError("Bound immutable task-evidence payload has not been deployed")
         _verify_file(self.transport_client_file, CLR_MAX_LENGTH, self.transport_client_sha256)
+        if self.portable_binding_file is not None:
+            _verify_file(self.portable_binding_file, CLR_MAX_LENGTH, self.portable_binding_sha256)
 
 
 def load(path, expected_sha256):
@@ -168,7 +173,17 @@ def validate_mapping(data, configuration_file, configuration_sha256):
         raise ValueError("Verified at-most-once transport source differs")
     _verify_file(transport, CLR_MAX_LENGTH, TRANSPORT_SHA256)
     editor = _selected_editor(data, install)
-    return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256, editor)
+    binding, binding_sha = None, None
+    if _PORTABLE_FIELDS.intersection(data):
+        if not _PORTABLE_FIELDS.issubset(data) or data["portable_engine_contract"] != "mcgs-portable-engine/v1":
+            raise ValueError("Portable engine binding fields must be supplied together")
+        if transport.parent != runtime:
+            raise ValueError("Portable queue transport must be directly inside runtime_root")
+        binding, binding_sha = _absolute(data["portable_binding_file"]), data["portable_binding_sha256"]
+        if not binding.is_relative_to(engineering) or not isinstance(binding_sha, str) or re.fullmatch("[a-f0-9]{64}", binding_sha) is None:
+            raise ValueError("Portable binding must declare actual SHA and an engineering-payload path")
+        _verify_file(binding, CLR_MAX_LENGTH, binding_sha)
+    return DeliveryLayout(path, configuration_sha256, task, engineering, runtime, install, transport, TRANSPORT_SHA256, editor, binding, binding_sha)
 
 
 def configure(path, expected_sha256):

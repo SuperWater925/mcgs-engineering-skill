@@ -1,4 +1,26 @@
 $ErrorActionPreference = 'Stop'
+$bundleRoot=Split-Path $PSScriptRoot -Parent
+if(-not(Test-Path -LiteralPath (Join-Path $bundleRoot 'bundle.json'))){
+ $pointer=Join-Path $PSScriptRoot 'turnkey-location.json'
+ if(Test-Path -LiteralPath $pointer){$bundleRoot=(Get-Content -LiteralPath $pointer -Raw|ConvertFrom-Json).bundle_root}
+}
+if($bundleRoot -and (Test-Path -LiteralPath (Join-Path $bundleRoot 'bundle.json'))){
+ $bundle=Get-Content -LiteralPath (Join-Path $bundleRoot 'bundle.json') -Raw|ConvertFrom-Json
+ $env:MCGS_PYTHON=Join-Path $bundleRoot $bundle.python
+ $env:MCGS_PWSH=Join-Path $bundleRoot $bundle.powershell
+ $env:MCGS_BUNDLE_ROOT=$bundleRoot
+ if($PSVersionTable.PSVersion.Major -lt 7){
+  & $env:MCGS_PWSH -NoProfile -File $PSCommandPath @args
+  exit $LASTEXITCODE
+ }
+}
+if($args.Count -gt 0 -and $args[0] -eq 'turnkey'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $setupArgs=@()
+ if($args.Count -gt 1){$setupArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/turnkey.py') @setupArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-engine-select'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $selectionArgs=@()

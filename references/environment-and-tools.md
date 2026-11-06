@@ -1,5 +1,7 @@
 # 环境、安装与工具接口
 
+拿到完整整合包时先读[开箱配置](turnkey-start-zh.md)：运行时、Capstone/Pillow、预编译引擎及桥已包含；`run.ps1` 自动从整合包或安装位置指针找到同一 Python/PowerShell。首次只物化当前目标数据，不运行 Csc。完整包带单独许可的完整厂商安装介质；本 Git 源码技能不含这些介质，两者分别交付。
+
 日常修改优先按[离线提速](offline-performance.md)使用 `baseline` 一次生成快照、导出与指纹，`batch-edit` 合并控件/策略/配方修改，并用 `apply -Commit -ExportAfter <新目录>` 复用提交后的完整回读。源 SHA、字段前指纹、备份、固定白名单及全表核对保留；提交后重新只读打开验证实际文件。原有独立命令仍可用于专项核验。
 
 
@@ -9,7 +11,7 @@
 
 Python3.11+用于纯字节归档解码、候选准备和Pro CLI；共同数据库命令只依赖PowerShell/.NET和ACE；Pro新建还使用同位数ADOX.Catalog创建Jet 4兼容格式数据库，但不使用Jet OLEDB提供程序或32位宿主。优先显式传入本机已有Python路径；找不到时可在Codex中调用`mcp__codex_app__load_workspace_dependencies`定位已捆绑运行时。不要把作者机器的Python绝对路径写成迁移前提。离线核心命令无pip依赖；在线准备的动态函数定位另用Capstone，安装到同一个Python，不建第二套环境。
 
-原厂McgsStu / McgsPro及相匹配的控件、驱动、字体用于最终检查与模拟，由接收者安装；本技能不分发它们。不要下载未知DLL补齐依赖。
+原厂McgsStu / McgsPro及相匹配的控件、驱动、字体用于最终检查与模拟。源代码技能不分发这些程序；完整整合包保留完整介质及原许可，由接收者选择保留本机版或备份后安装。不要下载未知DLL补齐依赖。
 
 将整个`mcgs-engineering`文件夹放到目标电脑的`%USERPROFILE%\.codex\skills\`（Codex，调用`$mcgs-engineering`）或`%USERPROFILE%\.claude\skills\`（Claude Code），也可用PowerShell7直接运行该文件夹内的`run.ps1`。保留`assets/`、`scripts/`、`references/`的相对结构。若同名技能已有本地改动，先比较再合并，不盲目覆盖。
 

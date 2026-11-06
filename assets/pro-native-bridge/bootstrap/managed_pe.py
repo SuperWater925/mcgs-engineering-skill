@@ -177,7 +177,25 @@ class ManagedImage:
 def verify_scope_binding(raw, scope_sha256, *, bootstrap=False):
     image = ManagedImage(raw)
     name = 'McgsInternalBridge.BootstrapLayout' if bootstrap else 'McgsInternalBridge.NativeEngineeringDeliveryLayout'
+    if bootstrap:
+        try:
+            portable = image.string_constant(name, 'PortableBridgeContract')
+        except ValueError:
+            portable = None
+        if portable is not None:
+            if portable != 'mcgs-portable-bridge/v6':
+                raise ValueError('Precompiled portable bridge contract differs')
+            return {'machine': 'I386', 'format': 'PE32', 'managed': True,
+                    'compiled_scope_sha256': None, 'runtime_scope_binding': portable,
+                    'selected_scope_sha256': scope_sha256}
     actual = image.string_constant(name, 'ExpectedConfigurationSha256')
+    if not bootstrap and actual == 'runtime:mcgs-portable-engine/v1':
+        contract = image.string_constant(name, 'PortableEngineContract')
+        if contract != 'mcgs-portable-engine/v1':
+            raise ValueError('Precompiled portable engine contract differs')
+        return {'machine': 'I386', 'format': 'PE32', 'managed': True,
+                'compiled_scope_sha256': None, 'runtime_scope_binding': contract,
+                'selected_scope_sha256': scope_sha256}
     if actual != scope_sha256:
         raise ValueError('Compiled own DLL configuration SHA differs from the selected scope')
     return {'machine': 'I386', 'format': 'PE32', 'managed': True, 'compiled_scope_sha256': actual}

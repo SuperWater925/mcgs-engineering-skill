@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 544,
-  "descriptor_sha256": "4fd1e2cfec389b2b57a570251686be8f72cd8d38fa41f2f32f0815ddcbafcfa2",
+  "file_count": 567,
+  "descriptor_sha256": "0b22ae30cc4ac2d2c9b879a6dda55713073a253d959eca48ec7b24226832b48a",
   "files": [
     {
       "file": ".gitattributes",
@@ -236,8 +236,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/managed_pe.py",
-      "bytes": 9370,
-      "sha256": "a8a9d5aa56f51b87c212a1bde735ad833231e13f860d95949c680dd8234846ff"
+      "bytes": 10397,
+      "sha256": "25c5dc44208f7c5d5857a759e34de669ad2f7df89bb15d7bd280413c8326e6b6"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/offline-build-verification.json",
@@ -271,8 +271,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/select_engine.py",
-      "bytes": 13082,
-      "sha256": "b5949a54721207ef57590126f0d6a87959054de04bbabaf33f98aa7f2d2e522a"
+      "bytes": 13337,
+      "sha256": "4f790138cc1843968e999fe398b92bcd150b306c198acebf89222a936ffc0ce5"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/source/Bootstrap.cs",
@@ -321,8 +321,8 @@
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/stage_engine.py",
-      "bytes": 3526,
-      "sha256": "7d0ca26f7640f2adc344da246372c479966d11f86f8b7944423b8664eb68195c"
+      "bytes": 3786,
+      "sha256": "837c8cea257f5dcc755003e7ecde011dbb766f5cc6b63a96d82e24b11f4a1b90"
     },
     {
       "file": "assets/pro-native-bridge/bootstrap/upstream-source-hashes.json",
@@ -351,8 +351,8 @@
     },
     {
       "file": "assets/pro-native-bridge/client/native_delivery_config.py",
-      "bytes": 8688,
-      "sha256": "a47854eda4940d6962c7a78a7da8336f94333cae4797c16c314bd59988409c43"
+      "bytes": 9713,
+      "sha256": "073b9a490b5284b43e4cc87ef32e15e79cafe6e9138393fe9d75d0a04d47617d"
     },
     {
       "file": "assets/pro-native-bridge/client/native_engineering.py",
@@ -376,8 +376,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/device-entry-v2/native_delivery_config.py",
-      "bytes": 8688,
-      "sha256": "a47854eda4940d6962c7a78a7da8336f94333cae4797c16c314bd59988409c43"
+      "bytes": 9713,
+      "sha256": "073b9a490b5284b43e4cc87ef32e15e79cafe6e9138393fe9d75d0a04d47617d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/device-entry-v2/NativeEngineeringDeliveryLayout.cs",
@@ -2205,6 +2205,76 @@
       "sha256": "bb293c1bbd12756514b0b703f011765c3bba5143809a4fba423b7b32a8be70fd"
     },
     {
+      "file": "assets/pro-native-bridge/portable-bridge/build.py",
+      "bytes": 5614,
+      "sha256": "505939d6ea7a523a15c5aa6dffb24d312453779e22cdd0bad13117544991d76e"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/build_hook.py",
+      "bytes": 8646,
+      "sha256": "206a8befff0772d82fa4c140196ba32dc639436e42ef1edc44e40a779bad0f6a"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/contract.json",
+      "bytes": 605,
+      "sha256": "78a08cb8b7a718d8a51392899f029bb74a0fc7a582aeb0f2062041a01a377f9b"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/materialize.py",
+      "bytes": 7494,
+      "sha256": "a6214156612d0bbe9355e07f6409e80bf54903f726662aec9908dcb41fac5d51"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/README.md",
+      "bytes": 3134,
+      "sha256": "b18cb38eb2528626f278dd442bdd91a50aff8b53fa04e5a4faa0efe8f189cec1"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/source/PortableClient.cs",
+      "bytes": 16684,
+      "sha256": "debb1995c2de0ef7404c9736745b09fd51999181713f52b145ff00101985c6ba"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/source/PortableEntry.cs",
+      "bytes": 3255,
+      "sha256": "668059d8686daa0ff682786e4ff6559458135e6477d787d6eafa73e28a439dfd"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-bridge/verify_fixture.py",
+      "bytes": 5538,
+      "sha256": "d165348e5792cfca3815dfc8f5d6d659a1e94a1b55863a9e725fb2a9ee331738"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/build_generic.py",
+      "bytes": 13955,
+      "sha256": "f1da1231eff0a974b13ab79b38781f7bff811fb027535fa0a12a6d4886d8a19c"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/materialize.py",
+      "bytes": 16096,
+      "sha256": "eacf906d37cf5466f3b24b9d1dd2a02de7db886703f7d7fe9b5ebe9fa7c9843c"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/NativeEngineeringDeliveryLayout.cs",
+      "bytes": 8535,
+      "sha256": "12f824dacfe8ec400b99a03e8e0df1d5b93515a602f4643176afb4967d8138c8"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/NativePortableRuntime.cs",
+      "bytes": 4840,
+      "sha256": "c185e9945fea947b774cd1d69aa6db12fec736d2c3d0dd81a4b6c509c59db300"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/portable_support.py",
+      "bytes": 4194,
+      "sha256": "b8f5bf84cbfe9be203a152576042a8d453996cd0d38c7566eb16b35d71e1a14c"
+    },
+    {
+      "file": "assets/pro-native-bridge/portable-engine/README.md",
+      "bytes": 3070,
+      "sha256": "f0b83cfebae60a5eb9a58c60de86c2b944503b1f31555033ab446144b2ceb44e"
+    },
+    {
       "file": "assets/pro-native-bridge/script-adapters/data-window-device-source-semantics.json",
       "bytes": 2379,
       "sha256": "a562d34dfd9b91145f79b681a83fabfcafc6002a2c79d5e1b9eab6f4651fe73e"
@@ -2250,14 +2320,24 @@
       "sha256": "298e62cf5798acc03d82af5dd5b5751703a1e65348e12a485780239c01fe3417"
     },
     {
+      "file": "assets/turnkey-setup/InstallerChoice.cs",
+      "bytes": 22091,
+      "sha256": "9ea086d764851508b75e2b89cf88171f122856d50cb064f76a076036c698b3d3"
+    },
+    {
+      "file": "assets/turnkey-setup/Launcher.cs",
+      "bytes": 5657,
+      "sha256": "53d5bc889b6d37610d19e688c8813f59676d6d17e4efd3f04b4fa4d994c439d6"
+    },
+    {
       "file": "CHANGELOG.md",
-      "bytes": 16267,
-      "sha256": "c0026dd03df38cf787d9ade2c9649ec5b90ff0c48c11dd1c6a24cc3f92e50a39"
+      "bytes": 17463,
+      "sha256": "4ce1e0d2630de446823c8b9157c88dca49a62bac2f9e1721eff138753779d2b2"
     },
     {
       "file": "CONTRIBUTING.md",
-      "bytes": 6805,
-      "sha256": "7954835d28869ea6652c04568e3504c57b046632b13b32c8fabf70df28943ed1"
+      "bytes": 6960,
+      "sha256": "ccbbc110bd79095c4c161867535bda807ff9c66dfc9378083023d8e2861a72fc"
     },
     {
       "file": "LICENSE",
@@ -2266,8 +2346,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 20881,
-      "sha256": "02af0bc18ef03c590f467103bfe5b0a5e2ae5d479a8f9441fddf0159ae4264d0"
+      "bytes": 21661,
+      "sha256": "ce0a49b5e8eb5de0e2d62575915a4d8d6d4e3198a8d7e096d3305e362e44c88c"
     },
     {
       "file": "references/adaptive-native-location-validation.json",
@@ -2336,8 +2416,8 @@
     },
     {
       "file": "references/environment-and-tools.md",
-      "bytes": 8921,
-      "sha256": "c389d4272ea44dcbcdb3a4142484e8e0f2befdd8bad1641a308abb010d50a370"
+      "bytes": 9399,
+      "sha256": "a2e08c04bd47a24f0eb23f4096d5961535ffe08795ce52638d6c1a25a683e04f"
     },
     {
       "file": "references/installation-validation.json",
@@ -2411,8 +2491,8 @@
     },
     {
       "file": "references/pro-native-deployment.md",
-      "bytes": 21082,
-      "sha256": "241acafe4f637e938867900f774fb2b7a4416fa9111c3ba8cac565c265e4efd2"
+      "bytes": 21956,
+      "sha256": "01ea4b88fae381a41eab423bbf6bd2484f2bb856f17b5fefdd99d193ff19fa27"
     },
     {
       "file": "references/pro-native-device-reopen.md",
@@ -2500,6 +2580,21 @@
       "sha256": "aea768025e9550e1e3f37fca6d8278ecb112514d3527baf5cbdaa2c566ee80b7"
     },
     {
+      "file": "references/turnkey-start-zh.md",
+      "bytes": 5101,
+      "sha256": "98a4debfe1aaf60a2cb75e9a48b2bec17f6f8c0b209f210719da0c14eea8980a"
+    },
+    {
+      "file": "references/turnkey-third-party.md",
+      "bytes": 2158,
+      "sha256": "7eb75b205231553a848580b4b9b8c211e39c418dcd2969561e14ade493513023"
+    },
+    {
+      "file": "references/turnkey-validation.json",
+      "bytes": 3220,
+      "sha256": "106d7556b99b364ced0139e6710bcef6a89e3ca95f65d2019698df4b4ac57b9f"
+    },
+    {
       "file": "references/ui-tools.md",
       "bytes": 9265,
       "sha256": "d3801deb17d8af019c0b880fb456bf3e3ee9981ad3219c9c5ac27f4707d31475"
@@ -2521,8 +2616,8 @@
     },
     {
       "file": "run.ps1",
-      "bytes": 2811,
-      "sha256": "af6bfe78561b81fb4dcf3aba0523bea1c2c160fcfda5a5cd4daacd4228618c5c"
+      "bytes": 3893,
+      "sha256": "186f7baea6d2262f321b0a586fe92eba9a9da8dd5059aa1417236f83bee895f8"
     },
     {
       "file": "scripts/ace-runtime.ps1",
@@ -2533,6 +2628,16 @@
       "file": "scripts/build_release.py",
       "bytes": 4163,
       "sha256": "29b2c67c26c09602a295c093e56f908cd002f4b9da9f1765c755a29dbf5eeabd"
+    },
+    {
+      "file": "scripts/build_turnkey_bundle.py",
+      "bytes": 8451,
+      "sha256": "e4c895106144422d1adc726b4ccb463747364dca2aa0b39b060ca598245cfbe5"
+    },
+    {
+      "file": "scripts/build_turnkey_tools.ps1",
+      "bytes": 1020,
+      "sha256": "6f592ca6e6871eb5d95add12a9cba615afff7c38e62234bcf75b2131a51c0e20"
     },
     {
       "file": "scripts/check_powershell.ps1",
@@ -2656,8 +2761,8 @@
     },
     {
       "file": "scripts/pro_native_doctor.py",
-      "bytes": 8124,
-      "sha256": "f757ed529d9e340dae1d07a98107328269a7b5b35587808a202011dcf03b1022"
+      "bytes": 10331,
+      "sha256": "570a91fcc46da61c8fd5051e47383ec453191fc73cfc6d586d560015b4041dda"
     },
     {
       "file": "scripts/pro_native_engineering.py",
@@ -2675,9 +2780,19 @@
       "sha256": "04bbcdbe43575ebed30c0dc7cb611eae22d5944f46750a89273137a7e6fab60a"
     },
     {
+      "file": "scripts/turnkey.py",
+      "bytes": 21022,
+      "sha256": "7f6e3a0f546726e110af2654e996d21171fa1b90033f70ce647d1242b45b93fb"
+    },
+    {
+      "file": "scripts/turnkey_installation.py",
+      "bytes": 59941,
+      "sha256": "fab78b1e0fb5e9f84046318a5fb1414ea52b4a33f9ea9ce1628691cdce09c4fb"
+    },
+    {
       "file": "SKILL.md",
-      "bytes": 16180,
-      "sha256": "080dc6adddcefef49c301bf5cce2763180c28c033988e1d316f7d2773c7201f9"
+      "bytes": 17825,
+      "sha256": "036c6f3071f15d822b9eebbc62668e84294783819c62280eec1eb09e3f8009dc"
     },
     {
       "file": "tools/mcgs_ui.py",
