@@ -104,6 +104,7 @@ Pro 内部接口属于实际 ABI 的适配，不是原厂公开 SDK，也不承�
 - 离线页面、样式、缓存、动画、组与原厂效果：[原生界面](references/native-ui.md)。
 - 现成控件、策略与配方命令及规格：[有界修改](references/bounded-edits.md)。
 - 配方和预览：[配方](references/recipes-and-preview.md)。
+- 设备清单、按设备导出设备信息 CSV、批量改通道处理：[设备通道导出](references/device-channel-export.md)。
 - PLC 供数、驱动类型码：[PLC 合同](references/plc-handoff.md)。
 - 统计与 CSV：[统计导出](references/statistics-and-export.md)。
 

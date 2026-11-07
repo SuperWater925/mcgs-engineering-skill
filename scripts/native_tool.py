@@ -11,6 +11,7 @@ import importlib.util
 import json
 from pathlib import Path
 import re
+import struct
 import sys
 import tempfile
 import time
@@ -505,6 +506,294 @@ def normalize_inputs(export,output):
     save(Path(output)/'repairs.json',{'scope':'only nested metadata length prefixes; exact primary/mirror appearance required','controls':changes})
     return result
 
+# ---------- device channels: list / export / bounded channel-processing edit ----------
+# 设备窗口 lbObjects 的实测结构：PLC 节点(设备名+IP) → 设备(设备名+驱动名+驱动路径) → 通道(通道名称+变量名+属性区)。
+# 导出格式与 Pro「设备信息导出」一致：GBK、逗号分隔、CRLF，前 4 行设备信息 + 1 行列标题。
+DRIVER_VERSION = {'西门子_S7_1500_以太网': '7.102', 'Siemens_1200': '7.101',
+                  '西门子_S7_1200_以太网': '7.101', '西门子_S7_300_以太网': '7.0',
+                  '西门子_S7_400_以太网': '7.0'}
+CHANNEL_COLUMNS = '通道号,变量名,变量类型,通道名称,读写类型,寄存器名称,数据类型,寄存器地址,地址偏移,通道采集频次,通道处理'
+CHANNEL_PREFIXES = ('读写', '只读', '只写')
+# 实测：BB 是有符号，BUB 是无符号。位通道的寄存器地址只写到字节，位号只出现在「数据类型」列。
+WIDTH_TYPES = {'DB': '32位 有符号二进制', 'WB': '16位 有符号二进制',
+               'WUB': '16位 无符号二进制', 'BUB': '8位 无符号二进制',
+               'BB': '8位 有符号二进制'}
+
+def channel_wstr(data, off):
+    if off + 4 > len(data) or data[off:off + 3] != b'\xff\xfe\xff':
+        return None, off
+    count = data[off + 3]
+    pos = off + 4
+    if count == 0xff:
+        if pos + 1 >= len(data):
+            return None, off
+        count = int.from_bytes(data[pos:pos + 2], 'little')
+        pos += 2
+    if count == 0 or count > 400 or pos + count * 2 > len(data):
+        return None, off
+    try:
+        return data[pos:pos + count * 2].decode('utf-16-le'), pos + count * 2
+    except UnicodeDecodeError:
+        return None, off
+
+def channel_strings(data, lo, hi):
+    found, cursor = [], lo
+    while cursor < hi:
+        text, end = channel_wstr(data, cursor)
+        if text is None:
+            cursor += 1
+        else:
+            found.append((cursor, text))
+            cursor = end
+    return found
+
+def channel_address(name):
+    """通道名称 -> (读写类型, 寄存器名称, 数据类型, 寄存器地址)"""
+    rw = name[:2] if name[:2] in CHANNEL_PREFIXES else '读写'
+    body = name[len(rw):]
+    match = re.fullmatch(r'DB(\d+):STR(\d+)_(\d+)', body)
+    if match:
+        return rw, 'V数据寄存器', 'ASCII字符串', f'{match.group(1)}.{int(match.group(2))}_{match.group(3)}'
+    match = re.fullmatch(r'DB(\d+):(WUB|WB|BUB|BB|DB)(\d+)', body)
+    if match:
+        return rw, 'V数据寄存器', WIDTH_TYPES[match.group(2)], f'{match.group(1)}.{int(match.group(3))}'
+    match = re.fullmatch(r'DB(\d+):(\d+)\.(\d+)', body)
+    if match:
+        return rw, 'V数据寄存器', f'通道的第0{match.group(3)}位', f'{match.group(1)}.{int(match.group(2))}'
+    for letter, area in (('I', 'I输入继电器'), ('Q', 'Q输出继电器'), ('M', 'M内部继电器')):
+        match = re.fullmatch(letter + r'([IQM]?)(DB|WUB|WB|BUB|BB)?(\d+)(?:\.(\d+))?', body)
+        if match:
+            extra, width, number, bit = match.groups()
+            if bit is not None:
+                return rw, area, f'通道的第0{bit}位', number
+            key = extra + width if (extra + width) in WIDTH_TYPES else width
+            return rw, area, WIDTH_TYPES.get(key, '16位 有符号二进制'), number
+    return rw, '(未识别)', '(未识别)', body
+
+def channel_var_type(dtype):
+    if dtype.startswith('通道的第'):
+        return 'INTEGER'
+    if dtype == 'ASCII字符串':
+        return 'STRING'
+    return 'SINGLE'
+
+def channel_number(value):
+    if abs(value - round(value)) < 1e-6:
+        return str(int(round(value)))
+    return ('%.6f' % value).rstrip('0').rstrip('.')
+
+def channel_processing(region):
+    """属性区 -> '输入:0_10000工程:0_100'；只在带 #通道处理 标记时存在。
+    两个数值不固定在某个偏移（部分通道前面多一段 CDevDealMethodXXX 标识），
+    按特征定位：两个正浮点相隔 16 字节、中间 12 字节全 0。"""
+    if len(region) < 40 or '#通道处理'.encode('utf-16-le') not in region:
+        return ''
+    for start in range(0, len(region) - 20):
+        if region[start + 4:start + 16] != b'\x00' * 12:
+            continue
+        raw_in = struct.unpack_from('<f', region, start)[0]
+        raw_eng = struct.unpack_from('<f', region, start + 16)[0]
+        if 1e-3 < raw_in < 1e9 and 1e-3 < raw_eng < 1e9:
+            return f'输入:0_{channel_number(raw_in)}工程:0_{channel_number(raw_eng)}'
+    return ''
+
+class DeviceTable:
+    """WndDevice 归档的只读视图：PLC 节点、设备与通道。"""
+    def __init__(self, raw):
+        self.data = raw
+        strings = channel_strings(raw, 0, len(raw))
+        nodes = []
+        for index, (offset, text) in enumerate(strings):
+            if index and re.fullmatch(r'\d{1,3}\.\d{1,3}', text):
+                nodes.append((strings[index - 1][0], strings[index - 1][1], text))
+        nodes.sort()
+        self.nodes = nodes
+        marks = []
+        for driver in DRIVER_VERSION:
+            encoded = driver.encode('utf-16-le')
+            cursor = 0
+            while True:
+                found = raw.find(encoded, cursor)
+                if found < 0:
+                    break
+                if channel_wstr(raw, found - 4)[0] == driver:
+                    marks.append((found - 4, driver))
+                cursor = found + 1
+        marks.sort()
+        self.devices = []
+        for index, (offset, driver) in enumerate(marks):
+            previous = channel_strings(raw, max(0, offset - 200), offset)
+            name = previous[-1][1] if previous else f'设备{index + 1}'
+            end = marks[index + 1][0] if index + 1 < len(marks) else len(raw)
+            path = ''
+            for _, text in channel_strings(raw, offset, min(end, offset + 400)):
+                if re.match(r'^[A-Za-z]:\\', text):
+                    path = text
+                    break
+            owners = [node for node in nodes if node[0] < offset]
+            self.devices.append(dict(name=name, driver=driver, path=path, low=offset, high=end,
+                                     plc=owners[-1][1] if owners else '', ip=owners[-1][2] if owners else '',
+                                     channels=self.channels(offset, end)))
+        self.by_name = {device['name']: device for device in self.devices}
+
+    def channels(self, low, high):
+        strings = channel_strings(self.data, low, high)
+        found = []
+        for index, (offset, text) in enumerate(strings):
+            if text not in ('通讯状态',) and not text.startswith(CHANNEL_PREFIXES):
+                continue
+            if text == '通讯状态':
+                continue
+            name_end = channel_wstr(self.data, offset)[1]
+            variable, variable_end = '', name_end
+            if index + 1 < len(strings):
+                next_offset, next_text = strings[index + 1]
+                # 变量名必须紧贴通道名称，否则该通道未绑定变量
+                if next_offset == name_end and next_text and not next_text.startswith(CHANNEL_PREFIXES):
+                    variable = next_text
+                    variable_end = channel_wstr(self.data, next_offset)[1]
+            next_channel = high
+            for later in range(index + 2, len(strings)):
+                if strings[later][1].startswith(CHANNEL_PREFIXES) and strings[later][1] != '通讯状态':
+                    next_channel = strings[later][0]
+                    break
+            region = self.data[variable_end:next_channel]
+            rw, register, dtype, address = channel_address(text)
+            found.append(dict(variable=variable, name=text, readwrite=rw, register=register,
+                              dtype=dtype, address=address,
+                              processing=channel_processing(region) if variable else '',
+                              var_type=channel_var_type(dtype), offset=offset))
+        return found
+
+    def csv_text(self, device):
+        lines = [f"组态设备名称:{device['name']}",
+                 f"驱动库文件路径:{device['path']}",
+                 f"驱动构件名称:{device['driver']}",
+                 f"驱动构件版本:{DRIVER_VERSION.get(device['driver'], '')}",
+                 CHANNEL_COLUMNS]
+        for number, channel in enumerate(device['channels']):
+            lines.append(','.join([str(number), channel['variable'], channel['var_type'],
+                                   channel['name'], channel['readwrite'], channel['register'],
+                                   channel['dtype'], channel['address'], '', '1',
+                                   channel['processing']]))
+        return '\r\n'.join(lines) + '\r\n'
+
+def device_archive(export):
+    keys = [key for (table, key) in export.rows if table == 'WndDevice']
+    if not keys:
+        raise ValueError('Export has no WndDevice row')
+    return DeviceTable(unwrapped(export.blob('WndDevice', sorted(keys)[0], 'lbObjects')))
+
+def channel_export(export, output, only=None):
+    """按设备导出「设备信息」CSV，格式与 Pro 的导出一致，可直接导回软件。"""
+    table = device_archive(export)
+    target = Path(output)
+    target.mkdir(parents=True, exist_ok=True)
+    written = []
+    for device in table.devices:
+        if only and device['name'] != only:
+            continue
+        text = table.csv_text(device)
+        path = target / (re.sub(r'[\\/:*?"<>|]', '_', device['name']) + '.csv')
+        payload = text.encode('gbk')
+        path.write_bytes(payload)
+        if path.read_bytes() != payload:
+            raise ValueError(f'{path.name} readback differs')
+        written.append({'device': device['name'], 'plc': device['plc'], 'ip': device['ip'],
+                        'driver': device['driver'], 'channels': len(device['channels']),
+                        'unbound': sum(1 for c in device['channels'] if not c['variable']),
+                        'processing': sum(1 for c in device['channels'] if c['processing']),
+                        'file': path.name, 'bytes': len(payload), 'sha256': sha(payload)})
+    if not written:
+        raise ValueError(f'No device matched {only!r}')
+    manifest = {'input_sha256': export.index['sha256'], 'format': 'pro-device-info/gbk-csv-crlf',
+                'device_count': len(written), 'channel_count': sum(item['channels'] for item in written),
+                'devices': written, 'mcs_written': False,
+                'import_note': '导入回 Pro 的「设备信息导入」由软件执行，本工具不写数据库'}
+    (target / 'devices.json').write_bytes((json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode('utf-8'))
+    return manifest
+
+def channel_edit(source, output, plan):
+    """只改「通道处理」列的有界编辑；其余单元格、行数、表头必须逐字节不变。"""
+    source, target = Path(source), Path(output)
+    target.mkdir(parents=True, exist_ok=True)
+    edits = plan.get('edits')
+    if not edits:
+        raise ValueError('Plan has no edits')
+    grouped = {}
+    for edit in edits:
+        grouped.setdefault(edit['file'], []).append(edit)
+    changes, files = [], []
+    for name, items in grouped.items():
+        original = (source / name)
+        raw = original.read_bytes()
+        lines = raw.decode('gbk').split('\r\n')
+        if not raw.endswith(b'\r\n') or len(lines) < 6 or lines[4] != CHANNEL_COLUMNS:
+            raise ValueError(f'{name} is not a device-info CSV')
+        for edit in items:
+            hits = 0
+            for index in range(5, len(lines)):
+                if not lines[index]:
+                    continue
+                cells = lines[index].split(',')
+                if len(cells) != 11:
+                    raise ValueError(f'{name} row {index + 1} has {len(cells)} columns')
+                if cells[1] != edit['variable']:
+                    continue
+                hits += 1
+                updated = list(cells)
+                updated[10] = edit.get('processing', '')
+                candidate = ','.join(updated)
+                if candidate != lines[index]:
+                    changes.append({'file': name, 'row': index + 1, 'variable': cells[1],
+                                    'before': cells[10], 'after': updated[10]})
+                lines[index] = candidate
+            if hits == 0:
+                raise ValueError(f'{name}: variable {edit["variable"]!r} not found')
+            if hits > 1:
+                raise ValueError(f'{name}: variable {edit["variable"]!r} is not unique')
+        payload = ('\r\n'.join(lines)).encode('gbk')
+        (target / name).write_bytes(payload)
+        files.append({'file': name, 'bytes': len(payload), 'sha256': sha(payload)})
+    for item in files:
+        before = (source / item['file']).read_bytes()
+        after = (target / item['file']).read_bytes()
+        old_lines, new_lines = before.decode('gbk').split('\r\n'), after.decode('gbk').split('\r\n')
+        if len(old_lines) != len(new_lines) or old_lines[4] != new_lines[4]:
+            raise ValueError(f'{item["file"]} structure changed')
+        for index in range(len(old_lines)):
+            if index < 5 or not old_lines[index]:
+                if old_lines[index] != new_lines[index]:
+                    raise ValueError(f'{item["file"]} header or blank line changed')
+                continue
+            old_cells, new_cells = old_lines[index].split(','), new_lines[index].split(',')
+            if old_cells[:10] != new_cells[:10]:
+                raise ValueError(f'{item["file"]} row {index + 1} changed outside 通道处理')
+    return {'ok': True, 'edited_rows': len(changes), 'changed_files': files,
+            'changes': changes, 'mcs_written': False,
+            'import_note': '改后的 CSV 需由 Pro 的「设备信息导入」写回，本工具不改数据库'}
+
+def channel_plan_from_match(source, pattern, processing):
+    """按变量名正则批量生成编辑计划，便于整批改量程。"""
+    edits = []
+    for path in sorted(Path(source).glob('*.csv')):
+        raw = path.read_bytes()
+        try:
+            lines = raw.decode('gbk').split('\r\n')
+        except UnicodeDecodeError:
+            continue
+        if len(lines) < 6 or lines[4] != CHANNEL_COLUMNS:
+            continue
+        for line in lines[5:]:
+            if not line:
+                continue
+            cells = line.split(',')
+            if len(cells) == 11 and re.search(pattern, cells[1]):
+                edits.append({'file': path.name, 'variable': cells[1], 'processing': processing})
+    if not edits:
+        raise ValueError(f'No channel matched {pattern!r}')
+    return {'edits': edits}
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
@@ -534,13 +823,43 @@ def main():
     normalize=commands.add_parser('normalize-inputs')
     normalize.add_argument('--export',dest='export_dir',required=True)
     normalize.add_argument('--out',required=True)
+    channels=commands.add_parser('channels')
+    channels.add_argument('--export',dest='export_dir',required=True)
+    channels.add_argument('--out',help='CSV 输出目录；与 --list 同时使用时可省略')
+    channels.add_argument('--device',help='只导出指定设备')
+    channels.add_argument('--list',action='store_true',help='只输出设备清单，不写 CSV')
+    channel_edit_parser=commands.add_parser('channels-edit')
+    channel_edit_parser.add_argument('--dir',required=True,help='channels 的输出目录')
+    channel_edit_parser.add_argument('--out',required=True)
+    channel_edit_parser.add_argument('--plan',help='编辑计划 JSON')
+    channel_edit_parser.add_argument('--match',help='变量名正则，与 --processing 一起批量生成计划')
+    channel_edit_parser.add_argument('--processing',help='新的通道处理，例如 输入:0_10000工程:0_100')
     args = parser.parse_args()
-    export = Export(args.export_dir)
+    export = Export(args.export_dir) if args.command != 'channels-edit' else None
     if args.command=='audit':result=audit(export)
     elif args.command=='batch-edit':result=batch_edit(export,args.plan,args.out)
     elif args.command=='normalize-inputs':result=normalize_inputs(export,args.out)
     elif args.command=='controls':result=controls_patch(export,load(Path(args.spec)),args.out)
     elif args.command=='recipe-cell':result=recipe_cell(export,args.group,args.row,args.column,args.value,args.out)
+    elif args.command=='channels':
+        table=device_archive(export)
+        if args.list or not args.out:
+            result={'ok':True,'devices':[{'device':d['name'],'plc':d['plc'],'ip':d['ip'],
+                    'driver':d['driver'],'channels':len(d['channels']),
+                    'unbound':sum(1 for c in d['channels'] if not c['variable']),
+                    'processing':sum(1 for c in d['channels'] if c['processing'])} for d in table.devices],
+                    'device_count':len(table.devices),
+                    'channel_count':sum(len(d['channels']) for d in table.devices),'mcs_written':False}
+        else:
+            result=channel_export(export,args.out,args.device)
+    elif args.command=='channels-edit':
+        if args.plan:
+            plan=load(Path(args.plan))
+        else:
+            if not args.match or args.processing is None:
+                raise ValueError('channels-edit 需要 --plan，或同时给出 --match 与 --processing')
+            plan=channel_plan_from_match(args.dir,args.match,args.processing)
+        result=channel_edit(args.dir,args.out,plan)
     else:
         path=[int(v) for v in args.action_path.split(',')] if args.action_path else None
         result=strategy_source(export,args.strategy_name,args.source,args.out,path)
