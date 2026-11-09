@@ -1231,6 +1231,20 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     return result
 
 
+def _rows_by_profile_entry(entries, rows, *, include_exact=False):
+    """Group rows by matching JSON pointer ancestors, preserving input order."""
+    grouped = {}
+    for row in rows:
+        pointer = row['json_pointer']
+        end = len(pointer) if include_exact else pointer.rfind('/')
+        while end >= 0:
+            prefix = pointer[:end]
+            if prefix in entries:
+                grouped.setdefault(prefix, []).append(row)
+            end = pointer.rfind('/', 0, end)
+    return grouped
+
+
 def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compact_names=False):
     """All profiles get a real SHA, with per-field/entry partial-state evidence."""
     if catalog.get('schema') != CATALOG_SCHEMA or result.get('schema') != RESULT_SCHEMA:
@@ -1259,9 +1273,12 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compac
     actual_pes = {}
     for ordinal, profile in enumerate(catalog['profiles']):
         source = (root / profile['relative_path']).resolve()
-        if not source.is_relative_to(root) or digest(source.read_bytes()) != profile['reference_sha256']:
+        if not source.is_relative_to(root):
             raise ValueError('Reference profile source changed: ' + profile['relative_path'])
-        document = json.loads(source.read_text('utf-8-sig'))
+        source_raw = source.read_bytes()
+        if digest(source_raw) != profile['reference_sha256']:
+            raise ValueError('Reference profile source changed: ' + profile['relative_path'])
+        document = json.loads(source_raw.decode('utf-8-sig'))
         record = {'relative_path': profile['relative_path'], 'reference_sha256': profile['reference_sha256'],
             'resolved_relative_path': f'{ordinal:03x}.json' if compact_names else profile['relative_path'],
             'resolved_fields': [], 'unresolved_fields': [], 'entry_resolutions': []}
@@ -1364,19 +1381,28 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compac
                     'reason': 'Mapped data has not preserved the declared loader-zero virtual section role'})
             # Preserve the published zero expectation. The existing runtime
             # guard still reads actual memory; no bytes are invented on disk.
-        for entry in profile['entry_paths']:
+        entry_paths = profile['entry_paths']
+        if entry_paths:
+            prefixes = {entry['json_pointer'] for entry in entry_paths}
+            details_by_entry = _rows_by_profile_entry(prefixes, record['unresolved_fields'], include_exact=True)
+            resolved_by_entry = _rows_by_profile_entry(prefixes, record['resolved_fields'])
+            fields_by_entry = _rows_by_profile_entry(prefixes, profile['fields'])
+            direct_fields = {}
+            for field in profile['fields']:
+                direct_fields.setdefault(field['json_pointer'], field)
+        for entry in entry_paths:
             prefix = entry['json_pointer']
-            details = [u for u in record['unresolved_fields'] if u['json_pointer'] == prefix or u['json_pointer'].startswith(prefix + '/')]
-            resolved = [r for r in record['resolved_fields'] if r['json_pointer'].startswith(prefix + '/')]
+            details = details_by_entry.get(prefix, [])
+            resolved = resolved_by_entry.get(prefix, [])
             direct_details = [u for u in details if '/' not in u['json_pointer'][len(prefix) + 1:]]
             state = {'status': 'unresolved' if details else 'resolved', 'details': details,
                      'direct_status': 'unresolved' if direct_details else 'resolved', 'direct_details': direct_details,
                      'profile': profile['relative_path'], 'entry': entry['name'], 'json_pointer': prefix,
-                     'no_native_address_fields': not any(f['json_pointer'].startswith(prefix + '/') for f in profile['fields']),
+                     'no_native_address_fields': prefix not in fields_by_entry,
                      'proof_ids': sorted({r['proof_id'] for r in resolved})}
             state['blocked_scope'] = 'consuming-entry'
             state['failure_categories'] = sorted({item.get('failure_category', 'required_contract_unresolved') for item in details})
-            direct_rva = next((f for f in profile['fields'] if f['json_pointer'] == prefix + '/rva'), None)
+            direct_rva = direct_fields.get(prefix + '/rva')
             if direct_rva is not None:
                 state['reference_rva'] = direct_rva['reference_rva']
                 state['module'] = direct_rva['module']
