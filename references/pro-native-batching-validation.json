@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "date": "2026-11-10",
+  "pro_build": "3.5.2.12210",
+  "baseline_source_commit": "d7622470d2ec7cec1ed4ee9e237069a8c24db4d8",
+  "seed_sha256": "1d4d401ad59a8fb6d18c33b9443cc3c2b533637e2b2cc9d0248c482e27f6aac6",
+  "attach": {
+    "scope": "Wall clock from prepare-online to live queue confirmation on newly opened Pro processes with copies of the same seed. Pro launch and page activation excluded.",
+    "old_without_persistent_abi_cache_seconds": 112.156,
+    "new_with_verified_abi_cache_seconds": 12.340,
+    "new_business_materialization_seconds": 11.113,
+    "new_hot_attach_seconds": 0.462,
+    "new_queue_probe_seconds": 0.160,
+    "actual_module_hashes_rechecked": 352,
+    "same_live_connection_reuse_seconds": 0.238,
+    "new_cold_attach_without_abi_cache": "not_measured"
+  },
+  "write": {
+    "scope": "Same Pro PID, project, precompiled DLL and active page for both runs. Restored original colors between runs and verified the 20 target preimages matched. One additional native state word in the surrounding page snapshot changed after the first save. Page activation and preparation excluded.",
+    "page_id": 5,
+    "page_name": "参数设置",
+    "label_color_changes": 20,
+    "rpc_count_each": 1,
+    "native_property_actions": {"old": 20, "new": 1},
+    "native_history_captures": {"old": 20, "new": 1},
+    "native_refreshes": {"old": 20, "new": 1},
+    "raw_native_receipt_bytes": {"old": 2292733, "new": 366209},
+    "seconds": {
+      "write_and_refresh": {"old": 15.217, "new": 5.536},
+      "page_save": {"old": 2.486, "new": 2.474},
+      "root_save": {"old": 1.891, "new": 1.917},
+      "write_through_save": {"old": 19.594, "new": 9.927}
+    },
+    "both_native_saves_return_verified": true,
+    "native_color_readback_each": 20,
+    "archived_color_readback_each": 20,
+    "compared_project_fields": 604,
+    "different_fields_between_saved_outputs": 0,
+    "page_control_blob_identical": true,
+    "page_activation_observation": "Pro activated the page. The existing postcondition flagged two native page attributes changed on open. The benchmark checked the active page and read a fresh preimage before timing either write."
+  },
+  "path_length": {
+    "observed_old_evidence_path_chars": 269,
+    "observed_new_max_evidence_path_chars": 234,
+    "overlong_fixture_rejected_before_resolution": true
+  },
+  "original_project_check": "not_performed",
+  "close_reopen": "not_performed",
+  "local_simulation": "not_performed",
+  "benchmark_pro_process_exited": true
+}

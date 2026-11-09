@@ -17,14 +17,21 @@ installation's actual modules, resolves current functions and native tables,
 materializes profiles with their actual dependency SHA values, and emits JSON
 address/guard/ordinal/module maps. It copies the published DLL without altering
 a byte. It does not generate C#, invoke Csc, launch Pro or touch a project.
-An immutable historical C# review artifact is deployed as `.cs.txt` data; its
+An immutable historical C# review artifact is deployed as text data. Its
 reference and actual digest remain consistent.
+
+The materializer reads the selected DLL's `EvidenceLayout` metadata. An engine
+with `flat-v1` stores each evidence file once under `task-evidence/a` and uses a
+short numbered name. Its binding maps the original logical names to these
+files. The runtime still checks the SHA of the mapped file and uses the
+original logical key for the ABI profile. Older DLLs use their existing
+directory layout.
 
 ```powershell
 python materialize.py --scope-base-json D:\task\base.json `
   --engine-file D:\bundle\engine\business\McgsEngineering.Portable.dll `
   --engine-sha256 <published-own-DLL-SHA256> `
-  --output-directory D:\task\runtime\business-prepared
+  --output-directory D:\task\rt\engine
 ```
 
 The base JSON uses the existing schema 1 fields: `task_root`, `engineering_root`,

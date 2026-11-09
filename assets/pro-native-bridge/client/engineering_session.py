@@ -136,16 +136,18 @@ def prepare_group_data(steps, start, results, merge_steps, max_merged_actions):
         member["sha256"] = hashlib.sha256(member["encoded"]).hexdigest()
     read_only = members[0]["step"].get("mode", "edit") == "inspect"
     group_spec = group_encoded = group_sha = None
+    property_batches = {}
     if not read_only:
         group_spec = {key: copy.deepcopy(value) for key, value in members[0]["specification"].items() if key != "actions"}
         group_spec["actions"] = [copy.deepcopy(action) for member in members for action in member["specification"]["actions"]]
+        property_batches = coalesce_property_actions(group_spec)
         group_spec["trial_id"] = str(uuid.uuid4())
         group_encoded = encoded_json(group_spec)
         group_sha = hashlib.sha256(group_encoded).hexdigest()
         if len(members) > 1 and len(group_encoded) > MAX_RPC_SPEC_BYTES:
             raise ValueError("Prepared merged specification exceeds its grouping byte budget")
     return {"members": members, "end": start + len(members), "read_only": read_only,
-        "group_spec": group_spec, "group_encoded": group_encoded, "group_sha256": group_sha,
+        "group_spec": group_spec, "group_encoded": group_encoded, "group_sha256": group_sha, "property_batches": property_batches,
         "prepared_thread_id": threading.get_ident()}
 
 
@@ -226,11 +228,14 @@ class PreparationPipeline:
             self.executor.shutdown(wait=True, cancel_futures=True)
 
 
-def merge_signature(step, specification):
-    if step.get("mode", "edit") != "edit" or specification.get("commit", False) is not False:
-        return None
+def persistence_deferred(specification):
     scope = specification.get("save_scope", {})
-    if not isinstance(scope, dict) or scope.get("root_save", False) is not False or specification.get("root_save", False) is not False:
+    return (specification.get("commit", False) is False and isinstance(scope, dict)
+            and scope.get("root_save", False) is False and specification.get("root_save", False) is False)
+
+
+def merge_signature(step, specification):
+    if step.get("mode", "edit") != "edit" or not persistence_deferred(specification):
         return None
     pages = set()
     for action in specification["actions"]:
@@ -300,6 +305,159 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
     return members
 
 
+PROPERTY_BATCH_KIND = "control-properties-batch"
+PROPERTY_PAGE_KEYS = ("page_id", "page_name")
+PROPERTY_CONTROL_KEYS = ("control_name", "rtti", "control_path", "component_path")
+
+
+def property_batch_page(action):
+    if action["kind"] != "control-properties" or set(action) != {"action_id", "kind", "target", "after"}:
+        return None
+    target, after = action["target"], action["after"]
+    if (not set(target) <= set(PROPERTY_PAGE_KEYS + PROPERTY_CONTROL_KEYS)
+            or type(target.get("page_id")) is not int
+            or any(not isinstance(target.get(key), str) or not target[key] for key in ("page_name", "control_name", "rtti"))
+            or ("component_path" in target and not isinstance(target["component_path"], list))):
+        return None
+    path = target.get("control_path")
+    if not isinstance(path, list) or not path or any(type(index) is not int or index < 0 for index in path):
+        return None
+    if set(after) != {"properties"} or not isinstance(after["properties"], list) or not after["properties"]:
+        return None
+    return tuple(target[key] for key in PROPERTY_PAGE_KEYS)
+
+
+def property_control_target(action):
+    return {key: action["target"][key] for key in PROPERTY_CONTROL_KEYS if key in action["target"]}
+
+
+def coalesce_property_actions(specification):
+    """Compile contiguous, independent property edits to the existing native batch."""
+    if not persistence_deferred(specification) or not specification.get("coalesce_native_properties", True):
+        return {}
+    actions = specification["actions"]
+    wire, batches = [], {}
+    start = 0
+    while start < len(actions):
+        first = actions[start]
+        page = property_batch_page(first)
+        end = start + 1
+        if page is not None:
+            paths = {tuple(first["target"]["control_path"])}
+            while end < len(actions) and property_batch_page(actions[end]) == page:
+                path = tuple(actions[end]["target"]["control_path"])
+                if path in paths:
+                    break
+                paths.add(path)
+                end += 1
+        if end == start + 1:
+            wire.append(first)
+        else:
+            members = actions[start:end]
+            identifier = first["action_id"]
+            batches[identifier] = members
+            wire.append({"action_id": identifier, "kind": PROPERTY_BATCH_KIND,
+                         "target": dict(zip(PROPERTY_PAGE_KEYS, page)),
+                         "after": {"controls": [{"target": property_control_target(member),
+                                                  "properties": member["after"]["properties"]}
+                                                 for member in members]}})
+        start = end
+    specification["actions"] = wire
+    return batches
+
+
+def check_direct_prefix(rows, expected, results=False):
+    if not isinstance(rows, list) or len(rows) > len(expected):
+        raise ValueError("Native direct prefix has an invalid length")
+    for index, row in enumerate(rows):
+        if not isinstance(row, dict) or row.get("action_id") != expected[index]:
+            raise ValueError("Native direct prefix differs from submitted order")
+        if results:
+            if not isinstance(row.get("result"), dict):
+                raise ValueError("Native direct action lacks a result object")
+            if row["result"].get("ok") is not True and index != len(rows) - 1:
+                raise ValueError("Native direct result continued after a failed action")
+
+
+def property_snapshots(snapshot, originals):
+    rows = snapshot.get("controls")
+    if not isinstance(rows, list) or len(rows) != len(originals):
+        raise ValueError("Native property batch snapshot has an invalid control count")
+    common = {key: snapshot[key] for key in ("abi_profile_sha256", "page", "root_modified", "compile_valid")}
+    output = []
+    for row, original in zip(rows, originals):
+        if not isinstance(row, dict) or row.get("target") != property_control_target(original):
+            raise ValueError("Native property batch snapshot differs from submitted control order")
+        output.append({**common, **{key: row[key] for key in ("control", "selected_owner", "properties")}})
+    return output
+
+
+def expand_property_batch_receipt(receipt, wire_actions, batches):
+    """Project verified native outcomes to the original action IDs for session references."""
+    if not batches:
+        return receipt
+    expected = [action["action_id"] for action in wire_actions]
+    raw_results = receipt.get("direct_action_results", [])
+    check_direct_prefix(raw_results, expected, results=True)
+    expanded = dict(receipt)
+    individual, preimages = [], []
+    inspection = receipt.get("direct_inspection")
+    captured_batches = set()
+    if isinstance(inspection, dict):
+        raw_preimages = inspection.get("action_preimages", [])
+        check_direct_prefix(raw_preimages, expected)
+        for row in raw_preimages:
+            originals = batches.get(row["action_id"])
+            if originals is None:
+                preimages.append(row)
+                continue
+            for original, snapshot in zip(originals, property_snapshots(row["before"], originals)):
+                preimages.append({**row, "action_id": original["action_id"], "kind": original["kind"],
+                                  "target": original["target"], "before": snapshot})
+            captured_batches.add(row["action_id"])
+        expanded["direct_inspection"] = {**inspection, "action_preimages": preimages}
+    for row in raw_results:
+        originals = batches.get(row["action_id"])
+        if originals is None:
+            individual.append(row)
+            continue
+        outcome = row["result"]
+        provenance = {"native_action_id": row["action_id"],
+                      "action_ids": [original["action_id"] for original in originals]}
+        if outcome.get("ok") is not True:
+            individual.append({**row, "native_property_batch": provenance})
+            if outcome.get("write_attempted") is not False:
+                expanded["unverified_property_batch_action_ids"] = provenance["action_ids"]
+            break
+        reports = outcome["actions"]
+        applied = [report["apply"] for report in reports
+                   if report["unit"] == PROPERTY_BATCH_KIND and "apply" in report]
+        if row["action_id"] not in captured_batches or len(applied) != 1 or applied[0].get("ok") is not True:
+            raise ValueError("Successful native property batch lacks its preimage or one verified apply report")
+        snapshots = property_snapshots(applied[0]["after"], originals)
+        for index, (original, snapshot) in enumerate(zip(originals, snapshots)):
+            native_apply = {"ok": True, "kind": original["kind"], "after": snapshot,
+                            "native_getter_setter_used": True, "automatic_undo_redo_replay": False,
+                            "original_history_store_projection": applied[0].get("original_history_store_projection"),
+                            "full_persistence_acceptance_pending": True, "native_property_batch": provenance}
+            # Shared native work is measured and counted once in the first projection.
+            projected_reports = [{"unit": original["kind"], "apply": native_apply}]
+            if index == 0:
+                for key in ("original_history_captures", "native_refreshes"):
+                    native_apply[key] = applied[0][key]
+                projected_reports.extend(report for report in reports if "flush" in report)
+            projected = {**row, "action_id": original["action_id"], "native_property_batch": provenance,
+                         "result": {**outcome, "actions": projected_reports}}
+            if index:
+                projected.pop("timings_ms", None)
+                projected["result"].pop("phase_timings_ms", None)
+            if index != len(originals) - 1:
+                projected["result"].pop("root_save", None)
+            individual.append(projected)
+    expanded["direct_action_results"] = individual
+    return expanded
+
+
 def split_direct_receipt(receipt, members):
     """Split a correlated native prefix without changing any per-step indices.
 
@@ -310,13 +468,7 @@ def split_direct_receipt(receipt, members):
     """
     expected = [action["action_id"] for row in members for action in row["specification"]["actions"]]
     individual = receipt.get("direct_action_results", [])
-    if not isinstance(individual, list) or len(individual) > len(expected):
-        raise ValueError("Native direct result prefix has an invalid length")
-    for index, row in enumerate(individual):
-        if not isinstance(row, dict) or row.get("action_id") != expected[index] or not isinstance(row.get("result"), dict):
-            raise ValueError("Native direct action prefix differs from submitted order")
-        if row["result"].get("ok") is not True and index != len(individual) - 1:
-            raise ValueError("Native direct result continued after a failed action")
+    check_direct_prefix(individual, expected, results=True)
     successful = sum(row["result"].get("ok") is True for row in individual)
     complete = receipt.get("ok") is True
     if complete and (successful != len(expected) or len(individual) != len(expected)):
@@ -333,14 +485,14 @@ def split_direct_receipt(receipt, members):
     output = []
     parent_inspect = receipt.get("direct_inspection")
     preimages = parent_inspect.get("action_preimages", []) if isinstance(parent_inspect, dict) else []
-    if not isinstance(preimages, list) or any(not isinstance(row, dict) for row in preimages):
-        raise ValueError("Native direct action preimages have an invalid shape")
-    if [row.get("action_id") for row in preimages] != expected[:len(preimages)]:
-        raise ValueError("Native direct preimages differ from submitted order")
+    check_direct_prefix(preimages, expected)
+    unverified = set(receipt.get("unverified_property_batch_action_ids", ()))
     for member in members:
         offset, count = member["action_offset"], member["action_count"]
         selected = individual[offset:offset + count]
         state = "completed" if first_failed is None or offset + count <= first_failed else "failed" if offset <= first_failed < offset + count else "not-executed"
+        if state == "not-executed" and unverified.intersection(expected[offset:offset + count]):
+            state = "partial"
         if state == "not-executed":
             output.append((member, state, None, None))
             continue
@@ -382,7 +534,8 @@ def split_direct_receipt(receipt, members):
                     inspect["native_summary_utf8_sha256"] = digest
                 else:
                     inspect.pop("native_summary_utf8_sha256", None)
-                inspect["native_summary_scope"] = "this-step-first-action"
+                inspect["native_summary_scope"] = ("shared-native-property-batch" if "native_property_batch" in selected[0]
+                                                   else "this-step-first-action")
             elif offset:
                 inspect.pop("native_summary", None)
                 inspect.pop("native_summary_utf8_sha256", None)
@@ -400,6 +553,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
         "execution_mode": "direct", "approval_required": False, "automatic_retry": False,
         "automatic_resume": False, "project_open_close_operations": 0,
         "engineering_acceptance_verified": False, "rpc_count": 0, "merged_rpc_count": 0,
+        "native_property_batches_submitted": 0,
         "merge_compatible_steps": merge_steps,
         "max_merged_actions": MAX_RPC_ACTIONS if max_merged_actions is None else max_merged_actions}
     active_step, phase, members = None, "resolve-and-freeze", []
@@ -471,12 +625,17 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
                     "specification_sha256": prepared["group_sha256"], "steps": [{"step_id": member["step"]["step_id"],
                     "action_offset": member["action_offset"], "action_count": member["action_count"]} for member in members],
                     "automatic_retry": False, "automatic_resume": False}
+                property_batches = prepared["property_batches"]
+                if property_batches:
+                    group_record["native_property_batches"] = {key: [action["action_id"] for action in actions]
+                                                                 for key, actions in property_batches.items()}
                 journal(prefix(members[0]) + "-rpc-begin", group_record, critical=True)
                 preparation.schedule_after(prepared)
                 writer.check()
                 phase = "direct-execute"
                 status["rpc_count"] += 1
                 status["merged_rpc_count"] += len(members) > 1
+                status["native_property_batches_submitted"] += len(property_batches)
                 try:
                     receipt = batch.execute(program["project_path"], group_file, request_id, timeout,
                                             specification_sha256=group_record["specification_sha256"])
@@ -495,6 +654,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
                 receipt_file = directory / (prefix(members[0]) + "-rpc-response.json")
                 receipt_sha = batch.write_new(receipt_file, receipt)
                 phase = "split-direct-response"
+                receipt = expand_property_batch_receipt(receipt, prepared["group_spec"]["actions"], property_batches)
                 split = split_direct_receipt(receipt, members)
                 parent_inspect = receipt.get("direct_inspection")
                 if isinstance(parent_inspect, dict):
@@ -513,9 +673,12 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
                         writer.submit(directory / (prefix(member) + "-inspect.json"), inspect)
                     writer.submit(directory / (prefix(member) + "-apply.json"), apply)
                     results["steps"][name] = {"inspect": inspect, "apply": apply}
-                    if state == "failed":
-                        failed = name
-                        journal(prefix(member) + "-failed", {"step_id": name, "execution_may_be_partial": True,
+                    if state in ("failed", "partial"):
+                        if state == "failed":
+                            failed = name
+                        elif name not in status.setdefault("ambiguous_steps", []):
+                            status["ambiguous_steps"].append(name)
+                        journal(prefix(member) + "-" + state, {"step_id": name, "execution_may_be_partial": True,
                             "completed_action_count": apply["completed_action_count"], "rpc": provenance})
                         continue
                     actions = member["specification"]["actions"]
@@ -551,7 +714,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
             for member in members:
                 name = member["step"]["step_id"]
                 if name in status["completed_steps"] or any((directory / (prefix(member) + suffix)) in writer.paths or (directory / (prefix(member) + suffix)).exists()
-                        for suffix in ("-failed.json", "-not-executed.json")):
+                        for suffix in ("-failed.json", "-partial.json", "-not-executed.json")):
                     continue
                 unresolved.append(name)
                 try:
@@ -724,6 +887,8 @@ def validate_spec(specification, read_only=False):
         specification["save_scope"] = {"root_save": False}
     if type(commit) is not bool:
         raise ValueError("Step commit must be Boolean")
+    if type(specification.get("coalesce_native_properties", True)) is not bool:
+        raise ValueError("coalesce_native_properties must be Boolean")
     if read_only and (commit or specification.get("save_scope", {}).get("root_save")):
         raise ValueError("An inspection step cannot authorize persistence")
     if commit:

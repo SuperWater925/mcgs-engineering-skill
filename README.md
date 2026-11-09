@@ -14,6 +14,8 @@
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
+2026-11-10 完整包包含新版预编译 Pro 引擎，支持接入缓存、同页原生批写和短路径。已使用旧完整包时，请从新完整包目录运行 `McgsStart.exe` 安装新版技能，以登记新引擎和运行时的位置。 [开箱配置](references/turnkey-start-zh.md) · [提速实测](references/pro-native-batching-validation.json) · [短路径实测](references/pro-native-compact-path-validation.json)
+
 当前在线定位增加有角色依据的等价代码适配，移除摘要计算与未使用根槽的整份资料门槛；多项只读检查逐项返回前像或未适配原因。`native-abi report`可查看具体接口，静态定位成功不等于原厂调用已验证。范围见[分层自动适配](references/adaptive-native-location.md)及[对应验证](references/adaptive-native-location-validation.json)。
 
 ## 功能范围

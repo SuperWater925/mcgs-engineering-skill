@@ -11,9 +11,11 @@ import os
 from pathlib import Path, PureWindowsPath
 import re
 
-from abi_locator import DEFAULT_CATALOG, load_catalog, resolve_catalog, write_resolved_profiles
+from abi_locator import DEFAULT_CATALOG, RESULT_SCHEMA, load_catalog, resolve_catalog, write_resolved_profiles
 from inventory import arguments, mask_csharp
 from pe32 import PE32
+from resolution_cache import ResolutionCache
+from x86_signature import DECODER_VERSION
 
 
 def digest(raw):
@@ -35,8 +37,46 @@ def actual_module_files(catalog, layout):
     return select_module_files(catalog, layout)['files']
 
 
+def resolve_selected(catalog, selection, cache_root=None, progress_callback=None):
+    """Reuse static RVA evidence only for the same currently selected module bytes."""
+    files = selection['files']
+    identities = selection['sha256']
+    paths = {alias: str(path) for alias, path in files.items()}
+    catalog_sha = digest(json_bytes(catalog))
+    key = {'catalog_sha256': catalog_sha, 'modules': sorted((alias, paths[alias], identities[alias]) for alias in files)}
+
+    def matches(result):
+        if (not isinstance(result, dict) or result.get('schema') != RESULT_SCHEMA
+                or result.get('catalog_sha256') != catalog_sha or result.get('local_actual_module_paths') != paths):
+            return False
+        modules = result.get('modules')
+        return (isinstance(modules, dict) and modules.keys() == files.keys()
+                and all(isinstance(modules[alias], dict) and isinstance(modules[alias].get('actual'), dict)
+                        and modules[alias]['actual'].get('sha256') == sha for alias, sha in identities.items()))
+
+    cache = None
+    if cache_root is not None:
+        directory = Path(__file__).resolve().parent
+        sources = ('abi_locator.py', 'adaptive_x86.py', 'pe32.py', 'rtti.py', 'x86_signature.py')
+        contract = {'schema': RESULT_SCHEMA, 'decoder': DECODER_VERSION,
+                    'sources': {name: digest((directory / name).read_bytes()) for name in sources}}
+        cache = ResolutionCache(cache_root, 'rva-resolution', contract)
+        cached = cache.load(key)
+        if matches(cached):
+            if progress_callback is not None:
+                progress_callback({'phase': 'native_resolution_cache_hit', 'modules_verified': len(files)})
+            return cached, {'status': 'hit', 'modules_verified': len(files)}
+
+    result = resolve_catalog(catalog, files, progress_callback=progress_callback)
+    _need(matches(result), 'Selected module bytes changed during native function resolution')
+    stored = cache is not None and cache.store(key, result)
+    return result, {'status': 'miss' if cache is not None else 'disabled',
+                    'modules_verified': len(files), 'stored': stored}
+
+
 class TargetBinding:
-    def __init__(self, stage, manifest, layout, output, catalog_file=None, module_overrides=None, progress_callback=None):
+    def __init__(self, stage, manifest, layout, output, catalog_file=None, module_overrides=None, progress_callback=None,
+                 cache_root=None, compact_profiles=False):
         self.stage = Path(stage)
         self.output = Path(output)
         self.catalog_file = Path(catalog_file or DEFAULT_CATALOG).resolve()
@@ -67,15 +107,16 @@ class TargetBinding:
                   'Source ordinal is not from the selected source manifest: '+name)
             self.source_ordinals.setdefault(name,[]).append(ordinal)
         from module_selection import select_module_files
-        selection = select_module_files(self.catalog, layout, module_overrides, progress_callback=progress_callback)
+        selection = select_module_files(self.catalog, layout, module_overrides, progress_callback=progress_callback,
+                                        cache_root=cache_root)
         modules = selection['files']
         self.module_selection_report = selection['report']
         self.actual_module_paths = modules
         self.module_names = {row.get('basename','').casefold(): alias
                              for alias,row in self.catalog['reference_modules'].items() if row.get('basename')}
-        self.result = resolve_catalog(self.catalog, modules, progress_callback=progress_callback)
+        self.result, self.resolution_cache = resolve_selected(self.catalog, selection, cache_root, progress_callback)
         self.attestation = write_resolved_profiles(self.catalog, self.result, self.output / 'profiles',
-                                                  profile_root=self.stage / 'artifacts')
+                                                  profile_root=self.stage / 'artifacts', compact_names=compact_profiles)
         self.profile_rows = {row['relative_path']: row for row in self.attestation['reference_profiles']}
         self.overrides = {}
         known = {row['task_relative_file']: row for row in manifest['owned_artifacts']}
@@ -291,6 +332,7 @@ class TargetBinding:
     def summary(self):
         return {'catalog_sha256': self.result['catalog_sha256'],
                 'module_selection': self.module_selection_report,
+                'resolution_cache': self.resolution_cache,
                 'profiles': {state: sum(row['status'] == state for row in self.profile_rows.values())
                              for state in ('resolved', 'partial', 'unresolved')},
                 'source_addresses': {state: sum(row['status'] == state for row in self.source_changes)

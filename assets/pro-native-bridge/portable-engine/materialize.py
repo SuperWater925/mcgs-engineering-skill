@@ -144,7 +144,7 @@ def resolve_source_tables(target):
 
 
 def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, source_stage=None,
-                 engine_file_name=None, abi_catalog=None, actual_modules=None, progress=None):
+                 engine_file_name=None, abi_catalog=None, actual_modules=None, progress=None, abi_cache_root=None):
     started = time.perf_counter()
     legacy = binder_module()
     from abi_binding import TargetBinding
@@ -172,11 +172,45 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
     own_type = "McgsInternalBridge.NativePortableRuntime"
     need(own_image.string_constant(own_type, "SourceManifestSha256") == digest(manifest_raw), "Published OWN engine and source data release differ")
     need(own_image.string_constant(own_type, "SourceCatalogSha256") == digest((ROOT / "abi-adapter/catalogs/source-addresses.json").read_bytes()), "Published OWN engine and source map release differ")
+    compact = own_image.string_constant(own_type, "EvidenceLayout", optional=True) == "flat-v1"
+
+    # Keep logical names for the ABI catalog. A flat-capable DLL routes both
+    # historical spellings to one immutable file under its evidence root.
+    proof_names = {row["task_relative_file"]: row["task_relative_file"] + ".txt"
+                   for row in manifest["owned_artifacts"] if Path(row["task_relative_file"]).suffix.casefold() == ".cs"}
+    old_engineering = PureWindowsPath(manifest["original_engineering_relative_root"])
+    artifact_targets = {}
+    artifact_paths = {}
+    for ordinal, row in enumerate(manifest["owned_artifacts"]):
+        relative = row["task_relative_file"]
+        deployed = PureWindowsPath(proof_names.get(relative, relative))
+        targets = [layout.evidence_root.joinpath(*deployed.parts)]
+        if deployed.is_relative_to(old_engineering):
+            targets.append(layout.engineering_root.joinpath(*deployed.relative_to(old_engineering).parts))
+        if compact:
+            short_path = layout.evidence_root / "a" / (f"{ordinal:03x}" + deployed.suffix)
+            logical = PureWindowsPath(relative)
+            targets.append(layout.evidence_root.joinpath(*logical.parts))
+            if logical.is_relative_to(old_engineering):
+                targets.append(layout.engineering_root.joinpath(*logical.relative_to(old_engineering).parts))
+            for logical_path in targets:
+                key = str(logical_path)
+                need(artifact_paths.setdefault(key, str(short_path)) == str(short_path),
+                     "Owned evidence alias collision: " + key)
+            targets = [short_path]
+        for target_path in targets:
+            if os.name == "nt":
+                file_units = len(str(target_path).encode("utf-16-le")) // 2
+                parent_units = len(str(target_path.parent).encode("utf-16-le")) // 2
+                need(file_units < 260 and parent_units < 248,
+                     "Native evidence exceeds the .NET path limit; use a shorter connection directory: " + str(target_path))
+        artifact_targets[relative] = targets
     output.mkdir(parents=True, exist_ok=True)
     resolution_started = time.perf_counter()
     _report(progress, "native_data_resolution")
     callbacks = {"progress_callback": progress} if progress is not None else {}
-    target = TargetBinding(stage, manifest, layout, output / "abi-resolution", abi_catalog, actual_modules, **callbacks)
+    target = TargetBinding(stage, manifest, layout, output / "abi", abi_catalog, actual_modules,
+                           cache_root=abi_cache_root, compact_profiles=compact, **callbacks)
     _report(progress, "source_address_tables")
     addresses, guards, ordinals = resolve_source_tables(target)
     resolution_seconds = time.perf_counter() - resolution_started
@@ -188,8 +222,6 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
                                               str(layout.evidence_root), str(layout.install_root), str(layout.program_root), str(layout.editor_executable))
     # One immutable C# review artifact is DATA, not an engine source input. Keep
     # it explicitly as .cs.txt so target preparation never emits a C# source.
-    proof_names = {row["task_relative_file"]: row["task_relative_file"] + ".txt"
-                   for row in manifest["owned_artifacts"] if Path(row["task_relative_file"]).suffix.casefold() == ".cs"}
     proof_paths = {str(layout.evidence_root / old).casefold(): str(layout.evidence_root / new) for old, new in proof_names.items()}
     artifacts = {}
     for row in manifest["owned_artifacts"]:
@@ -237,15 +269,9 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
         materialize_artifact(relative)
     _report(progress, "artifact_write", total=len(resolved))
     copied = []
-    old_engineering = PureWindowsPath(manifest["original_engineering_relative_root"])
     destinations = {}
     for relative, raw in resolved.items():
-        deployed_relative = proof_names.get(relative, relative)
-        targets = [layout.evidence_root / deployed_relative]
-        windows = PureWindowsPath(deployed_relative)
-        if windows.is_relative_to(old_engineering):
-            targets.append(layout.engineering_root / str(windows.relative_to(old_engineering)))
-        for destination in targets:
+        for destination in artifact_targets[relative]:
             if destination in destinations:
                 need(destinations[destination] == digest(raw), "Owned evidence destination collision")
                 continue
@@ -266,6 +292,8 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
                "module_files": {alias: str(file) for alias, file in target.actual_module_paths.items()},
                "vendor_whole_file_sha_admission": False, "feature_scoped_failure": True,
                "target_source_generation": False, "target_compiler_required": False}
+    if compact:
+        binding["artifact_paths"] = artifact_paths
     binding_file = layout.engineering_root / "portable-engine-binding.json"
     binding_raw = encoded(binding)
     write_new(binding_file, binding_raw)
@@ -285,6 +313,7 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
               "engineering_delivery_scope_sha256": digest(scope_raw),
               "binding_file": str(binding_file), "binding_sha256": digest(binding_raw),
               "profile_index_file": str(index_file), "profile_index_sha256": digest(index_raw),
+              "evidence_layout": "flat-v1" if compact else "legacy",
               "copied_artifacts": copied, "native_api_resolution": target.summary(),
               "timings_seconds": {"native_data_resolution": resolution_seconds, "total": time.perf_counter() - started},
               "compiled": False, "target_source_generation": False, "target_compiler_required": False,
@@ -294,7 +323,7 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
 
 
 def materialize(scope_base_json, engine_file, engine_sha256, output_directory, source_stage=None,
-                engine_file_name=None, abi_catalog=None, actual_modules=None, progress_file=None):
+                engine_file_name=None, abi_catalog=None, actual_modules=None, progress_file=None, abi_cache_root=None):
     """Prepare files with optional atomic progress, preserving the original API.
 
     A running snapshot after a killed process is partial work, not permission
@@ -304,7 +333,7 @@ def materialize(scope_base_json, engine_file, engine_sha256, output_directory, s
     try:
         _report(progress, "validation")
         result = _materialize(scope_base_json, engine_file, engine_sha256, output_directory,
-                              source_stage, engine_file_name, abi_catalog, actual_modules, progress)
+                              source_stage, engine_file_name, abi_catalog, actual_modules, progress, abi_cache_root)
         if progress is not None:
             progress.emit("completed", status="completed", engine_file=result["engine_file"],
                           materialization_manifest=str(Path(output_directory) / "materialization-manifest.json"),
@@ -330,6 +359,7 @@ if __name__ == "__main__":
     parser.add_argument("--source-stage", default=str(ROOT / "delivery/source"))
     parser.add_argument("--engine-file-name")
     parser.add_argument("--abi-catalog")
+    parser.add_argument("--abi-cache-root", help="Reuse verified static PE resolution across connections")
     parser.add_argument("--progress-file", help="Atomic preparation-phase JSON; does not start or inspect Pro")
     parser.add_argument("--actual-module", action="append", default=[])
     args = parser.parse_args()
@@ -337,4 +367,4 @@ if __name__ == "__main__":
     from module_selection import parse_module_overrides
     print(json.dumps(materialize(args.scope_base_json, args.engine_file, args.engine_sha256, args.output_directory,
                                  args.source_stage, args.engine_file_name, args.abi_catalog,
-                                 parse_module_overrides(args.actual_module), args.progress_file), ensure_ascii=False, indent=2))
+                                 parse_module_overrides(args.actual_module), args.progress_file, args.abi_cache_root), ensure_ascii=False, indent=2))
