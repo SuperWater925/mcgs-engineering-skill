@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 575,
-  "descriptor_sha256": "db45a1b6c57c67900b6303dfc6c5da1bfce907d9c112d5a7c0e0a24881ff084d",
+  "file_count": 578,
+  "descriptor_sha256": "00cc392391778232bf4d1c0725d1b661650c752f8d641d3c146ff16be2526ca1",
   "files": [
     {
       "file": ".gitattributes",
@@ -2341,8 +2341,8 @@
     },
     {
       "file": "CHANGELOG.md",
-      "bytes": 19477,
-      "sha256": "8fe27c96349b98b1508013f00ff7b34a703688198594b6f64e5fbf5898270d4f"
+      "bytes": 19576,
+      "sha256": "2603409a07f6539cf121192287095e503f23805a8ca1b87dae8a182d12ec0caf"
     },
     {
       "file": "CONTRIBUTING.md",
@@ -2356,8 +2356,8 @@
     },
     {
       "file": "README.md",
-      "bytes": 22306,
-      "sha256": "6e340a3289956b242ec74b7d6ff6056f9e6eb740d378cfc08925257bd394c5d5"
+      "bytes": 22408,
+      "sha256": "82f9d019656a06eb7585e26d6462d32a0239282da326f0c6f0bf6aa9fbb616bb"
     },
     {
       "file": "references/adaptive-native-location-validation.json",
@@ -2606,13 +2606,18 @@
     },
     {
       "file": "references/turnkey-start-zh.md",
-      "bytes": 7143,
-      "sha256": "833234d5efc4d4d1eae7d94546c61329e6f165c93ba6abe5b6e7d08fdac9c24a"
+      "bytes": 7301,
+      "sha256": "6a7d777c90ca97685859f714b55ebf98c8917b01fefc83859ae049a4fa44851c"
     },
     {
       "file": "references/turnkey-third-party.md",
       "bytes": 2158,
       "sha256": "7eb75b205231553a848580b4b9b8c211e39c418dcd2969561e14ade493513023"
+    },
+    {
+      "file": "references/turnkey-update-zh.md",
+      "bytes": 1824,
+      "sha256": "011780dac6f33564a16610943db194e9b88cb1ac08dccfcc82a5e3fd99a90394"
     },
     {
       "file": "references/turnkey-validation.json",
@@ -2650,6 +2655,11 @@
       "sha256": "5a245717f87e872038f165d02d5bc9f663f5682d91f614193bb155cf953349bc"
     },
     {
+      "file": "scripts/apply_turnkey_update.py",
+      "bytes": 8045,
+      "sha256": "08e64ed51a09e1a7e3a5b2791cd08e8805bd8543ea094ce2762a5fd349ea3c23"
+    },
+    {
       "file": "scripts/build_release.py",
       "bytes": 4163,
       "sha256": "29b2c67c26c09602a295c093e56f908cd002f4b9da9f1765c755a29dbf5eeabd"
@@ -2663,6 +2673,11 @@
       "file": "scripts/build_turnkey_tools.ps1",
       "bytes": 1020,
       "sha256": "6f592ca6e6871eb5d95add12a9cba615afff7c38e62234bcf75b2131a51c0e20"
+    },
+    {
+      "file": "scripts/build_turnkey_update.py",
+      "bytes": 5844,
+      "sha256": "61eb0553c7a4bb34a4139f0e1ba09a70b4e816d11e74b04699ff319d740331c9"
     },
     {
       "file": "scripts/check_powershell.ps1",
