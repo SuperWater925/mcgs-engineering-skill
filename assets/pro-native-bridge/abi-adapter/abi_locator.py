@@ -1231,7 +1231,7 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     return result
 
 
-def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
+def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compact_names=False):
     """All profiles get a real SHA, with per-field/entry partial-state evidence."""
     if catalog.get('schema') != CATALOG_SCHEMA or result.get('schema') != RESULT_SCHEMA:
         raise ValueError('Catalog/adaptation schema differs')
@@ -1257,13 +1257,14 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
                  'adaptation_attempts': item.get('adaptation_attempts', []),
                  'reason': item.get('reason')} for item in rows if item['status'] != 'resolved']
     actual_pes = {}
-    for profile in catalog['profiles']:
+    for ordinal, profile in enumerate(catalog['profiles']):
         source = (root / profile['relative_path']).resolve()
         if not source.is_relative_to(root) or digest(source.read_bytes()) != profile['reference_sha256']:
             raise ValueError('Reference profile source changed: ' + profile['relative_path'])
         document = json.loads(source.read_text('utf-8-sig'))
         record = {'relative_path': profile['relative_path'], 'reference_sha256': profile['reference_sha256'],
-            'resolved_relative_path': profile['relative_path'], 'resolved_fields': [], 'unresolved_fields': [], 'entry_resolutions': []}
+            'resolved_relative_path': f'{ordinal:03x}.json' if compact_names else profile['relative_path'],
+            'resolved_fields': [], 'unresolved_fields': [], 'entry_resolutions': []}
         record['unresolved_fields'].extend(copy.deepcopy(profile.get('reference_gaps', [])))
         for field in profile['fields']:
             alias, old = field.get('module'), field['reference_rva'];path = field['json_pointer']
@@ -1386,7 +1387,7 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root):
             'reference_sha256': profile['reference_sha256'], 'unresolved_fields': record['unresolved_fields'],
             'retained_unresolved_values_are_reference_only': True, 'guard_bytes_preferred_base_policy': 'reference module preferred base',
             'unresolved_entries_do_not_disable_other_features': True}
-        target = (out / profile['relative_path']).resolve()
+        target = (out / record['resolved_relative_path']).resolve()
         if not target.is_relative_to(out):
             raise ValueError('Resolved profile path escapes output')
         target.parent.mkdir(parents=True, exist_ok=True)

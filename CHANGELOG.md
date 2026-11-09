@@ -1,5 +1,12 @@
 # 更新记录
 
+## 2026-11-10 Pro 原生在线提速与短路径
+
+- 完整整合包换用支持 `flat-v1` 的预编译引擎。接收方通过包内工具热接 Pro，定位资料在本机生成并缓存，引擎和桥均由包内提供。
+- 同页独立属性自动合成原生批次，共用历史和刷新。整页修改结束后统一保存。在本机同页 20 项实测中，写入及刷新从 15.22 秒降至 5.54 秒。新进程接入命中 ABI 缓存后从 112.16 秒降至 12.34 秒。
+- 原生资料改用短编号文件名。连接目录过深时自动使用更短的本机目录。已有连接优先复用，验收结束后关闭本任务启动的实例。
+- [开箱配置](references/turnkey-start-zh.md) · [提速实测](references/pro-native-batching-validation.json) · [短路径实测](references/pro-native-compact-path-validation.json)
+
 ## 2026-11-06 源码安装获取完整包与准备进度
 
 - 修复源码技能安装到 WorkBuddy 等目录后，`turnkey inventory` 错找 skills/bundle.json：清单只读发现本机软件，无需整合包；缺包提供结构化恢复指引。

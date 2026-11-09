@@ -8,6 +8,7 @@ no vendor libraries are copied or installed by this module.
 from __future__ import annotations
 
 import os
+from functools import lru_cache
 from pathlib import Path, PureWindowsPath
 import re
 import stat
@@ -15,6 +16,7 @@ from collections import deque
 
 from pe32 import PE32
 from preparation_progress import PreparationProgress
+from resolution_cache import ResolutionCache, fingerprint
 
 
 def parse_module_overrides(values, known_aliases=None):
@@ -35,32 +37,17 @@ def parse_module_overrides(values, known_aliases=None):
     return result
 
 
-def _regular_image(path, *, editor=False):
-    # Bind the actual target of a legitimate symlink/junction. The selected
-    # bytes and the loaded module are still checked against this identity.
-    path = Path(path).resolve(strict=True)
-    if not stat.S_ISREG(path.stat().st_mode):
-        raise ValueError('Module is not a regular file')
-    image = PE32(path)
-    if editor and image.is_dll:
-        raise ValueError('The selected editor must be an EXE, not a DLL')
-    if not editor and not image.is_dll:
-        raise ValueError('The selected dependency must be a PE32/I386 DLL')
-    return path, image
-
-
 class _PreparationImages:
-    """Reuse parsing only within one selection while file identities stay fixed.
-
-    No cached observation is carried to a later invocation or used to admit a
-    vendor build. A replacement during this invocation remains an explicit
-    unavailable-file result instead of mixing two versions of a dependency.
-    """
-    def __init__(self, progress_callback=None):
+    """Recheck PE content each selection and reuse its import/forwarder summary."""
+    def __init__(self, progress_callback=None, cache_root=None):
         self.rows = {}
         self.hits = 0
         self.parses = 0
+        self.disk_hits = 0
         self.progress = PreparationProgress(progress_callback)
+        self.cache = None if cache_root is None else ResolutionCache(cache_root, 'module-discovery', {
+            'parser': fingerprint(Path(__file__).with_name('pe32.py').read_bytes()),
+            'summary': fingerprint(Path(__file__).read_bytes())})
 
     @staticmethod
     def identity(path):
@@ -80,17 +67,30 @@ class _PreparationImages:
             image = cached[1]
             self.hits += 1
         else:
-            image = PE32(path)
+            raw = path.read_bytes()
+            sha = fingerprint(raw)
+            image = self.cache.load(sha) if self.cache is not None else None
+            if (isinstance(image, dict) and image.get('sha256') == sha and type(image.get('is_dll')) is bool
+                    and all(isinstance(image.get(key), list) and all(isinstance(name, str) for name in image[key])
+                            for key in ('imports', 'forwarders'))):
+                self.disk_hits += 1
+            else:
+                pe = PE32(raw)
+                image = {'sha256': sha, 'is_dll': pe.is_dll, 'imports': pe.import_modules,
+                         'forwarders': list(dict.fromkeys(row['forwarder'] for row in pe.exports_by_ordinal.values()
+                                                         if row.get('forwarder')))}
+                if self.cache is not None:
+                    self.cache.store(sha, image)
+                self.parses += 1
             if self.identity(path) != identity:
                 raise ValueError('Module file identity changed while parsing: ' + str(path))
             self.rows[key] = (identity, image)
-            self.parses += 1
-        if editor and image.is_dll:
+        if editor and image['is_dll']:
             raise ValueError('The selected editor must be an EXE, not a DLL')
-        if not editor and not image.is_dll:
+        if not editor and not image['is_dll']:
             raise ValueError('The selected dependency must be a PE32/I386 DLL')
         self.progress('module_discovery', self.parses, None,
-                      image_cache_hits=self.hits, current_module=path.name)
+                      image_cache_hits=self.hits, disk_cache_hits=self.disk_hits, current_module=path.name)
         return path, image
 
 
@@ -117,7 +117,7 @@ def _import_names(alias, reference, imported):
     return list(dict.fromkeys(matches))
 
 
-def _dependency_imports(editor, image, roots, install, *, image_loader=None):
+def _dependency_imports(editor, image, locate_import, load_dependency):
     """Inspect the local import graph before considering reference fallbacks."""
     pending = deque([(editor, image)])
     seen = {os.path.normcase(str(editor))}
@@ -125,12 +125,11 @@ def _dependency_imports(editor, image, roots, install, *, image_loader=None):
     while pending:
         importer, current = pending.popleft()
         forwarded = []
-        for exported in current.exports_by_ordinal.values():
-            value = exported.get('forwarder')
-            if value and '.' in value:
+        for value in current['forwarders']:
+            if '.' in value:
                 module = value.rsplit('.', 1)[0]
                 forwarded.append(module if module.casefold().endswith('.dll') else module + '.dll')
-        for name in dict.fromkeys([*current.import_modules, *forwarded]):
+        for name in dict.fromkeys([*current['imports'], *forwarded]):
             if name.casefold() not in name_keys:
                 names.append(name)
                 name_keys.add(name.casefold())
@@ -138,27 +137,25 @@ def _dependency_imports(editor, image, roots, install, *, image_loader=None):
             if PureWindowsPath(name).name != name or name in ('.', '..'):
                 rows.append({'importer': str(importer), 'name': name, 'status': 'non-basename-import'})
                 continue
-            search = list(dict.fromkeys((importer.parent, *roots)))
-            path = next((root/name for root in search if os.path.lexists(root/name)), None)
+            path = locate_import(importer.parent, name)
             if path is None:
                 continue
-            path = Path(path).resolve()
             key = os.path.normcase(str(path))
             if key in seen:
                 continue
             seen.add(key)
-            try:
-                path, dependency = (image_loader or _regular_image)(path)
+            path, dependency, error = load_dependency(path)
+            if error is None:
                 rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'read'})
                 # Cycle detection bounds traversal by the finite actual graph,
                 # including explicit dependencies outside the installation.
                 pending.append((path, dependency))
-            except (OSError, ValueError) as error:
-                rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'unavailable', 'error': str(error)})
+            else:
+                rows.append({'importer': str(importer), 'name': name, 'path': str(path), 'status': 'unavailable', 'error': error})
     return names, rows
 
 
-def select_module_files(catalog, layout, module_overrides=None, *, progress_callback=None):
+def select_module_files(catalog, layout, module_overrides=None, *, progress_callback=None, cache_root=None):
     """Return valid files plus per-alias unavailable/ambiguity diagnostics.
 
     The explicitly bound editor is mandatory. Optional dependencies never abort
@@ -178,7 +175,7 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
     editor = Path(layout.editor_executable or Path(layout.install_root) / 'Program' / 'McgsSetPro.exe')
     if 'editor' in overrides and os.path.normcase(os.path.abspath(overrides['editor'])) != os.path.normcase(os.path.abspath(editor)):
         raise ValueError('Editor override must equal the explicitly bound editor executable')
-    images = _PreparationImages(progress_callback)
+    images = _PreparationImages(progress_callback, cache_root)
     images.progress('module_discovery', 0, None, force=True)
     editor, image = images.load(editor, editor=True)
     install = Path(os.path.abspath(layout.install_root))
@@ -196,7 +193,7 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
             roots.append(path.resolve())
     files = {'editor': editor}
     rows = {'editor': {'status': 'selected', 'source': 'bound-editor', 'path': str(editor),
-                       'sha256': image.identity()['sha256'], 'candidates': []}}
+                       'sha256': image['sha256'], 'candidates': []}}
     base_images = {editor: image}
     # Explicit mappings are discovery roots even when they rename a runtime or
     # a dynamically loaded plugin. Invalid optional mappings remain isolated.
@@ -210,11 +207,33 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
             # Its per-alias row below records the exact invalid candidate.
             pass
 
+    @lru_cache(maxsize=None)
+    def locate_import(parent, name):
+        search = dict.fromkeys((parent, *roots))
+        path = next((root / name for root in search if os.path.lexists(root / name)), None)
+        return path.resolve() if path is not None else None
+
+    @lru_cache(maxsize=None)
+    def load_dependency(path):
+        try:
+            resolved, dependency = images.load(path)
+            return resolved, dependency, None
+        except (OSError, ValueError) as error:
+            return path, None, str(error)
+
+    graphs = {}
+
     def collect_imports(seed_images):
-        names, evidence = [], []
+        names, evidence, known = [], [], set()
         for path, dependency in seed_images.items():
-            found, graph = _dependency_imports(path, dependency, roots, install, image_loader=images.load)
-            names.extend(name for name in found if name.casefold() not in {item.casefold() for item in names})
+            if path not in graphs:
+                graphs[path] = _dependency_imports(path, dependency, locate_import, load_dependency)
+            found, graph = graphs[path]
+            for name in found:
+                key = name.casefold()
+                if key not in known:
+                    names.append(name)
+                    known.add(key)
             evidence.extend(graph)
         return names, evidence
 
@@ -229,6 +248,19 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
     history = {}
     root_history = []
     discovery_passes = 0
+    recursive = {}
+    recursive_error = None
+    search_names = {references[alias]['basename'].casefold() for alias in aliases
+                    if alias not in overrides and references[alias].get('basename')}
+    if search_names:
+        try:
+            for candidate in install.rglob('*'):
+                name = candidate.name.casefold()
+                if name in search_names:
+                    recursive.setdefault(name, []).append(candidate)
+        except OSError as error:
+            recursive.clear()
+            recursive_error = str(error)
     # Discover catalogued dynamic components before committing runtime/library
     # aliases. MFC/CRT/Qt fallbacks are hypotheses, never independent import roots:
     # an old provisional MFC must not keep its old CRT alive after replacement.
@@ -245,10 +277,13 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
                 continue
             reference = references[alias]
             candidates = []
+            candidate_keys = set()
             def add(path, source, rank):
                 path = Path(os.path.abspath(path))
-                if all(os.path.normcase(str(row['path'])) != os.path.normcase(str(path)) for row in candidates):
+                key = os.path.normcase(str(path))
+                if key not in candidate_keys:
                     candidates.append({'path': str(path), 'source': source, 'rank': rank})
+                    candidate_keys.add(key)
             if alias in overrides:
                 add(overrides[alias], 'explicit-map', 0)
             else:
@@ -266,7 +301,7 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
                         owner_image = base_images.get(owner_path) or images.load(owner_path, editor=owner == 'editor')[1]
                     except (OSError, ValueError):
                         continue
-                    matched = _import_names(alias, reference, owner_image.import_modules)
+                    matched = _import_names(alias, reference, owner_image['imports'])
                     role_names.extend(matched)
                     for name in matched:
                         if PureWindowsPath(name).name == name:
@@ -297,12 +332,10 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
                 if basename:
                     for index, root in enumerate(roots[1:]):
                         add(root / basename, 'basename-fallback', 50 + index)
-                    try:
-                        found = sorted((p for p in install.rglob('*') if p.name.casefold() == basename.casefold()), key=lambda p: str(p).casefold())
-                        for path in found:
-                            add(path, 'recursive-basename-fallback', 60)
-                    except OSError as error:
-                        candidates.append({'source': 'recursive-search', 'status': 'unreadable', 'error': str(error), 'rank': 99})
+                    for path in sorted(recursive.get(basename.casefold(), ()), key=lambda p: str(p).casefold()):
+                        add(path, 'recursive-basename-fallback', 60)
+                    if recursive_error is not None:
+                        candidates.append({'source': 'recursive-search', 'status': 'unreadable', 'error': recursive_error, 'rank': 99})
             present = []
             for candidate in candidates:
                 if 'path' not in candidate:
@@ -324,7 +357,7 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
                     for candidate in chosen:
                         try:
                             path, candidate_image = images.load(candidate['path'])
-                            equal.append((path, candidate_image.identity()['sha256']))
+                            equal.append((path, candidate_image['sha256']))
                         except (OSError, ValueError):
                             equal = []
                             break
@@ -340,7 +373,7 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
                         path, selected = images.load(candidate['path'])
                         files[alias] = path
                         selected_images[alias] = selected
-                        row.update(status='selected', source=candidate['source'], path=str(path), sha256=selected.identity()['sha256'])
+                        row.update(status='selected', source=candidate['source'], path=str(path), sha256=selected['sha256'])
                         candidate['status'] = 'selected'
                     except (OSError, ValueError) as error:
                         candidate.update(status='invalid', error=str(error))
@@ -382,13 +415,23 @@ def select_module_files(catalog, layout, module_overrides=None, *, progress_call
         alias = 'dependency:' + str(path).casefold()
         files[alias] = path
         selected_paths.add(os.path.normcase(str(path)))
+    identities = {}
+    for alias, path in files.items():
+        identity, observation = images.rows[os.path.normcase(str(path))]
+        if images.identity(path) != identity:
+            raise ValueError('Selected module changed during discovery: ' + str(path))
+        identities[alias] = observation['sha256']
     images.progress('module_discovery_complete', images.parses, images.parses, force=True,
-                    image_cache_hits=images.hits)
-    return {'files': files, 'report': {'schema': 'mcgs-native-module-selection/v1', 'modules': rows,
+                    image_cache_hits=images.hits, disk_cache_hits=images.disk_hits,
+                    unique_import_probes=locate_import.cache_info().misses, unique_dependency_graphs=len(graphs))
+    return {'files': files, 'sha256': identities, 'report': {'schema': 'mcgs-native-module-selection/v1', 'modules': rows,
                                      'preparation_image_cache': {'unique_files_parsed': images.parses, 'cache_hits': images.hits,
+                                                                 'verified_disk_cache_hits': images.disk_hits,
                                                                  'scope': 'single_selection_stable_file_identity'},
                                      'dependency_imports': dependency_rows,
                                      'dependency_discovery_passes': discovery_passes,
+                                     'dependency_graph_memo': {'unique_import_probes': locate_import.cache_info().misses,
+                                                               'unique_dependency_graphs': len(graphs)},
                                      'dependency_roots': [{'alias': alias, 'path': str(path)} for alias, path in sorted(discovery_roots.items())],
                                      'loaded_target_identity_check_required': True,
                                      'vendor_files_copied': False, 'vendor_whole_file_sha_admission': False}}

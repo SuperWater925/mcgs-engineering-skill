@@ -155,12 +155,14 @@ class ManagedImage:
             result.extend(range(start, end))
         return result
 
-    def string_constant(self, full_name, field_name):
+    def string_constant(self, full_name, field_name, *, optional=False):
         wanted = []
         for field in self.type_fields(full_name):
             at = self.offsets[4]+(field-1)*self.sizes[4]
             if self._string(self._uint(at+2, self.string_size)) == field_name:
                 wanted.append(field)
+        if not wanted and optional:
+            return None
         self._need(len(wanted) == 1, 'Expected one compiled binding field: '+full_name+'.'+field_name)
         values = []
         for row in range(self.rows.get(11, 0)):

@@ -134,6 +134,37 @@ def patch_owned_literals(text, aliases, manifest, catalog):
     return deconst_runtime_fields(text), counts
 
 
+def patch_evidence_reads(text, keep_logical_paths=True):
+    """Route exact owned artifact reads without changing logical path construction."""
+    from inventory import arguments, mask_csharp
+    masked, unused = mask_csharp(text)
+    patches, counts = [], Counter()
+    reads = re.compile(
+        r"(?<![\w.])(?:(?:System\.IO\.)?File\s*\.\s*"
+        r"(?P<method>Exists|GetAttributes|GetLastWriteTimeUtc|ReadAllBytes|ReadAllText|OpenRead|Open)"
+        r"|(?P<stream>new\s+(?:System\.IO\.)?FileStream))\s*\(")
+    for match in reads.finditer(masked):
+        end, spans = arguments(masked, match.end() - 1)
+        need(end is not None and spans, "Portable evidence read has incomplete arguments")
+        if match["stream"] or match["method"] == "Open":
+            # Keep CreateNew, Append and other write-capable paths untouched.
+            access = [re.sub(r"\s+", "", masked[a:b]) for a, b in spans[1:3]]
+            if access != ["FileMode.Open", "FileAccess.Read"]:
+                continue
+        start, end = spans[0]
+        patches.append((start, start, "NativePortableRuntime.EvidenceReadPath("))
+        patches.append((end, end, ")"))
+        counts["evidence_read_paths"] += 1
+    if keep_logical_paths:
+        for match in re.finditer(r"(?<![\w.])(?:System\.IO\.)?Path\s*\.\s*(GetFullPath|GetDirectoryName)(?=\s*\()", masked):
+            replacement = {"GetFullPath": "LogicalFullPath", "GetDirectoryName": "LogicalDirectoryName"}[match[1]]
+            patches.append((match.start(), match.end(), "NativePortableRuntime." + replacement))
+            counts["evidence_logical_paths"] += 1
+    for start, end, value in sorted(patches, reverse=True):
+        text = text[:start] + value + text[end:]
+    return text, counts
+
+
 def propagate_runtime_string_aliases(prepared):
     """A const alias of a now-runtime digest must also become readonly.
 
@@ -197,12 +228,19 @@ def build(source_stage, output_directory, engine_file_name="McgsEngineering.Port
         text = patch_runtime_source(row["name"], legacy.patch_common(row["name"], text))
         text, counts = patch_owned_literals(text, aliases, manifest, catalog)
         stats.update(counts)
+        text, counts = patch_evidence_reads(text)
+        stats.update(counts)
         need(manifest["original_task_root"].casefold() not in text.casefold() and manifest["original_install_root"].casefold() not in text.casefold(), "Release source retains an original machine root: " + row["name"])
         prepared.append((row["name"], text.encode("utf-8")))
     prepared = propagate_runtime_string_aliases(prepared)
     helper = (ROOT / "abi-adapter/NativeAbiTargetProfiles.cs").read_text(encoding="utf-8-sig")
     helper = legacy.replace_once(helper, 'internal const string ExpectedIndexSha256="__BOUND_ABI_PROFILE_INDEX_SHA256__";', 'internal static string ExpectedIndexSha256{get{return NativePortableRuntime.IndexSha256;}}')
     helper = legacy.replace_once(helper, 'indexPath=Path.Combine(NativeEngineeringDeliveryLayout.EvidenceRoot,IndexName);', 'indexPath=NativePortableRuntime.IndexFile;')
+    index_lookup = "files.TryGetValue(Path.GetFullPath(path),out row)"
+    need(helper.count(index_lookup) == 3, "Native profile index lookup contract differs")
+    helper = helper.replace(index_lookup, "files.TryGetValue(Path.GetFullPath(NativePortableRuntime.EvidenceReadPath(path)),out row)")
+    helper, counts = patch_evidence_reads(helper, keep_logical_paths=False)
+    stats.update(counts)
     prepared.append(("NativeAbiTargetProfiles.cs", helper.encode("utf-8")))
     for name in ("NativeEngineeringDeliveryLayout.cs", "NativePortableRuntime.cs"):
         raw = Path(__file__).with_name(name).read_bytes()
@@ -225,6 +263,7 @@ if ($LASTEXITCODE -ne 0) {throw 'Portable release compile failed'}
 '''.replace("ENGINE", engine_file_name)
     write_new(output / "build-release.ps1", script.encode("utf-8"))
     result = {"schema": "mcgs-portable-engine-release-sources/v1", "engine_contract": CONTRACT,
+              "evidence_layout": "flat-v1",
               "source_manifest_sha256": digest(manifest_raw), "source_catalog_sha256": digest(source_catalog_raw),
               "engine_file_name": engine_file_name, "selected_source_count": len(prepared),
               "sources": [{"name": name, "sha256": digest(raw)} for name, raw in prepared],

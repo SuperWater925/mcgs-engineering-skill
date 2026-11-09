@@ -15,6 +15,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 
@@ -222,7 +223,37 @@ def processes(editor):
     return result
 
 
+def connection_task_directory(local_cache, key, process_key):
+    local_cache = local_cache.resolve()
+    identifier = hashlib.sha256((key + '\n' + process_key).encode()).hexdigest()[:24]
+    legacy = local_cache / 'connections' / key / process_key
+    normal = local_cache / 'c' / identifier
+    # Discover and recover any existing journal before choosing a fresh root.
+    for candidate in (legacy, normal):
+        if (candidate / 'connection.json').is_file():
+            return candidate
+    # The complete native receipt can include an 80-character request ID
+    # and a GUID staging suffix. Reserve their space before attaching the host.
+    receipt = Path('rt/engineering/reply-payloads') / ('x' * 80 + '.json.' + '0' * 32 + '.staging')
+    def fits(candidate):
+        return os.name != 'nt' or len(str(candidate.resolve() / receipt).encode('utf-16-le')) < 520
+
+    if fits(normal):
+        return normal
+    user_key = hashlib.sha256(str(local_cache).casefold().encode()).hexdigest()[:10]
+    fallback = Path(tempfile.gettempdir()).resolve() / ('m-' + user_key) / identifier
+    if (fallback / 'connection.json').is_file() or fits(fallback):
+        return fallback
+    raise ValueError('The native queue path would exceed .NET limits. Use a shorter local TEMP directory for a new connection.')
+
+
 def prepare_online(root, editor, install_root=None, pid=None, preparation_timeout=0):
+    started = time.perf_counter()
+    elapsed = {}
+
+    def record_phase(name, phase_start):
+        elapsed[name] = round((time.perf_counter() - phase_start) * 1000, 2)
+
     root, info = bundle(root)
     editor = Path(editor).resolve(strict=True)
     install_root = Path(install_root).resolve(strict=True) if install_root else editor.parent.parent
@@ -245,8 +276,10 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
         raise ValueError('Packaged portable bridge client differs from its publisher manifest')
     # Discover before creating any connection directory. The same Pro may have
     # been attached from another bundle path or a prior release's launcher.
+    phase_start = time.perf_counter()
     discovered = run_json([packaged_client, '--discover', str(target['pid']),
                            str(target['creation_filetime'])], env, timeout=20)
+    record_phase('discover', phase_start)
     if discovered.get('host_attached'):
         live = discovered['existing_bridge']
         bootstrap = Path(live['bootstrap_root'])
@@ -282,12 +315,18 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
             state['active_engine'] = selected
         else:
             state.update(phase='existing_engine_not_selected', engine_scope_ready=False)
+        phase_start = time.perf_counter()
         state['queue_liveness'] = probe_queue(runtime, py)
+        record_phase('queue_probe', phase_start)
+        record_phase('total', started)
+        state['elapsed_ms'] = elapsed
         if state['queue_liveness']['verified'] and state.get('scope_config'):
             state.update(status='connected', phase='ready')
         return state
     key = hashlib.sha256((str(editor) + '\n' + digest(editor) + '\n' + info['release']).encode()).hexdigest()[:20]
-    task = cache_root() / 'connections' / key / (str(target['pid']) + '-' + str(target['creation_filetime']))
+    local_cache = cache_root()
+    process_key = str(target['pid']) + '-' + str(target['creation_filetime'])
+    task = connection_task_directory(local_cache, key, process_key)
     task.mkdir(parents=True, exist_ok=True)
     journal = task / 'connection.json'
     if journal.exists():
@@ -298,52 +337,66 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
                     'meaning': 'Inspect actual status after a timeout; never replay an unknown connect or project request'}
         return {**state, 'status': 'preparation_interrupted',
                 'meaning': 'Inspect the recorded files and phase before resuming; no automatic retry or compiler fallback'}
+    runtime, payload, boot = task / 'rt', task / 'pkg', task / 'boot'
     state = {'schema': 1, 'status': 'preparing', 'phase': 'bridge_materialization',
-             'target': target, 'task_root': str(task), 'receiver_compilation_required': False,
-             'preparation_progress_file': str(task / 'preparation-progress.json'),
+             'target': target, 'task_root': str(task), 'runtime_root': str(runtime),
+             'receiver_compilation_required': False,
+             'elapsed_ms': elapsed,
+             'preparation_progress_file': str(task / 'prep.json'),
              'preparation_timeout_seconds': preparation_timeout,
-             'meaning': 'Precompiled engine still requires local interface analysis. Read the progress file; do not restart an uncertain existing preparation.'}
+             'meaning': 'Verifying current modules and preparing the native binding. Read the progress file before resuming an interrupted preparation.'}
     save(journal, state)
-    runtime, payload, boot = task / 'runtime', task / 'payload', task / 'bootstrap'
     for path in (runtime, payload, task / 'tools'):
         path.mkdir(exist_ok=True)
     transport = runtime / 'bridge_client.py'
     shutil.copy2(asset / 'transport/bridge_client.py', transport)
+    phase_start = time.perf_counter()
     bridge_result = run_json([py, asset / 'portable-bridge/materialize.py',
         '--artifacts', artifacts, '--task-root', task,
         '--runtime-root', runtime, '--bootstrap-root', boot, '--install-root', install_root,
         '--editor', editor, '--pid', str(target['pid']), '--ui-thread', str(target['ui_thread']),
         '--creation-filetime', str(target['creation_filetime'])], env)
+    record_phase('bridge_materialization', phase_start)
     hot = boot / 'hot-attach.json'
     hot_data = read(hot)
     state.update(phase='business_materialization', hot_attach_config=str(hot), client=hot_data['client'])
     save(journal, state)
     print(json.dumps({'phase': 'business_materialization', 'task_root': str(task),
                       'progress_file': state['preparation_progress_file'],
-                      'meaning': 'Local interface analysis is running; inspect this progress file instead of starting another binding.'},
+                      'meaning': 'Verifying current modules and reusing matching ABI evidence when available; inspect this progress file instead of starting another binding.'},
                      ensure_ascii=False), file=sys.stderr, flush=True)
     scope = {'schema': 1, 'task_root': str(task), 'engineering_root': str(payload),
              'runtime_root': str(runtime), 'install_root': str(install_root),
              'transport_client_file': str(transport), 'transport_client_sha256': digest(transport),
              'editor_executable': str(editor)}
-    scope_base = task / 'base.scope.json'
+    scope_base = task / 'base.json'
     save(scope_base, scope)
     engine = contained(root, info['business_engine'])
+    phase_start = time.perf_counter()
     prepared = run_json([py, asset / 'portable-engine/materialize.py',
         '--scope-base-json', scope_base, '--engine-file', engine, '--engine-sha256', digest(engine),
-        '--output-directory', runtime / 'business-prepared',
-        '--progress-file', task / 'preparation-progress.json'], env,
+        '--output-directory', runtime / 'engine',
+        '--abi-cache-root', local_cache / 'native-abi',
+        '--progress-file', state['preparation_progress_file']], env,
         timeout=preparation_timeout or None)
+    record_phase('business_materialization', phase_start)
     state.update(phase='engine_staging', engine_preparation=prepared)
     save(journal, state)
+    phase_start = time.perf_counter()
     staged = run_json([py, asset / 'bootstrap/stage_engine.py', '--bootstrap-root', boot,
         '--engine-file', prepared['engine_file'], '--engine-scope-file', prepared['engine_scope_file']], env)
+    record_phase('engine_staging', phase_start)
     active_scope = boot / 'engines' / Path(prepared['engine_scope_file']).name
     state.update(status='connect_requested', phase='host_attach', scope_config=str(active_scope),
                  scope_sha256=digest(active_scope), bridge_preparation=bridge_result, engine_staging=staged)
     save(journal, state)  # An unknown result must never silently reattach/replay.
+    phase_start = time.perf_counter()
     connected = run_json([state['client'], '--connect', hot], env, timeout=90)
+    record_phase('host_attach', phase_start)
+    phase_start = time.perf_counter()
     liveness = probe_queue(runtime, py)
+    record_phase('queue_probe', phase_start)
+    record_phase('total', started)
     state.update(status='connected' if liveness['verified'] else 'bridge_attached_queue_not_confirmed',
                  phase='ready' if liveness['verified'] else 'inspect_queue', connection=connected,
                  queue_liveness=liveness,
