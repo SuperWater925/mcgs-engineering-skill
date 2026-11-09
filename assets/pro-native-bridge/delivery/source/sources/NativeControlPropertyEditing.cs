@@ -33,9 +33,16 @@ namespace McgsInternalBridge {
    return NativeDynamicCollections.ReadDrawList(NativeMemory.Add(complete,0xE4),doc,api.Engine.Address(0xD3FD70));
   }
   sealed class Selection {internal IntPtr Page,Doc,Full,Object,Selected,View;internal List<Dictionary<string,object>> Values;internal Dictionary<string,object> Snapshot;}
-  static Selection Capture(Api api,Dictionary<string,object> action,Dictionary<string,object> sharedPageSnapshot=null) {
-   var target=Map(action["target"]);IntPtr page=api.Common.Page(target);int id=Convert.ToInt32(target["page_id"]);IntPtr doc=api.Common.Document(page,id),full=IntPtr.Zero;
-   var current=api.Common.TopControls(doc);object raw;
+  static IntPtr CaptureDrawingView(Api api,IntPtr doc) {
+   IntPtr view=api.Bind<NativeEngine.ThisPointer>("GetDrawingView")(doc);
+   if(view!=IntPtr.Zero)NativeMemory.Require(NativeMemory.Ptr(view,0)==api.Engine.Address(0xD9041C)&&api.Bind<NativeEngine.ThisPointer>("DrawingViewGetDocument")(view)==doc&&IsWindow(NativeMemory.Ptr(view,0x20)),"Control view/document/HWND differs.");
+   return view;
+  }
+  static Selection Capture(Api api,Dictionary<string,object> action) {return Capture(api,Map(action["target"]),null);}
+  static Selection Capture(Api api,Dictionary<string,object> target,BatchSelection batch) {
+   IntPtr page=batch==null?api.Common.Page(target):batch.Page;
+   IntPtr doc=batch==null?api.Common.Document(page,Convert.ToInt32(target["page_id"])):batch.Doc,full=IntPtr.Zero;
+   var current=batch==null?api.Common.TopControls(doc):batch.TopControls;object raw;
    if(target.TryGetValue("control_path",out raw)) {
     var path=new List<int>();foreach(object n in (IEnumerable)raw)path.Add(Convert.ToInt32(n));NativeMemory.Require(path.Count>0,"Control path is empty.");
     var pathObjects=new HashSet<uint>();for(int i=0;i<path.Count;i++){NativeMemory.Require(path[i]>=0&&path[i]<current.Count,"Control path is outside current native ownership list.");full=current[path[i]];NativeMemory.Require(pathObjects.Add(NativeMemory.U(full)),"Control path repeats a native owner-tree object.");if(i+1<path.Count)current=GroupChildren(api,full,doc);}
@@ -45,15 +52,14 @@ namespace McgsInternalBridge {
    NativeMemory.Require(full!=IntPtr.Zero&&NativeMemory.Ptr(full,0x64)==doc,"Logical control is absent or has another document owner.");
    IntPtr obj=NativeMemory.Add(full,4);var info=api.Engine.Describe(obj);
    NativeMemory.Require(Convert.ToInt32(info["complete_offset"])==4&&NativeStrategyProfile.ReadName(api.Common.Shared,obj)==NativePageControlPreparation.Text(target,"control_name")&&Convert.ToString(info["rtti"])==NativePageControlPreparation.Text(target,"rtti"),"Logical control name/RTTI/base offset differs.");
-   var s=new Selection{Page=page,Doc=doc,Full=full,Object=obj,Selected=obj,View=api.Bind<NativeEngine.ThisPointer>("GetDrawingView")(doc)};
-   if(s.View!=IntPtr.Zero)NativeMemory.Require(NativeMemory.Ptr(s.View,0)==api.Engine.Address(0xD9041C)&&api.Bind<NativeEngine.ThisPointer>("DrawingViewGetDocument")(s.View)==doc&&IsWindow(NativeMemory.Ptr(s.View,0x20)),"Control view/document/HWND differs.");
+   var s=new Selection{Page=page,Doc=doc,Full=full,Object=obj,Selected=obj,View=batch==null?CaptureDrawingView(api,doc):batch.View};
    using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.Read(obj);
    AnnotateComponentOccurrences(s.Values);
    if(target.TryGetValue("component_path",out raw))foreach(object n in (IEnumerable)raw) {
     IntPtr child=ResolveComponent(api,s.Values,s.Selected,n);
     NativeMemory.Require(child!=IntPtr.Zero,"Requested getter-derived component path is absent.");NativePropertyTarget.Describe(api.Engine,child);s.Selected=child;
    }
-   s.Snapshot=new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"page",sharedPageSnapshot??api.Common.PageSnapshot(page)},
+   s.Snapshot=new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"page",batch==null?api.Common.PageSnapshot(page):batch.PageState},
     {"control",new Dictionary<string,object>{{"name",NativeStrategyProfile.ReadName(api.Common.Shared,obj)},{"rtti",info["rtti"]},{"type_id",NativeMemory.I32(full,0xC)},{"complete",NativeMemory.Hex(full)},{"iobject",NativeMemory.Hex(obj)},{"owner_document",NativeMemory.Hex(doc)}}},
     {"selected_owner",NativeMemory.Hex(s.Selected)},{"properties",s.Values},{"root_modified",NativeMemory.I32(api.Common.Shared.RootDoc(),0x48)},{"compile_valid",NativeMemory.I32(api.Common.Shared.RootDoc(),0x114)}};
    return s;

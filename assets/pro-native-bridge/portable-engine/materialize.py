@@ -227,7 +227,9 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
     for row in manifest["owned_artifacts"]:
         relative = row["task_relative_file"]
         file = stage / "artifacts" / relative
-        raw = target.overrides.get(relative, file.read_bytes())
+        raw = target.overrides.get(relative)
+        if raw is None:
+            raw = file.read_bytes()
         text = raw.decode("utf-8-sig")
         if file.suffix == ".json":
             def visit(value, key=None):

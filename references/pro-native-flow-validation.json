@@ -1,0 +1,217 @@
+{
+  "schema": "mcgs-native-flow-benchmark/v1",
+  "before_release": "v2026.11.10-online-update",
+  "after_release": "v2026.11.10-online-flow",
+  "project_and_build": {
+    "pro": "3.5.2.12210",
+    "page_id": 5,
+    "label_colors": 20,
+    "fixture_seed_sha256": "50129b484c28660c57c308cbfa2cb2e510415356741b9e568d1c7d7c27cd52ed",
+    "engine_source_release": "v2026.11.10-online-flow",
+    "temporary_stopwatch_instrumentation": true,
+    "single_live_pro_instance": true
+  },
+  "method": "Same byte-identical fixture seed, Pro 3.5.2.12210, page 5 and 20 label color changes. One fresh owned Pro instance in the retest. Instrumented builds from each release source record native monotonic elapsed time. CLI wall time recorded separately. Warm-cache preparation is file-only, after test shutdown.",
+  "comparable_wall_seconds": {
+    "application_start_to_project_lock_and_main_window": {
+      "before": 3.828578,
+      "after": 3.500335
+    },
+    "cold_attach": {
+      "before": 31.323784,
+      "after": 26.422781
+    },
+    "same_process_connection_reuse": {
+      "before": 0.782895,
+      "after": 0.744352
+    },
+    "abi_profile_render_cold": {
+      "before": 5.121816,
+      "after": 1.053033
+    },
+    "warm_cached_file_materialization": {
+      "before": 11.523841,
+      "after": 6.986625
+    },
+    "abi_profile_render_warm": {
+      "before": 5.153369,
+      "after": 1.027545
+    },
+    "standalone_view_inspection": {
+      "before": 19.4505784,
+      "after": null,
+      "after_status": "omitted by direct activation"
+    },
+    "activate_target_page": {
+      "before": 84.665978,
+      "after": 3.421513
+    },
+    "typed_property_preimage": {
+      "before": 3.335412,
+      "after": 2.608335
+    },
+    "generate_and_stage": {
+      "before": 2.285474,
+      "after": 2.39349
+    },
+    "edit_refresh_and_save": {
+      "before": 11.61387,
+      "after": 4.247266
+    },
+    "native_post_save_inspection": {
+      "before": 3.03401,
+      "after": 2.521734
+    },
+    "disk_snapshot_and_export": {
+      "before": 1.357507,
+      "after": 1.138486
+    },
+    "measured_workflow_total": {
+      "before": 157.066613,
+      "after": 42.753606
+    }
+  },
+  "workflow_total_scope": {
+    "before_cli_phases": [
+      "attach",
+      "view-before",
+      "activate-once",
+      "before",
+      "program",
+      "stage",
+      "edit",
+      "page-save",
+      "root-save",
+      "saved",
+      "disk-capture"
+    ],
+    "after_cli_phases": [
+      "attach",
+      "activate-once",
+      "before",
+      "program",
+      "append-save-steps",
+      "stage",
+      "edit-save-unified",
+      "saved",
+      "disk-capture"
+    ],
+    "excludes": [
+      "application startup",
+      "package preflight",
+      "warm cache",
+      "extra no-op check",
+      "shutdown",
+      "helper comparisons not individually timed in baseline"
+    ]
+  },
+  "comparable_native_ms": {
+    "page_activation_ui_dispatch": {
+      "before": 82405.8095,
+      "after": 1138.0495
+    },
+    "page_activation_draw_forest": {
+      "before": 81457.082,
+      "after": 120.3152
+    },
+    "typed_preimage_target": {
+      "before": 757.351,
+      "after": 227.421
+    },
+    "property_batch_ui_dispatch": {
+      "before": 3496.2873,
+      "after": 941.0361
+    },
+    "property_batch_capture_five_rounds": {
+      "before": 3238.8433,
+      "after": 715.2464
+    },
+    "native_setters_20": {
+      "before": 3.0827,
+      "after": 1.9585
+    },
+    "native_refresh": {
+      "before": 11.379,
+      "after": 9.6792
+    },
+    "page_save_action": {
+      "before": 799.3338,
+      "after": 640.7538
+    },
+    "root_save_action": {
+      "before": 108.3123,
+      "after": 85.9139
+    },
+    "original_page_save_data": {
+      "before": 12.0851,
+      "after": 8.1668
+    },
+    "original_root_save": {
+      "before": 3.1678,
+      "after": 3.3336
+    }
+  },
+  "after": {
+    "cold_attach_ms": {
+      "discover": 94.25,
+      "bridge_materialization": 115.38,
+      "business_materialization": 24732.76,
+      "engine_staging": 113.31,
+      "host_attach": 452.42,
+      "queue_probe": 168.05,
+      "total": 25738.18
+    },
+    "cold_abi_materialization_seconds": {
+      "native_data_resolution": 21.413091800000075,
+      "total": 23.707419900000787,
+      "abi_catalog_and_contracts": 0.5081275000002279,
+      "abi_module_selection": 9.041449199999988,
+      "abi_static_rva_resolution": 10.48427029999948,
+      "abi_profile_render": 1.0530327000005855,
+      "abi_profile_readback": 0.05782629999976052,
+      "abi_diagnostics_write": 0.11625149999963469,
+      "source_address_tables": 0.12346630000047298,
+      "owned_artifact_validation": 0.01974019999943266,
+      "profile_path_rewrite_and_repin": 1.3875465000000986,
+      "artifact_write": 0.0684692000004361,
+      "binding_write": 0.042010900000605034
+    },
+    "cold_abi_cache_status": "miss",
+    "warm_abi_cache_status": "hit",
+    "forest_reads_before_after": [
+      5,
+      4
+    ],
+    "already_active_no_native_open_verified": true,
+    "already_active_confirmation_wall_seconds": 2.8641988,
+    "rpc_count_edit_and_save_before_after": [
+      3,
+      2
+    ],
+    "property_rpc_wall_seconds": 0.97022,
+    "combined_save_rpc_wall_seconds": 0.809323,
+    "native_history_captures": 1,
+    "native_refreshes": 1,
+    "page_save_and_root_save_verified": true,
+    "same_pid_connection_reused": true,
+    "native_color_readback_passed": true,
+    "file_readback": {
+      "file_readback_passed": true,
+      "archived_colors_verified": 20,
+      "compared_fields": 604,
+      "changed_fields": [
+        [
+          "WndUser",
+          "5",
+          "lbObjects"
+        ]
+      ]
+    },
+    "test_pro_normal_exit_verified": true,
+    "remaining_pro_processes": 0,
+    "receiver_compiled_engine": false,
+    "native_configuration_check": "not_performed",
+    "close_reopen": "not_performed",
+    "local_simulation": "not_performed"
+  }
+}

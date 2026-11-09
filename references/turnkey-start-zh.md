@@ -4,7 +4,7 @@
 
 包内包括 McgsPro 3.5.2.12210、McgsStu 3.5.3.9198 SP1 完整安装介质、统一的便携 Python/PowerShell、预编译在线业务引擎与热接桥、Codex 技能和说明。版本是安装介质信息，不是技能准入条件。Stu 当前支持离线；Pro 可选离线/在线。
 
-先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。已连接的实例沿用当前连接。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.10-online-update/references/turnkey-update-zh.md)
+先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。已连接的实例沿用当前连接。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.10-online-flow/references/turnkey-update-zh.md)
 
 ## 首次配置
 

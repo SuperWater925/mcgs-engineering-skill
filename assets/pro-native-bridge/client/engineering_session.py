@@ -256,10 +256,36 @@ def merge_signature(step, specification):
     return (next(iter(pages)), json.dumps(metadata, ensure_ascii=False, sort_keys=True, allow_nan=False))
 
 
+def native_save_step(step, specification):
+    """Only group explicit saves whose native direct scope is set by the kind."""
+    if (step.get("mode", "edit") != "edit"
+            or set(specification) - {"actions", "commit", "save_scope", "trial_id"}
+            or len(specification["actions"]) != 1):
+        return None
+    scope = specification.get("save_scope", {})
+    if (not isinstance(scope, dict) or set(scope) - {
+            "root_save", "affected_page_ids", "strategy_ids", "module_ids",
+            "created_page_actions", "created_strategy_actions", "main_control_document", "linguist_document"}
+            or type(scope.get("root_save", False)) is not bool):
+        return None
+    action = specification["actions"][0]
+    if set(action) != {"action_id", "kind", "target", "after"} or action["after"]:
+        return None
+    target = action["target"]
+    if (action["kind"] == "page-flush" and not scope.get("root_save")
+            and set(target) == {"page_id", "page_name"}
+            and type(target["page_id"]) is int and isinstance(target["page_name"], str) and target["page_name"]):
+        return "page-flush"
+    if action["kind"] == "root-flush" and not target:
+        return "root-flush"
+    return None
+
+
 def next_direct_group(steps, start, results, merge_steps=True, max_merged_actions=None):
     """Resolve only completed dependencies; never send a client $ref to native."""
     limit = MAX_RPC_ACTIONS if max_merged_actions is None else max_merged_actions
     members, signature, ids, action_count = [], None, set(), 0
+    saving = False
     action_bytes, metadata_bytes = 0, None
     for index in range(start, len(steps)):
         step = steps[index]
@@ -277,9 +303,13 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
                 # bad pointer must not prevent an earlier valid step executing.
                 break
             raise
-        current = merge_signature(step, specification)
+        save_kind = native_save_step(step, specification)
+        if not members:
+            saving = save_kind == "page-flush"
+        current = merge_signature(step, specification) if not saving else save_kind
         current_ids = {action["action_id"] for action in specification["actions"]}
-        if members and (not merge_steps or signature is None or current != signature or ids & current_ids):
+        compatible = (save_kind is not None if saving else signature is not None and current == signature)
+        if members and (not merge_steps or not compatible or ids & current_ids):
             break
         # Encode each new action once for an exact pretty-JSON byte estimate;
         # do not repeatedly encode the growing prefix. In the group array every
@@ -300,7 +330,7 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
         action_bytes += new_bytes
         ids.update(current_ids)
         signature = current
-        if not merge_steps or signature is None:
+        if not merge_steps or signature is None or saving and save_kind == "root-flush":
             break
     return members
 
@@ -513,6 +543,7 @@ def split_direct_receipt(receipt, members):
                 apply[key] = json_copy(selected[-1]["result"][key])
         if state == "completed":
             for key in ("error", "managed_stack", "comparison_evidence", "failed_action_id", "owned_cleanup_error",
+                        "native_abi", "failure_category", "affected_feature",
                         "native_batch_finalization_failed", "batch_finalization_action_id"):
                 apply.pop(key, None)
             apply["phase"] = selected[-1]["result"].get("phase", "client-split-direct-step-completed")
@@ -553,7 +584,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
         "execution_mode": "direct", "approval_required": False, "automatic_retry": False,
         "automatic_resume": False, "project_open_close_operations": 0,
         "engineering_acceptance_verified": False, "rpc_count": 0, "merged_rpc_count": 0,
-        "native_property_batches_submitted": 0,
+        "native_property_batches_submitted": 0, "native_save_groups_submitted": 0,
         "merge_compatible_steps": merge_steps,
         "max_merged_actions": MAX_RPC_ACTIONS if max_merged_actions is None else max_merged_actions}
     active_step, phase, members = None, "resolve-and-freeze", []
@@ -636,6 +667,8 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
                 status["rpc_count"] += 1
                 status["merged_rpc_count"] += len(members) > 1
                 status["native_property_batches_submitted"] += len(property_batches)
+                if len(members) > 1 and native_save_step(members[0]["step"], members[0]["specification"]) == "page-flush":
+                    status["native_save_groups_submitted"] += 1
                 try:
                     receipt = batch.execute(program["project_path"], group_file, request_id, timeout,
                                             specification_sha256=group_record["specification_sha256"])

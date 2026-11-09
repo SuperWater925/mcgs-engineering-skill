@@ -14,7 +14,7 @@
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
-2026-11-10 小更新包包含新版预编译 Pro 引擎，支持接入缓存、同页原生批写和短路径。已有 11 月 6 日 bootstrap 完整包时，可让 AI 直接应用更新，复用本机安装介质和运行时。 [下载小更新包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.10-online-update) · [更新说明](references/turnkey-update-zh.md) · [提速实测](references/pro-native-batching-validation.json) · [短路径实测](references/pro-native-compact-path-validation.json)
+2026-11-10 在线流程小更新包含新版预编译 Pro 引擎，沿用接入缓存、同页原生批写和短路径，并减少页面激活、属性采集、保存请求和 ABI 配置生成中的重复工作。已有 11 月 6 日 bootstrap 完整包时，可直接应用更新，复用本机安装介质和运行时。 [下载小更新包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.10-online-flow) · [更新说明](references/turnkey-update-zh.md) · [在线提速合同](references/pro-native-performance.md) · [此前批写实测](references/pro-native-batching-validation.json) · [短路径实测](references/pro-native-compact-path-validation.json)
 
 当前在线定位增加有角色依据的等价代码适配，移除摘要计算与未使用根槽的整份资料门槛；多项只读检查逐项返回前像或未适配原因。`native-abi report`可查看具体接口，静态定位成功不等于原厂调用已验证。范围见[分层自动适配](references/adaptive-native-location.md)及[对应验证](references/adaptive-native-location-validation.json)。
 

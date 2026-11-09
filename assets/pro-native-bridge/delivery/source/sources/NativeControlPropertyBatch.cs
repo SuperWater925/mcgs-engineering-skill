@@ -56,30 +56,37 @@ namespace McgsInternalBridge {
   }
 
   sealed class BatchSelection {
+   // Each capture resolves its own page and root list. Callers never reuse them for a later capture.
    internal readonly List<Selection> Controls=new List<Selection>();
    internal readonly List<Dictionary<string,object>> Requests=new List<Dictionary<string,object>>();
-   internal Dictionary<string,object> Snapshot;internal IntPtr Page,Doc,View;
+   internal readonly IntPtr Page,Doc,View;
+   internal readonly List<IntPtr> TopControls;
+   internal readonly Dictionary<string,object> PageState;
+   internal Dictionary<string,object> Snapshot;
+   internal BatchSelection(Api api,Dictionary<string,object> target){
+    Page=api.Common.Page(target);
+    Doc=api.Common.Document(Page,Convert.ToInt32(target["page_id"]));
+    TopControls=api.Common.TopControls(Doc);
+    PageState=api.Common.PageSnapshot(Page,TopControls);
+    View=CaptureDrawingView(api,Doc);
+    NativeMemory.Require(Convert.ToString(PageState["document"])==NativeMemory.Hex(Doc)&&Convert.ToString(PageState["view"])==NativeMemory.Hex(View),"Property batch page snapshot disagrees with the current document/view.");
+   }
   }
   static BatchSelection CaptureBatch(Api api,Dictionary<string,object> action){
-   var parent=Map(action["target"]);IntPtr page=api.Common.Page(parent);
-   var pageState=api.Common.PageSnapshot(page);var batch=new BatchSelection{Page=page,
-    Doc=api.Common.Document(page,Convert.ToInt32(parent["page_id"]))};
+   var parent=Map(action["target"]);var batch=new BatchSelection(api,parent);
    var fullObjects=new HashSet<uint>();var rows=new List<object>();
    foreach(object raw in(IEnumerable)Map(action["after"])["controls"]){
     var item=Map(raw);var target=new Dictionary<string,object>(parent);
     foreach(var pair in Map(item["target"])){
      NativeMemory.Require(pair.Key=="control_name"||pair.Key=="rtti"||pair.Key=="control_path"||pair.Key=="component_path","Property batch control target contains unsupported fields.");target.Add(pair.Key,pair.Value);
     }
-    var request=new Dictionary<string,object>{{"target",target}};
-    Selection control=Capture(api,request,pageState);
-    NativeMemory.Require(control.Page==batch.Page&&control.Doc==batch.Doc&&fullObjects.Add(NativeMemory.U(control.Full)),"Each property batch entry must address a distinct native control on the same page.");
-    if(batch.Controls.Count==0)batch.View=control.View;
-    NativeMemory.Require(control.View==batch.View,"Batch targets disagree on the page's current view.");
+    Selection control=Capture(api,target,batch);
+    NativeMemory.Require(fullObjects.Add(NativeMemory.U(control.Full)),"Each property batch entry must address a distinct native control on the same page.");
     batch.Controls.Add(control);batch.Requests.Add(item);
     var capturedRow=new Dictionary<string,object>{{"target",item["target"]},{"control",control.Snapshot["control"]},{"selected_owner",control.Snapshot["selected_owner"]},{"properties",control.Values}};object pairedFlag;if(item.TryGetValue("expect_paired_basic_button_visuals",out pairedFlag)){NativeMemory.Require(pairedFlag is bool,"expect_paired_basic_button_visuals must be Boolean.");capturedRow["paired_basic_button_visuals"]=PairedBasicInfo(api,control);}rows.Add(capturedRow);
    }
    NativeMemory.Require(batch.Controls.Count>0,"Property batch needs at least one control.");
-   batch.Snapshot=new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"kind",BatchKind},{"page",pageState},{"controls",rows},
+   batch.Snapshot=new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"kind",BatchKind},{"page",batch.PageState},{"controls",rows},
     {"root_modified",NativeMemory.I32(api.Common.Shared.RootDoc(),0x48)},{"compile_valid",NativeMemory.I32(api.Common.Shared.RootDoc(),0x114)},{"full_serialization_preimage",false}};
    return batch;
   }
