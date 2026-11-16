@@ -612,26 +612,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     identities = {alias: pe.identity() for alias, pe in actual.items()}
     equal_modules = {alias for alias in actual if alias in catalog['reference_modules'] and
         identities[alias]['sha256'] == catalog['reference_modules'][alias]['sha256']}
-    dependency_names = {}
-    for alias, pe in actual.items():
-        names = {pe.path.name.casefold()} if pe.path else set()
-        if getattr(pe, 'export_module_name', None):
-            names.add(pe.export_module_name.casefold())
-        for name in names:
-            dependency_names.setdefault(name, []).append((alias, pe))
-    dependencies = {}
-    for name, rows in dependency_names.items():
-        owners = {str(pe.path.resolve()) if pe.path else id(pe) for _, pe in rows}
-        if len(owners) == 1:
-            dependencies[name] = rows[0]
-    for alias, pe in actual.items():
-        pe._abi_module_alias = alias
-        pe._abi_module_aliases = tuple(a for a, other in actual.items()
-                                      if other.path == pe.path and identities[a]['sha256'] == identities[alias]['sha256'])
     proven_export_targets = {}
-    for pe in actual.values():
-        pe._abi_import_dependencies = dependencies
-        pe._abi_import_role_targets = proven_export_targets
+    xs.attach_import_role_context(actual, proven_export_targets)
     # Unchanged export-table bytes can prove an ordinal's role immediately.
     # Changed dependencies still need their actual function proof below.
     for entry in catalog['signatures']:
@@ -645,15 +627,16 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                     for alias, pe in actual.items()}, 'rva_maps': {alias: {} for alias in actual},
         'functions': [], 'types': [], 'proofs': [], 'gaps': [],
         'capabilities': {'code_and_RTTI_locations_are_not_object_layout_or_call_semantics': True,
-            'existing_object_layout_contracts_preserved': True, 'object_layout_verified': False,
+            'private_object_layout_requires_separate_current_witnesses': True, 'object_layout_verified': False,
             'calling_semantics_verified': False, 'evidence_flags_are_not_new_global_permission_gates': True},
         'adaptation_policy': {'strict_evidence_first': True,
-            'automatic_fallback': 'independently-identified-structure-preserving-x86',
+            'automatic_fallback': 'independently-identified-current-native-role',
             'unrelated_hierarchy_and_callee_metadata_not_global_gates': True,
             'unresolved_entries_block_only_the_consuming_feature': True,
             'unresolved_reference_addresses_callable': False},
         'local_actual_module_paths': {alias: str(Path(path).resolve()) for alias, path in actual_modules.items()}}
     suggestions, anchors, anchor_identities, candidate_suggestions, table_members = {}, {}, {}, {}, {}
+    caller_roles = {}
     signature_models = {}
     for model in catalog['signatures']:
         signature_models.setdefault((model['module'], model['reference_rva']), []).append(model)
@@ -667,22 +650,33 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
     def complete_function(row, entry, current, context, method, *, identity=None, adaptive_evidence=None):
         alias, old, identifier = entry['module'], entry['reference_rva'], entry['id']
         pe = actual[alias]
-        try:
-            canonical, reloc = xs.normalized_guard_bytes(pe, current, entry['guard_length'], catalog['reference_modules'][alias]['image_base'])
-            raw = pe.read(current, entry['guard_length'])
-        except (ValueError, struct.error) as exc:
-            row.update(status='unresolved', failure_category='guard_extent_unavailable',
-                candidate_rvas=[current], required_guard_length=entry['guard_length'],
-                reason='Located function cannot provide the unchanged consumer guard extent: '+str(exc))
-            return False
         terminal = terminal_contract(entry, current, identity, adaptive_evidence)
+        if terminal['required'] and not terminal['satisfied'] and identity is not None:
+            from role_based_x86 import match as match_role
+            role = match_role(entry, pe, current, identity)
+            if role is not None:
+                context, adaptive_evidence = role['context'], role['evidence']
+                method = 'current-interface-role'
+                terminal = terminal_contract(entry, current, identity, adaptive_evidence)
         if terminal['required'] and not terminal['satisfied']:
             row.update(status='unresolved', failure_category='terminal_body_contract_unresolved',
                 candidate_rvas=[current], terminal_body_contract=terminal,
                 reason='Entry role was located, but its known complete terminal body contract was not preserved')
             return False
+        guard_length = entry['guard_length']
+        if adaptive_evidence and 'live_entry_guard_span' in adaptive_evidence:
+            guard_length = min(guard_length, adaptive_evidence['live_entry_guard_span'])
+        try:
+            canonical, reloc = xs.normalized_guard_bytes(pe, current, guard_length, catalog['reference_modules'][alias]['image_base'])
+            raw = pe.read(current, guard_length)
+        except (ValueError, struct.error) as exc:
+            row.update(status='unresolved', failure_category='guard_extent_unavailable',
+                candidate_rvas=[current], reference_guard_length=entry['guard_length'],
+                reason='Current entry cannot supply its byte guard: '+str(exc))
+            return False
         row.update(status='resolved', actual_rva=current,
             actual_guard_bytes=raw.hex(), guard_bytes_at_reference_preferred_base=canonical.hex(),
+            reference_guard_length=entry['guard_length'], actual_guard_length=guard_length,
             actual_relocation_offsets=reloc, proof_id=identifier, resolution_method=method,
             identity_anchors={'RTTI_slot': current in anchors.get((alias, old), set()),
                 'named_export': [name for name in entry.get('exports', []) if name in pe.exports and
@@ -700,7 +694,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             row['adaptive_identity'] = copy.deepcopy(identity)
             row['adaptive_evidence'] = copy.deepcopy(adaptive_evidence or {})
         result['proofs'].append({'id': identifier, 'kind': method, 'module': alias,
-            'reference_rva': old, 'actual_rva': current, 'object_displacements_preserved': True,
+            'reference_rva': old, 'actual_rva': current,
+            'object_displacements_preserved': not bool(adaptive_evidence and adaptive_evidence.get('implementation_bytes_may_differ')),
             'address_proof_scope': 'direct-function-location', 'virtual_slot_numbers_adapted': False,
             'normalization': context['normalization_proofs']})
         suggest(alias, old, current, 'function', identifier)
@@ -712,12 +707,16 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 # never an independently callable address proof.
                 values = candidate_suggestions.setdefault((alias, int(ref['reference_rva'])), {})
                 values.setdefault(int(ref['actual_rva']), set()).add(identifier)
+                if ref.get('transfer_kind') == 'call':
+                    caller_roles.setdefault((alias, int(ref['reference_rva']), int(ref['actual_rva'])), set()).add(identifier)
             else:
                 suggest(alias, ref['reference_rva'], ref['actual_rva'], ref['kind'], identifier)
         for ref in context.get('candidate_referents', []):
             if ref.get('kind') == 'code-reference' and pe.is_executable(ref['actual_rva']):
                 values = candidate_suggestions.setdefault((alias, int(ref['reference_rva'])), {})
                 values.setdefault(int(ref['actual_rva']), set()).add(identifier)
+                if ref.get('transfer_kind') == 'call' and identity is not None:
+                    caller_roles.setdefault((alias, int(ref['reference_rva']), int(ref['actual_rva'])), set()).add(identifier)
         if terminal['required']:
             values = candidate_suggestions.setdefault((alias, terminal['reference_body_rva']), {})
             values.setdefault(terminal['actual_body_rva'], set()).add(identifier)
@@ -725,7 +724,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
 
     not_decoded = object()
 
-    def match_candidate(entry, current, identity=None, *, verify_targets=True, allow_adaptive=True, local_actual=not_decoded):
+    def match_candidate(entry, current, identity=None, *, verify_targets=True, allow_adaptive=True,
+                        allow_role=True, local_actual=not_decoded):
         alias = entry['module'];pe = actual[alias]
         matched = xs.local_match(entry, pe, current) if local_actual is not_decoded else local_actual
         context = xs.verify_context(reference.get(alias), pe, entry, matched,
@@ -740,6 +740,13 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             relaxed = xs.adaptive_match(entry, pe, current, identity_proof=identity)
             if relaxed is not None:
                 return {**relaxed, 'adaptive': True, 'identity': identity}
+            # Interface identity is sufficient for dispatching its declared
+            # method; diagnostics, optimizer choices and private implementation
+            # bytes are not a vendor-build admission contract. Field readers
+            # consume separately derived layout descriptors.
+            if allow_role:
+                from role_based_x86 import match as match_role
+                return match_role(entry, pe, current, identity)
         return None
 
     def anchor_identity(alias, old, current):
@@ -757,6 +764,9 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         from overriding a known longer body contract without wrapper/body
         callable-proof cycles.  Actual CALLs are never treated as entry JMPs.
         """
+        if adaptive_evidence and adaptive_evidence.get('old_terminal_body_not_required'):
+            return {'required': False, 'satisfied': True, 'basis': 'current-interface-role',
+                    'implementation_bytes_may_differ': True}
         old_body = None
         if entry.get('first_is_direct_thunk'):
             transfer = entry['transfers'][0]
@@ -794,9 +804,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         if new_body is None or not pe.is_executable(new_body):
             witness['reason'] = 'Current entry has no verified terminal reached through actual direct JMPs'
             return witness
-        body_identity = {**identity, 'actual_rva': new_body, 'relation': 'actual-entry-terminal-body'} if identity else None
         for model in models:
-            selected = match_candidate(model, new_body, body_identity)
+            selected = match_candidate(model, new_body, allow_adaptive=False)
             if selected is None:
                 continue
             try:
@@ -846,17 +855,13 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         new = exact[0]
         if role_only:
             role_evidence = rtti.table_role_proof(old, new)
-        # COL, type and hierarchy identify this table independently of methods
-        # which this particular request may never call. A shorter trailing
-        # method list cannot invalidate that identity. Only slots actually
-        # present on both sides may provide function anchors; native callers
-        # still prove every slot they use against the live table.
+        # COL and hierarchy identify a table. Methods are separately located
+        # across the current table, including when its slot order changed.
         reference_slots = len(old['slot_entry_rvas'])
         actual_slots = len(new['slot_entry_rvas'])
         slots = {'reference_count': reference_slots, 'actual_count': actual_slots,
-                 'shared_prefix_count': min(reference_slots, actual_slots),
-                 'missing_reference_tail_indexes': list(range(actual_slots, reference_slots)),
-                 'identity_is_not_proof_of_all_reference_slots': True}
+                 'ordinal_equality_used_as_method_identity': False,
+                 'identified_slots': []}
         proof = {'id': proof_id, 'kind': 'RTTI-stable-table-subobject-role' if role_only else 'RTTI-class-COL-hierarchy-vtable', 'module': alias,
             'decorated_name': old['decorated_name'], 'reference': old, 'actual': new, 'slot_coverage': slots}
         if role_evidence is not None:
@@ -888,19 +893,26 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 members.add(cursor)
             thunk_member_cache[alias, start] = seen
             members.update(seen)
-        for slot_index, (before, after) in enumerate(zip(old['slot_entry_rvas'], new['slot_entry_rvas'])):
+        for before in set(old['slot_entry_rvas']):
             table_members.setdefault((alias, before), set()).update(members)
+            names = {name for model in signature_models.get((alias, before), ()) for name in model.get('exports', [])}
+            exported = {actual[alias].exports[name]['rva'] for name in names
+                        if name in actual[alias].exports and not actual[alias].exports[name].get('forwarder')}
+            if len(exported) != 1:
+                continue
+            after = next(iter(exported))
+            slot_index = rtti.locate_method_slot(new, after)
+            if slot_index is None:
+                continue
+            method_names = sorted(name for name in names if name in actual[alias].exports
+                                  and actual[alias].exports[name]['rva'] == after
+                                  and not actual[alias].exports[name].get('forwarder'))
             anchors.setdefault((alias, before), set()).add(after)
             identity = {'kind': 'rtti-slot', 'proof_id': proof_id, 'independent': True,
                         'actual_rva': after, 'decorated_name': old['decorated_name'],
-                        'col_offset': old['col_offset'], 'slot_index': slot_index,
-                        'table_identity_does_not_prove_method_or_private_fields': True}
+                        'col_offset': new['col_offset'], 'slot_index': slot_index,
+                        'method_names': method_names, 'ordinal_equality_used_as_method_identity': False}
             anchor_identities.setdefault((alias, before), {}).setdefault(after, []).append(identity)
-            # Do not promote the reference thunk's intermediate bodies to
-            # independent RTTI identities.  The actual entry may have lost its
-            # JMP and start with CALL; body correspondence belongs to the
-            # entry's returned actual_body_rva candidate and must pass the
-            # body's own full catalog signature with a caller dependency.
 
     progress_report('RTTI_tables', len(catalog['types']), len(catalog['types']), force=True)
     pending = []
@@ -952,10 +964,19 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             complete_function(row, entry, old, context, 'identical-PE-content-cache')
             result['functions'].append(row)
             continue
-        candidates = xs.candidates(pe, entry, role_anchors)
+        if len(set(export_anchors)) == 1:
+            current = export_anchors[0]
+            identity = anchor_identity(alias, old, current)
+            selected = match_candidate(entry, current, identity)
+            if selected is not None and complete_function(row, entry, current, selected['context'],
+                    'current-named-export-role', identity=identity, adaptive_evidence=selected.get('evidence')):
+                result['functions'].append(row)
+                continue
+        current_table_members = table_members.get((alias, old), set())
+        candidates = xs.candidates(pe, entry, role_anchors or current_table_members)
         # Include a stable prefix fallback for instruction-length changes; this
         # is also checked for true ambiguity, never a reference-address fallback.
-        if not role_anchors:
+        if not role_anchors and not current_table_members:
             candidates = sorted(set(candidates + xs.candidates(pe, entry, prefix_fallback=True)))
         local_candidates[identifier] = []
         primary_candidates = candidates[:]
@@ -977,9 +998,10 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             # virtual methods were inserted before its old slot.  A full,
             # unique strict body proof can locate it independently; this does
             # not claim the old slot number is valid for a virtual caller.
-            fallback = sorted((set(xs.candidates(pe, entry) +
-                                   xs.candidates(pe, entry, prefix_fallback=True)) - set(candidates)) &
-                              table_members.get((alias, old), set()))
+            # These are already bounded by the current class's real vtables.
+            # Scanning the complete PE and intersecting afterwards adds no
+            # identity evidence and repeatedly searches megabytes of code.
+            fallback = sorted(current_table_members - set(candidates))
             for candidate_index, candidate in enumerate(fallback):
                 progress_report('same_class_candidates', function_index, len(catalog['signatures']),
                                 module=alias, entry_id=identifier, candidates_completed=candidate_index, candidates_total=len(fallback))
@@ -991,9 +1013,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                     strict_matches.append((candidate, selected))
             candidates = sorted(set(candidates + fallback))
             row['adaptation_attempts'].append('same-class-strict-method-search-before-slot-adaptation')
-        # Complete same-class strict identity outranks an old slot number's
-        # relaxed structural candidate.  A newly inserted B must not mask A
-        # merely because their push/call/ret skeletons look alike.
+        # Only independently identified current methods reach the relaxed
+        # path. A matching number or common instruction skeleton cannot do so.
         matches = strict_matches[:]
         if not matches:
             for candidate in primary_candidates:
@@ -1008,7 +1029,7 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                 failure_category='function_identity_ambiguous' if len(matches) > 1 else 'function_structure_not_located',
                 candidate_rvas=[v[0] for v in matches], candidates_examined=len(candidates),
                 reason='Normalized instruction/body/RTTI/export proof is not unique' if matches else
-                    'No independently identified candidate preserves required instruction/field/stack roles; unresolved reference value is not callable')
+                    'No unique current method evidence or independently identified native interface role')
             result['functions'].append(row);pending.append((row, entry));continue
         current, selected = matches[0]
         row['candidates_examined'] = len(candidates)
@@ -1048,11 +1069,13 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
                     supporting_ids = (sorted({proof['proof_id'] for proof in values[current]}) if values else
                                       sorted(advisory[current]))
                     supporting_ids = [value for value in supporting_ids if value != entry['id']]
-                    if identity is None and supporting_ids:
-                        identity = {'kind': 'proven-caller-role', 'proof_id': supporting_ids[0],
+                    direct_callers = sorted(set(supporting_ids) & caller_roles.get((alias, old, current), set()))
+                    if identity is None and direct_callers:
+                        supporting_ids = direct_callers
+                        identity = {'kind': 'proven-caller-role', 'proof_id': direct_callers[0],
                                     'independent': True, 'actual_rva': current,
-                                    'supporting_proof_ids': supporting_ids,
-                                    'candidate_is_not_callable_until_own_structure_matches': True}
+                                    'supporting_proof_ids': direct_callers,
+                                    'basis': 'current-aligned-direct-call'}
                 selected = match_candidate(entry, current, identity)
                 if selected is not None:
                     matches.append((current, selected, supporting_ids))
@@ -1145,7 +1168,12 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             has_import_roles = any(imported.get('export_role') for imported in _signature_imports(entry))
             import_valid = True
             if has_import_roles and not dependency_lost:
-                import_valid = match_candidate(entry, row['actual_rva'], row.get('adaptive_identity')) is not None
+                # A caller's role may survive a private implementation
+                # change, but losing an operand proof must withdraw the
+                # dependent address edges emitted from that implementation.
+                role_only = bool(row.get('adaptive_evidence', {}).get('implementation_bytes_may_differ'))
+                import_valid = match_candidate(entry, row['actual_rva'], row.get('adaptive_identity'),
+                                               allow_role=role_only) is not None
             terminal_valid = True
             if row.get('terminal_body_contract', {}).get('required') and not dependency_lost:
                 terminal_valid = terminal_contract(entry, row['actual_rva'], row.get('adaptive_identity'),
@@ -1212,6 +1240,28 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             result['gaps'].append({'module': alias, 'reference_rva': before, 'reason': 'Operand referent is not one-to-one', 'actual_rva': after});continue
         result['rva_maps'][alias][hex(before)] = {'actual_rva': after, 'kind': proofs[0]['kind'],
             'proof_id': proofs[0]['proof_id'], 'proof_ids': sorted({p['proof_id'] for p in proofs})}
+    for row in result['types']:
+        if row['status'] != 'resolved':
+            continue
+        mapped = result['rva_maps'][row['module']]
+        before, after = row['reference'], row['actual']
+        for reference_index, old_entry in enumerate(before['slot_entry_rvas']):
+            if row['module'] in equal_modules and after['slot_entry_rvas'] == before['slot_entry_rvas']:
+                current_index = reference_index
+                method_proof = row['module'] + ':complete-PE-content-equivalence'
+            else:
+                method = mapped.get(hex(old_entry))
+                if method is None or not any(function_id in functions_by_id and
+                        functions_by_id[function_id]['status'] == 'resolved' and
+                        functions_by_id[function_id]['actual_rva'] == method['actual_rva']
+                        for function_id in method['proof_ids']):
+                    continue
+                current_index = rtti.locate_method_slot(after, method['actual_rva'])
+                method_proof = method['proof_id']
+            if current_index is not None:
+                row['slot_coverage']['identified_slots'].append({
+                    'reference_index': reference_index, 'actual_index': current_index,
+                    'actual_entry_rva': after['slot_entry_rvas'][current_index], 'method_proof_id': method_proof})
     result['summary'] = {'functions': len(result['functions']),
         'functions_resolved': sum(f['status'] == 'resolved' for f in result['functions']),
         'RTTI_tables': len(result['types']), 'RTTI_tables_resolved': sum(t['status'] == 'resolved' for t in result['types']),
@@ -1263,6 +1313,7 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compac
     for item in result['functions']:
         if 'reference_rva' in item:
             functions_by_address.setdefault((item['module'], item['reference_rva']), []).append(item)
+    tables_by_id = {row['id']: row for row in result['types'] if row['status'] == 'resolved'}
 
     def address_diagnostics(alias, address):
         rows = functions_by_address.get((alias, address), [])
@@ -1283,6 +1334,7 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compac
             'resolved_relative_path': f'{ordinal:03x}.json' if compact_names else profile['relative_path'],
             'resolved_fields': [], 'unresolved_fields': [], 'entry_resolutions': []}
         record['unresolved_fields'].extend(copy.deepcopy(profile.get('reference_gaps', [])))
+        table_offsets = {}
         for field in profile['fields']:
             alias, old = field.get('module'), field['reference_rva'];path = field['json_pointer']
             mapping = result['rva_maps'].get(alias, {}).get(hex(old))
@@ -1298,6 +1350,35 @@ def write_resolved_profiles(catalog, result, output_dir, *, profile_root, compac
             set_at(document, path, _format_number(original, encoded))
             record['resolved_fields'].append({'json_pointer': path, 'module': alias, 'reference_rva': old,
                 'actual_rva': mapping['actual_rva'], 'proof_id': mapping['proof_id']})
+            row_path, _, key = path.rpartition('/')
+            if key != 'rva' and not key.endswith('vtable_rva'):
+                continue
+            for proof_id in mapping['proof_ids']:
+                table = tables_by_id.get(proof_id)
+                if (table and table['reference']['vtable_rva'] == old and
+                        table['actual']['vtable_rva'] == mapping['actual_rva']):
+                    table_offsets.setdefault(row_path, []).append(table)
+        for row_path, tables in table_offsets.items():
+            row = get_at(document, row_path)
+            for key in ('offset_to_complete', 'complete_offset', 'col_offset'):
+                original = row.get(key)
+                # A colocated numeric field is a COL displacement only when
+                # its original value matches the evidenced source table.
+                if type(original) is not int:
+                    continue
+                matching = [t for t in tables if t['reference']['col_offset'] == original]
+                candidates = {t['actual']['col_offset'] for t in matching}
+                path = row_path + '/' + key
+                if len(candidates) == 1:
+                    current = next(iter(candidates))
+                    if current != original:
+                        row[key] = current
+                        record['resolved_fields'].append({'json_pointer': path, 'actual_value': current,
+                            'proof_id': matching[0]['id'], 'proof_kind': 'current-RTTI-COL-displacement'})
+                elif len(candidates) > 1:
+                    record['unresolved_fields'].append({'json_pointer': path,
+                        'failure_category': 'table_displacement_ambiguous', 'blocked_scope': 'consuming-entry',
+                        'reason': 'Multiple current table displacements match the declared source field'})
         for field in profile.get('pe_metadata_fields', []):
             alias, path = field.get('module'), field['json_pointer']
             identity = result['modules'].get(alias, {}).get('actual', {})

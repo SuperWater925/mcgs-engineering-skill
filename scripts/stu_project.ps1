@@ -1,4 +1,4 @@
-param(
+﻿param(
  [Parameter(Mandatory,Position=0)][ValidateSet('doctor','inspect','snapshot','baseline','fingerprints','compare','apply')][string]$Command,
  [string]$Project, [string]$Out, [string]$Left, [string]$Right, [string]$Manifest,
  [string]$RecipeRoot, [string]$Report, [string]$Backup, [string]$ExportAfter,
@@ -8,6 +8,14 @@ param(
 $ErrorActionPreference='Stop'
 Set-StrictMode -Version Latest
 . (Join-Path $PSScriptRoot 'ace-runtime.ps1')
+if($Command -notin @('snapshot','compare')){
+ $worker=Get-McgsAceWorker $Provider
+ if($worker.ready -and $worker.path -ine (Get-Process -Id $PID).Path){
+  $workerArgs=@();foreach($key in $PSBoundParameters.Keys){$value=$PSBoundParameters[$key];if($value -is [Management.Automation.SwitchParameter]){if($value.IsPresent){$workerArgs+='-'+$key}}else{$workerArgs+='-'+$key;$workerArgs+=[string]$value}}
+  & $worker.path -NoProfile -NonInteractive -File $PSCommandPath @workerArgs
+  exit $LASTEXITCODE
+ }
+}
 . (Join-Path $PSScriptRoot 'project-family.ps1')
 $script:SelectedProvider=$null
 $script:RawTables=@('Alarm','Data','DDEConnection','DDEConnectionPoint','Stgy','System','Trigger','WndControl','WndDevice','WndUser')
@@ -16,10 +24,11 @@ $script:WriteFields=@{System=@('lbContext');Stgy=@('lbObjects');Trigger=@('lbCon
 
 function FullPath([string]$Path){return [IO.Path]::GetFullPath($Path)}
 function Need([string]$Value,[string]$Name){if([string]::IsNullOrWhiteSpace($Value)){throw "Missing -$Name"}}
-function Sha([byte[]]$Bytes){return [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($Bytes)).ToLowerInvariant()}
+function Sha([byte[]]$Bytes){$h=[Security.Cryptography.SHA256]::Create();try{return ([BitConverter]::ToString($h.ComputeHash($Bytes))).Replace('-','').ToLowerInvariant()}finally{$h.Dispose()}}
 function SharedHash([string]$Path){
  $s=[IO.File]::Open($Path,'Open','Read',([IO.FileShare]::ReadWrite -bor [IO.FileShare]::Delete))
- try{return [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($s)).ToLowerInvariant()}finally{$s.Dispose()}
+ $h=[Security.Cryptography.SHA256]::Create()
+ try{return ([BitConverter]::ToString($h.ComputeHash($s))).Replace('-','').ToLowerInvariant()}finally{$s.Dispose();$h.Dispose()}
 }
 function ValueFingerprint($Value){
  if($null -eq $Value -or $Value -is [DBNull]){return 'null'}
@@ -173,11 +182,10 @@ try{
  $result=$null
  switch($Command){
   'doctor'{
-   $providers=[Collections.Generic.List[string]]::new()
-   $r=[Data.OleDb.OleDbEnumerator]::GetRootEnumerator();try{while($r.Read()){if([string]$r['SOURCES_NAME'] -match '^Microsoft\.ACE\.OLEDB\.(12|16)\.0$'){$providers.Add([string]$r['SOURCES_NAME'])}}}finally{$r.Dispose()}
+   $providers=Get-McgsAceProviders
    $python=$null
    if($env:MCGS_PYTHON){$python=$env:MCGS_PYTHON}else{$p=Get-Command python -ErrorAction SilentlyContinue;if($p){$python=$p.Source}}
-   $result=[ordered]@{powershell=$PSVersionTable.PSVersion.ToString();process_bits=([IntPtr]::Size*8);ace_providers=@($providers.ToArray());python=$python;source_written=$false;database_write_tested=$false}
+   $result=[ordered]@{powershell=$PSVersionTable.PSVersion.ToString();process_bits=([IntPtr]::Size*8);ace_providers=@($providers);offline_ready=(@($providers).Count -gt 0);python=$python;source_written=$false;database_write_tested=$false}
    if($Project){$d=Capture (FullPath $Project);$result['project_sha256']=$d.sha256;$result['tables']=@($d.tables|ForEach-Object {@{table=$_.table;rows=$_.rows}});$result['project_read_passed']=$true}
   }
   'snapshot'{
@@ -187,9 +195,9 @@ try{
     $root=FullPath $RecipeRoot;$recipeDest=$dest+'.recipes'
     if(Test-Path -LiteralPath $recipeDest){throw 'Recipe snapshot directory already exists.'}
     [void][IO.Directory]::CreateDirectory($recipeDest)
-    $namesBefore=@(Get-ChildItem -LiteralPath $root -File -Recurse|ForEach-Object {[IO.Path]::GetRelativePath($root,$_.FullName)}|Sort-Object)
+    $namesBefore=@(Get-ChildItem -LiteralPath $root -File -Recurse|ForEach-Object {(Get-McgsRelativePath $root $_.FullName)}|Sort-Object)
     foreach($name in $namesBefore){$files.Add((StableCopy (Join-Path $root $name) (Join-Path $recipeDest $name)))}
-    $namesAfter=@(Get-ChildItem -LiteralPath $root -File -Recurse|ForEach-Object {[IO.Path]::GetRelativePath($root,$_.FullName)}|Sort-Object)
+    $namesAfter=@(Get-ChildItem -LiteralPath $root -File -Recurse|ForEach-Object {(Get-McgsRelativePath $root $_.FullName)}|Sort-Object)
     if(($namesBefore -join "`n") -cne ($namesAfter -join "`n")){throw 'Runtime recipe membership changed during the snapshot.'}
     foreach($file in $files){if((SharedHash $file.source) -ne $file.sha256){throw 'A runtime recipe changed during the snapshot.'}}
    }
@@ -212,7 +220,7 @@ try{
    $snapshot=Join-Path $directory ('project'+[IO.Path]::GetExtension($src))
    $snapshotArgs=@{Command='snapshot';Project=$src;Out=$snapshot;Provider=$Provider}
    if($RecipeRoot){$snapshotArgs['RecipeRoot']=$RecipeRoot}
-   $snapshotResult=(& $PSCommandPath @snapshotArgs | Out-String | ConvertFrom-Json -AsHashtable)
+   $snapshotResult=(ConvertFrom-McgsJson (& $PSCommandPath @snapshotArgs | Out-String))
    if(-not $? -or -not $snapshotResult -or -not $snapshotResult.Contains('project')){throw 'Baseline snapshot failed.'}
    $timings['snapshot']=[math]::Round($clock.Elapsed.TotalMilliseconds,3)
    $exportDirectory=Join-Path $directory 'export';[void][IO.Directory]::CreateDirectory($exportDirectory)
@@ -227,12 +235,12 @@ try{
    if($Out){WriteJson $Out $data;$result=@{sha256=$data.sha256;tables=$data.table_count;fingerprints=(FullPath $Out);source_unchanged=$true}}else{$result=$data}
   }
   'compare'{
-   Need $Left 'Left';Need $Right 'Right';$a=Get-Content -LiteralPath $Left -Raw -Encoding utf8|ConvertFrom-Json -AsHashtable;$b=Get-Content -LiteralPath $Right -Raw -Encoding utf8|ConvertFrom-Json -AsHashtable
+   Need $Left 'Left';Need $Right 'Right';$a=ConvertFrom-McgsJson (Get-Content -LiteralPath $Left -Raw -Encoding utf8);$b=ConvertFrom-McgsJson (Get-Content -LiteralPath $Right -Raw -Encoding utf8)
    $delta=CompareMaps $a.fingerprints $b.fingerprints;$result=[ordered]@{left_sha256=$a.sha256;right_sha256=$b.sha256;equal=($delta.Count -eq 0);changes=$delta;count=$delta.Count;source_written=$false}
   }
   'apply'{
    Need $Project 'Project';Need $Manifest 'Manifest';$src=FullPath $Project;$manifestPath=FullPath $Manifest;$manifestDirectory=[IO.Path]::GetDirectoryName($manifestPath)
-   $m=Get-Content -LiteralPath $manifestPath -Raw -Encoding utf8|ConvertFrom-Json -AsHashtable
+   $m=ConvertFrom-McgsJson (Get-Content -LiteralPath $manifestPath -Raw -Encoding utf8)
    if(-not $m.Contains('input_sha256') -or $m.input_sha256 -notmatch '^[0-9a-fA-F]{64}$'){throw 'Manifest requires input_sha256.'}
    $base=Capture $src
    $timings['preflight_capture']=$base.capture_ms

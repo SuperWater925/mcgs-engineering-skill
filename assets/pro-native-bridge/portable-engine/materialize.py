@@ -99,19 +99,7 @@ def resolve_source_tables(target):
         addresses[source_key(entry)] = row
         target.source_changes.append(row)
     for guard in target.source_catalog.get("source_guards", []):
-        alias, old = guard["module"], guard["reference_rva"]
-        match = next((item for item in target.result["functions"] if item["module"] == alias
-                      and item["reference_rva"] == old and item["status"] == "resolved"
-                      and len(item.get("guard_bytes_at_reference_preferred_base", "")) == 2 * guard["length"]), None)
-        mapped = target.result["rva_maps"].get(alias, {}).get(hex(old))
-        state = {"id": guard["id"], "module": alias, "reference_rva": old,
-                 "actual_rva": mapped["actual_rva"] if mapped else None, "length": guard["length"],
-                 "status": "verified" if match else "unresolved",
-                 "reference_preferred_base": target.catalog["reference_modules"][alias]["image_base"],
-                 "details": "Resolved current full source guard" if match else "Full source guard was not uniquely located"}
-        if match:
-            state.update(actual_rva=match["actual_rva"], bytes_at_reference_preferred_base=match["guard_bytes_at_reference_preferred_base"],
-                         highlow_offsets=match["actual_relocation_offsets"], proof_id=match["proof_id"])
+        state = target.source_guard_row(guard)
         guards[guard["id"]] = state
         target.guard_changes.append(state)
     images = {}

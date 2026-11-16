@@ -1,8 +1,14 @@
 ﻿$ErrorActionPreference='Stop'
 $ProgressPreference='SilentlyContinue'
 . (Join-Path $PSScriptRoot '../../../scripts/ace-runtime.ps1')
+$worker=Get-McgsAceWorker
+if($worker.ready -and $worker.path -ine (Get-Process -Id $PID).Path){
+ $requestText=[Console]::In.ReadToEnd()
+ $requestText | & $worker.path -NoProfile -NonInteractive -File $PSCommandPath
+ exit $LASTEXITCODE
+}
 $script:DbProvider=@('Microsoft.ACE.OLEDB.16.0','Microsoft.ACE.OLEDB.12.0') | Where-Object {$_ -in (Get-McgsAceProviders)} | Select-Object -First 1
-if(-not $script:DbProvider){throw 'Matching-bitness ACE 16.0 or 12.0 required'}
+if(-not $script:DbProvider){throw 'No available process can load ACE 16.0 or 12.0; offline database access is not ready.'}
 [Console]::OutputEncoding=New-Object Text.UTF8Encoding($false)
 $request=[Console]::In.ReadToEnd() | ConvertFrom-Json
 function Identifier($name) {

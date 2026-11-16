@@ -10,7 +10,7 @@
 4. **后台完成。** UI返回普通managed回执数据。`FinalizeResponse`在后台等待trace结束、写比较证据、编码并发布完整结果；准备与完成固定使用同一个engine ticket，切换active-engine不改变已开始的请求。
 5. **客户端后台派生输出。** 原件接收后，线程池写步骤spec、inspect/apply回执和journal。下一RPC可与这些独立文件写入重叠；最终返回前drain所有任务并报告错误。
 
-`run --prepare-workers N`默认1，0关闭前看；`--io-workers N`默认1，可增加不同派生文件的写入并发。仍默认8动作/兼容组，`--max-merged-actions`可调；原单step不因分组预算被拒绝。资源窗口有界，不为每个控件创建新Python进程。
+`run --prepare-workers N`默认1，0关闭前看；`--io-workers N`默认1，可增加不同派生文件的写入并发。按相容动作、页面、依赖和消息字节预算合并，`--max-merged-actions`可另设动作数预算；原单step不因分组预算被拒绝。资源窗口有界，不为每个控件创建新Python进程。
 
 ## 采集与日志
 

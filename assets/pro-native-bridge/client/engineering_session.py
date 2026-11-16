@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import ntpath
 import os
 from pathlib import Path
 import re
@@ -32,8 +33,28 @@ NAME = re.compile(r"[A-Za-z0-9_-]{1,60}\Z")
 # boundaries rather than inferring compatibility from their names.
 MERGE_KINDS = frozenset({"control-native-create", "control-geometry",
     "control-geometry-batch", "control-properties", "control-properties-batch"})
-MAX_RPC_ACTIONS = 8
+# No sample-derived action-count ceiling. The encoded message budget and real
+# operation dependencies determine the default batch boundary. Callers can
+# still ask for smaller groups explicitly for interactive progress.
+MAX_RPC_ACTIONS = None
 MAX_RPC_SPEC_BYTES = 8 * 1024 * 1024
+
+
+def project_identity(path):
+    if os.name == "nt":
+        path = str(Path(path).resolve(strict=False))
+    return ntpath.normcase(ntpath.normpath(path))
+
+
+def editor_identity(inspect, expected_project):
+    values = tuple(inspect.get(key) for key in (
+        "process_id", "creation_filetime", "native_thread_id", "actual_project", "editor_image_sha256"))
+    if any(value is None for value in values) or not isinstance(values[3], str) or not values[3]:
+        raise ValueError("Inspection is missing editor/project identity")
+    actual = project_identity(values[3])
+    if actual != project_identity(expected_project):
+        raise ValueError("Native receipt project differs from the session's scoped project")
+    return (*values[:3], actual, values[4])
 
 
 def json_copy(value):
@@ -209,7 +230,7 @@ class PreparationPipeline:
                 if any(references(spec)) or merge_signature(step, spec) != signature:
                     break
                 action_ids = {row["action_id"] for row in spec["actions"]}
-                if end > start and (not self.merge_steps or count + len(action_ids) > limit or ids & action_ids):
+                if end > start and (not self.merge_steps or limit is not None and count + len(action_ids) > limit or ids & action_ids):
                     break
                 count += len(action_ids)
                 ids.update(action_ids)
@@ -252,8 +273,12 @@ def merge_signature(step, specification):
             return None
     if len(pages) != 1:
         return None
+    return (next(iter(pages)), merge_metadata(specification))
+
+
+def merge_metadata(specification):
     metadata = {key: value for key, value in specification.items() if key not in ("actions", "trial_id")}
-    return (next(iter(pages)), json.dumps(metadata, ensure_ascii=False, sort_keys=True, allow_nan=False))
+    return json.dumps(metadata, ensure_ascii=False, sort_keys=True, allow_nan=False)
 
 
 def native_save_step(step, specification):
@@ -281,22 +306,52 @@ def native_save_step(step, specification):
     return None
 
 
+def pointer_text(parts):
+    return "/" + "/".join(part.replace("~", "~0").replace("/", "~1") for part in parts)
+
+
+def resolve_for_group(value, results, members):
+    """Translate known receipt paths to native sequential result references.
+
+    Other client receipt fields retain the original RPC boundary. We never
+    predict an allocated control index, page ID, or native object address.
+    """
+    if isinstance(value, dict):
+        if "$ref" in value:
+            if set(value) != {"$ref"}:
+                raise ValueError("A result reference must contain only $ref")
+            parts = pointer_parts(value["$ref"])
+            prior = next((row for row in members if row["step"]["step_id"] == parts[1]), None)
+            if prior is None:
+                return resolve(value, results)
+            actions = prior["specification"]["actions"]
+            if (parts[2:4] == ["apply", "direct_action_results"] and len(parts) >= 6
+                    and re.fullmatch(r"0|[1-9][0-9]*", parts[4]) and parts[5] == "result"):
+                action = actions[int(parts[4])]
+                path = pointer_text(["result"] + parts[6:])
+            elif (len(actions) == 1 and parts[2:6] == ["apply", "actions", "0", "apply"]):
+                action = actions[0]
+                path = pointer_text(["apply"] + parts[6:])
+            else:
+                raise ValueError("This receipt reference needs the completed client receipt")
+            return {"$native_result": {"action_id": action["action_id"], "path": path}}
+        return {key: resolve_for_group(child, results, members) for key, child in value.items()}
+    if isinstance(value, list):
+        return [resolve_for_group(child, results, members) for child in value]
+    return value
+
+
 def next_direct_group(steps, start, results, merge_steps=True, max_merged_actions=None):
-    """Resolve only completed dependencies; never send a client $ref to native."""
+    """Resolve completed receipts and fold supported same-RPC dependencies."""
     limit = MAX_RPC_ACTIONS if max_merged_actions is None else max_merged_actions
     members, signature, ids, action_count = [], None, set(), 0
     saving = False
     action_bytes, metadata_bytes = 0, None
     for index in range(start, len(steps)):
         step = steps[index]
-        # A prior step in this prospective RPC has no receipt yet. Finish that
-        # RPC first, then resolve it locally with the original JSON pointer.
-        if any(parts[1] in {row["step"]["step_id"] for row in members}
-               for parts in references(step["specification"])):
-            break
         try:
-            specification = resolve(step["specification"], results)
-            validate_spec(specification, step.get("mode", "edit") == "inspect")
+            specification = resolve_for_group(step["specification"], results, members)
+            validate_spec(specification, step.get("mode", "edit") == "inspect", ids)
         except Exception:
             if members:
                 # Preserve the original sequential failure boundary: a later
@@ -309,6 +364,14 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
         current = merge_signature(step, specification) if not saving else save_kind
         current_ids = {action["action_id"] for action in specification["actions"]}
         compatible = (save_kind is not None if saving else signature is not None and current == signature)
+        if (members and not saving and step.get("mode", "edit") == "edit"
+                and members[0]["step"].get("mode", "edit") == "edit"
+                and persistence_deferred(specification)
+                and merge_metadata(specification) == merge_metadata(members[0]["specification"])
+                and any(reference["action_id"] in ids for reference in native_references(specification))):
+            # A result-dependent action is prepared in the UI thread after the
+            # producer completes, so its newly allocated target needs no page signature.
+            compatible = True
         if members and (not merge_steps or not compatible or ids & current_ids):
             break
         # Encode each new action once for an exact pretty-JSON byte estimate;
@@ -322,7 +385,7 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
             metadata_bytes = encoded_size(dict(specification, actions=[], trial_id="00000000-0000-0000-0000-000000000000"))
         candidate_count = action_count + len(specification["actions"])
         candidate_bytes = metadata_bytes + action_bytes + new_bytes + 2 * candidate_count + 2
-        if members and (candidate_count > limit or candidate_bytes > MAX_RPC_SPEC_BYTES):
+        if members and (limit is not None and candidate_count > limit or candidate_bytes > MAX_RPC_SPEC_BYTES):
             break
         members.append({"index": index, "step": step, "specification": specification,
                         "action_offset": action_count, "action_count": len(specification["actions"])})
@@ -330,7 +393,7 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
         action_bytes += new_bytes
         ids.update(current_ids)
         signature = current
-        if not merge_steps or signature is None or saving and save_kind == "root-flush":
+        if not merge_steps or step.get("mode", "edit") != "edit" or saving and save_kind == "root-flush":
             break
     return members
 
@@ -352,7 +415,10 @@ def property_batch_page(action):
     path = target.get("control_path")
     if not isinstance(path, list) or not path or any(type(index) is not int or index < 0 for index in path):
         return None
-    if set(after) != {"properties"} or not isinstance(after["properties"], list) or not after["properties"]:
+    if (set(after) - {"properties", "expect_paired_basic_button_visuals"}
+            or not isinstance(after.get("properties"), list) or not after["properties"]
+            or "expect_paired_basic_button_visuals" in after
+            and type(after["expect_paired_basic_button_visuals"]) is not bool):
         return None
     return tuple(target[key] for key in PROPERTY_PAGE_KEYS)
 
@@ -361,21 +427,31 @@ def property_control_target(action):
     return {key: action["target"][key] for key in PROPERTY_CONTROL_KEYS if key in action["target"]}
 
 
+def property_batch_item(action):
+    return {"target": property_control_target(action), **copy.deepcopy(action["after"])}
+
+
 def coalesce_property_actions(specification):
     """Compile contiguous, independent property edits to the existing native batch."""
     if not persistence_deferred(specification) or not specification.get("coalesce_native_properties", True):
         return {}
     actions = specification["actions"]
+    referenced = {reference["action_id"] for reference in native_references(actions)}
     wire, batches = [], {}
     start = 0
     while start < len(actions):
         first = actions[start]
-        page = property_batch_page(first)
+        page = None if first["action_id"] in referenced else property_batch_page(first)
         end = start + 1
         if page is not None:
-            paths = {tuple(first["target"]["control_path"])}
-            while end < len(actions) and property_batch_page(actions[end]) == page:
-                path = tuple(actions[end]["target"]["control_path"])
+            def identity(action):
+                target = action["target"]
+                component = json.dumps(target.get("component_path", []), sort_keys=True, ensure_ascii=False)
+                return tuple(target["control_path"]), component
+            paths = {identity(first)}
+            while (end < len(actions) and actions[end]["action_id"] not in referenced
+                   and property_batch_page(actions[end]) == page):
+                path = identity(actions[end])
                 if path in paths:
                     break
                 paths.add(path)
@@ -388,9 +464,7 @@ def coalesce_property_actions(specification):
             batches[identifier] = members
             wire.append({"action_id": identifier, "kind": PROPERTY_BATCH_KIND,
                          "target": dict(zip(PROPERTY_PAGE_KEYS, page)),
-                         "after": {"controls": [{"target": property_control_target(member),
-                                                  "properties": member["after"]["properties"]}
-                                                 for member in members]}})
+                         "after": {"controls": [property_batch_item(member) for member in members]}})
         start = end
     specification["actions"] = wire
     return batches
@@ -470,6 +544,8 @@ def expand_property_batch_receipt(receipt, wire_actions, batches):
                             "native_getter_setter_used": True, "automatic_undo_redo_replay": False,
                             "original_history_store_projection": applied[0].get("original_history_store_projection"),
                             "full_persistence_acceptance_pending": True, "native_property_batch": provenance}
+            if applied[0].get("no_op") is True:
+                native_apply.update(no_op=True, native_setter_calls=0)
             # Shared native work is measured and counted once in the first projection.
             projected_reports = [{"unit": original["kind"], "apply": native_apply}]
             if index == 0:
@@ -603,9 +679,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
 
     def check_identity(inspect):
         nonlocal identity
-        values = tuple(inspect.get(key) for key in ("process_id", "creation_filetime", "native_thread_id", "actual_project", "editor_image_sha256"))
-        if any(value is None for value in values):
-            raise ValueError("Inspection is missing editor/project identity")
+        values = editor_identity(inspect, program["project_path"])
         if identity is None:
             identity = values
             journal("editor-identity", dict(zip(("process_id", "creation_filetime", "ui_thread_id", "project_path", "editor_image_sha256"), identity)))
@@ -891,7 +965,27 @@ def resolve(value, results):
     return value
 
 
-def validate_spec(specification, read_only=False):
+def native_references(value):
+    if isinstance(value, dict):
+        if "$native_result" in value:
+            reference = value["$native_result"]
+            if (set(value) != {"$native_result"} or not isinstance(reference, dict)
+                    or set(reference) != {"action_id", "path"}
+                    or not isinstance(reference["action_id"], str)
+                    or not isinstance(reference["path"], str)
+                    or reference["path"] and not reference["path"].startswith("/")
+                    or re.search(r"~(?![01])", reference["path"])):
+                raise ValueError("Invalid native result reference")
+            yield reference
+        else:
+            for child in value.values():
+                yield from native_references(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from native_references(child)
+
+
+def validate_spec(specification, read_only=False, prior_native_ids=()):
     require_json_value(specification)
     if not isinstance(specification, dict):
         raise ValueError("Each step needs a specification object")
@@ -899,6 +993,9 @@ def validate_spec(specification, read_only=False):
     if not isinstance(actions, list) or not actions:
         raise ValueError("Each step needs a nonempty engineering action list")
     action_ids = set()
+    native_ids = set(prior_native_ids)
+    if any(native_references({key: value for key, value in specification.items() if key != "actions"})):
+        raise ValueError("Native result references belong in action target or after")
     for action in actions:
         required = ("action_id", "kind", "target") if read_only else ("action_id", "kind", "target", "after")
         if not isinstance(action, dict) or not all(key in action for key in required):
@@ -913,6 +1010,13 @@ def validate_spec(specification, read_only=False):
             raise ValueError("Action target and after must be objects")
         if "before" in action or "abi_profile_sha256" in action:
             raise ValueError("Session actions obtain fresh before/ABI from their own inspection")
+        if any(native_references({key: value for key, value in action.items() if key not in ("target", "after")})):
+            raise ValueError("Native result references belong in action target or after")
+        for key in ("target", "after"):
+            for reference in native_references(action.get(key)):
+                if read_only or reference["action_id"] not in native_ids:
+                    raise ValueError("A native result reference must select an earlier action in the same request")
+        native_ids.add(action_id)
     if "trial_id" in specification:
         raise ValueError("The staging process assigns unique step trial IDs")
     commit = specification.get("commit", False)
@@ -1057,10 +1161,7 @@ def run(directory, timeout, legacy_permits=False, merge_steps=True, max_merged_a
                 batch.write_new(inspect_file, inspect)
                 if inspect.get("ok") is not True:
                     raise RuntimeError("Native engineering inspection did not complete successfully")
-                current_identity = tuple(inspect.get(key) for key in
-                    ("process_id", "creation_filetime", "native_thread_id", "actual_project", "editor_image_sha256"))
-                if any(item is None for item in current_identity):
-                    raise ValueError("Inspection is missing editor/project identity")
+                current_identity = editor_identity(inspect, program["project_path"])
                 if identity is None:
                     identity = current_identity
                     journal("editor-identity", dict(zip(("process_id", "creation_filetime", "ui_thread_id",
@@ -1090,8 +1191,7 @@ def run(directory, timeout, legacy_permits=False, merge_steps=True, max_merged_a
                 inspect = apply.get("direct_inspection")
                 if inspect is not None:
                     batch.write_new(directory / (prefix + "-inspect.json"), inspect)
-                    current_identity = tuple(inspect.get(key) for key in
-                        ("process_id", "creation_filetime", "native_thread_id", "actual_project", "editor_image_sha256"))
+                    current_identity = editor_identity(inspect, program["project_path"])
                     if identity is None:
                         identity = current_identity
                         journal("editor-identity", dict(zip(("process_id", "creation_filetime", "ui_thread_id",
@@ -1147,7 +1247,7 @@ def main():
     execution.add_argument("--legacy-permits", action="store_true", help="Use the old inspect/permit/apply file workflow")
     execution.add_argument("--no-merge-steps", action="store_true", help="Keep one direct RPC per edit step; explicit inspections are always retained")
     execution.add_argument("--max-merged-actions", type=int, default=MAX_RPC_ACTIONS,
-        help="Cross-step grouping budget (default8); an existing single step is never split or rejected by this budget")
+        help="Optional cross-step action budget (default: encoded-size/dependency grouping); existing single steps remain intact")
     execution.add_argument("--prepare-workers", type=int, default=1, help="In-process pure JSON preparation threads;0 disables lookahead")
     execution.add_argument("--io-workers", type=int, default=1, help="Bounded derived-output writer threads; drained before return")
     args = parser.parse_args()

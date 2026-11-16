@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+$env:PYTHONDONTWRITEBYTECODE='1'
 $bundleRoot=$null
 $bundleCandidates=[Collections.Generic.List[string]]::new()
 if($env:MCGS_BUNDLE_ROOT){$bundleCandidates.Add($env:MCGS_BUNDLE_ROOT)}
@@ -77,6 +78,13 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-engineering'){
  $nativeArgs=@()
  if($args.Count -gt 1){$nativeArgs=@($args[1..($args.Count-1)])}
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_native_engineering.py') @nativeArgs
+ exit $LASTEXITCODE
+}
+if($args.Count -gt 0 -and $args[0] -eq 'native-hwnd'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $hwndArgs=@()
+ if($args.Count -gt 1){$hwndArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_hwnd.py') @hwndArgs
  exit $LASTEXITCODE
 }
 if($args.Count -gt 0 -and $args[0] -in @('audit','controls','strategy-source','recipe-cell','normalize-inputs','batch-edit')){

@@ -1,0 +1,921 @@
+{
+  "schema": 1,
+  "release_tag": "v2026.11.16-portable-online",
+  "baseline_release": "v2026.11.10-online-flow",
+  "coverage": {
+    "1": {
+      "status": "verified_in_isolation",
+      "implementation": "Resolve the active skill's native source contract through the release index before executing setup, attach or install. A complete base can supply runtime files; bundled Python executes the current entry.",
+      "files": [
+        "scripts/turnkey.py",
+        "scripts/turnkey_delivery.py",
+        "scripts/build_turnkey_update.py"
+      ],
+      "evidence": [
+        "Delivery regression automated checks for local matching index, cache preference, absent index and current-script delegation.",
+        "Existing complete-bundle discovery and damaged archive regression suite."
+      ],
+      "pending": [
+        "published download on an independent machine"
+      ]
+    },
+    "2": {
+      "status": "verified_in_isolation",
+      "implementation": "Install from the current skill after matching the portable engine. Prepare and verify a replacement directory before moving the existing installation aside.",
+      "files": [
+        "scripts/turnkey.py"
+      ],
+      "evidence": [
+        "Verified candidate install into a new test skill directory returned its current source contract and precompiled DLL SHA."
+      ],
+      "pending": [
+        "installed skill and packaged engine readback"
+      ]
+    },
+    "3": {
+      "status": "verified_in_isolation",
+      "implementation": "Update manifests pin the target and payload. Reuse unchanged runtime/media files from the original or an earlier updated directory using per-file SHA and size.",
+      "files": [
+        "scripts/apply_turnkey_update.py",
+        "scripts/build_turnkey_update.py"
+      ],
+      "evidence": [
+        "Delivered update successfully assembled from a previous release fixture with different metadata. Incorrect reused runtime bytes were rejected before publishing a destination."
+      ],
+      "pending": [
+        "exercise reusable published base and previous update"
+      ]
+    },
+    "4": {
+      "status": "verified_on_current_build",
+      "implementation": "Reuse the discovered live bridge and queue. Materialize and select the current business engine from the same PID, preserving the original queue and verified transport copies.",
+      "files": [
+        "scripts/turnkey.py"
+      ],
+      "evidence": [
+        "Simulated bridge replacement validated both runtime output and transport path, preserving the original transport. Actual engine execution is separate.",
+        "Live Pro reused the same process creation identity, bridge and queue while switching the selected DLL. Subsequent native receipts returned the final measured engine SHA."
+      ],
+      "pending": [
+        "Additional bridge builds and independent installations."
+      ]
+    },
+    "5": {
+      "status": "verified_in_isolation",
+      "implementation": "Infer parent of Program for conventional layouts and executable directory for flat portable layouts.",
+      "files": [
+        "scripts/turnkey.py",
+        "scripts/turnkey_installation.py"
+      ],
+      "evidence": [
+        "Conventional Program and flat portable install-root fixture."
+      ],
+      "pending": [
+        "live flat portable installation"
+      ]
+    },
+    "6": {
+      "status": "verified_on_current_build",
+      "implementation": "Probe loadable ACE 12/16 by worker architecture only for offline preparation. Use a same-bitness worker for database operations while retaining independent online prerequisites.",
+      "files": [
+        "scripts/ace-runtime.ps1",
+        "scripts/ace_probe.py",
+        "scripts/stu_project.ps1",
+        "assets/pro-3.5-cli/scripts/database.ps1",
+        "scripts/turnkey.py"
+      ],
+      "evidence": [
+        "On this machine the 64-bit worker loaded ACE 12.0 and 16.0. Stable safe file capture and offline field fingerprinting worked against both benchmark project copies."
+      ],
+      "pending": [
+        "machine with x86-only ACE",
+        "ADOX separately required for creation"
+      ]
+    },
+    "7": {
+      "status": "verified_in_isolation",
+      "implementation": "Report installed location and source contract separately from packaged engine SHA and the active process engine reported at connection time.",
+      "files": [
+        "scripts/turnkey.py"
+      ],
+      "evidence": [
+        "Test-installed skill and its location pointer returned exact directory, release, source manifest/catalog and bundled DLL SHA. The package selection and actual DLL SHA were independently verified in real online receipts."
+      ],
+      "pending": [
+        "local production skill installation and readback after release approval"
+      ]
+    },
+    "8": {
+      "status": "verified_on_current_build",
+      "implementation": "Recreate task-local scope and versioned transport for the actual selected installation or live bridge. Retain validation of an existing scope's own paths and fingerprints.",
+      "files": [
+        "scripts/turnkey.py",
+        "assets/pro-native-bridge/client/native_delivery_config.py"
+      ],
+      "evidence": [
+        "Simulated existing bridge selection located the new scope and transport paths, without modifying original queue root or transport.",
+        "Same live bridge used a new local portable scope, evidence payload and compatible content-addressed transport in the original queue runtime."
+      ],
+      "pending": [
+        "actual path/transport relocation beyond the current target machine"
+      ]
+    },
+    "9": {
+      "status": "verified_on_current_build",
+      "implementation": "Locate roles in current named exports, independent call sites or independently confirmed RTTI/interface slots. Consume current field operands, virtual slots, guard extents and unresolved layout entries without guessing historical addresses.",
+      "files": [
+        "assets/pro-native-bridge/abi-adapter/abi_locator.py",
+        "assets/pro-native-bridge/abi-adapter/rtti.py",
+        "assets/pro-native-bridge/abi-adapter/role_based_x86.py",
+        "assets/pro-native-bridge/abi-adapter/layout_adaptation.py",
+        "assets/pro-native-bridge/abi-adapter/abi_binding.py",
+        "assets/pro-native-bridge/delivery/source/sources/NativeLayout.cs"
+      ],
+      "evidence": [
+        "Six role/layout mechanism tests and a static probe on the local installation.",
+        "Local static probe resolved 17/17 consumed fields, 5,874/5,874 functions, 265/265 RTTI tables and 8,843 independently proved slots. Static evidence has no vendor project write.",
+        "Portable file-only materialization resolved 17 target fields and used the generic DLL unchanged. The property, create, save, project check and lifecycle calls used that binding in real Pro."
+      ],
+      "pending": [
+        "Independent Pro builds and unobserved private layouts."
+      ]
+    },
+    "10": {
+      "status": "implemented_with_scoped_verification",
+      "implementation": "Acquire page/window context lazily for action families that use it.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeOperations.functional.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs"
+      ],
+      "evidence": [
+        "Normal window operations, original save, project check and lifecycle succeeded. Isolated missing unrelated-window proof is pending."
+      ],
+      "pending": [
+        "Live non-window operation on a target with an unrelated window feature missing."
+      ]
+    },
+    "11": {
+      "status": "verified_on_current_build",
+      "implementation": "Open the original designer and treat unrelated unknown controls as opaque objects. Protect them while reading and editing the actual target.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativePageViewOperations.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeDesignerPreviewContext.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeOpaqueDrawState.cs"
+      ],
+      "evidence": [
+        "Activation before the two measured workloads succeeded. Reopened original view exposed all expected controls to subsequent read-only inspection. A separate activation verification reported an original runtime document state difference after the successful lifecycle call.",
+        "After the separate final-DLL original close/reopen test, first view activation passed and reported its actual client extent. Reentering the active page skipped the original native open. Twenty colors and twenty new rectangles were read back, original root save passed, and the business page archive was unchanged.",
+        "A replay of the actual before/after capture from the earlier failed operation invoked the shipped production VerifyAfter. It accepted only the original client-extent change 2320×1013 to 212×0 and rejected a change to the real application page width."
+      ],
+      "pending": [
+        "Vendor page containing an unadapted external control."
+      ]
+    },
+    "12": {
+      "status": "implemented_with_scoped_verification",
+      "implementation": "Acquire save and view refresh functions at their actual use sites, after determining whether writing and saving are requested.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs"
+      ],
+      "evidence": [
+        "Real property and creation batches ran without save until explicit grouped page/root flush. Missing-save installed build remains untested."
+      ],
+      "pending": [
+        "Target installation lacking the corresponding save/refresh feature."
+      ]
+    },
+    "13": {
+      "status": "verified_on_current_build",
+      "implementation": "Use the original BeforeModify call and observe the actual relevant business/ownership state after the native notification.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeOriginalHistoryObservation.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlHistoryContext.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs"
+      ],
+      "evidence": [
+        "Property and factory batches each reported one original history notification for all twenty new-arm objects. The last repaint and all persistent fields were verified."
+      ],
+      "pending": [
+        "Undo interaction outside the benchmark."
+      ]
+    },
+    "14": {
+      "status": "implemented_with_scoped_verification",
+      "implementation": "Carry typed capability failures forward separately from project identity conflict, mutation failures and unknown outcomes.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeLayout.cs",
+        "assets/pro-native-bridge/abi-adapter/NativeAbiTargetProfiles.cs"
+      ],
+      "evidence": [
+        "Known capability exceptions, identity failures and after-mutation checks are separate. The failed no-project pre-activation reported write_attempted=false. The old client path capitalization was addressed without changing process/thread or target-file identity validation."
+      ],
+      "pending": [
+        "Unobserved adapter-specific ordinary exceptions and real missing-capability installations."
+      ]
+    },
+    "15": {
+      "status": "implemented_unverified",
+      "implementation": "Use native paired-state getters and verify the shared conditions for paired button changes.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs"
+      ],
+      "evidence": [],
+      "pending": [
+        "Paired button original setter and reopen."
+      ]
+    },
+    "16": {
+      "status": "implemented_with_scoped_verification",
+      "implementation": "Read requested property fields and use capacity/readability/cycle boundaries for font and component collections.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeOriginalFontValue.cs"
+      ],
+      "evidence": [
+        "The actual property batch read only requested target values. The old selector payload with no properties still supported a full read-only property inventory after its compatibility correction."
+      ],
+      "pending": [
+        "Vendor controls with larger fonts or unfamiliar component trees."
+      ]
+    },
+    "17": {
+      "status": "verified_on_current_build",
+      "implementation": "Read RTTI and vtables in their actual loaded module. Validate complete object adjustment using evidence for the current tables.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativePropertyTarget.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeLayout.cs",
+        "assets/pro-native-bridge/abi-adapter/rtti.py"
+      ],
+      "evidence": [
+        "Used the actual load-address range and independently confirmed RTTI slots in the local Pro executable/modules; original getter/setter succeeded in the measured scope."
+      ],
+      "pending": [
+        "Vendor-derived classes outside the sampled executable/modules."
+      ]
+    },
+    "18": {
+      "status": "implemented_unverified",
+      "implementation": "Treat matching values as a no-change result and skip setters, history and save for an all-matching batch.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs"
+      ],
+      "evidence": [],
+      "pending": [
+        "Real all-matching request when available in the isolated case."
+      ]
+    },
+    "19": {
+      "status": "verified_in_isolation",
+      "implementation": "Dispatch common geometry edits through the same archive-aware line, rectangle, label, input, button and multistate adapters in shared and Pro JSON entry points.",
+      "files": [
+        "scripts/native/control_geometry.py",
+        "scripts/native/control_patch.py",
+        "assets/pro-3.5-cli/scripts/control_factory.py"
+      ],
+      "evidence": [
+        "Shared line, rectangle, label and multistate fixture edits had byte-identical results across entry points."
+      ],
+      "pending": [
+        "newly supported variants in a vendor-produced project"
+      ]
+    },
+    "20": {
+      "status": "verified_in_isolation",
+      "implementation": "Prefer compatible current project prototypes for new controls and variable storage. Neutralize recognized business bindings and actions for ordinary additions. Keep explicit clone semantics and packaged fallback templates.",
+      "files": [
+        "assets/pro-3.5-cli/scripts/control_factory.py",
+        "assets/pro-3.5-cli/scripts/mcgs_file.py"
+      ],
+      "evidence": [
+        "Button prototype fixture preserved current header and neutralized recognized bindings/actions; explicit cloning kept its actions."
+      ],
+      "pending": [
+        "vendor save/reopen of controls and variable records from unknown project layouts"
+      ]
+    },
+    "21": {
+      "status": "verified_in_isolation",
+      "implementation": "Parse numeric input limits as native literals or expressions, retaining the other limit and unrelated input metadata during style edits.",
+      "files": [
+        "scripts/native/mcs_input_text.py",
+        "scripts/native/control_patch.py",
+        "assets/pro-3.5-cli/scripts/control_factory.py"
+      ],
+      "evidence": [
+        "Synthetic archived expression limits remained intact through unit/font edits. The Pro JSON entry changed one limit to a literal while retaining the opposite expression."
+      ],
+      "pending": [
+        "originating vendor archive with expression limits and original simulation"
+      ]
+    },
+    "22": {
+      "status": "verified_in_isolation",
+      "implementation": "Keep generic button dispatch and unknown length-delimited extensions during unrelated edits. Resolve opaque event prefixes only when the independently validated property boundary is unique.",
+      "files": [
+        "scripts/native/mcs_button_control.py",
+        "scripts/native/metadata_layout.py"
+      ],
+      "evidence": [
+        "Synthetic generic Click dispatch, unknown property/extension/control tails survived text and font edits byte-for-byte."
+      ],
+      "pending": [
+        "vendor output for unknown event extensions and button execution"
+      ]
+    },
+    "23": {
+      "status": "verified_in_isolation",
+      "implementation": "Locate variable/alarm boundaries and window identity fields by observed structure. Preserve unknown data and reject ambiguity or unsupported signatures; variable parsing stays lazy for unrelated edits.",
+      "files": [
+        "assets/pro-3.5-cli/scripts/native_format.py",
+        "assets/pro-3.5-cli/scripts/mcgs_file.py",
+        "scripts/native/mcs_window_archive.py"
+      ],
+      "evidence": [
+        "Synthetic alarm extension survived a variable edit; leading window variants, unsigned dimensions and event tail survived window identity and width edits."
+      ],
+      "pending": [
+        "vendor-produced examples of additional alarm shapes and window variants"
+      ]
+    },
+    "24": {
+      "status": "verified_in_isolation",
+      "implementation": "Set precompiled setup as the default and identify maintainer-specific source builds. Remove the historical default eight-action grouping description from current instructions.",
+      "files": [
+        "README.md",
+        "references/pro-native-deployment.md",
+        "references/pro-native-engineering.md",
+        "references/pro-native-dynamic-functions.md",
+        "references/pro-native-pipeline.md",
+        "references/turnkey-update-zh.md"
+      ],
+      "evidence": [
+        "Repository Markdown path and syntax checks passed."
+      ],
+      "pending": [
+        "release-link verification after publication"
+      ]
+    },
+    "25": {
+      "status": "verified_on_current_build",
+      "implementation": "Match authorized original factory dialogs by PID, body text and exact button. Keep unknown or unresolved UI outcomes visible in the receipt. No system foreground activation is used.",
+      "files": [
+        "scripts/pro_hwnd.py",
+        "assets/pro-native-bridge/client/hwnd_backend.py",
+        "references/pro-native-deployment.md"
+      ],
+      "evidence": [
+        "Fake HWND verified exact dialog matching and disappearance; unknown modal blocked subsequent commands.",
+        "Exact native Open, same-basename backup, recovery, and exit dialogs were observed and answered. Edit text returned exact readback. Real responses matched current provider HWND, text and button; no physical input or system foreground activation was sent."
+      ],
+      "pending": [
+        "Additional original modal types and UI languages."
+      ]
+    },
+    "26": {
+      "status": "verified_on_current_build",
+      "implementation": "Share page baseline and indexing across consecutive deferred factory actions, and verify all original and added objects once after final refresh.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs"
+      ],
+      "evidence": [
+        "Real Pro created twenty rectangles in one batch; receipt recorded one page baseline, one original history notification, one refresh and zero per-create full-tree reads. All rectangles verified on disk and via reopened native control inspection."
+      ],
+      "pending": [
+        "Additional factory classes, alternate builds and whole-page rebuilding."
+      ]
+    },
+    "27": {
+      "status": "verified_on_current_build",
+      "implementation": "Share loaded module ranges, class proofs, and object identities, and update affected index entries with native insertion receipts.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlFactories.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeOpaqueDrawState.cs"
+      ],
+      "evidence": [
+        "The measured native rectangle factory recorded shared baseline/index reuse preserving the existing tree; true working-document changes were addressed in the batch."
+      ],
+      "pending": [
+        "Independent profile combining alternate draw classes and unknown subtrees."
+      ]
+    },
+    "28": {
+      "status": "verified_on_current_build",
+      "implementation": "Reuse initial selected property state as the batch baseline, validate the live targets before mutation and verify protected fields and results after writing.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
+        "assets/pro-native-bridge/delivery/source/sources/NativeTypedPropertyCollector.cs"
+      ],
+      "evidence": [
+        "Twenty real original label color changes succeeded in one newer native property request. The original baseline was reused, target values verified, and one original refresh recorded."
+      ],
+      "pending": [
+        "Other typed properties and button paired-write paths."
+      ]
+    },
+    "29": {
+      "status": "verified_in_isolation",
+      "implementation": "Keep paired-button conditions and independent owner/component selectors when compiling compatible operations into the same batch.",
+      "files": [
+        "assets/pro-native-bridge/client/engineering_session.py"
+      ],
+      "evidence": [
+        "Fixture combined paired and same-control component selectors into eligible batches while retaining their scope and original request IDs. Standard real label edit used one RPC rather than three."
+      ],
+      "pending": [
+        "Original Pro paired-button writes in one automatically merged batch."
+      ]
+    },
+    "30": {
+      "status": "verified_in_isolation",
+      "implementation": "Allow ordered in-request references to prior native action results via JSON Pointer. Preserve actual dependency and unsupported-feature failures.",
+      "files": [
+        "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
+        "assets/pro-native-bridge/client/engineering_session.py"
+      ],
+      "evidence": [
+        "Python planner grouped supported native dependencies, preserved producer action result receipts, and rejected invalid forward/self references. An x86 CLR fixture invoked the shipped production resolver for pointer escaping, prior successful results and canonical array indices."
+      ],
+      "pending": [
+        "Actual Pro structural dependency runs with different original allocated IDs."
+      ]
+    },
+    "31": {
+      "status": "verified_in_isolation",
+      "implementation": "Keep a JSON Lines process for inspect, execute, request status and shutdown. Reuse bound transport and preserve request IDs and durable evidence.",
+      "files": [
+        "assets/pro-native-bridge/client/native_service.py",
+        "assets/pro-native-bridge/client/native_engineering.py"
+      ],
+      "evidence": [
+        "Persistent JSONL client fixture reused the configured transport, retained the original submission ID after timeout and submitted that request once."
+      ],
+      "pending": [
+        "Persistent client exercised in the target workstation over longer mixed workloads."
+      ]
+    }
+  },
+  "hwnd_backend": {
+    "status": "verified_on_current_build",
+    "entry": "run.ps1 native-hwnd",
+    "implementation": "Current native menu names, scoped MDI activation, canvas messages, native selection commands, standard Edit and Scintilla readback, optional authorized modal response, one-plan and persistent JSONL submission.",
+    "evidence": [
+      "Eight fake Windows message tests passed. No vendor project or process was used in those tests.",
+      "Real Pro current menu and standard Edit, exact open confirmation, preservation/recovery responses and normal exit. An initial message timeout during window startup exposed a diagnostics-argument collision; the error path was fixed and fixture-tested."
+    ],
+    "pending": [
+      "Real drawing, native multi-selection/copy/paste, other editor controls and Scintilla have isolated rather than vendor runtime coverage.",
+      "Alternate UI language and application builds."
+    ]
+  },
+  "automated_checks": {
+    "delivery_regressions": 9,
+    "existing_bundle_regressions": 14,
+    "archive_regressions": 7,
+    "hwnd_message_regressions": 8,
+    "powershell_parse_files": 14,
+    "published_artifact_candidate": {
+      "files_verified": 3516,
+      "precompiled_artifacts_verified": 4,
+      "receiver_compiler_required": false
+    },
+    "native_locator_mechanism_cases": 6,
+    "native_session_and_resolver": [
+      "Python planning and persistent client fixture",
+      "x86 CLR shipping resolver fixture",
+      "Windows path spelling identity regression"
+    ],
+    "static_current_abi": {
+      "functions_resolved": 5874,
+      "rtti_tables_resolved": 265,
+      "proven_virtual_slots": 8843,
+      "consumed_layout_fields_resolved": 17,
+      "cold_materialization_s": 29.347,
+      "vendor_process_called": false
+    }
+  },
+  "real_pro_benchmark": {
+    "editor_version": "McgsPro 3.5.2.12210",
+    "single_owned_editor_process": true,
+    "same_pid_bridge_queue_after_engine_update": true,
+    "fixture_preopen_sha256": "50129b484c28660c57c308cbfa2cb2e510415356741b9e568d1c7d7c27cd52ed",
+    "fixture_method": "Two copies of the exact same input, opened sequentially by the same Pro process. The first copy retained a file lock after normal project close, so the second copy was in a distinct directory. The full 604 field fingerprints matched at both phase starts.",
+    "same_page_existing_labels_changed": 20,
+    "same_native_rectangles_created": 20,
+    "arm_notes": [
+      "Connection timings are different activities: initial hot attach on the older release versus local materialization and engine selection in the existing bridge. They do not measure a comparable attach speedup.",
+      "Old defaults used batches of eight. The old third creation RPC returned four successful Native results and the prior two returned sixteen, but the old CLI reported the project path capitalization change as an identity error. No create was replayed. Page and root save were issued separately after checking all twenty raw original receipts.",
+      "A preparatory latest-engine read encountered a missing optional properties selector key before any business mutation. The final measured engine fixed that compatibility case in the same PID. Measurements of the earlier preparation and read are excluded.",
+      "New-arm measurements validate the intended target page operations. They do not quantify rebuilding a complete page or all factory kinds."
+    ],
+    "arms": {
+      "old": {
+        "engine_sha256": "4b3cff1a8799ca287047bb7d80bf7406a0e9226aea404296db3e6464674bdad9",
+        "connection_mode": "initial_hot_attach",
+        "connection_phase_ms": {
+          "discover": 93.09,
+          "bridge_materialization": 102.65,
+          "business_materialization": 30475.01,
+          "engine_staging": 95.53,
+          "host_attach": 524.99,
+          "queue_probe": 186.21,
+          "total": 31536.63
+        },
+        "same_bridge_and_queue": false,
+        "safe_export": {
+          "colors": 20,
+          "rectangles": 20,
+          "preserved_other_objects": 22,
+          "compared_fields": 604,
+          "changed_fields": [
+            [
+              "WndUser",
+              "5",
+              "lbObjects"
+            ]
+          ]
+        },
+        "phase_wall": {
+          "opened-disk": {
+            "seconds": 1.5298,
+            "exit_code": 0
+          },
+          "attach": {
+            "seconds": 32.1769,
+            "exit_code": 0
+          },
+          "view": {
+            "seconds": 3.7094,
+            "exit_code": 0
+          },
+          "before": {
+            "seconds": 2.39,
+            "exit_code": 0
+          },
+          "edit-stage": {
+            "seconds": 2.066,
+            "exit_code": 0
+          },
+          "edit-run": {
+            "seconds": 5.7802,
+            "exit_code": 0
+          },
+          "create-stage": {
+            "seconds": 2.2711,
+            "exit_code": 0
+          },
+          "create-run": {
+            "seconds": 33.2825,
+            "exit_code": 1
+          },
+          "save-stage": {
+            "seconds": 2.2217,
+            "exit_code": 0
+          },
+          "save-run": {
+            "seconds": 3.2867,
+            "exit_code": 0
+          },
+          "disk": {
+            "seconds": 1.1461,
+            "exit_code": 0
+          }
+        },
+        "native_preimage_ms": 367.38530000000003,
+        "native_view_dispatch_ms": 1385.0814,
+        "edit": {
+          "rpc_count": 3,
+          "direct_action_count": 3,
+          "native_dispatch_s": 3.138961,
+          "direct_action_ms": {
+            "read_target": 733.9205,
+            "current_summary_and_plan": 7.318,
+            "prepare_apply_verify_and_flush": 2194.5385
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 9.7799,
+            "prepare": 1096.4508,
+            "validate_current_targets": 330.844,
+            "apply_verify_refresh": 756.696,
+            "flush_and_save": 0.0002,
+            "request_total_including_cleanup": 2194.5021
+          },
+          "factory_batches": [],
+          "property_batch_controls": 20,
+          "property_refresh_calls": 3,
+          "property_internal_ms": {},
+          "original_page_save_confirmed": null,
+          "original_root_save_confirmed": null
+        },
+        "create": {
+          "rpc_count": 3,
+          "direct_action_count": 20,
+          "native_dispatch_s": 30.716507,
+          "direct_action_ms": {
+            "read_target": 10375.8917,
+            "current_summary_and_plan": 49.1253,
+            "prepare_apply_verify_and_flush": 18180.4174
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 77.2366,
+            "prepare": 8421.37,
+            "validate_current_targets": 7271.5867,
+            "apply_verify_refresh": 2409.5955,
+            "flush_and_save": 0.0015,
+            "request_total_including_cleanup": 18180.1459
+          },
+          "factory_batches": [
+            {
+              "ok": true,
+              "created_count": 8,
+              "original_history_calls": 1,
+              "final_refresh_calls": 1,
+              "full_persistence_acceptance_pending": true
+            },
+            {
+              "ok": true,
+              "created_count": 8,
+              "original_history_calls": 1,
+              "final_refresh_calls": 1,
+              "full_persistence_acceptance_pending": true
+            },
+            {
+              "ok": true,
+              "created_count": 4,
+              "original_history_calls": 1,
+              "final_refresh_calls": 1,
+              "full_persistence_acceptance_pending": true
+            }
+          ],
+          "property_batch_controls": 0,
+          "property_refresh_calls": 0,
+          "property_internal_ms": {},
+          "original_page_save_confirmed": null,
+          "original_root_save_confirmed": null
+        },
+        "save": {
+          "rpc_count": 1,
+          "direct_action_count": 2,
+          "native_dispatch_s": 1.040483,
+          "direct_action_ms": {
+            "read_target": 219.1856,
+            "current_summary_and_plan": 5.3073,
+            "prepare_apply_verify_and_flush": 747.4429
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 40.2792,
+            "prepare": 300.6592,
+            "validate_current_targets": 187.6257,
+            "apply_verify_refresh": 187.772,
+            "flush_and_save": 31.0203,
+            "request_total_including_cleanup": 747.4198
+          },
+          "factory_batches": [],
+          "property_batch_controls": 0,
+          "property_refresh_calls": 0,
+          "property_internal_ms": {},
+          "original_page_save_confirmed": true,
+          "original_root_save_confirmed": true
+        }
+      },
+      "new": {
+        "engine_sha256": "c3e42b62673c9c5cdfdc2993461aefca2bdbbef148d85dbd51723d4a3d792a9a",
+        "connection_mode": "existing_bridge_engine_selection",
+        "connection_phase_ms": {
+          "discover": 101.74,
+          "engine_selection": 8985.55,
+          "queue_probe": 167.03,
+          "total": 9274.03
+        },
+        "same_bridge_and_queue": true,
+        "safe_export": {
+          "colors": 20,
+          "rectangles": 20,
+          "preserved_other_objects": 22,
+          "compared_fields": 604,
+          "changed_fields": [
+            [
+              "WndUser",
+              "5",
+              "lbObjects"
+            ]
+          ]
+        },
+        "phase_wall": {
+          "opened-disk": {
+            "seconds": 1.6062,
+            "exit_code": 0
+          },
+          "attach": {
+            "seconds": 9.8994,
+            "exit_code": 0
+          },
+          "view": {
+            "seconds": 3.8998,
+            "exit_code": 0
+          },
+          "before": {
+            "seconds": 2.8881,
+            "exit_code": 0
+          },
+          "edit-stage": {
+            "seconds": 2.2009,
+            "exit_code": 0
+          },
+          "edit-run": {
+            "seconds": 3.4215,
+            "exit_code": 0
+          },
+          "create-stage": {
+            "seconds": 2.2106,
+            "exit_code": 0
+          },
+          "create-run": {
+            "seconds": 4.331,
+            "exit_code": 0
+          },
+          "save-stage": {
+            "seconds": 2.1188,
+            "exit_code": 0
+          },
+          "save-run": {
+            "seconds": 3.5161,
+            "exit_code": 0
+          },
+          "disk": {
+            "seconds": 1.5332,
+            "exit_code": 0
+          }
+        },
+        "native_preimage_ms": 584.6694,
+        "native_view_dispatch_ms": 1447.8064000000002,
+        "edit": {
+          "rpc_count": 1,
+          "direct_action_count": 1,
+          "native_dispatch_s": 1.02433,
+          "direct_action_ms": {
+            "read_target": 405.0598,
+            "current_summary_and_plan": 2.6418,
+            "prepare_apply_verify_and_flush": 489.5029
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 3.0165,
+            "prepare": 153.4878,
+            "validate_current_targets": 197.8072,
+            "apply_verify_refresh": 134.2764,
+            "flush_and_save": 0,
+            "request_total_including_cleanup": 489.4885
+          },
+          "factory_batches": [],
+          "property_batch_controls": 20,
+          "property_refresh_calls": 1,
+          "property_internal_ms": {
+            "reuse_direct_baseline": 0.8071,
+            "prepare_setters": 15.9398,
+            "prewrite_read": 196.41740000000001,
+            "history_notification_and_read": 68.0648,
+            "native_apply": 3.813,
+            "refresh": 0.019200000000000002,
+            "final_readback": 58.972
+          },
+          "original_page_save_confirmed": null,
+          "original_root_save_confirmed": null
+        },
+        "create": {
+          "rpc_count": 1,
+          "direct_action_count": 20,
+          "native_dispatch_s": 1.919357,
+          "direct_action_ms": {
+            "read_target": 103.4572,
+            "current_summary_and_plan": 52.7962,
+            "prepare_apply_verify_and_flush": 1047.1316
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 54.4113,
+            "prepare": 871.5947,
+            "validate_current_targets": 10.2823,
+            "apply_verify_refresh": 110.3331,
+            "flush_and_save": 0.0011,
+            "request_total_including_cleanup": 1046.8754
+          },
+          "factory_batches": [
+            {
+              "ok": true,
+              "created_count": 20,
+              "timings_ms": {
+                "native_apply": 102.1605,
+                "save": 0,
+                "baseline_capture": 499.54200000000003,
+                "refresh": 0.0391,
+                "final_readback": 74.02170000000001
+              },
+              "save_in_batch": false,
+              "existing_and_created_forest_verified": true,
+              "per_create_full_forest_reads": 0,
+              "original_history_calls": 1,
+              "final_refresh_calls": 1,
+              "full_persistence_acceptance_pending": true
+            }
+          ],
+          "property_batch_controls": 0,
+          "property_refresh_calls": 0,
+          "property_internal_ms": {},
+          "original_page_save_confirmed": null,
+          "original_root_save_confirmed": null
+        },
+        "save": {
+          "rpc_count": 1,
+          "direct_action_count": 2,
+          "native_dispatch_s": 1.344914,
+          "direct_action_ms": {
+            "read_target": 301.9313,
+            "current_summary_and_plan": 5.2702,
+            "prepare_apply_verify_and_flush": 903.7963
+          },
+          "nested_native_phase_ms": {
+            "plan_and_save_context": 6.2436,
+            "prepare": 479.2371,
+            "validate_current_targets": 196.4383,
+            "apply_verify_refresh": 195.424,
+            "flush_and_save": 26.4009,
+            "request_total_including_cleanup": 903.7813
+          },
+          "factory_batches": [],
+          "property_batch_controls": 0,
+          "property_refresh_calls": 0,
+          "property_internal_ms": {},
+          "original_page_save_confirmed": true,
+          "original_root_save_confirmed": true
+        }
+      }
+    },
+    "vendor_check": {
+      "passed": true,
+      "original_worker_entered": true,
+      "original_worker_returned": true,
+      "original_return_int32": 0,
+      "compile_valid_after": 1,
+      "error_count": null,
+      "warning_count": null
+    },
+    "original_close_reopen": {
+      "same_project_verified": true,
+      "same_project_target_blob_exact_after_reopen": true,
+      "live_post_reopen_colors_verified": 20,
+      "live_post_reopen_rectangles_verified": 20,
+      "live_followup_view_activation_state_difference_reported": true
+    },
+    "normal_exit": true,
+    "both_fixture_locks_removed": true,
+    "remaining_editor_processes": 0,
+    "local_simulation_tested": false,
+    "field_communications_tested": false
+  },
+  "final_release_engine_validation": {
+    "engine_sha256": "c1113a6af1824ef48d9f5b1a62fe5a75dc41b287f6e99553dcd33514a85048f7",
+    "benchmark_engine_sha256": "c3e42b62673c9c5cdfdc2993461aefca2bdbbef148d85dbd51723d4a3d792a9a",
+    "difference_after_benchmark": "Narrow original first-view client-extent allowance, tied to two statically proved fields and the actual client bounds of the original drawing child. Bulk setter, factory and batch paths were unchanged.",
+    "original_close_reopen_on_saved_test_copy": true,
+    "post_reopen_probe": {
+      "engine_sha256": "c1113a6af1824ef48d9f5b1a62fe5a75dc41b287f6e99553dcd33514a85048f7",
+      "first_native_view_open": true,
+      "target_active": true,
+      "initial_designer_client_extent": {
+        "width_before": 2320,
+        "width_after": 2320,
+        "height_before": 1013,
+        "height_after": 1013,
+        "source": "original drawing child window client rectangle"
+      },
+      "original_native_open_skipped_when_already_active": true,
+      "live_colors_verified": 20,
+      "live_rectangles_verified": 20,
+      "native_root_save_confirmed": true,
+      "saved_target_blob_exact": true
+    },
+    "normal_exit": true,
+    "fixture_lock_removed": true,
+    "remaining_editor_processes": 0,
+    "original_capture_replay": {
+      "accepted_original_client_extent_change": true,
+      "client_extent_before": [
+        2320,
+        1013
+      ],
+      "client_extent_after": [
+        212,
+        0
+      ],
+      "actual_page_width_mutation_rejected": true,
+      "vendor_process_called_in_replay": false,
+      "evidence": "A replay of the actual before/after capture from the earlier failed operation invoked the shipped production VerifyAfter. It accepted only the original client-extent change 2320×1013 to 212×0 and rejected a change to the real application page width."
+    }
+  }
+}

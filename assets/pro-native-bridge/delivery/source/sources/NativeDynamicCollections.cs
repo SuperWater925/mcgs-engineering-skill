@@ -15,7 +15,7 @@ namespace McgsInternalBridge {
    for(int i=0;i<count;i++){
     NativeMemory.Require(node!=IntPtr.Zero&&nodes.Add(NativeMemory.U(node))&&NativeMemory.Ptr(node,4)==previous,"Current native drawing-list link/cycle differs.");
     IntPtr item=NativeMemory.Ptr(node,8);
-    NativeMemory.Require(item!=IntPtr.Zero&&objects.Add(NativeMemory.U(item))&&NativeMemory.Ptr(item,0x64)==document,"Current native drawing-list object identity/document owner differs.");
+    NativeMemory.Require(item!=IntPtr.Zero&&objects.Add(NativeMemory.U(item))&&NativeMemory.Ptr(item,NativeLayout.Offset("control.owner_document"))==document,"Current native drawing-list object identity/document owner differs.");
     result.Add(item);previous=node;node=NativeMemory.Ptr(node,0);
    }
    NativeMemory.Require(node==IntPtr.Zero&&previous==tail,"Current native drawing-list tail/count differs.");return result;

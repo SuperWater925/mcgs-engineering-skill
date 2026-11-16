@@ -33,9 +33,9 @@ inspection 的 `compiled_kinds` 是本次编译入口清单，`action_preimages`
 
 `device-catalog`、`data-catalog`、`recipe-catalog`、`picture-catalog`、`language-catalog`、`reference-graph` 等通过 inspection selectors 取得当前内容；驱动 property catalog 的原厂 Get 则是私有clone动作，不能把它混作完全无副作用的普通读取。未知派生控件/驱动、未闭合属性或产品不支持的动作精确拒绝；没有 PLC 运行或下载命令。
 
-## 首次热接的文件准备
+## 维护者源码构建：首次热接文件准备
 
-已有桥直接按下节更新；首次部署按以下顺序执行。使用 PowerShell 7，把占位路径替换为接收电脑的实际绝对路径；SkillRoot 可为 Codex 或 Claude 的实际安装目录，TaskRoot 可使用现有任务目录。InstallRoot 包含明确选择的真实 EXE，不再要求固定 `Program` 子目录。需要本机 `%WINDIR%\Microsoft.NET\Framework\v4.0.30319\csc.exe`（x86）存在。所有工具用绝对路径调用，不依赖当前工作目录；SHA 均从本次文件计算，不复制作者路径、PID、历史 claim 或哈希。下面为首次输出生成独立子目录；已有桥不要重复首次部署。
+本节仅用于维护者修改 C# 后构建或维护旧源码部署。普通下载者使用上面的 `turnkey prepare-online`，不执行本节编译流程。开发者使用 PowerShell 7 和 x86 .NET Framework Csc，把占位路径替换为实际目录。InstallRoot 使用真实安装根；所有 SHA 从本次文件计算，不复制作者路径、PID 或历史 claim。已有桥沿用其队列与任务目录。
 
 ```powershell
 $ErrorActionPreference = 'Stop'
@@ -122,11 +122,11 @@ if ($LASTEXITCODE -ne 0) { throw 'layout核对失败。' }
 
 2026-11-04 从发布 ZIP 新解压到含中文及空格的独立目录，已完成本节生产 prepare、157源编译、307份自有ABI资料promotion、stage与新scope layout核对；均未注册或接入Pro、未调用业务engine。独立自有宿主另完成3次ping与清理。这是可搬移文件链证据，不代表新电脑环境或原厂业务验收。
 
-新增 `editor_executable` 需要用本版 Layout 重新编译对应 engine；复制技能不会改变进程中已加载的程序集。上述示例使用数字引擎名，兼容旧 Bootstrap；本版 EngineLoader 才支持相同规则下的描述性 DLL 名。已有旧 Bootstrap 时继续用数字名，或按当前连接状态明确更新桥，不能只换引擎名就宣称旧代码已更新。显式 EXE 的路径绑定/部署已验证，改名 EXE 的完整厂商业务尚未验证，部分业务入口仍按原模块名找主模块。
+源代码构建例以指定的 `editor_executable` 物化本机绑定。预编译发布版可用 `turnkey prepare-online --editor` 自动生成对应资料并选择匹配 DLL。显式 EXE 路径的部署有既有验证，改名 EXE 的完整厂商业务未验证。
 
 ## 已有桥的同任务更新
 
-复用实际 TaskRoot、RuntimeRoot、BootstrapRoot、队列和历史结果；不要重跑上节创建新任务/首次 stage 的命令。选新的 binding/bound 输出目录、独立 EngineeringRoot 和版本化 transport 文件（例如 `bridge_client_0102.py`），按上节对应的 binding → compile → promotion 段生成新 engine / 同名 scope，不覆盖已加载DLL或在用资料。已有 Bootstrap 不随 engine 更新替换；启用新版后台调度需按[流水线兼容规则](pro-native-pipeline.md)接入新版 Bootstrap。
+日常更新运行新版 `turnkey prepare-online`。它沿用进程、原桥和队列，在独立路径物化当前预编译 DLL 所需的资料，并返回实际选用引擎。以下手工选用命令供维护者调试自有构建，使用已构建 DLL 及对应 scope。桥仍须满足[流水线兼容规则](pro-native-pipeline.md)。
 
 使用公开 `native-engine-select` 入口更新已有连接。先读当前选择；默认执行文件更新，显式加 `--plan` 才只预览，不需要重跑首次 stage：
 
@@ -180,7 +180,7 @@ FreshReceipt 使用 runtime 内的新文件。未知/超时结果保留 claim，
 
 独立图库 CPicture 的原厂 STORE 会把内部 named Bitmap 展开成独立内嵌像素；重开后不存在永久嵌套名称链接。`picture-contained-reference-redirect` 支持显式 carrier path 的 private raster 替换，完整保护 path、owner、原 image/像素及其它资源，调用原 init/name setter/Refresh/Dirty/Save，不按重复 hash 猜 owner。最终比较必须核目标像素和其它 draw tree，而不能把 links1→0 当成永久引用成功。
 
-Root85 检查和原 Close/Open 保留原厂自身 UI/警告/持久化语义，不是纯 headless API。原厂可能出现 Recovery 询问，消息循环中的计时保存也可能打开 SaveAs；须由用户或已授权电脑操作按真实提示处理，不通过系统消息、内存或隐藏确认包装跳过。既有关闭重开验收中实际取消SaveAs并选择不恢复后正常完成，原始claim未重发。Root85成功必须核 `native_check_passed`、本次worker entered/returned、返回整型0及检查后compile1；单独 `ok=true` 只表示正常返回。未知错误/警告计数写 unknown，不能编造0或仅用历史 compile1。生命周期默认直接执行；关闭后旧root/指针作废；原生新上下文及完整重开比较单独取证。运行期 PLC/脚本/设备通信不由组态操作执行。
+Root85 检查和原 Close/Open 保留原厂自身 UI/警告/持久化语义，不是纯 headless API。原厂可能出现 Recovery 询问，消息循环中的计时保存也可能打开 SaveAs；按本轮已有授权处理真实提示。可用 `native-hwnd` 对确切 PID 的已识别原厂对话框按文字定位按钮应答；未知提示或需要新决定的内容交接用户。不要盲选按钮或把提示隐藏后宣称检查通过。既有关闭重开验收中实际取消SaveAs并选择不恢复后正常完成，原始claim未重发。Root85成功必须核 `native_check_passed`、本次worker entered/returned、返回整型0及检查后compile1；单独 `ok=true` 只表示正常返回。未知错误/警告计数写 unknown，不能编造0或仅用历史 compile1。生命周期默认直接执行；关闭后旧root/指针作废；原生新上下文及完整重开比较单独取证。运行期 PLC/脚本/设备通信不由组态操作执行。
 
 CAniInput 的兼容字段 `words_uint32['54']` 只组合真实 byte54/55 两个0/1布尔值；可写packed值仅0、1、0x100、0x101。+56/+57是对齐填充，私有修改也不写这两字节。该类+60/+74为原编译器根据+58/+5C表达式生成的CByteArray，原工程STORE/LOAD不保存它们，重开构造后可为空；原运行输出在对应布尔为真时可能使用缓存，不能泛称无运行作用。当前业务比较仍精确保护两个真实布尔、源表达式、浮点备用值及所有其它已知字段，原始缓存差异另记，不宽免字节数组或序列化字段。
 

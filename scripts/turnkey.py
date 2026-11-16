@@ -19,6 +19,8 @@ import tempfile
 import time
 import uuid
 
+from turnkey_installation import installation_root_from_editor
+
 SKILL = Path(__file__).resolve().parents[1]
 
 
@@ -108,6 +110,8 @@ def runtime_env(root, info):
     env['MCGS_PYTHON'] = str(contained(root, info['python']))
     env['MCGS_PWSH'] = str(contained(root, info['powershell']))
     env['PYTHONUTF8'] = '1'
+    env['PYTHONDONTWRITEBYTECODE'] = '1'
+    env['MCGS_BUNDLE_ROOT'] = str(root)
     return env
 
 
@@ -117,14 +121,14 @@ def cache_root():
     return root
 
 
-def probe_queue(runtime, python):
+def probe_queue(runtime, python, transport_file=None):
     """One correlated read-only ping; preserves unknown outcomes for inspection."""
-    transport = Path(runtime) / 'bridge_client.py'
-    if not transport.is_file():
+    transport = Path(transport_file).resolve() if transport_file else Path(runtime) / 'bridge_client.py'
+    if transport.parent != Path(runtime).resolve() or not transport.is_file():
         return {'verified': False, 'status': 'transport_not_at_runtime_root'}
     request_id = 'turnkey-ping-' + uuid.uuid4().hex
     try:
-        receipt = run_json([python, transport, 'ping', '--id', request_id, '--timeout', '10'], timeout=20)
+        receipt = run_json([python, '-B', '-X', 'utf8', transport, 'ping', '--id', request_id, '--timeout', '10'], timeout=20)
         return {'verified': bool(receipt.get('ok')), 'request_id': request_id, 'receipt': receipt}
     except (RuntimeError, OSError, subprocess.SubprocessError) as error:
         return {'verified': False, 'request_id': request_id, 'status': 'queue_not_confirmed',
@@ -247,6 +251,75 @@ def connection_task_directory(local_cache, key, process_key):
     raise ValueError('The native queue path would exceed .NET limits. Use a shorter local TEMP directory for a new connection.')
 
 
+def select_current_engine(root, info, actual, bootstrap, selected, env, preparation_timeout=0):
+    """Select the current precompiled business engine on the existing host.
+
+    Materialize paths for this live connection rather than importing another
+    machine's scope. Selection is atomic/file-only and does not replay requests.
+    """
+    asset = SKILL / 'assets/pro-native-bridge'
+    runtime, task = Path(actual['runtime_root']), Path(actual['task_root'])
+    engine = contained(root, info['business_engine'])
+    expected_sha = digest(engine)
+    wanted = read(engine.parent / 'portable-engine-manifest.json')
+    selected_digest = digest(runtime / 'active-engine.json') if selected else None
+    if selected and read(runtime / 'active-engine.json') != selected:
+        raise ValueError('Engine selection changed during discovery; inspect the current selection before continuing')
+    current_scope = Path(selected['assembly']).with_suffix('.scope.json') if selected else None
+    if selected and selected.get('sha256') == expected_sha and current_scope.is_file():
+        scope = read(current_scope)
+        binding = Path(scope.get('portable_binding_file', ''))
+        if (digest(current_scope) == selected.get('engine_scope_sha256') and binding.is_file()
+                and digest(binding) == scope.get('portable_binding_sha256')):
+            data = read(binding)
+            if all(data.get(key) == wanted.get(key) for key in ('source_manifest_sha256', 'source_catalog_sha256')):
+                return {'changed': False, 'scope_config': str(current_scope),
+                        'scope_sha256': digest(current_scope), 'active_engine': selected}
+    # Each selected DLL basename is immutable while loaded. A short fresh name
+    # also permits rematerializing the same DLL after a local path change.
+    identifier = expected_sha[:10] + '-' + uuid.uuid4().hex[:6]
+    work = task / ('u-' + identifier)
+    payload, output = work / 'data', runtime / ('u-' + identifier)
+    payload.mkdir(parents=True)
+    source_transport = asset / 'transport/bridge_client.py'
+    transport_sha = digest(source_transport)
+    # The transport uses its own directory as the durable queue root. Keep a
+    # content-qualified copy alongside the old client in that same directory.
+    transport = runtime / ('bridge_client_' + transport_sha[:16] + '.py')
+    try:
+        with transport.open('xb') as destination, source_transport.open('rb') as source:
+            shutil.copyfileobj(source, destination)
+    except FileExistsError:
+        pass
+    if digest(transport) != transport_sha:
+        raise ValueError('The versioned native queue client differs from the current skill: ' + str(transport))
+    base = {key: actual[key] for key in ('task_root', 'runtime_root', 'install_root', 'editor_executable')}
+    base.update(schema=1, engineering_root=str(payload), transport_client_file=str(transport),
+                transport_client_sha256=transport_sha)
+    scope_base = work / 'base.json'
+    save(scope_base, base)
+    prepared = run_json([env['MCGS_PYTHON'], asset / 'portable-engine/materialize.py',
+        '--scope-base-json', scope_base, '--engine-file', engine, '--engine-sha256', expected_sha,
+        '--engine-file-name', 'McgsEngineering.' + identifier + '.dll',
+        '--output-directory', output, '--abi-cache-root', cache_root() / 'native-abi',
+        '--progress-file', work / 'prep.json'], env, timeout=preparation_timeout or None)
+    if selected:
+        result = run_json([env['MCGS_PYTHON'], asset / 'bootstrap/select_engine.py',
+            '--bootstrap-root', bootstrap, '--engine-file', prepared['engine_file'],
+            '--engine-scope-file', prepared['engine_scope_file'], '--engine-sha256', expected_sha,
+            '--engine-scope-sha256', prepared['scope_sha256'],
+            '--manifest-sha256', selected_digest], env)
+    else:
+        result = run_json([env['MCGS_PYTHON'], asset / 'bootstrap/stage_engine.py',
+            '--bootstrap-root', bootstrap, '--engine-file', prepared['engine_file'],
+            '--engine-scope-file', prepared['engine_scope_file']], env)
+    selected = read(runtime / 'active-engine.json')
+    active_scope = Path(selected['assembly']).with_suffix('.scope.json')
+    return {'changed': True, 'scope_config': str(active_scope), 'scope_sha256': digest(active_scope),
+            'active_engine': selected, 'engine_preparation': prepared, 'engine_selection': result,
+            'same_pro_process': True, 'local_paths_materialized': True, 'receiver_compilation_required': False}
+
+
 def prepare_online(root, editor, install_root=None, pid=None, preparation_timeout=0):
     started = time.perf_counter()
     elapsed = {}
@@ -256,7 +329,8 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
 
     root, info = bundle(root)
     editor = Path(editor).resolve(strict=True)
-    install_root = Path(install_root).resolve(strict=True) if install_root else editor.parent.parent
+    install_root = (Path(install_root).resolve(strict=True) if install_root else
+                    installation_root_from_editor(editor))
     if not editor.is_relative_to(install_root):
         raise ValueError('Editor is outside selected installation')
     candidates = [row for row in processes(editor) if pid is None or row['pid'] == pid]
@@ -300,7 +374,7 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
                  'receiver_compilation_required': False, 'actual_bridge_status': discovered,
                  'reused_connection': True, 'project_written': False,
                  'native_project_check': 'not_performed',
-                 'meaning': 'Reusing the actual live bridge and its current engine scope; no new connection or attach attempt was created'}
+                 'meaning': 'Reusing the actual live bridge and selecting the current precompiled engine; no new process or attach attempt was created'}
         if selected:
             if selected.get('bootstrap_scope_sha256') != live['bootstrap_scope_sha256']:
                 raise ValueError('Live bridge engine selection has a different bootstrap scope; inspect it without reattaching')
@@ -316,7 +390,13 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
         else:
             state.update(phase='existing_engine_not_selected', engine_scope_ready=False)
         phase_start = time.perf_counter()
-        state['queue_liveness'] = probe_queue(runtime, py)
+        selected_result = select_current_engine(root, info, actual, bootstrap, selected, env, preparation_timeout)
+        record_phase('engine_selection', phase_start)
+        state.update({key: selected_result[key] for key in ('scope_config', 'scope_sha256', 'active_engine')})
+        state.update(engine_scope_ready=True, engine_update=selected_result)
+        phase_start = time.perf_counter()
+        selected_scope = read(selected_result['scope_config'])
+        state['queue_liveness'] = probe_queue(runtime, py, selected_scope['transport_client_file'])
         record_phase('queue_probe', phase_start)
         record_phase('total', started)
         state['elapsed_ms'] = elapsed
@@ -341,6 +421,7 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
     state = {'schema': 1, 'status': 'preparing', 'phase': 'bridge_materialization',
              'target': target, 'task_root': str(task), 'runtime_root': str(runtime),
              'receiver_compilation_required': False,
+             'local_paths_materialized': True,
              'elapsed_ms': elapsed,
              'preparation_progress_file': str(task / 'prep.json'),
              'preparation_timeout_seconds': preparation_timeout,
@@ -400,6 +481,7 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
     state.update(status='connected' if liveness['verified'] else 'bridge_attached_queue_not_confirmed',
                  phase='ready' if liveness['verified'] else 'inspect_queue', connection=connected,
                  queue_liveness=liveness,
+                 active_engine=read(runtime / 'active-engine.json'),
                  project_written=False, native_project_check='not_performed')
     save(journal, state)
     return state
@@ -407,19 +489,41 @@ def prepare_online(root, editor, install_root=None, pid=None, preparation_timeou
 
 def install_skill(root, destination=None):
     root, info = bundle(root)
-    source = SKILL if source_matches_engine(root, info) else contained(root, info['skill_directory'])
+    if not source_matches_engine(root, info):
+        raise ValueError('Fetch the matching precompiled update before installing; the current skill will not be downgraded')
+    source = SKILL
     destination = Path(destination).expanduser().resolve() if destination else Path.home() / '.codex/skills/mcgs-engineering'
+    delivery = load_module('mcgs_turnkey_delivery', SKILL / 'scripts/turnkey_delivery.py')
+    helper = bundle_helper()
+    contract = delivery.source_contract(source, helper)
+    engine = contained(root, info['business_engine'])
+    location = {'schema': 1, 'bundle_root': str(root), 'release': info['release'],
+                'source_contract': contract, 'packaged_engine_sha256': digest(engine)}
     if destination == source:
-        save(destination / 'turnkey-location.json', {'schema': 1, 'bundle_root': str(root), 'release': info['release']})
-        return {'status': 'skill_already_at_destination', 'directory': str(destination)}
-    if destination.exists():
-        backup = destination.with_name(destination.name + '.backup-' + time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:6])
-        destination.rename(backup)
-    else:
-        backup = None
-    shutil.copytree(source, destination, ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
-    save(destination / 'turnkey-location.json', {'schema': 1, 'bundle_root': str(root), 'release': info['release']})
-    return {'status': 'skill_installed', 'directory': str(destination), 'previous_backup': str(backup) if backup else None}
+        save(destination / 'turnkey-location.json', location)
+        return {'status': 'skill_already_at_destination', 'directory': str(destination), **location}
+    if destination.is_relative_to(source) or source.is_relative_to(destination):
+        raise ValueError('Skill source and installation directories cannot contain each other')
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    backup = None
+    with tempfile.TemporaryDirectory(prefix='.mcgs-install-', dir=destination.parent) as staging:
+        prepared = Path(staging) / 'skill'
+        shutil.copytree(source, prepared, ignore=shutil.ignore_patterns(
+            '__pycache__', '*.pyc', '*.pyo', '.git', '.venv', 'local-artifacts', 'turnkey-location.json'))
+        if delivery.source_contract(prepared, helper) != contract:
+            raise ValueError('The copied skill source contract differs from the chosen source')
+        save(prepared / 'turnkey-location.json', location)
+        if destination.exists():
+            backup = destination.with_name(destination.name + '.backup-' + time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:6])
+            destination.rename(backup)
+        try:
+            prepared.rename(destination)
+        except OSError:
+            if backup is not None and not destination.exists():
+                backup.rename(destination)
+            raise
+    return {'status': 'skill_installed', 'directory': str(destination), **location,
+            'previous_backup': str(backup) if backup else None}
 
 
 def source_matches_engine(root, info):
@@ -427,26 +531,25 @@ def source_matches_engine(root, info):
     try:
         engine = contained(root, info['business_engine'])
         release = read(engine.parent / 'portable-engine-manifest.json')
-        return (digest(SKILL / 'assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json') == release['source_manifest_sha256']
+        return (digest(engine) == release['sha256']
+                and digest(SKILL / 'assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json') == release['source_manifest_sha256']
                 and digest(SKILL / 'assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json') == release['source_catalog_sha256'])
     except (OSError, ValueError, KeyError):
         return False
 
 
 def delegate_to_bundle(root, info, args):
-    """Run the source and runtime shipped with the selected precompiled engine.
-
-    The receiving skill may be anywhere (including WorkBuddy). Reuse its newer
-    Python entry when its own source-data contract matches the engine; otherwise
-    use the matching bundled entry. Either way, use bundled Python/Capstone.
-    """
-    selected_skill = contained(root, info.get('skill_directory', 'skill'))
-    script = Path(__file__).resolve() if source_matches_engine(root, info) else selected_skill / 'scripts/turnkey.py'
+    """Use bundled Python with the current entry; never delegate to an old skill."""
+    script = Path(__file__).resolve()
     python = contained(root, info['python'])
-    if script.resolve() == Path(__file__).resolve() and Path(sys.executable).resolve() == python:
+    if Path(sys.executable).resolve() == python:
         return None
     argv = [python, '-B', '-X', 'utf8', script,
             '--bundle-root', root, args.command]
+    if getattr(args, 'no_download', False):
+        argv.append('--no-download')
+    if getattr(args, 'cache_dir', None):
+        argv.extend(['--cache-dir', args.cache_dir])
     parameters = {
         'verify': ('full',),
         'setup': ('family', 'editor', 'interactive', 'mode'),
@@ -454,8 +557,6 @@ def delegate_to_bundle(root, info, args):
         'install-skill': ('destination',),
     }
     for name in parameters.get(args.command, ()):
-        if name == 'preparation_timeout' and script.resolve() != Path(__file__).resolve() and 'preparation-timeout' not in script.read_text(encoding='utf-8-sig'):
-            continue
         value = getattr(args, name, None)
         if value is None or value is False:
             continue
@@ -490,8 +591,14 @@ def main():
         result = inventory(args.bundle_root, args.family, args.editor, args.cache_dir)
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
-    can_fetch = args.command in ('fetch-bundle', 'setup', 'prepare-online') and not args.no_download
+    can_fetch = args.command in ('fetch-bundle', 'setup', 'prepare-online', 'install-skill') and not args.no_download
     root, info = bundle(args.bundle_root, allow_download=can_fetch, cache_dir=args.cache_dir)
+    needs_engine = (args.command in ('fetch-bundle', 'prepare-online', 'install-skill')
+                    or args.command == 'setup' and args.family == 'pro' and args.mode == 'online')
+    if needs_engine:
+        delivery = load_module('mcgs_turnkey_delivery', SKILL / 'scripts/turnkey_delivery.py')
+        root, info = delivery.ensure_matching(SKILL, root, info, bundle_helper(),
+                                              allow_download=can_fetch, cache_dir=args.cache_dir)
     if args.command == 'fetch-bundle':
         result = {'status': 'complete_bundle_ready', 'bundle_root': str(root), 'release': info['release'],
                   'runtime': {key: str(contained(root, info[key])) for key in ('python', 'powershell')},
@@ -512,7 +619,17 @@ def main():
         result = module.setup_bundle(root, args.family, explicit_editor=args.editor, interactive=args.interactive)
         result['runtime'] = {key: str(contained(root, info[key])) for key in ('python', 'powershell')}
         result['mode'] = 'offline' if args.family == 'stu' else args.mode
-        result['mode_prompt'] = None if result['mode'] or not result.get('environment_ready') else '环境已准备好，你选择离线修改还是在线修改？离线直接批量编辑工程文件；在线通过内部接口修改已打开的Pro并可观察变化。'
+        editor_ready = result.get('editor_ready', result.get('environment_ready', False))
+        if editor_ready and result['mode'] == 'offline':
+            probe = load_module('mcgs_ace_probe', SKILL / 'scripts/ace_probe.py')
+            result.update(probe.offline_status(powershell=contained(root, info['powershell'])))
+            result['environment_ready'] = bool(result.get('offline_ready'))
+        elif editor_ready and result['mode'] == 'online':
+            result['environment_ready'] = True
+            result['online_ready'] = None  # prepare-online must inspect the live bridge.
+            result['online_preparation_required'] = True
+            result['ace_required'] = False
+        result['mode_prompt'] = None if result['mode'] or not editor_ready else '环境已准备好，你选择离线修改还是在线修改？离线直接批量编辑工程文件；在线通过内部接口修改已打开的Pro并可观察变化。'
         result['mode_options'] = ['offline'] if args.family == 'stu' else ['offline', 'online']
         result['project_written'] = False
     print(json.dumps(result, ensure_ascii=False, indent=2))

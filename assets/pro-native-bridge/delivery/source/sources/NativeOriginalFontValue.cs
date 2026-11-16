@@ -69,7 +69,7 @@ namespace McgsInternalBridge {
   internal static Dictionary<string,object> Snapshot(IntPtr value) {
    NativeMemory.Readable(value,16);byte flag=Marshal.ReadByte(value);NativeMemory.Require(flag<=1,"FontValue native flag is not Boolean.");
    IntPtr first=NativeMemory.Ptr(value,4),last=NativeMemory.Ptr(value,8),end=NativeMemory.Ptr(value,12);
-   uint a=NativeMemory.U(first),b=NativeMemory.U(last),c=NativeMemory.U(end);NativeMemory.Require(a<=b&&b<=c&&(b-a)%20==0&&(c-a)%20==0&&b-a<=32*20&&c-a<=128*20,"FontValue vector range differs.");
+   uint a=NativeMemory.U(first),b=NativeMemory.U(last),c=NativeMemory.U(end);NativeMemory.Require(a<=b&&b<=c&&(b-a)%20==0&&(c-a)%20==0&&b-a<=Int32.MaxValue,"FontValue vector range differs.");if(b>a)NativeMemory.Readable(first,checked((int)(b-a)));
    int count=(int)((b-a)/20);var rows=new List<Dictionary<string,object>>();var ids=new HashSet<int>();
    for(int i=0;i<count;i++) {
     IntPtr row=NativeMemory.Add(first,20*i);NativeMemory.Readable(row,20);int id=NativeMemory.I32(row,0),italic=NativeMemory.I32(row,4);

@@ -4,6 +4,7 @@ import math
 import struct
 from pathlib import Path
 import sys
+from functools import lru_cache
 
 _native = Path(__file__).resolve().parents[3] / 'scripts/native'
 if str(_native) not in sys.path:
@@ -142,12 +143,11 @@ def page_properties(trailer, *, ident=None, name=None, width=None, height=None):
     settings=WindowSettings.parse(trailer)
     if settings.to_bytes()!=trailer:
         raise ValueError('Unsupported page properties')
-    for index,val,kind in ((0,ident,3),(1,name,8),(6,width,3),(7,height,3)):
+    targets={key:settings.field(key) for key,value in (('id',ident),('name',name),('width',width),('height',height)) if value is not None}
+    for key,val in (('id',ident),('name',name),('width',width),('height',height)):
         if val is None:continue
-        if index>=len(settings.properties) or settings.properties[index].vt!=kind:
-            raise ValueError('Requested page property position/type is not supported')
-        if index in (6,7) and (type(val)is not int or not 1<=val<=0x7fffffff):raise ValueError('Invalid native Int32 page size')
-        settings.properties[index].value=val
+        if key in ('width','height') and (type(val)is not int or not 1<=val<=0x7fffffff):raise ValueError('Invalid native Int32 page size')
+        targets[key].value=val
     return settings.to_bytes()
 
 
@@ -158,7 +158,7 @@ class VariableRecords(list):
         self.document_header = document_header
 
 
-def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0):
+def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=0):
     if len(blob)<12 or u32(blob,4) != len(blob)-8:
         raise ValueError('Unsupported variable document')
     count=u32(blob,8); pos=12; rows=[]
@@ -193,6 +193,8 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0):
                     for _ in range(alarms):
                         _,pos=string(blob,pos+alarm_bytes);pos+=alarm_tail
         _,pos=string(blob,pos)
+        pos+=record_tail
+        if pos>len(blob):raise ValueError('Variable record tail exceeds document extent')
         rows.append({'id':native_id,'name':name,'note':note,'unit':unit,'kind':kind,
                      'initial':initial,'prefix':prefix,'extension':blob[extension_start:pos],
                      '_text_source':{'name':(name,name_raw),'note':(note,note_raw),'unit':(unit,unit_raw)}})
@@ -202,6 +204,70 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0):
     return VariableRecords(rows, blob[:4])
 
 
+def _variables_preserving_alarm_layout(blob, group_strings=False, record_tail=0):
+    """Locate opaque alarm extensions through whole-document record framing.
+
+    No alarm internals are edited or synthesized. Every candidate must resolve
+    the exact remaining record count, unique IDs/names, and final EOF. Ambiguous
+    framing is reported for variable editing only, never for unrelated pages.
+    """
+    if len(blob)<12 or u32(blob,4)!=len(blob)-8:raise ValueError('Invalid variable document')
+    count=u32(blob,8)
+    if count>len(blob)//100:raise ValueError('Invalid variable count')
+    @lru_cache(maxsize=None)
+    def parse_from(pos,remaining):
+        if not remaining:return [()] if pos==len(blob) else []
+        if len(blob)-pos<100*remaining:return []
+        try:
+            row={};sources={}
+            for key in ('name','note','unit'):
+                start=pos;value,pos=string(blob,pos);row[key]=value;sources[key]=(value,blob[start:pos])
+            if not row['name'] or '\0' in row['name']:return []
+            start=pos;kind=u32(blob,pos)
+            if kind not in (1,2,3,0xffffffff):return []
+            _,middle=string(blob,pos+36);initial,end=string(blob,middle+28)
+            if end+24>len(blob):return []
+            row.update(id=u32(blob,end+12),kind=kind,initial=initial,prefix=blob[start:end+24],_text_source=sources)
+            extension_start=pos=end+24
+            members=u32(blob,pos);pos+=4
+            if members>count:return []
+            if kind==0xffffffff and group_strings:
+                for _ in range(members):_,pos=string(blob,pos)
+            else:pos+=4*members
+            enabled=u32(blob,pos);pos+=4
+            if enabled not in (0,1):return []
+            if enabled:
+                alarms=u32(blob,pos);pos+=4
+                if alarms>(len(blob)-pos)//5:return []
+                # Each alarm has at least one numeric field plus a CString.
+                # Retain the complete segment without assigning its fields.
+                candidates=range(pos+5*alarms,len(blob)-4) if alarms else (pos,)
+            else:candidates=(pos,)
+            answers=[]
+            for group_start in candidates:
+                try:
+                    groups=u32(blob,group_start)
+                    if groups>count:continue
+                    text_pos=group_start+4+groups*4
+                    _,next_pos=string(blob,text_pos);next_pos+=record_tail
+                    if next_pos>len(blob):continue
+                    if remaining==1 and next_pos!=len(blob):continue
+                    continuations=parse_from(next_pos,remaining-1)
+                    if not continuations:continue
+                    current=dict(row,extension=blob[extension_start:next_pos])
+                    for following in continuations:
+                        records=(current,)+following
+                        if len({r['id'] for r in records})!=len(records) or len({r['name'] for r in records})!=len(records):continue
+                        if not any(records==old for old in answers):answers.append(records)
+                        if len(answers)>1:return answers
+                except (ValueError,UnicodeError,struct.error,IndexError):continue
+            return answers
+        except (ValueError,UnicodeError,struct.error,IndexError):return []
+    matches=parse_from(12,count)
+    if len(matches)!=1:raise ValueError('Alarm extension has no unique complete variable framing')
+    return VariableRecords(matches[0],blob[:4])
+
+
 def variables(blob):
     # A document can use ID vectors or native CString group members, and the
     # measured alarm bodies have 40 or 52 bytes plus a four-byte suffix.
@@ -209,11 +275,19 @@ def variables(blob):
     # software release number or rewrite any alarm/member bytes.
     candidates=[];errors=[]
     for strings in (False,True):
-        for alarm_bytes,alarm_tail in ((40,0),(52,4)):
-            try:
-                rows=_variables(blob,strings,alarm_bytes,alarm_tail)
-                if not any(rows==other for other in candidates):candidates.append(rows)
-            except (ValueError,UnicodeError,struct.error,IndexError) as exc:errors.append(str(exc))
+        for record_tail in (0,12):
+            for alarm_bytes,alarm_tail in ((40,0),(52,4)):
+                try:
+                    rows=_variables(blob,strings,alarm_bytes,alarm_tail,record_tail)
+                    if not any(rows==other for other in candidates):candidates.append(rows)
+                except (ValueError,UnicodeError,struct.error,IndexError) as exc:errors.append(str(exc))
+    if not candidates:
+        for strings in (False,True):
+            for record_tail in (0,12):
+                try:
+                    rows=_variables_preserving_alarm_layout(blob,strings,record_tail)
+                    if not any(rows==other for other in candidates):candidates.append(rows)
+                except (ValueError,UnicodeError,struct.error,IndexError) as exc:errors.append(str(exc))
     if len(candidates)!=1:
         raise ValueError('Ambiguous variable record layout' if candidates else 'Unsupported variable record layout: '+'; '.join(dict.fromkeys(errors)))
     return candidates[0]

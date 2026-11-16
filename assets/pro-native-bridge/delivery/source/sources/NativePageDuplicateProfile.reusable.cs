@@ -61,9 +61,8 @@ namespace McgsInternalBridge {
                 IntPtr type=NativeMemory.Ptr(col,12);Engine.Rva(type);return NativeMemory.Ascii(NativeMemory.Add(type,8),256);
             }
             internal IntPtr Virtual(IntPtr instance,int slot,int expectedThunk) {
-                NativeMemory.Require(slot>=0 && slot<=104,"Page virtual slot exceeds the derived range.");
-                IntPtr table=NativeMemory.Ptr(instance,0);Engine.Rva(table);IntPtr function=NativeMemory.Ptr(table,4*slot);
-                NativeMemory.Require(function==Engine.Address(expectedThunk),"Page virtual method differs at slot "+slot);return function;
+                IntPtr table=NativeMemory.Ptr(instance,0);Engine.Rva(table);
+                return Engine.VerifyVirtual(table,slot,Engine.Address(expectedThunk),"page duplicate/save virtual slots",slot.ToString());
             }
         }
 
@@ -88,12 +87,12 @@ namespace McgsInternalBridge {
             if(diagnostic==null)diagnostic=new Dictionary<string,object>();
             IntPtr rootDoc=api.Strategy.RootDoc();
             diagnostic["root_document"]=DescribePointer(api,rootDoc);
-            NativeMemory.Require(NativeMemory.Ptr(rootDoc,0)==api.Engine.Address(RootDocVtable) && NativeMemory.Ptr(rootDoc,0x2D4)==context.ObjectModel,"Root document and attached object model disagree.");
+            NativeMemory.Require(NativeMemory.Ptr(rootDoc,0)==api.Engine.Address(RootDocVtable) && NativeMemory.Ptr(rootDoc,NativeLayout.Offset("root.object_model"))==context.ObjectModel,"Root document and attached object model disagree.");
             IntPtr app=api.Bind<NativeEngine.CdeclPointer>("Host_GetApp")();
             diagnostic["app"]=DescribePointer(api,app);
-            NativeMemory.Require(NativeMemory.Ptr(app,0x520)==rootDoc,"Application and native data-centre document disagree.");
+            NativeMemory.Require(NativeMemory.Ptr(app,NativeLayout.Offset("app.root_document"))==rootDoc,"Application and native data-centre document disagree.");
             diagnostic["app_main_window_0x20"]=DescribePointer(api,NativeMemory.Ptr(app,0x20));
-            IntPtr frame=NativeMemory.Ptr(app,0x524);diagnostic["app_manage_frame_0x524"]=DescribePointer(api,frame);
+            IntPtr frame=NativeMemory.Ptr(app,NativeLayout.Offset("app.main_frame"));diagnostic["app_manage_frame_0x524"]=DescribePointer(api,frame);
             // AB21B0 constructs C0FrmManage; AB22AB stores that this in app+524.
             // Its native construction appends five list objects to this+314;
             // the third append AB4862/AB48A8 is C0ManListUser (AB9E80).
@@ -137,12 +136,12 @@ namespace McgsInternalBridge {
         }
         static Dictionary<string,object> FlushWindowData(Api api,NativeContext context,string path,int pageId) {
             NativeMemory.Require(pageId==2 && CurrentProjectPath(api).Equals(path,StringComparison.OrdinalIgnoreCase),"Window flush requires the exact current fixture and source ID2.");
-            NativeMemory.Require(NativeMemory.Ptr(api.Strategy.RootDoc(),0x2D4)==context.ObjectModel,"Window flush context belongs to a different native document.");
+            NativeMemory.Require(NativeMemory.Ptr(api.Strategy.RootDoc(),NativeLayout.Offset("root.object_model"))==context.ObjectModel,"Window flush context belongs to a different native document.");
             var pages=Pages(api,context);NativeMemory.Require((pages.Count==11 || pages.Count==12) && pages.ContainsKey(2),"Window flush requires the prepared11/12-page fixture.");
             IntPtr page=pages[2];NativeMemory.Require(NativeStrategyProfile.ReadName(api.Strategy,page)=="首页","Window flush source page name differs.");
             // The normal IObject page enumeration has already taken its native lazy-load path.
-            IntPtr document=NativeMemory.Ptr(page,0x14);api.Type(document,".?AVC0DocUser@@",WindowDocumentVtable);
-            NativeMemory.Require(NativeMemory.I32(document,0x258)==2 && NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(document,0x25C),256)=="首页","Loaded native page document identity differs.");
+            IntPtr document=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));api.Type(document,".?AVC0DocUser@@",WindowDocumentVtable);
+            NativeMemory.Require(NativeMemory.I32(document,NativeLayout.Offset("document.archive_id"))==2 && NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(document,NativeLayout.Offset("document.name")),256)=="首页","Loaded native page document identity differs.");
             api.Virtual(document,26,0x3508A);api.Virtual(document,27,0x3A3C8);
             api.Engine.RequireTable(context.WindowService,"UserWindowObjectManager.IUserWindowService");api.Virtual(context.WindowService,12,0x21733);
             int before=api.Strategy.Bind<NativeEngine.ThisInt>("RootIsModified")(document);NativeMemory.Require(before==0 || before==1,"Loaded page dirty-state representation differs.");

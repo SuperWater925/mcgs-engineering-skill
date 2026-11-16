@@ -53,7 +53,7 @@ namespace McgsInternalBridge {
     NativeMemory.Require(NativeMemory.I32(api.Pictures.Raw.Engine.Address(0xFBFF30),0)==0,"Original image initializer changed global registration mode.");
    }
    public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){ValidateBefore();lease.BeginApply(action);entered=true;try{
-    NativeOperationTrace.BeforeMutation("picture-private-carrier-mark-root");api.RootDirty(api.Pictures.Raw.Common.Shared.RootDoc(),1);Marshal.WriteInt32(api.Pictures.Raw.Common.Shared.RootDoc(),0x114,0);
+    NativeOperationTrace.BeforeMutation("picture-private-carrier-mark-root");api.RootDirty(api.Pictures.Raw.Common.Shared.RootDoc(),1);Marshal.WriteInt32(api.Pictures.Raw.Common.Shared.RootDoc(),NativeLayout.Offset("document.compile_valid"),0);
     lease.RequireApplying(action);api.Check();NativeOperationTrace.BeforeMutation("picture-private-carrier-original-named-initializer21");api.InitializeNamedReference(selected.Member.Image);InitializedNamed();
     lease.RequireApplying(action);api.Check();NativeOperationTrace.BeforeMutation("picture-private-carrier-original-name-setter17");api.SetName(selected.Member.Image,replacement.Storage);InitializedNamed();NativeMemory.Require(CString(NativeMemory.Add(selected.Member.Image,0xC),4096)==newName,"Original image setter did not retain the selected replacement name.");
     lease.RequireApplying(action);api.Check();NativeOperationTrace.BeforeMutation("picture-private-carrier-original-content-hash-refresh");api.Refresh(api.Pictures.Raw.Preload,resourceName.Storage,1);NativeOperationTrace.BeforeMutation("picture-private-carrier-original-module-dirty");api.MarkDirty(api.Pictures.Raw.Preload);

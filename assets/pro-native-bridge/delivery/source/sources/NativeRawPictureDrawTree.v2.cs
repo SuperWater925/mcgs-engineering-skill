@@ -8,7 +8,7 @@ namespace McgsInternalBridge {
    NativeOperationTrace.SetPhase("picture-vector-raw-api-begin");
    var api=new Api(engine,context,project);
    NativeOperationTrace.SetPhase("picture-vector-raw-owning-tree-begin");
-   IntPtr document=NativeMemory.Ptr(root,0x64);
+   IntPtr document=NativeMemory.Ptr(root,NativeLayout.Offset("control.owner_document"));
    // Tree validates installed concrete RTTI/vtables/type/size and follows only
    // the raw owning Cell/Unit CObList. NULL is a valid resource document owner.
    Node tree=api.Tree(root,document,new int[]{0},new HashSet<uint>(),0);RequireKnownSubtree(tree,"complete vector-resource payload read");
@@ -22,7 +22,7 @@ namespace McgsInternalBridge {
     {"class",node.Class.Name},{"rtti",".?AV"+node.Class.Name+"@@"},
     {"type_id",node.Class.TypeId},{"size",node.Class.Size},{"path",node.Path},
     {"complete",NativeMemory.Hex(node.Full)},
-    {"owner_document",NativeMemory.Hex(NativeMemory.Ptr(node.Full,0x64))},
+    {"owner_document",NativeMemory.Hex(NativeMemory.Ptr(node.Full,NativeLayout.Offset("control.owner_document")))},
     {"cached_parent_iobject_raw",NativeMemory.Hex(NativeMemory.Ptr(node.Full,8))},
     // IObject9 B46270 uses IO+48 = complete+4C; copying the existing CString
     // does not construct an MFC return object or invoke any vector virtual.
@@ -30,7 +30,7 @@ namespace McgsInternalBridge {
     {"rectangle",NativePageControlAbi.Rectangle(node.Full)},
     {"raw_DWORD44",unchecked((uint)NativeMemory.I32(node.Full,0x44))},
     {"raw_DWORD48",unchecked((uint)NativeMemory.I32(node.Full,0x48))},
-    {"raw_DWORD60",unchecked((uint)NativeMemory.I32(node.Full,0x60))},
+    {"raw_DWORD60",unchecked((uint)NativeMemory.I32(node.Full,NativeLayout.Offset("control.raw_state")))},
     {"raw_DWORDB0",unchecked((uint)NativeMemory.I32(node.Full,0xB0))},
     {"native_identity_queried",false},{"native_name_getter_called",false},
     {"raw_native_object_hex",BitConverter.ToString(original).Replace("-","").ToLowerInvariant()},

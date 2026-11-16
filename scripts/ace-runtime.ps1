@@ -1,11 +1,64 @@
-# Shared Windows PowerShell 7 / ACE runtime for McgsStu and McgsPro.
-if($PSVersionTable.PSVersion.Major -lt 7){throw 'PowerShell 7 or newer is required for MCGS.'}
-if(-not $IsWindows){throw 'The MCGS ACE runtime requires Windows.'}
+﻿# Shared ACE worker runtime. The editing frontend may be x64 while ACE is x86.
+if([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT){throw 'The MCGS ACE runtime requires Windows.'}
 function Get-McgsAceProviders {
  $items=[Collections.Generic.List[string]]::new()
  $reader=[Data.OleDb.OleDbEnumerator]::GetRootEnumerator()
- try{while($reader.Read()){if([string]$reader['SOURCES_NAME'] -match '^Microsoft\.ACE\.OLEDB\.(12|16)\.0$'){$items.Add([string]$reader['SOURCES_NAME'])}}}finally{$reader.Dispose()}
+ try{while($reader.Read()){
+  $name=[string]$reader['SOURCES_NAME'];if($name -notmatch '^Microsoft\.ACE\.OLEDB\.(12|16)\.0$'){continue}
+  $instance=$null
+  try{$instance=[Activator]::CreateInstance([Type]::GetTypeFromProgID($name,$true));$items.Add($name)}catch{}
+  finally{if($null -ne $instance -and [Runtime.InteropServices.Marshal]::IsComObject($instance)){[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($instance)}}
+ }}finally{$reader.Dispose()}
  return ,@($items.ToArray())
+}
+function Get-McgsAceWorker([string]$Provider='auto') {
+ $current=(Get-Process -Id $PID).Path
+ try{$providers=Get-McgsAceProviders;if($Provider -ne 'auto'){$providers=@($providers|Where-Object {$_ -eq $Provider})}}catch{$providers=@()}
+ if($providers.Count){return [pscustomobject]@{ready=$true;path=$current;process_bits=([IntPtr]::Size*8);providers=$providers}}
+ $candidates=[Collections.Generic.List[string]]::new()
+ foreach($configured in @($env:MCGS_ACE_PWSH,$env:MCGS_PWSH_X86,$env:MCGS_PWSH_X64,$env:MCGS_PWSH)){
+  if($configured){$candidates.Add($configured)}
+ }
+ foreach($root in @(${env:ProgramFiles(x86)},$env:ProgramW6432,$env:ProgramFiles)){
+  if($root){$candidates.Add((Join-Path $root 'PowerShell/7/pwsh.exe'))}
+ }
+ foreach($directory in @('SysWOW64','System32','Sysnative')){
+  if($env:WINDIR){$candidates.Add((Join-Path $env:WINDIR ($directory+'/WindowsPowerShell/v1.0/powershell.exe')))}
+ }
+ $probe=@'
+$ErrorActionPreference='Stop';[Console]::OutputEncoding=[Text.UTF8Encoding]::new($false);$p=@();$r=[Data.OleDb.OleDbEnumerator]::GetRootEnumerator()
+try{while($r.Read()){$n=[string]$r['SOURCES_NAME'];if($n -notmatch '^Microsoft\.ACE\.OLEDB\.(12|16)\.0$'){continue};$o=$null;try{$o=[Activator]::CreateInstance([Type]::GetTypeFromProgID($n,$true));$p+=$n}catch{}finally{if($null -ne $o -and [Runtime.InteropServices.Marshal]::IsComObject($o)){[void][Runtime.InteropServices.Marshal]::FinalReleaseComObject($o)}}}}finally{$r.Dispose()}
+@{process_bits=([IntPtr]::Size*8);providers=@($p)}|ConvertTo-Json -Compress
+'@
+ $encoded=[Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($probe))
+ foreach($candidate in @($candidates|Select-Object -Unique)){
+  if($candidate -ieq $current -or -not(Test-Path -LiteralPath $candidate -PathType Leaf)){continue}
+  try{
+   $raw=& $candidate -NoProfile -NonInteractive -EncodedCommand $encoded 2>$null
+   if($LASTEXITCODE -ne 0){continue};$result=($raw|Out-String|ConvertFrom-Json)
+   $available=@($result.providers|Where-Object {$Provider -eq 'auto' -or $_ -eq $Provider})
+   if($available.Count){return [pscustomobject]@{ready=$true;path=$candidate;process_bits=$result.process_bits;providers=$available}}
+  }catch{}
+ }
+ return [pscustomobject]@{ready=$false;path=$null;process_bits=$null;providers=@();reason='No installed worker can load ACE 12/16; install ACE for an available worker architecture.'}
+}
+
+# The narrow database worker also runs under Windows PowerShell 5.1 when only
+# that architecture has ACE. Keep compatibility here, not in online startup.
+function ConvertFrom-McgsJson([string]$Json){
+ function Convert-Map($Value){
+  if($null -eq $Value){return $null}
+  if($Value -is [System.Management.Automation.PSCustomObject]){
+   $map=@{};foreach($p in $Value.PSObject.Properties){$map[$p.Name]=Convert-Map $p.Value};return ,$map
+  }
+  if($Value -is [Array]){return ,@($Value|ForEach-Object {Convert-Map $_})}
+  return $Value
+ }
+ return Convert-Map ($Json|ConvertFrom-Json)
+}
+function Get-McgsRelativePath([string]$Root,[string]$Path){
+ $base=[Uri]::new(([IO.Path]::GetFullPath($Root).TrimEnd('\','/')+[IO.Path]::DirectorySeparatorChar))
+ return [Uri]::UnescapeDataString($base.MakeRelativeUri([Uri]::new([IO.Path]::GetFullPath($Path))).ToString()).Replace('/',[IO.Path]::DirectorySeparatorChar)
 }
 function New-McgsAceConnectionString([string]$Path,[string]$Mode,[string]$Provider,[switch]$Create){
  $builder=[Data.OleDb.OleDbConnectionStringBuilder]::new()

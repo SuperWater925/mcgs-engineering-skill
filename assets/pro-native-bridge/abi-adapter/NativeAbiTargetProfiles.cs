@@ -29,6 +29,9 @@ namespace McgsInternalBridge {
   static List<Dictionary<string,object>> modules;
   static Dictionary<string,Dictionary<string,object>> sourceGuards;
   static List<Dictionary<string,object>> sourceOrdinals;
+  static Dictionary<string,object> objectLayout;
+  static Dictionary<Tuple<string,int,int,int>,int> virtualSlots;
+  static Dictionary<Tuple<int,int>,List<Tuple<string,int,int>>> virtualRoles;
   static readonly HashSet<string> verifiedModules=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
   static string indexPath;
   [ThreadStatic]static string requestedOperation,requestedKind,requestedAction,requestedStage;
@@ -75,8 +78,63 @@ namespace McgsInternalBridge {
     foreach(object item in (IEnumerable)map["source_guards"]){var row=(Dictionary<string,object>)item;guardRows.Add(Text(row,"id"),row);}
     var ordinalRows=new List<Dictionary<string,object>>();
     foreach(object item in (IEnumerable)map["source_ordinals"])ordinalRows.Add((Dictionary<string,object>)item);
+    object layout;objectLayout=map.TryGetValue("object_layout",out layout)?layout as Dictionary<string,object>:null;
+    var slots=new Dictionary<Tuple<string,int,int,int>,int>();
+    var roles=new Dictionary<Tuple<int,int>,List<Tuple<string,int,int>>>();
+    object slotRows;
+    if(map.TryGetValue("virtual_slots",out slotRows))foreach(object item in (IEnumerable)slotRows){
+     var row=(Dictionary<string,object>)item;string module=Text(row,"module"),proof=Text(row,"method_proof_id");
+     int table=Convert.ToInt32(row["actual_table_rva"],CultureInfo.InvariantCulture),reference=Convert.ToInt32(row["reference_index"],CultureInfo.InvariantCulture);
+     int entry=Convert.ToInt32(row["actual_entry_rva"],CultureInfo.InvariantCulture),actual=Convert.ToInt32(row["actual_index"],CultureInfo.InvariantCulture);
+     var key=Tuple.Create(module,table,reference,entry);int existing;
+     RequireArtifact(table>0&&entry>0&&reference>=0&&actual>=0&&!String.IsNullOrEmpty(proof)&&(!slots.TryGetValue(key,out existing)||actual==existing),"Invalid or conflicting virtual-slot proof.",IndexName,"virtual_slots");
+     slots[key]=actual;
+     var roleKey=Tuple.Create(table,reference);List<Tuple<string,int,int>> candidates;
+     if(!roles.TryGetValue(roleKey,out candidates)){candidates=new List<Tuple<string,int,int>>();roles.Add(roleKey,candidates);}
+     candidates.Add(Tuple.Create(module,entry,actual));
+    }
+    virtualSlots=slots;virtualRoles=roles;
     sourceOrdinals=ordinalRows;sourceGuards=guardRows;modules=moduleRows;files=found;
    }
+  }
+  internal static IntPtr RequireVirtualSlot(string module,IntPtr moduleBase,IntPtr table,int referenceSlot,IntPtr expectedMethod,string profile,string entry){
+   Load();int slot=referenceSlot;
+   long tableRva=(long)NativeMemory.U(table)-NativeMemory.U(moduleBase),methodRva=(long)NativeMemory.U(expectedMethod)-NativeMemory.U(moduleBase);
+   if(tableRva>=0&&tableRva<=Int32.MaxValue&&methodRva>=0&&methodRva<=Int32.MaxValue){
+    int located;
+    if(virtualSlots.TryGetValue(Tuple.Create(module,(int)tableRva,referenceSlot,(int)methodRva),out located))slot=located;
+   }
+   RequireLayout(slot>=0&&NativeMemory.Ptr(table,checked(slot*IntPtr.Size))==expectedMethod,
+    "Current virtual entry differs from the bound method: "+entry,profile,entry);
+   return expectedMethod;
+  }
+  internal static IntPtr ProvenVirtualSlot(IntPtr table,int referenceSlot,string profile){
+   Load();string imageFile;IntPtr image=NativeOpaqueDrawState.RequestImages.Owner(table,out imageFile);
+   int tableRva=checked((int)(NativeMemory.U(table)-NativeMemory.U(image)));
+   string entryName=NativeMemory.Hex(table)+"/"+referenceSlot.ToString(CultureInfo.InvariantCulture);
+   List<Tuple<string,int,int>> candidates;
+   if(!virtualRoles.TryGetValue(Tuple.Create(tableRva,referenceSlot),out candidates))
+    throw new NativeAbiUnavailableException("No independently located native method for this virtual role.",profile,entryName);
+   IntPtr expected=IntPtr.Zero;int slot=-1;
+   foreach(var candidate in candidates){
+    var row=ModuleRow(candidate.Item1);object source;
+    if(row==null||!row.TryGetValue("actual_file",out source)||!(source is string))continue;
+    if(!String.Equals((string)source,imageFile,StringComparison.OrdinalIgnoreCase))continue;
+    IntPtr method=NativeMemory.Add(image,candidate.Item2);
+    RequireArtifact(expected==IntPtr.Zero||expected==method&&slot==candidate.Item3,"Conflicting native virtual role proofs.",IndexName,entryName);
+    expected=method;slot=candidate.Item3;
+   }
+   if(expected==IntPtr.Zero)throw new NativeAbiUnavailableException("No native virtual role proof for the loaded table's owning module.",profile,entryName);
+   NativeOpaqueDrawState.RequestImages.Check(NativeMemory.Add(table,checked(slot*IntPtr.Size)),IntPtr.Size);
+   NativeOpaqueDrawState.RequestImages.Check(expected,1);
+   RequireLayout(NativeMemory.Ptr(table,checked(slot*IntPtr.Size))==expected,"Current virtual role no longer matches its bound method.",profile,entryName);
+   return expected;
+  }
+  internal static int LayoutField(string key){
+   Load();object raw;Dictionary<string,object> fields,row;
+   if(objectLayout==null||!objectLayout.TryGetValue("fields",out raw)||(fields=raw as Dictionary<string,object>)==null||!fields.TryGetValue(key,out raw)||(row=raw as Dictionary<string,object>)==null||!row.TryGetValue("status",out raw)||!Object.Equals(raw,"resolved")||!row.TryGetValue("offset",out raw))throw new NativeAbiUnavailableException("This action needs a locally derived object field: "+key,IndexName+"/object_layout",key);
+   if(Convert.ToInt32(objectLayout["schema"],CultureInfo.InvariantCulture)!=1||Convert.ToInt32(objectLayout["pointer_size"],CultureInfo.InvariantCulture)!=IntPtr.Size)throw Problem("abi_layout_mismatch","Object layout schema/pointer width differs.",IndexName+"/object_layout",key);
+   int value=Convert.ToInt32(raw,CultureInfo.InvariantCulture);RequireLayout(value>=0,"Derived object offset must be nonnegative.",IndexName+"/object_layout",key);return value;
   }
   internal static void CheckProfile(string path,bool verifyBytes) {
    Load();
@@ -185,7 +243,7 @@ namespace McgsInternalBridge {
    NativeCompatibilityException problem=null;for(var e=error;e!=null;e=e.InnerException){problem=e as NativeCompatibilityException;if(problem!=null)break;}
    var feature=problem==null?CurrentFeature():problem.Feature;object kind;feature.TryGetValue("kind",out kind);
    string category=problem==null?"native_operation_failure":problem.Category;
-   bool local=category=="locator_unresolved"||category=="abi_layout_mismatch"||category=="unsupported_feature";
+   bool local=category=="locator_unresolved"||category=="abi_layout_mismatch"||category=="unsupported_feature"||category=="feature_read_failed";
    return new Dictionary<string,object>{{"failure_category",category},{"native_abi_status",category=="locator_unresolved"?"unresolved":category=="abi_layout_mismatch"?"incompatible":"not_classified_as_abi"},
     {"affected_profile",problem==null?null:problem.Profile},{"affected_entry",problem==null?null:problem.Entry},{"affected_feature",feature},
     {"blocked_scope",!local?"current_native_request":String.IsNullOrEmpty(Convert.ToString(kind,CultureInfo.InvariantCulture))?"shared_native_context":"requested_feature"},{"feature_isolation_eligible",local&&!String.IsNullOrEmpty(Convert.ToString(kind,CultureInfo.InvariantCulture))},{"other_features_status","not_evaluated"},
@@ -196,9 +254,14 @@ namespace McgsInternalBridge {
    SelectFeature(action,"inspect-selector");
    try{return new Dictionary<string,object>{{"status","preimage_read"},{"preimage",reader()}};}
    catch(Exception error){
-    // This path is read-only and explicit: no inferred exception categories,
-    // no continuation after a mutation/uncertain call, no fabricated before.
-    if(NativeOperationTrace.MutationAttempted||!IsUnavailableFeature(error))throw;
+    // A read selector is independent. Legacy validation failures stay failures
+    // of that selector; do not mislabel them as an unsupported Pro version.
+    // Mutations, deployment/integrity/identity errors still stop the request.
+    if(NativeOperationTrace.MutationAttempted)throw;
+    if(!IsUnavailableFeature(error)){
+     if(error is NativeCompatibilityException||!(error is InvalidOperationException))throw;
+     error=Problem("feature_read_failed",error.Message,"requested selector validation",Convert.ToString(action["kind"],CultureInfo.InvariantCulture));
+    }
     var metadata=Metadata(error);if(!Object.Equals(metadata["feature_isolation_eligible"],true))throw;
     var issue=new Dictionary<string,object>{{"action_id",action["action_id"]},{"kind",action["kind"]},{"target",action["target"]},{"status","unavailable"},{"read_completed",false},{"error",error.Message}};RecordFailure(issue,error);
     return new Dictionary<string,object>{{"status","unavailable"},{"issue",issue}};

@@ -1,4 +1,4 @@
-"""Build a new complete MCGS bundle from a pinned base and an extracted update."""
+"""Build a complete bundle by reusing verified target files from an installed version."""
 from __future__ import annotations
 
 import argparse
@@ -86,22 +86,21 @@ def apply_update(base, update_root, output):
             'Output must be outside both the base and the extracted update')
 
     update = object_json(source_file(update_root, 'update.json').read_bytes(), SCHEMA)
-    base_metadata = pin_bytes(source_file(base, METADATA), update['base_bundle_sha256'])
-    object_json(base_metadata, bundle.SCHEMA)
-    base_manifest = pin_bytes(source_file(base, FILES), update['base_files_sha256'])
-    old = file_rows(object_json(base_manifest, 1)['files'])
+    # The publisher's base hashes describe how the delta was produced. Any
+    # installed release can supply a reused file when its bytes match target.
+    object_json(source_file(base, METADATA).read_bytes(), bundle.SCHEMA)
     payload = update_root / 'payload'
     require(payload.is_dir() and not is_reparse(payload.lstat()), 'Missing regular update payload directory')
     target_manifest = pin_bytes(source_file(payload, FILES), update['target_files_sha256'])
     target = file_rows(object_json(target_manifest, 1)['files'])
-    require(FILES not in old and FILES not in target and METADATA in old and METADATA in target,
+    require(FILES not in target and METADATA in target,
             'Bundle manifest must include bundle.json and exclude itself')
-    require(old[METADATA]['sha256'] == update['base_bundle_sha256'] and old[METADATA]['size'] == len(base_metadata),
-            'Pinned base bundle.json differs from its pinned file manifest')
-    expected = {key: row for key, row in target.items() if old.get(key) != row}
+    expected = file_rows(update['payload'])
     require(METADATA in expected, 'Update must include the new bundle.json')
-    expected[FILES] = {'file': FILES, 'size': len(target_manifest), 'sha256': update['target_files_sha256']}
-    require(file_rows(update['payload']) == expected, 'Update payload manifest differs from the exact bundle changes')
+    require(expected.get(FILES) == {'file': FILES, 'size': len(target_manifest), 'sha256': update['target_files_sha256']},
+            'Update target file manifest differs')
+    for key, row in expected.items():
+        require(key == FILES or target.get(key) == row, 'Payload file differs from target manifest: ' + row['file'])
 
     actual = set()
     for path in payload.rglob('*'):
@@ -116,6 +115,17 @@ def apply_update(base, update_root, output):
         file = source_file(payload, row['file'])
         require(file.stat().st_size == row['size'] and bundle._sha(file) == row['sha256'],
                 'Update payload file differs: ' + row['file'])
+    missing = []
+    for key, row in target.items():
+        if key in expected:
+            continue
+        try:
+            file = source_file(base, row['file'])
+            if file.stat().st_size != row['size'] or bundle._sha(file) != row['sha256']:
+                missing.append(row['file'])
+        except OSError:
+            missing.append(row['file'])
+    require(not missing, 'The installed bundle cannot supply these target files: ' + ', '.join(missing))
     target_release = update['target_release']
     target_metadata = pin_bytes(source_file(payload, METADATA), target[METADATA]['sha256'])
     metadata = object_json(target_metadata, bundle.SCHEMA)

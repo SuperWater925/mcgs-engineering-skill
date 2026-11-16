@@ -105,10 +105,11 @@ class InputMetadata:
     properties:ByteArray
     extension_tail:ByteArray
     tail:bytes
+    extension_extra:bytes=b''
 
     @classmethod
     def parse(cls,data,appearance=None):
-        try:return cls._strict(data)
+        try:return cls._strict(data,appearance)
         except FormatError:
             # A measured legacy editing defect left two stale nested counts
             # after removing an image. Only recover the exact duplicate body
@@ -125,25 +126,22 @@ class InputMetadata:
             return result
 
     @classmethod
-    def _strict(cls,data):
-        r=Reader(data);begin=r.pos
-        if r.count():raise FormatError('Input generic events require a class-aware metadata adapter')
-        events=data[begin:r.pos];words=r.take(8);extension=ByteArray.parse(r)
-        tail=r.take(len(data)-r.pos)
-        if len(tail) not in (0,4):raise FormatError('Unknown input metadata outer tail')
-        nested=Reader(extension.value);properties=ByteArray.parse(nested);extension_tail=ByteArray.parse(nested)
-        if nested.pos!=len(extension.value):raise FormatError('Input metadata nested extent differs')
-        result=cls(events,words,extension,properties,extension_tail,tail)
+    def _strict(cls,data,appearance=None):
+        from metadata_layout import split_metadata
+        def validate(raw):
+            unit_slot(raw,20)
+        events,words,extension,properties,extension_tail,tail,extra,_=split_metadata(data,validate,appearance)
+        result=cls(events,words,extension,properties,extension_tail,tail,extra)
         if result.to_bytes()!=data:raise FormatError('Input metadata byte roundtrip differs')
         return result
 
     def to_bytes(self):
-        self.extension.value=self.properties.to_bytes()+self.extension_tail.to_bytes()
+        self.extension.value=self.properties.to_bytes()+self.extension_tail.to_bytes()+self.extension_extra
         return self.events+self.words+self.extension.to_bytes()+self.tail
 
     def normalize_counts(self):
         self.properties.prefix=write_count(len(self.properties.value))
-        self.extension.value=self.properties.to_bytes()+self.extension_tail.to_bytes()
+        self.extension.value=self.properties.to_bytes()+self.extension_tail.to_bytes()+self.extension_extra
         self.extension.prefix=write_count(len(self.extension.value))
 
 
@@ -173,9 +171,15 @@ class InputRecord:
         cache,_=r.byte_array()
         props=[r.u32() for _ in range(7)]
         variable,_,_=r.cstring()
-        if props[4]&6:
-            raise FormatError("输入极限表达式分支未实现，拒绝模板")
-        maximum,minimum=r.take(4),r.take(4)
+        # The native limit gates serialize either CString or float32. Keep
+        # each original wire slice, including narrow/wide string encoding.
+        limits=[]
+        for mask in (4,2):
+            start=r.pos
+            if props[4]&mask:r.cstring()
+            else:r.take(4)
+            limits.append(r.data[start:r.pos])
+        maximum,minimum=limits
         position=[r.u32(),r.u32()]
         enabled,_,_=r.cstring()
         condition,style=r.u32(),r.u32()
@@ -209,6 +213,29 @@ class InputRecord:
 
     @property
     def variable_type(self):return self.properties[6]
+
+    def limit(self,name):
+        mask,raw=(2,self.min_raw) if name=='minimum' else (4,self.max_raw)
+        return Reader(raw).cstring()[0] if self.properties[4]&mask else struct.unpack('<f',raw)[0]
+
+    def set_limits(self,**changes):
+        if self.variable_type==3:raise ValueError('Character inputs do not accept numeric limits')
+        if not changes or set(changes)-{'minimum','maximum'}:raise ValueError('Unknown input limit')
+        values={key:changes.get(key,self.limit(key)) for key in ('minimum','maximum')}
+        for key,value in values.items():
+            if isinstance(value,str):
+                if not value.strip() or '\0' in value:raise ValueError('Limit expression must be nonempty text without NUL')
+            elif type(value) not in (int,float) or not math.isfinite(value) or abs(value)>FLOAT_MAX:
+                raise ValueError('Limit must be a finite float32 or native expression')
+        if not any(isinstance(v,str) for v in values.values()) and values['minimum']>values['maximum']:
+            raise ValueError('Minimum exceeds maximum')
+        for key,value in changes.items():
+            mask,attr=(2,'min_raw') if key=='minimum' else (4,'max_raw')
+            expression=isinstance(value,str)
+            if value==self.limit(key) and expression==bool(self.properties[4]&mask):continue
+            self.properties[4]=(self.properties[4]|mask) if expression else (self.properties[4]&~mask)
+            setattr(self,attr,write_cstring(value) if expression else struct.pack('<f',value))
+            self.expression_cache=b''
 
     @property
     def unit(self):return unit_slot(InputMetadata.parse(self.common.metadata,self.appearance).properties.value,20)[0]

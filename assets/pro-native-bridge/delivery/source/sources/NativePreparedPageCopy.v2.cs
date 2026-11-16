@@ -61,9 +61,8 @@ namespace McgsInternalBridge {
                 IntPtr type=NativeMemory.Ptr(col,12);Engine.Rva(type);return NativeMemory.Ascii(NativeMemory.Add(type,8),256);
             }
             internal IntPtr Virtual(IntPtr instance,int slot,int expectedThunk) {
-                NativeMemory.Require(slot>=0 && slot<=104,"Page virtual slot exceeds the derived range.");
-                IntPtr table=NativeMemory.Ptr(instance,0);Engine.Rva(table);IntPtr function=NativeMemory.Ptr(table,4*slot);
-                NativeMemory.Require(function==Engine.Address(expectedThunk),"Page virtual method differs at slot "+slot);return function;
+                IntPtr table=NativeMemory.Ptr(instance,0);Engine.Rva(table);
+                return Engine.VerifyVirtual(table,slot,Engine.Address(expectedThunk),"page duplicate/save virtual slots",slot.ToString());
             }
         }
 
@@ -90,12 +89,12 @@ namespace McgsInternalBridge {
             if(diagnostic==null)diagnostic=new Dictionary<string,object>();
             IntPtr rootDoc=api.Strategy.RootDoc();
             diagnostic["root_document"]=DescribePointer(api,rootDoc);
-            NativeMemory.Require(NativeMemory.Ptr(rootDoc,0)==api.Engine.Address(RootDocVtable) && NativeMemory.Ptr(rootDoc,0x2D4)==context.ObjectModel,"Root document and attached object model disagree.");
+            NativeMemory.Require(NativeMemory.Ptr(rootDoc,0)==api.Engine.Address(RootDocVtable) && NativeMemory.Ptr(rootDoc,NativeLayout.Offset("root.object_model"))==context.ObjectModel,"Root document and attached object model disagree.");
             IntPtr app=api.Bind<NativeEngine.CdeclPointer>("Host_GetApp")();
             diagnostic["app"]=DescribePointer(api,app);
-            NativeMemory.Require(NativeMemory.Ptr(app,0x520)==rootDoc,"Application and native data-centre document disagree.");
+            NativeMemory.Require(NativeMemory.Ptr(app,NativeLayout.Offset("app.root_document"))==rootDoc,"Application and native data-centre document disagree.");
             diagnostic["app_main_window_0x20"]=DescribePointer(api,NativeMemory.Ptr(app,0x20));
-            IntPtr frame=NativeMemory.Ptr(app,0x524);diagnostic["app_manage_frame_0x524"]=DescribePointer(api,frame);
+            IntPtr frame=NativeMemory.Ptr(app,NativeLayout.Offset("app.main_frame"));diagnostic["app_manage_frame_0x524"]=DescribePointer(api,frame);
             // AB21B0 constructs C0FrmManage; AB22AB stores that this in app+524.
             // Its native construction appends five list objects to this+314;
             // the third append AB4862/AB48A8 is C0ManListUser (AB9E80).
@@ -157,7 +156,7 @@ namespace McgsInternalBridge {
         internal static INativePreparedPageControlEdit Prepare(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){return new Prepared(new Api(e),new NativePageControlAbi(e,c,project),action);}
         static Dictionary<string,object> Capture(Api api,NativePageControlAbi shared,Dictionary<string,object> action){
             var target=NativePageControlPreparation.Map(action["target"]);NativeMemory.Require(NativePageControlPreparation.Text(target,"source_mode")=="persisted-archive","Page-copy source must explicitly name persisted-archive mode.");
-            IntPtr page=shared.Page(target);int id=NativePageControlPreparation.Number(target,"page_id");IntPtr document=NativeMemory.Ptr(page,0x14);
+            IntPtr page=shared.Page(target);int id=NativePageControlPreparation.Number(target,"page_id");IntPtr document=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));
             NativeMemory.Require(api.Strategy.Bind<NativeEngine.ThisInt>("RootIsModified")(document)==0,"Page-copy source has pending edits; persist the intended source in a planned batch before copying its archive.");
             string blob=PersistedSource(shared,target,id);var structure=new List<string>();var identities=new List<Dictionary<string,object>>();Snapshot(api,page,0,structure,identities,new HashSet<uint>(),new HashSet<int>(),false);structure.Sort(StringComparer.Ordinal);
             return new Dictionary<string,object>{{"abi_profile_sha256",CopyAbi},{"source_mode","persisted-archive"},{"persisted_source_blob_sha256",blob},{"source_page",shared.PageSnapshot(page)},{"source_structure",structure},{"source_identities",identities},{"owner",FindOwner(api,shared.Context).Report()}};
@@ -195,7 +194,7 @@ namespace McgsInternalBridge {
             public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!applied,"Prepared page-copy is disposed or already applied.");shared.Current();NativePageControlPreparation.Same(before,Capture(api,shared,action),"Page-copy preimage changed before Apply.");lease.BeginApply(action);applied=true;
                 // The store branch reads the proven persisted source. No implicit RootSave/source flush occurs.
                 NativeOperationTrace.BeforeMutation("parameterized-page-archive-store-owned-buffer");archive(owner.List,sourceId,store.Storage);store.Finish();seek(file.Storage);load.Start(file.Storage,1);
-                NativeOperationTrace.BeforeMutation("parameterized-page-copy-root-dirty");setRoot(api.Strategy.RootDoc(),1);Marshal.WriteInt32(api.Strategy.RootDoc(),0x114,0);nameCache.Invalidate(lease,action);NativeOperationTrace.BeforeMutation("parameterized-page-archive-load-new");archive(owner.List,-1,load.Storage);load.Finish();
+                NativeOperationTrace.BeforeMutation("parameterized-page-copy-root-dirty");setRoot(api.Strategy.RootDoc(),1);Marshal.WriteInt32(api.Strategy.RootDoc(),NativeLayout.Offset("document.compile_valid"),0);nameCache.Invalidate(lease,action);NativeOperationTrace.BeforeMutation("parameterized-page-archive-load-new");archive(owner.List,-1,load.Storage);load.Finish();
                 var current=Pages(api,shared.Context);NativeMemory.Require(current.Count==pages.Count+1,"Native archive copy did not add exactly one page.");foreach(var row in pages)NativeMemory.Require(current.ContainsKey(row.Key)&&current[row.Key]==row.Value&&NativeStrategyProfile.ReadName(api.Strategy,row.Value)==names[row.Key],"Page copy altered an original page identity/name.");foreach(var row in current)if(!pages.ContainsKey(row.Key)){NativeMemory.Require(copy==IntPtr.Zero,"Page copy assigned more than one new ID.");newId=row.Key;copy=row.Value;}NativeMemory.Require(copy!=IntPtr.Zero,"Page copy returned no new page.");shared.Engine.Children(copy);copyDoc=shared.Document(copy,newId);
                 if(requestedName!=null){assign(oldName.Storage,NativeMemory.Ptr(copyDoc,0x25C));NativeOperationTrace.BeforeMutation("parameterized-copied-page-rename");NativeMemory.Require(rename(shared.Context.WindowService,oldName.Storage,newName.Storage),"Copied page rename returned false; do not replay.");nameCache.Refresh(lease,action,copy,newName);NativeMemory.Require(NativeStrategyProfile.ReadName(api.Strategy,copy)==requestedName,"Copied page requested-name readback differs.");}
                 string finalName=NativeStrategyProfile.ReadName(api.Strategy,copy);NativeMemory.Require(!String.IsNullOrWhiteSpace(finalName),"Copied page has an empty name.");foreach(string name in names.Values)NativeMemory.Require(!String.Equals(name,finalName,StringComparison.OrdinalIgnoreCase),"Copied page name collides with an original page.");

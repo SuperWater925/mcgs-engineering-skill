@@ -10,7 +10,7 @@ import subprocess
 from zipfile import ZIP_DEFLATED, ZipFile
 
 from check_repository import MANIFEST, file_manifest, package_files
-from turnkey_bundle import _relative
+from turnkey_bundle import _relative, REPOSITORY
 
 
 def sha(raw):
@@ -81,13 +81,17 @@ def build(base_zip, base_sha256, business, version, output):
     replacements["bundle-files.json"] = encoded({
         "schema": 1, "files": sorted(target_rows.values(), key=lambda entry: entry["file"].casefold()),
     })
-    payload = {name: raw for name, raw in replacements.items() if row(name, raw) != baseline.get(name)}
+    # Every current skill file and engine is shipped. A receiver can upgrade
+    # any prior update, including a file reverted to the original base bytes.
+    payload = dict(replacements)
+    source_contract = {key: release[key] for key in ('source_manifest_sha256', 'source_catalog_sha256')}
     manifest = {
         "schema": "mcgs-turnkey-update/v1",
         "base_bundle_sha256": sha(base_bundle),
         "base_files_sha256": sha(base_files),
         "target_files_sha256": sha(replacements["bundle-files.json"]),
         "target_release": target["release"],
+        "source_contract": source_contract,
         "payload": [row(name, payload[name]) for name in sorted(payload)],
     }
     output.mkdir(parents=True, exist_ok=False)
@@ -103,9 +107,17 @@ def build(base_zip, base_sha256, business, version, output):
         if archive.testzip() is not None:
             raise ValueError("Update ZIP CRC verification failed")
     digest = file_sha(asset)
-    (output / "SHA256SUMS.txt").write_text(f"{digest}  {asset.name}\n", encoding="ascii")
+    index = output / "mcgs-engineering-index.json"
+    index.write_bytes(encoded({
+        "schema": "mcgs-engineering-release-index/v1", "release_tag": version,
+        "source_commit": commit, "source_contract": source_contract,
+        "skill_manifest_sha256": file_sha(repo / MANIFEST),
+        "update": {"file": asset.name, "size": asset.stat().st_size, "sha256": digest,
+                   "url": f"https://github.com/{REPOSITORY}/releases/download/{version}/{asset.name}"},
+    }))
+    (output / "SHA256SUMS.txt").write_text(f"{digest}  {asset.name}\n{file_sha(index)}  {index.name}\n", encoding="ascii")
     return {"archive": str(asset), "sha256": digest, "payload_files": len(payload),
-            "bytes": asset.stat().st_size, "source_commit": commit}
+            "bytes": asset.stat().st_size, "source_commit": commit, "release_index": str(index)}
 
 
 if __name__ == "__main__":

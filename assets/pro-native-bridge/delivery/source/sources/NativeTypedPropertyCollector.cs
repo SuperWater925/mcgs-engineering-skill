@@ -15,7 +15,7 @@ namespace McgsInternalBridge {
   readonly NativeEngine engine;readonly List<Delegate> callbacks=new List<Delegate>();
   readonly List<Dictionary<string,object>> rows=new List<Dictionary<string,object>>();
   readonly List<string> errors=new List<string>();readonly HashSet<uint> activeTargets=new HashSet<uint>();
-  IntPtr instance,vtable,code;bool active,entered,disposed;int depth;
+  IntPtr instance,vtable,code;bool active,entered,disposed;int depth;HashSet<string> selectedKeys;bool descend=true,componentsOnly;
   internal NativeTypedPropertyCollector(NativeEngine native) {
    engine=native;RequireThread();
    try {
@@ -48,20 +48,20 @@ namespace McgsInternalBridge {
    return new UnicodeEncoding(false,false,true).GetString(raw,0,length*2);
   }
   void ReadTarget(IntPtr target) {
-   RequireThread();NativeMemory.Require(!disposed&&active&&depth<16&&activeTargets.Add(NativeMemory.U(target)),"Property component depth/cycle/lifetime differs.");
+   RequireThread();NativeMemory.Require(!disposed&&active&&activeTargets.Add(NativeMemory.U(target)),"Property component cycle/lifetime differs.");
    depth++;
-   try{NativePropertyTarget.Describe(engine,target);Getter getter=engine.Bind<Getter>(engine.Virtual(target,6));getter(target,instance);}
+   try{Getter getter=NativePropertyTarget.Bind<Getter>(engine,target,false);getter(target,instance);}
    finally{depth--;activeTargets.Remove(NativeMemory.U(target));GC.KeepAlive(callbacks);}
   }
   void Copy(int slot,IntPtr self,IntPtr owner,IntPtr key,IntPtr value,IntPtr number) {
    try {
     RequireThread();NativeMemory.Require(!disposed&&active&&self==instance&&NativeMemory.I32(self,4)==0x434F4C31,"Owned property callback context/bound differs.");
     NativeMemory.Require(owner!=IntPtr.Zero&&activeTargets.Contains(NativeMemory.U(owner)),"Getter returned an unentered property owner.");
-    string name=CString(key,256);var row=new Dictionary<string,object>{{"native_owner",NativeMemory.Hex(owner)},{"native_key",name},{"collector_slot",slot},{"component_depth",depth-1}};
+    string name=CString(key,256);if(componentsOnly&&slot!=1)return;if(!componentsOnly&&selectedKeys!=null&&(slot==1||!selectedKeys.Contains(name)))return;var row=new Dictionary<string,object>{{"native_owner",NativeMemory.Hex(owner)},{"native_key",name},{"collector_slot",slot},{"component_depth",depth-1}};
     switch(slot) {
      case 1:
       row["native_type_tag"]=9;row["component_iobject"]=NativeMemory.Hex(value);row["value"]=null;rows.Add(row);
-      if(value!=IntPtr.Zero){var info=NativePropertyTarget.Describe(engine,value);row["component_rtti"]=info["rtti"];row["component_property_interface"]=info["property_interface"];ReadTarget(value);}return;
+      if(value!=IntPtr.Zero&&!componentsOnly){var info=NativePropertyTarget.Describe(engine,value);row["component_rtti"]=info["rtti"];row["component_property_interface"]=info["property_interface"];if(descend)ReadTarget(value);}return;
      case 2:row["native_type_tag"]=0;row["value"]=NativeMemory.U(value);break;
      case 3:row["native_type_tag"]=1;row["value"]=NativeOriginalFontValue.Snapshot(value);break;
      case 4:row["native_type_tag"]=2;row["value"]=value.ToInt32();break;
@@ -85,6 +85,8 @@ namespace McgsInternalBridge {
    NativeMemory.Require(errors.Count==0,"Owned collector callback failed: "+String.Join("; ",errors.ToArray()));
    return rows;
   }
+  internal List<Dictionary<string,object>> ReadSelected(IntPtr target,IEnumerable<string> keys){selectedKeys=new HashSet<string>(keys,StringComparer.Ordinal);descend=false;return Read(target);}
+  internal List<Dictionary<string,object>> ReadComponents(IntPtr target){componentsOnly=true;descend=false;return Read(target);}
   public void Dispose(){if(disposed)return;NativeMemory.Require(!active,"Cannot release collector during native getter.");disposed=true;GC.KeepAlive(callbacks);if(code!=IntPtr.Zero){VirtualFree(code,UIntPtr.Zero,0x8000);code=IntPtr.Zero;}if(vtable!=IntPtr.Zero){Marshal.FreeHGlobal(vtable);vtable=IntPtr.Zero;}if(instance!=IntPtr.Zero){Marshal.FreeHGlobal(instance);instance=IntPtr.Zero;}callbacks.Clear();}
  }
 }

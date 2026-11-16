@@ -58,6 +58,11 @@ def inside(path, root):
     return canonical(path).is_relative_to(canonical(root))
 
 
+def installation_root_from_editor(editor):
+    directory = Path(editor).parent
+    return directory.parent if directory.name.casefold() == 'program' else directory
+
+
 def write_new_json(path, value):
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -204,7 +209,7 @@ def discover_installations(explicit_paths=(), registry_rows=None, associations=N
             if actual_family not in EDITOR_NAMES or actual_family != family:
                 observations.append({'source': origin, 'status': 'different_product', 'executable': str(image)})
                 return
-            install = canonical(root) if root else (image.parent.parent if image.parent.name.casefold() == 'program' else image.parent)
+            install = canonical(root) if root else installation_root_from_editor(image)
             if not image.is_relative_to(install) or install == Path(install.anchor):
                 raise ValueError('Installation root does not contain its editor or is a whole volume')
             identity = hashlib.sha256((family + '\0' + os.path.normcase(str(image))).encode('utf-8')).hexdigest()
@@ -811,7 +816,8 @@ def setup_bundle(bundle_root, family, explicit_editor=None, interactive=False):
     plan_file=work/'plan.json';write_new_json(plan_file,plan)
     if choice=='cancel':return {**common,'ok':True,'status':'cancelled','plan_file':str(plan_file),'software_changed':False}
     if choice=='current':
-        return {**common,'ok':True,'status':'current_installation_selected','environment_ready':True,
+        return {**common,'ok':True,'status':'current_installation_selected','environment_ready':False,
+                'editor_ready':True,'offline_ready':None,'online_ready':None,'mode_selection_required':True,
                 'installation':installation,'selected_installation':installation,'analysis':plan['analysis'],
                 'local_adaptation_required':True,'plan_file':str(plan_file),'software_changed':False}
     command=[sys.executable,str(Path(__file__).resolve()),'execute','--plan',str(plan_file)]
@@ -886,7 +892,8 @@ def execute_plan(plan_file, *, elevate=False, process_rows=None):
     if not result.get('ok'):return {**result,'environment_ready':False}
     restoration=restore_user_data(plan_file)
     receipt=folder/'installation-verified.json'
-    answer={**result,'environment_ready':True,'business_adaptation_verified':False,'user_data_restore':restoration,
+    answer={**result,'environment_ready':False,'editor_ready':True,'offline_ready':None,'online_ready':None,
+            'business_adaptation_verified':False,'user_data_restore':restoration,
             'mode_selection_required':True,'next_step':'Offer offline or online editing, and initialize only the selected mode against this installation.'}
     if not receipt.exists():write_new_json(receipt,answer)
     return answer

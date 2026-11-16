@@ -101,18 +101,15 @@ namespace McgsInternalBridge {
                 api.Bind<Ptr1>("StartupName");var result=new CString(api);try{api.MatchVirtual(instance,9,"StartupName");api.Bind<Ptr1>("StartupName")(instance,result.Storage);result.constructed=true;return result;}catch{result.Dispose();throw;}
             }
             internal static CString NameVirtual(Api api,IntPtr instance) {
-                api.Engine.Describe(instance);
+                NativeMemory.Readable(instance,4);
                 var result=new CString(api);try{api.Engine.Bind<Ptr1>(api.Engine.Virtual(instance,9))(instance,result.Storage);result.constructed=true;return result;}catch{result.Dispose();throw;}
             }
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]delegate IntPtr KeyFactory(IntPtr output,int propertyId);
             internal static CString PropertyKey(Api api,int propertyId) {
                 api.Bind<KeyFactory>("PropertyKeyName");var result=new CString(api);try{api.Bind<KeyFactory>("PropertyKeyName")(result.Storage,propertyId);result.constructed=true;return result;}catch{result.Dispose();throw;}
             }
-            internal string Read() {
-                IntPtr text=NativeMemory.Ptr(Storage,0);NativeMemory.Require(text!=IntPtr.Zero,"Native CString has no data.");var result=new StringBuilder();
-                for(int i=0;i<256;i++){IntPtr at=NativeMemory.Add(text,2*i);NativeMemory.Readable(at,2);char c=(char)(ushort)Marshal.ReadInt16(at);if(c==0)return result.ToString();result.Append(c);}
-                throw new InvalidOperationException("Native name exceeds trial bound.");
-            }
+            internal string Read() {return NativeUsableEditPermit.ReadCurrentCString(Storage,Int32.MaxValue/2-1);}
+
             public void Dispose(){try{if(constructed){constructed=false;api.Bind<Void0>("CStringDtor")(Storage);}}finally{Marshal.FreeHGlobal(Storage);}}
         }
         sealed class Matcher : IDisposable {
@@ -124,17 +121,14 @@ namespace McgsInternalBridge {
             public void Dispose(){try{if(constructed){constructed=false;api.Bind<Void0>("MatcherDtor")(Storage);}}finally{Marshal.FreeHGlobal(Storage);}}
         }
         internal static string ReadName(Api api,IntPtr instance){using(var name=CString.NameVirtual(api,instance))return name.Read();}
-        internal static int ReadId(Api api,IntPtr instance){api.Engine.Describe(instance);return api.Engine.Bind<Int0>(api.Engine.Virtual(instance,14))(instance);}
-        internal static string ReadBorrowedCString(IntPtr storage,int maximum) {
-            IntPtr text=NativeMemory.Ptr(storage,0);NativeMemory.Require(text!=IntPtr.Zero,"Borrowed CString has no data.");var result=new StringBuilder();
-            for(int i=0;i<maximum;i++){IntPtr at=NativeMemory.Add(text,2*i);NativeMemory.Readable(at,2);char c=(char)(ushort)Marshal.ReadInt16(at);if(c==0)return result.ToString();result.Append(c);}
-            throw new InvalidOperationException("Borrowed CString exceeds bounded length.");
-        }
+        internal static int ReadId(Api api,IntPtr instance){NativeMemory.Readable(instance,4);return api.Engine.Bind<Int0>(api.Engine.Virtual(instance,14))(instance);}
+        internal static string ReadBorrowedCString(IntPtr storage,int maximum) {return NativeUsableEditPermit.ReadCurrentCString(storage,Int32.MaxValue/2-1);}
+
         internal static int MarkRootDirty(Api api) {
             IntPtr root=api.RootDoc();int modified=api.Bind<Int0>("RootIsModified")(root);NativeMemory.Require(modified==0 || modified==1,"Unexpected root dirty state.");
-            int compile=NativeMemory.I32(root,0x114);NativeMemory.Require(compile==0 || compile==1,"Unexpected compile-valid representation.");
+            int compile=NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"));NativeMemory.Require(compile==0 || compile==1,"Unexpected compile-valid representation.");
             NativeOperationTrace.BeforeMutation("mark-root-dirty");
-            api.Bind<VoidInt>("RootSetModified")(root,1);Marshal.WriteInt32(NativeMemory.Add(root,0x114),0);return modified;
+            api.Bind<VoidInt>("RootSetModified")(root,1);Marshal.WriteInt32(NativeMemory.Add(root,NativeLayout.Offset("document.compile_valid")),0);return modified;
         }
         static Dictionary<string,object> RequireSessionPreimage(string fixture) {
             string pristine=Path.Combine(NativeOperations.TaskRoot,"evidence","pristine-fixture.MCP");
@@ -311,7 +305,7 @@ namespace McgsInternalBridge {
             NativeMemory.Require(Interlocked.CompareExchange(ref flushAttempted,0,0)==0,"This engine revision already attempted the strategy flush; inspect evidence instead of retrying.");
             var api=new Api(engine);IntPtr root=api.RootDoc(),target=Startup(api),preload=StrategyPreloadable(api,target);
             var evidence=RequireSuccessfulWriteBeforeFlush(api,root,target,fixture);
-            NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==0 && NativeMemory.I32(root,0x114)==1,"Strategy flush requires the exact saved root state.");
+            NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==0 && NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))==1,"Strategy flush requires the exact saved root state.");
             int dirtyBefore=StrategyDataDirty(api,target);
             using(var oldText=new CString(api,OldBody))using(var newText=new CString(api,NewBody))using(var matcher=new Matcher(api)) {
                 var find=api.Bind<FindText>("BlockFindText");
@@ -325,7 +319,7 @@ namespace McgsInternalBridge {
                 NativeOperationTrace.SetPhase("strategy-preloadable-save-data-void");api.Bind<Void0>("StrategyPreloadSaveData")(preload);
                 int dirtyAfter=StrategyDataDirty(api,target);
                 NativeMemory.Require(dirtyAfter==1 && !find(target,oldText.Storage,matcher.Storage) && find(target,newText.Storage,matcher.Storage) &&
-                    api.Bind<Int0>("RootIsModified")(root)==1 && NativeMemory.I32(root,0x114)==0,
+                    api.Bind<Int0>("RootIsModified")(root)==1 && NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))==0,
                     "Strategy flush did not retain updated source plus block/root dirty and compile-invalid state.");
                 NativeOperationTrace.SetPhase("strategy-flush-dispatched-requires-native-save");
                 return new Dictionary<string,object>{{"ok",true},{"strategy_iobject",NativeMemory.Hex(target)},{"preloadable",NativeMemory.Hex(preload)},
@@ -345,7 +339,7 @@ namespace McgsInternalBridge {
             using(var oldBody=new CString(api,OldBody))using(var newBody=new CString(api,NewBody))using(var matcher=new Matcher(api)) {
                 return new Dictionary<string,object>{{"strategy_iobject",NativeMemory.Hex(target)},{"root_document",NativeMemory.Hex(root)},
                     {"strategy_id",0},{"strategy_name","启动策略"},{"module",3},{"root_modified",api.Bind<Int0>("RootIsModified")(root)},
-                    {"compile_valid_field",NativeMemory.I32(root,0x114)},
+                    {"compile_valid_field",NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))},
                     {"block_data_modified",StrategyDataDirty(api,target)},
                     {"old_marker_found",api.Bind<FindText>("BlockFindText")(target,oldText.Storage,matcher.Storage)},
                     {"new_marker_found",api.Bind<FindText>("BlockFindText")(target,newText.Storage,matcher.Storage)},
@@ -357,7 +351,7 @@ namespace McgsInternalBridge {
         internal static Dictionary<string,object> DiagnoseSource(NativeEngine engine) {
             NativeOperationTrace.SetPhase("strategy-source-diagnose");
             var api=new Api(engine);IntPtr root=api.RootDoc(),target=Startup(api);
-            int modified=api.Bind<Int0>("RootIsModified")(root),compile=NativeMemory.I32(root,0x114);
+            int modified=api.Bind<Int0>("RootIsModified")(root),compile=NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"));
             var queries=new List<Dictionary<string,object>>();
             string[] keys={"old_full_crlf","old_body_no_line_end","old_full_lf","old_full_cr","old_marker_only",
                            "new_full_crlf","new_body_no_line_end","new_marker_only"};
@@ -374,7 +368,7 @@ namespace McgsInternalBridge {
                         {"found",find(target,text.Storage,matcher.Storage)}});
                 }
             }
-            NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==modified && NativeMemory.I32(root,0x114)==compile,
+            NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==modified && NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))==compile,
                 "Read-only strategy source diagnosis changed the root document state.");
             return new Dictionary<string,object>{{"ok",true},{"strategy_iobject",NativeMemory.Hex(target)},
                 {"strategy_id",0},{"strategy_name","启动策略"},{"module",3},{"queries",queries},
@@ -391,7 +385,7 @@ namespace McgsInternalBridge {
             var sessionPreimage=RequireSessionPreimage(fixture);
             var api=new Api(engine);IntPtr root=api.RootDoc(),target=Startup(api);
             NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==0,"Live project is already modified; the pristine fixture preimage is no longer sufficient.");
-            int compileBefore=NativeMemory.I32(root,0x114);NativeMemory.Require(compileBefore==0 || compileBefore==1,"Unexpected compile-valid field representation.");
+            int compileBefore=NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"));NativeMemory.Require(compileBefore==0 || compileBefore==1,"Unexpected compile-valid field representation.");
             using(var oldText=new CString(api,OldBody))using(var newText=new CString(api,NewBody))using(var matcher=new Matcher(api)) {
                 var find=api.Bind<FindText>("BlockFindText");var replace=api.Bind<ReplaceText>("BlockReplaceText");
                 NativeMemory.Require(find(target,oldText.Storage,matcher.Storage) && !find(target,newText.Storage,matcher.Storage),"Unique prepared source-marker preimage does not match.");
@@ -403,7 +397,7 @@ namespace McgsInternalBridge {
                 int count=replace(target,oldText.Storage,newText.Storage,matcher.Storage);
                 NativeMemory.Require(count==1,"Native strategy replacement changed an unexpected number of fields: "+count);
                 NativeMemory.Require(!find(target,oldText.Storage,matcher.Storage) && find(target,newText.Storage,matcher.Storage),"Native source-marker postimage does not match.");
-                NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==1 && NativeMemory.I32(root,0x114)==0,"Root document dirty/compile-invalid state was not retained.");
+                NativeMemory.Require(api.Bind<Int0>("RootIsModified")(root)==1 && NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))==0,"Root document dirty/compile-invalid state was not retained.");
                 NativeOperationTrace.SetPhase("verified");
                 return new Dictionary<string,object>{{"ok",true},{"strategy_name","启动策略"},{"strategy_id",0},{"module",3},{"strategy_iobject",NativeMemory.Hex(target)},
                     {"changed_count",count},{"search_body_before",OldBody},{"search_body_after",NewBody},

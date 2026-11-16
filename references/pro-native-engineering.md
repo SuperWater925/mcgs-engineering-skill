@@ -15,7 +15,7 @@ pwsh -NoProfile -File .\run.ps1 native-engineering --scope-config '<完整路径
 pwsh -NoProfile -File .\run.ps1 native-engineering --scope-config '<完整路径>' run --directory '<同一session完整路径>' --timeout 180
 ```
 
-直接执行在同一个原生队列调用内按动作顺序读取、准备和操作当前目标，无需生成 permit 文件。多步骤 program 的 `run` 默认合并连续同页、无结果依赖且兼容的编辑步骤，每组最多 8 个动作（可用 `--max-merged-actions` 调整）。显式查询、页面或元数据变化、保存、检查、不兼容动作和组内 `$ref` 依赖会结束当前编辑组。连续的显式页保存与末尾工程保存可另成一组，按顺序调用各自的原厂接口。单步原有动作保持完整，`--no-merge-steps` 保留逐步路线。已完成动作的真实 ID、名称和路径可通过 `$ref` 引用。
+直接执行在同一个原生队列调用内按动作顺序读取、准备和操作当前目标，无需生成 permit 文件。多步骤 program 的 `run` 默认合并连续同页、无结果依赖且兼容的编辑步骤，默认按实际依赖和消息大小分组（可用 `--max-merged-actions` 另外限定动作数）。显式查询、页面或元数据变化、保存、检查、不兼容动作和组内 `$ref` 依赖会结束当前编辑组。连续的显式页保存与末尾工程保存可另成一组，按顺序调用各自的原厂接口。单步原有动作保持完整，`--no-merge-steps` 保留逐步路线。已完成动作的真实 ID、名称和路径可通过 `$ref` 引用。
 
 ```powershell
 # 连接配置也可在本次终端一次设置。
@@ -41,4 +41,4 @@ pwsh -NoProfile -File .\run.ps1 native-engineering execute --project '<当前工
 
 本机已配置桥可沿原 TaskRoot/RuntimeRoot 使用新工程 scope。首次搬到另一任务或电脑时，先检查当前进程已有桥；普通启动且未接桥的 Pro 优先使用热接入口，按本次目录配置生成自有工具并连接。原 Addins/桥接启动器部署是可选兼容路径，不是每次在线修改的前提。只复制客户端或 scope 不会完成桥接。原桥的引擎加载目录和命名规则继续保留，部署时 DLL 与同名 `.scope.json` 必须一起放到该目录。
 
-完整自有源码、目录绑定/首次部署工具、原生保存边界及配方/图库持久化合同见[部署与保存](pro-native-deployment.md)。包内源码需按本次显式目录生成绑定并编译；不能将未绑定模板当作可加载 DLL。
+完整自有源码、目录绑定及原生保存合同见[部署与保存](pro-native-deployment.md)。普通用户通过 `turnkey prepare-online` 自动取得与当前技能配套的预编译引擎，只物化本机资料。源码编译仅供维护者开发，不是换电脑或换 Pro 版本后的必做步骤。

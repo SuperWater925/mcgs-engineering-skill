@@ -14,7 +14,7 @@ namespace McgsInternalBridge {
   static partial void AdditionalPrepare(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> action,ref Unit result);
   internal sealed class Unit:IDisposable {
    internal string Kind;internal Action Validate;internal Func<NativeUsableEditPermit.Lease,Dictionary<string,object>> Apply,Flush;
-   internal IDisposable Resource;public void Dispose(){if(Resource!=null){IDisposable r=Resource;Resource=null;r.Dispose();}}
+   internal IDisposable Resource;internal bool NoOp;public void Dispose(){if(Resource!=null){IDisposable r=Resource;Resource=null;r.Dispose();}}
   }
   internal static List<string> Kinds(){var list=new List<string>(BuiltinKinds);list.Add(NativeControlPropertyEditing.BatchKind);list.Add(NativeControlPropertyEditing.RenameKind);list.Add(NativePageDocumentProperties.Kind);list.Add(NativePageViewOperations.Kind);list.Add(NativeAlarmDefinitionEditing.Kind);list.Add(NativeAlarmTypedSpecification.Kind);list.Add(NativePageEventSourceEditing.Kind);list.AddRange(NativePageEventListEditing.Kinds);list.Add(NativeLinguistOpenViewsRefresh.Kind);list.AddRange(NativeStrategyWorkingModelEditing.ImplementedKinds);list.AddRange(NativeDataEngineering.Kinds);list.Add(NativeDataBatchEditing.Kind);list.Add(NativeRecipeMatrixEditing.Kind);list.AddRange(NativeDataGroupsAndArrays.Kinds);list.AddRange(NativeDataReferencedRename.Kinds);list.AddRange(NativeUsableDeviceBatch.ImplementedKinds);list.AddRange(NativePictureResources.Kinds);list.AddRange(NativeLinguistEditing.Kinds);list.Add(NativeDomainProjectCheck.Kind);AddKinds(list);var unique=new HashSet<string>(StringComparer.Ordinal);foreach(string kind in list)NativeMemory.Require(unique.Add(kind),"Duplicate compiled engineering kind: "+kind);return list;}
   static Dictionary<string,object> Map(object value){return NativePageControlPreparation.Map(value);}
@@ -122,14 +122,14 @@ namespace McgsInternalBridge {
     {"editor_image_sha256",engine.ImageSha256},{"native_summary",summary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(summary)},{"compiled_kinds",Kinds()},{"action_preimages",preimages},{"inspection_completed",true},{"all_requested_features_available",unavailable.Count==0},{"partial_inspection",unavailable.Count!=0},{"unsupported_actions",unavailable},{"feature_observations",observations},
     {"current_scope","Current native Pro project; dynamic counts; actual structural ABI checks"},{"write_attempted",false},{"candidate_functional_acceptance_pending",true},{"complete_serialization_preimage_claimed",false},{"binary_validation_reuse",NativeEngineeringFileHashes.Status()}};
   }
-  static Unit PrepareAction(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action) {
+  static Unit PrepareAction(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action,object capturedPropertyBaseline=null) {
    NativeAbiTargetProfiles.SelectFeature(action,"prepare-target");
    if(Kind(action)==NativePictureResources.VectorCreateKind)return PreparedAdditional(e,c,p,action,NativePictureResources.PrepareVectorCreate(e,c,p,action));
    string k=Kind(action);if(k==NativeCurrentTemplateControlOperations.GeometryBatchKind){var b=NativeCurrentTemplateControlOperations.PrepareGeometryBatch(e,c,p,action);return new Unit{Kind=k,Resource=b,Validate=delegate{NativePageControlPreparation.Before(action,NativeCurrentTemplateControlOperations.ReadGeometryBatch(e,c,p,action));},Apply=b.Apply,Flush=b.Flush};}if(k==NativeDomainProjectCheck.Kind){var a=NativeDomainProjectCheck.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}Unit extension=null;AdditionalPrepare(e,c,p,action,ref extension);if(extension!=null)return extension;
    if(IsWorkingStrategy(action)){var a=NativeStrategyWorkingModelEditing.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=delegate{NativePageControlPreparation.Same(action["before"],NativeStrategyWorkingModelEditing.Read(e,c,p,action),"Native strategy working-model preimage changed before Claim.");},Apply=a.Apply,Flush=a.Flush};}
    if(k=="label-caption-rect"){var a=NativeUsableLabelEditor.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
-   if(k=="control-properties"){var a=NativeControlPropertyEditing.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
-   if(k==NativeControlPropertyEditing.BatchKind){var a=NativeControlPropertyEditing.PrepareBatch(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
+   if(k=="control-properties"){var a=NativeControlPropertyEditing.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,NoOp=!a.HasChanges,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
+   if(k==NativeControlPropertyEditing.BatchKind){var a=NativeControlPropertyEditing.PrepareBatch(e,c,p,action,capturedPropertyBaseline);return new Unit{Kind=k,Resource=a,NoOp=!a.HasChanges,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    if(k==NativeControlPropertyEditing.RenameKind){var a=NativeControlPropertyEditing.PrepareRename(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    if(k==NativePageDocumentProperties.Kind){var a=NativePageDocumentProperties.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    if(k==NativePageViewOperations.Kind){var a=NativePageViewOperations.Prepare(e,c,p,action);return new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
@@ -183,14 +183,13 @@ namespace McgsInternalBridge {
    // A fresh next batch remains in the same open editor; no reopen is required.
    NativeMemory.Require(finalPersistenceOnly||structural==0||(structural==1&&plan.Actions.Count==1),"Structural page operations need their own chained permit; current planner does not predict native-assigned catalogs.");
   }
-  internal static Dictionary<string,object> Apply(Dictionary<string,object> request,NativeEngine engine,NativeContext context,Dictionary<string,object> directDocument=null,Dictionary<string,object> directSummary=null) {
+  internal static Dictionary<string,object> Apply(Dictionary<string,object> request,NativeEngine engine,NativeContext context,Dictionary<string,object> directDocument=null,Dictionary<string,object> directSummary=null,object capturedPropertyBaseline=null) {
    if(directDocument==null&&!request.ContainsKey("permit_file"))return ApplyDirect(request,engine,context);
    var result=new Dictionary<string,object>{{"ok",false},{"op","engineering-edit-batch"},{"automatic_retry",false},{"automatic_rollback",false},{"candidate_functional_acceptance_pending",true},{"actions",new List<object>()}};
    NativeUsableEditPermit.Plan plan=null;NativeUsableEditPermit.Lease lease=null;var units=new List<Unit>();var reports=(List<object>)result["actions"];
    var phaseTimes=new Dictionary<string,object>();result["phase_timings_ms"]=phaseTimes;var totalClock=Stopwatch.StartNew();var phaseClock=Stopwatch.StartNew();
    try {
     string project=NativeEngineeringProjectScope.ExpectedProjectPath;var summary=directSummary??NativeUsableEditPermit.Capture(engine,context);plan=directDocument!=null?NativeUsableEditPermit.LoadDirectPlan(directDocument,engine,context,summary,Kinds()):NativeUsableEditPermit.LoadPlan(request,engine,context,summary,Kinds());CheckIndependentPlan(plan);plan.ValidatePersistenceScopesBeforeClaim();/* Commit authorizes only the exact child scopes; RootSave is a separate explicit capability. */
-    NativePageDuplicateProfile.PreparedRootSave rootSave=null;if(plan.Commit&&plan.RootSaveAllowed){NativeAbiTargetProfiles.SelectFeature(null,"prepare-root-save");rootSave=new NativePageDuplicateProfile.PreparedRootSave(engine,project);}
     phaseTimes["plan_and_save_context"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
     // Content actions precede the grouped strategy unit, so it can preserve its full source catalog.
     HashSet<int> openStrategyIds=null;
@@ -201,7 +200,7 @@ namespace McgsInternalBridge {
      if(openStrategyIds==null)openStrategyIds=NativeStrategyWorkingModelEditing.OpenBlockIds(engine,context,project);
      NativeMemory.Require(!openStrategyIds.Contains(Convert.ToInt32(raw)),"This strategy has a native designer working document; edit/save that model to avoid a later Doc83 overwriting canonical changes.");
     }
-    foreach(var action in plan.Actions)if((!IsCanonicalSource(action)||IsWorkingStrategy(action))&&!IsDevice(Kind(action))&&(Kind(action)!="strategy-delete"||IsLifecycleStrategy(action)))units.Add(PrepareAction(engine,context,project,action));
+    foreach(var action in plan.Actions)if((!IsCanonicalSource(action)||IsWorkingStrategy(action))&&!IsDevice(Kind(action))&&(Kind(action)!="strategy-delete"||IsLifecycleStrategy(action)))units.Add(PrepareAction(engine,context,project,action,capturedPropertyBaseline));
     bool hasDevice=false;foreach(var action in plan.Actions)if(IsDevice(Kind(action)))hasDevice=true;
     if(hasDevice){var a=NativeUsableDeviceBatch.Prepare(engine,context,plan);units.Add(new Unit{Kind="device-batch",Resource=a,Validate=a.ValidateBefore,Apply=delegate(NativeUsableEditPermit.Lease l){a.Apply(l);return a.Status();},Flush=delegate(NativeUsableEditPermit.Lease l){a.Flush(l);return a.Status();}});}
     bool hasSource=false;foreach(var action in plan.Actions)if(IsCanonicalSource(action))hasSource=true;
@@ -209,6 +208,13 @@ namespace McgsInternalBridge {
     bool hasDelete=false;foreach(var action in plan.Actions)if(Kind(action)=="strategy-delete"&&!IsLifecycleStrategy(action))hasDelete=true;
     if(hasDelete){var a=NativeUsableStrategyDeleteBatch.Prepare(engine,context,plan);units.Add(new Unit{Kind="strategy-delete",Resource=a,Validate=a.ValidateBefore,Apply=delegate(NativeUsableEditPermit.Lease l){a.Apply(l);return a.Status();},Flush=delegate(NativeUsableEditPermit.Lease l){a.Flush(l);return a.Status();}});}
     foreach(Unit unit in units){var related=unit.Resource as INativePreparedRelatedPersistence;if(related!=null)related.ValidatePersistence(plan);}
+    bool needsRootSave=NativeOperationTrace.MutationAttempted;
+    foreach(Unit unit in units)needsRootSave|=!unit.NoOp;
+    NativePageDuplicateProfile.PreparedRootSave rootSave=null;
+    if(plan.Commit&&plan.RootSaveAllowed){
+     if(needsRootSave){NativeAbiTargetProfiles.SelectFeature(null,"prepare-root-save");rootSave=new NativePageDuplicateProfile.PreparedRootSave(engine,project);}
+     else result["root_save_skipped"]="all prepared edits already have their requested values";
+    }
     phaseTimes["prepare"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
     lease=plan.Claim(delegate{foreach(Unit unit in units){NativeAbiTargetProfiles.SelectFeatureGroup(unit.Kind,"validate-prepared-unit");unit.Validate();}});
     phaseTimes["validate_current_targets"]=phaseClock.Elapsed.TotalMilliseconds;phaseClock.Restart();
