@@ -3,7 +3,7 @@
 This backend is independent of native object layouts. It never attaches a
 native bridge, sends physical input, changes system foreground/maximization,
 or reads/writes vendor object memory. Cross-process memory is used solely for
-Scintilla's documented message buffers. Message acceptance is not a project
+documented Scintilla and common-toolbar message buffers. Message acceptance is not a project
 compile/check result. Unknown outcomes stop the current plan without replay.
 """
 from __future__ import annotations
@@ -12,7 +12,11 @@ import ctypes
 from ctypes import wintypes
 import hashlib
 import json
+import math
 import os
+import ntpath
+import struct
+import subprocess
 from pathlib import Path
 import time
 import uuid
@@ -22,6 +26,9 @@ WM_COMMAND, WM_MOUSEMOVE, WM_LBUTTONDOWN, WM_LBUTTONUP = 0x111, 0x200, 0x201, 0x
 WM_MDIACTIVATE, WM_MDIGETACTIVE, BM_CLICK = 0x222, 0x229, 0xF5
 SCI_GETTEXT, SCI_GETTEXTLENGTH, SCI_GETCODEPAGE = 2182, 2183, 2137
 SCI_SETSEL, SCI_REPLACESEL, SCI_BEGINUNDOACTION, SCI_ENDUNDOACTION = 2160, 2170, 2078, 2079
+TB_GETBUTTON, TB_BUTTONCOUNT, TB_GETITEMRECT = 0x417, 0x418, 0x41D
+READ_ONLY = frozenset(('read_text', 'scintilla_get', 'toolbar_inventory'))
+UI_ONLY = frozenset(('activate_page', 'respond_dialog'))
 SCHEMA = 'mcgs-hwnd-plan/v1'
 
 
@@ -45,8 +52,41 @@ def menu_text(text):
     return str(text).split('\t', 1)[0].replace('&&', '\0').replace('&', '').replace('\0', '&').strip()
 
 
+def full_project(path):
+    if not isinstance(path, str):
+        return False
+    drive, tail = ntpath.splitdrive(path)
+    return bool(drive and tail.startswith(('\\', '/')) and ntpath.splitext(tail)[1].casefold() == '.mcp')
+
+
+def canonical_project(path):
+    if os.name == 'nt':
+        path = str(Path(path).resolve())
+    return ntpath.normcase(ntpath.normpath(path))
+
+
 def text_sha(text):
     return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+
+def toolbar_button_size(machine):
+    if machine in (0x14c, 0x1c4):
+        return 20
+    if machine in (0x8664, 0xaa64) and ctypes.sizeof(ctypes.c_void_p) == 8:
+        return 32
+    raise BackendError('Unsupported toolbar machine or cross-bitness', status='toolbar_abi_unavailable', machine=machine)
+
+
+def matching_button_area(native, accessible):
+    if len(native) != 4 or len(accessible) != 4 or not all(map(math.isfinite, accessible)):
+        return False
+    x0, y0, x1, y1 = native
+    a0, b0, a1, b1 = accessible
+    if not (x0 <= (a0 + a1) / 2 <= x1 and y0 <= (b0 + b1) / 2 <= y1
+            and a0 <= (x0 + x1) / 2 <= a1 and b0 <= (y0 + y1) / 2 <= b1):
+        return False
+    overlap = max(0, min(x1, a1) - max(x0, a0)) * max(0, min(y1, b1) - max(y0, b0))
+    return overlap > 0 and 2 * overlap >= max((x1 - x0) * (y1 - y0), (a1 - a0) * (b1 - b0))
 
 
 class Win32:
@@ -87,6 +127,7 @@ class Win32:
         self.k.OpenProcess.restype = pointer
         self.k.CloseHandle.argtypes = [pointer]
         self.k.GetExitCodeProcess.argtypes = [pointer, ctypes.POINTER(wintypes.DWORD)]
+        self.u.ClientToScreen.argtypes = [pointer, ctypes.POINTER(wintypes.POINT)]
         self.k.GetProcessTimes.argtypes = [pointer] + [ctypes.POINTER(wintypes.FILETIME)] * 4
         self.k.QueryFullProcessImageNameW.argtypes = [pointer, wintypes.DWORD, wintypes.LPWSTR, ctypes.POINTER(wintypes.DWORD)]
         self.k.VirtualAllocEx.argtypes = [pointer, pointer, size, wintypes.DWORD, wintypes.DWORD]
@@ -257,7 +298,7 @@ class Win32:
         if not self.memory_process:
             self.memory_process = self.k.OpenProcess(0x1038, False, self.pid)
         if not self.memory_process:
-            raise BackendError('Cannot allocate a documented Scintilla message buffer', status='message_buffer_unavailable',
+            raise BackendError('Cannot allocate a documented Windows control message buffer', status='message_buffer_unavailable',
                                winerror=ctypes.get_last_error())
         address = self.k.VirtualAllocEx(self.memory_process, None, size, 0x3000, 4)
         if not address:
@@ -273,6 +314,153 @@ class Win32:
         # A timed-out message can still consume its buffer later. Freeing it
         # here would invalidate an in-flight pointer. Process exit reclaims it.
         self.retained_buffers.append({'address': address, 'bytes': size, 'reason': 'message_outcome_unknown'})
+
+    def _message_buffer(self, hwnd, message, index, size):
+        address = self._remote(size)
+        release = True
+        try:
+            try:
+                result = self.send(hwnd, message, index, address)
+            except BackendError as error:
+                if error.status == 'read_timeout':
+                    self._retain(address, size)
+                    release = False
+                raise
+            if not result:
+                raise BackendError('Toolbar entry no longer exists', status='toolbar_changed')
+            data, copied = ctypes.create_string_buffer(size), ctypes.c_size_t()
+            if not self.k.ReadProcessMemory(self.memory_process, address, data, size, ctypes.byref(copied)) or copied.value != size:
+                raise ctypes.WinError(ctypes.get_last_error())
+            return data.raw
+        finally:
+            if release:
+                self.k.VirtualFreeEx(self.memory_process, address, 0, 0x8000)
+
+    def _toolbar_button_size(self):
+        probe = getattr(self.k, 'IsWow64Process2', None)
+        if probe is None:
+            try:
+                # QueryFullProcessImageNameW from the already verified live PID
+                # identifies its PE header. The caller still verifies HWND ownership.
+                with Path(self.identity['executable']).open('rb') as image:
+                    dos = image.read(64)
+                    if not dos.startswith(b'MZ') or len(dos) != 64:
+                        raise ValueError('Invalid DOS header')
+                    image.seek(struct.unpack_from('<I', dos, 60)[0])
+                    pe = image.read(6)
+                    if not pe.startswith(b'PE\0\0') or len(pe) != 6:
+                        raise ValueError('Invalid PE header')
+                    return toolbar_button_size(struct.unpack_from('<H', pe, 4)[0])
+            except (OSError, ValueError) as error:
+                raise BackendError('Cannot determine the target toolbar ABI', status='toolbar_abi_unavailable') from error
+        probe.argtypes = [ctypes.c_void_p, ctypes.POINTER(wintypes.USHORT), ctypes.POINTER(wintypes.USHORT)]
+        process, native = wintypes.USHORT(), wintypes.USHORT()
+        if not probe(self.process, ctypes.byref(process), ctypes.byref(native)):
+            raise ctypes.WinError(ctypes.get_last_error())
+        machine = process.value or native.value
+        return toolbar_button_size(machine)
+
+    def toolbar_buttons(self, hwnd):
+        toolbar = self.snapshot(hwnd)
+        if toolbar['class_name'].casefold() != 'toolbarwindow32' or not toolbar['visible'] or not toolbar['parent']:
+            raise BackendError('Expected a visible common-controls toolbar', status='toolbar_unavailable')
+        parent = self.snapshot(toolbar['parent'])
+        size = self._toolbar_button_size()
+        count = self.send(hwnd, TB_BUTTONCOUNT)
+        if count > 4096:
+            raise BackendError('Invalid toolbar button count', status='toolbar_changed', count=count)
+        dpi = getattr(self.u, 'SetThreadDpiAwarenessContext', None)
+        if dpi is None:
+            raise BackendError('Cannot match toolbar and UIA screen coordinates', status='toolbar_dpi_unavailable')
+        dpi.argtypes = [ctypes.c_void_p]
+        dpi.restype = ctypes.c_void_p
+        previous = dpi(ctypes.c_void_p(-4))
+        if not previous:
+            raise ctypes.WinError(ctypes.get_last_error())
+        try:
+            rows = []
+            for index in range(count):
+                raw = self._message_buffer(hwnd, TB_GETBUTTON, index, size)
+                _, command, state, style = struct.unpack_from('<iiBB', raw)
+                if state & 8 or style & 1:  # TBSTATE_HIDDEN, BTNS_SEP
+                    continue
+                coords = struct.unpack('<iiii', self._message_buffer(hwnd, TB_GETITEMRECT, index, 16))
+                first, last = wintypes.POINT(*coords[:2]), wintypes.POINT(*coords[2:])
+                if not self.u.ClientToScreen(hwnd, ctypes.byref(first)) or not self.u.ClientToScreen(hwnd, ctypes.byref(last)):
+                    raise ctypes.WinError(ctypes.get_last_error())
+                rows.append({'toolbar': hwnd, 'parent': parent['hwnd'], 'id': command,
+                             'screen_rect': [first.x, first.y, last.x, last.y], 'style': style,
+                             'enabled': toolbar['enabled'] and parent['enabled'] and bool(state & 4)})
+            if self.send(hwnd, TB_BUTTONCOUNT) != count:
+                raise BackendError('Toolbar changed during inventory', status='toolbar_changed')
+        finally:
+            dpi(previous)
+        return rows
+
+    def toolbar_labels(self, hwnd):
+        self.check(hwnd)
+        # Read-only UIA is isolated in a short-lived helper because a provider
+        # can block on the editor thread. HWND and PID are integer arguments.
+        script = r'''
+$ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = [Text.UTF8Encoding]::new($false)
+Add-Type -AssemblyName UIAutomationClient,UIAutomationTypes
+$root = [Windows.Automation.AutomationElement]::FromHandle([IntPtr]HANDLE_VALUE)
+if ($null -eq $root -or $root.Current.ProcessId -ne PID_VALUE) { throw 'Wrong UIA toolbar owner' }
+$condition = [Windows.Automation.PropertyCondition]::new(
+    [Windows.Automation.AutomationElement]::ControlTypeProperty, [Windows.Automation.ControlType]::Button)
+$rows = @(
+    foreach ($button in $root.FindAll([Windows.Automation.TreeScope]::Descendants, $condition)) {
+        $b = $button.Current
+        $r = $b.BoundingRectangle
+        if ($b.ProcessId -eq PID_VALUE -and !$b.IsOffscreen -and !$r.IsEmpty -and $b.Name) {
+            @{label=$b.Name; screen_rect=@($r.Left,$r.Top,$r.Right,$r.Bottom); enabled=$b.IsEnabled}
+        }
+    }
+)
+ConvertTo-Json -InputObject $rows -Compress -Depth 4
+'''
+        script = script.replace('HANDLE_VALUE', str(int(hwnd))).replace('PID_VALUE', str(self.pid))
+        try:
+            powershell = Path(os.environ.get('SystemRoot', 'C:/Windows')) / 'System32/WindowsPowerShell/v1.0/powershell.exe'
+            result = subprocess.run([str(powershell), '-NoProfile', '-NonInteractive', '-Command', script],
+                                    capture_output=True, check=True, timeout=self.timeout_ms / 1000,
+                                    encoding='utf-8', creationflags=subprocess.CREATE_NO_WINDOW)
+            return json.loads(result.stdout)
+        except (OSError, subprocess.SubprocessError, ValueError) as error:
+            raise BackendError('Could not read the toolbar UIA button labels', status='toolbar_uia_unavailable',
+                               error_type=type(error).__name__) from error
+
+    def toolbar_resource_labels(self, command_ids):
+        if not command_ids or not self.identity['executable']:
+            return {}
+        self.live()
+        self.k.LoadLibraryExW.argtypes = [wintypes.LPCWSTR, wintypes.HANDLE, wintypes.DWORD]
+        self.k.LoadLibraryExW.restype = wintypes.HMODULE
+        self.k.FreeLibrary.argtypes = [wintypes.HMODULE]
+        self.u.LoadStringW.argtypes = [wintypes.HINSTANCE, wintypes.UINT, wintypes.LPWSTR, ctypes.c_int]
+        # Load the selected executable only as a data/image resource. Command
+        # IDs are sampled from TB_GETBUTTON, never from a vendor ID table.
+        module = self.k.LoadLibraryExW(self.identity['executable'], None, 0x22)
+        if not module:
+            return {}
+        try:
+            labels = {}
+            buffer = ctypes.create_unicode_buffer(4096)
+            for command_id in command_ids:
+                if not 0 < command_id <= 0xffff:
+                    continue
+                size = self.u.LoadStringW(module, command_id, buffer, len(buffer))
+                if not 0 < size < len(buffer) - 1:
+                    continue
+                lines = buffer.value.splitlines()
+                # MFC command strings have the status prompt, then tooltip.
+                # Require both parts so arbitrary matching resources are ignored.
+                if len(lines) == 2 and lines[0].strip() and lines[1].strip():
+                    labels[command_id] = lines[1].strip()
+            return labels
+        finally:
+            self.k.FreeLibrary(module)
 
     def scintilla_text(self, hwnd):
         length = self.send(hwnd, SCI_GETTEXTLENGTH)
@@ -325,11 +513,34 @@ class Win32:
 
 
 class Backend:
-    def __init__(self, pid, timeout_ms=3000, api=None):
+    def __init__(self, pid, timeout_ms=3000, api=None, project_probe=None):
         self.api = api or Win32(pid, timeout_ms)
         self.pid, self.cache, self.trace = int(pid), None, []
         self.dialog_responses = []
         self.frame_handle = None
+        self.project_probe = project_probe
+        self.expected_project = None
+        self.verified_project = None
+
+    def verify_project(self):
+        if self.expected_project is None:
+            return
+        if self.project_probe is None:
+            raise BackendError('An active bridge read is required to verify the current full project path',
+                               status='project_identity_unavailable')
+        try:
+            actual = self.project_probe(self.expected_project)
+        except (OSError, RuntimeError, ValueError, ImportError) as error:
+            raise BackendError(str(error), status='project_identity_unavailable') from error
+        path = actual.get('actual_project')
+        if (actual.get('ok') is not True or actual.get('op') != 'engineering-edit-inspect'
+                or actual.get('process_id') != self.pid
+                or actual.get('creation_filetime') != self.api.identity['creation_filetime']
+                or not full_project(path) or canonical_project(path) != canonical_project(self.expected_project)):
+            raise BackendError('Current Pro project or process generation differs from the plan',
+                               status='project_identity_mismatch', expected_project=self.expected_project,
+                               actual_project=path)
+        self.verified_project = path
 
     def close(self):
         self.api.close()
@@ -408,11 +619,14 @@ class Backend:
             row, parent = parent, self.api.snapshot(parent['parent']) if parent['parent'] else None
         if not parent:
             raise BackendError('Target is not inside an MDI document page', status='mdi_activation_unavailable', target=row)
-        self._send(parent['hwnd'], WM_MDIACTIVATE, row['hwnd'])
         active = self.api.send(parent['hwnd'], WM_MDIGETACTIVE)
+        sent = active != row['hwnd']
+        if sent:
+            self._send(parent['hwnd'], WM_MDIACTIVATE, row['hwnd'])
+            active = self.api.send(parent['hwnd'], WM_MDIGETACTIVE)
         if active != row['hwnd']:
             raise BackendError('MDI activation was not confirmed', status='activation_not_verified', expected=row['hwnd'], actual=active)
-        return {'sent': True, 'verified': True, 'verification': 'WM_MDIGETACTIVE', 'page': row, 'mdi_client': parent['hwnd'],
+        return {'sent': sent, 'verified': True, 'verification': 'WM_MDIGETACTIVE', 'page': row, 'mdi_client': parent['hwnd'],
                 'system_foreground_changed': False, 'maximized': False}
 
     def activate_for(self, row):
@@ -560,6 +774,63 @@ class Backend:
         return {'sent': True, 'verified': False, 'verification': 'native_handler_returned_only',
                 'menu': command, 'native_return': value, 'project_check_passed': None}
 
+    def discover_toolbar(self, selector):
+        toolbar = self.find(selector)
+        hwnd = toolbar['hwnd']
+        buttons = self.api.toolbar_buttons(hwnd)
+        try:
+            labels = self.api.toolbar_labels(hwnd)
+        except BackendError as error:
+            if error.status != 'toolbar_uia_unavailable':
+                raise
+            labels = []
+        matched = []
+        for button in buttons:
+            matches = [label for label in labels if matching_button_area(button['screen_rect'], label['screen_rect'])]
+            accessible = None
+            if len(matches) == 1 and sum(matching_button_area(other['screen_rect'], matches[0]['screen_rect'])
+                                         for other in buttons) == 1:
+                accessible = matches[0]
+            matched.append((button, accessible))
+        resources = self.api.toolbar_resource_labels({row['id'] for row, label in matched if label is None})
+        if self.api.toolbar_buttons(hwnd) != buttons:
+            raise BackendError('Toolbar changed during semantic discovery', status='toolbar_changed')
+        rows = []
+        for button, accessible in matched:
+            if accessible is not None:
+                rows.append({**button, 'label': accessible['label'], 'label_source': 'uia_button_rect',
+                             'enabled': button['enabled'] and accessible['enabled']})
+            elif button['id'] in resources:
+                rows.append({**button, 'label': resources[button['id']],
+                             'label_source': 'executable_command_resource'})
+        return rows
+
+    def toolbar_command(self, step):
+        if step.get('page'):
+            self.activate(step['page'])
+        requested = step['label']
+        if not isinstance(requested, str) or not requested.strip():
+            raise ValueError('Toolbar commands need a nonempty UIA label')
+        rows = [row for row in self.discover_toolbar(step['toolbar']) if row['label'] == requested]
+        if len(rows) != 1 or not rows[0]['enabled']:
+            raise BackendError('Toolbar label is unavailable, ambiguous or disabled',
+                               status='toolbar_command_unavailable', label=requested, matches=rows)
+        button = rows[0]
+        if not 0 < button['id'] <= 0xffff or button['style'] & (0x08 | 0x80):
+            raise BackendError('Toolbar entry is a dropdown or cannot be dispatched as WM_COMMAND',
+                               status='toolbar_command_unavailable', button=button)
+        current = self.api.snapshot(button['toolbar'])
+        if current['parent'] != button['parent'] or not current['enabled'] or not self.api.snapshot(button['parent'])['enabled']:
+            raise BackendError('Toolbar routing parent or enabled state changed', status='toolbar_changed')
+        if step.get('expect_dialog') is not None:
+            self._post(button['parent'], WM_COMMAND, button['id'])
+            dialog = self.wait_dialog(step['expect_dialog'], step.get('timeout_ms', 10000))
+            return {'sent': True, 'verified': True, 'verification': 'expected_dialog_observed',
+                    'toolbar_button': button, 'dialog': dialog, 'project_check_passed': None}
+        value = self._send(button['parent'], WM_COMMAND, button['id'], timeout_ms=step.get('timeout_ms'))
+        return {'sent': True, 'verified': False, 'verification': 'native_handler_returned_only',
+                'toolbar_button': button, 'native_return': value, 'project_check_passed': None}
+
     @staticmethod
     def coordinates(point):
         if not isinstance(point, (list, tuple)) or len(point) != 2 or any(type(value) is not int or not -32768 <= value <= 32767 for value in point):
@@ -579,6 +850,10 @@ class Backend:
         if len(points) < 2:
             raise ValueError('Native drawing/moving requires at least two client points')
         packed = [self.coordinates(point) for point in points]
+        if step.get('tool_menu') and step.get('tool_toolbar'):
+            raise ValueError('Choose one drawing-tool selector')
+        if step.get('tool_toolbar'):
+            self.toolbar_command(step['tool_toolbar'])
         if step.get('tool_menu'):
             self.command({'path': step['tool_menu'], 'frame': step.get('frame')})
         keys = (8 if step.get('control') else 0) | (4 if step.get('shift') else 0)
@@ -658,8 +933,12 @@ class Backend:
 
     def execute(self, step):
         operation = step['op']
+        if operation == 'toolbar_inventory':
+            return {'sent': False, 'verified': True, 'items': self.discover_toolbar(step['toolbar'])}
         if operation == 'activate_page':
             return self.activate(step['target'])
+        if operation == 'toolbar_command':
+            return self.toolbar_command(step)
         if operation == 'menu_command':
             return self.command(step)
         if operation == 'respond_dialog':
@@ -697,7 +976,7 @@ class Backend:
                   for row in windows if row['class_name'] == 'MDIClient']
         return {'schema': 'mcgs-hwnd-inventory/v1', 'status': 'inventory_read', 'process': self.api.identity,
                 'windows': windows, 'menus': menus, 'mdi': active, 'dialogs': self.dialogs(),
-                'capabilities': {'dynamic_native_menu_paths': True, 'mdi_activation_readback': True,
+                'capabilities': {'dynamic_native_menu_paths': True, 'semantic_toolbar_inventory': True, 'mdi_activation_readback': True,
                     'canvas_mouse_messages': True, 'point_selection_command': True, 'native_copy_paste_move': True,
                     'standard_edit_text_readback': True, 'scintilla_full_text_readback': True,
                     'exact_dialog_responses': True, 'arbitrary_native_control_properties': False,
@@ -710,10 +989,15 @@ class Backend:
         if plan.get('pid', self.pid) != self.pid:
             raise ValueError('Plan PID differs from the explicitly selected process')
         allowed = {'activate_page', 'menu_command', 'respond_dialog', 'draw', 'move', 'select', 'selection_command',
-                   'copy_paste_move', 'property_set', 'scintilla_get', 'scintilla_replace', 'read_text'}
+                   'copy_paste_move', 'property_set', 'scintilla_get', 'scintilla_replace', 'read_text', 'toolbar_command', 'toolbar_inventory'}
         for step in plan['steps']:
             if not isinstance(step, dict) or step.get('op') not in allowed:
                 raise BackendError('Plan contains an unsupported operation', operation=step.get('op') if isinstance(step, dict) else None)
+        mutates = bool(plan.get('save_command')) or any(step['op'] not in READ_ONLY | UI_ONLY for step in plan['steps'])
+        self.expected_project = plan.get('expected_project') if mutates else None
+        self.verified_project = None
+        if mutates and not full_project(self.expected_project):
+            raise ValueError('A mutating HWND plan needs expected_project as a full absolute .mcp path')
         self.dialog_responses = plan.get('dialog_responses', [])
         self.trace = []
         started = time.perf_counter()
@@ -737,8 +1021,11 @@ class Backend:
             result['steps'].append(entry)
             save()
             try:
-                if step['op'] not in ('respond_dialog', 'read_text', 'scintilla_get', 'property_set'):
+                if step['op'] not in READ_ONLY | {'respond_dialog', 'property_set'}:
                     self.guard_dialogs(step.get('dialog_context'))
+                if step['op'] not in READ_ONLY | UI_ONLY:
+                    self.verify_project()
+                    result['verified_project'] = self.verified_project
                 value = self.execute(step)
                 entry.update(value, status='completed')
                 if step.get('_final_save'):

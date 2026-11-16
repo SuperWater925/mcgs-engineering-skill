@@ -52,6 +52,11 @@ namespace McgsInternalBridge {
    internal readonly List<IntPtr> TopControls;
    internal readonly Dictionary<string,object> PageState;
    internal Dictionary<string,object> Snapshot;
+   HashSet<IntPtr> ownerIdentities;
+   internal HashSet<IntPtr> OwnerIdentities(Api api){
+    if(ownerIdentities==null)ownerIdentities=PropertyOwnerIndex(api,TopControls,Doc);
+    return ownerIdentities;
+   }
    internal BatchSelection(Api api,Dictionary<string,object> target){
     Page=api.Common.Page(target);
     Doc=api.Common.Document(Page,Convert.ToInt32(target["page_id"]));
@@ -67,7 +72,7 @@ namespace McgsInternalBridge {
    foreach(object raw in(IEnumerable)Map(action["after"])["controls"]){
     var item=Map(raw);var target=new Dictionary<string,object>(parent);
     foreach(var pair in Map(item["target"])){
-     NativeMemory.Require(pair.Key=="control_name"||pair.Key=="rtti"||pair.Key=="control_path"||pair.Key=="component_path","Property batch control target contains unsupported fields.");target.Add(pair.Key,pair.Value);
+     NativeMemory.Require(pair.Key=="control_name"||pair.Key=="rtti"||pair.Key=="control_path"||pair.Key=="component_path"||pair.Key=="complete"||pair.Key=="native_id","Property batch control target contains unsupported fields.");target.Add(pair.Key,pair.Value);
     }
     object properties;
     IEnumerable requested=item.TryGetValue("properties",out properties)?(IEnumerable)properties:null;

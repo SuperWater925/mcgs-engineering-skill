@@ -1,8 +1,13 @@
 """HWND protocol fixtures, never launches or controls vendor software."""
 import argparse
+from contextlib import redirect_stdout
+import io
 import json
 from pathlib import Path
+import sys
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 import uuid
 
 import pro_hwnd
@@ -26,6 +31,21 @@ class FakeWindows:
             7: self.row(7, 4, 'Scintilla', 'old source'),
         }
         self.fail_message = None
+        self.rows[21] = self.row(21, 1, 'ToolbarWindow32', '')
+        self.toolbar_id = 551
+        self.toolbar_enabled = True
+
+    def toolbar_buttons(self, hwnd):
+        assert hwnd == 21 and self.snapshot(hwnd)['parent'] == 1
+        return [{'toolbar': hwnd, 'parent': 1, 'id': self.toolbar_id,
+                 'screen_rect': [20, 10, 44, 34], 'enabled': self.toolbar_enabled, 'style': 0}]
+
+    def toolbar_labels(self, hwnd):
+        assert hwnd == 21
+        return [{'label': 'Fixture tool', 'screen_rect': [22, 12, 43, 32], 'enabled': True}]
+
+    def toolbar_resource_labels(self, command_ids):
+        return {}
 
     @staticmethod
     def row(hwnd, parent, cls, text, owner=0):
@@ -95,10 +115,19 @@ class FakeWindows:
 class HwndTests(unittest.TestCase):
     def setUp(self):
         self.api = FakeWindows()
-        self.backend = native.Backend(22, api=self.api)
+        self.project = r'D:\Example\Fixture.mcp'
+        self.actual_project = self.project
+        self.probe_calls = []
+        self.backend = native.Backend(22, api=self.api, project_probe=self.probe)
+
+    def probe(self, expected):
+        self.probe_calls.append(expected)
+        return {'op': 'engineering-edit-inspect', 'ok': True, 'process_id': 22,
+                'creation_filetime': 10, 'actual_project': self.actual_project}
 
     def run_plan(self, steps, **options):
-        return self.backend.run({'schema': native.SCHEMA, 'steps': steps, **options})
+        return self.backend.run({'schema': native.SCHEMA, 'steps': steps,
+                                 'expected_project': self.project, **options})
 
     def test_inventory_is_read_only_and_capabilities_do_not_claim_project_checks(self):
         report = self.backend.inventory()
@@ -141,6 +170,7 @@ class HwndTests(unittest.TestCase):
         self.assertEqual(result['status'], 'stopped')
         self.assertEqual(result['steps'][0]['status'], 'blocked_unknown_dialog')
         self.assertEqual(self.api.calls, [])
+        self.assertEqual(self.probe_calls, [])
 
     def test_exact_modal_button_is_posted_and_disappearance_verified(self):
         self.api.add_dialog('Known question')
@@ -160,9 +190,95 @@ class HwndTests(unittest.TestCase):
         self.assertEqual(sum(message == native.WM_LBUTTONUP for _, message, *unused in self.api.calls), 1)
         self.assertFalse(any(message == native.WM_COMMAND for _, message, *unused in self.api.calls))
 
+    def test_project_path_not_basename_is_required(self):
+        self.actual_project = r'D:\Another\Fixture.mcp'
+        result = self.run_plan([{'op': 'menu_command', 'path': ['Edit', 'Copy']}])
+        self.assertEqual(result['steps'][0]['status'], 'project_identity_mismatch')
+        self.assertFalse(any(call[1] == native.WM_COMMAND for call in self.api.calls))
+        with self.assertRaises(ValueError):
+            self.run_plan([{'op': 'menu_command', 'path': ['Edit', 'Copy']}], expected_project='Fixture.mcp')
+
+    def test_semantic_toolbar_read_only_and_current_dynamic_id(self):
+        selector = {'hwnd': 21}
+        result = self.run_plan([{'op': 'toolbar_inventory', 'toolbar': selector}], expected_project=None)
+        self.assertEqual(result['steps'][0]['items'][0]['label'], 'Fixture tool')
+        self.assertEqual(self.probe_calls, [])
+        self.api.toolbar_id = 619
+        result = self.run_plan([{'op': 'toolbar_command', 'toolbar': selector, 'label': 'Fixture tool',
+                                 'page': {'hwnd': 4}}])
+        self.assertEqual(result['status'], 'completed')
+        self.assertEqual(self.api.active, 4)
+        self.assertIn((1, native.WM_COMMAND, 619, 0), self.api.calls)
+        self.assertFalse(result['steps'][0]['verified'])
+
+    def test_resource_label_falls_back_to_the_current_toolbar_id(self):
+        self.api.toolbar_labels = lambda hwnd: []
+        calls = []
+
+        def labels(command_ids):
+            calls.append(command_ids)
+            return {command_id: 'Resource action' for command_id in command_ids}
+
+        self.api.toolbar_resource_labels = labels
+        self.api.toolbar_id = 217
+        result = self.run_plan([{'op': 'toolbar_command', 'toolbar': {'hwnd': 21},
+                                 'label': 'Resource action'}])
+        self.assertEqual(result['status'], 'completed')
+        self.assertEqual(calls, [{217}])
+        self.assertIn((1, native.WM_COMMAND, 217, 0), self.api.calls)
+        self.assertEqual(result['steps'][0]['toolbar_button']['label_source'], 'executable_command_resource')
+
+    def test_disabled_toolbar_and_unknown_outcome_do_not_retry(self):
+        steps = [{'op': 'toolbar_command', 'toolbar': {'hwnd': 21}, 'label': 'Fixture tool'}]
+        self.api.toolbar_enabled = False
+        result = self.run_plan(steps)
+        self.assertEqual(result['steps'][0]['status'], 'toolbar_command_unavailable')
+        self.assertFalse(any(call[1] == native.WM_COMMAND for call in self.api.calls))
+        self.api.toolbar_enabled = True
+        self.api.fail_message = native.WM_COMMAND
+        result = self.run_plan(steps + steps)
+        self.assertTrue(result['unknown_outcome'])
+        self.assertEqual(sum(call[1] == native.WM_COMMAND for call in self.api.calls), 1)
+
+    def test_run_cli_binds_connection_before_submitting_project_identity(self):
+        base = WORK / uuid.uuid4().hex
+        plan, receipt = base.with_suffix('.plan.json'), base.with_suffix('.receipt.json')
+        plan.write_text(json.dumps({'schema': native.SCHEMA, 'expected_project': self.project,
+                                    'steps': [{'op': 'menu_command', 'path': ['Edit', 'Copy']}]}),
+                        encoding='utf-8')
+        scope = str(base.with_suffix('.scope.json'))
+        digest = '1' * 64
+        calls = []
+
+        def configure(path, expected):
+            calls.append(('configure', path, expected))
+
+        def load_client():
+            self.assertEqual(calls, [('configure', scope, digest)])
+            return SimpleNamespace(SubmissionError=RuntimeError, QueueTimeout=TimeoutError)
+
+        def submit(request, request_id, timeout):
+            calls.append(('submit', request, timeout))
+            self.assertTrue(request_id.startswith('hwnd_identity_'))
+            return self.probe(request['expected_project'])
+
+        modules = {'native_delivery_config': SimpleNamespace(configure=configure),
+                   'edit_batch_client': SimpleNamespace(load_client=load_client, submit=submit)}
+        module = SimpleNamespace(Backend=lambda pid, timeout, project_probe:
+                                 native.Backend(pid, timeout, api=self.api, project_probe=project_probe))
+        arguments = ['pro_hwnd.py', 'run', '--pid', '22', '--plan', str(plan), '--receipt', str(receipt),
+                     '--scope-config', scope, '--scope-sha256', digest]
+        self.addCleanup(pro_hwnd.project_client.cache_clear)
+        with patch.dict(sys.modules, modules), patch.object(sys, 'argv', arguments), \
+                patch.object(pro_hwnd, 'backend_module', return_value=module), redirect_stdout(io.StringIO()):
+            self.assertEqual(pro_hwnd.main(), 0)
+        self.assertEqual(pro_hwnd.read(receipt)['status'], 'completed')
+        self.assertEqual(calls[1], ('submit', {'op': 'engineering-edit-inspect',
+                                              'expected_project': self.project}, 3.0))
+
     def test_existing_receipt_returns_result_without_replaying(self):
         path = WORK / (uuid.uuid4().hex + '.json')
-        plan = {'schema': native.SCHEMA, 'steps': [{'op': 'menu_command', 'path': ['Edit', 'Copy']}]}
+        plan = {'schema': native.SCHEMA, 'expected_project': self.project, 'steps': [{'op': 'menu_command', 'path': ['Edit', 'Copy']}]}
         pro_hwnd.run_plan(self.backend, plan, path)
         before = list(self.api.calls)
         result = pro_hwnd.run_plan(self.backend, plan, path)

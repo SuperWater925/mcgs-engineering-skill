@@ -1,5 +1,4 @@
 // Class-specific same-project template lifecycle and native geometry composition.
-// Static implementation candidate. No caller, deployment, host invocation or acceptance test.
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -79,8 +78,15 @@ namespace McgsInternalBridge {
      delegate(IntPtr item,Node current){if(current.Class!=null)return Children(current.Class,item,document);return current.OpaqueGroupOffset==0?new List<IntPtr>():NativeDynamicCollections.ReadDrawList(NativeMemory.Add(item,current.OpaqueGroupOffset),document,Engine.Address(0xD3FD70));},delegate(Node parent,Node child){parent.Children.Add(child);});
    }
    internal List<Node> Forest(IntPtr doc){var result=new List<Node>();var seen=new HashSet<uint>();var top=Shared.TopControls(doc);for(int i=0;i<top.Count;i++)result.Add(Tree(top[i],doc,new int[]{i},seen,0));return result;}
-   internal Node Locate(Dictionary<string,object> target,out IntPtr page,out IntPtr doc){page=Shared.Page(target);doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));var forest=Forest(doc);object raw;if(target.TryGetValue("control_path",out raw)){var path=Integers(raw);NativeMemory.Require(path.Count>0,"Control path is empty.");List<Node> list=forest;Node selected=null;for(int pathIndex=0;pathIndex<path.Count;pathIndex++){int index=path[pathIndex];NativeMemory.Require(index>=0&&index<list.Count,"Control path no longer resolves exactly, or traverses an unknown child layout.");selected=list[index];if(pathIndex+1<path.Count&&selected.Class==null)throw new NativeAbiUnavailableException("Target path traverses an unknown group lifecycle.",TemplateRelative,Convert.ToString(selected.Opaque["rtti"]));list=selected.Children;}Match(selected,target);return selected;}Node found=null;foreach(Node node in Flatten(forest)){if(node.Class==null||node.Class.Name!=NativePageControlPreparation.Text(target,"class")||NativeStrategyProfile.ReadName(Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))!=NativePageControlPreparation.Text(target,"control_name"))continue;NativeMemory.Require(found==null,"Template class/name is ambiguous; supply its exact control_path.");found=node;}NativeMemory.Require(found!=null,"Requested legal template is absent from the current native project.");RequireKnownSubtree(found,"selected template target");return found;}
-   void Match(Node node,Dictionary<string,object> target){RequireKnownSubtree(node,"selected template target");NativeMemory.Require(node.Class.Name==NativePageControlPreparation.Text(target,"class")&&NativeStrategyProfile.ReadName(Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))==NativePageControlPreparation.Text(target,"control_name"),"Control path resolved to another class/name.");}
+   internal Node Locate(Dictionary<string,object> target,out IntPtr page,out IntPtr doc){page=Shared.Page(target);doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));var forest=Forest(doc);object raw;if(target.TryGetValue("control_path",out raw)){var path=Integers(raw);NativeMemory.Require(path.Count>0,"Control path is empty.");List<Node> list=forest;Node selected=null;for(int pathIndex=0;pathIndex<path.Count;pathIndex++){int index=path[pathIndex];NativeMemory.Require(index>=0&&index<list.Count,"Control path no longer resolves exactly, or traverses an unknown child layout.");selected=list[index];if(pathIndex+1<path.Count&&selected.Class==null)throw new NativeAbiUnavailableException("Target path traverses an unknown group lifecycle.",TemplateRelative,Convert.ToString(selected.Opaque["rtti"]));list=selected.Children;}Match(selected,target);return selected;}Node found=null;object complete;if(target.TryGetValue("complete",out complete)){
+    foreach(Node node in Flatten(forest))if(NativeMemory.Hex(node.Full)==Convert.ToString(complete)){found=node;break;}
+    Match(found,target);return found;
+   }foreach(Node node in Flatten(forest)){if(node.Class==null||node.Class.Name!=NativePageControlPreparation.Text(target,"class")||NativeStrategyProfile.ReadName(Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))!=NativePageControlPreparation.Text(target,"control_name"))continue;NativeMemory.Require(found==null,"Template class/name is ambiguous; supply its exact control_path.");found=node;}NativeMemory.Require(found!=null,"Requested legal template is absent from the current native project.");RequireKnownSubtree(found,"selected template target");return found;}
+   internal void Match(Node node,Dictionary<string,object> target){RequireKnownSubtree(node,"selected template target");NativeMemory.Require(node.Class.Name==NativePageControlPreparation.Text(target,"class")&&NativeStrategyProfile.ReadName(Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))==NativePageControlPreparation.Text(target,"control_name"),"Control path resolved to another class/name.");
+    object raw;
+    if(target.TryGetValue("complete",out raw))NativeMemory.Require(NativeMemory.Hex(node.Full)==Convert.ToString(raw),"Template complete identity differs.");
+    if(target.TryGetValue("native_id",out raw))NativeMemory.Require(NativeStrategyProfile.ReadId(Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))==Num(raw),"Template native ID differs.");
+   }
    internal IntPtr View(IntPtr doc){IntPtr view=ViewBind<NativeEngine.ThisPointer>("GetDrawingView")(doc);if(view==IntPtr.Zero)return view;NativeMemory.Require(NativeMemory.Ptr(view,0)==Engine.Address(0xD9041C)&&ViewBind<NativeEngine.ThisPointer>("DrawingViewGetDocument")(view)==doc&&IsWindow(NativeMemory.Ptr(view,0x20)),"Native drawing view/doc/HWND identity differs.");return view;}
    internal Dictionary<string,object> ViewState(IntPtr doc){IntPtr view=View(doc);var result=new Dictionary<string,object>{{"view",NativeMemory.Hex(view)}};if(view==IntPtr.Zero)return result;NativeMemory.Require(!ViewBind<Busy>("GlobalBusy")(),"Native global edit guard is active.");IntPtr storage=Marshal.AllocHGlobal(4);try{Marshal.WriteInt32(storage,0);NativeMemory.Require(ViewBind<Embedded>("EmbeddedEditor1")(view,storage)==0,"Embedded editor owns the active drawing command.");Marshal.WriteInt32(storage,0);NativeMemory.Require(ViewBind<Embedded>("EmbeddedEditor2")(view,storage)==0,"Embedded editor owns the active drawing command.");}finally{Marshal.FreeHGlobal(storage);}result["hwnd"]=NativeMemory.Hex(NativeMemory.Ptr(view,0x20));return result;}
   }
@@ -92,31 +98,332 @@ namespace McgsInternalBridge {
    delegate(Node item){return SnapshotHeader(api,item);},delegate(Node item){return item.Children;},
    delegate(Dictionary<string,object> parent,Dictionary<string,object> child){((List<object>)parent["children"]).Add(child);},
    delegate(Node item,Dictionary<string,object> result){if(item.Class==null)return;if(item.Class.Name=="CDrawLabel")result["caption"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0xE4),4096);if(item.Class.Name=="CDrawEdit")result["input_variable"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0x11C),1024);});}
-  static List<object> SnapshotForest(Api api,IntPtr doc){var result=new List<object>();foreach(Node node in api.Forest(doc))result.Add(Snapshot(api,node));return result;}
+  static List<object> SnapshotForest(Api api,IntPtr doc,List<IntPtr> controls=null){var result=new List<object>();var seen=new HashSet<uint>();var top=controls??api.Shared.TopControls(doc);for(int i=0;i<top.Count;i++)result.Add(Snapshot(api,api.Tree(top[i],doc,new[]{i},seen,0)));return result;}
   static IEnumerable<Dictionary<string,object>> SnapshotRows(object tree){foreach(object value in (IEnumerable)tree)yield return Map(value);}
   static List<Dictionary<string,object>> FlatSnapshot(object tree){return new List<Dictionary<string,object>>(NativeDynamicCollections.DepthFirst<Dictionary<string,object>>(SnapshotRows(tree),delegate(Dictionary<string,object> row){return SnapshotRows(row["children"]);}));}
-  static Dictionary<string,object> Capture(Api api,Dictionary<string,object> action){string kind=NativePageControlPreparation.Kind(action);IntPtr target=api.Shared.Page(Map(action["target"])),doc=NativeMemory.Ptr(target,NativeLayout.Offset("page.document"));var result=new Dictionary<string,object>{{"abi_profile_sha256",ProfileSha},{"target_page",api.Shared.PageSnapshot(target)},{"target_forest",SnapshotForest(api,doc)},{"view_state",api.ViewState(doc)},{"history_store_projection",NativeHistoryStoreProjection.Prepare(api.Engine,doc).Before}};IntPtr sourcePage,sourceDoc;Node selected=api.Locate(Map(action[kind=="control-template-clone"?"source":"target"]),out sourcePage,out sourceDoc);result["selected"]=Snapshot(api,selected);result["source_page"]=api.Shared.PageSnapshot(sourcePage);result["source_forest"]=SnapshotForest(api,sourceDoc);if(kind=="control-template-delete"){var references=new List<object>();foreach(Node node in Flatten(new List<Node>{selected}))using(var reference=new NativeReference(api,NativeOpaqueDrawState.ControlObject(node.Full)))references.Add(new Dictionary<string,object>{{"path",node.Path},{"status",reference.Status},{"first",reference.First}});result["references"]=references;}return result;}
-  internal static Dictionary<string,object> Read(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){return Capture(new Api(e,c,p),action);}
-  internal static INativePreparedPageControlEdit Prepare(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){return new Prepared(new Api(e,c,p),action);}
+  static Dictionary<string,object> Capture(Api api,Dictionary<string,object> action){string kind=NativePageControlPreparation.Kind(action);IntPtr target=api.Shared.Page(Map(action["target"])),doc=NativeMemory.Ptr(target,NativeLayout.Offset("page.document"));var result=new Dictionary<string,object>{{"abi_profile_sha256",ProfileSha},{"target_page",api.Shared.PageSnapshot(target)},{"target_forest",SnapshotForest(api,doc)},{"view_state",api.ViewState(doc)},{"history_store_projection",NativeHistoryStoreProjection.Prepare(api.Engine,doc).Before}};IntPtr sourcePage,sourceDoc;Node selected=api.Locate(Map(action[kind=="control-template-clone"?"source":"target"]),out sourcePage,out sourceDoc);result["selected"]=Snapshot(api,selected);result["source_page"]=sourcePage==target?result["target_page"]:api.Shared.PageSnapshot(sourcePage);result["source_forest"]=sourceDoc==doc?result["target_forest"]:SnapshotForest(api,sourceDoc);if(kind=="control-template-delete"){var references=new List<object>();foreach(Node node in Flatten(new List<Node>{selected}))using(var reference=new NativeReference(api,NativeOpaqueDrawState.ControlObject(node.Full)))references.Add(new Dictionary<string,object>{{"path",node.Path},{"status",reference.Status},{"first",reference.First}});result["references"]=references;}return result;}
+  internal static Dictionary<string,object> Read(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){var batch=CurrentCloneBatch(NativePageControlPreparation.Kind(action));return batch==null?Capture(new Api(e,c,p),action):batch.CaptureTemplate(action);}
+  internal static INativePreparedPageControlEdit Prepare(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){var batch=CurrentCloneBatch(NativePageControlPreparation.Kind(action));return new Prepared(batch==null?new Api(e,c,p):batch.Template,action,batch);}
+
+  [ThreadStatic] static CloneBatchScope activeCloneBatch;
+  internal static CloneBatchScope BeginCloneBatch(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> target,string kind){
+   NativeMemory.Require(activeCloneBatch==null,"Clone batch nesting is not supported.");
+   var scope=new CloneBatchScope(engine,context,project,target,kind);
+   activeCloneBatch=scope;
+   return scope;
+  }
+  internal static CloneBatchScope CurrentCloneBatch(string kind){
+   return activeCloneBatch!=null&&activeCloneBatch.Kind==kind?activeCloneBatch:null;
+  }
+  internal sealed class CloneBatchScope:IDisposable {
+   internal readonly string Kind;
+   internal readonly Api Template;
+   internal readonly NativePageControlAbi Shared;
+   internal readonly IntPtr Page,Doc,View,Root;
+   internal readonly NativeHistoryStoreProjection History;
+   readonly string baselineId=Guid.NewGuid().ToString("N");
+   readonly Dictionary<string,object> initialPage,initialView;
+   readonly List<IntPtr> order;
+   readonly HashSet<IntPtr> attached=new HashSet<IntPtr>();
+   readonly Dictionary<IntPtr,int[]> originalPaths=new Dictionary<IntPtr,int[]>();
+   readonly Dictionary<IntPtr,Dictionary<string,object>> expectedByAddress=new Dictionary<IntPtr,Dictionary<string,object>>();
+   readonly Dictionary<string,IntPtr> standardSources=new Dictionary<string,IntPtr>(StringComparer.Ordinal);
+   readonly HashSet<string> standardNames=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+   readonly HashSet<int> standardIds=new HashSet<int>();
+   readonly List<object> expected;
+   readonly VI invalidate;
+   readonly V0 update;
+   readonly IntPtr list;
+   readonly Dictionary<string,object> timings=new Dictionary<string,object>();
+   IntPtr head,tail;
+   bool disposed,complete;
+   internal int AppliedCount{get;private set;}
+   internal bool MutationEntered;
+
+   internal CloneBatchScope(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> target,string kind){
+    var clock=Stopwatch.StartNew();
+    Kind=kind;
+    if(kind=="control-template-clone")Template=new Api(engine,context,project);
+    Shared=Template==null?new NativePageControlAbi(engine,context,project):Template.Shared;
+    Page=Shared.Page(target);
+    Doc=NativeMemory.Ptr(Page,NativeLayout.Offset("page.document"));
+    Root=Shared.Shared.RootDoc();
+    order=Shared.TopControls(Doc);
+    foreach(IntPtr item in order)attached.Add(item);
+    initialPage=Shared.PageSnapshot(Page,order);
+    list=NativeMemory.Add(Doc,NativeLayout.Offset("document.controls"));
+    head=NativeMemory.Ptr(list,4);
+    tail=NativeMemory.Ptr(list,8);
+    NativeMemory.Require(NativeMemory.I32(list,12)==order.Count,"Clone baseline owner list count differs.");
+    if(Template==null){
+     RequireNoStandardView();
+     expected=(List<object>)initialPage["top_level_controls"];
+     foreach(object value in expected)TrackStandardIdentity(Map(value));
+    }else{
+     View=Template.View(Doc);
+     initialView=Template.ViewState(Doc);
+     History=NativeHistoryStoreProjection.Prepare(engine,Doc);
+     expected=SnapshotForest(Template,Doc,order);
+     foreach(var row in FlatSnapshot(expected)){IndexTemplate(row);originalPaths.Add(Address(row),Integers(row["path"]).ToArray());}
+     if(View!=IntPtr.Zero){invalidate=Template.ViewBind<VI>("InvalidateView");update=Template.ViewBind<V0>("UpdateView");}
+    }
+    // Keep the original page snapshot independent of working list changes.
+    initialPage.Remove("top_level_controls");
+    timings["baseline_capture"]=clock.Elapsed.TotalMilliseconds;
+   }
+
+   void RequireNoStandardView(){
+    NativeMemory.Require(Shared.Bind<NativeEngine.ThisPointer>("size","GetUserView")(Doc)==IntPtr.Zero,
+      "This lifecycle adapter requires a page without a user view; view/history insertion uses its separate native chain.");
+   }
+   internal void ValidateTarget(Dictionary<string,object> target){
+    ValidateCurrent();
+    NativeMemory.Require(NativePageControlPreparation.Number(target,"page_id")==Convert.ToInt32(initialPage["page_id"])&&
+      NativePageControlPreparation.Text(target,"page_name")==Convert.ToString(initialPage["page_name"]),
+      "Clone batch page identity differs.");
+   }
+   void ValidateOwnerHeader(){
+    NativeMemory.Require(NativeMemory.Ptr(list,4)==head&&NativeMemory.Ptr(list,8)==tail&&NativeMemory.I32(list,12)==order.Count,
+      "Clone batch owner list changed outside its original insertion receipts.");
+   }
+   void ValidateCurrent(){
+    Shared.Current();
+    NativeMemory.Require(!disposed&&!complete&&activeCloneBatch==this&&Shared.Shared.RootDoc()==Root&&
+      Shared.Document(Page,Convert.ToInt32(initialPage["page_id"]))==Doc,"Clone batch root or document changed.");
+    if(Template==null)RequireNoStandardView();
+    else NativePageControlPreparation.Same(initialView,Template.ViewState(Doc),"Clone batch drawing view changed.");
+    ValidateOwnerHeader();
+   }
+   internal Dictionary<string,object> PageHeader(){
+    var page=new Dictionary<string,object>(initialPage);
+    page["page_modified"]=Shared.Shared.Bind<NativeEngine.ThisInt>("RootIsModified")(Doc);
+    page["attributes"]=Shared.Attributes(Doc);
+    return page;
+   }
+   internal Dictionary<string,object> Revision(){
+    return new Dictionary<string,object>{{"shared_baseline_id",baselineId},{"revision",AppliedCount},{"top_level_count",order.Count}};
+   }
+   static IntPtr Address(Dictionary<string,object> row){return new IntPtr(Num(row["complete"]));}
+   void IndexTemplate(Dictionary<string,object> row){
+    IntPtr full=Address(row);
+    NativeMemory.Require(!expectedByAddress.ContainsKey(full),"Clone subtree reuses an object identity.");
+    expectedByAddress.Add(full,row);
+   }
+   void TrackStandardIdentity(Dictionary<string,object> row){
+    object rawName,rawId;
+    NativeMemory.Require(row.TryGetValue("name",out rawName)&&row.TryGetValue("native_id",out rawId)&&rawName is string,
+      "Native standard clone destination has an unrecognized control identity.");
+    string name=(string)rawName;
+    int id=Convert.ToInt32(row["native_id"]);
+    NativeMemory.Require(standardNames.Add(name),"Native destination names repeat.");
+    NativeMemory.Require(id==-2||(id>=0&&standardIds.Add(id)),"Assigned native IDs repeat or an unknown sentinel appeared.");
+    standardSources.Add(name,Address(row));
+   }
+   internal IntPtr LocateStandard(Dictionary<string,object> source){
+    ValidateTarget(source);
+    IntPtr full;
+    NativeMemory.Require(standardSources.TryGetValue(NativePageControlPreparation.Text(source,"control_name"),out full),
+      "Requested top-level control is absent; grouped-child ownership requires its separate adapter.");
+    return full;
+   }
+   static bool EqualPath(IList<int> a,IList<int> b){
+    if(a.Count!=b.Count)return false;
+    for(int i=0;i<a.Count;i++)if(a[i]!=b[i])return false;
+    return true;
+   }
+   internal Node LocateTemplate(Dictionary<string,object> source){
+    ValidateTarget(source);
+    object raw;
+    Dictionary<string,object> row=null;
+    if(source.TryGetValue("complete",out raw)){
+     IntPtr full=new IntPtr(Num(raw));
+     NativeMemory.Require(expectedByAddress.TryGetValue(full,out row),"Requested clone source identity is outside the current page.");
+     if(source.TryGetValue("control_path",out raw)){
+      var path=Integers(raw);
+      int[] initial;
+      // Only a path known from this batch may be reconciled with its live identity.
+      if(!EqualPath(path,Integers(row["path"])))NativeMemory.Require(originalPaths.TryGetValue(full,out initial)&&EqualPath(path,initial),"Clone source path and complete identity disagree.");
+     }
+    }else if(source.TryGetValue("control_path",out raw)){
+     IList children=expected;
+     var path=Integers(raw);
+     NativeMemory.Require(path.Count>0,"Control path is empty.");
+     for(int i=0;i<path.Count;i++){
+      int index=path[i];
+      NativeMemory.Require(index>=0&&index<children.Count,"Control path no longer resolves exactly, or traverses an unknown child layout.");
+      row=Map(children[index]);
+      if(i+1<path.Count)NativeMemory.Require(row.ContainsKey("class")&&!row.ContainsKey("opaque"),"Target path traverses an unknown group lifecycle.");
+      children=(IList)row["children"];
+     }
+    }else{
+     foreach(var candidate in expectedByAddress.Values){
+      object name,cls;
+      if(!candidate.TryGetValue("name",out name)||!candidate.TryGetValue("class",out cls)||
+        !Object.Equals(name,source["control_name"])||!Object.Equals(cls,source["class"]))continue;
+      NativeMemory.Require(row==null,"Template class/name is ambiguous; supply its exact control_path.");
+      row=candidate;
+     }
+    }
+    NativeMemory.Require(row!=null,"Requested legal template is absent from the current native project.");
+    var selected=Template.Tree(Address(row),Doc,Integers(row["path"]).ToArray(),new HashSet<uint>(),0);
+    Template.Match(selected,source);
+    NativePageControlPreparation.Same(row,Snapshot(Template,selected),"Clone source differs from its current batch preimage.");
+    return selected;
+   }
+   internal Dictionary<string,object> CaptureTemplate(Dictionary<string,object> action){
+    ValidateTarget(Map(action["target"]));
+    var selected=LocateTemplate(Map(action["source"]));
+    var page=PageHeader();
+    return new Dictionary<string,object>{{"abi_profile_sha256",ProfileSha},{"target_page",page},{"source_page",page},
+      {"shared_clone_batch",Revision()},{"complete_forest_preimage",false},{"selected",Snapshot(Template,selected)},
+      {"view_state",initialView},{"history_pending",View!=IntPtr.Zero&&!History.OriginalBeforeModifyReturned}};
+   }
+   internal void HistoryReturned(){
+    History.OriginalStoreReturned();
+    // Validate the native transition once before later actions consult this baseline.
+    var observed=SnapshotForest(Template,Doc,order);
+    for(int i=0;i<expected.Count;i++){
+     var row=Map(expected[i]);
+     History.ProjectExpectedSnapshotInPlace(row);
+     NativePageControlPreparation.Same(row,observed[i],"Original clone history altered a protected control field.");
+    }
+    ValidateOwnerHeader();
+   }
+   internal Dictionary<string,object> IncompleteReport(object firstAction,object lastAction){
+    return new Dictionary<string,object>{{"kind",Kind},{"shared_baseline_id",baselineId},{"first_action_id",firstAction},
+     {"last_action_id",lastAction},{"individually_verified_clone_count",AppliedCount},{"save_in_batch",false},
+     {"final_scope_verified",false}};
+   }
+   internal Dictionary<string,object> RefreshPartial(object firstAction,object lastAction){
+    var report=IncompleteReport(firstAction,lastAction);
+    if(View==IntPtr.Zero||!MutationEntered)return report;
+    try{
+     Shared.Current();
+     NativeMemory.Require(Shared.Shared.RootDoc()==Root&&Shared.Document(Page,Convert.ToInt32(initialPage["page_id"]))==Doc&&Template.View(Doc)==View,
+      "Clone batch page/view changed before partial refresh.");
+     NativeOperationTrace.BeforeMutation("native-clone-partial-invalidate");
+     invalidate(View,1);
+     NativeOperationTrace.BeforeMutation("native-clone-partial-update");
+     update(View);
+     report["partial_refresh_returned"]=true;
+    }catch(Exception error){report["partial_refresh_error"]=error.GetType().Name+": "+error.Message;}
+    return report;
+   }
+   internal void RequireDetached(IntPtr created){
+    ValidateOwnerHeader();
+    NativeMemory.Require(!attached.Contains(created)&&!expectedByAddress.ContainsKey(created),
+      "Native clone was already registered before DocAdd.");
+   }
+   internal int ObserveInsertion(IntPtr created){
+    NativeMemory.Require(NativeMemory.Ptr(created,NativeLayout.Offset("control.owner_document"))==Doc&&
+      NativeMemory.I32(list,12)==order.Count+1,"Original DocAdd did not establish the exact clone owner/count.");
+    IntPtr nextHead=NativeMemory.Ptr(list,4),nextTail=NativeMemory.Ptr(list,8);
+    int index;
+    if(nextTail!=IntPtr.Zero&&NativeMemory.Ptr(nextTail,8)==created&&NativeMemory.Ptr(nextTail,4)==tail&&
+      NativeMemory.Ptr(nextTail,0)==IntPtr.Zero&&(order.Count==0?nextHead==nextTail:nextHead==head&&NativeMemory.Ptr(tail,0)==nextTail))
+     index=order.Count;
+    else if(nextHead!=IntPtr.Zero&&NativeMemory.Ptr(nextHead,8)==created&&NativeMemory.Ptr(nextHead,0)==head&&
+      NativeMemory.Ptr(nextHead,4)==IntPtr.Zero&&nextTail==tail&&NativeMemory.Ptr(head,4)==nextHead)
+     index=0;
+    else{
+     var actual=Shared.TopControls(Doc);
+     index=actual.IndexOf(created);
+     NativeMemory.Require(index>=0&&actual.Count==order.Count+1,"Clone insertion receipt does not resolve.");
+     actual.RemoveAt(index);
+     NativePageControlPreparation.Same(order.ConvertAll(NativeMemory.Hex),actual.ConvertAll(NativeMemory.Hex),
+       "Original DocAdd reordered existing controls.");
+    }
+    NativeMemory.Require(attached.Add(created),"Original DocAdd reused a clone identity.");
+    order.Insert(index,created);
+    head=nextHead;
+    tail=nextTail;
+    return index;
+   }
+   internal void RecordTemplate(Node selected,Node created){
+    var source=expectedByAddress[selected.Full];
+    var current=Template.Tree(selected.Full,Doc,Integers(source["path"]).ToArray(),new HashSet<uint>(),0);
+    NativePageControlPreparation.Same(source,Snapshot(Template,current),"Native template clone altered its original source subtree.");
+    var added=Snapshot(Template,created);
+    foreach(var row in FlatSnapshot(new List<object>{added})){IndexTemplate(row);originalPaths.Add(Address(row),Integers(row["path"]).ToArray());}
+    expected.Insert(created.Path[0],added);
+    // Reconcile each displaced root against the actual owner list ordering.
+    for(int i=created.Path[0]+1;i<expected.Count;i++){
+     var root=Map(expected[i]);
+     NativeMemory.Require(Address(root)==order[i],"Clone path update lost its original owner identity.");
+     foreach(var row in FlatSnapshot(new List<object>{root})){
+      var path=Integers(row["path"]);
+      path[0]=i;
+      row["path"]=path;
+     }
+    }
+    AppliedCount++;
+   }
+   internal void RecordStandard(IntPtr created,int index){
+    var added=Map(Shared.ControlRows(Doc,new List<IntPtr>{created})[0]);
+    TrackStandardIdentity(added);
+    expected.Insert(index,added);
+    AppliedCount++;
+   }
+   internal Dictionary<string,object> Complete(){
+    ValidateCurrent();
+    NativeMemory.Require(AppliedCount>0,"Cannot complete an empty clone batch.");
+    var clock=Stopwatch.StartNew();
+    if(View!=IntPtr.Zero){
+     NativeOperationTrace.BeforeMutation("native-clone-batch-invalidate");
+     invalidate(View,1);
+     NativeOperationTrace.BeforeMutation("native-clone-batch-update");
+     update(View);
+    }
+    timings["refresh"]=clock.Elapsed.TotalMilliseconds;
+    clock.Restart();
+    ValidateCurrent();
+    var top=Shared.TopControls(Doc);
+    var page=Shared.PageSnapshot(Page,top);
+    NativePageControlPreparation.Same(initialPage["attributes"],page["attributes"],"Clone batch changed page attributes.");
+    NativePageControlPreparation.Same(initialPage["pages"],page["pages"],"Clone batch changed page identities.");
+    var actual=Template==null?page["top_level_controls"]:SnapshotForest(Template,Doc,top);
+    NativePageControlPreparation.Same(expected,actual,"Clone batch final original/created control preservation differs.");
+    timings["final_readback"]=clock.Elapsed.TotalMilliseconds;
+    complete=true;
+    var result=new Dictionary<string,object>{{"ok",true},{"kind",Kind},{"cloned_count",AppliedCount},
+      {"shared_baseline_id",baselineId},{"timings_ms",timings},{"save_in_batch",false},{"final_scope_verified",true},
+      {"original_history_calls",View==IntPtr.Zero?0:1},{"final_refresh_calls",View==IntPtr.Zero?0:1},
+      {"page_after",page},{"full_payload_acceptance_pending",true}};
+    if(Template!=null){result["complete_forest_after"]=true;result["forest_after"]=actual;result["native_history_store_projection"]=History.Report();}
+    return result;
+   }
+   public void Dispose(){disposed=true;if(activeCloneBatch==this)activeCloneBatch=null;}
+  }
+
 
   sealed class PlannedRectangle : IDisposable {internal readonly string Class;internal readonly int[] Value;internal IntPtr Storage;internal readonly RectSetter Setter;internal PlannedRectangle(Api api,Class cls,int[] rectangle){Class=cls.Name;Value=rectangle;Setter=api.Bind<RectSetter>(cls,"set_rect");Storage=Marshal.AllocHGlobal(16);for(int i=0;i<4;i++)Marshal.WriteInt32(Storage,4*i,rectangle[i]);}public void Dispose(){if(Storage!=IntPtr.Zero){Marshal.FreeHGlobal(Storage);Storage=IntPtr.Zero;}}}
   sealed class Prepared : INativePreparedPageControlEdit {
-   readonly NativeHistoryStoreProjection history;readonly Api api;readonly Dictionary<string,object> action,before;readonly string operation;readonly IntPtr page,doc,view,sourcePage,sourceDoc,root;readonly Node selected;readonly Clone clone;readonly V0 delete,update;readonly VP add,remove;readonly VI setRoot,setDoc,invalidate;readonly BeforeModify beforeModify;readonly SaveData save;readonly NativeEngine.ThisInt modified;readonly List<PlannedRectangle> rectangles=new List<PlannedRectangle>();readonly List<NativeReference> references=new List<NativeReference>();bool applied,disposed;IntPtr resultFull;
-   internal Prepared(Api value,Dictionary<string,object> request){api=value;action=request;operation=NativePageControlPreparation.Kind(action);NativeMemory.Require(NativePageControlPreparation.Text(action,"abi_profile_sha256")==ProfileSha,"Template operation ABI binding differs.");page=api.Shared.Page(Map(action["target"]));doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));view=api.View(doc);history=NativeHistoryStoreProjection.Prepare(api.Engine,doc);root=api.Shared.Shared.RootDoc();selected=api.Locate(Map(action[operation=="control-template-clone"?"source":"target"]),out sourcePage,out sourceDoc);
+   readonly CloneBatchScope batch;readonly NativeHistoryStoreProjection history;readonly Api api;readonly Dictionary<string,object> action,before;readonly string operation;readonly IntPtr page,doc,view,sourcePage,sourceDoc,root;readonly Node selected;readonly Clone clone;readonly V0 delete,update;readonly VP add,remove;readonly VI setRoot,setDoc,invalidate;readonly BeforeModify beforeModify;readonly SaveData save;readonly NativeEngine.ThisInt modified;readonly List<PlannedRectangle> rectangles=new List<PlannedRectangle>();readonly List<NativeReference> references=new List<NativeReference>();bool applied,disposed;IntPtr resultFull;
+   internal Prepared(Api value,Dictionary<string,object> request,CloneBatchScope scope){api=value;batch=scope;action=request;operation=NativePageControlPreparation.Kind(action);NativeMemory.Require(NativePageControlPreparation.Text(action,"abi_profile_sha256")==ProfileSha,"Template operation ABI binding differs.");if(batch==null){page=api.Shared.Page(Map(action["target"]));doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));view=api.View(doc);history=NativeHistoryStoreProjection.Prepare(api.Engine,doc);root=api.Shared.Shared.RootDoc();selected=api.Locate(Map(action[operation=="control-template-clone"?"source":"target"]),out sourcePage,out sourceDoc);}
+    else{batch.ValidateTarget(Map(action["target"]));page=sourcePage=batch.Page;doc=sourceDoc=batch.Doc;view=batch.View;history=batch.History;root=batch.Root;selected=batch.LocateTemplate(Map(action["source"]));}
     if(operation=="control-template-clone"){clone=api.Bind<Clone>(selected.Class,"clone");add=api.Shared.Bind<VP>("standard","DocAdd");}if(operation=="control-template-delete"){delete=api.Bind<V0>(selected.Class,"delete");remove=api.Shared.Bind<VP>("standard","DocRemove");}setRoot=api.Shared.Shared.Bind<VI>("RootSetModified");setDoc=api.Shared.Bind<VI>("standard","DocSetModified");if(view!=IntPtr.Zero){beforeModify=api.ViewBind<BeforeModify>("DocBeforeModify");invalidate=api.ViewBind<VI>("InvalidateView");update=api.ViewBind<V0>("UpdateView");}save=api.Shared.Bind<SaveData>("standard","WindowSaveData");modified=api.Shared.Shared.Bind<NativeEngine.ThisInt>("RootIsModified");
-    try{before=Capture(api,action);NativePageControlPreparation.Before(action,before);foreach(Node node in Flatten(new List<Node>{selected})){if(operation=="control-template-delete")api.Bind<V0>(node.Class,"delete");else api.Bind<RectSetter>(node.Class,"set_rect");if(node.Class.External&&(operation!="control-geometry"||node.Class.Name=="CDrawActiveX"))throw new InvalidOperationException("External component lifecycle/COM contract remains unresolved for "+node.Class.Name+"; the wrapper virtual ABI alone is not permission to clone/delete it.");}
+    try{before=batch==null?Capture(api,action):batch.CaptureTemplate(action);NativePageControlPreparation.Before(action,before);foreach(Node node in Flatten(new List<Node>{selected})){if(operation=="control-template-delete")api.Bind<V0>(node.Class,"delete");else api.Bind<RectSetter>(node.Class,"set_rect");if(node.Class.External&&(operation!="control-geometry"||node.Class.Name=="CDrawActiveX"))throw new InvalidOperationException("External component lifecycle/COM contract remains unresolved for "+node.Class.Name+"; the wrapper virtual ABI alone is not permission to clone/delete it.");}
      if(operation=="control-template-delete"){NativeMemory.Require(selected.Path.Length==1&&sourceDoc==doc,"Nested group-child removal needs the original Unit child-unregister chain; DocRemove cannot be substituted.");foreach(Node node in Flatten(new List<Node>{selected})){var reference=new NativeReference(api,NativeOpaqueDrawState.ControlObject(node.Full));references.Add(reference);NativeMemory.Require(reference.Status==0,"Selected control/group child has incoming references; no delete entered.");}}
      else{var after=Map(action["after"]);int[] attrs=api.Shared.Attributes(doc);int[] desired=Rectangle(after,selected.Class.Name,selected.Path.Length>1&&operation=="control-geometry"?10000:attrs[2],selected.Path.Length>1&&operation=="control-geometry"?10000:attrs[3]);if(selected.Children.Count>0){object allow;NativeMemory.Require(after.TryGetValue("transform_group_children",out allow)&&Convert.ToBoolean(allow),"Group geometry must explicitly include its descendant rectangles.");}PrepareRectangles(api,selected,desired,rectangles);}
      if(operation=="control-template-clone")NativeMemory.Require(NativeMemory.I32(api.Engine.Address(0xFB21F8),0)==0,"Native clone serializer mode is already active.");api.Shared.Slot(doc,27,0x3A3C8);api.Shared.Slot(api.Context.WindowService,12,0x21733);
     }catch{Dispose();throw;}
    }
-   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!applied,"Prepared template operation is disposed/already applied.");api.Shared.Current();NativePageControlPreparation.Same(before,Capture(api,action),"Template operation preimage changed before Apply.");lease.BeginApply(action);applied=true;if(view!=IntPtr.Zero){NativeOperationTrace.BeforeMutation("template-native-before-modify-history");history.ValidateBefore();beforeModify(doc,view,1,1);history.OriginalStoreReturned();NativeMemory.Require(modified(doc)==1,"Original DocBeforeModify did not mark its document modified.");}NativeOperationTrace.BeforeMutation("template-root-and-page-dirty");setRoot(root,1);Marshal.WriteInt32(root,NativeLayout.Offset("document.compile_valid"),0);setDoc(doc,1);
+   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!applied,"Prepared template operation is disposed/already applied.");api.Shared.Current();NativePageControlPreparation.Same(before,batch==null?Capture(api,action):batch.CaptureTemplate(action),"Template operation preimage changed before Apply.");lease.BeginApply(action);applied=true;if(batch!=null)batch.MutationEntered=true;bool calledHistory=view!=IntPtr.Zero&&(batch==null||!history.OriginalBeforeModifyReturned);if(calledHistory){NativeOperationTrace.BeforeMutation("template-native-before-modify-history");history.ValidateBefore();beforeModify(doc,view,1,1);if(batch==null)history.OriginalStoreReturned();else batch.HistoryReturned();NativeMemory.Require(modified(doc)==1,"Original DocBeforeModify did not mark its document modified.");}NativeOperationTrace.BeforeMutation("template-root-and-page-dirty");setRoot(root,1);Marshal.WriteInt32(root,NativeLayout.Offset("document.compile_valid"),0);setDoc(doc,1);
     if(operation=="control-template-delete"){NativeOperationTrace.BeforeMutation("template-native-owner-detach");remove(doc,selected.Full);NativeMemory.Require(!api.Shared.TopControls(doc).Contains(selected.Full),"Original DocRemove did not remove the exact top-level control/group.");api.Type(selected.Full);NativeOperationTrace.BeforeMutation("template-native-class-delete");delete(selected.Full);resultFull=IntPtr.Zero;}
-    else{Node target=selected;if(operation=="control-template-clone"){NativeOperationTrace.BeforeMutation("template-class-native-deep-clone");resultFull=clone(selected.Full,doc);NativeMemory.Require(resultFull!=IntPtr.Zero&&resultFull!=selected.Full&&NativeMemory.I32(api.Engine.Address(0xFB21F8),0)==0,"Native template clone returned invalid object or left serializer mode active.");Class actual=api.Type(resultFull);NativeMemory.Require(actual.Name==selected.Class.Name,"Native clone returned another CDraw class.");IntPtr owner=NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"));NativeMemory.Require(owner==IntPtr.Zero||owner==doc,"Native clone has another document owner.");NativeMemory.Require(!api.Shared.TopControls(doc).Contains(resultFull),"Clone attached before the original owner insertion.");NativeOperationTrace.BeforeMutation("template-native-owner-insert");add(doc,resultFull);NativeMemory.Require(api.Shared.TopControls(doc).Contains(resultFull)&&NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"))==doc,"Original DocAdd did not establish the exact target owner.");target=api.Tree(resultFull,doc,new int[]{api.Shared.TopControls(doc).IndexOf(resultFull)},new HashSet<uint>(),0);Shape(selected,target);}
+    Node resulting=null;
+    if(operation!="control-template-delete"){Node target=selected;if(operation=="control-template-clone"){NativeOperationTrace.BeforeMutation("template-class-native-deep-clone");resultFull=clone(selected.Full,doc);NativeMemory.Require(resultFull!=IntPtr.Zero&&resultFull!=selected.Full&&NativeMemory.I32(api.Engine.Address(0xFB21F8),0)==0,"Native template clone returned invalid object or left serializer mode active.");Class actual=api.Type(resultFull);NativeMemory.Require(actual.Name==selected.Class.Name,"Native clone returned another CDraw class.");IntPtr owner=NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"));NativeMemory.Require(owner==IntPtr.Zero||owner==doc,"Native clone has another document owner.");if(batch!=null)batch.RequireDetached(resultFull);else NativeMemory.Require(!api.Shared.TopControls(doc).Contains(resultFull),"Clone attached before the original owner insertion.");NativeOperationTrace.BeforeMutation("template-native-owner-insert");add(doc,resultFull);int index;if(batch!=null)index=batch.ObserveInsertion(resultFull);else{index=api.Shared.TopControls(doc).IndexOf(resultFull);NativeMemory.Require(index>=0&&NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"))==doc,"Original DocAdd did not establish the exact target owner.");}target=api.Tree(resultFull,doc,new int[]{index},new HashSet<uint>(),0);Shape(selected,target);}
      else resultFull=selected.Full;var nodes=new List<Node>(Flatten(new List<Node>{target}));NativeMemory.Require(nodes.Count==rectangles.Count,"Native copied/group node count differs from prepared geometry plan.");for(int i=0;i<nodes.Count;i++){var plan=rectangles[i];NativeMemory.Require(nodes[i].Class.Name==plan.Class,"Native geometry plan class differs.");api.Type(nodes[i].Full);if(i==0){NativeOperationTrace.BeforeMutation("template-class-native-set-rectangle-"+i);plan.Setter(nodes[i].Full,plan.Storage,IntPtr.Zero);}NativePageControlPreparation.Same(plan.Value,NativePageControlAbi.Rectangle(nodes[i].Full),"Class-specific geometry readback differs from requested rectangle.");}
+     if(batch!=null){batch.RecordTemplate(selected,target);resulting=target;}
     }
-    if(view!=IntPtr.Zero){NativeMemory.Require(api.View(doc)==view,"Drawing view changed during template operation.");NativeOperationTrace.BeforeMutation("template-native-invalidate");invalidate(view,1);NativeOperationTrace.BeforeMutation("template-native-update-window");update(view);}
-    Node resulting=null;if(resultFull!=IntPtr.Zero){resulting=api.Tree(resultFull,doc,operation=="control-geometry"?selected.Path:new int[]{api.Shared.TopControls(doc).IndexOf(resultFull)},new HashSet<uint>(),0);var finalNodes=new List<Node>(Flatten(new List<Node>{resulting}));NativeMemory.Require(finalNodes.Count==rectangles.Count,"Final geometry tree count changed during refresh.");for(int i=0;i<finalNodes.Count;i++)NativePageControlPreparation.Same(rectangles[i].Value,NativePageControlAbi.Rectangle(finalNodes[i].Full),"Final geometry changed during original view refresh.");}VerifyUnchangedScope();var result=NativePageControlPreparation.Result(operation);result["page_after"]=api.Shared.PageSnapshot(page);result["forest_after"]=SnapshotForest(api,doc);result["view_kept_open"]=view!=IntPtr.Zero;result["original_doc_before_modify_called"]=view!=IntPtr.Zero;result["full_payload_acceptance_pending"]=true;result["native_history_store_projection"]=history.Report();if(resulting!=null)result["resulting_control"]=Snapshot(api,resulting);var geometryPlan=new List<object>();foreach(var rectangle in rectangles)geometryPlan.Add(new Dictionary<string,object>{{"class",rectangle.Class},{"rectangle",rectangle.Value}});result["native_geometry_plan"]=geometryPlan;lease.CompleteApply(action);return result;
+    if(batch==null&&view!=IntPtr.Zero){NativeMemory.Require(api.View(doc)==view,"Drawing view changed during template operation.");NativeOperationTrace.BeforeMutation("template-native-invalidate");invalidate(view,1);NativeOperationTrace.BeforeMutation("template-native-update-window");update(view);}
+    if(batch==null&&resultFull!=IntPtr.Zero){resulting=api.Tree(resultFull,doc,operation=="control-geometry"?selected.Path:new int[]{api.Shared.TopControls(doc).IndexOf(resultFull)},new HashSet<uint>(),0);var finalNodes=new List<Node>(Flatten(new List<Node>{resulting}));NativeMemory.Require(finalNodes.Count==rectangles.Count,"Final geometry tree count changed during refresh.");for(int i=0;i<finalNodes.Count;i++)NativePageControlPreparation.Same(rectangles[i].Value,NativePageControlAbi.Rectangle(finalNodes[i].Full),"Final geometry changed during original view refresh.");}
+    if(batch==null)VerifyUnchangedScope();
+    var result=NativePageControlPreparation.Result(operation);
+    if(operation=="control-template-clone")result["clone_batch_applied"]=batch!=null;
+    result["page_after"]=batch==null?api.Shared.PageSnapshot(page):batch.PageHeader();
+    if(batch==null)result["forest_after"]=SnapshotForest(api,doc);
+    else result["shared_clone_batch"]=batch.Revision();
+    result["complete_forest_after"]=batch==null;result["view_kept_open"]=view!=IntPtr.Zero;result["original_doc_before_modify_called"]=calledHistory;result["full_payload_acceptance_pending"]=true;if(batch==null)result["native_history_store_projection"]=history.Report();if(resulting!=null)result["resulting_control"]=Snapshot(api,resulting);var geometryPlan=new List<object>();foreach(var rectangle in rectangles)geometryPlan.Add(new Dictionary<string,object>{{"class",rectangle.Class},{"rectangle",rectangle.Value}});result["native_geometry_plan"]=geometryPlan;lease.CompleteApply(action);return result;
    }
    void VerifyUnchangedScope(){var targetBefore=Map(before["target_page"]);NativePageControlPreparation.Same(targetBefore["attributes"],api.Shared.Attributes(doc),"Template operation altered page attributes.");NativePageControlPreparation.Same(targetBefore["pages"],api.Shared.PageRows(),"Template operation altered page identities.");var old=FlatSnapshot(before["target_forest"]);var forest=SnapshotForest(api,doc);var current=FlatSnapshot(forest);var changed=new HashSet<string>(StringComparer.Ordinal);foreach(Node node in Flatten(new List<Node>{selected}))changed.Add(NativeMemory.Hex(node.Full));var actualByAddress=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);foreach(var row in current)actualByAddress.Add(Convert.ToString(row["complete"]),row);foreach(var original in old){string address=Convert.ToString(original["complete"]);if(operation=="control-template-delete"&&changed.Contains(address)){NativeMemory.Require(!actualByAddress.ContainsKey(address),"Deleted object remains in the native owner tree.");continue;}Dictionary<string,object> now;NativeMemory.Require(actualByAddress.TryGetValue(address,out now),"An original native control vanished.");NativePageControlPreparation.Same(ChildAddresses(original),ChildAddresses(now),"Original group child identities/order changed.");var expected=Map(history.ExpectedSnapshot(original));var actual=new Dictionary<string,object>(now);expected.Remove("children");actual.Remove("children");expected.Remove("path");actual.Remove("path");if(operation=="control-geometry"&&address==NativeMemory.Hex(selected.Full)){expected.Remove("rectangle");actual.Remove("rectangle");}NativePageControlPreparation.Same(expected,actual,"Unplanned existing control identity/geometry/raw-state change.");}var expectedTop=new List<string>();foreach(object value in (IEnumerable)before["target_forest"]){string address=Convert.ToString(Map(value)["complete"]);if(operation!="control-template-delete"||!changed.Contains(address))expectedTop.Add(address);}var actualTop=new List<string>();foreach(object value in forest){string address=Convert.ToString(Map(value)["complete"]);if(operation!="control-template-clone"||address!=NativeMemory.Hex(resultFull))actualTop.Add(address);}NativePageControlPreparation.Same(expectedTop,actualTop,"Original top-level control order changed.");int oldCount=((IList)before["target_forest"]).Count;int currentCount=api.Shared.TopControls(doc).Count;NativeMemory.Require(currentCount==oldCount+(operation=="control-template-clone"?1:operation=="control-template-delete"?-1:0),"Native top-level control count differs.");if(operation=="control-template-clone"){NativePageControlPreparation.Same(sourceDoc==doc?history.ExpectedSnapshot(before["selected"]):before["selected"],Snapshot(api,selected),"Native template clone altered its original source subtree.");if(sourceDoc!=doc){NativePageControlPreparation.Same(before["source_forest"],SnapshotForest(api,sourceDoc),"Template clone altered its source page tree.");NativePageControlPreparation.Same(Map(before["source_page"])["attributes"],api.Shared.Attributes(sourceDoc),"Template clone altered source page attributes.");}}
    }

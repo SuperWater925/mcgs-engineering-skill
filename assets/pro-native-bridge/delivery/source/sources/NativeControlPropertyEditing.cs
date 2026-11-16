@@ -32,6 +32,19 @@ namespace McgsInternalBridge {
    int type=NativeMemory.I32(complete,NativeLayout.Offset("control.type_id"));NativeMemory.Require(type==0x503A||type==0x5039,"Only actual CDrawUnit/CDrawCell containers carry this verified child-list layout.");
    return NativeDynamicCollections.ReadDrawList(NativeMemory.Add(complete,0xE4),doc,api.Engine.Address(0xD3FD70));
   }
+  static readonly IntPtr[] EmptyOwnerChildren=new IntPtr[0];
+  static IEnumerable<IntPtr> IdentityChildren(Api api,IntPtr full,IntPtr doc){
+   IntPtr instance;string rtti;
+   if(NativeOpaqueDrawState.TryControlObject(full,out instance,out rtti)&&(rtti==".?AVCDrawUnit@@"||rtti==".?AVCDrawCell@@"))
+    return GroupChildren(api,full,doc);
+   return EmptyOwnerChildren;
+  }
+  static HashSet<IntPtr> PropertyOwnerIndex(Api api,List<IntPtr> roots,IntPtr doc){
+   var result=new HashSet<IntPtr>();
+   foreach(IntPtr full in NativeDynamicCollections.DepthFirst(roots,delegate(IntPtr current){return IdentityChildren(api,current,doc);}))
+    NativeMemory.Require(result.Add(full),"Current property owner tree repeats a native control.");
+   return result;
+  }
   sealed class Selection {internal IntPtr Page,Doc,Full,Object,Selected,View;internal List<Dictionary<string,object>> Values;internal Dictionary<string,object> Snapshot;}
   static IntPtr CaptureDrawingView(Api api,IntPtr doc) {
    IntPtr view=api.Bind<NativeEngine.ThisPointer>("GetDrawingView")(doc);
@@ -46,6 +59,11 @@ namespace McgsInternalBridge {
    if(target.TryGetValue("control_path",out raw)) {
     var path=new List<int>();foreach(object n in (IEnumerable)raw)path.Add(Convert.ToInt32(n));NativeMemory.Require(path.Count>0,"Control path is empty.");
     var pathObjects=new HashSet<uint>();for(int i=0;i<path.Count;i++){NativeMemory.Require(path[i]>=0&&path[i]<current.Count,"Control path is outside current native ownership list.");full=current[path[i]];NativeMemory.Require(pathObjects.Add(NativeMemory.U(full)),"Control path repeats a native owner-tree object.");if(i+1<path.Count)current=GroupChildren(api,full,doc);}
+   }else if(target.TryGetValue("complete",out raw)){
+    NativeMemory.Require(target.ContainsKey("native_id"),"Property target without a path needs its complete address and native ID.");
+    var identities=batch==null?PropertyOwnerIndex(api,current,doc):batch.OwnerIdentities(api);
+    full=new IntPtr(NativeEngine.Number(raw));
+    NativeMemory.Require(identities.Contains(full),"Property control complete identity is outside the current page owner tree.");
    }else {
     string name=NativePageControlPreparation.Text(target,"control_name"),rtti=NativePageControlPreparation.Text(target,"rtti");
     foreach(IntPtr candidate in current){
@@ -57,6 +75,8 @@ namespace McgsInternalBridge {
    NativeMemory.Require(full!=IntPtr.Zero&&NativeMemory.Ptr(full,NativeLayout.Offset("control.owner_document"))==doc,"Logical control is absent or has another document owner.");
    IntPtr obj=NativeOpaqueDrawState.ControlObject(full);var info=NativePropertyTarget.Describe(api.Engine,obj);
    NativeMemory.Require(NativeStrategyProfile.ReadName(api.Common.Shared,obj)==NativePageControlPreparation.Text(target,"control_name")&&Convert.ToString(info["rtti"])==NativePageControlPreparation.Text(target,"rtti"),"Logical control name/RTTI/base offset differs.");
+   if(target.TryGetValue("complete",out raw))NativeMemory.Require(full==new IntPtr(NativeEngine.Number(raw)),"Property control complete identity differs.");
+   if(target.TryGetValue("native_id",out raw))NativeMemory.Require(NativeStrategyProfile.ReadId(api.Common.Shared,obj)==NativeEngine.Number(raw),"Property control native ID differs.");
    var s=new Selection{Page=page,Doc=doc,Full=full,Object=obj,Selected=obj,View=batch==null?CaptureDrawingView(api,doc):batch.View};
    bool local=requested!=null;
    if(!local){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.Read(obj);AnnotateComponentOccurrences(s.Values);}

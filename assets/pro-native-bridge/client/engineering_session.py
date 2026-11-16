@@ -28,10 +28,11 @@ PURPOSE = "native-engineering-session-program"
 NAME = re.compile(r"[A-Za-z0-9_-]{1,60}\Z")
 
 # These adapters keep action order and use fresh native targets inside one direct
-# request. Creation appends roots; none changes page identity or control order.
+# request. The editor supplies actual paths after inserting new controls.
 # Keep unknown, layering, reference, persistence and editor-switch actions as
 # boundaries rather than inferring compatibility from their names.
-MERGE_KINDS = frozenset({"control-native-create", "control-geometry",
+CLONE_KINDS = frozenset({"control-clone", "control-template-clone"})
+MERGE_KINDS = CLONE_KINDS | frozenset({"control-native-create", "control-geometry",
     "control-geometry-batch", "control-properties", "control-properties-batch"})
 # No sample-derived action-count ceiling. The encoded message budget and real
 # operation dependencies determine the default batch boundary. Callers can
@@ -263,6 +264,11 @@ def merge_signature(step, specification):
         page = action["target"].get("page_id")
         if action["kind"] not in MERGE_KINDS or type(page) is not int:
             return None
+        if action["kind"] in CLONE_KINDS:
+            source = action.get("source")
+            if (not isinstance(source, dict) or source.get("page_id") != page
+                    or source.get("page_name") != action["target"].get("page_name")):
+                return None
         pages.add(page)
         # Do not combine an adapter payload that also names another page.
         def same_page(value):
@@ -400,7 +406,7 @@ def next_direct_group(steps, start, results, merge_steps=True, max_merged_action
 
 PROPERTY_BATCH_KIND = "control-properties-batch"
 PROPERTY_PAGE_KEYS = ("page_id", "page_name")
-PROPERTY_CONTROL_KEYS = ("control_name", "rtti", "control_path", "component_path")
+PROPERTY_CONTROL_KEYS = ("control_name", "rtti", "control_path", "component_path", "complete", "native_id")
 
 
 def property_batch_page(action):
@@ -413,7 +419,15 @@ def property_batch_page(action):
             or ("component_path" in target and not isinstance(target["component_path"], list))):
         return None
     path = target.get("control_path")
-    if not isinstance(path, list) or not path or any(type(index) is not int or index < 0 for index in path):
+    address = target.get("complete")
+    if "complete" in target and (not isinstance(address, str) or not re.fullmatch(r"0x[0-9A-Fa-f]{1,8}", address)):
+        return None
+    if "native_id" in target and type(target["native_id"]) is not int:
+        return None
+    if "control_path" in target:
+        if not isinstance(path, list) or not path or any(type(index) is not int or index < 0 for index in path):
+            return None
+    elif address is None or "native_id" not in target:
         return None
     if (set(after) - {"properties", "expect_paired_basic_button_visuals"}
             or not isinstance(after.get("properties"), list) or not after["properties"]
@@ -447,12 +461,15 @@ def coalesce_property_actions(specification):
             def identity(action):
                 target = action["target"]
                 component = json.dumps(target.get("component_path", []), sort_keys=True, ensure_ascii=False)
-                return tuple(target["control_path"]), component
-            paths = {identity(first)}
+                if "control_path" in target:
+                    return "path", tuple(target["control_path"]), component
+                return "complete", int(target["complete"], 16), component
+            first_identity = identity(first)
+            paths = {first_identity}
             while (end < len(actions) and actions[end]["action_id"] not in referenced
                    and property_batch_page(actions[end]) == page):
                 path = identity(actions[end])
-                if path in paths:
+                if path[0] != first_identity[0] or path in paths:
                     break
                 paths.add(path)
                 end += 1
@@ -585,7 +602,7 @@ def split_direct_receipt(receipt, members):
         boundary_id = receipt.get("batch_finalization_action_id", receipt.get("failed_action_id"))
         if complete or not individual or successful != len(individual) or boundary_id != individual[-1]["action_id"]:
             raise ValueError("Native batch finalization failure does not identify its last successful action")
-        # A factory sub-run can finalize before a later properties action in the
+        # A native sub-run can finalize before a later properties action in the
         # same RPC. That last factory step is partial; the next one was not run.
         first_failed = len(individual) - 1
     output = []
@@ -593,17 +610,32 @@ def split_direct_receipt(receipt, members):
     preimages = parent_inspect.get("action_preimages", []) if isinstance(parent_inspect, dict) else []
     check_direct_prefix(preimages, expected)
     unverified = set(receipt.get("unverified_property_batch_action_ids", ()))
+    incomplete_clone = receipt.get("incomplete_native_clone_batch")
+    if isinstance(incomplete_clone, dict):
+        start = expected.index(incomplete_clone["first_action_id"])
+        end = expected.index(incomplete_clone["last_action_id"])
+        if end < start:
+            raise ValueError("Incomplete native clone batch action interval is reversed")
+        unverified.update(expected[start:end + 1])
+    clone_batches = receipt.get("native_clone_batches", ())
     for member in members:
         offset, count = member["action_offset"], member["action_count"]
         selected = individual[offset:offset + count]
         state = "completed" if first_failed is None or offset + count <= first_failed else "failed" if offset <= first_failed < offset + count else "not-executed"
-        if state == "not-executed" and unverified.intersection(expected[offset:offset + count]):
+        if state != "failed" and unverified.intersection(expected[offset:offset + count]):
             state = "partial"
         if state == "not-executed":
             output.append((member, state, None, None))
             continue
         apply = {key: json_copy(value) for key, value in receipt.items()
-                 if key not in ("actions", "direct_action_results", "direct_inspection")}
+                 if key not in ("actions", "direct_action_results", "direct_inspection", "native_clone_batches")}
+        step_action_ids = set(expected[offset:offset + count])
+        if "native_clone_batches" in receipt:
+            # Keep one full verification snapshot in the derived step reports.
+            apply["native_clone_batches"] = [json_copy(group) for group in clone_batches
+                                             if group["last_action_id"] in step_action_ids]
+        if not step_action_ids.intersection(unverified):
+            apply.pop("incomplete_native_clone_batch", None)
         reports, flushes = [], []
         for row in selected:
             for report in row["result"].get("actions", []):
@@ -995,7 +1027,7 @@ def validate_spec(specification, read_only=False, prior_native_ids=()):
     action_ids = set()
     native_ids = set(prior_native_ids)
     if any(native_references({key: value for key, value in specification.items() if key != "actions"})):
-        raise ValueError("Native result references belong in action target or after")
+        raise ValueError("Native result references belong in action target, after, or clone source")
     for action in actions:
         required = ("action_id", "kind", "target") if read_only else ("action_id", "kind", "target", "after")
         if not isinstance(action, dict) or not all(key in action for key in required):
@@ -1010,9 +1042,10 @@ def validate_spec(specification, read_only=False, prior_native_ids=()):
             raise ValueError("Action target and after must be objects")
         if "before" in action or "abi_profile_sha256" in action:
             raise ValueError("Session actions obtain fresh before/ABI from their own inspection")
-        if any(native_references({key: value for key, value in action.items() if key not in ("target", "after")})):
-            raise ValueError("Native result references belong in action target or after")
-        for key in ("target", "after"):
+        fields = ("target", "after", "source") if action["kind"] in CLONE_KINDS else ("target", "after")
+        if any(native_references({key: value for key, value in action.items() if key not in fields})):
+            raise ValueError("Native result references belong in action target, after, or clone source")
+        for key in fields:
             for reference in native_references(action.get(key)):
                 if read_only or reference["action_id"] not in native_ids:
                     raise ValueError("A native result reference must select an earlier action in the same request")
@@ -1024,8 +1057,9 @@ def validate_spec(specification, read_only=False, prior_native_ids=()):
         specification["save_scope"] = {"root_save": False}
     if type(commit) is not bool:
         raise ValueError("Step commit must be Boolean")
-    if type(specification.get("coalesce_native_properties", True)) is not bool:
-        raise ValueError("coalesce_native_properties must be Boolean")
+    for key in ("coalesce_native_properties", "coalesce_native_clones"):
+        if type(specification.get(key, True)) is not bool:
+            raise ValueError(f"{key} must be Boolean")
     if read_only and (commit or specification.get("save_scope", {}).get("root_save")):
         raise ValueError("An inspection step cannot authorize persistence")
     if commit:
