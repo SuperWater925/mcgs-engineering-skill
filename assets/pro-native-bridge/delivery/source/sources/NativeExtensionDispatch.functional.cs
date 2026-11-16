@@ -189,7 +189,7 @@ namespace McgsInternalBridge {
                 NativeMemory.Require(Process.GetCurrentProcess().Id==24212 && EngineEntry.ExpectedUiThreadId==35436,"Initial page creation belongs only to the completed run0001 session.");
                 NativeMemory.Require(NativeMemory.Hash(expected)=="96a8cd5e73c0bec13d9991738b8db505060fa69de8dffa0e5faefb10fd3c9924","Initial extension fixture differs from the complete run0001 baseline.");
                 var api=new NativeStrategyProfile.Api(engine);IntPtr root=api.RootDoc();
-                NativeMemory.Require(NativeMemory.I32(root,0x48)==0 && NativeMemory.I32(root,0x114)==1,"Initial extension root has unsaved changes or an invalid compile preimage.");
+                NativeMemory.Require(NativeMemory.I32(root,NativeLayout.Offset("document.modified"))==0 && NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))==1,"Initial extension root has unsaved changes or an invalid compile preimage.");
             } else {
                 string file=Path.Combine(TaskRoot,"extensions","run-0002","session-preconditions.json");
                 NativeMemory.Require(NativeMemory.Hash(file)=="c72e330cbc1d3f5b3182fc5aa75ae2b22385ee4712a60f295682facd9c37131a","Recovery session evidence differs.");

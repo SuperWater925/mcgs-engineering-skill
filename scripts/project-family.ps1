@@ -1,6 +1,6 @@
-# Match the same product brand as the Python entry points; release numbers are observations.
+﻿# Match the same product brand as the Python entry points; release numbers are observations.
 $familyContractPath=Join-Path $PSScriptRoot 'native/project_family.json'
-$script:McgsFamilyContract=Get-Content -LiteralPath $familyContractPath -Raw -Encoding utf8 | ConvertFrom-Json -AsHashtable
+$script:McgsFamilyContract=Get-Content -LiteralPath $familyContractPath -Raw -Encoding utf8 | ConvertFrom-Json
 $script:McgsNativeArchiveTool=Join-Path $PSScriptRoot 'native/mcgs_native_zip.py'
 if($script:McgsFamilyContract.schema -ne 1){throw 'Unsupported shared project-family contract.'}
 function Get-McgsProjectFamily([string]$Version){
@@ -17,7 +17,12 @@ function Get-McgsVersionText([byte[]]$Archive){
   $start=[Diagnostics.ProcessStartInfo]::new();$start.FileName=$python
   $start.UseShellExecute=$false;$start.CreateNoWindow=$true
   $start.RedirectStandardInput=$true;$start.RedirectStandardOutput=$true;$start.RedirectStandardError=$true
-  foreach($arg in @('-B',$script:McgsNativeArchiveTool,'--unpack-base64')){[void]$start.ArgumentList.Add($arg)}
+  if($PSVersionTable.PSVersion.Major -ge 7){
+   foreach($arg in @('-B',$script:McgsNativeArchiveTool,'--unpack-base64')){[void]$start.ArgumentList.Add($arg)}
+  }else{
+   # These fixed switches and a Windows file path cannot contain a quote.
+   $start.Arguments='-B "'+$script:McgsNativeArchiveTool+'" --unpack-base64'
+  }
   $process=[Diagnostics.Process]::Start($start)
   try{
    $process.StandardInput.Write([Convert]::ToBase64String($Archive));$process.StandardInput.Close()

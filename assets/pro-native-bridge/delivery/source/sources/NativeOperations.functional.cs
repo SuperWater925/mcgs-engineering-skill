@@ -37,11 +37,12 @@ namespace McgsInternalBridge {
         [ThreadStatic]static string operation;
         [ThreadStatic]static NativeRequestPipeline.TraceWriter writer;
         internal static void Begin(Dictionary<string,object> request) {
+            NativeOpaqueDrawState.ResetRequestImages();
             object value;operation=request!=null && request.TryGetValue("op",out value)?Convert.ToString(value,CultureInfo.InvariantCulture):"";
             writer=new NativeRequestPipeline.TraceWriter(Path.Combine(NativeOperations.TaskRoot,"extensions","native-operation-trace.jsonl"));
             Record();
         }
-        internal static void End(Dictionary<string,object> request){var current=writer;writer=null;NativeRequestPipeline.NativeFinished(request,current);if(current!=null&&!NativeRequestPipeline.IsPrepared(request))current.Drain();}
+        internal static void End(Dictionary<string,object> request){NativeOpaqueDrawState.ResetRequestImages();var current=writer;writer=null;NativeRequestPipeline.NativeFinished(request,current);if(current!=null&&!NativeRequestPipeline.IsPrepared(request))current.Drain();}
         internal static void BeforeMutation(string phase){MutationAttempted=true;Phase=phase;Record();}
         internal static void SetPhase(string phase){Phase=phase;Record();}
         static void Record() {
@@ -109,7 +110,14 @@ namespace McgsInternalBridge {
     }
 
     internal sealed class NativeContext {
-        internal IntPtr WindowService,WindowManager,Root,ObjectModel;
+        readonly NativeEngine engine;IntPtr service,manager,root,model;
+        internal NativeContext(NativeEngine value){engine=value;}
+        void Model(){if(model!=IntPtr.Zero)return;IntPtr current=engine.Call<NativeEngine.CdeclPointer>("GetCurrentObjectModel")();engine.RequireTable(current,"ObjectModel");IntPtr value=engine.Call<NativeEngine.ThisPointer>("ObjectModel_getRoot")(current);engine.RequireTable(value,"ObjectRoot.IObject");NativeMemory.Require(engine.Bind<NativeEngine.ThisInt>(engine.Virtual(value,20))(value)==12&&engine.Bind<NativeEngine.ThisPointer>(engine.Virtual(value,15))(value)==IntPtr.Zero,"Unexpected project-root identity.");model=current;root=value;}
+        void Windows(){if(service!=IntPtr.Zero)return;IntPtr value=engine.Call<NativeEngine.CdeclPointer>("GetUserWindowService")();NativeMemory.Require(value!=IntPtr.Zero,"No current user-window service.");engine.RequireTable(value,"UserWindowObjectManager.IUserWindowService");int offset=NativeMemory.I32(NativeMemory.Ptr(NativeMemory.Ptr(value,0),-4),4);IntPtr owner=NativeMemory.Add(value,-offset);engine.RequireTable(owner,"UserWindowObjectManager.IObject");NativeMemory.Require(engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(0)==owner&&engine.Bind<NativeEngine.ThisInt>(engine.Virtual(owner,20))(owner)==0&&engine.Bind<NativeEngine.ThisPointer>(engine.Virtual(owner,15))(owner)==Root,"Window service module/root identity differs.");manager=owner;service=value;}
+        internal IntPtr WindowService{get{Windows();return service;}}
+        internal IntPtr WindowManager{get{Windows();return manager;}}
+        internal IntPtr Root{get{Model();return root;}}
+        internal IntPtr ObjectModel{get{Model();return model;}}
     }
 
     internal static class NativeMemory {
@@ -158,6 +166,7 @@ namespace McgsInternalBridge {
         readonly Dictionary<string,Dictionary<string,object>> tables=new Dictionary<string,Dictionary<string,object>>();
         readonly HashSet<string> abiFunctionsVerified=new HashSet<string>();
         readonly HashSet<string> abiTablesVerified=new HashSet<string>();
+        readonly NativeOpaqueDrawState.LoadedImageRanges loadedImages=new NativeOpaqueDrawState.LoadedImageRanges();
         internal NativeEngine() {
             string executable=Process.GetCurrentProcess().MainModule.FileName;
             ImageBase=Process.GetCurrentProcess().MainModule.BaseAddress;
@@ -181,7 +190,7 @@ namespace McgsInternalBridge {
         internal IntPtr Address(int rva){NativeMemory.Require(rva>=0 && rva<imageSize,"RVA is outside editor image.");return NativeMemory.Add(ImageBase,rva);}
         internal int Rva(IntPtr pointer){long value=(long)NativeMemory.U(pointer)-NativeMemory.U(ImageBase);NativeMemory.Require(value>=0 && value<imageSize,"Pointer is outside editor image.");return (int)value;}
         internal IntPtr Function(string name){Dictionary<string,object> item;if(!functions.TryGetValue(name,out item))throw new NativeAbiUnavailableException("Root profile has no requested function: "+name,"static/read-tree-guard-profile.json",name);if(!abiFunctionsVerified.Contains(name)){VerifyFunction(item);abiFunctionsVerified.Add(name);}return Address(Number(item["rva"]));}
-        internal T Bind<T>(IntPtr function)where T:class{Rva(function);NativeMemory.Readable(function,1);return Marshal.GetDelegateForFunctionPointer(function,typeof(T))as T;}
+        internal T Bind<T>(IntPtr function)where T:class{loadedImages.Check(function,1);return Marshal.GetDelegateForFunctionPointer(function,typeof(T))as T;}
         internal T Call<T>(string name)where T:class{return Bind<T>(Function(name));}
         static byte[] ParseHex(string text){var result=new byte[text.Length/2];for(int i=0;i<result.Length;i++)result[i]=Byte.Parse(text.Substring(i*2,2),NumberStyles.HexNumber);return result;}
         void VerifyFunction(Dictionary<string,object> item) {
@@ -195,7 +204,7 @@ namespace McgsInternalBridge {
             NativeAbiTargetProfiles.CheckEntry(item,"vtable");
             IntPtr table=Address(Number(item["rva"]));
             NativeMemory.Require(NativeMemory.Ptr(table,-4)==Address(Number(item["col_rva"])),"RTTI COL differs: "+item["name"]);
-            int i=0;foreach(object slot in (IEnumerable)item["slot_entry_rvas"]){NativeMemory.Require(NativeMemory.Ptr(table,4*i)==Address(Number(slot)),"Vtable slot differs: "+item["name"]+"/"+i);i++;}
+            int i=0;foreach(object slot in (IEnumerable)item["slot_entry_rvas"]){VerifyVirtual(table,i,Address(Number(slot)),"static/read-tree-guard-profile.json",item["name"]+"/"+i);i++;}
         }
         void VerifyTableIdentity(Dictionary<string,object> item) {
             const string profile="static/read-tree-guard-profile.json";string name=Convert.ToString(item["name"],CultureInfo.InvariantCulture);
@@ -210,8 +219,8 @@ namespace McgsInternalBridge {
             NativeMemory.Readable(instance,4);NativeAbiTargetProfiles.RequireLayout(NativeMemory.Ptr(instance,0)==Address(Number(tables[name]["rva"])),"Unexpected native object type: "+name,"static/read-tree-guard-profile.json",name);
         }
         internal IntPtr Virtual(IntPtr instance,int slot) {
-            NativeMemory.Require(slot>=0 && slot<=32,"Invalid IObject virtual slot.");
-            IntPtr table=NativeMemory.Ptr(instance,0);int tableRva=Rva(table);IntPtr method=NativeMemory.Ptr(table,4*slot);Rva(method);
+            NativeMemory.Require(slot>=0,"Invalid IObject virtual slot.");
+            IntPtr table=NativeMemory.Ptr(instance,0);loadedImages.Check(table,4);long relative=(long)NativeMemory.U(table)-NativeMemory.U(ImageBase);int tableRva=relative>=0&&relative<imageSize?(int)relative:-1;
             // Core context tables are shared by every feature. Validate only the
             // slot about to be used; an unrelated unresolved tail is not needed.
             const string profile="static/read-tree-guard-profile.json";
@@ -227,33 +236,24 @@ namespace McgsInternalBridge {
                 if(!abiTablesVerified.Contains(name)){VerifyTableIdentity(item);abiTablesVerified.Add(name);}
                 var slots=item["slot_entry_rvas"] as IList;if(slots==null||slot>=slots.Count)throw new NativeAbiUnavailableException("Current core table has no bound contract for the requested slot: "+name+"/"+slot,profile,name+path);
                 NativeAbiTargetProfiles.CheckPaths(item,"root virtual slot",profile,path);
-                NativeAbiTargetProfiles.RequireLayout(method==Address(Number(slots[slot])),"Current core virtual entry differs: "+name+"/"+slot,profile,name+path);
+                return VerifyVirtual(table,slot,Address(Number(slots[slot])),profile,name+path);
             }
-            // Non-core classes retain the exact selected entry checks in their
-            // existing caller-specific profiles; no new generic admission.
-            return method;
+            return NativeAbiTargetProfiles.ProvenVirtualSlot(table,slot,"native virtual interface");
         }
-        internal NativeContext Attach() {
-            IntPtr service=Call<CdeclPointer>("GetUserWindowService")();NativeMemory.Require(service!=IntPtr.Zero,"No current user-window service.");
-            RequireTable(service,"UserWindowObjectManager.IUserWindowService");
-            IntPtr manager=NativeMemory.Add(service,-0x34);RequireTable(manager,"UserWindowObjectManager.IObject");
-            NativeMemory.Require(Call<CdeclModule>("GetModuleObject")(0)==manager,"Module getter and service RTTI disagree.");
-            IntPtr root=Bind<ThisPointer>(Virtual(manager,15))(manager);RequireTable(root,"ObjectRoot.IObject");
-            NativeMemory.Require(Bind<ThisInt>(Virtual(manager,20))(manager)==0,"Unexpected window module.");
-            NativeMemory.Require(Bind<ThisInt>(Virtual(root,20))(root)==12 && Bind<ThisPointer>(Virtual(root,15))(root)==IntPtr.Zero,"Unexpected project-root identity.");
-            IntPtr model=Call<CdeclPointer>("GetCurrentObjectModel")();RequireTable(model,"ObjectModel");
-            NativeMemory.Require(Call<ThisPointer>("ObjectModel_getRoot")(model)==root,"Document model and parent root disagree.");
-            return new NativeContext{WindowService=service,WindowManager=manager,Root=root,ObjectModel=model};
+        internal IntPtr VerifyVirtual(IntPtr table,int referenceSlot,IntPtr method,string profile,string entry){
+            loadedImages.Check(method,1);
+            return NativeAbiTargetProfiles.RequireVirtualSlot("editor",ImageBase,table,referenceSlot,method,profile,entry);
         }
+        internal NativeContext Attach() {return new NativeContext(this);}
         internal Dictionary<string,object> Describe(IntPtr instance) {
-            return NativeObjectTraversal.Describe(instance,Rva,delegate(IntPtr value,int slot){return Bind<ThisInt>(Virtual(value,slot))(value);});
+            return NativeObjectTraversal.Describe(instance,loadedImages.Relative,delegate(IntPtr value,int slot){return Bind<ThisInt>(Virtual(value,slot))(value);});
         }
         internal List<IntPtr> Children(IntPtr owner) {
             return NativeObjectTraversal.Children(owner,Describe,
                 delegate(IntPtr iter,IntPtr value){Call<ThisPointerPointer>("IObjectIter_ctor")(iter,value);},
                 delegate(IntPtr value,IntPtr iter){return Bind<ThisBoolPointer>(Virtual(value,17))(value,iter);},
                 delegate(IntPtr value,IntPtr iter){return Bind<ThisBoolPointer>(Virtual(value,18))(value,iter);},
-                delegate(IntPtr iter){Call<ThisVoid>("IObjectIter_dtor")(iter);});
+                delegate(IntPtr iter){Call<ThisVoid>("IObjectIter_dtor")(iter);},false);
         }
         internal List<object> ReadTree(IntPtr root) {
             var output=new List<object>();var visited=new HashSet<uint>();ReadTreeNode(root,0,"",output,visited);return output;

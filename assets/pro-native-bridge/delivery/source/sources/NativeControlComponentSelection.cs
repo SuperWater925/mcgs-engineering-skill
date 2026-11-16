@@ -3,11 +3,10 @@ using System;using System.Collections.Generic;
 namespace McgsInternalBridge {
  internal static partial class NativeControlPropertyEditing {
   static void AnnotateComponentOccurrences(List<Dictionary<string,object>> values){
-   var counts=new Dictionary<string,Dictionary<string,int>>(StringComparer.Ordinal);
-   foreach(var row in values){if(Convert.ToInt32(row["native_type_tag"])!=9)continue;
-    string owner=Convert.ToString(row["native_owner"]),key=Convert.ToString(row["native_key"]);Dictionary<string,int> keys;
-    if(!counts.TryGetValue(owner,out keys)){keys=new Dictionary<string,int>(StringComparer.Ordinal);counts.Add(owner,keys);}
-    int ordinal;keys.TryGetValue(key,out ordinal);row["native_key_occurrence"]=ordinal;keys[key]=checked(ordinal+1);
+   var counts=new Dictionary<Tuple<string,string,int>,int>();
+   foreach(var row in values){
+    var identity=Tuple.Create(Convert.ToString(row["native_owner"]),Convert.ToString(row["native_key"]),Convert.ToInt32(row["native_type_tag"]));
+    int ordinal;counts.TryGetValue(identity,out ordinal);row["native_key_occurrence"]=ordinal;counts[identity]=checked(ordinal+1);
    }
   }
   static IntPtr ResolveComponent(Api api,List<Dictionary<string,object>> values,IntPtr owner,object token){

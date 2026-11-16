@@ -1,7 +1,7 @@
 """Resolve one selected program's native profiles before delivery SHA repinning.
 
-Only classified PE addresses change. Object offsets, IDs and calling contracts
-remain the existing contracts. No editor process is loaded or invoked here.
+Classified PE addresses and explicitly consumed layout fields are derived from
+the current program. No editor process is loaded or invoked here.
 """
 from __future__ import annotations
 
@@ -57,7 +57,7 @@ def resolve_selected(catalog, selection, cache_root=None, progress_callback=None
     cache = None
     if cache_root is not None:
         directory = Path(__file__).resolve().parent
-        sources = ('abi_locator.py', 'adaptive_x86.py', 'pe32.py', 'rtti.py', 'x86_signature.py')
+        sources = ('abi_locator.py', 'adaptive_x86.py', 'role_based_x86.py', 'pe32.py', 'rtti.py', 'x86_signature.py')
         contract = {'schema': RESULT_SCHEMA, 'decoder': DECODER_VERSION,
                     'sources': {name: digest((directory / name).read_bytes()) for name in sources}}
         cache = ResolutionCache(cache_root, 'rva-resolution', contract)
@@ -115,6 +115,23 @@ class TargetBinding:
         self.module_names = {row.get('basename','').casefold(): alias
                              for alias,row in self.catalog['reference_modules'].items() if row.get('basename')}
         self.result, self.resolution_cache = resolve_selected(self.catalog, selection, cache_root, progress_callback)
+        from layout_adaptation import derive_layout
+        layout_cache = None
+        if cache_root is not None:
+            directory = Path(__file__).resolve().parent
+            sources = ('layout_adaptation.py', 'role_based_x86.py', 'adaptive_x86.py',
+                       'rtti.py', 'pe32.py', 'x86_signature.py')
+            layout_cache = ResolutionCache(cache_root, 'object-layout', {
+                'decoder': DECODER_VERSION,
+                'sources': {name: digest((directory / name).read_bytes()) for name in sources}})
+        layout_key = {'catalog': self.result['catalog_sha256'], 'modules': selection['sha256'],
+                      'resolution': digest(json_bytes({
+                          'maps': self.result['rva_maps'], 'types': self.result['types']}))}
+        self.object_layout = layout_cache.load(layout_key) if layout_cache is not None else None
+        if not isinstance(self.object_layout, dict) or self.object_layout.get('schema') != 1:
+            self.object_layout = derive_layout(self.catalog, self.result, modules)
+            if layout_cache is not None:
+                layout_cache.store(layout_key, self.object_layout)
         self.attestation = write_resolved_profiles(self.catalog, self.result, self.output / 'profiles',
                                                   profile_root=self.stage / 'artifacts', compact_names=compact_profiles)
         self.profile_rows = {row['relative_path']: row for row in self.attestation['reference_profiles']}
@@ -171,6 +188,24 @@ class TargetBinding:
         pattern = re.compile('|'.join(re.escape(old)+r'''(?=(?:\\)?['"]|$)''' for old in sorted(pairs,key=len,reverse=True)),re.I)
         return pattern.sub(lambda match:pairs[match.group().casefold()],text)
 
+    def source_guard_row(self, guard):
+        alias, old = guard['module'], guard['reference_rva']
+        mapped = self.result['rva_maps'].get(alias, {}).get(hex(old))
+        match = next((item for item in self.result['functions']
+                      if item['module'] == alias and item['reference_rva'] == old
+                      and item['status'] == 'resolved' and item['reference_guard_length'] == guard['length']
+                      and mapped is not None and item['actual_rva'] == mapped['actual_rva']), None)
+        state = {'id': guard['id'], 'module': alias, 'reference_rva': old,
+                 'actual_rva': mapped['actual_rva'] if mapped else None,
+                 'length': match['actual_guard_length'] if match else guard['length'],
+                 'reference_length': guard['length'], 'status': 'verified' if match else 'unresolved',
+                 'reference_preferred_base': self.catalog['reference_modules'][alias]['image_base'],
+                 'details': 'Resolved current source guard' if match else 'Current source guard was not uniquely located'}
+        if match:
+            state.update(bytes_at_reference_preferred_base=match['guard_bytes_at_reference_preferred_base'],
+                         highlow_offsets=match['actual_relocation_offsets'], proof_id=match['proof_id'])
+        return state
+
     def patch_addresses(self, name, text):
         """Apply spans against exact original text, before all other rewriting."""
         entries = self.source_entries.get(name, [])
@@ -226,21 +261,9 @@ class TargetBinding:
         for guard in self.source_guards.get(name, []):
             start, end = guard['start'], guard['end']
             _need(text[start:end] == guard['original_literal'], 'Native source byte-guard span changed: ' + name)
-            match = next((item for item in self.result['functions']
-                          if item['module'] == guard['module'] and item['reference_rva'] == guard['reference_rva']
-                          and item['status'] == 'resolved'
-                          and len(item.get('guard_bytes_at_reference_preferred_base', '')) == 2 * guard['length']), None)
-            mapped = self.result['rva_maps'].get(guard['module'], {}).get(hex(guard['reference_rva']))
-            state = {'id':guard['id'], 'module':guard['module'], 'reference_rva':guard['reference_rva'],
-                     'actual_rva':mapped['actual_rva'] if mapped else None, 'length':guard['length'],
-                     'status':'verified' if match else 'unresolved',
-                     'reference_preferred_base':self.catalog['reference_modules'][guard['module']]['image_base'],
-                     'details':'Resolved current full source guard' if match else 'Full source guard was not uniquely located'}
-            if match:
-                state.update(actual_rva=match['actual_rva'],
-                             bytes_at_reference_preferred_base=match['guard_bytes_at_reference_preferred_base'],
-                             highlow_offsets=match['actual_relocation_offsets'], proof_id=match['proof_id'])
-                replacements[(start,end)] = json.dumps(match['guard_bytes_at_reference_preferred_base'])
+            state = self.source_guard_row(guard)
+            if state['status'] == 'verified':
+                replacements[(start,end)] = json.dumps(state['bytes_at_reference_preferred_base'])
             self.guard_changes.append(state)
         for ordinal in self.source_ordinals.get(name,[]):
             start,end=ordinal['start'],ordinal['end'];alias=ordinal['module'];old=ordinal['reference_ordinal'];rva=ordinal['reference_rva']
@@ -324,9 +347,22 @@ class TargetBinding:
                             'actual_basename': item['actual']['basename'], 'actual_sha256': item['actual']['sha256'],
                             'actual_file': str(self.actual_module_paths[alias]),
                             'is_editor': alias == 'editor'})
+        virtual_slots = {}
+        for table in self.result['types']:
+            if table['status'] != 'resolved':
+                continue
+            module, table_rva = table['module'], table['actual']['vtable_rva']
+            for slot in table['slot_coverage']['identified_slots']:
+                key = (module, table_rva, slot['reference_index'], slot['actual_entry_rva'])
+                virtual_slots[key] = {'module': module, 'actual_table_rva': table_rva, **slot}
         return {'schema': 'mcgs-native-bound-profile-index/v1', 'catalog_sha256': self.result['catalog_sha256'],
                 'files': rows, 'modules': modules, 'source_guards':self.guard_changes,'source_ordinals':self.ordinal_changes,
-                'object_layout_offsets_changed': False, 'vendor_whole_file_sha_admission': False,
+                'virtual_slots': list(virtual_slots.values()),
+                'object_layout': self.object_layout,
+                'object_layout_offsets_changed': any(row.get('status') == 'resolved'
+                    and 'reference_offset' in row and row['offset'] != row['reference_offset']
+                    for row in self.object_layout['fields'].values()),
+                'vendor_whole_file_sha_admission': False,
                 'feature_scoped_failure': True, 'adaptive_locator': True}
 
     def summary(self):
@@ -360,7 +396,7 @@ def patch_runtime_source(name, text):
         # Core functions and table slots are lazy in the reusable source itself.
         # Binding only changes classified addresses/guards and owned file IO;
         # it must not inject an eager whole-table gate back into the constructor.
-    elif name == 'NativeControlPropertyBatch.cs':
+    elif name == 'NativeControlPropertyBatch.cs' and 'NativeMemory.Require(BitConverter.ToString(expected)' in text:
         once('NativeMemory.Require(BitConverter.ToString(expected)==BitConverter.ToString(NativeMemory.Bytes(api.Engine.Address(rva),expected.Length))',
              'NativeAbiTargetProfiles.RelocateSourceGuard(rva,expected);NativeMemory.Require(BitConverter.ToString(expected)==BitConverter.ToString(NativeMemory.Bytes(api.Engine.Address(rva),expected.Length))')
     elif name == 'NativeRecipeStoreProjection.cs':

@@ -35,7 +35,7 @@ namespace McgsInternalBridge {
     ValidateBefore();lease.BeginApply(action);try{
      var native=rename.ApplyWithinExistingLease(lease,delegate{
       NativeOperationTrace.BeforeMutation("control-rename-original-page-before-modify");if(selected.View!=IntPtr.Zero){history.ValidateBefore();notify(selected.Doc,selected.View,1,1);history.OriginalBeforeModifyReturned();}else docDirty(selected.Doc,1);
-      rootDirty(api.Common.Shared.RootDoc(),1);Marshal.WriteInt32(api.Common.Shared.RootDoc(),0x114,0);
+      rootDirty(api.Common.Shared.RootDoc(),1);Marshal.WriteInt32(api.Common.Shared.RootDoc(),NativeLayout.Offset("document.compile_valid"),0);
      },history);
      if(selected.View!=IntPtr.Zero){NativeOperationTrace.BeforeMutation("control-rename-native-invalidate");invalidate(selected.View,1);NativeOperationTrace.BeforeMutation("control-rename-native-update");update(selected.View);}
      Selection now=VerifyTarget();applied=true;lease.CompleteApply(action);return new Dictionary<string,object>{{"ok",true},{"kind",RenameKind},{"native_rename",native},{"original_history_store_projection",history==null?null:(object)history.Report()},{"target_after",now.Snapshot},{"complete_expected_consumers_required",true},{"full_persistence_acceptance_pending",true}};

@@ -99,7 +99,7 @@ class 对象:
         return b"".join([self.name.encode(), self.comment.encode(), self.unit.encode(), pack(self.prefix), self.extra_before_init.encode(), pack(self.middle), self.initial.encode(), pack(self.suffix[:7]), b"".join(x.encode() for x in self.members), extension, self.extra_after_init.encode(), pack(self.tail)])
 
 
-def parse_scalar(reader):
+def parse_scalar(reader,alarm_bytes=52,alarm_tail=4):
     start = reader.pos
     name, comment, unit = reader.string(), reader.string(), reader.string()
     prefix = [reader.u32() for _ in range(9)]
@@ -117,8 +117,8 @@ def parse_scalar(reader):
     if enabled not in (0,1):raise 结构未支持('对象报警开关不是0/1')
     if enabled:
         alarms=reader.u32()
-        if alarms>len(reader.data)//56:raise 结构未支持('对象报警数量越界')
-        for _ in range(alarms):reader.read(52);reader.string();reader.read(4)
+        if alarms>len(reader.data)//(alarm_bytes+alarm_tail+1):raise 结构未支持('对象报警数量越界')
+        for _ in range(alarms):reader.read(alarm_bytes);reader.string();reader.read(alarm_tail)
     groups=reader.u32()
     if groups>len(reader.data)//4:raise 结构未支持('对象反向组索引数量越界')
     reader.read(groups*4)
@@ -128,12 +128,10 @@ def parse_scalar(reader):
         raise 结构未支持(f"标量出现组成员：offset={start}")
     after = reader.string()
     tail = [reader.u32() for _ in range(3)]
-    if tail != [0, 2, 0]:
-        raise 结构未支持(f"未验证记录尾：offset={start}")
     return 对象(start, name, comment, unit, prefix, before, middle, initial, suffix, members, after, tail, reader.pos,extension if enabled or groups else None)
 
 
-def parse(data):
+def _parse(data,alarm_bytes=52,alarm_tail=4):
     reader = 游标(data)
     version = reader.read(4)
     length, count = reader.u32(), reader.u32()
@@ -143,13 +141,25 @@ def parse(data):
     for index in range(count):
         start=reader.pos
         try:
-            obj=parse_scalar(reader)
+            obj=parse_scalar(reader,alarm_bytes,alarm_tail)
         except Exception as exc:
             raise 结构未支持(f"对象#{index}始于{start}，尚未完整支持；已完成{len(objects)}条：{exc}") from exc
         objects.append(obj)
     if reader.pos != len(data):
         raise 结构未支持(f"记录后有未解析数据：offset={reader.pos}, total={len(data)}")
     return version, objects
+
+
+def parse(data):
+    matches=[];errors=[]
+    for size,tail in ((52,4),(40,0)):
+        try:
+            result=_parse(data,size,tail)
+            if serialize(*result)!=data:raise 结构未支持('对象归档无法精确回读')
+            if not any(result==old for old in matches):matches.append(result)
+        except (ValueError,UnicodeError,struct.error) as exc:errors.append(str(exc))
+    if len(matches)!=1:raise 结构未支持('对象布局不唯一' if matches else '; '.join(errors))
+    return matches[0]
 
 
 def serialize(version, objects):

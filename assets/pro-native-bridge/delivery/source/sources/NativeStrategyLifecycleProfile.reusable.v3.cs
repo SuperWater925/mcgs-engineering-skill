@@ -58,10 +58,10 @@ namespace McgsInternalBridge {
                 currentApplicationPrefix=new byte[applicationPrefix.Length/2];
                 for(int i=0;i<currentApplicationPrefix.Length;i++)currentApplicationPrefix[i]=Convert.ToByte(applicationPrefix.Substring(i*2,2),16);
                 CheckCurrentApplicationPrefix();Root=Read.Existing.RootDoc();
-                NativeMemory.Require(NativeMemory.Ptr(Root,0x2D4)==context.ObjectModel,"Strategy lifecycle object model differs from the current document.");
+                NativeMemory.Require(NativeMemory.Ptr(Root,NativeLayout.Offset("root.object_model"))==context.ObjectModel,"Strategy lifecycle object model differs from the current document.");
                 Manager=engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(3);NativeMemory.Require(NativeMemory.Ptr(Manager,0)==engine.Address(0xDDD094),"Strategy manager differs.");
                 var profile=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(NativeLazyFunctionProfile.ReadText(guard));foreach(object row in (IEnumerable)profile["native_factories"]){var item=(Dictionary<string,object>)row;string name=Convert.ToString(item["method"]);factories.Add(name,item);}
-                Current();NativeMemory.Require(Bind<Int0>("DatabaseIsOpen")(NativeMemory.Add(Root,0x25C))==1,"Current native project database is not already open; do not repair/reopen it.");
+                Current();NativeMemory.Require(Bind<Int0>("DatabaseIsOpen")(NativeMemory.Add(Root,NativeLayout.Offset("document.name")))==1,"Current native project database is not already open; do not repair/reopen it.");
                 IntPtr rowClass=engine.Address(0xCFEF38);NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Ptr(rowClass,0),64)=="CDBTrigger" && NativeMemory.I32(rowClass,4)==0xBC,"Native Trigger recordset class/size differs.");
             }
             void CheckCurrentApplicationPrefix(){
@@ -72,14 +72,14 @@ namespace McgsInternalBridge {
                 NativeMemory.Require(IntPtr.Size==4 && EngineEntry.ExpectedUiThreadId>0 && NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Strategy lifecycle is outside the captured x86 UI thread.");
                 CheckCurrentApplicationPrefix();
                 IntPtr app=currentApplication();NativeMemory.Require(app!=IntPtr.Zero,"No current MFC application.");
-                IntPtr document=NativeMemory.Ptr(app,0x520);
+                IntPtr document=NativeMemory.Ptr(app,NativeLayout.Offset("app.root_document"));
                 NativeMemory.Require(document!=IntPtr.Zero&&document==Root&&NativeMemory.Ptr(document,0)==Engine.Address(0xD57684),"Strategy lifecycle current root changed.");
                 // Identical live RootDoc type/slot checks; only the redundant
                 // new PageDuplicate.Api from CurrentProjectPath was removed.
                 Read.Existing.MatchVirtual(document,26,"RootIsModified");
                 Read.Existing.MatchVirtual(document,27,"RootSetModified");
-                NativeMemory.Readable(NativeMemory.Add(document,0x114),4);
-                NativeMemory.Require(NativeMemory.Ptr(document,0x2D4)==Context.ObjectModel,"Strategy lifecycle current object model changed.");
+                NativeMemory.Readable(NativeMemory.Add(document,NativeLayout.Offset("document.compile_valid")),4);
+                NativeMemory.Require(NativeMemory.Ptr(document,NativeLayout.Offset("root.object_model"))==Context.ObjectModel,"Strategy lifecycle current object model changed.");
                 string value=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(document,0x24),2048);
                 NativeMemory.Require(!String.IsNullOrEmpty(value)&&Path.GetFullPath(value).Equals(Fixture,StringComparison.OrdinalIgnoreCase),"Strategy lifecycle native project differs from the current requested project.");
             }
@@ -159,7 +159,7 @@ namespace McgsInternalBridge {
                 api=value;storage=Marshal.AllocHGlobal(0xBC);
                 try {
                     for(int i=0;i<0xBC;i++)Marshal.WriteByte(storage,i,0);
-                    IntPtr expected=NativeMemory.Add(api.Root,0x25C);NativeMemory.Require(api.Bind<Int0>("DatabaseIsOpen")(expected)==1,"Trigger postcheck database closed.");
+                    IntPtr expected=NativeMemory.Add(api.Root,NativeLayout.Offset("document.name"));NativeMemory.Require(api.Bind<Int0>("DatabaseIsOpen")(expected)==1,"Trigger postcheck database closed.");
                     NativeMemory.Require(api.Bind<CreateDatabasePointer>("CurrentProjectDatabase")(api.Root)==expected,"Trigger postcheck database owner differs.");
                     NativeMemory.Require(api.Bind<RowCtor>("TriggerRecordCtor")(storage,expected)==storage,"Native Trigger row constructor returned another object.");constructed=true;api.Read.Table(storage,"TriggerRecord");
                     opened=true;api.Bind<RecordOpen>("RecordOpen")(storage,-1,IntPtr.Zero,0);
@@ -200,7 +200,7 @@ namespace McgsInternalBridge {
             NativeMemory.Require(Convert.ToBoolean(comparison["ok"]) && Convert.ToBoolean(comparison["all_exact_utf16_bytes_equal"]) && Convert.ToInt32(comparison["programs"])==9 && Convert.ToString(comparison["export_sha256"])==projectSha,"Fresh exact-source comparison is not the complete nine-script baseline.");
             NativeMemory.Require(Convert.ToString(comparison["native_response_sha256"])==Convert.ToString(((Dictionary<string,object>)session["native_source_read"])["sha256"]),"Fresh source comparison references another native response.");
             NativeMemory.Require(Convert.ToInt32(source["block_count"])==5 && Convert.ToInt32(source["direct_program_count"])==9 && Convert.ToInt32(inspection["next_strategy_id"])==15,"Fresh strategy model count/next-ID differs.");
-            NativeMemory.Require(NativeMemory.I32(api.Root,0x48)==Convert.ToInt32(inspection["root_modified_after"]) && NativeMemory.I32(api.Root,0x114)==Convert.ToInt32(inspection["compile_valid_after"]),"Native root flags changed since the fresh strategy inspection.");
+            NativeMemory.Require(NativeMemory.I32(api.Root,NativeLayout.Offset("document.modified"))==Convert.ToInt32(inspection["root_modified_after"]) && NativeMemory.I32(api.Root,NativeLayout.Offset("document.compile_valid"))==Convert.ToInt32(inspection["compile_valid_after"]),"Native root flags changed since the fresh strategy inspection.");
             NativeMemory.Require(Convert.ToInt32(session["expected_next_strategy_id"])==15 && Convert.ToString(template["template_condition_json"])==api.TemplateCondition(api.Blocks()[0]),"Expected own strategy ID or full native template-condition proof differs.");
             NativeMemory.Require(Convert.ToString(template["old_strategy_snapshot_utf8_sha256"])==HashUtf8(Snapshot(api,api.Blocks())),"Complete old strategy/condition/source snapshot changed since fresh native creation inspection.");
             var triggerIds=new HashSet<int>();foreach(object item in (IEnumerable)index["rows"]){var row=(Dictionary<string,object>)item;if(Convert.ToString(row["table"])!="Trigger")continue;int recordId=Convert.ToInt32(row["iID"]);NativeMemory.Require(recordId>=0 && triggerIds.Add(recordId),"Baseline Trigger record IDs are invalid/repeated.");}
@@ -292,7 +292,7 @@ namespace McgsInternalBridge {
                 NativeStrategyProfile.MarkRootDirty(api.Read.Existing);NativeOperationTrace.BeforeMutation("strategy-own-block-dirty-notify");record["phase"]="native-dirty-and-list-notify";WriteAttempt(attemptFile,record);
                 IntPtr preload=NativeMemory.Add(created,4);api.Read.Table(preload,"BlockPreloadable");api.Read.Existing.MatchVirtual(preload,2,"StrategyPreloadSaveData");api.Read.Existing.Bind<Void0>("StrategyPreloadSaveData")(preload);
                 ExistingUnchanged(api,originals,originalSnapshot);api.Program(created,next,AfterName,SourceAfter);NativeMemory.Require(api.TemplateCondition(created)==conditionSnapshot && api.ExactCString(NativeMemory.Add(created,0x10),4096)==userNote,"RootAdd/rename/notify changed the retained condition or User comment.");
-                NativeMemory.Require(api.Blocks().Count==6 && NativeMemory.I32(api.Root,0x48)==1 && NativeMemory.I32(api.Root,0x114)==0 && Marshal.ReadByte(NativeMemory.Add(created,0x60))==1,"Owned new strategy final native state differs.");
+                NativeMemory.Require(api.Blocks().Count==6 && NativeMemory.I32(api.Root,NativeLayout.Offset("document.modified"))==1 && NativeMemory.I32(api.Root,NativeLayout.Offset("document.compile_valid"))==0 && Marshal.ReadByte(NativeMemory.Add(created,0x60))==1,"Owned new strategy final native state differs.");
                 // Original CStrategyBlock::~CStrategyBlock releases rows/CStrings, not context+10.
                 // The context is now in the root owning array and must not be separately deleted.
                 api.Read.Table(temporary,"BlockComplete");api.Slot(temporary,1,0x511BD);NativeOperationTrace.SetPhase("strategy-owned-temporary-block-destroy");api.Bind<VoidInt>("BlockDeleteOwned")(temporary,1);temporary=IntPtr.Zero;

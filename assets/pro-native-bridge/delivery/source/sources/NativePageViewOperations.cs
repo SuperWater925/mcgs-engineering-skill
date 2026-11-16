@@ -37,7 +37,7 @@ namespace McgsInternalBridge {
     var mfc=M(profile["mfc"]);IntPtr module=GetModuleHandleW("mfc110u.dll");string actual=null;foreach(ProcessModule loaded in Process.GetCurrentProcess().Modules)if(loaded.BaseAddress==module)actual=loaded.FileName;
     NativeMemory.Require(module!=IntPtr.Zero&&actual!=null&&NativeBinaryIdentity.Observe(Convert.ToString(mfc["sha256"]),NativeMemory.Hash(actual),"NativePageViewOperations:31:module"),"Native document template MFC owner differs.");
     foreach(object value in(IEnumerable)mfc["imports"]){var row=M(value);IntPtr address=NativeMemory.Add(module,N(row["target_rva"]));NativeMemory.Require(ExportOrdinal(module,new IntPtr(N(row["ordinal"])))==address&&NativeMemory.Ptr(e.Address(N(row["iat_rva"])),0)==address,"Native document template import target differs.");Bytes(row,address,module,0x10000000U);}
-    IntPtr app=Common.Common.Shared.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(NativeMemory.Ptr(app,0x520)==Common.Common.Shared.RootDoc(),"Designer application root differs.");
+    IntPtr app=Common.Common.Shared.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(NativeMemory.Ptr(app,NativeLayout.Offset("app.root_document"))==Common.Common.Shared.RootDoc(),"Designer application root differs.");
     Frame=NativeMemory.Ptr(app,0x20);Table(Frame,M(profile["main_frame"]));Template=NativeMemory.Ptr(Frame,N(profile["template_frame_offset"]));Table(Template,M(profile["template"]));
     NativeMemory.Require(NativeMemory.Ptr(NativeMemory.Ptr(Template,0),23*4)==methods.Address("TemplateFirstDoc")&&NativeMemory.Ptr(NativeMemory.Ptr(Template,0),24*4)==methods.Address("TemplateNextDoc"),"Native designer template enumerator vtable differs.");
    }
@@ -45,7 +45,7 @@ namespace McgsInternalBridge {
    void Table(IntPtr instance,Dictionary<string,object> info){NativeMemory.Require(instance!=IntPtr.Zero&&NativeMemory.Ptr(instance,0)==Engine.Address(N(info["vtable_rva"])),"Native designer owner type differs.");IntPtr table=NativeMemory.Ptr(instance,0),col=NativeMemory.Ptr(table,-4);NativeMemory.Require(col==Engine.Address(N(info["col_rva"]))&&NativeMemory.I32(col,4)==0&&NativeMemory.Ptr(col,12)==Engine.Address(N(info["type_descriptor_rva"]))&&NativeMemory.Ascii(NativeMemory.Add(NativeMemory.Ptr(col,12),8),256)==Convert.ToString(info["rtti"]),"Native designer owner RTTI differs.");}
    internal void Current(){Common.Common.Current();Table(Frame,M(profile["main_frame"]));NativeMemory.Require(NativeMemory.Ptr(Frame,N(profile["template_frame_offset"]))==Template,"Native designer template owner changed.");Table(Template,M(profile["template"]));}
    internal List<object> Frames(){Current();var result=new List<object>();var positions=new HashSet<uint>();var docs=new HashSet<uint>();IntPtr position=FirstDoc(Template);for(int i=0;position!=IntPtr.Zero;i++){
-    NativeMemory.Require(positions.Add(NativeMemory.U(position)),"Native designer document list bound/cycle differs.");IntPtr doc=NextDoc(Template,ref position);NativeMemory.Require(doc!=IntPtr.Zero&&docs.Add(NativeMemory.U(doc))&&NativeMemory.Ptr(doc,0)==Engine.Address(0xDC4D94),"Native designer template contains an unknown/duplicate document.");IntPtr frame;bool visible=Probe(doc,out frame);NativeMemory.Require(visible==(frame!=IntPtr.Zero),"Native drawing-frame predicate/result disagree.");if(visible){NativeMemory.Require(IsWindow(NativeMemory.Ptr(frame,0x20)),"Native drawing-frame HWND is invalid.");result.Add(new Dictionary<string,object>{{"page_id",NativeMemory.I32(doc,0x258)},{"document",NativeMemory.Hex(doc)},{"frame",NativeMemory.Hex(frame)}});}
+    NativeMemory.Require(positions.Add(NativeMemory.U(position)),"Native designer document list bound/cycle differs.");IntPtr doc=NextDoc(Template,ref position);NativeMemory.Require(doc!=IntPtr.Zero&&docs.Add(NativeMemory.U(doc))&&NativeMemory.Ptr(doc,0)==Engine.Address(0xDC4D94),"Native designer template contains an unknown/duplicate document.");IntPtr frame;bool visible=Probe(doc,out frame);NativeMemory.Require(visible==(frame!=IntPtr.Zero),"Native drawing-frame predicate/result disagree.");if(visible){NativeMemory.Require(IsWindow(NativeMemory.Ptr(frame,0x20)),"Native drawing-frame HWND is invalid.");result.Add(new Dictionary<string,object>{{"page_id",NativeMemory.I32(doc,NativeLayout.Offset("document.archive_id"))},{"document",NativeMemory.Hex(doc)},{"frame",NativeMemory.Hex(frame)}});}
    }return result;}
    internal Dictionary<string,object> ActiveFrame(IntPtr frame){
     IntPtr child=frame==IntPtr.Zero?IntPtr.Zero:NativeMemory.Ptr(frame,0x20);
@@ -72,7 +72,7 @@ namespace McgsInternalBridge {
    int maximum=api.Maximum(IntPtr.Zero);NativeMemory.Require(maximum>0,"Original native designer maximum is not a positive current capability.");
    var password=Password(doc);bool eligible=open||(frames.Count<maximum&&Convert.ToInt32(password["utf16_units"])==0);
    return new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"page",api.Common.Common.PageSnapshot(page)},{"controls",NativeUsableEditPermit.CurrentDrawControls(api.Engine,doc,id)},
-    {"document_compile_raw",NativeMemory.I32(doc,0x114)},{"root_modified",NativeMemory.I32(api.Common.Common.Shared.RootDoc(),0x48)},{"root_compile_raw",NativeMemory.I32(api.Common.Common.Shared.RootDoc(),0x114)},
+    {"document_compile_raw",NativeMemory.I32(doc,NativeLayout.Offset("document.compile_valid"))},{"root_modified",NativeMemory.I32(api.Common.Common.Shared.RootDoc(),NativeLayout.Offset("document.modified"))},{"root_compile_raw",NativeMemory.I32(api.Common.Common.Shared.RootDoc(),NativeLayout.Offset("document.compile_valid"))},
     {"drawing_frames",frames},{"target_frame",NativeMemory.Hex(frame)},{"target_open",open},{"active_frame",api.ActiveFrame(frame)},
     {"maximum_open_frames",maximum},{"password_preimage",password},{"eligible_without_closing_others_or_password_dialog",eligible},{"full_serialization_preimage",false}};
   }
@@ -101,27 +101,47 @@ namespace McgsInternalBridge {
     return current;
    }
    internal void ValidateBefore(){ValidateCapture();}
-   void VerifyAfter(Dictionary<string,object> after){
-    NativeMemory.Require(Object.Equals(after["target_open"],true),"Native designer command returned without an actual drawing frame.");var b=new Dictionary<string,object>(M(before["page"]));var a=new Dictionary<string,object>(M(after["page"]));b.Remove("view");a.Remove("view");NativePageControlPreparation.Same(b,a,"Native designer open changed page identity, dirty state, attributes or top-level controls.");
+   static Dictionary<string,object> ObserveInitialClientExtent(Dictionary<string,object> beforePage,Dictionary<string,object> afterPage){
+    int first,width,height;
+    try{
+     first=NativeLayout.Offset("document.attributes");
+     width=NativeLayout.Offset("document.designer_client_width")-first;
+     height=NativeLayout.Offset("document.designer_client_height")-first;
+    }catch(NativeAbiUnavailableException){return null;}
+    var prior=(IList)beforePage["attributes"];var current=(IList)afterPage["attributes"];
+    if(width<0||height<0||width%4!=0||height%4!=0||width==height||prior.Count!=current.Count||width/4>=prior.Count||height/4>=prior.Count)return null;
+    int x=width/4,y=height/4;
+    var businessAttributes=new List<object>();for(int i=0;i<prior.Count;i++)businessAttributes.Add(i==x||i==y?current[i]:prior[i]);
+    beforePage["attributes"]=businessAttributes;
+    return new Dictionary<string,object>{{"width_before",prior[x]},{"width_after",current[x]},
+     {"height_before",prior[y]},{"height_after",current[y]},{"source","original drawing child window client rectangle"}};
+   }
+   Dictionary<string,object> VerifyAfter(Dictionary<string,object> after){
+    NativeMemory.Require(Object.Equals(after["target_open"],true),"Native designer command returned without an actual drawing frame.");
+    var b=new Dictionary<string,object>(M(before["page"]));var a=new Dictionary<string,object>(M(after["page"]));
+    b.Remove("view");a.Remove("view");
+    Dictionary<string,object> extent=Object.Equals(before["target_open"],false)?ObserveInitialClientExtent(b,a):null;
+    NativePageControlPreparation.Same(b,a,"Native designer open changed page identity, dirty state, business attributes or top-level controls.");
     foreach(string key in new[]{"controls","document_compile_raw","root_modified","root_compile_raw","password_preimage"})NativePageControlPreparation.Same(before[key],after[key],"Native designer open changed a protected project value: "+key);
     var frames=new Dictionary<string,object>();foreach(object value in(IEnumerable)after["drawing_frames"]){var row=M(value);frames.Add(Convert.ToString(row["document"]),row);}
     foreach(object value in(IEnumerable)before["drawing_frames"]){var row=M(value);NativeMemory.Require(frames.ContainsKey(Convert.ToString(row["document"])),"Native designer command closed another document frame.");NativePageControlPreparation.Same(row,frames[Convert.ToString(row["document"])],"Native designer command replaced an existing frame.");}
     int count=((IList)before["drawing_frames"]).Count+(Object.Equals(before["target_open"],true)?0:1);NativeMemory.Require(frames.Count==count,"Native designer frame count changed beyond the selected page.");
     NativeMemory.Require(IsActive(after),"Native designer command did not establish the exact target as the active MDI child.");
+    return extent;
    }
    public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){
-    var after=ValidateCapture();bool alreadyActive=IsActive(after);int? nativeReturn=null;
+    var after=ValidateCapture();bool alreadyActive=IsActive(after);int? nativeReturn=null;Dictionary<string,object> extent=null;
     lease.BeginApply(action);entered=true;
     if(!alreadyActive){
      NativeOperationTrace.BeforeMutation("original-c0frmmain-open-or-activate-page");
      nativeReturn=api.Open(api.Frame,N(M(action["target"])["page_id"]));
      NativeMemory.Require(nativeReturn==0,"Original designer open returned failure; no repeat.");
      after=Capture(api,action);
-     VerifyAfter(after);
+     extent=VerifyAfter(after);
     }
     lease.CompleteApply(action);
     return new Dictionary<string,object>{{"ok",true},{"kind",Kind},{"native_return",nativeReturn},{"native_open_called",!alreadyActive},
-     {"already_active",alreadyActive},{"exact_page_is_active",true},{"after",after},{"computer_input_injected",false},
+     {"already_active",alreadyActive},{"exact_page_is_active",true},{"after",after},{"initial_designer_client_extent",extent},{"computer_input_injected",false},
      {"project_save_called",false},{"functional_acceptance_pending",true}};
    }
    public Dictionary<string,object> Flush(NativeUsableEditPermit.Lease lease){NativeMemory.Require(entered&&!disposed,"Designer Apply must complete before Flush.");lease.BeginFlush(action);VerifyAfter(Capture(api,action));lease.CompleteFlush(action);return new Dictionary<string,object>{{"ok",true},{"project_save_called",false}};}

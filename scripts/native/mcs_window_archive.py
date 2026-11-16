@@ -87,40 +87,54 @@ class OleVariant:
         r=Reader(self.raw); original=OleVariant.parse(r)
         if self.vt==original.vt and self.value==original.value: return self.raw
         header=struct.pack("<H",self.vt)
-        if self.vt==3: return header+struct.pack("<i",self.value)
+        integer_fmts={2:'<h',3:'<i',16:'<b',17:'<B',18:'<H',19:'<I',20:'<q',21:'<Q'}
+        if self.vt in integer_fmts:return header+struct.pack(integer_fmts[self.vt],self.value)
         if self.vt==8:
             raw=str(self.value).encode("utf-16le"); return header+struct.pack("<I",len(raw))+raw
-        raise FormatError("Only proven int32 and BSTR edits currently supported")
+        raise FormatError("Only integral and BSTR property edits are supported")
 
 @dataclass
 class WindowSettings:
     password_data: bytes  # Opaque, never decoded or reported.
     properties: list[OleVariant]
     event_tail: bytes
+    identity: tuple | None = None
     @classmethod
-    def parse(cls,trailer):
+    def parse(cls,trailer,identity=None):
         r=Reader(trailer); size=r.u32(); pwd_size=r.u32(); pwd=r.take(pwd_size); core=r.take(size)
         if r.pos!=len(trailer): raise FormatError("Unexpected bytes after window settings")
         p=Reader(core)
         n=p.count()
         if n>(len(p.data)-p.pos)//2:raise FormatError("Window property count exceeds stream extent")
         props=[OleVariant.parse(p) for _ in range(n)]
-        return cls(pwd,props,core[p.pos:])
+        return cls(pwd,props,core[p.pos:],identity)
     def to_bytes(self):
         core=write_count(len(self.properties))+b"".join(v.to_bytes() for v in self.properties)+self.event_tail
         return struct.pack("<2I",len(core),len(self.password_data))+self.password_data+core
     def field(self,name):
-        # These positions are the native serialization contract, not a
-        # release number. Validate the requested semantic field before use.
-        layout={'id':(0,3),'name':(1,8),'width':(6,3),'height':(7,3),'background':(15,3)}
+        # Resolve a complete property block from its actual ID/name anchor;
+        # keep the original numeric variant width and every other property.
+        integers={2,3,16,17,18,19,20,21}
+        layout={'id':0,'name':1,'width':6,'height':7,'background':15}
         if name not in layout:raise FormatError('Unknown window property role: '+str(name))
-        index,kind=layout[name]
-        if index>=len(self.properties) or self.properties[index].vt!=kind:
-            raise FormatError('Unsupported native window '+name+' property layout')
-        return self.properties[index]
+        candidates=[]
+        for offset in range(max(0,len(self.properties)-7)):
+            props=self.properties[offset:]
+            if props[0].vt not in integers or props[1].vt!=8:continue
+            if self.identity is not None and (props[0].value,props[1].value)!=self.identity:continue
+            if props[6].vt not in integers or props[7].vt not in integers:continue
+            if props[6].value<=0 or props[7].value<=0:continue
+            if self.identity is None and (props[0].value<0 or not props[1].value):continue
+            index=offset+layout[name]
+            if index>=len(self.properties):continue
+            if self.properties[index].vt not in ({8} if name=='name' else integers):continue
+            candidates.append(index)
+        if len(candidates)!=1:raise FormatError('Window '+name+' layout has no unique semantic anchor; only this property operation is unsupported')
+        return self.properties[candidates[0]]
     def clone(self,window_id,name):
         result=copy.deepcopy(self)
-        result.field('id').value=window_id; result.field('name').value=name
+        ident=result.field('id');title=result.field('name')
+        ident.value=window_id;title.value=name;result.identity=(window_id,name)
         return result
 
 @dataclass

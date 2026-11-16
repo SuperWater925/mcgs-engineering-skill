@@ -553,6 +553,7 @@ def _context(reference, actual_pe, actual, paired, *, external_identity, verify_
                         'standalone_address_mapping_emitted': False})
                     candidates.append({'reference_rva': old, 'actual_rva': new, 'kind': 'code-reference',
                         'operand_role': 'aligned-unverified-transfer-candidate',
+                        'transfer_kind': source['kind'],
                         'instruction_index': source['instruction_index'],
                         'reference_site_rva': reference['reference_rva'] + source['instruction_offset'],
                         'actual_site_rva': actual['reference_rva'] + target['instruction_offset']})
@@ -565,6 +566,7 @@ def _context(reference, actual_pe, actual, paired, *, external_identity, verify_
                     'instruction_index': index, 'callee_address_mapping_emitted': False})
                 candidates.append({'reference_rva': old, 'actual_rva': new, 'kind': 'code-reference',
                     'operand_role': 'aligned-unverified-transfer-candidate',
+                    'transfer_kind': source['kind'],
                     'instruction_index': source['instruction_index'],
                     'reference_site_rva': reference['reference_rva'] + source['instruction_offset'],
                     'actual_site_rva': actual['reference_rva'] + target['instruction_offset']})

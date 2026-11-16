@@ -17,12 +17,13 @@ import sys
 NATIVE = Path(__file__).resolve().parents[3] / 'scripts' / 'native'
 if str(NATIVE) not in sys.path:
     sys.path.insert(0, str(NATIVE))
-from mcs_window_archive import ControlRecord, WindowSettings, write_count
+from mcs_window_archive import ControlRecord, WindowSettings, Reader, write_count, write_cstring
 from mcs_button_control import ButtonArchive
 from mcs_input_text import InputRecord, InputMetadata, LabelRecord, unit_slot
 from 原生界面样式 import CommonEnvelope, GroupArchive, set_font
 from 可见动画归档 import 添加可见条件
 from 窗口事件归档 import 窗口事件, 设置窗口事件
+from control_geometry import resize, GEOMETRY_TYPES
 
 TYPES = {'label': 0x5008, 'line': 0x5002, 'rectangle': 0x5004,
          'button': 0x5027, 'numeric-input': 0x5025, 'character-input': 0x5025,
@@ -58,7 +59,78 @@ def _common(value):
     return cm
 
 
-def primitive_record(control_type, primitives=None):
+def _local_primitive(control_type, source_pages, neutral):
+    """Reuse a current class serialization while clearing new-object business.
+
+    Unknown business-bearing extension layouts are not guessed; those local
+    candidates remain untouched and another current neutral candidate is tried.
+    Explicit clone_from never enters this neutralization path.
+    """
+    neutral_common=_common(neutral)
+    neutral_input=InputRecord.parse(neutral_common.project_without_animations()) if control_type in INPUT_TYPES else None
+    neutral_button=ButtonArchive.parse(neutral_common.project_without_animations()) if control_type=='button' else None
+    def walk(controls):
+        for candidate in controls:
+            if candidate.type_id==0x503a:
+                try:yield from walk(GroupArchive.parse(candidate).children)
+                except (ValueError,UnicodeError):pass
+            else:yield candidate
+    for page in source_pages:
+        for candidate in walk(page['controls']):
+            if candidate.type_id!=TYPES[control_type]:continue
+            try:
+                cm=_common(copy.deepcopy(candidate))
+                value=cm.project_without_animations()
+                cm=_common(value)
+                prefix=bytearray(cm.prefix)
+                flags=struct.unpack_from('<H',prefix,cm.animation_end)[0]
+                struct.pack_into('<H',prefix,cm.animation_end,flags&~1)
+                cm.prefix=bytes(prefix)
+                # A linked-object header is a dependency, even without animation.
+                if struct.unpack_from('<I',cm.prefix,4)[0]&0x100:
+                    reader=Reader(cm.prefix,20);reader.cstring()
+                    cm.prefix=cm.prefix[:12]+bytes(8)+write_cstring('')+cm.prefix[reader.pos:]
+                    cm=_common(cm.to_record())
+                value=cm.to_record()
+                if control_type in INPUT_TYPES:
+                    q=InputRecord.parse(value)
+                    if (q.variable_type==3)!=control_type.startswith('character-'):continue
+                    meta=InputMetadata.parse(q.common.metadata,q.appearance)
+                    neutral_meta=InputMetadata.parse(neutral_input.common.metadata,neutral_input.appearance)
+                    if (meta.extension_extra or meta.extension_tail.value or
+                            meta.words!=neutral_meta.words or meta.tail!=neutral_meta.tail):continue
+                    meta.events=write_count(0);q.common.metadata=meta.to_bytes()
+                    q.disable_images();q.variable='';q.properties[5]=0xffffffff;q.expression_cache=b''
+                    q.properties[4]&=~6;q.min_raw=struct.pack('<f',0);q.max_raw=struct.pack('<f',100)
+                    q.enabled_expression='0' if control_type.endswith('-display') else '1'
+                    q.disabled_when_nonzero=0;q.disabled_style=1;q.keyboard_window=''
+                    q.keyboard_fields=list(neutral_input.keyboard_fields)
+                    value.payload=q.to_bytes()
+                elif control_type=='button':
+                    q=ButtonArchive.parse(value)
+                    if (q.tail or q.metadata.extension_extra or q.metadata.extension_tail.value or q.metadata.properties.tail or
+                            q.metadata.words!=neutral_button.metadata.words or q.metadata.tail!=neutral_button.metadata.tail):continue
+                    q.metadata.empty_events=write_count(0);q.metadata.properties.clear_actions()
+                    q.enable_compiled.value=q.release_compiled.value=b''
+                    q.action_texts.clear_values();q.action_ids.clear_values(0xffffffff);q.action_modes.clear_values(0)
+                    q.action_words[:]=[0,0];q.release_script.value='';q.enabled_expression.value='1';q.enabled_invert=0
+                    q.safety_mode=0;q.hold_time=0;q.confirmation_time=50;q.disabled_appearance=1
+                    q.picture=struct.pack('<I',0x80)+write_cstring('')
+                    q.metadata.properties.words[16]=0;q.metadata.properties.picture=b''
+                    value.payload=q.to_bytes()
+                else:
+                    from 原生界面样式 import GenericMetadata
+                    meta=GenericMetadata.parse(cm.metadata.value)
+                    # Static primitives have just the common words/empty extension.
+                    if len(meta.tail)!=10:continue
+                    cm.metadata.value=write_count(0)+meta.tail;value=cm.to_record()
+                _common(value)
+                return value
+            except (ValueError,UnicodeError,struct.error):continue
+    return None
+
+
+def primitive_record(control_type, primitives=None, source_pages=()):
     """Return a neutral Pro template, with no project binding or button source."""
     if control_type not in TYPES:
         raise ValueError('Unsupported control type: ' + str(control_type))
@@ -70,6 +142,8 @@ def primitive_record(control_type, primitives=None):
     if preset is None or preset['kind'] != TYPES[control_type]:
         raise ValueError('No matching neutral Pro primitive for ' + control_type)
     value = record(preset['kind'], bytes.fromhex(preset['payload']))
+    local=_local_primitive(control_type,source_pages,value)
+    if local is not None:return local
     cm = _common(value)
     if cm.animations:
         raise ValueError('Neutral primitive unexpectedly contains animation bindings')
@@ -142,7 +216,7 @@ def _visible(value, expression):
 
 def edit_control(kind, payload, edits, variables=None):
     """Edit supported original classes, restoring every unmodified animation."""
-    if kind not in set(TYPES.values()) or not isinstance(edits, dict) or not edits or set(edits) - FIELDS:
+    if kind not in GEOMETRY_TYPES or not isinstance(edits, dict) or not edits or set(edits) - FIELDS:
         raise ValueError('Unknown, empty or unsupported native control edit')
     edits = dict(edits)
     if 'caption' in edits:
@@ -151,7 +225,7 @@ def edit_control(kind, payload, edits, variables=None):
         edits['text'] = edits.pop('caption')
     value = record(kind, payload); cm = _common(value)
     if 'bounds' in edits:
-        cm.set_rect(rectangle(edits['bounds'], kind == 0x5002))
+        value = resize(value, edits['bounds']); cm = _common(value)
     if 'name' in edits:
         name = text(edits['name'])
         if not name:
@@ -226,14 +300,7 @@ def edit_control(kind, payload, edits, variables=None):
             elif {'binding_id', 'binding_type'} & set(edits):
                 raise ValueError('Binding identity fields require binding')
             if {'minimum', 'maximum'} & set(edits):
-                if q.variable_type == 3:
-                    raise ValueError('Character inputs do not accept numeric limits')
-                low = edits.get('minimum', struct.unpack('<f', q.min_raw)[0]); high = edits.get('maximum', struct.unpack('<f', q.max_raw)[0])
-                largest = struct.unpack('<f', bytes.fromhex('ffff7f7f'))[0]
-                if not all(type(x) in (int, float) and math.isfinite(x) and abs(x) <= largest for x in (low, high)) or low > high:
-                    raise ValueError('Expected an ordered finite float32 range')
-                if 'minimum' in edits: q.min_raw = struct.pack('<f', low)
-                if 'maximum' in edits: q.max_raw = struct.pack('<f', high)
+                q.set_limits(**{key: edits[key] for key in ('minimum', 'maximum') if key in edits})
             if 'unit' in edits: q.set_unit(text(edits['unit']))
             if 'decimals' in edits:
                 places = edits['decimals']
@@ -273,7 +340,7 @@ def make_control(item, variables, primitives=None, source_pages=()):
     control_type = item.get('type')
     if control_type not in TYPES or 'name' not in item or 'bounds' not in item:
         raise ValueError('New control requires supported type/name/bounds')
-    value = resolve_clone(source_pages, item['clone_from'], control_type) if 'clone_from' in item else primitive_record(control_type, primitives)
+    value = resolve_clone(source_pages, item['clone_from'], control_type) if 'clone_from' in item else primitive_record(control_type, primitives, source_pages)
     if control_type.endswith('-display') and 'clone_from' in item:
         cm = _common(value); projected = cm.project_without_animations(); q = InputRecord.parse(projected)
         q.enabled_expression = '0'; q.disabled_when_nonzero = 0; q.disabled_style = 1

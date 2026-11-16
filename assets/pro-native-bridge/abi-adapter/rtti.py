@@ -146,13 +146,10 @@ def _role_bases(model):
 
 
 def table_role_proof(reference, actual):
-    """Identify one unchanged table subobject without requiring unrelated bases.
+    """Identify the named primary/nonvirtual interface role in the current RTTI.
 
-    A stable class name alone is insufficient.  The COL and constructor offsets,
-    self PMD and flags must match.  A secondary table additionally needs an
-    explicit unchanged nonvirtual base role at that COL offset.  Virtual-base
-    roles which cannot be derived from these records retain the exact-hierarchy
-    path.  This proves table identity, never private member layout or every slot.
+    Unrelated hierarchy flags and a moved named base do not reject the class.
+    Return the actual subobject displacement; private fields are separate.
     """
     name = reference.get('decorated_name')
     if not name or actual.get('decorated_name') != name:
@@ -160,27 +157,39 @@ def table_role_proof(reference, actual):
     if ('constructor_displacement_offset' not in reference or
             'constructor_displacement_offset' not in actual):
         return None
-    if (actual.get('col_offset') != reference.get('col_offset') or
-            actual['constructor_displacement_offset'] != reference['constructor_displacement_offset']):
+    if actual['constructor_displacement_offset'] != reference['constructor_displacement_offset']:
         return None
     before, after = _role_bases(reference), _role_bases(actual)
     old_self = [row for row in before if row['decorated_name'] == name]
     new_self = [row for row in after if row['decorated_name'] == name]
-    if len(old_self) != 1 or new_self != old_self:
+    if (len(old_self) != 1 or len(new_self) != 1
+            or old_self[0]['pmd'] != new_self[0]['pmd']):
         return None
     required = old_self[:]
     offset = reference.get('col_offset')
-    if offset != 0:
+    if offset == 0:
+        if actual.get('col_offset') != 0:
+            return None
+    else:
         # mdisp is a complete subobject offset only when pdisp=-1.  Do not
         # reinterpret virtual PMDs or the hierarchy's row order as that role.
         old_roles = [row for row in before
                      if row['decorated_name'] != name and row['pmd'][0] == offset and row['pmd'][1] == -1]
-        stable = [row for row in old_roles if after.count(row) == 1]
+        # The named nonvirtual base identifies the interface. Its complete
+        # object displacement may move in a different build; consume the
+        # current PMD instead of requiring the old numeric COL offset.
+        stable = []
+        for old_role in old_roles:
+            current = [row for row in after if row['decorated_name'] == old_role['decorated_name']
+                       and row['pmd'][1:] == old_role['pmd'][1:]]
+            if len(current) == 1 and current[0]['pmd'][0] == actual.get('col_offset'):
+                stable.append(current[0])
         if not stable:
             return None
         required.extend(stable)
     return {'kind': 'RTTI-stable-table-subobject-role', 'decorated_name': name,
-            'col_offset': offset,
+            'col_offset': actual.get('col_offset'), 'reference_col_offset': offset,
+            'subobject_offset_adapted': actual.get('col_offset') != offset,
             'constructor_displacement_offset': reference['constructor_displacement_offset'],
             'required_base_roles': required,
             'unrelated_hierarchy_rows_not_required': True,
@@ -199,6 +208,12 @@ def pair_table_roles(reference, actual_tables):
     for row in actual_tables:
         (compatible if table_role_proof(reference, row) else differing).append(row)
     return compatible, differing
+
+
+def locate_method_slot(table, method_rva):
+    """Locate a separately identified method entry in the current table."""
+    matches = [index for index, rva in enumerate(table['slot_entry_rvas']) if rva == method_rva]
+    return matches[0] if len(matches) == 1 else None
 
 
 def role_address_pairs(reference, actual):

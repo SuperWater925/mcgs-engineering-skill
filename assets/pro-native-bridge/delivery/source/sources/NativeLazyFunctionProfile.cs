@@ -173,7 +173,7 @@ namespace McgsInternalBridge {
    NativeMemory.Require(IntPtr.Size==4&&EngineEntry.ExpectedUiThreadId>0&&NativeMemory.GetCurrentThreadId()==EngineEntry.ExpectedUiThreadId,"Project identity requires the captured x86 host UI thread.");
    IntPtr app=functions.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(app!=IntPtr.Zero,"No current MFC application.");
    // These are the explicit evidenced x86 object fields, not offsets inferred from a software version.
-   IntPtr doc=NativeMemory.Ptr(app,0x520),table=engine.Address(RootDocVtableRva);
+   IntPtr doc=NativeMemory.Ptr(app,NativeLayout.Offset("app.root_document")),table=engine.Address(RootDocVtableRva);
    NativeMemory.Require(doc!=IntPtr.Zero&&NativeMemory.Ptr(doc,0)==table,"Current root document type differs.");
    IntPtr col=NativeMemory.Ptr(table,-4);engine.Rva(col);NativeMemory.Require(NativeMemory.I32(col,0)==0&&NativeMemory.I32(col,4)==0,"Current root document primary RTTI layout differs.");
    IntPtr type=NativeMemory.Ptr(col,12);engine.Rva(type);NativeMemory.Require(NativeMemory.Ascii(NativeMemory.Add(type,8),256)==".?AVC0DocManage@@","Current root document RTTI differs.");

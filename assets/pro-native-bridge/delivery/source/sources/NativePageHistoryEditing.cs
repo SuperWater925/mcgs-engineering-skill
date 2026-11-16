@@ -11,7 +11,7 @@ namespace McgsInternalBridge {
   [UnmanagedFunctionPointer(CallingConvention.ThisCall)][return:MarshalAs(UnmanagedType.I1)]delegate bool SaveData(IntPtr service,IntPtr page);
   static Dictionary<string,object> Map(object value){return NativePageControlPreparation.Map(value);}
   static Dictionary<string,object> State(NativeControlPropertyEditing.Api api,Dictionary<string,object> action) {
-   IntPtr page=api.Common.Page(Map(action["target"])),doc=NativeMemory.Ptr(page,0x14),view=api.Bind<NativeEngine.ThisPointer>("GetDrawingView")(doc);
+   IntPtr page=api.Common.Page(Map(action["target"])),doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document")),view=api.Bind<NativeEngine.ThisPointer>("GetDrawingView")(doc);
    NativeMemory.Require(view!=IntPtr.Zero&&NativeMemory.Ptr(view,0)==api.Engine.Address(0xD9041C)&&api.Bind<NativeEngine.ThisPointer>("DrawingViewGetDocument")(view)==doc,"Native page history requires its current drawing view.");
    NativeMemory.Require(!api.Bind<Busy>("GlobalBusy")(),"Native global edit guard is busy.");IntPtr storage=Marshal.AllocHGlobal(4);
    try{Marshal.WriteInt32(storage,0);NativeMemory.Require(api.Bind<Embedded>("EmbeddedEditor1")(view,storage)==0,"An embedded editor owns this native history branch.");Marshal.WriteInt32(storage,0);NativeMemory.Require(api.Bind<Embedded>("EmbeddedEditor2")(view,storage)==0,"An embedded editor owns this native history branch.");}finally{Marshal.FreeHGlobal(storage);}
@@ -43,8 +43,8 @@ namespace McgsInternalBridge {
     lease.CompleteApply(action);return new Dictionary<string,object>{{"ok",true},{"operation",operation},{"requested_steps",steps},{"completed_steps",checkpoints.Count},{"checkpoints",checkpoints},{"controls_reenumerated_after_each_command",true},{"automatic_history_replay",false},{"consolidated_content_acceptance_pending",true}};
    }
    public Dictionary<string,object> Flush(NativeUsableEditPermit.Lease lease) {
-    NativeMemory.Require(applied&&!disposed,"Page history Apply must precede Flush.");lease.BeginFlush(action);IntPtr page=api.Common.Page(Map(action["target"])),doc=NativeMemory.Ptr(page,0x14);int dirty=NativeMemory.I32(doc,0x48);NativeMemory.Require(dirty==0||dirty==1,"Native page history dirty state differs.");
-    if(dirty==1){NativeOperationTrace.BeforeMutation("explicit-native-page-history-save-data");NativeMemory.Require(save(api.Context.WindowService,page)&&NativeMemory.I32(doc,0x48)==0,"Native history page saveData did not clean its document.");}lease.CompleteFlush(action);return new Dictionary<string,object>{{"ok",true},{"page_save_data_called",dirty==1},{"root_save_called",false}};
+    NativeMemory.Require(applied&&!disposed,"Page history Apply must precede Flush.");lease.BeginFlush(action);IntPtr page=api.Common.Page(Map(action["target"])),doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));int dirty=NativeMemory.I32(doc,NativeLayout.Offset("document.modified"));NativeMemory.Require(dirty==0||dirty==1,"Native page history dirty state differs.");
+    if(dirty==1){NativeOperationTrace.BeforeMutation("explicit-native-page-history-save-data");NativeMemory.Require(save(api.Context.WindowService,page)&&NativeMemory.I32(doc,NativeLayout.Offset("document.modified"))==0,"Native history page saveData did not clean its document.");}lease.CompleteFlush(action);return new Dictionary<string,object>{{"ok",true},{"page_save_data_called",dirty==1},{"root_save_called",false}};
    }
    public void Dispose(){disposed=true;}
   }

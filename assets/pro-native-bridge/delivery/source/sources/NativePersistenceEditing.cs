@@ -11,13 +11,13 @@ namespace McgsInternalBridge {
   internal static Dictionary<string,object> Read(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action) {
    string kind=Convert.ToString(action["kind"]);var common=new NativePageControlAbi(e,c,p);IntPtr root=common.Shared.RootDoc();
    if(kind=="page-flush")return new Dictionary<string,object>{{"abi_profile_sha256",PageAbi},{"page",common.PageSnapshot(common.Page(Map(action["target"])) )}};
-   if(kind=="root-flush")return new Dictionary<string,object>{{"abi_profile_sha256",PageAbi},{"root_document",NativeMemory.Hex(root)},{"root_modified",NativeMemory.I32(root,0x48)},{"compile_valid",NativeMemory.I32(root,0x114)},{"disk_sha256",NativeMemory.Hash(p)}};
+   if(kind=="root-flush")return new Dictionary<string,object>{{"abi_profile_sha256",PageAbi},{"root_document",NativeMemory.Hex(root)},{"root_modified",NativeMemory.I32(root,NativeLayout.Offset("document.modified"))},{"compile_valid",NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))},{"disk_sha256",NativeMemory.Hash(p)}};
    NativeMemory.Require(kind=="strategy-flush","Unknown persistence action.");
    var target=Map(action["target"]);int id=Convert.ToInt32(target["block_id"]);string name=Convert.ToString(target["block_name"]);
    var full=NativeStrategyExtensionProfile.Inspect(e,c);object block=null;var programs=new List<object>();
    foreach(object value in (IEnumerable)full["blocks"]){var row=Map(value);if(Convert.ToInt32(row["block_id"])==id){NativeMemory.Require(block==null&&Convert.ToString(row["block_name"])==name,"Persistence strategy block name/ID differs.");block=row;}}
    NativeMemory.Require(block!=null,"Persistence strategy block is absent.");foreach(object value in (IEnumerable)full["programs"])if(Convert.ToInt32(Map(value)["block_id"])==id)programs.Add(value);
-   return new Dictionary<string,object>{{"abi_profile_sha256",StrategyAbi},{"block",block},{"programs",programs},{"root_modified",NativeMemory.I32(root,0x48)},{"compile_valid",NativeMemory.I32(root,0x114)}};
+   return new Dictionary<string,object>{{"abi_profile_sha256",StrategyAbi},{"block",block},{"programs",programs},{"root_modified",NativeMemory.I32(root,NativeLayout.Offset("document.modified"))},{"compile_valid",NativeMemory.I32(root,NativeLayout.Offset("document.compile_valid"))}};
   }
   internal static Prepared Prepare(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){return new Prepared(e,c,p,action);}
   internal sealed class Prepared:INativePreparedPageControlEdit {
@@ -29,7 +29,7 @@ namespace McgsInternalBridge {
     NativeMemory.Require(Convert.ToString(a["abi_profile_sha256"])==(kind=="strategy-flush"?StrategyAbi:PageAbi),"Persistence action ABI differs.");
     pageSave=api.Bind<SaveData>("standard","WindowSaveData");strategySave=api.Shared.Bind<V0>("StrategyPreloadSaveData");strategyDirty=api.Shared.Bind<VI>("StrategyPreloadSetDirty");
     before=Read(e,c,p,a);NativePageControlPreparation.Before(a,before);
-    if(kind=="page-flush"){page=api.Page(Map(a["target"]));doc=NativeMemory.Ptr(page,0x14);api.Slot(c.WindowService,12,0x21733);}
+    if(kind=="page-flush"){page=api.Page(Map(a["target"]));doc=NativeMemory.Ptr(page,NativeLayout.Offset("page.document"));api.Slot(c.WindowService,12,0x21733);}
     else if(kind=="strategy-flush") {
      block=new IntPtr(NativeEngine.Number(Map(before["block"])["block_iobject"]));preload=NativeMemory.Add(block,4);
      NativeMemory.Require(NativeMemory.Ptr(block,0)==e.Address(0xE3B4DC)&&NativeMemory.Ptr(block,-4)==e.Address(0xE3B4B8)&&NativeMemory.Ptr(preload,0)==e.Address(0xE3B56C),"Persistence strategy secondary interface differs.");
@@ -40,7 +40,7 @@ namespace McgsInternalBridge {
    public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){ValidateBefore();lease.BeginApply(action);applied=true;lease.CompleteApply(action);return new Dictionary<string,object>{{"ok",true},{"kind",kind},{"edit_replayed",false},{"native_mutation_in_apply",false}};}
    public Dictionary<string,object> Flush(NativeUsableEditPermit.Lease lease) {
     NativeMemory.Require(applied&&!disposed,"Persistence Apply must precede Flush.");lease.BeginFlush(action);api.Current();bool called=false;
-    if(kind=="page-flush"){int dirty=NativeMemory.I32(doc,0x48);NativeMemory.Require(dirty==0||dirty==1,"Persistence page dirty state differs.");if(dirty==1){NativeOperationTrace.BeforeMutation("explicit-persistence-native-page-save-data");called=true;NativeMemory.Require(pageSave(context.WindowService,page)&&NativeMemory.I32(doc,0x48)==0,"Explicit page saveData failed to clean its page.");}}
+    if(kind=="page-flush"){int dirty=NativeMemory.I32(doc,NativeLayout.Offset("document.modified"));NativeMemory.Require(dirty==0||dirty==1,"Persistence page dirty state differs.");if(dirty==1){NativeOperationTrace.BeforeMutation("explicit-persistence-native-page-save-data");called=true;NativeMemory.Require(pageSave(context.WindowService,page)&&NativeMemory.I32(doc,NativeLayout.Offset("document.modified"))==0,"Explicit page saveData failed to clean its page.");}}
     else if(kind=="strategy-flush") {
      int dirty=Marshal.ReadByte(block,0x60);NativeMemory.Require(dirty<=1,"Persistence strategy dirty state differs.");
      if(dirty==1){NativeOperationTrace.BeforeMutation("explicit-persistence-native-strategy-save-data");called=true;strategySave(preload);NativeMemory.Require(Marshal.ReadByte(block,0x60)==1,"Original strategy SaveData state differs.");}

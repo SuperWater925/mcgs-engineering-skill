@@ -182,6 +182,7 @@ class ButtonProperties:
     press_compiled: ByteArray
     preserved_compiled: ByteArray
     reserved: ByteArray
+    tail: bytes = b''
 
     @classmethod
     def parse(cls, data):
@@ -197,10 +198,8 @@ class ButtonProperties:
                   Array.parse(r, True), Array.parse(r), Array.parse(r)]
         press, text = CString.parse(r), CString.parse(r)
         compiled = [ByteArray.parse(r) for _ in range(3)]
-        if r.pos != len(data):
-            raise FormatError(f"Unexpected ButtonProperties bytes at {r.pos}/{len(data)}")
         return cls(words, caption, font, picture, action_words, down, up,
-                   parameters, *arrays, press, text, *compiled)
+                   parameters, *arrays, press, text, *compiled, data[r.pos:])
 
     def to_bytes(self):
         return (struct.pack("<18I", *self.words) + self.caption.to_bytes() +
@@ -211,7 +210,7 @@ class ButtonProperties:
                     self.flags_up, self.texts_up, self.ids_down, self.ids_up]) +
                 self.press_script.to_bytes() + self.preserved_text.to_bytes() +
                 self.press_compiled.to_bytes() + self.preserved_compiled.to_bytes() +
-                self.reserved.to_bytes())
+                self.reserved.to_bytes() + self.tail)
 
     def clear_actions(self):
         # These defaults occur in the vendor's script-only XY buttons.
@@ -237,33 +236,21 @@ class ButtonMetadata:
     extension_tail: ByteArray
     tail: bytes
     properties: ButtonProperties
+    extension_extra: bytes = b''
 
     @classmethod
     def parse(cls, data):
-        r = Reader(data)
-        start = r.pos
-        if r.count():
-            raise FormatError("Generic control events need their own class-aware parser")
-        events = data[start:r.pos]
-        words = r.take(8)
-        extension = ByteArray.parse(r)
-        remaining = len(r.data) - r.pos
-        if remaining not in (0, 4):
-            raise FormatError('Button metadata tail structure not proven')
-        tail = r.take(remaining)
-        if r.pos != len(data):
-            raise FormatError("Unexpected button metadata tail")
-        e = Reader(extension.value)
-        blob = ByteArray.parse(e)
-        extension_tail = ByteArray.parse(e)
-        if e.pos != len(extension.value):
-            raise FormatError("Unexpected extension archive tail")
-        return cls(events, words, extension, blob, extension_tail, tail,
-                   ButtonProperties.parse(blob.value))
+        from metadata_layout import split_metadata
+        def validate(raw):
+            value=ButtonProperties.parse(raw)
+            if value.to_bytes()!=raw:raise FormatError('Button properties do not round-trip')
+            return value
+        events,words,extension,blob,extension_tail,tail,extra,properties=split_metadata(data,validate)
+        return cls(events,words,extension,blob,extension_tail,tail,properties,extra)
 
     def to_bytes(self):
         self.properties_blob.value = self.properties.to_bytes()
-        self.extension.value = self.properties_blob.to_bytes() + self.extension_tail.to_bytes()
+        self.extension.value = self.properties_blob.to_bytes() + self.extension_tail.to_bytes() + self.extension_extra
         return self.empty_events + self.words + self.extension.to_bytes() + self.tail
 
 
@@ -294,6 +281,7 @@ class ButtonArchive:
     hold_time: int
     confirmation_time: int
     disabled_appearance: int
+    tail: bytes = b''
 
     @classmethod
     def parse(cls, record):
@@ -326,12 +314,10 @@ class ButtonArchive:
         script, compiled = CString.parse(r), ByteArray.parse(r)
         # 88c740 stores these final fields explicitly: +204, +206, +208, +228.
         safety, hold, confirm, appearance = r.u8(), r.u16(), r.u16(), r.u8()
-        if r.pos != len(record.payload):
-            raise FormatError(f"Button trailing bytes at {r.pos}/{len(record.payload)}")
         result=cls(copy.deepcopy(record), prefix, rect_offset, rect, name,
                    metadata_array, metadata, enable_compiled, text, ids, modes,
                    caption_words, caption, align, picture, font, action_words,
-                   enabled, invert, script, compiled, safety, hold, confirm, appearance)
+                   enabled, invert, script, compiled, safety, hold, confirm, appearance, record.payload[r.pos:])
         if result.to_bytes()!=record.payload:
             raise FormatError('Button actual structure does not round-trip exactly')
         return result
@@ -349,7 +335,7 @@ class ButtonArchive:
                 struct.pack("<I", self.enabled_invert) + self.release_script.to_bytes() +
                 self.release_compiled.to_bytes() +
                 struct.pack("<BHHB", self.safety_mode, self.hold_time,
-                            self.confirmation_time, self.disabled_appearance))
+                            self.confirmation_time, self.disabled_appearance) + self.tail)
 
     def to_record(self):
         result = copy.deepcopy(self.record)
@@ -367,7 +353,7 @@ class ButtonArchive:
                     expression_compiled_bytes=len(self.enable_compiled.value),
                     release_compiled_bytes=len(self.release_compiled.value),
                     press_compiled_bytes=len(self.metadata.properties.press_compiled.value),
-                    native_generic_click_event=False)
+                    native_generic_click_event=bool(Reader(self.metadata.empty_events).count()))
 
 
 

@@ -31,6 +31,29 @@ def relocation_range(pe, start, end, *, intersecting=False):
     return ordered[bisect.bisect_left(ordered, first):bisect.bisect_right(ordered, last)]
 
 
+def attach_import_role_context(images, role_targets):
+    """Supply selected current PE owners and proven target RVAs to matching."""
+    dependency_names = {}
+    for alias, image in images.items():
+        names = {image.path.name.casefold()} if image.path else set()
+        if getattr(image, 'export_module_name', None):
+            names.add(image.export_module_name.casefold())
+        for name in names:
+            dependency_names.setdefault(name, []).append((alias, image))
+    dependencies = {}
+    for name, rows in dependency_names.items():
+        owners = {str(image.path) if image.path else id(image) for _, image in rows}
+        if len(owners) == 1:
+            dependencies[name] = rows[0]
+    for alias, image in images.items():
+        image._abi_module_alias = alias
+        image._abi_module_aliases = tuple(name for name, other in images.items()
+                                          if other is image or image.path and other.path == image.path)
+        image._abi_import_dependencies = dependencies
+        image._abi_import_role_targets = role_targets
+    return dependencies
+
+
 def import_symbol_match(reference, actual, pe=None):
     """Compare symbol identity; a named import's lookup hint is not identity.
 
@@ -404,7 +427,8 @@ def verify_context(reference_pe, actual_pe, reference, actual, reference_rva, ac
                 return None
             role = 'branch-target-body-signature'
             refs.append({'reference_rva': ref['reference_target_rva'], 'actual_rva': got['reference_target_rva'],
-                         'kind': 'code-reference', 'operand_role': role, 'instruction_index': ref['instruction_index']})
+                         'kind': 'code-reference', 'operand_role': role, 'instruction_index': ref['instruction_index'],
+                         'transfer_kind': ref['kind']})
         evidence.append({'kind': role, 'instruction_index': ref['instruction_index'],
                          'reference_target_rva': ref['reference_target_rva'], 'actual_target_rva': got['reference_target_rva']})
     return {'normalization_proofs': evidence, 'referents': refs}

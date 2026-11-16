@@ -30,9 +30,9 @@ def sha(path):
 
 def pwsh():
     configured = os.environ.get('MCGS_PWSH')
-    path = configured or shutil.which('pwsh')
+    path = configured or shutil.which('pwsh') or shutil.which('powershell')
     if not path or not Path(path).is_file():
-        raise ValueError('PowerShell 7 required; set MCGS_PWSH to its executable path')
+        raise ValueError('A Windows PowerShell worker is required; set MCGS_PWSH to its executable path')
     return Path(path)
 
 
@@ -82,10 +82,28 @@ def set_variables(data, additions, updates):
         if any(r['name']==name for r in rows) or kind not in templates['variables']:
             raise ValueError('Duplicate variable or unsupported type')
         template=templates['variables'][kind]
+        # Prefer an actual neutral scalar of this class. Compare the known
+        # collection/retention configuration with the neutral schema before
+        # reusing it; never inherit alarms or group membership accidentally.
+        prototype=None
+        neutral=bytes.fromhex(template['prefix'])
+        _,neutral_middle=f.string(neutral,36)
+        for existing in rows:
+            if existing['kind']!=template['kind']:continue
+            prefix=existing['prefix'];before,middle=f.string(prefix,36)
+            extension=existing['extension']
+            try:
+                after,end=f.string(extension,12)
+                clean_extension=extension[:12]==bytes(12) and not after
+            except (ValueError,UnicodeError):clean_extension=False
+            if (not before and prefix[4:36]==neutral[4:36] and
+                    prefix[middle:middle+28]==neutral[neutral_middle:neutral_middle+28] and clean_extension):
+                prototype=existing;break
         rows.append({'id':max((r['id'] for r in rows),default=-1)+1,'name':name,'kind':template['kind'],
                      'note':item.get('note',''),'unit':item.get('unit',''),
                      'initial':str(item.get('initial','0')),
-                     'prefix':bytes.fromhex(template['prefix']), 'extension':bytes.fromhex(template['extension'])})
+                     'prefix':prototype['prefix'] if prototype else bytes.fromhex(template['prefix']),
+                     'extension':prototype['extension'] if prototype else bytes.fromhex(template['extension'])})
     for item in updates:
         if set(item)-{'name','initial','note','unit'}:
             raise ValueError('Unknown variable update')
@@ -143,6 +161,10 @@ def template_pages(data):
 class SourcePages:
     """Resolve only explicitly requested clone pages from the original snapshot."""
     def __init__(self,rows):self.rows=rows;self.loaded={}
+    def __iter__(self):
+        for row in self.rows:
+            try:yield self.page(row['iID'])
+            except (ValueError,UnicodeError,struct.error):continue
     def page(self,ident):
         if ident not in self.loaded:
             row=one(r for r in self.rows if r['iID']==ident)
@@ -242,7 +264,7 @@ def edit_data(data,spec):
         ident=page.get('id',max(ids,default=0)+1);name=title(page['name'])
         if type(ident)is not int or not 0<ident<=2147483647 or ident in ids or name.casefold() in names:raise ValueError('New page ID/name is invalid or repeated')
         header,_,trailer=f.window(f.archive(template['lbObjects']))
-        settings=WindowSettings.parse(trailer).clone(ident,name)
+        settings=WindowSettings.parse(trailer,identity=(template['iID'],template['strName'])).clone(ident,name)
         trailer=page_events(settings.to_bytes(),page.get('events',{}),fresh=True)
         records=[control(c,variables,primitives,source_pages) for c in page.get('controls',[])]
         if len({f.common(b)['name'] for _,b in records})!=len(records):raise ValueError('Duplicate new page control name')

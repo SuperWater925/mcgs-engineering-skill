@@ -39,7 +39,7 @@ namespace McgsInternalBridge {
             }
             IntPtr contextModel(NativeEngine engine){return NativeMemory.Ptr(Existing.RootDoc(),0x2D4);}
             internal T Bind<T>(string name)where T:class{return Marshal.GetDelegateForFunctionPointer(functions[name],typeof(T))as T;}
-            internal void Method(IntPtr self,int slot,int thunk){NativeMemory.Require(slot>=0 && slot<=109,"Page virtual slot exceeds derived class range.");IntPtr table=NativeMemory.Ptr(self,0);Engine.Rva(table);NativeMemory.Require(NativeMemory.Ptr(table,slot*4)==Engine.Address(thunk),"Page virtual method differs at "+slot);}
+            internal void Method(IntPtr self,int slot,int thunk){IntPtr table=NativeMemory.Ptr(self,0);Engine.Rva(table);Engine.VerifyVirtual(table,slot,Engine.Address(thunk),"page extension virtual slots",slot.ToString());}
             internal IntPtr Owner(NativeContext context) {
                 IntPtr doc=Existing.RootDoc();NativeMemory.Require(NativeMemory.Ptr(doc,0x2D4)==context.ObjectModel,"Page context belongs to another root.");
                 IntPtr app=Existing.Bind<NativeEngine.CdeclPointer>("GetAfxApp")();NativeMemory.Require(NativeMemory.Ptr(app,0x520)==doc,"Page owner root changed.");

@@ -6,6 +6,7 @@ import struct
 from 原生界面样式 import CommonEnvelope, GroupArchive, MultiState, set_font
 from mcs_input_text import InputRecord, LabelRecord, InputMetadata
 from mcs_button_control import ButtonArchive
+from control_geometry import resize
 
 def text(value):
     if not isinstance(value,str) or '\0' in value:raise ValueError('Expected text without NUL')
@@ -18,12 +19,7 @@ def edit(record,changes,variables=None):
     cm=CommonEnvelope.parse(record)
     if cm.to_record().payload!=record.payload:raise ValueError('Control original roundtrip differs')
     if 'bounds' in changes:
-        rect=changes['bounds']
-        if not isinstance(rect,list) or len(rect)!=4 or any(type(x)is not int or not -0x80000000<=x<=0x7fffffff for x in rect) or rect[0]>=rect[2] or rect[1]>=rect[3]:raise ValueError('Invalid Int32 positive control bounds')
-        if record.type_id in (0x5028,0x502a):
-            m=MultiState.parse(record);m.resize(rect);record=m.to_record()
-        elif record.type_id in (0x5008,0x5025,0x5027):cm.set_rect(rect);record=cm.to_record()
-        else:raise ValueError('Bounds editing requires text/input/button/multi-state; use verified class geometry for other types')
+        record=resize(record,changes['bounds'])
     cm=CommonEnvelope.parse(record)
     for key in ('fill','border'):
         if key in changes and (type(changes[key])is not int or not 0<=changes[key]<=0xffffff):raise ValueError('Colors use integer COLORREF 0..0xffffff')
@@ -64,12 +60,7 @@ def edit(record,changes,variables=None):
             if (q.variable,q.variable_id,q.variable_type)!=(name,target['id'],target['kind']):
                 q.variable=name;q.properties[5]=target['id'];q.properties[6]=target['kind'];q.expression_cache=b''
         if special & {'minimum','maximum'}:
-            if q.variable_type==3:raise ValueError('Numeric range cannot be applied to a character input')
-            low=changes.get('minimum',struct.unpack('<f',q.min_raw)[0]);high=changes.get('maximum',struct.unpack('<f',q.max_raw)[0])
-            largest=struct.unpack('<f',bytes.fromhex('ffff7f7f'))[0]
-            if not all(type(v)in (int,float) and math.isfinite(v) and abs(v)<=largest for v in (low,high)) or low>high:raise ValueError('Invalid finite input range')
-            if 'minimum' in changes:q.min_raw=struct.pack('<f',low)
-            if 'maximum' in changes:q.max_raw=struct.pack('<f',high)
+            q.set_limits(**{key:changes[key] for key in ('minimum','maximum') if key in changes})
     for key in ('press_source','release_source'):
         if key in changes:
             if kind!=0x5027:raise ValueError('Native press/release source requires a standard button')
