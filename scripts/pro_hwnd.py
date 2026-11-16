@@ -8,6 +8,7 @@ vendor project check. Existing receipts prevent accidental plan replay.
 from __future__ import annotations
 
 import argparse
+from functools import lru_cache
 import hashlib
 import importlib.util
 import json
@@ -17,6 +18,32 @@ import sys
 import uuid
 
 ROOT = Path(__file__).resolve().parents[1]
+CLIENT = ROOT / 'assets/pro-native-bridge/client'
+
+
+@lru_cache(maxsize=1)
+def project_client(scope_config, scope_sha256):
+    # Configure only for mutation. Inventory and exact dialog responses do not
+    # require an active bridge connection.
+    if not scope_config:
+        raise ValueError('Choose the current bridge with --scope-config or MCGS_NATIVE_SCOPE_CONFIG')
+    if str(CLIENT) not in sys.path:
+        sys.path.insert(0, str(CLIENT))
+    from native_delivery_config import configure
+    pinned_sha = scope_sha256 or hashlib.sha256(Path(scope_config).read_bytes()).hexdigest()
+    configure(scope_config, pinned_sha)
+    import edit_batch_client
+    return edit_batch_client
+
+
+def project_probe(project, timeout, scope_config, scope_sha256):
+    bridge = project_client(scope_config, scope_sha256)
+    client = bridge.load_client()
+    try:
+        return bridge.submit({'op': 'engineering-edit-inspect', 'expected_project': project},
+                             'hwnd_identity_' + uuid.uuid4().hex, timeout)
+    except (client.SubmissionError, client.QueueTimeout) as error:
+        raise RuntimeError('Live bridge project identity could not be confirmed') from error
 
 
 def backend_module():
@@ -80,12 +107,16 @@ def serve(backend, log=None):
             elif request.get('op') == 'inventory':
                 result = {'id': identity, **backend.inventory()}
                 answers[identity] = fingerprint, result
+            elif request.get('op') == 'toolbar-inventory':
+                result = {'id': identity, 'status': 'inventory_read',
+                          'items': backend.discover_toolbar(request['toolbar'])}
+                answers[identity] = fingerprint, result
             elif request.get('op') == 'run':
                 plan = read(request['plan_file']) if 'plan_file' in request else request['plan']
                 result = {'id': identity, **run_plan(backend, plan, request['receipt'])}
                 answers[identity] = fingerprint, result
             else:
-                raise ValueError('JSONL op must be inventory or run')
+                raise ValueError('JSONL op must be inventory, toolbar-inventory or run')
         except Exception as error:
             result = {'id': request.get('id') if isinstance(request, dict) else None,
                       'status': getattr(error, 'status', 'request_failed'), 'error': str(error),
@@ -103,21 +134,30 @@ def serve(backend, log=None):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     commands = parser.add_subparsers(dest='command', required=True)
-    for command in ('inventory', 'run', 'serve'):
+    for command in ('inventory', 'toolbar-inventory', 'run', 'serve'):
         entry = commands.add_parser(command)
         entry.add_argument('--pid', type=int, required=True)
         entry.add_argument('--timeout-ms', type=int, default=3000)
         entry.add_argument('--receipt', required=command == 'run', help='JSON receipt; serve uses an optional JSONL log')
+        if command in ('run', 'serve'):
+            entry.add_argument('--scope-config', default=os.environ.get('MCGS_NATIVE_SCOPE_CONFIG'),
+                               help='Existing native connection layout used for mutation identity')
+            entry.add_argument('--scope-sha256', help='Optional exact connection-layout SHA256')
         if command == 'run':
             entry.add_argument('--plan', required=True)
+        if command == 'toolbar-inventory':
+            entry.add_argument('--toolbar', required=True, type=lambda value: int(value, 0))
     args = parser.parse_args()
     module = backend_module()
-    backend = module.Backend(args.pid, args.timeout_ms)
+    backend = module.Backend(args.pid, args.timeout_ms,
+                             project_probe=lambda project: project_probe(project, args.timeout_ms / 1000,
+                                 args.scope_config, args.scope_sha256))
     try:
         if args.command == 'serve':
             return serve(backend, args.receipt)
-        if args.command == 'inventory':
-            result = backend.inventory()
+        if args.command in ('inventory', 'toolbar-inventory'):
+            result = (backend.inventory() if args.command == 'inventory' else
+                      {'status': 'inventory_read', 'items': backend.discover_toolbar({'hwnd': args.toolbar})})
             if args.receipt:
                 save(args.receipt, result)
         else:

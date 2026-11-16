@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 595,
-  "descriptor_sha256": "47b1d50c64d56c0d748d0d599ca7aa15f4b4aa5d2b364f831d1d3d5e3f969ad4",
+  "file_count": 602,
+  "descriptor_sha256": "93ef1c5eaf546438371ac58ac15d4a96d07a79a9d4e604ead48cb63cc109dfe3",
   "files": [
     {
       "file": ".gitattributes",
@@ -162,7 +162,7 @@
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json",
       "bytes": 400320,
-      "sha256": "fa91851af6c91bfae278e3129e7de7786144f3d0a56dbae9fbeb9d952da268e9"
+      "sha256": "9158676f79a7d233288bd70db64f35dd1fbf37f233ae58855a3b1b63444e3c1c"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/inventory.py",
@@ -361,13 +361,13 @@
     },
     {
       "file": "assets/pro-native-bridge/client/engineering_session.py",
-      "bytes": 71370,
-      "sha256": "e729c970b93d62a7038f40cd261612bbfab46972cc1f6aa7f17b07f6a28e5486"
+      "bytes": 73487,
+      "sha256": "27d4a2e64c2e3b9ba92059125107e5b6780c94985e9780d9c3003983ea1153c3"
     },
     {
       "file": "assets/pro-native-bridge/client/hwnd_backend.py",
-      "bytes": 42199,
-      "sha256": "8d19cb1960ad6a73019b59825f2369527b77a4f28353a37e2463d2f8f40e4969"
+      "bytes": 58101,
+      "sha256": "e911457b6ff28bba07d1da556d081953be70593cbd3b12ced0e51e610829c724"
     },
     {
       "file": "assets/pro-native-bridge/client/internal_page_gate.py",
@@ -388,6 +388,16 @@
       "file": "assets/pro-native-bridge/client/native_service.py",
       "bytes": 4381,
       "sha256": "478a3f7221ee23bc7f7a8a84528e72dab74250824d5fdf0cf4f58a38589dac70"
+    },
+    {
+      "file": "assets/pro-native-bridge/client/page_plan.py",
+      "bytes": 31638,
+      "sha256": "66b8dc98b9db22cae2a29983d94d9bfac3e7551d3eb277a0e6bda27781d6bc5b"
+    },
+    {
+      "file": "assets/pro-native-bridge/client/page_readback_report.py",
+      "bytes": 14455,
+      "sha256": "7948018b86ef608546e89cbb1abf814a93b5e40fc134eeae92c5992782f2cba5"
     },
     {
       "file": "assets/pro-native-bridge/client/project_lifecycle_client.py",
@@ -1367,7 +1377,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json",
       "bytes": 81007,
-      "sha256": "5f5e2d33e05e982c10ebf8613831dd1680a9a50ab022ff90ed8ce22e4f6a65e5"
+      "sha256": "c332d1b416cff99fc759b0aaee53af709e36bc1402e594bdf0e66047487b7d3a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/bootstrap__NativeTrialActions.cs",
@@ -1551,13 +1561,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
-      "bytes": 22150,
-      "sha256": "4b2601b9dc3c5480524591921d54f8dc57684b0d6a31c04d0e6c7acb34a9b103"
+      "bytes": 22409,
+      "sha256": "422d1234a94ad769c13824f557c41fc5af9cc4d69739914fb48adfecf40694bc"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
-      "bytes": 18007,
-      "sha256": "697f7ec06620d616439df33d57c64f82dc524f90fb2aa6b3e827051659035877"
+      "bytes": 19581,
+      "sha256": "0e916c1d34731679ce0bb11957396b93282fac93a3edce33f792aca346368861"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeControlReferencedRename.cs",
@@ -1576,8 +1586,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "bytes": 38246,
-      "sha256": "e1459c08c14c79dc16f8fb398d78df71836f21f7286dfa6c077999457730b7df"
+      "bytes": 56623,
+      "sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeCurveTableCollectionEditing.cs",
@@ -1651,8 +1661,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
-      "bytes": 19969,
-      "sha256": "945946a747bb710519ad19547aa28fae74999f798c3a4ce44b2cd677b993b541"
+      "bytes": 23580,
+      "sha256": "95dda4017a07b9520bcd18d4a37b4084bbf20f825ec6543db2ee6c298a3f9983"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringFileHashes.cs",
@@ -1871,8 +1881,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "bytes": 21725,
-      "sha256": "ccd6cc911635712fffd25c86ad4c6a8fb4bf4bb2f9e72c52b85b71d5cf2e99cf"
+      "bytes": 24293,
+      "sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/NativeProjectCompileDiagnostics.cs",
@@ -2371,8 +2381,8 @@
     },
     {
       "file": "CHANGELOG.md",
-      "bytes": 21512,
-      "sha256": "d28654a127510420b937951788a4f9ff28861725103c96d5bac2b688d0182b22"
+      "bytes": 22408,
+      "sha256": "8651db91a91bcf78201f662634c7f7ec8906b024aba70cf5f8b73270d6b7cce4"
     },
     {
       "file": "CONTRIBUTING.md",
@@ -2521,8 +2531,8 @@
     },
     {
       "file": "references/portable-online.md",
-      "bytes": 4951,
-      "sha256": "b965696a5d5a4acb99ed7de1ec0b1da26d1064bbb2373ed7062a31bc6c62f77e"
+      "bytes": 6198,
+      "sha256": "9dad3cf5d5cd065f5926e9fc329199da4ad8d9db4cc8fb9c6bf0c146766b358c"
     },
     {
       "file": "references/pro-adapter.md",
@@ -2580,6 +2590,16 @@
       "sha256": "fb4bbee3b107dae1ec912e4fffcd5a61930aff3a03b7a6229cbbb071f42dc3d1"
     },
     {
+      "file": "references/pro-native-page-plan.md",
+      "bytes": 6964,
+      "sha256": "8b3a3f09c642556b80b0e08e19b55f2b483184179a2a68d14282f4f5fb81cbda"
+    },
+    {
+      "file": "references/pro-native-page-update-validation.md",
+      "bytes": 4087,
+      "sha256": "480424a2e9bd356f0ae02285b9abd4ccfbc34f7ce84f70b84a464c1e0d4015d9"
+    },
+    {
       "file": "references/pro-native-performance-validation.json",
       "bytes": 1993,
       "sha256": "91c215441437cbf07bdf3f1a59fde34896311415852126abc1d7ca736bb9cb36"
@@ -2616,8 +2636,8 @@
     },
     {
       "file": "references/pro-native-ui-workflow.md",
-      "bytes": 14881,
-      "sha256": "a89f03ff762324ff978d85bb0b36a35698f434fc9ea90d6aa6bb4a169f8ed825"
+      "bytes": 15024,
+      "sha256": "bf3c907a9b6e9402e2580b3d7981473eae7447a575bbdb922ce2d810340bf8d7"
     },
     {
       "file": "references/project-profile.md",
@@ -2651,8 +2671,8 @@
     },
     {
       "file": "references/turnkey-start-zh.md",
-      "bytes": 7363,
-      "sha256": "14285e0f2b4d4b616bdf2112de89d60d74d5367150695d8724e4b39e67135c25"
+      "bytes": 7366,
+      "sha256": "64cefbb89507c3a80a2c7e43013b4f64a63d025f87bf28f2e4ba3228602699d1"
     },
     {
       "file": "references/turnkey-third-party.md",
@@ -2661,8 +2681,8 @@
     },
     {
       "file": "references/turnkey-update-zh.md",
-      "bytes": 2702,
-      "sha256": "8547f8697e5dd93dd5613d36c7de5d1186ae6ac9a33d131d94d4fed176fa76ac"
+      "bytes": 3010,
+      "sha256": "2fefd5b3412e32d416cceeda3d022f1f32c63dd4db389196440f052483e634ea"
     },
     {
       "file": "references/turnkey-validation.json",
@@ -2691,8 +2711,8 @@
     },
     {
       "file": "run.ps1",
-      "bytes": 5103,
-      "sha256": "b02997ab879892b06f35738a58b803d74dd7c875f8fa645ee7dc6e59039a2944"
+      "bytes": 5447,
+      "sha256": "6011719499a6176d8d538bdbfbc1e23c2023ddf7cb8ac8e5eb46e27de38855a1"
     },
     {
       "file": "scripts/ace-runtime.ps1",
@@ -2861,8 +2881,8 @@
     },
     {
       "file": "scripts/pro_hwnd.py",
-      "bytes": 6124,
-      "sha256": "6b260745e76784f5512575d84700524c838f4e38d815e66da4b65eda734e772a"
+      "bytes": 8467,
+      "sha256": "ed11aa4d459249dd3973b39638935c65fee152c8451bd54b637c4a0d032afbc4"
     },
     {
       "file": "scripts/pro_native_doctor.py",
@@ -2873,6 +2893,11 @@
       "file": "scripts/pro_native_engineering.py",
       "bytes": 614,
       "sha256": "377071a2eec5d77f49024f1a2e27f58e11c57ea45af498e99047d47119a8e936"
+    },
+    {
+      "file": "scripts/pro_page_plan.py",
+      "bytes": 3013,
+      "sha256": "6f4af16960f1aa9b041d95e87baaba1f4dad77578155f4a3382d0d13bb1861c6"
     },
     {
       "file": "scripts/project-family.ps1",
@@ -2890,14 +2915,24 @@
       "sha256": "5f0cb78670153e92b16eefc37e81c8010f63559af075973073d34d5f7a2497eb"
     },
     {
+      "file": "scripts/test_native_clone_batch.py",
+      "bytes": 5733,
+      "sha256": "d34c5d7686966e8e76ee49037d49bb9d24c270ef161a7d059c24543c4be97637"
+    },
+    {
       "file": "scripts/test_offline_adapters.py",
       "bytes": 7142,
       "sha256": "3ee388363f2f928aca5042f1df27f8b41b5b166df6ab2842d4c189d6614fb939"
     },
     {
       "file": "scripts/test_pro_hwnd.py",
-      "bytes": 8726,
-      "sha256": "fed8976ce36ae1c49653d3a10a36b5e79bd7ca929a3c7f02bfeb15f1fcb9ae4e"
+      "bytes": 14939,
+      "sha256": "6eb59d01b93107124d19c313b7765c3be5bf9092f6de5238d1acdf05367f8738"
+    },
+    {
+      "file": "scripts/test_pro_page_plan.py",
+      "bytes": 7204,
+      "sha256": "b5e9b85621944cffcda934191277fd4f83bc98dcd3e5ab64b75e1df2a4c16d81"
     },
     {
       "file": "scripts/test_turnkey_bundle.py",
@@ -2906,13 +2941,13 @@
     },
     {
       "file": "scripts/test_turnkey_delivery.py",
-      "bytes": 11873,
-      "sha256": "a58d07560c799ddcf5d5198b2dd7a5b7874167750cdb8df895b0d18c16c7942c"
+      "bytes": 14513,
+      "sha256": "89dd39813c6a964b86f8f6b4310687964c55de45689d9bff3e173e88ca639da3"
     },
     {
       "file": "scripts/turnkey.py",
-      "bytes": 36515,
-      "sha256": "d2a40309a059e3f7a77384f926c9d0980d2870669feb689744b4fad4b9e464c6"
+      "bytes": 37050,
+      "sha256": "f31bd3d3b79e9938b5402b8003450b59076d71006c5ee3f70f273e6f459f4918"
     },
     {
       "file": "scripts/turnkey_bundle.py",
@@ -2931,8 +2966,8 @@
     },
     {
       "file": "SKILL.md",
-      "bytes": 20196,
-      "sha256": "65c710144c8195ee787bcfcfc342f4dfa21c3e92f6dec7a513f148ad328cd157"
+      "bytes": 20821,
+      "sha256": "e7557f3763ce16bc6e283646630cfa1388fe911960e77373aee5eb2e4004a490"
     },
     {
       "file": "tools/mcgs_ui.py",

@@ -80,6 +80,13 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-engineering'){
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_native_engineering.py') @nativeArgs
  exit $LASTEXITCODE
 }
+if($args.Count -gt 0 -and $args[0] -eq 'native-page-plan'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $planArgs=@()
+ if($args.Count -gt 1){$planArgs=@($args[1..($args.Count-1)])}
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_page_plan.py') @planArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-hwnd'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $hwndArgs=@()

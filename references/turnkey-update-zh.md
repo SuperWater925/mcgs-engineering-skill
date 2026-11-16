@@ -1,8 +1,8 @@
-# Pro 在线提速小更新包
+# Pro 在线画面小更新包
 
-小更新包供 Windows x64 用户使用。它更新技能源码、说明、清单和预编译 Pro 引擎，复用本机完整包的安装介质、Python、PowerShell 和热接桥。可复用原完整包或上一版更新目录。源码技能入口会按当前合同自动获取匹配小更新，不静默退回旧引擎。 [下载小更新包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.16-portable-online) · [下载完整基底](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey-bootstrap)
+小更新包供 Windows x64 用户使用。它更新技能源码、说明、清单和预编译 Pro 引擎，复用本机完整包的安装介质、Python、PowerShell 和热接桥。可复用原完整包或上一版更新目录。源码技能入口会按当前合同自动获取匹配小更新，不静默退回旧引擎。 [下载小更新包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.16-native-page-update) · [下载完整基底](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey-bootstrap)
 
-本轮按能力解析当前函数、RTTI 和实际字段布局。原生创建与属性编辑按页共享工作，保存集中执行。已有连接可以选用当前预编译引擎，小更新复用已有完整目录的已校验文件。 [在线提速合同](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-portable-online/references/pro-native-performance.md)
+新版支持同页同源原生批量克隆、整页设计计划、工具栏语义发现，以及可逐项回读的原生规则阵列复制。已有连接可以选用新预编译引擎。 [在线工程编辑](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/pro-native-engineering.md) · [实测范围](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/pro-native-page-update-validation.md)
 
 ## 交给 AI 更新
 
@@ -22,6 +22,6 @@ $new = 'D:\MCGS\在线新版'
 & "$new\McgsRun.cmd" turnkey install-skill --bundle-root $new
 ```
 
-其他智能体可用 `--destination` 指定实际技能目录。也可从新版目录运行 `McgsStart.exe`。新 Pro 连接会加载新版预编译引擎。已有连接运行 `turnkey prepare-online`，会在原桥选择匹配新业务 DLL并返回实际引擎信息；无需重开 Pro。旧目录保留作回退或后续复用来源。
+其他智能体可用 `--destination` 指定实际技能目录。也可从新版目录运行 `McgsStart.exe`。新 Pro 连接会加载新版预编译引擎。已有连接运行 `turnkey prepare-online`，会在原桥选择匹配新业务 DLL并返回实际引擎信息；无需重开 Pro。完整包旧目录可用于回退或后续更新。技能暂存和旧技能备份保存在技能扫描根之外的同卷目录。安装失败时原目录会恢复，安装成功的回执用 `previous_backup` 给出旧技能备份位置。
 
-首次在线使用时，普通方式打开 Pro 工程，再在新版目录运行 `McgsRun.cmd turnkey prepare-online`。接收方使用包内引擎和运行时，只在本机生成 ABI 定位资料。 [在线操作](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-portable-online/references/turnkey-start-zh.md)
+首次在线使用时，普通方式打开 Pro 工程，再在新版目录运行 `McgsRun.cmd turnkey prepare-online`。接收方使用包内引擎和运行时，只在本机生成 ABI 定位资料。 [在线操作](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/turnkey-start-zh.md)

@@ -492,7 +492,7 @@ def install_skill(root, destination=None):
     if not source_matches_engine(root, info):
         raise ValueError('Fetch the matching precompiled update before installing; the current skill will not be downgraded')
     source = SKILL
-    destination = Path(destination).expanduser().resolve() if destination else Path.home() / '.codex/skills/mcgs-engineering'
+    destination = Path(destination or Path.home() / '.codex/skills/mcgs-engineering').expanduser().resolve()
     delivery = load_module('mcgs_turnkey_delivery', SKILL / 'scripts/turnkey_delivery.py')
     helper = bundle_helper()
     contract = delivery.source_contract(source, helper)
@@ -504,9 +504,16 @@ def install_skill(root, destination=None):
         return {'status': 'skill_already_at_destination', 'directory': str(destination), **location}
     if destination.is_relative_to(source) or source.is_relative_to(destination):
         raise ValueError('Skill source and installation directories cannot contain each other')
-    destination.parent.mkdir(parents=True, exist_ok=True)
+    scan_root = destination.parent
+    transaction_root = (scan_root.parent / '.mcgs-skill-install').resolve()
+    if transaction_root.is_relative_to(scan_root) or transaction_root.is_relative_to(source):
+        raise ValueError('Skill installation needs a transaction directory outside the skill scan root and source')
+    scan_root.mkdir(parents=True, exist_ok=True)
+    transaction_root.mkdir(parents=True, exist_ok=True)
+    if transaction_root.stat().st_dev != scan_root.stat().st_dev:
+        raise ValueError('Skill installation needs a transaction directory on the same volume as the destination')
     backup = None
-    with tempfile.TemporaryDirectory(prefix='.mcgs-install-', dir=destination.parent) as staging:
+    with tempfile.TemporaryDirectory(prefix='staging-', dir=transaction_root) as staging:
         prepared = Path(staging) / 'skill'
         shutil.copytree(source, prepared, ignore=shutil.ignore_patterns(
             '__pycache__', '*.pyc', '*.pyo', '.git', '.venv', 'local-artifacts', 'turnkey-location.json'))
@@ -514,7 +521,8 @@ def install_skill(root, destination=None):
             raise ValueError('The copied skill source contract differs from the chosen source')
         save(prepared / 'turnkey-location.json', location)
         if destination.exists():
-            backup = destination.with_name(destination.name + '.backup-' + time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex[:6])
+            backup = transaction_root / (
+                destination.name + '.backup-' + time.strftime('%Y%m%d-%H%M%S') + '-' + uuid.uuid4().hex)
             destination.rename(backup)
         try:
             prepared.rename(destination)

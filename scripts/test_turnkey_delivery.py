@@ -89,6 +89,55 @@ class DeliveryTests(unittest.TestCase):
     def tearDown(self):
         self.env.stop()
 
+    def test_install_keeps_backup_and_staging_outside_scan_root(self):
+        scan_root = self.root / '.codex/skills'
+        destination = scan_root / 'mcgs-engineering'
+        destination.mkdir(parents=True)
+        (destination / 'SKILL.md').write_bytes(b'previous skill')
+        (self.skill / 'SKILL.md').write_bytes(b'current skill')
+        rename = Path.rename
+        promoted = []
+
+        def track_promotion(source, target):
+            if target == destination:
+                self.assertFalse(source.is_relative_to(scan_root))
+                self.assertEqual(source.stat().st_dev, scan_root.stat().st_dev)
+                promoted.append(source.parent)
+            return rename(source, target)
+
+        with patch.object(turnkey, 'SKILL', self.skill), patch.object(turnkey, 'bundle_helper', return_value=bundle), \
+             patch.object(turnkey, 'load_module', return_value=delivery), patch.object(Path, 'rename', track_promotion):
+            result = turnkey.install_skill(self.target, destination)
+
+        backup = Path(result['previous_backup'])
+        self.assertFalse(backup.is_relative_to(scan_root))
+        self.assertEqual((backup / 'SKILL.md').read_bytes(), b'previous skill')
+        self.assertEqual((destination / 'SKILL.md').read_bytes(), b'current skill')
+        self.assertEqual(list(scan_root.rglob('SKILL.md')), [destination / 'SKILL.md'])
+        self.assertEqual(len(promoted), 1)
+        self.assertFalse(promoted[0].exists())
+
+    def test_failed_skill_promotion_restores_previous_skill(self):
+        scan_root = self.root / '.codex/skills'
+        destination = scan_root / 'mcgs-engineering'
+        destination.mkdir(parents=True)
+        (destination / 'SKILL.md').write_bytes(b'previous skill')
+        rename = Path.rename
+
+        def fail_promotion(source, target):
+            if source.name == 'skill' and target == destination:
+                raise OSError('injected promotion failure')
+            return rename(source, target)
+
+        with patch.object(turnkey, 'SKILL', self.skill), patch.object(turnkey, 'bundle_helper', return_value=bundle), \
+             patch.object(turnkey, 'load_module', return_value=delivery), patch.object(Path, 'rename', fail_promotion):
+            with self.assertRaisesRegex(OSError, 'injected promotion failure'):
+                turnkey.install_skill(self.target, destination)
+
+        self.assertEqual((destination / 'SKILL.md').read_bytes(), b'previous skill')
+        self.assertEqual(list(scan_root.rglob('SKILL.md')), [destination / 'SKILL.md'])
+        self.assertEqual(list((scan_root.parent / '.mcgs-skill-install').iterdir()), [])
+
     def test_update_reuses_previous_release_with_different_metadata(self):
         metadata = bundle._read(self.base / 'bundle.json')
         metadata['release'] = 'previous-update-not-original-base'
