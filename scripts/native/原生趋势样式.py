@@ -1,4 +1,4 @@
-"""CDrawHisPic 352.1 style spans, proven from native writer 90a3c0.
+"""CDrawHisPic style spans, proven from native writer 90a3c0.
 
 Four LOGPENs, CMcgsFont/ink pairs and the sixteen trace LOGPENs are
 independent visual fields. Sources, ranges, selected-point outputs, IDs,
@@ -8,7 +8,10 @@ two ink members to CDC virtual+38 SetTextColor. No vendor code executes.
 """
 from dataclasses import dataclass
 import struct
-from 原生界面样式 import Reader,CString,Array,_font,set_font,fonts
+from 原生界面样式 import CommonEnvelope,Reader,CString,Array,_font,set_font,fonts
+
+HISTORY_CURVE_TYPE = 0x502e
+HISTORY_CURVE_EDIT_FIELDS = {'history_curve_colors', 'history_curve_pens'}
 
 @dataclass
 class Span:
@@ -45,6 +48,8 @@ class HistoryCurveStyle:
   assert self.to_bytes()==data
  def to_bytes(self):return b''.join(s.raw for s in self.spans)
  def fields(self):return {s.name:s.raw for s in self.spans}
+ def curve_pens(self):
+  return [span for span in self.spans if span.kind == 'p' and span.name.startswith('curve')]
  def style(self,*,ink,line,color_map,font_height=20):
   allowed={'fc','10c','11c','12c','198','1b0','1e8','200'}|{f'curve{j}_pen' for j in range(self.curve_count)};changes=[]
   for s in self.spans:
@@ -62,3 +67,81 @@ class HistoryCurveStyle:
   assert before.keys()==after.keys()
   assert all(before[k]==after[k] for k in before if k not in allowed)
   return result,dict(changes=changes,allowed_fields=sorted(allowed),business_fields_identical=True,opaque_tail_identical=True)
+
+
+def _control_style(record):
+    if record.type_id != HISTORY_CURVE_TYPE:
+        raise ValueError('Trace pens require a native history curve')
+    common = CommonEnvelope.parse(record)
+    if common.to_record().payload != record.payload:
+        raise ValueError('History curve original does not round-trip')
+    return common, HistoryCurveStyle(common.content)
+
+
+def _pen_color(pen):
+    return struct.unpack_from('<I', pen.raw, 12)[0]
+
+
+def history_curve_colors(record):
+    _, style = _control_style(record)
+    return [{'trace_index': index, 'color': _pen_color(pen) & 0xffffff}
+            for index, pen in enumerate(style.curve_pens())]
+
+
+def history_curve_pens(record):
+    _, style = _control_style(record)
+    result = []
+    for index, pen in enumerate(style.curve_pens()):
+        line_style, width, _, color = struct.unpack('<IiiI', pen.raw)
+        result.append({'trace_index': index, 'style': line_style, 'width': width, 'color': color & 0xffffff})
+    return result
+
+
+def _edit_history_curve_pens(record, edits, fields):
+    common, style = _control_style(record)
+    if not isinstance(edits, list) or not edits:
+        raise ValueError('History curve pens require a nonempty list')
+    pens = style.curve_pens()
+    requested = {}
+    for edit in edits:
+        if not isinstance(edit, dict) or not {'trace_index'} < set(edit) <= fields | {'trace_index'}:
+            raise ValueError('History curve pen requires trace_index and supported visual fields')
+        index = edit['trace_index']
+        if type(index) is not int or not 0 <= index < len(pens) or index in requested:
+            raise ValueError('History curve trace_index is out of range or repeated')
+        line_style, width, width_y, raw_color = struct.unpack('<IiiI', pens[index].raw)
+        if 'color' in edit:
+            color = edit['color']
+            if type(color) is not int or not 0 <= color <= 0xffffff:
+                raise ValueError('History curve color uses integer COLORREF 0..0xffffff')
+            raw_color = (raw_color & 0xff000000) | color
+        if 'style' in edit or 'width' in edit:
+            line_style = edit.get('style', line_style)
+            width = edit.get('width', width)
+            # Both original COwnerSelLine pickers emit four patterned choices
+            # at width 1 and six solid choices as PS_INSIDEFRAME at widths 1..6.
+            if (type(line_style) is not int or type(width) is not int or
+                    not ((line_style in (1, 2, 3, 4) and width == 1) or
+                         (line_style == 6 and 1 <= width <= 6))):
+                raise ValueError('History curve pen requires style 1..4 at width 1 or style 6 at width 1..6')
+        requested[index] = struct.pack('<IiiI', line_style, width, width_y, raw_color)
+
+    content = bytearray(common.content)
+    for index, expected in requested.items():
+        offset = pens[index].offset
+        content[offset:offset + len(expected)] = expected
+    common.content = bytes(content)
+    result = common.to_record()
+    _, checked = _control_style(result)
+    after = checked.curve_pens()
+    if any(after[index].raw != expected for index, expected in requested.items()):
+        raise ValueError('History curve trace pen readback differs')
+    return result
+
+
+def edit_history_curve_colors(record, edits):
+    return _edit_history_curve_pens(record, edits, {'color'})
+
+
+def edit_history_curve_pens(record, edits):
+    return _edit_history_curve_pens(record, edits, {'style', 'width', 'color'})

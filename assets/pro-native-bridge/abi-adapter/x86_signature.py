@@ -143,14 +143,15 @@ def string_anchor(pe, rva):
     return None
 
 
-def _decode_signature(pe, rva, guard_length=32):
+def _decode_signature(pe, rva, guard_length=32, complete_body=False):
     if not pe.is_executable(rva):
         raise ValueError('Signature address is not in an executable PE section')
     guard = pe.read(rva, guard_length)
     data = available(pe, rva, guard_length + 15)
     instructions = []
     match_end = 0
-    # End at RET/JMP/INT3: bytes from an adjacent function are not identity.
+    # Standard probes stop at RET/JMP/INT3. Reviewed body extents may cross
+    # internal jumps, but must end at the original one-argument RET.
     for ins in decoder().disasm(data, rva):
         offset = ins.address - rva
         if offset >= guard_length:
@@ -161,10 +162,15 @@ def _decode_signature(pe, rva, guard_length=32):
             break
         instructions.append(ins)
         match_end = offset + ins.size
-        if ins.group(capstone.CS_GRP_RET) or ins.id == x86.X86_INS_JMP:
+        if ins.group(capstone.CS_GRP_RET) or (ins.id == x86.X86_INS_JMP and not complete_body):
             break
     if not instructions or match_end < 1:
         raise ValueError('Insufficient complete x86 instructions for identity')
+    if complete_body and (match_end != guard_length or instructions[-1].id != x86.X86_INS_RET
+                          or len(instructions[-1].operands) != 1
+                          or instructions[-1].operands[0].type != x86.X86_OP_IMM
+                          or instructions[-1].operands[0].imm != 4):
+        raise ValueError('Reviewed native property method does not end at its exact RET 4')
     mask = bytearray(b'\xff' * match_end)
     raw = pe.read(rva, match_end)
     tokens, relocations, transfers = [], [], []
@@ -215,14 +221,17 @@ def _decode_signature(pe, rva, guard_length=32):
             else:
                 operands.append(['other', op.type, op.size])
         tokens.append({'mnemonic': ins.mnemonic, 'operands': operands})
-    return {'reference_rva': rva, 'guard_length': guard_length, 'match_length': match_end,
+    result = {'reference_rva': rva, 'guard_length': guard_length, 'match_length': match_end,
             'bytes_hex': raw.hex(), 'mask_hex': bytes(mask).hex(), 'tokens': tokens,
             'instruction_offsets': [ins.address - rva for ins in instructions],
             'relocations': relocations, 'transfers': transfers,
             'first_is_direct_thunk': bool(instructions[0].id == x86.X86_INS_JMP and transfers and transfers[0]['instruction_index'] == 0)}
+    if complete_body:
+        result['complete_body'] = True
+    return result
 
 
-def decode_signature(pe, rva, guard_length=32):
+def decode_signature(pe, rva, guard_length=32, *, complete_body=False):
     """Memoize byte-derived decoding; callers always own their mutable result.
 
     Context/role verification is deliberately not cached: its proof graph can
@@ -231,19 +240,19 @@ def decode_signature(pe, rva, guard_length=32):
     """
     data = getattr(pe, 'data', None)
     if not isinstance(data, bytes):
-        return _decode_signature(pe, rva, guard_length)
+        return _decode_signature(pe, rva, guard_length, complete_body)
     state = getattr(pe, '_abi_signature_decode_cache', None)
     if state is None or state['data'] is not data:
         state = {'data': data, 'rows': OrderedDict(), 'tokens': 0,
                  'calls': 0, 'hits': 0, 'decodes': 0, 'evictions': 0}
         pe._abi_signature_decode_cache = state
     state['calls'] += 1
-    key = (rva, guard_length)
+    key = (rva, guard_length, complete_body)
     cached = state['rows'].get(key)
     if cached is None:
         state['decodes'] += 1
         try:
-            value = _decode_signature(pe, rva, guard_length)
+            value = _decode_signature(pe, rva, guard_length, complete_body)
             cached = (True, value, max(1, len(value['tokens'])))
         except (ValueError, struct.error) as error:
             cached = (False, (type(error), error.args), 1)
@@ -330,8 +339,11 @@ def actual_instructions(pe, rva, count):
 
 def local_match(reference, actual_pe, rva):
     """Match exact nonaddress operands, including every ordinary field offset."""
+    complete_body = reference.get('complete_body', False)
+    wanted_length = max(reference['guard_length'], reference['match_length'])
     try:
-        actual = decode_signature(actual_pe, rva, max(reference['guard_length'], reference['match_length']) + 15)
+        actual = decode_signature(actual_pe, rva, wanted_length if complete_body else wanted_length + 15,
+                                  complete_body=complete_body)
     except (ValueError, struct.error):
         return None
     wanted = reference['tokens']

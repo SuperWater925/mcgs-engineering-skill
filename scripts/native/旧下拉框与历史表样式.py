@@ -21,6 +21,7 @@ SAVE_ROLES = {'m240': 'header_fill', 'm248': 'header_text', 'm25c': 'odd_row_fil
               'm280': 'focus_row_fill', 'm288': 'focus_cell_fill', 'm290': 'focus_text',
               'm210_font': 'header_font', 'm228_font': 'body_font',
               'm204': 'row_height', 'm2a8': 'inner_rect'}
+SAVE_COLUMN_TEXT_FIELDS = {'data_name': 0, 'title': 1, 'unit': 2, 'display_format': 3, 'output_variable': 4}
 
 @dataclass
 class NativeStyle:
@@ -118,10 +119,25 @@ def parse_save_data(data):
     n=r.u32()
     if n==0:raise FormatError('Empty SaveData column definition')
     r.count_extent(n,21,'SaveData column')
-    columns=[]
+    columns=[];column_spans=[]
+    text_roles = {index: name for name, index in SAVE_COLUMN_TEXT_FIELDS.items()}
     for _ in range(n):
-        columns.append(dict(width=r.u32(),alignment=r.u32(),texts=[r.cstring()[0] for _ in range(5)],words=[r.u32(),r.u32()]))
+        width_start = r.pos
+        width, alignment = r.u32(), r.u32()
+        spans = {'width': (width_start, width_start + 4),
+                 'alignment': (width_start + 4, width_start + 8)}
+        texts = []
+        for index in range(5):
+            start = r.pos
+            texts.append(r.cstring()[0])
+            if index in text_roles:
+                spans[text_roles[index]] = (start, r.pos)
+        spans['compiled_output'] = (r.pos, r.pos + 8)
+        column_spans.append(spans)
+        columns.append(dict(width=width, alignment=alignment, texts=texts, words=[r.u32(), r.u32()]))
     result.metadata['columns']=columns
+    result.metadata['column_spans']=column_spans
+    result.metadata['column_end_offset']=r.pos
     if r.u32()!=0:raise FormatError('Unproven SaveData temporary array')
     result.metadata['native_name']=r.cstring()[0]
     r.take(4+11*4) # member100,104..118,198,120,two reserved,140

@@ -4,6 +4,7 @@ Never opens an MCS database, launches vendor code or writes an input export.
 """
 from __future__ import annotations
 import argparse
+import base64
 import copy
 import hashlib
 import importlib
@@ -195,13 +196,18 @@ def audit(export):
     from mcs_file_browser import FileBrowserCore
     result=_audit_basic(export)
     result.update(project_family=export.index.get('project_family'),project_version=export.index.get('project_version'),software_version_gate=False)
+    from animation_edits import inspect_items
     counts=Counter();types=Counter();defects=[];opaque_plugins=Counter()
+    result['animation_lists']=[]
+    result['state_layouts']=[]
     def equal(a,b):
         if a!=b:raise ValueError('Archive byte roundtrip differs')
     def visit(c,window,path):
         types[hex(c.type_id)]+=1
         try:
             cm=CommonEnvelope.parse(c);equal(cm.to_record().payload,c.payload);counts['common']+=1
+            if cm.animations:
+                result['animation_lists'].append({'window':window,'path':path,'sha256':sha(c.payload),'items':inspect_items(cm)})
             projected=cm.project_without_animations()
             if c.type_id in (0x5008,0x5025,0x5027):
                 parser={0x5008:LabelRecord,0x5025:InputRecord,0x5027:ButtonArchive}[c.type_id]
@@ -212,7 +218,12 @@ def audit(export):
                     try:InputMetadata.parse(q.common.metadata)
                     except ValueError:defects.append({'window':window,'path':path,'name':cm.name.value,'reason':'stale nested metadata lengths; primary and mirror appearance match; explicit normalize-inputs available'})
             elif c.type_id in (0x5028,0x502a):
-                equal(MultiState.parse(c).to_record().payload,c.payload);counts['multi_state']+=1
+                from control_patch import inspect_state_layout
+                state = MultiState.parse(c)
+                equal(state.to_record().payload, c.payload)
+                result['state_layouts'].append({'window': window, 'path': path, 'sha256': sha(c.payload),
+                                               'name': cm.name.value, **inspect_state_layout(state)})
+                counts['multi_state'] += 1
             elif c.type_id==0x503a:
                 g=GroupArchive.parse(c);equal(g.to_record().payload,c.payload);counts['group']+=1
                 for i,child in enumerate(g.children):visit(child,window,path+[i])
@@ -363,6 +374,11 @@ def controls_patch(export,spec,output):
             _,objects_rows=objects.parse(plain)
             rows=[{'name':r.name.value,'kind':r.kind,'id':r.id} for r in objects_rows]
         variables={v['name']:v for v in rows}
+    def has_picture_reference(value):
+        if isinstance(value,dict):return 'reference' in value or any(has_picture_reference(v) for v in value.values())
+        if isinstance(value,list):return any(has_picture_reference(v) for v in value)
+        return False
+    references=picture_reference_index(export) if has_picture_reference(spec['controls']) else None
     windows={};originals={};plain_originals={};paths=[];replacements={}
     for change in spec['controls']:
         if set(change)!={'window','path','sha256','edits'}:raise ValueError('Control operation requires window/path/sha256/edits')
@@ -376,7 +392,7 @@ def controls_patch(export,spec,output):
             windows[key]=w;originals[key]=original;plain_originals[key]=plain;replacements[key]=[]
         w=windows[key];record=cp.at_path(w.controls,path)
         if sha(record.payload)!=change['sha256']:raise ValueError('Control preimage SHA differs')
-        replacement=cp.edit(record,change['edits'],variables)
+        replacement=cp.edit(record,change['edits'],variables,references)
         if replacement.payload==record.payload:raise ValueError('Control operation has no change')
         cp.replace_path(w.controls,path,replacement)
         replacements[key].append((path,record,replacement))
@@ -394,14 +410,95 @@ def controls_patch(export,spec,output):
         filename='window-'+key+'.bin';raw=wrapped_like(originals[key],serialized[key]);(out/filename).write_bytes(raw)
         operations.append({'action':'update','table':'WndUser','key_column':'iID','key':int(key),'before':{'lbObjects':export.fp['fingerprints']['WndUser'][key]['lbObjects']},'values':{'lbObjects':{'blob':filename,'sha256':sha(raw)}}})
     save(out/'manifest.json',{'format':'mcgs-native-bounded-update-v1','input_sha256':export.index['sha256'],'operations':operations})
-    proof={'control_count':len(paths),'window_count':len(windows),'outside_target_records_exact':True,'window_fields_and_events_exact':True,'animations_preserved':True,'inverse_replacement_exact':True,'source_written':False,'native_compile_verified':False,'native_runtime_verified':False}
+    proof={'control_count':len(paths),'window_count':len(windows),'outside_target_records_exact':True,'window_fields_and_events_exact':True,'animations_preserved':not any('animations' in change['edits'] for change in spec['controls']),'inverse_replacement_exact':True,'source_written':False,'native_compile_verified':False,'native_runtime_verified':False}
     save(out/'preparation.json',proof)
     return {'manifest':str(out/'manifest.json'),**proof}
+
+
+def picture_reference_index(export):
+    from picture_resources import PictureResource
+    identities={}
+    for table,key in export.rows:
+        if table=='System' and re.fullmatch(r'MCGS_PICTURE_DATA_[0-9]+',key):
+            q=PictureResource.parse(unwrapped(export.blob(table,key,'lbContext')))
+            identity=q.name.value
+            if not identity or identity in identities:raise ValueError('Empty or ambiguous library picture reference name')
+            identities[identity]=key
+    return identities
+
+
+def resource_inspect(export,key):
+    from picture_resources import PictureResource,raster_details
+    from 原生界面样式 import CommonEnvelope,GroupArchive
+    if not re.fullmatch(r'MCGS_PICTURE_DATA_[0-9]+',key):raise ValueError('Expected an existing picture data row key')
+    plain=unwrapped(export.blob('System',key,'lbContext'));q=PictureResource.parse(plain)
+    result={'key':key,'sha256':sha(plain),'name':q.name.value,'identity':q.identity.value,
+        'kind':q.kind,'width':q.width,'height':q.height,'payload_bytes':len(q.payload),
+        'roundtrip_equal':True,'source_written':False,'native_compile_verified':False}
+    if q.kind==16:
+        try:
+            group,end=q.vector();children=[]
+            def visit(records,path):
+                for i,r in enumerate(records):
+                    current=path+[i];cm=CommonEnvelope.parse(r)
+                    children.append({'path':current,'kind':r.type_id,'sha256':sha(r.payload),'bounds':list(cm.rect)})
+                    if r.type_id==0x503a:visit(GroupArchive.parse(r).children,current)
+            visit(group.children,[])
+            result.update(format='native-VECT',children=children,padding_bytes=len(q.payload)-end)
+        except ValueError as exc:result.update(format='opaque',edit_gap=str(exc))
+    else:
+        try:
+            info=raster_details(q.payload)
+            result.update(format=info['format'],raster=info,dimensions_match=(q.width,q.height)==(info['width'],info['height']))
+        except (ValueError,OSError) as exc:result.update(format='opaque',edit_gap=str(exc))
+    return result
+
+
+def resources_patch(export,spec,output):
+    """Change existing raster/vector resources; retain their names and identities."""
+    from picture_resources import PictureResource,image_hex
+    if not isinstance(spec,dict) or set(spec)!={'input_sha256','resources'} or spec['input_sha256']!=export.index['sha256']:
+        raise ValueError('Resource spec requires current input_sha256 and resources')
+    if not isinstance(spec['resources'],list) or not spec['resources']:raise ValueError('Empty resources list')
+    rows=[];seen=set()
+    for item in spec['resources']:
+        if not isinstance(item,dict) or set(item)!={'key','sha256','edits'}:raise ValueError('Resource requires key/sha256/edits')
+        key=item['key']
+        if not isinstance(key,str) or not re.fullmatch(r'MCGS_PICTURE_DATA_[0-9]+',key) or key in seen:
+            raise ValueError('Resource key must identify a unique existing picture data row')
+        seen.add(key)
+        raw=export.blob('System',key,'lbContext');plain=unwrapped(raw)
+        if sha(plain)!=item['sha256']:raise ValueError('Resource plaintext preimage SHA differs')
+        q=PictureResource.parse(plain);edits=item['edits']
+        if not isinstance(edits,dict):raise ValueError('Resource edits must be an object')
+        if set(edits)=={'raster_hex'} and isinstance(edits['raster_hex'],str):q.replace_raster(image_hex(edits['raster_hex']))
+        elif set(edits)=={'vector_children'}:q.edit_vector(edits['vector_children'])
+        else:raise ValueError('Resource edit requires raster_hex or vector_children')
+        after=q.to_bytes()
+        if after==plain:raise ValueError('Resource operation has no change')
+        reread=PictureResource.parse(after)
+        # Restore only the permitted dimensions/payload for an exact identity proof.
+        original=PictureResource.parse(plain)
+        reread.width,reread.height,reread.payload=original.width,original.height,original.payload
+        if reread.to_bytes()!=plain:raise ValueError('Resource identity or envelope changed unexpectedly')
+        rows.append((key,wrapped_like(raw,after)))
+    out=Path(output).resolve();out.mkdir(parents=True,exist_ok=False);operations=[]
+    for index,(key,raw) in enumerate(rows):
+        filename=f'resource-{index:04d}.bin';(out/filename).write_bytes(raw)
+        operations.append({'action':'update','table':'System','key_column':'strName','key':key,
+            'before':{'lbContext':export.fp['fingerprints']['System'][key]['lbContext']},
+            'values':{'lbContext':{'blob':filename,'sha256':sha(raw)}}})
+    save(out/'manifest.json',{'format':'mcgs-native-bounded-update-v1','input_sha256':export.index['sha256'],'operations':operations})
+    proof={'resource_count':len(rows),'resource_identities_preserved':True,'other_resource_rows_exact':True,
+        'source_written':False,'candidate_not_database_reread':True,'native_compile_verified':False,'native_runtime_verified':False}
+    save(out/'preparation.json',proof)
+    return {'manifest':str(out/'manifest.json'),**proof}
+
 
 class BatchExport(Export):
     """One verified in-memory view per batch; the project baseline never changes."""
     def __init__(self, export):
-        self.directory=export.directory
+        self.export=export
         self.index=copy.deepcopy(export.index)
         self.fp=copy.deepcopy(export.fp)
         self.rows=export.rows
@@ -411,7 +508,11 @@ class BatchExport(Export):
     def blob(self,table,key,field):
         ident=(table,str(key),field)
         if ident in self.changed:return self.changed[ident]
-        if ident not in self.verified:self.verified[ident]=super().blob(table,key,field)
+        if ident not in self.verified:
+            raw=self.export.blob(table,key,field)
+            fingerprints=self.fp['fingerprints'].setdefault(table,{}).setdefault(str(key),{})
+            if field not in fingerprints:fingerprints[field]=f'binary:{len(raw)}:{sha(raw)}'
+            self.verified[ident]=raw
         return self.verified[ident]
 
     def accept(self,manifest):
@@ -430,15 +531,35 @@ class BatchExport(Export):
                 self.fp['fingerprints'][table][key][field]=f'binary:{len(raw)}:{sha(raw)}'
 
 
-def batch_edit(export,plan_path,output):
-    """Compose proven bounded edits, including repeated rows, into one transaction."""
-    started=time.perf_counter()
+class ProjectBatchSource:
+    """Expose only the archive rows used by the existing batch steps."""
+    def __init__(self,data,baseline,family):
+        self.index={'sha256':baseline,'project_family':family}
+        self.fp={'fingerprints':{}}
+        self.rows={}
+        for table,key_column in (('WndUser','iID'),('Stgy','iStgyID'),('System','strName')):
+            for row in data[table]['rows']:
+                key=str(row[key_column])
+                if table=='Stgy' and key!='0':continue
+                if table=='System' and not re.fullmatch(
+                        r'ObjData|StgyAndTrigger|MCGS_RECIPE_.+|MCGS_PICTURE_DATA_[0-9]+',key):
+                    continue
+                identity=(table,key)
+                if identity in self.rows:raise ValueError('Duplicate batch project row: '+table+'/'+key)
+                self.rows[identity]=row
+
+    def blob(self,table,key,field):
+        if field!=('lbContext' if table=='System' else 'lbObjects'):
+            raise ValueError('Unexpected batch project archive field')
+        return base64.b64decode(self.rows[table,str(key)][field]['binary'],validate=True)
+
+
+def prepare_batch(export,plan_path):
+    """Plan the existing bounded steps against a single baseline and staged BLOBs."""
     plan_path=Path(plan_path).resolve();plan=load(plan_path)
     if set(plan)!={'input_sha256','steps'} or plan['input_sha256']!=export.index['sha256']:
         raise ValueError('Batch plan requires current input_sha256 and steps')
     if not isinstance(plan['steps'],list) or not plan['steps']:raise ValueError('Empty batch steps')
-    out=Path(output).resolve()
-    if out.exists():raise ValueError('Batch output must be a new directory')
     view=BatchExport(export);proofs=[]
     with tempfile.TemporaryDirectory(prefix='mcgs-bounded-batch-') as temporary:
         for index,step in enumerate(plan['steps']):
@@ -448,6 +569,9 @@ def batch_edit(export,plan_path,output):
             if command=='controls':
                 if set(step)!={'command','spec'}:raise ValueError('Controls batch step requires only spec')
                 proof=controls_patch(view,load((plan_path.parent/step['spec']).resolve()),step_out)
+            elif command=='resources':
+                if set(step)!={'command','spec'}:raise ValueError('Resources batch step requires only spec')
+                proof=resources_patch(view,load((plan_path.parent/step['spec']).resolve()),step_out)
             elif command=='strategy-source':
                 if set(step)-{'command','strategy_name','source','action_path'} or not {'strategy_name','source'}<=set(step):
                     raise ValueError('Strategy batch step requires strategy_name/source and optional action_path')
@@ -456,32 +580,52 @@ def batch_edit(export,plan_path,output):
                 if set(step)!={'command','group','row','column','value'} or type(step['row'])is not int or type(step['column'])is not int or not isinstance(step['value'],str):
                     raise ValueError('Recipe batch step requires group/row/column/value')
                 proof=recipe_cell(view,step['group'],step['row'],step['column'],step['value'],step_out)
-            else:raise ValueError('Batch supports controls, strategy-source and recipe-cell only')
+            else:raise ValueError('Batch supports controls, resources, strategy-source and recipe-cell only')
             view.accept(step_out/'manifest.json')
             proof.pop('manifest',None)
             proofs.append({'command':command,'elapsed_ms':round((time.perf_counter()-tick)*1000,3),**proof})
-        blobs=[]
-        keys={'System':'strName','Stgy':'iStgyID','WndUser':'iID'}
-        for (table,key,field),raw in sorted(view.changed.items()):
-            fingerprint=f'binary:{len(raw)}:{sha(raw)}'
-            if fingerprint==export.fp['fingerprints'][table][key][field]:continue
-            filename=f'blob-{len(blobs):04d}.bin'
-            op={'action':'update','table':table,'key_column':keys[table],
-                'key':key if table=='System' else int(key),
-                'before':{field:export.fp['fingerprints'][table][key][field]},
-                'values':{field:{'blob':filename,'sha256':sha(raw)}}}
-            blobs.append((filename,raw,op))
-        if not blobs:raise ValueError('Batch has no net change')
-        out.mkdir(parents=True,exist_ok=False)
-        for filename,raw,_ in blobs:(out/filename).write_bytes(raw)
-        save(out/'manifest.json',{'format':'mcgs-native-bounded-update-v1','input_sha256':export.index['sha256'],
-                                 'operations':[op for _,_,op in blobs]})
-        proof={'step_count':len(proofs),'fields':len(blobs),'steps':proofs,
-               'elapsed_ms':round((time.perf_counter()-started)*1000,3),
-               'single_baseline':True,'source_written':False,'candidate_not_database_reread':True,
-               'native_compile_verified':False,'native_runtime_verified':False}
-        save(out/'preparation.json',proof)
-        return {'manifest':str(out/'manifest.json'),**proof}
+    return view,proofs
+
+
+def apply_project_batch(data,baseline,family,plan_path):
+    source=ProjectBatchSource(data,baseline,family)
+    view,proofs=prepare_batch(source,plan_path)
+    changed=0
+    for (table,key,field),raw in view.changed.items():
+        if raw==view.verified[table,key,field]:continue
+        source.rows[table,key][field]={'binary':base64.b64encode(raw).decode('ascii')}
+        changed+=1
+    return {'step_count':len(proofs),'fields':changed}
+
+
+def batch_edit(export,plan_path,output):
+    """Compose proven bounded edits, including repeated rows, into one manifest."""
+    started=time.perf_counter()
+    out=Path(output).resolve()
+    if out.exists():raise ValueError('Batch output must be a new directory')
+    view,proofs=prepare_batch(export,plan_path)
+    blobs=[]
+    keys={'System':'strName','Stgy':'iStgyID','WndUser':'iID'}
+    for (table,key,field),raw in sorted(view.changed.items()):
+        fingerprint=f'binary:{len(raw)}:{sha(raw)}'
+        if fingerprint==export.fp['fingerprints'][table][key][field]:continue
+        filename=f'blob-{len(blobs):04d}.bin'
+        op={'action':'update','table':table,'key_column':keys[table],
+            'key':key if table=='System' else int(key),
+            'before':{field:export.fp['fingerprints'][table][key][field]},
+            'values':{field:{'blob':filename,'sha256':sha(raw)}}}
+        blobs.append((filename,raw,op))
+    if not blobs:raise ValueError('Batch has no net change')
+    out.mkdir(parents=True,exist_ok=False)
+    for filename,raw,_ in blobs:(out/filename).write_bytes(raw)
+    save(out/'manifest.json',{'format':'mcgs-native-bounded-update-v1','input_sha256':export.index['sha256'],
+                             'operations':[op for _,_,op in blobs]})
+    proof={'step_count':len(proofs),'fields':len(blobs),'steps':proofs,
+           'elapsed_ms':round((time.perf_counter()-started)*1000,3),
+           'single_baseline':True,'source_written':False,'candidate_not_database_reread':True,
+           'native_compile_verified':False,'native_runtime_verified':False}
+    save(out/'preparation.json',proof)
+    return {'manifest':str(out/'manifest.json'),**proof}
 
 
 def normalize_inputs(export,output):
@@ -531,6 +675,12 @@ def main():
     controls.add_argument('--export',dest='export_dir',required=True)
     controls.add_argument('--spec',required=True)
     controls.add_argument('--out',required=True)
+    resources=commands.add_parser('resources',help='Bounded existing native raster/VECT library edits')
+    resources.add_argument('--export',dest='export_dir',required=True)
+    resource_mode=resources.add_mutually_exclusive_group(required=True)
+    resource_mode.add_argument('--spec',help='JSON edits with baseline and resource preimages')
+    resource_mode.add_argument('--key',help='Inspect one existing resource and its vector child paths')
+    resources.add_argument('--out',help='New candidate directory, required with --spec')
     normalize=commands.add_parser('normalize-inputs')
     normalize.add_argument('--export',dest='export_dir',required=True)
     normalize.add_argument('--out',required=True)
@@ -540,6 +690,10 @@ def main():
     elif args.command=='batch-edit':result=batch_edit(export,args.plan,args.out)
     elif args.command=='normalize-inputs':result=normalize_inputs(export,args.out)
     elif args.command=='controls':result=controls_patch(export,load(Path(args.spec)),args.out)
+    elif args.command=='resources':
+        if args.key:result=resource_inspect(export,args.key)
+        elif not args.out:raise ValueError('resources --spec requires --out')
+        else:result=resources_patch(export,load(Path(args.spec)),args.out)
     elif args.command=='recipe-cell':result=recipe_cell(export,args.group,args.row,args.column,args.value,args.out)
     else:
         path=[int(v) for v in args.action_path.split(',')] if args.action_path else None

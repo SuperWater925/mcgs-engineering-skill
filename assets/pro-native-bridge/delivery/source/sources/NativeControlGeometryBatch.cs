@@ -9,9 +9,15 @@ namespace McgsInternalBridge {
    var result=new List<Dictionary<string,object>>();foreach(object value in(IEnumerable)after["controls"]){var item=Map(value);foreach(string key in item.Keys)NativeMemory.Require(key=="target"||key=="rectangle"||key=="transform_group_children","Unknown geometry batch item field.");result.Add(item);}NativeMemory.Require(result.Count>0,"Geometry batch is empty.");return result;
   }
   static Node GeometryBatchLocate(Api api,List<Node> forest,Dictionary<string,object> target){
-   foreach(string key in target.Keys)NativeMemory.Require(key=="control_path"||key=="control_name"||key=="class","Geometry batch target must use its current exact path/name/class.");
+   foreach(string key in target.Keys)NativeMemory.Require(key=="control_path"||key=="control_name"||key=="class"||key=="complete"||key=="native_id","Geometry batch target has an unknown identity field.");
+   object address;
+   if(!target.ContainsKey("control_path")&&target.TryGetValue("complete",out address)){
+    NativeMemory.Require(target.ContainsKey("native_id"),"Geometry target without a path needs complete address and native ID.");
+    Node exact=null;foreach(Node node in Flatten(forest))if(NativeMemory.Hex(node.Full)==Convert.ToString(address)){exact=node;break;}
+    api.Match(exact,target);return exact;
+   }
    var path=Integers(target["control_path"]);NativeMemory.Require(path.Count>0,"Geometry batch control path is empty.");List<Node> list=forest;Node found=null;for(int pathIndex=0;pathIndex<path.Count;pathIndex++){int index=path[pathIndex];NativeMemory.Require(index>=0&&index<list.Count,"Geometry batch path no longer exists or traverses an unknown child layout.");found=list[index];if(pathIndex+1<path.Count&&found.Class==null)throw new NativeAbiUnavailableException("Geometry batch target traverses an unknown group lifecycle.",Api.TemplateRelative,Convert.ToString(found.Opaque["rtti"]));list=found.Children;}
-   NativeMemory.Require(found!=null&&found.Class!=null&&found.Class.Name==NativePageControlPreparation.Text(target,"class")&&NativeStrategyProfile.ReadName(api.Shared.Shared,NativeOpaqueDrawState.ControlObject(found.Full))==NativePageControlPreparation.Text(target,"control_name"),"Geometry batch path resolved to another class/name.");RequireKnownSubtree(found,"geometry batch target");return found;
+   NativeMemory.Require(found!=null&&found.Class!=null&&found.Class.Name==NativePageControlPreparation.Text(target,"class")&&NativeStrategyProfile.ReadName(api.Shared.Shared,NativeOpaqueDrawState.ControlObject(found.Full))==NativePageControlPreparation.Text(target,"control_name"),"Geometry batch path resolved to another class/name.");api.Match(found,target);return found;
   }
   static Dictionary<string,object> GeometryBatchCapture(Api api,Dictionary<string,object> action){
    NativeMemory.Require(NativePageControlPreparation.Kind(action)==GeometryBatchKind,"Geometry batch kind differs.");var pageTarget=Map(action["target"]);foreach(string key in pageTarget.Keys)NativeMemory.Require(key=="page_id"||key=="page_name","Geometry batch target is one exact page.");

@@ -1,0 +1,157 @@
+{
+  "schema": 1,
+  "purpose": "Change only an existing canonical CTriggerEvent ordinary edge and independently preserve the Trigger DAO cache",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "functions": [
+    {
+      "name": "CreateEvent",
+      "module": "McgsSetPro.exe",
+      "rva": 107471
+    },
+    {
+      "name": "DeleteEvent",
+      "module": "McgsSetPro.exe",
+      "rva": 195746
+    },
+    {
+      "name": "SelectStrategyListRow",
+      "module": "McgsSetPro.exe",
+      "rva": 7048928
+    },
+    {
+      "name": "StrategyListItemState",
+      "module": "McgsSetPro.exe",
+      "rva": 219831
+    },
+    {
+      "name": "EventEquals",
+      "module": "McgsSetPro.exe",
+      "rva": 21546
+    },
+    {
+      "name": "EventPropertyConfirm",
+      "module": "McgsSetPro.exe",
+      "rva": 38486
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "CreateEventEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 107471,
+      "bytes": "e93c49ab00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "CreateEventBody",
+      "module": "McgsSetPro.exe",
+      "rva": 11332880,
+      "bytes": "558bec6aff687981040164a1000000005083ec0ca1600b3b0133c5508d45f464a3000000006a44e8136058ff8945f0c745fc00000000837df000740d8b4df0e8102d53ff8945eceb07c745ec000000008b45ec8945e8c745fcffffffff8b45e88b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21
+      ]
+    },
+    {
+      "name": "DeleteEventEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 195746,
+      "bytes": "e9d90caa00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "DeleteEventBody",
+      "module": "McgsSetPro.exe",
+      "rva": 11340160,
+      "bytes": "558bec51894dfc8b4dfce8a76356ff8b450883e00174098b4dfc51e83c9754ff8b45fc8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SelectStrategyListRowBody",
+      "module": "McgsSetPro.exe",
+      "rva": 7048928,
+      "bytes": "558bec83ec0c894df88b4df8e8ca0d98ff8945f4c745fc00000000eb098b45fc83c0018945fc8b4dfc3b4df47d2c8b55083b55fc74226a028b45fc508b4df8e893cb97ff85c074106a036a008b4dfc518b4df8e842684700ebc3837d08007d02eb398b55083b55f47c098b45f483e8018945086a036a038b4d08518b4df8e8176847006a008b5508528b4df8e8ac1b96ff6a018b4df8e8d34a95ff8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StrategyListItemStateEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 219831,
+      "bytes": "e9243d1100",
+      "reloc_offsets": []
+    },
+    {
+      "name": "StrategyListItemStateBody",
+      "module": "McgsSetPro.exe",
+      "rva": 1349600,
+      "bytes": "558bec51894dfc8b450c508b4d0851682c1000008b55fc8b422050ff151c783c018be55dc20800",
+      "reloc_offsets": [
+        29
+      ]
+    },
+    {
+      "name": "EventEqualsEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 21546,
+      "bytes": "e9c19eac00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventEqualsBody",
+      "module": "McgsSetPro.exe",
+      "rva": 11334384,
+      "bytes": "558bec83ec0856894dfc8b4508508b4dfce8119654ff0fb6c885c90f84990000008b55088955f8837df8000f84890000008b4dfc83c124e8854c54ff8bf08b4df883c124e8784c54ff3bf0756d8b4dfc83c124e8694c54ff508b4df883c124e855f855ff508b4dfc83c124e849f855ff50e8b81d060083c40c85c0753d8b45f883c038508b4dfc83c13851e81dae56ff83c4080fb6d085d274208b45fc8b4df88b503c3b513c75128b45fc8b4df88b50403b51407504b001eb0232c05e8be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "NativeEventPropertyConfirm",
+      "module": "McgsSetPro.exe",
+      "rva": 11313968,
+      "bytes": "558bec6aff68da75040164a1000000005081ec18050000a1600b3b0133c5508d45f464a300000000894df06861a500008d45e050e8af5958ff83c4088945d08b4dd0894dc0c745fc000000008b4dc0ff156c913c01508d8ddcfaffffe8e17154ffc645fc028d4de0ff1548913c016a008d8d5cfcffffe81d1358ffc645fc038b550883c218528d8d74fdffffff15708e3c018b450883c014508d8d80fdffffff15708e3c018b4df083c138518d8d84fdffffff15708e3c018b55f08b423c898578fdffff8b4df08b514089957cfdffff8d45bc508b4d08e8b59f54ff8945c88b4dc8894dd8c645fc048b55d8528d8d5cfcffffe8b38257ffc645fc038d4dbcff1548913c018d855cfcffff50687f0600008d8ddcfaffffe8283557ff8d8ddcfaffffe82d49060083f8010f8524010000837d0c0074166a016a016a008b4d0c8b118b4d0c8b8280010000ffd06a018b4df0e8126454ffe8237357ff83b82005000000746a8d4dec518d9574fdffff52e80a7357ff8b8820050000e8be7158ff85c0754b8b45088b4dec3b483474406a006a106862a500008d55dc52e8485858ff83c4088945e88b45e88945e4c645fc058b4de4ff156c913c0150e8f5480600c645fc038d4ddcff1548913c01eb138d8d74fdffff518b4d0883c118ff15708e3c018d9580fdffff528b4d0883c114ff15708e3c018d8584fdffff508b4df083c138ff15708e3c018b4df08b9578fdffff89513c8b45f08b8d7cfdffff8948408d55c4528d8d5cfcffffe804ae53ff8945d48b45d48945ccc645fc068b4dcc518b4d08e8913a58ffc645fc038d4dc4ff1548913c01c645fc028d8d5cfcffffe8fb6d53ffc745fcffffffff8d8ddcfaffffe8e73c54ff8b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        24,
+        81,
+        106,
+        142,
+        161,
+        180,
+        257,
+        437,
+        456,
+        477,
+        496,
+        515,
+        592
+      ]
+    },
+    {
+      "name": "NativeEventDialogDdx",
+      "module": "McgsSetPro.exe",
+      "rva": 11314928,
+      "bytes": "558bec83ec0c894dfc8b4508508b4dfce8c4a255ff8b4dfc81c1180100005168fa0300008b550852e8094706008b45fc051c0100005068fd0300008b4d0851e8da4f06008b55fc81c22001000052687a0400008b450850e8725106008b4dfc81c1240100005168fb0300008b550852e8c24606008b45fc05280100005068fc0300008b4d0851e8ab4606008b5508833a007405e9980000008b45fc83b82001000000742d8b4dfc83b9200100000174218b55fc83ba200100000374158b45fc83b820010000027409c745f800000000eb07c745f8010000008b4df85168fd0300008b4dfce8954906008bc8e89a4906008b55fc83ba200100000074158b45fc83b820010000017409c745f400000000eb07c745f4010000008b4df45168340400008b4dfce8554906008bc8e85a4906008b55fc81c2300100005268fe0300008b450850e83c4306008b4dfc81c12c0100005168fe0300008b550852e8d64506006a0a8b45fc052c010000508b4d0851e8c84506008be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventConstructor",
+      "module": "McgsSetPro.exe",
+      "rva": 11334048,
+      "bytes": "558bec6aff68e981040164a1000000005083ec10a1600b3b0133c5508d45f464a300000000894df08b4df0e8e04a58ffc745fc000000008b45f0c700140c25018b4df083c124e81ffd0500c645fc018b4df083c138ff1588903c01c645fc028b4df0c7410c040000006868a500008d55e452e8010b58ff83c4088945ec8b45ec8945e8c645fc038b4de8518b4df083c110ff15708e3c01c645fc028d4de4ff1548913c018b55f0c7423c000000008b45f0c7404000000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        60,
+        87,
+        147,
+        160
+      ]
+    },
+    {
+      "name": "EventPropertyConfirmEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 38486,
+      "bytes": "e9d50cac00",
+      "reloc_offsets": []
+    }
+  ]
+}

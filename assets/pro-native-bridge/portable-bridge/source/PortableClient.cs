@@ -62,7 +62,12 @@ static class PortableClient {
   using(var process=Process.GetProcessById(pid)){
    process.Refresh();Need(process.StartTime.ToFileTimeUtc()==creation,"Target PID was reused or restarted.");string executable=Regular(process.MainModule.FileName);Need(String.Equals(executable,Path.GetFullPath(Text(c,"editor_executable")),StringComparison.OrdinalIgnoreCase)&&Hash(executable)==Text(c,"editor_sha256"),"Target differs from the current explicit executable; this is not a release whitelist.");
    bool owned=false;foreach(ProcessThread thread in process.Threads)if(thread.Id==tid)owned=true;Need(owned,"Selected thread does not belong to this process.");
-   if(Text(c,"host_kind")=="pro"){uint owner;IntPtr window=process.MainWindowHandle;Need(window!=IntPtr.Zero&&GetWindowThreadProcessId(window,out owner)==(uint)tid&&owner==(uint)pid,"Selected UI thread must own the Pro main window.");}
+   string hostKind=Text(c,"host_kind");
+   if(hostKind=="pro"||hostKind=="stu"){
+    uint owner;IntPtr window=process.MainWindowHandle;
+    Need(window!=IntPtr.Zero&&GetWindowThreadProcessId(window,out owner)==(uint)tid&&owner==(uint)pid,
+         "The engineering UI thread must own the selected editor's main window.");
+   }
    bool wow;Need(IsWow64Process(process.Handle,out wow)&&(!Environment.Is64BitOperatingSystem||wow),"Target must be PE32/I386 for this release's x86 hook.");
    RegistryHive hive=Hive(process);var result=new Dictionary<string,object>{{"ok",true},{"operation",operation},{"portable_bridge_contract",Release},{"process_id",pid},{"ui_thread_id",tid},{"creation_filetime",creation},{"registry_hive",hive.ToString()+"/Registry32"},{"host_attached",false},{"thread_specific_hook",true},{"global_hook",false},{"remote_thread",false},{"remote_memory_written",false},{"windows_focus_changed",false},{"vendor_business_called",false},{"automatic_retry",false}};
    var discovered=Discovery(pid,creation);if(discovered!=null){result["existing_bridge"]=discovered;result["host_attached"]=true;result["connection_reused"]=true;if(operation!="--unregister")return result;}

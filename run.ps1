@@ -1,7 +1,32 @@
 $ErrorActionPreference = 'Stop'
 $env:PYTHONDONTWRITEBYTECODE='1'
+# PowerShell -File splits an equals-form drive path at the colon before the
+# script sees it. Restore only this known option, for dispatch and forwarding.
+$normalizedArgs=[Collections.Generic.List[string]]::new()
+for($i=0;$i -lt $args.Count;$i++){
+ $argument=[string]$args[$i]
+ if($argument -match '^--bundle-root=[A-Za-z]$' -and $i+1 -lt $args.Count -and [string]$args[$i+1] -match '^[\\/]'){
+  $i++
+  $argument += ':'+[string]$args[$i]
+ }
+ $normalizedArgs.Add($argument)
+}
+$args=$normalizedArgs.ToArray()
 $bundleRoot=$null
 $bundleCandidates=[Collections.Generic.List[string]]::new()
+$explicitBundle=$null
+for($i=0;$i -lt $args.Count;$i++){
+ $argument=[string]$args[$i]
+ if($argument -eq '--bundle-root'){
+  if($i+1 -ge $args.Count -or [string]$args[$i+1] -like '--*'){throw '--bundle-root requires a directory'}
+  $i++
+  $explicitBundle=[string]$args[$i]
+ }elseif($argument.StartsWith('--bundle-root=')){$explicitBundle=$argument.Substring(14)}
+}
+if($null -ne $explicitBundle){
+ if([string]::IsNullOrWhiteSpace($explicitBundle)){throw '--bundle-root requires a directory'}
+ $bundleCandidates.Add($explicitBundle)
+}
 if($env:MCGS_BUNDLE_ROOT){$bundleCandidates.Add($env:MCGS_BUNDLE_ROOT)}
 $bundleCandidates.Add($PSScriptRoot)
 $bundleCandidates.Add((Split-Path $PSScriptRoot -Parent))
@@ -75,9 +100,14 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-doctor'){
 }
 if($args.Count -gt 0 -and $args[0] -eq 'native-engineering'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
- $nativeArgs=@()
- if($args.Count -gt 1){$nativeArgs=@($args[1..($args.Count-1)])}
- & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_native_engineering.py') @nativeArgs
+ $nativeArgs=@($args | Select-Object -Skip 1)
+ $nativeScript='scripts/pro_native_engineering.py'
+ if($nativeArgs.Count -gt 0 -and $nativeArgs[0] -eq '--family'){
+  if($nativeArgs.Count -lt 2 -or $nativeArgs[1] -notin @('pro','stu')){throw '--family requires pro or stu'}
+  if($nativeArgs[1] -eq 'stu'){$nativeScript='scripts/stu_native_client.py'}
+  $nativeArgs=@($nativeArgs | Select-Object -Skip 2)
+ }
+ & $python -B -X utf8 (Join-Path $PSScriptRoot $nativeScript) @nativeArgs
  exit $LASTEXITCODE
 }
 if($args.Count -gt 0 -and $args[0] -eq 'native-page-plan'){
@@ -87,6 +117,18 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-page-plan'){
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_page_plan.py') @planArgs
  exit $LASTEXITCODE
 }
+if($args.Count -gt 0 -and $args[0] -eq 'native-animation-plan'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $animationArgs=@($args | Select-Object -Skip 1)
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_animation_plan.py') @animationArgs
+ exit $LASTEXITCODE
+}
+if($args.Count -gt 0 -and $args[0] -eq 'native-check-result'){
+ $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
+ $checkArgs=@($args | Select-Object -Skip 1)
+ & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/native_check_result.py') --powershell (Join-Path $PSHOME 'pwsh.exe') @checkArgs
+ exit $LASTEXITCODE
+}
 if($args.Count -gt 0 -and $args[0] -eq 'native-hwnd'){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  $hwndArgs=@()
@@ -94,7 +136,7 @@ if($args.Count -gt 0 -and $args[0] -eq 'native-hwnd'){
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/pro_hwnd.py') @hwndArgs
  exit $LASTEXITCODE
 }
-if($args.Count -gt 0 -and $args[0] -in @('audit','controls','strategy-source','recipe-cell','normalize-inputs','batch-edit')){
+if($args.Count -gt 0 -and $args[0] -in @('audit','controls','resources','strategy-source','recipe-cell','normalize-inputs','batch-edit')){
  $python=if($env:MCGS_PYTHON){$env:MCGS_PYTHON}else{(Get-Command python -ErrorAction Stop).Source}
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'scripts/native_tool.py') @args
  exit $LASTEXITCODE
@@ -105,6 +147,9 @@ if($args.Count -gt 0 -and $args[0] -in @('create','edit','demo')){
  & $python -B -X utf8 (Join-Path $PSScriptRoot 'assets/pro-3.5-cli/scripts/mcgs_file.py') @args
  exit $LASTEXITCODE
 }
-& (Join-Path $PSScriptRoot 'scripts/stu_project.ps1') @args
-if(-not $?){exit 1}
-exit 0
+# Rebind the shared database command's named parameters through the same
+# PowerShell executable. Array splatting into a script treats "-Project"
+# and "-Commit" as positional strings.
+$pwsh=(Get-Process -Id $PID).Path
+& $pwsh -NoProfile -File (Join-Path $PSScriptRoot 'scripts/stu_project.ps1') @args
+exit $LASTEXITCODE

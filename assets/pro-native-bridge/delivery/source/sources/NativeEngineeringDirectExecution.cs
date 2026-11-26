@@ -92,7 +92,21 @@ namespace McgsInternalBridge {
    return name.Length>0&&Int32.TryParse(Convert.ToString(id,System.Globalization.CultureInfo.InvariantCulture),
     System.Globalization.NumberStyles.Integer,System.Globalization.CultureInfo.InvariantCulture,out page)&&page>=0;
   }
-  static int DirectCloneRunEnd(Dictionary<string,object> spec,List<Dictionary<string,object>> actions,int start){
+  // Preserve legacy action projections only where a later result dependency consumes them.
+  static HashSet<string> DirectLegacyProjectionActions(List<Dictionary<string,object>> actions){
+   var affected=new HashSet<string>(StringComparer.Ordinal);
+   foreach(var action in actions)foreach(var row in NativeDynamicCollections.DictionaryValues(action)){
+    if(!row.ContainsKey("$native_result"))continue;string path;
+    string id=DirectReference(row,out path);
+    foreach(string prefix in new[]{"/apply","/applies/0","/result/actions/0/apply"})
+     foreach(string suffix in new[]{"/forest_after","/page_after/top_level_controls","/native_history_store_projection","/complete_forest_after"}){
+      string field=prefix+suffix;
+      if(path.Length==0||path==field||path.StartsWith(field+"/",StringComparison.Ordinal)||field.StartsWith(path+"/",StringComparison.Ordinal))affected.Add(id);
+     }
+   }
+   return affected;
+  }
+  static int DirectCloneRunEnd(Dictionary<string,object> spec,List<Dictionary<string,object>> actions,int start,HashSet<string> legacyProjection){
    string kind=Kind(actions[start]);
    if(!IsDirectClone(kind)||!DirectBoolean(spec,"coalesce_native_clones",true))return start;
    int page;string name;
@@ -100,7 +114,7 @@ namespace McgsInternalBridge {
    int end=start-1;
    for(int i=start;i<actions.Count;i++){
     var action=actions[i];object source;
-    if(Kind(action)!=kind||DirectCommit(spec,action)||action.ContainsKey("before")||!action.TryGetValue("source",out source))break;
+    if(Kind(action)!=kind||DirectCommit(spec,action)||action.ContainsKey("before")||legacyProjection.Contains(Convert.ToString(action["action_id"]))||!action.TryGetValue("source",out source))break;
     int current,sourcePage;string currentName,sourceName;
     if(!TryClonePage(action["target"],out current,out currentName)||current!=page||currentName!=name||
       !TryClonePage(source,out sourcePage,out sourceName)||sourcePage!=page||sourceName!=name)break;
@@ -114,11 +128,51 @@ namespace McgsInternalBridge {
    foreach(object raw in(IEnumerable)spec["actions"]){var action=prepared?Map(raw):DirectClone(Map(raw));object id;if(!action.TryGetValue("action_id",out id))action["action_id"]="direct_"+actions.Count.ToString("D4");string aid=Convert.ToString(action["action_id"]);NativeMemory.Require(aid.Length>0&&aid.Length<=96&&!ids.Contains(aid),"Action ID is empty/repeated.");NativeAbiTargetProfiles.SelectFeature(action,"validate-action-kind");if(!supported.Contains(Kind(action)))throw NativeAbiTargetProfiles.Problem("unsupported_feature","No implemented adapter for: "+Kind(action),"compiled engineering adapters",Kind(action));Map(action["target"]);Map(action["after"]);ValidateDirectReferences(action,ids);ids.Add(aid);actions.Add(action);}
    NativeMemory.Require(actions.Count>0,"Direct request has no actions.");return actions;
   }
+  static Dictionary<string,object> ValidateDesignPreflight(NativeEngine engine,NativeContext context,Dictionary<string,object> design){
+   string project=NativeEngineeringProjectScope.ExpectedProjectPath;
+   NativeMemory.Require(Convert.ToInt32(design["process_id"])==Process.GetCurrentProcess().Id&&Convert.ToInt64(design["creation_filetime"])==Process.GetCurrentProcess().StartTime.ToFileTimeUtc(),"Designed editor process generation changed before first mutation.");
+   NativeMemory.Require(NativeUsableEditPermit.SamePath(Convert.ToString(design["project_path"]),project),"Designed project path differs.");
+   var identity=DirectSummary(engine,context);
+   NativeMemory.Require(Object.Equals(identity["disk_sha256"],design["project_sha256"])&&Object.Equals(identity["root"],design["root"]),"Designed project file/root identity changed before first mutation.");
+   var result=NativeCurrentTemplateControlOperations.ValidateDesignPages(engine,context,project,design);object rows;
+   if(design.TryGetValue("style_preimages",out rows))foreach(object value in (IEnumerable)rows){
+    var item=Map(value);var action=new Dictionary<string,object>{{"kind","control-properties"},{"target",item["target"]},{"after",new Dictionary<string,object>{{"properties",item["properties"]}}}};
+    var observed=NativeControlPropertyEditing.Read(engine,context,project,action);var actual=new List<object>();
+    foreach(object requested in (IEnumerable)item["properties"]){var property=Map(requested);Dictionary<string,object> match=null;
+     foreach(object raw in (IEnumerable)observed["properties"]){var row=Map(raw);if(!Object.Equals(row["native_owner"],observed["selected_owner"])||!Object.Equals(row["native_key"],property["native_key"])||Convert.ToInt32(row["native_type_tag"])!=Convert.ToInt32(property["native_type_tag"]))continue;NativeMemory.Require(match==null,"Design style getter key/type is ambiguous.");match=row;}
+     NativeMemory.Require(match!=null,"Design style getter key/type disappeared.");actual.Add(new Dictionary<string,object>{{"native_key",match["native_key"]},{"native_type_tag",match["native_type_tag"]},{"value",match["value"]}});
+    }
+    NativePageControlPreparation.Same(item["properties"],actual,"Designed style sample changed before first mutation.");
+   }
+   if(design.TryGetValue("button_preimages",out rows))foreach(object value in (IEnumerable)rows){
+    var item=Map(value);var action=new Dictionary<string,object>{{"kind",NativeButtonActionEditing.Kind},{"target",item["target"]},{"after",new Dictionary<string,object>()}};
+    var observed=NativeButtonActionEditing.ReadDesignPhases(engine,context,project,action);
+    NativePageControlPreparation.Same(item["phases"],observed,"Designed button binding/actions changed before first mutation.");
+   }
+   if(design.TryGetValue("variables",out rows)){
+    var names=new HashSet<string>(StringComparer.Ordinal);foreach(object value in (IEnumerable)NativeDataEngineering.Inspect(engine,context,project,2)["records"])names.Add(Convert.ToString(Map(value)["name"]));
+    foreach(object name in (IEnumerable)rows)NativeMemory.Require(names.Contains(Convert.ToString(name)),"Designed variable is no longer present: "+name);
+   }
+   if(design.TryGetValue("configured_auxiliary_page_ids",out rows)){
+    IntPtr manager,main;var state=NativeReferencedPageEditing.PagePropertiesMainRead(new NativeReferencedPageEditing.Api(engine,context,project),out manager,out main);
+    var ids=new HashSet<int>();foreach(object value in (IEnumerable)Map(Map(state["arrays"])["AuxIds"])["values"])ids.Add(Convert.ToInt32(value));
+    foreach(object id in (IEnumerable)rows)NativeMemory.Require(ids.Contains(Convert.ToInt32(id)),"Designed auxiliary page is no longer configured: "+id);
+   }
+   return result;
+  }
   static Dictionary<string,object> ApplyDirect(Dictionary<string,object> request,NativeEngine engine,NativeContext context){
    var result=new Dictionary<string,object>{{"ok",false},{"op","engineering-edit-batch"},{"execution_mode","direct"},{"permit_file_required",false},{"durable_permit_claim_used",false},{"approval_required",false},{"automatic_retry",false},{"automatic_rollback",false},{"actions",new List<object>()},{"direct_action_results",new List<object>()}};
    var reports=(List<object>)result["actions"];var flushReports=new List<object>();var individual=(List<object>)result["direct_action_results"];var preimages=new List<object>();object cloneFirstActionId=null;var factoryBatches=new List<object>();result["native_factory_batches"]=factoryBatches;var cloneBatches=new List<object>();result["native_clone_batches"]=cloneBatches;Dictionary<string,object> firstSummary=null,last=null;int completed=0,factoryEnd=-1,cloneEnd=-1,cloneStart=-1;NativeCurrentTemplateControlOperations.CloneBatchScope cloneBatch=null;NativeCurrentTemplateControlOperations.FactoryBatchScope factoryBatch=null;NativeCurrentTemplateControlOperations.DirectFactoryCaptureScope factoryCapture=null;string phase="direct-load-specification";string activeActionId=null;
    try{
     var spec=DirectSpec(request);var actions=ReadDirectActions(spec,NativeRequestPipeline.IsPrepared(request));
+    var legacyProjection=DirectLegacyProjectionActions(actions);
+    result["features"]=Features;
+    object required;if(spec.TryGetValue("required_features",out required))foreach(object feature in (IEnumerable)required)
+     NativeMemory.Require(Array.IndexOf(Features,Convert.ToString(feature))>=0,"Native engine lacks requested semantic feature: "+feature);
+    object design;if(spec.TryGetValue("design_preflight",out design)){
+     phase="direct-design-preflight";NativeOperationTrace.SetPhase(phase);
+     result["design_preflight"]=ValidateDesignPreflight(engine,context,Map(design));
+    }
     result["requested_action_count"]=actions.Count;var receipts=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);result["native_result_reference_contract"]="mcgs-native-result/v1";
     for(int i=0;i<actions.Count;i++){
      var action=actions[i];activeActionId=Convert.ToString(action["action_id"]);
@@ -131,7 +185,7 @@ namespace McgsInternalBridge {
       action["source"]=Map(ResolveDirectResults(cloneSource,receipts));
      NativeAbiTargetProfiles.SelectFeature(action,"direct-prepare-action");phase="direct-read-"+Convert.ToString(action["action_id"]);NativeOperationTrace.SetPhase(phase);
      if(factoryBatch==null){factoryEnd=DirectFactoryRunEnd(spec,actions,i);if(factoryEnd>i)factoryBatch=NativeCurrentTemplateControlOperations.BeginFactoryBatch(engine,context,NativeEngineeringProjectScope.ExpectedProjectPath,Map(action["target"]));}
-     if(cloneBatch==null&&IsDirectClone(kind)){cloneEnd=DirectCloneRunEnd(spec,actions,i);if(cloneEnd>i){cloneStart=i;cloneFirstActionId=action["action_id"];cloneBatch=NativeCurrentTemplateControlOperations.BeginCloneBatch(engine,context,NativeEngineeringProjectScope.ExpectedProjectPath,Map(action["target"]),kind);}}
+     if(cloneBatch==null&&IsDirectClone(kind)){cloneEnd=DirectCloneRunEnd(spec,actions,i,legacyProjection);if(cloneEnd>i){cloneStart=i;cloneFirstActionId=action["action_id"];cloneBatch=NativeCurrentTemplateControlOperations.BeginCloneBatch(engine,context,NativeEngineeringProjectScope.ExpectedProjectPath,Map(action["target"]),kind);}}
      var actionClock=Stopwatch.StartNew();
      if(kind==NativeDomainProjectCheck.Kind){var after=Map(action["after"]);foreach(string k in new[]{"run_original_root85","confirm_project_already_saved","allow_original_worker_ui","allow_original_worker_persistence","preserve_original_warnings_and_exceptions","accept_unknown_error_warning_counts"})after[k]=true;}
      if(kind=="control-native-create"){NativeAbiTargetProfiles.SelectFeature(action,"direct-factory-capture");factoryCapture=NativeCurrentTemplateControlOperations.BeginDirectFactoryCapture(engine,context,NativeEngineeringProjectScope.ExpectedProjectPath,action);}
@@ -150,7 +204,7 @@ namespace McgsInternalBridge {
      double summaryMs=actionClock.Elapsed.TotalMilliseconds;actionClock.Restart();
      last=Apply(request,engine,context,document,summary,capturedPropertyBaseline);if(factoryCapture!=null){factoryCapture.Dispose();factoryCapture=null;}individual.Add(new Dictionary<string,object>{{"action_id",action["action_id"]},{"result",last},{"direct_summary",summary},{"direct_summary_utf8_sha256",document["native_summary_utf8_sha256"]},{"timings_ms",new Dictionary<string,object>{{"read_target",readMs},{"current_summary_and_plan",summaryMs},{"prepare_apply_verify_and_flush",actionClock.Elapsed.TotalMilliseconds}}}});
      foreach(object report in(IEnumerable)last["actions"]){var row=Map(report);if(row.ContainsKey("flush"))flushReports.Add(report);else reports.Add(report);}
-     if(!Object.Equals(last["ok"],true)){result["failed_action_id"]=action["action_id"];result["error"]=last.ContainsKey("error")?last["error"]:"Native action did not complete.";foreach(string key in new[]{"native_abi","failure_category","affected_feature"})if(last.ContainsKey(key))result[key]=last[key];break;}receipts.Add(Convert.ToString(action["action_id"]),DirectReceipt(last));completed++;result["completed_action_count"]=completed;
+     if(!Object.Equals(last["ok"],true)){result["failed_action_id"]=action["action_id"];result["error"]=last.ContainsKey("error")?last["error"]:"Native action did not complete.";foreach(string key in new[]{"native_abi","failure_category","affected_feature"})if(last.ContainsKey(key))result[key]=last[key];break;}if(cloneBatch!=null)cloneBatch.VerifiedMutation();receipts.Add(Convert.ToString(action["action_id"]),DirectReceipt(last));completed++;result["completed_action_count"]=completed;
      if(cloneBatch!=null&&i==cloneEnd){
       NativeAbiTargetProfiles.SelectFeature(action,"direct-clone-batch-finalize");phase="direct-clone-batch-finalize";
       result["batch_finalization_action_id"]=action["action_id"];
@@ -178,7 +232,7 @@ namespace McgsInternalBridge {
     }
     if(factoryCapture!=null){factoryCapture.Dispose();factoryCapture=null;}if(factoryBatch!=null){result["incomplete_factory_batch_created_count"]=factoryBatch.appliedCount;result["incomplete_factory_batch_count_is_lower_bound"]=true;factoryBatch.Dispose();}result["completed_action_count"]=completed;}
    foreach(object report in flushReports)reports.Add(report);
-   if(firstSummary!=null)result["direct_inspection"]=new Dictionary<string,object>{{"ok",true},{"op","engineering-edit-inspect"},{"process_id",Process.GetCurrentProcess().Id},{"creation_filetime",Process.GetCurrentProcess().StartTime.ToFileTimeUtc()},{"native_thread_id",NativeMemory.GetCurrentThreadId()},{"actual_project",NativeEngineeringProjectScope.ExpectedProjectPath},{"editor_image_sha256",engine.ImageSha256},{"native_summary",firstSummary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(firstSummary)},{"compiled_kinds",Kinds()},{"action_preimages",preimages},{"write_attempted",false},{"captured_inside_direct_execution",true},{"complete_project_summary",false}};
+   if(firstSummary!=null)result["direct_inspection"]=new Dictionary<string,object>{{"ok",true},{"op","engineering-edit-inspect"},{"process_id",Process.GetCurrentProcess().Id},{"creation_filetime",Process.GetCurrentProcess().StartTime.ToFileTimeUtc()},{"native_thread_id",NativeMemory.GetCurrentThreadId()},{"actual_project",NativeEngineeringProjectScope.ExpectedProjectPath},{"editor_image_sha256",engine.ImageSha256},{"native_summary",firstSummary},{"native_summary_utf8_sha256",NativeUsableEditPermit.Digest(firstSummary)},{"compiled_kinds",Kinds()},{"features",Features},{"project_sha256",firstSummary["disk_sha256"]},{"root",firstSummary["root"]},{"action_preimages",preimages},{"write_attempted",false},{"captured_inside_direct_execution",true},{"complete_project_summary",false}};
    result["phase"]=phase;result["write_attempted"]=NativeOperationTrace.MutationAttempted;result["native_result_may_be_partial"]=!Object.Equals(result["ok"],true)&&NativeOperationTrace.MutationAttempted;result["binary_validation_reuse"]=NativeEngineeringFileHashes.Status();return result;
   }
  }

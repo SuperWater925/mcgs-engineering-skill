@@ -1,8 +1,8 @@
 # 可认领任务
 
-本清单列昆仑通态触摸屏离线编辑及 Pro 在线编辑的后续工作，不包含 PLC 编程或具体客户工程。这里是任务提案，不代表已经支持或有人认领。请通过 [Issue 模板](https://github.com/SuperWater925/mcgs-engineering-skill/issues/new/choose) 引用任务编号认领，并在对应 Issue 中更新进度。
+本清单列昆仑通态 Stu 和 Pro 离线、在线组态的后续工作。这里是任务提案，已验收的能力以产品使用说明和回执为准。请通过 [Issue 模板](https://github.com/SuperWater925/mcgs-engineering-skill/issues/new/choose) 引用任务编号认领，并在对应 Issue 中更新进度。
 
-当前已交付 Pro 内部原生编辑、普通启动热接入、兼容同页批次及后台准备/回执流水线；不将这些作为待从零开发的任务。0102 新业务优化仍缺真实工程复测，Stu 在线入口尚未实现。当前证据见[流水线验证记录](references/pro-native-pipeline-validation.json)。
+Pro 已交付原生编辑、热接、同页批次及后台准备和回执流水线。Stu 已交付热接、工程和控件目录、设计页激活、标签和几何编辑、原厂模板复制及组态检查。0102 新业务优化仍待真实工程复测。 [Pro 流水线验证](references/pro-native-pipeline-validation.json) · [Stu 原生在线说明](references/stu-native-engineering.md)
 
 ## DOC 01 安装说明实测
 

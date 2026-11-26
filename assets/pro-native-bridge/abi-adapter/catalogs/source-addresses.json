@@ -5,12 +5,12 @@
   "generic_numeric_parser_rewritten": false,
   "object_layout_offsets_rewritten": false,
   "counts": {
-    "entries": 515,
-    "confirmed": 515,
+    "entries": 516,
+    "confirmed": 516,
     "source_ordinals": 16,
     "address_kinds": {
       "PE_RVA_constant": 31,
-      "PE_RVA_literal": 465,
+      "PE_RVA_literal": 466,
       "PE_data_RVA_literal": 8,
       "reference_base_encoded_RVA": 11
     },
@@ -107,31 +107,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
-      "source_sha256": "d84d4f14f2df31de56bcd37953a93fdad8d0504ab62a4d9d95f274121784255c",
-      "start": 6402,
-      "end": 6410,
-      "original_literal": "0xD3FD70",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 13892976,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 28,
-          "call": "a.Engine.Address",
-          "offset": 6385
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
-      "source_sha256": "d84d4f14f2df31de56bcd37953a93fdad8d0504ab62a4d9d95f274121784255c",
-      "start": 8208,
-      "end": 8216,
+      "source_sha256": "d2e6f87d0d1eba9491aeef75495d5eede703cc106cae838a73a7b852fee6643d",
+      "start": 8541,
+      "end": 8549,
       "original_literal": "0xD9041C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -142,18 +120,18 @@
       ],
       "consumers": [
         {
-          "line": 33,
+          "line": 34,
           "call": "a.Engine.Address",
-          "offset": 8191
+          "offset": 8524
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
-      "source_sha256": "d84d4f14f2df31de56bcd37953a93fdad8d0504ab62a4d9d95f274121784255c",
-      "start": 11975,
-      "end": 11982,
+      "source_sha256": "d2e6f87d0d1eba9491aeef75495d5eede703cc106cae838a73a7b852fee6643d",
+      "start": 12549,
+      "end": 12556,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -164,18 +142,18 @@
       ],
       "consumers": [
         {
-          "line": 41,
+          "line": 43,
           "call": "api.Properties.Pages.Slot",
-          "offset": 11935
+          "offset": 12509
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeButtonActionEditing.cs",
-      "source_sha256": "d84d4f14f2df31de56bcd37953a93fdad8d0504ab62a4d9d95f274121784255c",
-      "start": 12024,
-      "end": 12031,
+      "source_sha256": "d2e6f87d0d1eba9491aeef75495d5eede703cc106cae838a73a7b852fee6643d",
+      "start": 12598,
+      "end": 12605,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -186,18 +164,18 @@
       ],
       "consumers": [
         {
-          "line": 41,
+          "line": 43,
           "call": "api.Properties.Pages.Slot",
-          "offset": 11984
+          "offset": 12558
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
-      "source_sha256": "dc2249187ea41d1abb53beaee74369b19a8d1ab3b96ec946bc7176a08c1ddae6",
-      "start": 6671,
-      "end": 6678,
+      "source_sha256": "b64196e91e109c250c38cae37ceceef869435344b2b79a6950bb93cf65e49d16",
+      "start": 6984,
+      "end": 6991,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -208,18 +186,18 @@
       ],
       "consumers": [
         {
-          "line": 32,
+          "line": 33,
           "call": "api.Drawing.Shared.Slot",
-          "offset": 6640
+          "offset": 6953
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
-      "source_sha256": "dc2249187ea41d1abb53beaee74369b19a8d1ab3b96ec946bc7176a08c1ddae6",
-      "start": 6711,
-      "end": 6718,
+      "source_sha256": "b64196e91e109c250c38cae37ceceef869435344b2b79a6950bb93cf65e49d16",
+      "start": 7024,
+      "end": 7031,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -230,18 +208,18 @@
       ],
       "consumers": [
         {
-          "line": 32,
+          "line": 33,
           "call": "api.Drawing.Shared.Slot",
-          "offset": 6680
+          "offset": 6993
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlAnimationEditing.cs",
-      "source_sha256": "dc2249187ea41d1abb53beaee74369b19a8d1ab3b96ec946bc7176a08c1ddae6",
-      "start": 6781,
-      "end": 6788,
+      "source_sha256": "b64196e91e109c250c38cae37ceceef869435344b2b79a6950bb93cf65e49d16",
+      "start": 7094,
+      "end": 7101,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -252,18 +230,18 @@
       ],
       "consumers": [
         {
-          "line": 32,
+          "line": 33,
           "call": "api.Drawing.Shared.Slot",
-          "offset": 6720
+          "offset": 7033
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 11058,
-      "end": 11066,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 11018,
+      "end": 11026,
       "original_literal": "0xFBBC94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -276,16 +254,16 @@
         {
           "line": 41,
           "call": "Engine.Address",
-          "offset": 11043
+          "offset": 11003
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 11106,
-      "end": 11114,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 11066,
+      "end": 11074,
       "original_literal": "0xFBBC98",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -298,16 +276,16 @@
         {
           "line": 41,
           "call": "Engine.Address",
-          "offset": 11091
+          "offset": 11051
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 12010,
-      "end": 12018,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 11970,
+      "end": 11978,
       "original_literal": "0xFBBC94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -320,16 +298,16 @@
         {
           "line": 41,
           "call": "Engine.Address",
-          "offset": 11995
+          "offset": 11955
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 12766,
-      "end": 12774,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 12726,
+      "end": 12734,
       "original_literal": "0xFBBC94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -342,16 +320,16 @@
         {
           "line": 41,
           "call": "Engine.Address",
-          "offset": 12751
+          "offset": 12711
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 12822,
-      "end": 12830,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 12782,
+      "end": 12790,
       "original_literal": "0xFBBC98",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -364,16 +342,16 @@
         {
           "line": 41,
           "call": "Engine.Address",
-          "offset": 12807
+          "offset": 12767
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 15854,
-      "end": 15862,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 16205,
+      "end": 16213,
       "original_literal": "0xCEAFA8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -384,18 +362,18 @@
       ],
       "consumers": [
         {
-          "line": 47,
+          "line": 55,
           "call": "a.Engine.Address",
-          "offset": 15837
+          "offset": 16188
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 17930,
-      "end": 17938,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 18275,
+      "end": 18283,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -406,18 +384,18 @@
       ],
       "consumers": [
         {
-          "line": 53,
+          "line": 61,
           "call": "a.Engine.Address",
-          "offset": 17913
+          "offset": 18258
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 19581,
-      "end": 19589,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 19891,
+      "end": 19899,
       "original_literal": "0xD9041C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -428,18 +406,18 @@
       ],
       "consumers": [
         {
-          "line": 54,
+          "line": 62,
           "call": "a.Engine.Address",
-          "offset": 19564
+          "offset": 19874
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 25073,
-      "end": 25080,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 25375,
+      "end": 25382,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -450,18 +428,18 @@
       ],
       "consumers": [
         {
-          "line": 62,
+          "line": 70,
           "call": "api.Events.Properties.Pages.Slot",
-          "offset": 25026
+          "offset": 25328
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlEventEditing.v9.cs",
-      "source_sha256": "ae32750f389c433b59470c7c79451a592cb67713378045477cb8567f054b993c",
-      "start": 25129,
-      "end": 25136,
+      "source_sha256": "f00cf543789089a27b6b17173131f5c57f29b3c054aeacdd6248980f9576cde2",
+      "start": 25431,
+      "end": 25438,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -472,18 +450,18 @@
       ],
       "consumers": [
         {
-          "line": 62,
+          "line": 70,
           "call": "api.Events.Properties.Pages.Slot",
-          "offset": 25082
+          "offset": 25384
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlGeometryBatch.cs",
-      "source_sha256": "a47e2c570ad6642057f9639704026b3e598b502f8943de3d6f4db1034627715e",
-      "start": 5819,
-      "end": 5826,
+      "source_sha256": "44daa973ac36f5fc74e4e47c0339aaec4f52b19d12f2931f12d032c1619b5d42",
+      "start": 6239,
+      "end": 6246,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -494,18 +472,18 @@
       ],
       "consumers": [
         {
-          "line": 32,
+          "line": 38,
           "call": "api.Shared.Slot",
-          "offset": 5796
+          "offset": 6216
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlGeometryBatch.cs",
-      "source_sha256": "a47e2c570ad6642057f9639704026b3e598b502f8943de3d6f4db1034627715e",
-      "start": 7119,
-      "end": 7127,
+      "source_sha256": "44daa973ac36f5fc74e4e47c0339aaec4f52b19d12f2931f12d032c1619b5d42",
+      "start": 7539,
+      "end": 7547,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -516,18 +494,18 @@
       ],
       "consumers": [
         {
-          "line": 38,
+          "line": 44,
           "call": "api.Engine.Address",
-          "offset": 7100
+          "offset": 7520
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyBatch.cs",
-      "source_sha256": "422d1234a94ad769c13824f557c41fc5af9cc4d69739914fb48adfecf40694bc",
-      "start": 2662,
-      "end": 2670,
+      "source_sha256": "18a77b1e0dd42164b4f8b157c9a7683e03c96f093a18909cf9cd93455f49349b",
+      "start": 2637,
+      "end": 2645,
       "original_literal": "0x371140",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -540,38 +518,16 @@
         {
           "line": 26,
           "call": "api.Engine.Address",
-          "offset": 2643
+          "offset": 2618
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
-      "source_sha256": "0e916c1d34731679ce0bb11957396b93282fac93a3edce33f792aca346368861",
-      "start": 3764,
-      "end": 3772,
-      "original_literal": "0xD3FD70",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 13892976,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 33,
-          "call": "api.Engine.Address",
-          "offset": 3745
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativeControlPropertyEditing.cs",
-      "source_sha256": "0e916c1d34731679ce0bb11957396b93282fac93a3edce33f792aca346368861",
-      "start": 4943,
-      "end": 4951,
+      "source_sha256": "c49c1e90d6327ef937c99d579ec157f429f12a14580ab120e76355f0b1983d61",
+      "start": 5065,
+      "end": 5073,
       "original_literal": "0xD9041C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -582,9 +538,9 @@
       ],
       "consumers": [
         {
-          "line": 51,
+          "line": 53,
           "call": "api.Engine.Address",
-          "offset": 4924
+          "offset": 5046
         }
       ],
       "value_type": "int"
@@ -855,9 +811,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 11346,
-      "end": 11354,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 11526,
+      "end": 11534,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -868,18 +824,18 @@
       ],
       "consumers": [
         {
-          "line": 60,
+          "line": 61,
           "call": "Engine.Address",
-          "offset": 11331
+          "offset": 11511
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 13897,
-      "end": 13905,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 14196,
+      "end": 14204,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -890,18 +846,18 @@
       ],
       "consumers": [
         {
-          "line": 78,
+          "line": 79,
           "call": "Engine.Address",
-          "offset": 13882
+          "offset": 14181
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 16900,
-      "end": 16908,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 17199,
+      "end": 17207,
       "original_literal": "0xD9041C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -912,18 +868,18 @@
       ],
       "consumers": [
         {
-          "line": 90,
+          "line": 91,
           "call": "Engine.Address",
-          "offset": 16885
+          "offset": 17184
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 43860,
-      "end": 43868,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 29104,
+      "end": 29112,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -934,18 +890,62 @@
       ],
       "consumers": [
         {
-          "line": 408,
-          "call": "api.Engine.Address",
-          "offset": 43841
+          "line": 167,
+          "call": "engine.Address",
+          "offset": 29089
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 43950,
-      "end": 43957,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 41298,
+      "end": 41306,
+      "original_literal": "0xFB21F8",
+      "module": "editor",
+      "address_kind": "PE_RVA_literal",
+      "reference_rva": 16458232,
+      "status": "confirmed",
+      "proof": [
+        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
+      ],
+      "consumers": [
+        {
+          "line": 371,
+          "call": "Template.Engine.Address",
+          "offset": 41274
+        }
+      ],
+      "value_type": "int"
+    },
+    {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 51806,
+      "end": 51814,
+      "original_literal": "0xFB21F8",
+      "module": "editor",
+      "address_kind": "PE_RVA_literal",
+      "reference_rva": 16458232,
+      "status": "confirmed",
+      "proof": [
+        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
+      ],
+      "consumers": [
+        {
+          "line": 483,
+          "call": "api.Engine.Address",
+          "offset": 51787
+        }
+      ],
+      "value_type": "int"
+    },
+    {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 51896,
+      "end": 51903,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -956,18 +956,18 @@
       ],
       "consumers": [
         {
-          "line": 408,
+          "line": 483,
           "call": "api.Shared.Slot",
-          "offset": 43927
+          "offset": 51873
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 44004,
-      "end": 44011,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 51950,
+      "end": 51957,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -978,18 +978,18 @@
       ],
       "consumers": [
         {
-          "line": 408,
+          "line": 483,
           "call": "api.Shared.Slot",
-          "offset": 43959
+          "offset": 51905
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeCurrentTemplateControlOperations.cs",
-      "source_sha256": "b5ab907b887244157260023716a69b2b8ba371200db75a52cdb08a2c9d75943c",
-      "start": 45851,
-      "end": 45859,
+      "source_sha256": "57b25b440917db2cf8c65b4700dc751a95c22e6fbab74401328f6b603b2de09f",
+      "start": 53792,
+      "end": 53800,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -1000,9 +1000,9 @@
       ],
       "consumers": [
         {
-          "line": 414,
+          "line": 489,
           "call": "api.Engine.Address",
-          "offset": 45832
+          "offset": 53773
         }
       ],
       "value_type": "int"
@@ -1185,7 +1185,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeDomainProjectCheck.cs",
-      "source_sha256": "976619338a6c3940e7ea42224a456fb948426b60349819fb2ed656f58a14881e",
+      "source_sha256": "fcf6f7a18db1badbcc5a75db049fc1c37845a69eec4eda01b920f81af2c3e941",
       "start": 2978,
       "end": 2986,
       "original_literal": "0xFBB578",
@@ -1206,8 +1206,30 @@
       "value_type": "int"
     },
     {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringBatch.cs",
+      "source_sha256": "b57b022de243e4048db8199a018f6b4096fd1bd5ae86c630aaf1d60fc2df7449",
+      "start": 19671,
+      "end": 19679,
+      "original_literal": "0xFBB578",
+      "module": "editor",
+      "address_kind": "PE_RVA_literal",
+      "reference_rva": 16495992,
+      "status": "confirmed",
+      "proof": [
+        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
+      ],
+      "consumers": [
+        {
+          "line": 132,
+          "call": "engine.Address",
+          "offset": 19656
+        }
+      ],
+      "value_type": "int"
+    },
+    {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
-      "source_sha256": "95dda4017a07b9520bcd18d4a37b4084bbf20f825ec6543db2ee6c298a3f9983",
+      "source_sha256": "2026e843637ccfe759a5606be5bcf9bd25136a35ae09ebe268b48fdc895dea92",
       "start": 8469,
       "end": 8477,
       "original_literal": "0xFBB578",
@@ -1229,7 +1251,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeEngineeringDirectExecution.cs",
-      "source_sha256": "95dda4017a07b9520bcd18d4a37b4084bbf20f825ec6543db2ee6c298a3f9983",
+      "source_sha256": "2026e843637ccfe759a5606be5bcf9bd25136a35ae09ebe268b48fdc895dea92",
       "start": 8602,
       "end": 8610,
       "original_literal": "0xD57684",
@@ -3121,9 +3143,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
-      "source_sha256": "e0da44371a195102fa3f2148da12f72df8567fe7850a20fac9968089bd3dca6b",
-      "start": 18690,
-      "end": 18697,
+      "source_sha256": "2d99acd1b81ad2473cd4d23ff4af2641dc37650eb7f427441272cddca401013b",
+      "start": 25946,
+      "end": 25953,
       "original_literal": "0x3A3C8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3134,18 +3156,18 @@
       ],
       "consumers": [
         {
-          "line": 36,
+          "line": 164,
           "call": "api.Shared.Slot",
-          "offset": 18667
+          "offset": 25923
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
-      "source_sha256": "e0da44371a195102fa3f2148da12f72df8567fe7850a20fac9968089bd3dca6b",
-      "start": 18744,
-      "end": 18751,
+      "source_sha256": "2d99acd1b81ad2473cd4d23ff4af2641dc37650eb7f427441272cddca401013b",
+      "start": 26000,
+      "end": 26007,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3156,18 +3178,18 @@
       ],
       "consumers": [
         {
-          "line": 36,
+          "line": 164,
           "call": "api.Shared.Slot",
-          "offset": 18699
+          "offset": 25955
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeMulButtonVisualEditing.v2.cs",
-      "source_sha256": "e0da44371a195102fa3f2148da12f72df8567fe7850a20fac9968089bd3dca6b",
-      "start": 21615,
-      "end": 21623,
+      "source_sha256": "2d99acd1b81ad2473cd4d23ff4af2641dc37650eb7f427441272cddca401013b",
+      "start": 28871,
+      "end": 28879,
       "original_literal": "0xE1D40C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3178,9 +3200,9 @@
       ],
       "consumers": [
         {
-          "line": 37,
+          "line": 165,
           "call": "api.Engine.Address",
-          "offset": 21596
+          "offset": 28852
         }
       ],
       "value_type": "int"
@@ -3297,9 +3319,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "source_sha256": "2ae572eca8ccd94542bb96a26569e4a09617f058784d0917af55d65acb2243e5",
-      "start": 7784,
-      "end": 7792,
+      "source_sha256": "1680e77a4c3d58a113b18d4e4fce101b017ec73d028051d66fe049e10c5f2a01",
+      "start": 8055,
+      "end": 8063,
       "original_literal": "0xCEAFA8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3310,18 +3332,18 @@
       ],
       "consumers": [
         {
-          "line": 34,
+          "line": 36,
           "call": "e.Address",
-          "offset": 7774
+          "offset": 8045
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "source_sha256": "2ae572eca8ccd94542bb96a26569e4a09617f058784d0917af55d65acb2243e5",
-      "start": 14630,
-      "end": 14637,
+      "source_sha256": "1680e77a4c3d58a113b18d4e4fce101b017ec73d028051d66fe049e10c5f2a01",
+      "start": 45675,
+      "end": 45682,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3332,18 +3354,18 @@
       ],
       "consumers": [
         {
-          "line": 45,
+          "line": 568,
           "call": "api.Pages.Slot",
-          "offset": 14608
+          "offset": 45653
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "source_sha256": "2ae572eca8ccd94542bb96a26569e4a09617f058784d0917af55d65acb2243e5",
-      "start": 22948,
-      "end": 22955,
+      "source_sha256": "1680e77a4c3d58a113b18d4e4fce101b017ec73d028051d66fe049e10c5f2a01",
+      "start": 54448,
+      "end": 54455,
       "original_literal": "0x3CBE6",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3354,18 +3376,18 @@
       ],
       "consumers": [
         {
-          "line": 53,
+          "line": 576,
           "call": "api.Pages.Slot",
-          "offset": 22926
+          "offset": 54426
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "source_sha256": "2ae572eca8ccd94542bb96a26569e4a09617f058784d0917af55d65acb2243e5",
-      "start": 26658,
-      "end": 26665,
+      "source_sha256": "1680e77a4c3d58a113b18d4e4fce101b017ec73d028051d66fe049e10c5f2a01",
+      "start": 59187,
+      "end": 59194,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3376,18 +3398,18 @@
       ],
       "consumers": [
         {
-          "line": 54,
+          "line": 577,
           "call": "api.Pages.Slot",
-          "offset": 26636
+          "offset": 59165
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePageDocumentProperties.v3.cs",
-      "source_sha256": "2ae572eca8ccd94542bb96a26569e4a09617f058784d0917af55d65acb2243e5",
-      "start": 27068,
-      "end": 27074,
+      "source_sha256": "1680e77a4c3d58a113b18d4e4fce101b017ec73d028051d66fe049e10c5f2a01",
+      "start": 59597,
+      "end": 59603,
       "original_literal": "0x118B",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -3398,9 +3420,9 @@
       ],
       "consumers": [
         {
-          "line": 54,
+          "line": 577,
           "call": "api.Pages.Slot",
-          "offset": 27042
+          "offset": 59571
         }
       ],
       "value_type": "int"
@@ -4050,7 +4072,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
-      "source_sha256": "07343e52425d806bd765a1357f2e05fa2b1d6fdc68f54076dc9faf73a213590c",
+      "source_sha256": "cf79cbf1901f4ce1be8c97be03439e8a6e4abe546b6aa92841d5016a1f50ed21",
       "start": 8943,
       "end": 8951,
       "original_literal": "0xFBFF30",
@@ -4072,9 +4094,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResourceEditing.v5.cs",
-      "source_sha256": "07343e52425d806bd765a1357f2e05fa2b1d6fdc68f54076dc9faf73a213590c",
-      "start": 24509,
-      "end": 24517,
+      "source_sha256": "cf79cbf1901f4ce1be8c97be03439e8a6e4abe546b6aa92841d5016a1f50ed21",
+      "start": 24546,
+      "end": 24554,
       "original_literal": "0xFBFF30",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4087,16 +4109,16 @@
         {
           "line": 120,
           "call": "api.Raw.Engine.Address",
-          "offset": 24486
+          "offset": 24523
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureResources.v3.cs",
-      "source_sha256": "8fbf77dfcd2979eae36d7caab10af4a3cdb9aaccdda381d7d7661a63cdfe2adc",
-      "start": 7724,
-      "end": 7732,
+      "source_sha256": "ab197ec486a317f486d8f12f2104719b3f61367f093f2629d0eaf72eadce33d7",
+      "start": 7707,
+      "end": 7715,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4109,16 +4131,16 @@
         {
           "line": 18,
           "call": "Engine.Address",
-          "offset": 7709
+          "offset": 7692
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 5687,
-      "end": 5695,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 18303,
+      "end": 18311,
       "original_literal": "0xDED294",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4129,18 +4151,18 @@
       ],
       "consumers": [
         {
-          "line": 22,
+          "line": 251,
           "call": "raw.Engine.Address",
-          "offset": 5668
+          "offset": 18284
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 6351,
-      "end": 6359,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 19016,
+      "end": 19024,
       "original_literal": "0xDC4D94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4151,18 +4173,18 @@
       ],
       "consumers": [
         {
-          "line": 22,
+          "line": 260,
           "call": "raw.Engine.Address",
-          "offset": 6332
+          "offset": 18997
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 9918,
-      "end": 9926,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 25795,
+      "end": 25803,
       "original_literal": "0xFBFF30",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4173,18 +4195,18 @@
       ],
       "consumers": [
         {
-          "line": 27,
+          "line": 332,
           "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 9886
+          "offset": 25763
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 15260,
-      "end": 15268,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 33475,
+      "end": 33483,
       "original_literal": "0xFBFF30",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4195,40 +4217,18 @@
       ],
       "consumers": [
         {
-          "line": 38,
+          "line": 380,
           "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 15228
+          "offset": 33443
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 16992,
-      "end": 17000,
-      "original_literal": "0xD3FD70",
-      "module": "editor",
-      "address_kind": "PE_RVA_literal",
-      "reference_rva": 13892976,
-      "status": "confirmed",
-      "proof": [
-        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
-      ],
-      "consumers": [
-        {
-          "line": 45,
-          "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 16960
-        }
-      ],
-      "value_type": "int"
-    },
-    {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 21475,
-      "end": 21482,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 41111,
+      "end": 41118,
       "original_literal": "0x26337",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4239,18 +4239,18 @@
       ],
       "consumers": [
         {
-          "line": 48,
+          "line": 474,
           "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 21443
+          "offset": 41079
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 21564,
-      "end": 21571,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 41207,
+      "end": 41214,
       "original_literal": "0x48545",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4261,18 +4261,18 @@
       ],
       "consumers": [
         {
-          "line": 48,
+          "line": 475,
           "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 21532
+          "offset": 41175
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
-      "source_sha256": "74b54c6b185ee8d1f4a6f3a9ec529fcdc35dc3112b91513bc9407d52a5a0b1ef",
-      "start": 21654,
-      "end": 21660,
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 41304,
+      "end": 41310,
       "original_literal": "0x97BE",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4283,18 +4283,18 @@
       ],
       "consumers": [
         {
-          "line": 48,
+          "line": 476,
           "call": "api.Pictures.Raw.Engine.Address",
-          "offset": 21622
+          "offset": 41272
         }
       ],
       "value_type": "int"
     },
     {
-      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedDrawingCommands.cs",
-      "source_sha256": "024a3581cabb1a6f2cf87eac7aa36154208291ade1ecc0065b60cc2d4df40fbb",
-      "start": 2893,
-      "end": 2901,
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativePictureVectorCreation.cs",
+      "source_sha256": "d1f5b0e376217135a33c8563637267007c8382ff14a93d469026fb30fc7408f3",
+      "start": 42784,
+      "end": 42792,
       "original_literal": "0xD3FD70",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4305,18 +4305,40 @@
       ],
       "consumers": [
         {
-          "line": 11,
-          "call": "api.Engine.Address",
-          "offset": 2874
+          "line": 492,
+          "call": "api.Pictures.Raw.Engine.Address",
+          "offset": 42752
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedDrawingCommands.cs",
-      "source_sha256": "024a3581cabb1a6f2cf87eac7aa36154208291ade1ecc0065b60cc2d4df40fbb",
-      "start": 9533,
-      "end": 9540,
+      "source_sha256": "d6df3cd0d08da328e68a8fde039566cd57e10e58d31b98699c8cb83bf09ce748",
+      "start": 4638,
+      "end": 4646,
+      "original_literal": "0xD3FD70",
+      "module": "editor",
+      "address_kind": "PE_RVA_literal",
+      "reference_rva": 13892976,
+      "status": "confirmed",
+      "proof": [
+        "Literal/constant consumed by the known NativeEngine.Address RVA boundary"
+      ],
+      "consumers": [
+        {
+          "line": 47,
+          "call": "api.Engine.Address",
+          "offset": 4619
+        }
+      ],
+      "value_type": "int"
+    },
+    {
+      "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedDrawingCommands.cs",
+      "source_sha256": "d6df3cd0d08da328e68a8fde039566cd57e10e58d31b98699c8cb83bf09ce748",
+      "start": 11287,
+      "end": 11294,
       "original_literal": "0x21733",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4327,9 +4349,9 @@
       ],
       "consumers": [
         {
-          "line": 20,
+          "line": 56,
           "call": "api.Shared.Slot",
-          "offset": 9488
+          "offset": 11242
         }
       ],
       "value_type": "int"
@@ -4561,7 +4583,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2558,
       "end": 2566,
       "original_literal": "0xD72D8C",
@@ -4583,7 +4605,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2567,
       "end": 2575,
       "original_literal": "0xD72EC4",
@@ -4605,7 +4627,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2589,
       "end": 2596,
       "original_literal": "0x459F8",
@@ -4627,7 +4649,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2644,
       "end": 2652,
       "original_literal": "0xD5DE6C",
@@ -4649,7 +4671,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2653,
       "end": 2661,
       "original_literal": "0xD5DFB4",
@@ -4671,7 +4693,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2674,
       "end": 2681,
       "original_literal": "0x24B63",
@@ -4693,7 +4715,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2682,
       "end": 2689,
       "original_literal": "0x50E93",
@@ -4715,7 +4737,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2733,
       "end": 2741,
       "original_literal": "0xD63CB4",
@@ -4737,7 +4759,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2742,
       "end": 2750,
       "original_literal": "0xD63DFC",
@@ -4759,7 +4781,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2762,
       "end": 2769,
       "original_literal": "0x24B63",
@@ -4781,7 +4803,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 2770,
       "end": 2777,
       "original_literal": "0x4B73B",
@@ -4803,7 +4825,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 4159,
       "end": 4166,
       "original_literal": "0x46CCC",
@@ -4825,7 +4847,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 4185,
       "end": 4191,
       "original_literal": "0x1ACD",
@@ -4847,7 +4869,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 4265,
       "end": 4272,
       "original_literal": "0x3EF27",
@@ -4869,7 +4891,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 4327,
       "end": 4334,
       "original_literal": "0x3B895",
@@ -4891,7 +4913,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 12306,
       "end": 12314,
       "original_literal": "0xFB21F8",
@@ -4913,7 +4935,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 13135,
       "end": 13142,
       "original_literal": "0x3A3C8",
@@ -4935,7 +4957,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
       "start": 13182,
       "end": 13189,
       "original_literal": "0x21733",
@@ -4957,9 +4979,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativePreparedStandardControlOperations.cs",
-      "source_sha256": "8ad063cd700e788f684973c19167a44cba588c7e05556bcdf1493b38e81526e9",
-      "start": 16436,
-      "end": 16444,
+      "source_sha256": "9dbc1170bb2bc038ae5d7e9e39fd3833c281967b423d1596b24d1e1aba542561",
+      "start": 16431,
+      "end": 16439,
       "original_literal": "0xFB21F8",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -4972,7 +4994,7 @@
         {
           "line": 81,
           "call": "api.Engine.Address",
-          "offset": 16417
+          "offset": 16412
         }
       ],
       "value_type": "int"
@@ -5244,7 +5266,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
-      "source_sha256": "53484445776de366778a2d8dc8df920881b2929e87270e414e90eb408ec20d8a",
+      "source_sha256": "127c7833475347bdc5709bd05e79ff079922a1c010c28333ddd6a100a0d4b662",
       "start": 4485,
       "end": 4493,
       "original_literal": "0xDED294",
@@ -5266,7 +5288,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
-      "source_sha256": "53484445776de366778a2d8dc8df920881b2929e87270e414e90eb408ec20d8a",
+      "source_sha256": "127c7833475347bdc5709bd05e79ff079922a1c010c28333ddd6a100a0d4b662",
       "start": 4547,
       "end": 4555,
       "original_literal": "0xDC4D94",
@@ -5288,7 +5310,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferenceSynchronization.cs",
-      "source_sha256": "53484445776de366778a2d8dc8df920881b2929e87270e414e90eb408ec20d8a",
+      "source_sha256": "127c7833475347bdc5709bd05e79ff079922a1c010c28333ddd6a100a0d4b662",
       "start": 7220,
       "end": 7228,
       "original_literal": "0xCEAFA8",
@@ -5310,9 +5332,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedObjectRename.cs",
-      "source_sha256": "95e9e5073a35904d2e4298c909e0741338c2dbc40234d85f07b4bbd135234706",
-      "start": 8778,
-      "end": 8785,
+      "source_sha256": "7417e087619c20e66af2f5909718d0e0cff0d8bdce3ba65c38df20f654fffe47",
+      "start": 9824,
+      "end": 9831,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5323,18 +5345,18 @@
       ],
       "consumers": [
         {
-          "line": 20,
+          "line": 61,
           "call": "api.Shared.Slot",
-          "offset": 8741
+          "offset": 9787
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedObjectRename.cs",
-      "source_sha256": "95e9e5073a35904d2e4298c909e0741338c2dbc40234d85f07b4bbd135234706",
-      "start": 8862,
-      "end": 8868,
+      "source_sha256": "7417e087619c20e66af2f5909718d0e0cff0d8bdce3ba65c38df20f654fffe47",
+      "start": 9908,
+      "end": 9914,
       "original_literal": "0x118B",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5345,18 +5367,18 @@
       ],
       "consumers": [
         {
-          "line": 20,
+          "line": 61,
           "call": "api.Shared.Slot",
-          "offset": 8825
+          "offset": 9871
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedObjectRename.cs",
-      "source_sha256": "95e9e5073a35904d2e4298c909e0741338c2dbc40234d85f07b4bbd135234706",
-      "start": 17912,
-      "end": 17919,
+      "source_sha256": "7417e087619c20e66af2f5909718d0e0cff0d8bdce3ba65c38df20f654fffe47",
+      "start": 21007,
+      "end": 21014,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5367,16 +5389,16 @@
       ],
       "consumers": [
         {
-          "line": 30,
+          "line": 103,
           "call": "api.Shared.Slot",
-          "offset": 17878
+          "offset": 20973
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
       "start": 4473,
       "end": 4481,
       "original_literal": "0xDC2EC4",
@@ -5398,7 +5420,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
       "start": 4726,
       "end": 4733,
       "original_literal": "0x17355",
@@ -5420,9 +5442,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 5837,
-      "end": 5845,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 5685,
+      "end": 5693,
       "original_literal": "0xDDB24C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5433,18 +5455,18 @@
       ],
       "consumers": [
         {
-          "line": 36,
+          "line": 39,
           "call": "Engine.Address",
-          "offset": 5822
+          "offset": 5670
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 6184,
-      "end": 6190,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 6758,
+      "end": 6764,
       "original_literal": "0x118B",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5455,18 +5477,18 @@
       ],
       "consumers": [
         {
-          "line": 36,
+          "line": 54,
           "call": "Shared.Slot",
-          "offset": 6165
+          "offset": 6739
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 16164,
-      "end": 16172,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 16755,
+      "end": 16763,
       "original_literal": "0xD5DE6C",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5477,18 +5499,18 @@
       ],
       "consumers": [
         {
-          "line": 53,
+          "line": 74,
           "call": "api.Engine.Address",
-          "offset": 16145
+          "offset": 16736
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 16220,
-      "end": 16228,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 16811,
+      "end": 16819,
       "original_literal": "0xD5DFB4",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5499,18 +5521,18 @@
       ],
       "consumers": [
         {
-          "line": 53,
+          "line": 74,
           "call": "api.Engine.Address",
-          "offset": 16201
+          "offset": 16792
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 25007,
-      "end": 25015,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 25712,
+      "end": 25720,
       "original_literal": "0xDC4D94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5521,18 +5543,18 @@
       ],
       "consumers": [
         {
-          "line": 68,
+          "line": 89,
           "call": "api.Engine.Address",
-          "offset": 24988
+          "offset": 25693
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 25093,
-      "end": 25100,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 25798,
+      "end": 25805,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5543,18 +5565,18 @@
       ],
       "consumers": [
         {
-          "line": 68,
+          "line": 89,
           "call": "api.Shared.Slot",
-          "offset": 25056
+          "offset": 25761
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 25179,
-      "end": 25185,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 25884,
+      "end": 25890,
       "original_literal": "0x118B",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5565,18 +5587,18 @@
       ],
       "consumers": [
         {
-          "line": 68,
+          "line": 89,
           "call": "api.Shared.Slot",
-          "offset": 25142
+          "offset": 25847
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 35262,
-      "end": 35270,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 35967,
+      "end": 35975,
       "original_literal": "0xDC4D94",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5587,18 +5609,18 @@
       ],
       "consumers": [
         {
-          "line": 79,
+          "line": 100,
           "call": "api.Engine.Address",
-          "offset": 35243
+          "offset": 35948
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeReferencedPageEditing.cs",
-      "source_sha256": "39e1d15a747d08c4968b2c9c66b87ede08b69829c9a7f3f9d7620f718768ab8f",
-      "start": 35470,
-      "end": 35477,
+      "source_sha256": "be8f358db7acb6d81ba34772c07a753814cea0a4b0875c81469c7eb16279b610",
+      "start": 36175,
+      "end": 36182,
       "original_literal": "0x23308",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -5609,9 +5631,9 @@
       ],
       "consumers": [
         {
-          "line": 79,
+          "line": 100,
           "call": "api.Shared.Slot",
-          "offset": 35433
+          "offset": 36138
         }
       ],
       "value_type": "int"
@@ -6819,9 +6841,9 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "source_sha256": "0b8acb02b4efe9cf44b4aae8dbdd2cdb3455206c21ec07d1aa4754249b672666",
-      "start": 5230,
-      "end": 5237,
+      "source_sha256": "637f2aa8c273cb9e233fe4657428c4e05fde2808654a3193b130694f6a57c2d6",
+      "start": 5788,
+      "end": 5795,
       "original_literal": "0x65570",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -6832,18 +6854,18 @@
       ],
       "consumers": [
         {
-          "line": 116,
+          "line": 125,
           "call": "Extra",
-          "offset": 5208
+          "offset": 5766
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "source_sha256": "0b8acb02b4efe9cf44b4aae8dbdd2cdb3455206c21ec07d1aa4754249b672666",
-      "start": 5299,
-      "end": 5306,
+      "source_sha256": "637f2aa8c273cb9e233fe4657428c4e05fde2808654a3193b130694f6a57c2d6",
+      "start": 5857,
+      "end": 5864,
       "original_literal": "0x655B0",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -6854,18 +6876,18 @@
       ],
       "consumers": [
         {
-          "line": 116,
+          "line": 125,
           "call": "Extra",
-          "offset": 5277
+          "offset": 5835
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "source_sha256": "0b8acb02b4efe9cf44b4aae8dbdd2cdb3455206c21ec07d1aa4754249b672666",
-      "start": 5372,
-      "end": 5379,
+      "source_sha256": "637f2aa8c273cb9e233fe4657428c4e05fde2808654a3193b130694f6a57c2d6",
+      "start": 5930,
+      "end": 5937,
       "original_literal": "0x656D0",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -6876,18 +6898,18 @@
       ],
       "consumers": [
         {
-          "line": 116,
+          "line": 125,
           "call": "Extra",
-          "offset": 5348
+          "offset": 5906
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "source_sha256": "0b8acb02b4efe9cf44b4aae8dbdd2cdb3455206c21ec07d1aa4754249b672666",
-      "start": 5443,
-      "end": 5450,
+      "source_sha256": "637f2aa8c273cb9e233fe4657428c4e05fde2808654a3193b130694f6a57c2d6",
+      "start": 6001,
+      "end": 6008,
       "original_literal": "0x656A0",
       "module": "editor",
       "address_kind": "PE_RVA_literal",
@@ -6898,18 +6920,18 @@
       ],
       "consumers": [
         {
-          "line": 116,
+          "line": 125,
           "call": "Extra",
-          "offset": 5420
+          "offset": 5978
         }
       ],
       "value_type": "int"
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "source_sha256": "0b8acb02b4efe9cf44b4aae8dbdd2cdb3455206c21ec07d1aa4754249b672666",
-      "start": 13522,
-      "end": 13529,
+      "source_sha256": "637f2aa8c273cb9e233fe4657428c4e05fde2808654a3193b130694f6a57c2d6",
+      "start": 18868,
+      "end": 18875,
       "original_literal": "0x375F8",
       "module": "mfc",
       "address_kind": "PE_RVA_literal",
@@ -6920,9 +6942,9 @@
       ],
       "consumers": [
         {
-          "line": 207,
+          "line": 302,
           "call": "NativeMemory.Add",
-          "offset": 13497
+          "offset": 18843
         }
       ],
       "value_type": "int"
@@ -11929,7 +11951,7 @@
     },
     {
       "source": "assets/pro-native-bridge/delivery/source/sources/NativeStrategyTriggerContextEditing.cs",
-      "line": 136,
+      "line": 145,
       "call": "NativeMemory.Add",
       "base": "S(f,\"module\")==\"mfc110u.dll\"?Mfc:Engine.ImageBase",
       "reason": "Variable/parameter module ownership not proven by local syntax"

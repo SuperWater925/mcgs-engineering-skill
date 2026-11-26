@@ -131,10 +131,16 @@ namespace McgsInternalBridge {
     api=a;action=request;NativeMemory.Require(Convert.ToString(request["kind"])==BatchKind&&Convert.ToString(request["abi_profile_sha256"])==AbiProfileSha,"Property batch kind/ABI differs.");
     var clock=Stopwatch.StartNew();direct=captured!=null;before=captured??CaptureBatch(api,action);NativePageControlPreparation.Before(action,before.Snapshot);preservationPage=before.PageState;timings[direct?"reuse_direct_baseline":"baseline_capture"]=clock.Elapsed.TotalMilliseconds;clock.Restart();
     var finalValues=new Dictionary<Tuple<IntPtr,string,string,int,int>,object>();foreach(var selected in before.Controls)StoreExpectedValues(finalValues,selected,selected.Values);
+    HashSet<string> namedBitmaps=null;
     try{for(int i=0;i<before.Controls.Count;i++){
      var item=new BatchItem{Before=before.Controls[i],Expected=CloneRows(before.Controls[i].Values)};items.Add(item);
-     ReadExpectedValues(finalValues,item.Before,item.Expected);var writes=BatchWrites(item.Before,before.Requests[i],item.Expected);var pairedRequest=new Dictionary<string,object>(before.Requests[i]);pairedRequest["properties"]=writes;PairedBasicExpected(api,item.Before,pairedRequest,item.Expected);StoreExpectedValues(finalValues,item.Before,item.Expected);if(writes.Count>0){item.Set=NativePropertyTarget.Bind<Setter>(api.Engine,item.Before.Selected,true);item.Dispatcher=new NativeTypedPropertyDispatcher(api.Common.Shared,writes);setterCount++;}
-    }foreach(var item in items)ReadExpectedValues(finalValues,item.Before,item.Expected);}catch{Dispose();throw;}
+     ReadExpectedValues(finalValues,item.Before,item.Expected);var writes=BatchWrites(item.Before,before.Requests[i],item.Expected);
+     namedBitmaps=CollectNamedBitmapBackgrounds(api,item.Before,writes,namedBitmaps);
+     var pairedRequest=new Dictionary<string,object>(before.Requests[i]);pairedRequest["properties"]=writes;PairedBasicExpected(api,item.Before,pairedRequest,item.Expected);StoreExpectedValues(finalValues,item.Before,item.Expected);if(writes.Count>0){item.Set=NativePropertyTarget.Bind<Setter>(api.Engine,item.Before.Selected,true);item.Dispatcher=new NativeTypedPropertyDispatcher(api.Common.Shared,writes);setterCount++;}
+    }
+     NativePictureResources.RequireNamedPictures(api.Engine,api.Context,api.Project,namedBitmaps);
+     foreach(var item in items)ReadExpectedValues(finalValues,item.Before,item.Expected);
+    }catch{Dispose();throw;}
     timings["prepare_setters"]=clock.Elapsed.TotalMilliseconds;if(setterCount>0){rootDirty=api.Common.Shared.Bind<VI>("RootSetModified");docDirty=api.Common.Bind<VI>("standard","DocSetModified");if(before.View!=IntPtr.Zero){notify=api.Bind<BeforeModify>("DocBeforeModify");invalidate=api.Bind<VI>("InvalidateView");update=api.Bind<V0>("UpdateView");}}
    }
    internal void ValidateBefore(){NativeMemory.Require(!disposed&&!applied,"Property batch is disposed/already entered.");var clock=Stopwatch.StartNew();NativePageControlPreparation.Same(before.Snapshot,CaptureBatch(api,action).Snapshot,"Property batch preimage changed after preparation.");timings["prewrite_read"]=clock.Elapsed.TotalMilliseconds;}

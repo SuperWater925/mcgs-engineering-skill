@@ -719,6 +719,15 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
             raise ValueError("Editor, UI thread or project changed during the session")
 
     try:
+        contracts = set().union(*(required_features(step["specification"]) for step in program["steps"]))
+        if contracts:
+            phase = "inspect-feature-contracts"
+            status["rpc_count"] += 1
+            capability = batch.submit({"op": "engineering-edit-inspect", "expected_project": program["project_path"],
+                                       "capability_only": True}, "eng_" + manifest["session_id"] + "_features", timeout)
+            journal("native-feature-contracts", capability)
+            verify_features(contracts, capability)
+            check_identity(capability)
         index = 0
         while index < len(program["steps"]):
             active_step = program["steps"][index]["step_id"]
@@ -847,7 +856,7 @@ def run_direct_program(program, manifest, directory, timeout, merge_steps=True, 
         status.update(ok=True, status="engineering-program-completed-acceptance-remains-separate")
     except Exception as error:
         status.update(error_type=type(error).__name__, error=str(error), failed_step=active_step,
-            phase=phase, execution_may_be_partial=True)
+            phase=phase, execution_may_be_partial=phase != "inspect-feature-contracts")
         if phase == "split-direct-response":
             unresolved = []
             for member in members:
@@ -1017,10 +1026,30 @@ def native_references(value):
             yield from native_references(child)
 
 
+def required_features(specification):
+    features = specification.get("required_features", [])
+    if (not isinstance(features, list)
+            or any(not isinstance(value, str) or not re.fullmatch(r"[a-z][a-z0-9-]*/v[1-9][0-9]*", value)
+                   for value in features) or len(set(features)) != len(features)):
+        raise ValueError("required_features must contain distinct native feature contracts")
+    if "design_preflight" in specification and "plan-design-preflight/v1" not in features:
+        raise ValueError("A design preflight requires its native feature contract")
+    return set(features)
+
+
+def verify_features(required, receipt):
+    missing = sorted(set(required) - set(receipt.get("features", [])))
+    if receipt.get("ok") is not True or missing:
+        raise ValueError("The loaded engine lacks required page-plan features: " + ", ".join(missing) +
+                         "; select the matching engine with prepare-online/turnkey and recapture. "
+                         "This is an operation contract, not a Pro version requirement")
+
+
 def validate_spec(specification, read_only=False, prior_native_ids=()):
     require_json_value(specification)
     if not isinstance(specification, dict):
         raise ValueError("Each step needs a specification object")
+    required_features(specification)
     actions = specification.get("actions")
     if not isinstance(actions, list) or not actions:
         raise ValueError("Each step needs a nonempty engineering action list")
@@ -1150,6 +1179,8 @@ def run(directory, timeout, legacy_permits=False, merge_steps=True, max_merged_a
         raise ValueError("max merged actions must be a positive integer merge budget")
     if type(prepare_workers) is not int or prepare_workers < 0 or type(io_workers) is not int or io_workers < 1:
         raise ValueError("prepare workers must be nonnegative and IO workers positive")
+    if legacy_permits and any("design_preflight" in step["specification"] for step in program["steps"]):
+        raise ValueError("Page plans require direct execution so design preflight and first mutation share one native call")
     # This durable claim is never cleared, including after timeout or failure.
     batch.write_new(directory / ("execution-claim.json" if legacy_permits else "execution-start.json"), {"schema": 1,
         "session_id": manifest["session_id"], "manifest_sha256": manifest_sha,

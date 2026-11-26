@@ -10,6 +10,12 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
+本地新版统一了 Stu 和 Pro 的工程工厂。Stu 可用 `create` 新建空白或模板工程。两款可用 `edit` 加变量、页面、基础图元、默认历史曲线和存盘浏览，并共用离线动画编辑。Pro 在线动画计划支持从当前回执编排增删和排序，保留未改动画的原对象。[离线工厂](references/offline-factories.md) · [离线动画](references/offline-animation-edits.md) · [在线动画](references/pro-animation-editing.md)
+
+2026-11-17 本地待审核更新补齐前轮复查的 15 项遗漏及 2 项条件风险：计划前像、实例关联、组内顺序、克隆资格、依赖闭包、批次回执和旧引擎能力均按实际合同核对；同时补全自动发现、入口运行时、旧备份迁移、启动器退出码和离线 CI。此更新尚未发布，不代表上方下载链接已含这些改动。范围与本地交付流程见[本地审核更新](references/local-review-delivery.md)。
+
+离线另增已有多状态控件的状态颜色、文字/字体/图片槽，以及现有原生图库的有限编辑。VECT/CDrawCell 保持原分配和非目标子元件；已识别的 BMP/PNG/JPEG 可替换内容，保留图库名称及身份。共用源 SHA、前指纹和事务提交守卫，详细字段及影响范围见[状态与图库编辑](references/state-resource-edits.md)。纯回归与本轮原厂验收分别记录，不能把既有同版本验证外推为本次通过。
+
 首次使用推荐[完整整合包下载](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest)，按[开箱配置说明](references/turnkey-start-zh.md)运行：统一便携运行时、预编译自有在线引擎/热接桥，以及单独许可的完整 Pro/Stu 安装介质。已安装源码技能（包括 WorkBuddy）可直接运行 `run.ps1 turnkey fetch-bundle` 自动获取；`inventory` 无需完整包，`setup/prepare-online` 缺包时自动获取，不要求 skills 上级目录存在 bundle.json，不退回重建引擎。软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。完整介质仅随 Release 完整附件提供；源码技能 ZIP 本身不含编译后的引擎和运行时。
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
@@ -25,9 +31,12 @@
 | 共享快照、安全导出、全表指纹、比较 | 共用主入口 | 共用主入口 |
 | 现有行的受限 BLOB 更新 | 源 SHA、字段前指纹、白名单、事务与提交复读 | 同左 |
 | 已有文字、输入框、标准按钮等控件修改 | `controls`，支持组内路径及控件前指纹 | 同左，按真实结构适配 |
+| 多状态控件的状态、图文子项和按钮图片槽 | `controls` 可修改已识别槽位，并按适配结构增删或重排状态和子项 | 同左，保留动作、绑定与未列字段 |
+| 已有原生图库的有限编辑 | `resources`，VECT 子元件及已识别光栅资源 | 同左；可与控件修改共用 `batch-edit` |
 | 已有策略源码、配方单元格 | `strategy-source` / `recipe-cell` | 同左，保留双容器与封套 |
 | 已测历史输入框长度异常 | 显式 `normalize-inputs`，只读不自动修复 | 同左 |
-| 基础 JSON 工程、变量、控件创建与编辑 | 无空白工程工厂 | `create` / `edit` / `demo`；含原生按钮、数值/字符输入与显示 |
+| 基础 JSON 工程、变量、控件创建与编辑 | `create` / `edit`，可新建空白或指定模板 | 同一 `create` / `edit` 入口，另有 Pro `demo` |
+| 原生动画列表 | `audit` / `controls` | 离线共用；在线有 `native-animation-plan` |
 | 模板新页、克隆页及事件 | 共享 `new_window/clone_window`、`new-window` | 同左；JSON `add_pages/events` |
 | 模板控件工厂、样式、预览、文字检查、受限新增窗口 | 共用 `tools/` 工具链 | 已接 Pro 变量、封套、模板及受限事务；未知厂商控件保留 |
 | 已打开工程的原生页面、控件、策略、数据库、配方、设备和资源编辑 | 本版不提供在线入口 | `native-engineering`，按已闭合 ABI 与实际产品能力执行 |
@@ -83,7 +92,7 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 - Windows、PowerShell 7、Python 3.11+。
 - 离线数据库读写需要与 PowerShell 位数匹配的 Microsoft ACE OLEDB 16.0 或 12.0；优先 16.0，实际失败再试 12.0。纯在线组态无需先安装 ACE。
 - Pro 新建数据库另需同位数 `ADOX.Catalog`，不再使用独立 32 位 PowerShell 5.1 / Jet OLEDB 环境。
-- 离线核心命令无 pip 依赖；在线准备的动态函数定位使用同一 Python 中的 Capstone，依赖见 `assets/pro-native-bridge/abi-adapter/requirements.txt`。已准备好的桥的普通请求无需重复定位。Stu/Pro 离线预览和文字宽度工具另需 Pillow，SVG 预览可选 Node.js / sharp。
+- 离线数据库与基础归档命令无 pip 依赖；图片内容验证/替换、离线预览和文字宽度工具需 Pillow。在线准备的动态函数定位使用同一 Python 中的 Capstone，依赖见 `assets/pro-native-bridge/abi-adapter/requirements.txt`。已准备好的桥的普通请求无需重复定位。离线回归依赖统一列于 `scripts/requirements-tests.txt`；SVG 预览可选 Node.js / sharp。
 - 原厂 McgsStu / McgsPro、驱动、控件和字体用于最终验证，由使用者安装。
 
 `assets/pro-3.5-cli/` 仅保留兼容路径及模板来源，不是版本门槛，也不再注册第二个技能。详见[环境说明](references/environment-and-tools.md)。

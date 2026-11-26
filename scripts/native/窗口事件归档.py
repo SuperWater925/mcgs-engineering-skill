@@ -10,6 +10,7 @@ import struct
 from mcs_window_archive import Reader, WindowArchive, write_cstring, write_count, FormatError
 
 目录 = Path(__file__).resolve().parent
+STU_COMMON_WINDOW_LAYERS = ('bottom', 'middle', 'top')
 
 
 @dataclass
@@ -53,6 +54,47 @@ class 窗口事件:
             缓存编码.append(计数 + 内容)
         return (编码[0] + 编码[1] + struct.pack('<I', self.周期毫秒) + 编码[2]
                 + self.保留整数 + b''.join(编码[3:]) + b''.join(缓存编码) + self.扩展)
+
+
+def _公共窗口槽位置(原事件尾: bytes) -> tuple[int, int]:
+    事件 = 窗口事件.解析(原事件尾)
+    if 事件.序列化() != 原事件尾:
+        raise FormatError('Window event tail does not round-trip')
+    扩展 = 事件.扩展
+    位置 = len(原事件尾) - len(扩展) + 8
+    if len(扩展) == 84 and 扩展.startswith(b'\x04\0\0\0\0\0\x0e\0'):
+        # Stu C0DocUser writes bottom/middle/top as its +240/+248/+250
+        # fields in order. Other products with this envelope still get
+        # physical reference checks without assigning additional roles.
+        return 位置, 3
+    if len(扩展) == 16 and 扩展.startswith(b'\x04\0\0\0\0\0\x06\0') and 扩展[12:] == bytes(4):
+        return 位置, 1
+    raise FormatError('Unrecognized public-window record layout')
+
+
+def 读取公共窗口槽(原事件尾: bytes) -> tuple[int, ...]:
+    """Read the archived reference IDs in wire order, including empty slots."""
+    位置, 数量 = _公共窗口槽位置(原事件尾)
+    return struct.unpack_from(f'<{数量}i', 原事件尾, 位置)
+
+
+def 改选公共窗口(原事件尾: bytes, 原编号: int, 新编号: int, *, 层级: str | None = None) -> bytes:
+    """Retarget one verified slot and preserve the other slots verbatim."""
+    if type(新编号) is not int or not (新编号 == -1 or 0 < 新编号 <= 0x7fffffff):
+        raise ValueError('Expected an Int32 public-window ID or the native empty marker')
+    位置, 数量 = _公共窗口槽位置(原事件尾)
+    编号 = struct.unpack_from(f'<{数量}i', 原事件尾, 位置)
+    索引 = 0
+    if 层级 is not None:
+        if 数量 != len(STU_COMMON_WINDOW_LAYERS) or 层级 not in STU_COMMON_WINDOW_LAYERS:
+            raise ValueError('Public-window layer requires a verified Stu three-slot layout and bottom, middle or top')
+        索引 = STU_COMMON_WINDOW_LAYERS.index(层级)
+    if 编号[索引] != 原编号:
+        raise ValueError('Current public-window ID differs from the source selection')
+    if 层级 is not None and 新编号 != -1 and 新编号 != 原编号 and 新编号 in 编号:
+        raise ValueError('The selected public window already occupies another layer')
+    位置 += 索引 * 4
+    return 原事件尾[:位置] + struct.pack('<i', 新编号) + 原事件尾[位置 + 4:]
 
 
 def 设置窗口事件(原事件尾: bytes, 打开脚本='', 循环脚本='', 退出脚本='', 周期毫秒=100):

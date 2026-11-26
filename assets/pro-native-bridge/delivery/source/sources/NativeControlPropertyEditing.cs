@@ -12,10 +12,11 @@ namespace McgsInternalBridge {
   [UnmanagedFunctionPointer(CallingConvention.ThisCall)][return:MarshalAs(UnmanagedType.I1)]delegate bool SaveData(IntPtr service,IntPtr page);
   [DllImport("user32.dll")][return:MarshalAs(UnmanagedType.Bool)]static extern bool IsWindow(IntPtr hwnd);
   internal sealed class Api {
-   internal readonly NativePageControlAbi Common;internal readonly NativeEngine Engine;internal readonly NativeContext Context;
-   readonly NativeLazyFunctionProfile methods;
+   internal readonly NativePageControlAbi Common;internal readonly NativeEngine Engine;internal readonly NativeContext Context;internal readonly string Project;
+   readonly NativeLazyFunctionProfile methods;NativeCurrentTemplateControlOperations.Api groups;
+   internal NativeCurrentTemplateControlOperations.Api Groups{get{return groups??(groups=new NativeCurrentTemplateControlOperations.Api(Engine,Context,NativeEngineeringProjectScope.ExpectedProjectPath));}}
    internal Api(NativeEngine engine,NativeContext context,string project) {
-    Engine=engine;Context=context;Common=new NativePageControlAbi(engine,context,project);
+    Engine=engine;Context=context;Project=project;Common=new NativePageControlAbi(engine,context,project);
     string file=Path.Combine(NativeUsableEditPermit.DirectoryRoot,"typed-properties","control-properties-abi-profile.json");
     NativeMemory.Require(NativeLazyFunctionProfile.SourceHash(file)==AbiProfileSha,"Control property ABI contract changed.");
     var contract=ReadJson(file);NativeMemory.Require(NativeBinaryIdentity.Observe(Convert.ToString(contract["binary_sha256"]),engine.ImageSha256,"NativeControlPropertyEditing:21:editor"),"Control property ABI belongs to another installed image.");
@@ -29,8 +30,9 @@ namespace McgsInternalBridge {
   static Dictionary<string,object> Map(object value){return NativePageControlPreparation.Map(value);}
   static List<Dictionary<string,object>> CloneRows(List<Dictionary<string,object>> rows){return new JavaScriptSerializer{MaxJsonLength=16*1024*1024}.Deserialize<List<Dictionary<string,object>>>(NativePageControlPreparation.Json(rows));}
   static List<IntPtr> GroupChildren(Api api,IntPtr complete,IntPtr doc) {
-   int type=NativeMemory.I32(complete,NativeLayout.Offset("control.type_id"));NativeMemory.Require(type==0x503A||type==0x5039,"Only actual CDrawUnit/CDrawCell containers carry this verified child-list layout.");
-   return NativeDynamicCollections.ReadDrawList(NativeMemory.Add(complete,0xE4),doc,api.Engine.Address(0xD3FD70));
+   var group=api.Groups.Type(complete);
+   NativeMemory.Require(group.GroupOffset>0,"Current class has no resolved group child-list layout.");
+   return api.Groups.Children(group,complete,doc);
   }
   static readonly IntPtr[] EmptyOwnerChildren=new IntPtr[0];
   static IEnumerable<IntPtr> IdentityChildren(Api api,IntPtr full,IntPtr doc){
@@ -61,9 +63,12 @@ namespace McgsInternalBridge {
     var pathObjects=new HashSet<uint>();for(int i=0;i<path.Count;i++){NativeMemory.Require(path[i]>=0&&path[i]<current.Count,"Control path is outside current native ownership list.");full=current[path[i]];NativeMemory.Require(pathObjects.Add(NativeMemory.U(full)),"Control path repeats a native owner-tree object.");if(i+1<path.Count)current=GroupChildren(api,full,doc);}
    }else if(target.TryGetValue("complete",out raw)){
     NativeMemory.Require(target.ContainsKey("native_id"),"Property target without a path needs its complete address and native ID.");
-    var identities=batch==null?PropertyOwnerIndex(api,current,doc):batch.OwnerIdentities(api);
     full=new IntPtr(NativeEngine.Number(raw));
-    NativeMemory.Require(identities.Contains(full),"Property control complete identity is outside the current page owner tree.");
+    // A complete top-level identity needs no unrelated group traversal.
+    if(!current.Contains(full)){
+     var identities=batch==null?PropertyOwnerIndex(api,current,doc):batch.OwnerIdentities(api);
+     NativeMemory.Require(identities.Contains(full),"Property control complete identity is outside the current page owner tree.");
+    }
    }else {
     string name=NativePageControlPreparation.Text(target,"control_name"),rtti=NativePageControlPreparation.Text(target,"rtti");
     foreach(IntPtr candidate in current){
@@ -79,20 +84,34 @@ namespace McgsInternalBridge {
    if(target.TryGetValue("native_id",out raw))NativeMemory.Require(NativeStrategyProfile.ReadId(api.Common.Shared,obj)==NativeEngine.Number(raw),"Property control native ID differs.");
    var s=new Selection{Page=page,Doc=doc,Full=full,Object=obj,Selected=obj,View=batch==null?CaptureDrawingView(api,doc):batch.View};
    bool local=requested!=null;
-   if(!local){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.Read(obj);AnnotateComponentOccurrences(s.Values);}
+   bool ownerOnly=target.TryGetValue("property_scope",out raw);
+   NativeMemory.Require(!ownerOnly||(!local&&Convert.ToString(raw)=="selected-owner"),"Owner-only capture requires a read without requested property assignments.");
+   if(!local&&!ownerOnly){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.Read(obj);AnnotateComponentOccurrences(s.Values);}
    if(target.TryGetValue("component_path",out raw))foreach(object n in (IEnumerable)raw) {
-    if(local){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.ReadComponents(s.Selected);AnnotateComponentOccurrences(s.Values);}
+    if(local||ownerOnly){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.ReadComponents(s.Selected);AnnotateComponentOccurrences(s.Values);}
     IntPtr child=ResolveComponent(api,s.Values,s.Selected,n);
     NativeMemory.Require(child!=IntPtr.Zero,"Requested getter-derived component path is absent.");NativePropertyTarget.Describe(api.Engine,child);s.Selected=child;
    }
+   if(ownerOnly){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.ReadOwner(s.Selected);AnnotateComponentOccurrences(s.Values);}
    if(local){var keys=new List<string>();foreach(object property in requested)keys.Add(NativePageControlPreparation.Text(Map(property),"native_key"));
     if(!paired){using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.ReadSelected(s.Selected,keys);}
     else{using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values=collector.ReadComponents(obj);var states=new List<Dictionary<string,object>>(s.Values);foreach(var row in states){string key=Convert.ToString(row["native_key"]);if(key!="抬起状态"&&key!="按下状态")continue;IntPtr owner=new IntPtr(NativeEngine.Number(row["component_iobject"]));var descriptor=NativePropertyTarget.Describe(api.Engine,owner);row["component_rtti"]=descriptor["rtti"];row["component_property_interface"]=descriptor["property_interface"];using(var collector=new NativeTypedPropertyCollector(api.Engine))s.Values.AddRange(collector.ReadSelected(owner,keys));}}
     AnnotateComponentOccurrences(s.Values);}
    s.Snapshot=new Dictionary<string,object>{{"abi_profile_sha256",AbiProfileSha},{"page",batch==null?api.Common.PageSnapshot(page):batch.PageState},
     {"control",new Dictionary<string,object>{{"name",NativeStrategyProfile.ReadName(api.Common.Shared,obj)},{"rtti",info["rtti"]},{"type_id",NativeMemory.I32(full,NativeLayout.Offset("control.type_id"))},{"complete",NativeMemory.Hex(full)},{"iobject",NativeMemory.Hex(obj)},{"owner_document",NativeMemory.Hex(doc)}}},
-    {"selected_owner",NativeMemory.Hex(s.Selected)},{"properties",s.Values},{"property_capture_scope",local?"requested keys on selected owner":"full property tree"},{"root_modified",NativeMemory.I32(api.Common.Shared.RootDoc(),NativeLayout.Offset("document.modified"))},{"compile_valid",NativeMemory.I32(api.Common.Shared.RootDoc(),NativeLayout.Offset("document.compile_valid"))}};
+    {"selected_owner",NativeMemory.Hex(s.Selected)},{"properties",s.Values},{"property_capture_scope",ownerOnly?"selected owner without descending":local?"requested keys on selected owner":"full property tree"},{"root_modified",NativeMemory.I32(api.Common.Shared.RootDoc(),NativeLayout.Offset("document.modified"))},{"compile_valid",NativeMemory.I32(api.Common.Shared.RootDoc(),NativeLayout.Offset("document.compile_valid"))}};
    return s;
+  }
+  static HashSet<string> CollectNamedBitmapBackgrounds(Api api,Selection selection,List<Dictionary<string,object>> writes,HashSet<string> names){
+   foreach(var row in writes){
+    if(Convert.ToInt32(row["native_type_tag"])!=12||Convert.ToString(row["native_key"])!="背景图片")continue;
+    string name=row["value"] as string;if(String.IsNullOrEmpty(name))continue;
+    var owner=NativePropertyTarget.Describe(api.Engine,selection.Selected);
+    if(Convert.ToString(owner["rtti"])!=".?AVCOwnerBitmap@@"||Convert.ToInt32(owner["complete_offset"])!=4||Convert.ToString(owner["property_interface"])!="ObjectTree::IPropertyLinker")continue;
+    if(names==null)names=new HashSet<string>(StringComparer.Ordinal);
+    names.Add(name);
+   }
+   return names;
   }
   internal static Dictionary<string,object> Read(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> action){return Capture(new Api(engine,context,project),action).Snapshot;}
   internal static Prepared Prepare(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> action){return new Prepared(new Api(engine,context,project),action);}
@@ -120,6 +139,7 @@ namespace McgsInternalBridge {
      writes.Add(new Dictionary<string,object>{{"native_key",key},{"native_type_tag",tag},{"value",requested["value"]}});
     }
     noOp=writes.Count==0;if(noOp)return;
+    NativePictureResources.RequireNamedPictures(api.Engine,api.Context,api.Project,CollectNamedBitmapBackgrounds(api,before,writes,null));
     setter=NativePropertyTarget.Bind<Setter>(api.Engine,before.Selected,true);rootDirty=api.Common.Shared.Bind<VI>("RootSetModified");docDirty=api.Common.Bind<VI>("standard","DocSetModified");if(before.View!=IntPtr.Zero){notify=api.Bind<BeforeModify>("DocBeforeModify");invalidate=api.Bind<VI>("InvalidateView");update=api.Bind<V0>("UpdateView");}
     try{dispatcher=new NativeTypedPropertyDispatcher(api.Common.Shared,writes);}catch{Dispose();throw;}
    }

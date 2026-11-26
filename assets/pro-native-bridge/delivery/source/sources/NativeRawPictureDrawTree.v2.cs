@@ -15,6 +15,17 @@ namespace McgsInternalBridge {
    NativeOperationTrace.SetPhase("picture-vector-raw-owning-tree-returned");
    return RawPictureDrawNode(api,tree);
   }
+  internal static List<Dictionary<string,object>> RawPictureDrawRoots(NativeEngine engine,NativeContext context,string project,IList<IntPtr> roots,IntPtr document){
+   var api=new Api(engine,context,project);
+   var seen=new HashSet<uint>();
+   var rows=new List<Dictionary<string,object>>(roots.Count);
+   for(int i=0;i<roots.Count;i++){
+    Node tree=api.Tree(roots[i],document,new int[]{i},seen,0);
+    RequireKnownSubtree(tree,"selected vector source read");
+    rows.Add(RawPictureDrawNode(api,tree));
+   }
+   return rows;
+  }
   static Dictionary<string,object> RawPictureDrawNode(Api api,Node node){
    NativeOperationTrace.SetPhase("picture-vector-raw-node-begin-"+node.Class.Name);
    byte[] original=NativeChunkedRawMemory.Read(node.Full,node.Class.Size);

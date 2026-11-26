@@ -31,6 +31,31 @@ def encoded(value):
     return (json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False) + "\n").encode("utf-8")
 
 
+def preparation_input_sha256(stage=None, abi_catalog=None, module_overrides=None):
+    """Fingerprint the inputs that produce a portable ABI binding on this machine."""
+    from capstone import __version__ as decoder_version
+
+    adapter = ROOT / "abi-adapter"
+    source_stage = Path(stage or ROOT / "delivery/source")
+    catalog = Path(abi_catalog or adapter / "catalogs/reference.json.gz")
+    sources = {
+        "source_manifest": source_stage / "source-and-dependency-manifest.json",
+        "reference_catalog": catalog,
+        "source_addresses": adapter / "catalogs/source-addresses.json",
+        "profile_field_modules": adapter / "catalogs/profile-field-modules.json",
+        "materialize": ROOT / "portable-engine/materialize.py",
+        "portable_support": Path(__file__),
+        "path_rewriter": ROOT / "delivery/bind_common_delivery.v5.py",
+        "delivery_file_support": ROOT / "delivery/delivery_file_support.py",
+        "delivery_config": ROOT / "delivery/device-entry-v2/native_delivery_config.py",
+    }
+    sources.update((file.relative_to(ROOT).as_posix(), file) for file in adapter.glob("*.py"))
+    checksums = {name: digest(file.read_bytes()) for name, file in sorted(sources.items())}
+    overrides = sorted((name, str(Path(path).resolve())) for name, path in (module_overrides or {}).items())
+    return digest(encoded({"schema": 1, "decoder": decoder_version, "sources": checksums,
+                           "module_overrides": overrides}))
+
+
 def write_new(file, raw):
     file = Path(file)
     file.parent.mkdir(parents=True, exist_ok=True)

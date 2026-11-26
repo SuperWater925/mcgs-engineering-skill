@@ -17,6 +17,20 @@ namespace McgsInternalBridge {
    internal Dictionary<string,object> ByteArray(IntPtr value){TableAt(value,Map(Map(Profile["mfc"])["byte_array"]),mfcBase);int count=NativeMemory.I32(value,8),capacity=NativeMemory.I32(value,12);IntPtr pointer=NativeMemory.Ptr(value,4);NativeMemory.Require(count>=0&&capacity>=count&&(count==0||pointer!=IntPtr.Zero),"Resource byte-array length/capacity differs.");byte[] payload=count==0?new byte[0]:NativeChunkedRawMemory.Read(pointer,count);return new Dictionary<string,object>{{"native_header_hex",Hex(NativeMemory.Bytes(value,20))},{"length",count},{"payload_sha256",Sha(payload)},{"raw_payload_is_file_format",false}};}
    internal Dictionary<string,object> FrameList(IntPtr value){NativeMemory.Require(NativeMemory.Ptr(value,0)==Engine.Address(0xD3FD70),"Image frame-list class differs.");int count=NativeMemory.I32(value,12);NativeMemory.Require(count>=0,"Image frame-list bound differs.");IntPtr node=NativeMemory.Ptr(value,4),previous=IntPtr.Zero;var rows=new List<object>();var seen=new HashSet<uint>();for(int i=0;i<count;i++){NativeMemory.Require(node!=IntPtr.Zero&&seen.Add(NativeMemory.U(node))&&NativeMemory.Ptr(node,4)==previous,"Image frame-list cycle/back-link differs.");rows.Add(new Dictionary<string,object>{{"node",NativeMemory.Hex(node)},{"raw_node_hex",Hex(NativeMemory.Bytes(node,12))},{"payload_pointer",NativeMemory.Hex(NativeMemory.Ptr(node,8))}});previous=node;node=NativeMemory.Ptr(node,0);}NativeMemory.Require(node==IntPtr.Zero&&previous==NativeMemory.Ptr(value,8),"Image frame-list tail/count differs.");return new Dictionary<string,object>{{"header_hex",Hex(NativeMemory.Bytes(value,28))},{"rows",rows},{"frame_deep_payload_covered",count==0}};}
   }
+  // Name-only validation for the original COwnerBitmap named property. The
+  // property getter can echo a dangling name even when the inner lookup fails.
+  internal static void RequireNamedPictures(NativeEngine engine,NativeContext context,string project,HashSet<string> required){
+   if(required==null||required.Count==0)return;
+   var api=new Api(engine,context,project);
+   NativeMemory.Require(Marshal.ReadByte(api.Manager,0x38)==1,"Picture resource catalog is not already loaded.");
+   var present=new HashSet<string>(StringComparer.Ordinal);
+   foreach(IntPtr node in api.MapNodes(0x4C)){
+    string name=CString(NativeMemory.Add(node,8),4096);if(!required.Contains(name))continue;
+    IntPtr picture=NativeMemory.Ptr(node,16);api.Table(picture,"Picture");
+    NativeMemory.Require(present.Add(name)&&CString(NativeMemory.Add(picture,0x10),4096)==name,"Native picture name index and actual record disagree/repeat: "+name);
+   }
+   foreach(string name in required)NativeMemory.Require(present.Contains(name),"Named background picture is absent in native module 11: "+name);
+  }
   static Dictionary<string,object> Record(Api api,IntPtr picture){
    NativeOperationTrace.SetPhase("picture-raw-record-table-enter");api.Table(picture,"Picture");IntPtr image=NativeMemory.Add(picture,0x18);api.Table(image,"PictureImage");api.Table(NativeMemory.Add(image,4),"PictureImageSecondary");
    uint vectorMode=unchecked((uint)NativeMemory.I32(image,0x14));byte[] raw=NativeMemory.Bytes(picture,0xD0);

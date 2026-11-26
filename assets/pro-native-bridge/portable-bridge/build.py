@@ -1,13 +1,17 @@
 """Publisher-only build. Receiver preparation never calls this module or Csc."""
 from pathlib import Path
-import argparse,hashlib,importlib.util,json,os,re,subprocess
+import argparse,hashlib,importlib.util,json,os,re,shutil,subprocess,sys
 HERE=Path(__file__).resolve().parent
 TEMPLATES=HERE.parent/'bootstrap'
+REPO=HERE.parents[2]
+sys.path.insert(0,str(REPO/'scripts'))
+from turnkey_publisher_assets import bridge_source_inputs
 def sha(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 def write(path,value):Path(path).write_text(json.dumps(value,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-def build(output,csc=None):
+def build(output,csc=None,reuse_bootstrap=None):
  output=Path(output).resolve()
  if output.exists() and any(output.iterdir()):raise ValueError('Use an empty publisher output; do not replace loaded own artifacts')
+ source_inputs=bridge_source_inputs(REPO)
  output.mkdir(parents=True,exist_ok=True);src=output/'source';src.mkdir()
  contract=json.loads((HERE/'contract.json').read_text(encoding='utf-8'))
  compiler=Path(csc or Path(os.environ.get('WINDIR',r'C:\Windows'))/'Microsoft.NET/Framework/v4.0.30319/csc.exe')
@@ -47,11 +51,24 @@ def build(output,csc=None):
  (src/'PortableEntry.cs').write_bytes((HERE/'source/PortableEntry.cs').read_bytes())
  dll=output/contract['bridge_file'];client=output/contract['client_file'];hook=output/contract['hook_file']
  common=[str(compiler),'/nologo','/platform:x86','/codepage:65001','/optimize+','/reference:System.Web.Extensions.dll']
- subprocess.run(common+['/target:library','/reference:System.Windows.Forms.dll','/out:'+str(dll)]+[str(p)for p in sorted(src.glob('*.cs'))],check=True)
+ sources=[{'file':str(p.relative_to(output)),'sha256':sha(p)}for p in sorted(src.glob('*.cs'))]
+ if reuse_bootstrap:
+  reuse=Path(reuse_bootstrap).resolve(strict=True)
+  prior=json.loads((reuse/'portable-bridge-manifest.json').read_text(encoding='utf-8-sig'))
+  if prior.get('identity')!=contract or prior.get('sources')!=sources:
+   raise ValueError('Bootstrap source or portable identity changed; use a separately versioned bridge')
+  old_dll=reuse/contract['bridge_file']
+  recorded=next(row for row in prior['artifacts'] if row['file']==old_dll.name)
+  if old_dll.stat().st_size!=recorded['bytes'] or sha(old_dll)!=recorded['sha256']:
+   raise ValueError('Verified existing portable bootstrap bytes differ')
+  shutil.copyfile(old_dll,dll)
+ else:
+  subprocess.run(common+['/target:library','/reference:System.Windows.Forms.dll','/out:'+str(dll)]+[str(p)for p in sorted(src.glob('*.cs'))],check=True)
  subprocess.run(common+['/target:exe','/out:'+str(client),str(HERE/'source/PortableClient.cs')],check=True)
  spec=importlib.util.spec_from_file_location('portable_hook_builder',HERE/'build_hook.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
  hook_info=mod.build(hook,TEMPLATES/'build_native_wrapper.py')
- manifest={'schema':1,'contract':contract['release'],'state':'publisher_compiled_not_attached','identity':contract,'artifacts':[{'file':p.name,'sha256':sha(p),'bytes':p.stat().st_size}for p in (dll,client,hook)],'native_hook':hook_info,'receiver_compilation_required':False,'vendor_files_included':False,'sources':[{'file':str(p.relative_to(output)),'sha256':sha(p)}for p in sorted(src.glob('*.cs'))]}
+ if bridge_source_inputs(REPO)!=source_inputs:raise ValueError('Shared bridge inputs changed during publisher compilation')
+ manifest={'schema':1,'contract':contract['release'],'state':'publisher_compiled_not_attached','identity':contract,'artifacts':[{'file':p.name,'sha256':sha(p),'bytes':p.stat().st_size}for p in (dll,client,hook)],'native_hook':hook_info,'receiver_compilation_required':False,'vendor_files_included':False,'sources':sources,'source_inputs':source_inputs}
  write(output/'portable-bridge-manifest.json',manifest);return manifest
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--output',required=True);p.add_argument('--csc');z=p.parse_args();print(json.dumps(build(z.output,z.csc),ensure_ascii=False,indent=2))
+ p=argparse.ArgumentParser();p.add_argument('--output',required=True);p.add_argument('--csc');p.add_argument('--reuse-bootstrap');z=p.parse_args();print(json.dumps(build(z.output,z.csc,z.reuse_bootstrap),ensure_ascii=False,indent=2))

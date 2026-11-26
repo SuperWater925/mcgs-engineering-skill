@@ -175,10 +175,10 @@ if($request.action -eq 'create') {
     exit 0
 }
 if($request.action -notin @('read','write')) {throw 'Unsupported database action'}
-if($request.action -eq 'write' -and @($request.changes | Where-Object action -eq 'insert-page').Count) {
+if($request.action -eq 'write') {
     if([string]$request.expected_sha256 -notmatch '^[0-9a-fA-F]{64}$' -or
        (Get-FileHash -LiteralPath $request.path -Algorithm SHA256).Hash -ine [string]$request.expected_sha256) {
-        throw 'Page insertion requires the exact copied project SHA256'
+        throw 'Offline updates require the exact copied project SHA256'
     }
 }
 $c=Open-Database $request.path ($request.action -eq 'read')
@@ -191,6 +191,138 @@ try {
                 $table=[string]$change.table
                 if(!$before.Contains($table)) {throw 'Unknown table'}
                 $fields=@($before[$table].fields)
+                if($change.action -ceq 'renumber-picture-row') {
+                    $name=[string]$change.name
+                    $newName=[string]$change.values.strName
+                    $pattern='^MCGS_PICTURE_DATA_(0|[1-9][0-9]*)$'
+                    $from=[regex]::Match($name,$pattern)
+                    $to=[regex]::Match($newName,$pattern)
+                    $valueKeys=@($change.values.PSObject.Properties.Name)
+                    if($table -cne 'System' -or !$from.Success -or !$to.Success -or
+                       $valueKeys.Count -ne 1 -or $valueKeys[0] -cne 'strName' -or
+                       [int]$to.Groups[1].Value -ge [int]$from.Groups[1].Value) {
+                        throw 'Only renumbering a native picture row to a lower vacant slot is supported'
+                    }
+                    $matched=@($before.System.rows | Where-Object {$_['iID'] -eq $change.id -and $_['strName'] -ceq $name})
+                    if($matched.Count -ne 1){throw 'Picture row preimage changed'}
+                    $ident=@($fields | Where-Object name -CEQ 'iID')
+                    $title=@($fields | Where-Object name -CEQ 'strName')
+                    if($ident.Count -ne 1 -or $ident[0].type -ne 3 -or $title.Count -ne 1){throw 'Picture row identity schema differs'}
+                    $cmd=$c.CreateCommand();$cmd.Transaction=$transaction
+                    try {
+                        $cmd.CommandText='SELECT COUNT(*) FROM [System] WHERE [strName]=?'
+                        Add-Value $cmd $title[0] $newName
+                        if($cmd.ExecuteScalar() -ne 0){throw 'Destination picture slot is occupied'}
+                        $cmd.Parameters.Clear()
+                        $cmd.CommandText='UPDATE [System] SET [strName]=? WHERE [iID]=? AND [strName]=?'
+                        Add-Value $cmd $title[0] $newName
+                        Add-Value $cmd $ident[0] $change.id
+                        Add-Value $cmd $title[0] $name
+                        if($cmd.ExecuteNonQuery() -ne 1){throw 'Picture renumbering must affect exactly the expected row'}
+                    }finally{$cmd.Dispose()}
+                    continue
+                }
+                if($change.action -ceq 'rename-library-row') {
+                    $name=[string]$change.name
+                    $newName=[string]$change.values.strName
+                    $recipeName='^MCGS_RECIPE_(?!DATA$).+$'
+                    $values=@($change.values.PSObject.Properties.Name)
+                    if($table -cne 'System' -or $name -cnotmatch $recipeName -or $newName -cnotmatch $recipeName -or
+                       $values.Count -ne 2 -or 'strName' -cnotin $values -or 'lbContext' -cnotin $values) {
+                        throw 'Only a named recipe row can be renamed along with its native archive'
+                    }
+                    $matched=@($before.System.rows | Where-Object {$_['iID'] -eq $change.id -and $_['strName'] -ceq $name})
+                    if($matched.Count -ne 1){throw 'Recipe row preimage changed'}
+                    $columns=@{}
+                    foreach($field in $fields){$columns[$field.name]=$field}
+                    if($columns.iID.type -ne 3 -or $columns.lbContext.type -ne 205 -or !$columns.strName) {
+                        throw 'Recipe row schema differs'
+                    }
+                    $cmd=$c.CreateCommand();$cmd.Transaction=$transaction
+                    try {
+                        $cmd.CommandText='UPDATE [System] SET [strName]=?, [lbContext]=? WHERE [iID]=? AND [strName]=?'
+                        Add-Value $cmd $columns.strName $newName
+                        Add-Value $cmd $columns.lbContext $change.values.lbContext
+                        Add-Value $cmd $columns.iID $change.id
+                        Add-Value $cmd $columns.strName $name
+                        if($cmd.ExecuteNonQuery() -ne 1){throw 'Recipe rename must affect exactly the expected row'}
+                    }finally{$cmd.Dispose()}
+                    continue
+                }
+                if($change.action -cin @('delete-user-trigger','delete-loop-trigger','delete-event-trigger')) {
+                    $loop=$change.action -ceq 'delete-loop-trigger'
+                    $event=$change.action -ceq 'delete-event-trigger'
+                    $triggerType=if($loop){2}elseif($event){4}else{3}
+                    $minimumStrategyId=if($event){3}else{2}
+                    if($table -cne 'Trigger' -or $change.lType -ne $triggerType -or
+                       (($loop -or $event) -and ($change.id -le 0 -or $change.lStgyID -lt $minimumStrategyId))){
+                        throw 'Only the specified native user, custom loop, or event trigger can be removed'
+                    }
+                    $matched=@($before.Trigger.rows | Where-Object {
+                        $_['iID'] -eq $change.id -and $_['lType'] -eq $triggerType -and $_['lStgyID'] -eq $change.lStgyID -and $_['strNote'] -ceq $change.name
+                    })
+                    if($matched.Count -ne 1){throw 'Strategy trigger preimage changed'}
+                    $columns=@{}
+                    foreach($field in $fields){$columns[$field.name]=$field}
+                    foreach($fieldName in @('iID','lStgyID','lType')){
+                        if($columns[$fieldName].type -ne 3){throw 'User strategy trigger identity schema differs'}
+                    }
+                    $cmd=$c.CreateCommand();$cmd.Transaction=$transaction
+                    try {
+                        $cmd.CommandText='DELETE FROM [Trigger] WHERE [iID]=? AND [lStgyID]=? AND [lType]=?'
+                        Add-Value $cmd $columns.iID $change.id
+                        Add-Value $cmd $columns.lStgyID $change.lStgyID
+                        Add-Value $cmd $columns.lType $triggerType
+                        if($cmd.ExecuteNonQuery() -ne 1){throw 'Removal must affect exactly the expected strategy trigger'}
+                    }finally{$cmd.Dispose()}
+                    continue
+                }
+                if($change.action -in @('delete-page','delete-library-row')) {
+                    $name=[string]$change.name
+                    $page=$change.action -ceq 'delete-page' -and $table -ceq 'WndUser'
+                    $resource=$change.action -ceq 'delete-library-row' -and $table -ceq 'System' -and
+                         $name -cmatch '^MCGS_(PICTURE_DATA_[0-9]+|RECIPE_(?!DATA$).+)$'
+                    if(!$page -and !$resource){throw 'This row is outside the structural deletion contract'}
+                    $ident=@($fields | Where-Object name -CEQ 'iID')
+                    $title=@($fields | Where-Object name -CEQ 'strName')
+                    if($ident.Count -ne 1 -or $ident[0].type -ne 3 -or $title.Count -ne 1){throw 'Native row identity fields are absent'}
+                    $cmd=$c.CreateCommand();$cmd.Transaction=$transaction
+                    try {
+                        $cmd.CommandText='DELETE FROM '+(Identifier $table)+' WHERE [iID]=? AND [strName]=?'
+                        Add-Value $cmd $ident[0] $change.id
+                        Add-Value $cmd $title[0] $name
+                        if($cmd.ExecuteNonQuery() -ne 1){throw 'Deletion must affect exactly the expected row'}
+                    }finally{$cmd.Dispose()}
+                    continue
+                }
+                if($change.action -cin @('insert-library-row','insert-user-trigger','insert-loop-trigger','insert-event-trigger')){
+                    $values=$change.values
+                    $actual=@($values.PSObject.Properties.Name)
+                    if($change.action -ceq 'insert-library-row'){
+                        $name=[string]$values.strName
+                        if($table -cne 'System' -or $name -cnotmatch '^MCGS_(PICTURE_LIST|PICTURE_MANAGER_INFO|PICTURE_DATA_[0-9]+|RECIPE_(?!DATA$).+)$'){
+                            throw 'Only the native picture/recipe library rows may be inserted'
+                        }
+                    }else{
+                        $loop=$change.action -ceq 'insert-loop-trigger'
+                        $event=$change.action -ceq 'insert-event-trigger'
+                        $triggerType=if($loop){2}elseif($event){4}else{3}
+                        $minimumStrategyId=if($event){3}else{2}
+                        if($table -cne 'Trigger' -or [int]$values.lType -ne $triggerType -or
+                           (($loop -or $event) -and ([int]$values.iID -le 0 -or [int]$values.lStgyID -lt $minimumStrategyId -or
+                           $null -ne $values.iTemp1 -or $null -ne $values.iTemp2)) -or
+                           ($event -and $values.strNote -cne '当确定的条件满足时运行')){
+                            throw 'Only the specified native user, custom loop, or event trigger may be inserted'
+                        }
+                    }
+                    if($actual.Count -ne $fields.Count -or @($actual | Where-Object { $_ -cnotin @($fields.name) }).Count){
+                        throw 'New native row must match its current table schema exactly'
+                    }
+                    $insert=[ordered]@{}
+                    foreach($field in $fields){$insert[$field.name]=$values.($field.name)}
+                    Insert-Row $c $table $fields $insert $transaction
+                    continue
+                }
                 if($change.action -eq 'insert-page') {
                     if($table -cne 'WndUser') {throw 'Only a native WndUser page can be inserted'}
                     $noteField=if('strNote' -cin @($fields.name)) {'strNote'} elseif('strComment' -cin @($fields.name)) {'strComment'} else {throw 'Current native page schema has no annotation field'}

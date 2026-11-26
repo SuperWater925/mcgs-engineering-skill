@@ -253,7 +253,7 @@ try{
     if($op.key_column -ne $script:KeyColumns[$op.table]){throw 'Wrong table key column.'}
     $key=[string]$op.key
     if(-not $base.fingerprints[$op.table].Contains($key)){throw 'Manifest target row does not exist.'}
-    if($op.table -eq 'System' -and $key -notmatch '^(ObjData|ObjPointerRule|StgyAndTrigger|MCGS_RECIPE_.+)$'){throw 'System row is outside the editing whitelist.'}
+    if($op.table -eq 'System' -and $key -notmatch '^(ObjData|ObjPointerRule|StgyAndTrigger|MCGS_RECIPE_.+|MCGS_PICTURE_DATA_[0-9]+)$'){throw 'System row is outside the editing whitelist.'}
     if($op.table -eq 'Stgy' -and $key -ne '0'){throw 'Only the proven Stgy row 0 strategy-array container is supported.'}
     if($op.values.Count -eq 0 -or $op.before.Count -ne $op.values.Count){throw 'Every written field must have one before fingerprint.'}
     foreach($field in $op.values.Keys){

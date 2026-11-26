@@ -19,6 +19,7 @@ def absolute(value):
  return path
 def materialize(*,artifacts,task_root,runtime_root,bootstrap_root,install_root,editor,pid,ui_thread,creation_filetime,host_kind='pro'):
  artifacts,task,runtime,boot,install,editor=map(absolute,(artifacts,task_root,runtime_root,bootstrap_root,install_root,editor))
+ if host_kind=='stu' and editor.name.casefold()!='mcgssetstu.exe':raise ValueError('The Stu transport requires the actual McgsSetStu.exe executable')
  if not runtime.is_relative_to(task)or not boot.is_relative_to(task)or runtime==task or boot==task or runtime.is_relative_to(boot)or boot.is_relative_to(runtime):raise ValueError('Queue/bootstrap roots must be separate descendants of the connection root')
  if not editor.is_file()or not editor.is_relative_to(install):raise ValueError('The explicit current editor must be inside its actual installation root')
  if min(int(pid),int(ui_thread),int(creation_filetime))<=0:raise ValueError('Current PID/UI thread/creation FILETIME are required')
@@ -47,6 +48,6 @@ def materialize(*,artifacts,task_root,runtime_root,bootstrap_root,install_root,e
 def main():
  p=argparse.ArgumentParser(description=__doc__)
  for name in ('artifacts','task-root','runtime-root','bootstrap-root','install-root','editor'):p.add_argument('--'+name,required=True)
- p.add_argument('--pid',required=True,type=int);p.add_argument('--ui-thread',required=True,type=int);p.add_argument('--creation-filetime',required=True,type=int);p.add_argument('--host-kind',choices=['pro','own-test-message-loop','own-test-native-message-loop'],default='pro')
+ p.add_argument('--pid',required=True,type=int);p.add_argument('--ui-thread',required=True,type=int);p.add_argument('--creation-filetime',required=True,type=int);p.add_argument('--host-kind',choices=['pro','stu','own-test-message-loop','own-test-native-message-loop'],default='pro')
  print(json.dumps(materialize(**vars(p.parse_args())),ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

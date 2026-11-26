@@ -16,7 +16,7 @@ import sys
 import time
 import uuid
 
-from portable_support import ROOT, BINDING_SCHEMA, CONTRACT, PORTABLE_FIELDS, binder_module, digest, encoded, need, reference_aliases, source_key, validate_portable_scope, write_new
+from portable_support import ROOT, BINDING_SCHEMA, CONTRACT, PORTABLE_FIELDS, binder_module, digest, encoded, need, preparation_input_sha256, reference_aliases, source_key, validate_portable_scope, write_new
 
 
 class PreparationProgress:
@@ -154,6 +154,7 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
     need(layout.transport_client_file.parent == layout.runtime_root, "The at-most-once queue client must be in runtime_root because its own directory is the queue root")
     need(output.is_relative_to(layout.runtime_root), "Preparation output must be inside this connection's runtime")
     need(not any(layout.engineering_root.iterdir()), "Portable engineering payload must be new and empty")
+    preparation_inputs = preparation_input_sha256(stage, abi_catalog, actual_modules)
     manifest_raw = (stage / "source-and-dependency-manifest.json").read_bytes()
     manifest = json.loads(manifest_raw.decode("utf-8-sig"))
     own_image = ManagedImage(raw_engine)
@@ -273,7 +274,10 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
     index_raw = encoded(target.index(resolved, layout, copied))
     need(len(index_raw) <= 16 * 1024 * 1024, "Native data index exceeds managed parser bound")
     write_new(index_file, index_raw)
+    need(preparation_input_sha256(stage, abi_catalog, actual_modules) == preparation_inputs,
+         "Portable ABI inputs changed during materialization")
     binding = {"schema": BINDING_SCHEMA, "engine_contract": CONTRACT,
+               "preparation_input_sha256": preparation_inputs,
                "source_manifest_sha256": digest(manifest_raw),
                "source_catalog_sha256": digest((ROOT / "abi-adapter/catalogs/source-addresses.json").read_bytes()),
                "profile_index_file": str(index_file), "profile_index_sha256": digest(index_raw),
@@ -302,6 +306,7 @@ def _materialize(scope_base_json, engine_file, engine_sha256, output_directory, 
               "engine_scope_file": str(scope_file), "scope_sha256": digest(scope_raw),
               "engineering_delivery_scope_sha256": digest(scope_raw),
               "binding_file": str(binding_file), "binding_sha256": digest(binding_raw),
+              "preparation_input_sha256": preparation_inputs,
               "profile_index_file": str(index_file), "profile_index_sha256": digest(index_raw),
               "evidence_layout": "flat-v1" if compact else "legacy",
               "copied_artifacts": copied, "native_api_resolution": target.summary(),

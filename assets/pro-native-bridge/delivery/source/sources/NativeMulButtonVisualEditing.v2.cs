@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;using System.Text;
 namespace McgsInternalBridge {
  internal static partial class NativeCurrentTemplateControlOperations {
   internal const string MulButtonVisualKind="control-mulbutton-visual";
+  internal const string MulButtonStateCatalogKind="control-mulbutton-state-catalog";
   internal const string MulButtonVisualProfileSha="d5592d3bbf6eb0a544d6c1a46eda84d48d25a3ee772a765a7a29958e08e43792";
   [UnmanagedFunctionPointer(CallingConvention.ThisCall)]delegate IntPtr MulVisualAssign(IntPtr self,IntPtr source);
   sealed class MulVisualAbi {
@@ -23,10 +24,137 @@ namespace McgsInternalBridge {
   static Dictionary<string,object> MulVisualBytes(IntPtr p,int stride){string h=MulVisualHex(NativeMemory.Bytes(p,20));int count=NativeMemory.I32(p,8),cap=NativeMemory.I32(p,12);IntPtr data=NativeMemory.Ptr(p,4);NativeMemory.Require(count>=0&&cap>=count&&stride>0&&(count==0||data!=IntPtr.Zero),"MulBtn original scalar array bounds differ.");string bytes=count==0?"":MulVisualHex(NativeChunkedRawMemory.Read(data,checked(checked(count*stride))));NativeMemory.Require(h==MulVisualHex(NativeMemory.Bytes(p,20)),"MulBtn original scalar array changed.");return new Dictionary<string,object>{{"header_hex",h},{"active_bytes_hex",bytes}};}
   // CFontInObj owns two maps, not FontValue16: inline LOGFONTW rows and HFONT numeric cache.
   static Dictionary<string,object> MulVisualFontMap(IntPtr map,bool logfont){string header=MulVisualHex(NativeMemory.Bytes(map,8));IntPtr head=NativeMemory.Ptr(map,0);int count=NativeMemory.I32(map,4);NativeMemory.Require(head!=IntPtr.Zero&&count>=0&&Marshal.ReadByte(head,13)==1,"MulBtn text font map sentinel/count differs.");string headBytes=MulVisualHex(NativeMemory.Bytes(head,16));var rows=new List<object>();var seen=new HashSet<uint>();int? previous=null;Action<IntPtr,int> visit=null;visit=delegate(IntPtr n,int depth){NativeMemory.Require(depth<=128,"MulBtn font map is too deep.");if(n==head)return;NativeMemory.Require(n!=IntPtr.Zero&&Marshal.ReadByte(n,13)==0&&seen.Add(NativeMemory.U(n)),"MulBtn font map aliases/has bad nil flag.");IntPtr left=NativeMemory.Ptr(n,0),right=NativeMemory.Ptr(n,8);if(left!=head)NativeMemory.Require(NativeMemory.Ptr(left,4)==n,"MulBtn font left parent differs.");if(right!=head)NativeMemory.Require(NativeMemory.Ptr(right,4)==n,"MulBtn font right parent differs.");visit(left,depth+1);int id=NativeMemory.I32(n,16);NativeMemory.Require(!previous.HasValue||id>previous.Value,"MulBtn font language keys are not ordered.");previous=id;rows.Add(new Dictionary<string,object>{{"node",NativeMemory.Hex(n)},{"language_id",id},{"raw_node_hex",MulVisualHex(NativeMemory.Bytes(n,logfont?112:24))}});visit(right,depth+1);};IntPtr root=NativeMemory.Ptr(head,4);if(root!=head)NativeMemory.Require(NativeMemory.Ptr(root,4)==head,"MulBtn font root parent differs.");visit(root,0);NativeMemory.Require(rows.Count==count&&header==MulVisualHex(NativeMemory.Bytes(map,8))&&headBytes==MulVisualHex(NativeMemory.Bytes(head,16)),"MulBtn font map changed/count differs.");return new Dictionary<string,object>{{"header_hex",header},{"head_hex",headBytes},{"rows",rows},{"HFONT_values_are_not_dereferenced",!logfont}};}
-  static Dictionary<string,object> MulVisualText(MulVisualAbi abi,IntPtr p){abi.Table(p,"TextFrame");string raw=MulVisualHex(NativeMemory.Bytes(p,0xA8));abi.Table(NativeMemory.Add(p,0x70),"Font");var row=new Dictionary<string,object>{{"complete",NativeMemory.Hex(p)},{"raw_native_hex",raw},{"name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,12),1048576)},{"base_rectangle18_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,24),16))},{"base_rectangle28_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,40),16))},{"caption",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,0x6C),1048576)},{"font24_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,0x70),24))},{"font_handle_map",MulVisualFontMap(NativeMemory.Add(p,0x78),false)},{"font_logfont_map",MulVisualFontMap(NativeMemory.Add(p,0x80),true)}};NativeMemory.Require(raw==MulVisualHex(NativeMemory.Bytes(p,0xA8)),"MulBtn text changed during borrowed capture.");return row;}
-  static Dictionary<string,object> MulVisualState(MulVisualAbi abi,NativePictureResources.Api pictures,IntPtr state,bool text){if(text)abi.Table(state,"TextList");else abi.Images.Table(state,"ImageListInObj");string raw=MulVisualHex(NativeMemory.Bytes(state,28));var frames=text?abi.Pointers(NativeMemory.Add(state,8),"TextFrames"):abi.Images.Pointers(NativeMemory.Add(state,8),"ImageFrameArray");var rows=new List<object>();foreach(IntPtr frame in frames){if(text){rows.Add(MulVisualText(abi,frame));continue;}abi.Images.Table(frame,"ImageInObj");IntPtr image=NativeMemory.Ptr(frame,0x68);abi.Table(image,"OwnerBitmap");abi.Table(NativeMemory.Add(image,4),"OwnerBitmapSecondary");NativeMemory.Require(image!=IntPtr.Zero&&Marshal.ReadByte(image,8)==1,"This bounded image-clear adapter requires each frame to be an existing named COwnerBitmap.");var list=pictures.FrameList(NativeMemory.Add(image,0x88));NativeMemory.Require(((IList)list["rows"]).Count==0,"Named frame has an additional private frame graph; clear ownership is not generalized.");rows.Add(new Dictionary<string,object>{{"complete",NativeMemory.Hex(frame)},{"iobject",NativeMemory.Hex(NativeMemory.Add(frame,4))},{"raw_native_hex",MulVisualHex(NativeMemory.Bytes(frame,0x78))},{"name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(frame,12),1048576)},{"base_rectangle18_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(frame,24),16))},{"base_rectangle28_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(frame,40),16))},{"image",NativeMemory.Hex(image)},{"image_iobject",NativeMemory.Hex(NativeMemory.Add(image,4))},{"image_raw_hex",MulVisualHex(NativeMemory.Bytes(image,0xA4))},{"image_name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(image,12),4096)},{"image_cached_bytes",pictures.ByteArray(NativeMemory.Add(image,0x2C))},{"image_frames",list}});}NativeMemory.Require(raw==MulVisualHex(NativeMemory.Bytes(state,28)),"MulBtn image/text state changed during capture.");return new Dictionary<string,object>{{"complete",NativeMemory.Hex(state)},{"raw_native_hex",raw},{"frames",rows}};}
+  static Dictionary<string,object> MulVisualText(MulVisualAbi abi,IntPtr p){abi.Table(p,"TextFrame");string raw=MulVisualHex(NativeMemory.Bytes(p,0xA8));abi.Table(NativeMemory.Add(p,0x70),"Font");var row=new Dictionary<string,object>{{"complete",NativeMemory.Hex(p)},{"raw_native_hex",raw},{"name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,12),1048576)},{"base_rectangle18_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,24),16))},{"base_rectangle28_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,40),16))},{"caption",MulVisualFrameCaption(p)},{"font24_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(p,0x70),24))},{"font_handle_map",MulVisualFontMap(NativeMemory.Add(p,0x78),false)},{"font_logfont_map",MulVisualFontMap(NativeMemory.Add(p,0x80),true)}};NativeMemory.Require(raw==MulVisualHex(NativeMemory.Bytes(p,0xA8)),"MulBtn text changed during borrowed capture.");return row;}
+  static Dictionary<string,object> MulVisualState(MulVisualAbi abi,NativePictureResources.Api pictures,IntPtr state,bool text){if(text)abi.Table(state,"TextList");else abi.Images.Table(state,"ImageListInObj");string raw=MulVisualHex(NativeMemory.Bytes(state,28));var frames=text?abi.Pointers(NativeMemory.Add(state,8),"TextFrames"):abi.Images.Pointers(NativeMemory.Add(state,8),"ImageFrameArray");var rows=new List<object>();foreach(IntPtr frame in frames){if(text){rows.Add(MulVisualText(abi,frame));continue;}IntPtr image=MulVisualFrameImage(abi,frame);NativeMemory.Require(image!=IntPtr.Zero&&Marshal.ReadByte(image,8)==1,"This bounded image-clear adapter requires each frame to be an existing named COwnerBitmap.");var list=pictures.FrameList(NativeMemory.Add(image,0x88));NativeMemory.Require(((IList)list["rows"]).Count==0,"Named frame has an additional private frame graph; clear ownership is not generalized.");rows.Add(new Dictionary<string,object>{{"complete",NativeMemory.Hex(frame)},{"iobject",NativeMemory.Hex(NativeMemory.Add(frame,4))},{"raw_native_hex",MulVisualHex(NativeMemory.Bytes(frame,0x78))},{"name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(frame,12),1048576)},{"base_rectangle18_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(frame,24),16))},{"base_rectangle28_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(frame,40),16))},{"image",NativeMemory.Hex(image)},{"image_iobject",NativeMemory.Hex(NativeMemory.Add(image,4))},{"image_raw_hex",MulVisualHex(NativeMemory.Bytes(image,0xA4))},{"image_name",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(image,12),4096)},{"image_cached_bytes",pictures.ByteArray(NativeMemory.Add(image,0x2C))},{"image_frames",list}});}NativeMemory.Require(raw==MulVisualHex(NativeMemory.Bytes(state,28)),"MulBtn image/text state changed during capture.");return new Dictionary<string,object>{{"complete",NativeMemory.Hex(state)},{"raw_native_hex",raw},{"frames",rows}};}
   static Dictionary<string,object> MulVisualCapture(MulVisualAbi abi,NativePictureResources.Api pictures,Dictionary<string,object> action){var api=abi.Drawing;NativeMemory.Require(Convert.ToString(Map(action["target"])["rtti"])==".?AVCDrawMulBtn@@","MulBtn target RTTI selector differs.");IntPtr page,doc;Node selected=api.Locate(Map(action["target"]),out page,out doc);NativeMemory.Require(selected.Class.Name=="CDrawMulBtn"&&selected.Class.TypeId==0x5028&&selected.Class.Size==0x1FC,"Bounded state visual edit requires the exact CDrawMulBtn ABI.");List<Dictionary<string,object>> props;using(var collector=new NativeTypedPropertyCollector(api.Engine))props=collector.Read(NativeMemory.Add(selected.Full,4));IntPtr full=selected.Full;string rootRaw=MulVisualHex(NativeMemory.Bytes(full,0x1FC));var fills=abi.Pointers(NativeMemory.Add(full,0x14C),"FillArray");var images=abi.Images.Pointers(NativeMemory.Add(full,0x124),"MultiImageStates");var texts=abi.Pointers(NativeMemory.Add(full,0x138),"TextStates");int count=NativeMemory.I32(full,0x118);NativeMemory.Require(count>=1&&count==fills.Count&&count==images.Count&&count==texts.Count,"MulBtn levels/fill/image/text state counts differ.");abi.Table(NativeMemory.Add(full,0x110),"Levels");IntPtr levelData=NativeMemory.Ptr(full,0x114);NativeMemory.Require(levelData!=IntPtr.Zero&&NativeMemory.I32(full,0x11C)>=count,"MulBtn levels bounds differ.");var states=new List<object>();var own=new HashSet<uint>();for(int i=0;i<count;i++){NativeMemory.Require(own.Add(NativeMemory.U(fills[i]))&&own.Add(NativeMemory.U(images[i]))&&own.Add(NativeMemory.U(texts[i])),"MulBtn state containers have shared ownership.");abi.Table(fills[i],"Fill");states.Add(new Dictionary<string,object>{{"state_index",i},{"threshold_bits_uint32",unchecked((uint)NativeMemory.I32(levelData,4*i))},{"fill_object",NativeMemory.Hex(fills[i])},{"fill_raw_hex",MulVisualHex(NativeMemory.Bytes(fills[i],12))},{"fill_type_uint32",unchecked((uint)NativeMemory.I32(fills[i],4))},{"fill_color_uint32",unchecked((uint)NativeMemory.I32(fills[i],8))},{"images",MulVisualState(abi,pictures,images[i],false)},{"texts",MulVisualState(abi,pictures,texts[i],true)}});}var allOwned=new HashSet<string>(StringComparer.Ordinal);foreach(object stateValue in states){var stateRow=Map(stateValue);foreach(string stateKey in new[]{"images","texts"})foreach(object frameValue in(IEnumerable)Map(stateRow[stateKey])["frames"]){var frameRow=Map(frameValue);NativeMemory.Require(allOwned.Add(Convert.ToString(frameRow["complete"])),"MulBtn state frames share an owning allocation.");object imageValue;if(frameRow.TryGetValue("image",out imageValue))NativeMemory.Require(allOwned.Add(Convert.ToString(imageValue)),"MulBtn state frames share a COwnerBitmap owning allocation.");}}NativeMemory.Require(NativeMemory.I32(full,0x1E8)==0,"Additional private MulBtn action array is nonempty; its owned elements have no bounded preservation contract.");var eventAction=new Dictionary<string,object>{{"target",action["target"]},{"after",new Dictionary<string,object>{{"events",new object[0]}}}};var events=NativeControlEventEditing.Read(api.Engine,api.Context,NativeUsableEditPermit.Fixture,eventAction);var pictureCatalog=NativePictureResources.ReadRaw(api.Engine,api.Context,NativeUsableEditPermit.Fixture);foreach(object record in(IEnumerable)pictureCatalog["records"]){string canonicalImage=NativeMemory.Hex(NativeMemory.Add(new IntPtr(NativeEngine.Number(Map(record)["object"])),0x18));foreach(object stateValue in states)foreach(object frameValue in(IEnumerable)Map(Map(stateValue)["images"])["frames"])NativeMemory.Require(Convert.ToString(Map(frameValue)["image"])!=canonicalImage,"A state frame aliases a module11 canonical image, so original owned ClearAll is not safe.");}var result=new Dictionary<string,object>{{"abi_profile_sha256",MulButtonVisualProfileSha},{"kind",MulButtonVisualKind},{"target_control",Snapshot(api,selected)},{"page",api.Shared.PageSnapshot(page)},{"forest",SnapshotForest(api,doc)},{"history_store_projection",NativeHistoryStoreProjection.Prepare(api.Engine,doc).Before},{"properties",props},{"root_raw_native_hex",rootRaw},{"private_fixed100_hex",MulVisualHex(NativeMemory.Bytes(NativeMemory.Add(full,0x100),16))},{"point_cache_vector",MulVisualVector(NativeMemory.Add(full,0xE4))},{"levels",MulVisualBytes(NativeMemory.Add(full,0x110),4)},{"states",states},{"input_expression",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(full,0x160),1048576)},{"output_expression",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(full,0x174),1048576)},{"safety_expression",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(full,0x1AC),1048576)},{"safety_compiled_bytes",MulVisualBytes(NativeMemory.Add(full,0x1B0),1)},{"animation_list",NativeAnimationListEditing.CaptureRawList(api.Engine,full)},{"event_control",Map(events["target_control"])},{"picture_catalog",pictureCatalog},{"full_serialization_preimage",false},{"native_serialize_called",false}};NativeMemory.Require(rootRaw==MulVisualHex(NativeMemory.Bytes(full,0x1FC)),"MulBtn fixed private fields changed during capture.");return result;}
   internal static Dictionary<string,object> ReadMulButtonVisual(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){var drawing=new Api(e,c,project);return MulVisualCapture(new MulVisualAbi(drawing),new NativePictureResources.Api(e,c,project),action);}
+  static IntPtr MulVisualFrameImage(MulVisualAbi abi,IntPtr frame) {
+   abi.Images.Table(frame,"ImageInObj");
+   IntPtr image=NativeMemory.Ptr(frame,0x68);
+   abi.Table(image,"OwnerBitmap");
+   abi.Table(NativeMemory.Add(image,4),"OwnerBitmapSecondary");
+   return image;
+  }
+  static string MulVisualFrameCaption(IntPtr frame) {
+   return NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(frame,0x6C),1048576);
+  }
+  static void MulVisualCatalogImageGeometry(IntPtr frame,Dictionary<string,object> row) {
+   // CSelectSubObj's image archive stores the local +0x28 box first,
+   // followed by the parent +0x18 box and four binary64 values at +0x38.
+   IntPtr nameField=NativeMemory.Add(frame,0xC),boundsField=NativeMemory.Add(frame,0x18);
+   string name=NativeUsableEditPermit.ReadCurrentCString(nameField,1048576);
+   byte[] raw=NativeMemory.Bytes(boundsField,64);
+   var local=new int[4];
+   var parent=new int[4];
+   var subpixel=new string[4];
+   for(int i=0;i<4;i++){
+    parent[i]=BitConverter.ToInt32(raw,4*i);
+    local[i]=BitConverter.ToInt32(raw,16+4*i);
+    subpixel[i]=BitConverter.ToUInt64(raw,32+8*i).ToString("x16",CultureInfo.InvariantCulture);
+   }
+   NativeMemory.Require(name==NativeUsableEditPermit.ReadCurrentCString(nameField,1048576)&&
+    MulVisualHex(raw)==MulVisualHex(NativeMemory.Bytes(boundsField,raw.Length)),"MulBtn catalog image frame geometry changed while reading.");
+   row["frame_name"]=name;
+   row["local_bounds"]=local;
+   row["parent_bounds"]=parent;
+   row["subpixel_bounds_bits"]=subpixel;
+  }
+  static List<object> MulVisualCatalogFrames(MulVisualAbi abi,List<IntPtr> frames,bool text,bool imageGeometry,HashSet<uint> owners) {
+   var rows=new List<object>();
+   for(int i=0;i<frames.Count;i++){
+    IntPtr frame=frames[i];
+    NativeMemory.Require(owners.Add(NativeMemory.U(frame)),"MulBtn catalog state frames share an owning allocation.");
+    var row=new Dictionary<string,object>{{"frame_index",i}};
+    if(text){
+     abi.Table(frame,"TextFrame");
+     string caption=MulVisualFrameCaption(frame);
+     NativeMemory.Require(caption==MulVisualFrameCaption(frame),"MulBtn catalog frame text changed while reading.");
+     row["caption"]=caption;
+    }else{
+     IntPtr image=MulVisualFrameImage(abi,frame);
+     byte mode=Marshal.ReadByte(image,8);
+     NativeMemory.Require(mode==0||mode==1,"MulBtn catalog image reference mode differs.");
+     row["image_mode"]=mode==1?"named":"embedded";
+     if(mode==1){
+      IntPtr nameField=NativeMemory.Add(image,12);
+      string name=NativeUsableEditPermit.ReadCurrentCString(nameField,4096);
+      NativeMemory.Require(name==NativeUsableEditPermit.ReadCurrentCString(nameField,4096),
+       "MulBtn catalog image resource name changed while reading.");
+      row["resource_name"]=name;
+      if(imageGeometry)MulVisualCatalogImageGeometry(frame,row);
+     }
+     NativeMemory.Require(image==NativeMemory.Ptr(frame,0x68)&&mode==Marshal.ReadByte(image,8),
+      "MulBtn catalog frame image changed while reading.");
+    }
+    rows.Add(row);
+   }
+   return rows;
+  }
+  internal static Dictionary<string,object> ReadMulButtonStateCatalog(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action) {
+   var target=Map(action["target"]);
+   NativeMemory.Require(target.ContainsKey("control_path")&&Convert.ToString(target["rtti"])==".?AVCDrawMulBtn@@",
+    "Select the exact CDrawMulBtn path and RTTI for the state catalog.");
+   object details,imageGeometry;
+   if(!target.TryGetValue("include_frame_details",out details))details=false;
+   NativeMemory.Require(details is bool,"The state catalog include_frame_details selector must be a boolean.");
+   if(!target.TryGetValue("include_image_frame_geometry",out imageGeometry))imageGeometry=false;
+   NativeMemory.Require(imageGeometry is bool,"The state catalog include_image_frame_geometry selector must be a boolean.");
+   var drawing=new Api(e,c,project);
+   var abi=new MulVisualAbi(drawing);
+   IntPtr page,doc;
+   Node selected=drawing.Locate(target,out page,out doc);
+   NativeMemory.Require(selected.Class.Name=="CDrawMulBtn"&&selected.Class.TypeId==0x5028&&selected.Class.Size==0x1FC,
+    "The state catalog requires the verified CDrawMulBtn layout.");
+   IntPtr full=selected.Full;
+   string original=MulVisualHex(NativeMemory.Bytes(full,selected.Class.Size));
+   IntPtr levelsField=NativeMemory.Add(full,0x110);
+   abi.Table(levelsField,"Levels");
+   int count=NativeMemory.I32(levelsField,8);
+   IntPtr levelsData=NativeMemory.Ptr(levelsField,4);
+   NativeMemory.Require(count>0&&NativeMemory.I32(levelsField,12)>=count&&levelsData!=IntPtr.Zero,
+    "MulBtn levels bounds differ.");
+   var fills=abi.Pointers(NativeMemory.Add(full,0x14C),"FillArray");
+   var images=abi.Images.Pointers(NativeMemory.Add(full,0x124),"MultiImageStates");
+   var texts=abi.Pointers(NativeMemory.Add(full,0x138),"TextStates");
+   NativeMemory.Require(count==fills.Count&&count==images.Count&&count==texts.Count,
+    "MulBtn levels/fill/image/text state counts differ.");
+   byte[] levels=NativeChunkedRawMemory.Read(levelsData,checked(count*4));
+   var states=new List<object>();
+   var owners=new HashSet<uint>();
+   for(int i=0;i<count;i++){
+    NativeMemory.Require(owners.Add(NativeMemory.U(fills[i]))&&owners.Add(NativeMemory.U(images[i]))&&owners.Add(NativeMemory.U(texts[i])),
+     "MulBtn state containers have shared ownership.");
+    abi.Table(fills[i],"Fill");
+    abi.Images.Table(images[i],"ImageListInObj");
+    abi.Table(texts[i],"TextList");
+    var imageFrames=abi.Images.Pointers(NativeMemory.Add(images[i],8),"ImageFrameArray");
+    var textFrames=abi.Pointers(NativeMemory.Add(texts[i],8),"TextFrames");
+    float threshold=BitConverter.ToSingle(levels,4*i);
+    var state=new Dictionary<string,object>{
+     {"state_index",i},{"threshold_bits_uint32",BitConverter.ToUInt32(levels,4*i)},
+     {"threshold",Single.IsNaN(threshold)||Single.IsInfinity(threshold)?null:(object)threshold},
+     {"fill_type_uint32",unchecked((uint)NativeMemory.I32(fills[i],4))},
+     {"fill_color_uint32",unchecked((uint)NativeMemory.I32(fills[i],8))},
+     {"image_frame_count",imageFrames.Count},{"text_frame_count",textFrames.Count},
+    };
+    if((bool)details||(bool)imageGeometry){
+     state["image_frames"]=MulVisualCatalogFrames(abi,imageFrames,false,(bool)imageGeometry,owners);
+     state["text_frames"]=MulVisualCatalogFrames(abi,textFrames,true,false,owners);
+    }
+    states.Add(state);
+   }
+   NativeMemory.Require(original==MulVisualHex(NativeMemory.Bytes(full,selected.Class.Size))&&
+    MulVisualHex(levels)==MulVisualHex(NativeChunkedRawMemory.Read(levelsData,levels.Length)),
+    "MulBtn state definition changed while reading.");
+   var identity=NativeOpaqueDrawState.ControlObject(full);
+   return new Dictionary<string,object>{
+    {"abi_profile_sha256",MulButtonVisualProfileSha},{"kind",MulButtonStateCatalogKind},
+    {"target_control",new Dictionary<string,object>{{"class",selected.Class.Name},{"path",selected.Path},
+      {"name",NativeStrategyProfile.ReadName(drawing.Shared.Shared,identity)},
+      {"native_id",NativeStrategyProfile.ReadId(drawing.Shared.Shared,identity)}}},
+    {"states",states},{"read_only",true},
+   };
+  }
   internal static INativePreparedPageControlEdit PrepareMulButtonVisual(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){return new PreparedMulButtonVisual(new Api(e,c,project),project,action);}
   sealed class PreparedMulButtonVisual:INativePreparedPageControlEdit {
    sealed class Item{internal int Index;internal bool Clear;internal uint Type,Color;internal IntPtr Fill,State,Value;}

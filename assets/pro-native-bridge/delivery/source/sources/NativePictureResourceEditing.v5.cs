@@ -81,7 +81,7 @@ namespace McgsInternalBridge {
      if(kind=="picture-rename"){
       string destination=NativePageControlPreparation.Text(Map(a["after"]),"name");foreach(object item in (IEnumerable)Map(before["resource_catalog"])["records"])NativeMemory.Require(!Convert.ToString(Map(item)["name"]).Equals(destination,StringComparison.OrdinalIgnoreCase),"Picture rename destination already exists.");
       RequireNoKnownContainedPictureReferences(api,name);RejectExternalPictureConsumers(api,before,target);
-      rename=NativeReferencedPageEditing.PreparedObjectRename.Prepare(api.Raw.Engine,api.Raw.Context,api.Raw.Project,a,target);
+      rename=NativeReferencedPageEditing.PreparedObjectRename.Prepare(api.Raw.Engine,api.Raw.Context,api.Raw.Project,a,target,allowUnreferencedPictureCatalog:true);
      }else if(kind=="picture-delete"){
       RequireNoKnownContainedPictureReferences(api,name);var after=Map(a["after"]);NativeMemory.Require(after.Count==1&&after.ContainsKey("exists")&&after["exists"] is bool&&!(bool)after["exists"],"Picture deletion requires explicit exists=false.");RequireNoIncoming(Map(before["reference_graph"]),Convert.ToString(before["target_path"]));nativeName=new NativeStrategyProfile.CString(api.Raw.Common.Shared,name);
      }else if(creates||kind=="picture-replace"||kind=="picture-export"){

@@ -23,24 +23,40 @@ CONTRACT_PATHS = {
     'source_manifest_sha256': 'assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json',
     'source_catalog_sha256': 'assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json',
 }
+STU_CONTRACT = 'stu_engine_source_sha256'
 
 
-def source_contract(skill, helper):
-    return {key: helper._sha(Path(skill) / path) for key, path in CONTRACT_PATHS.items()}
+def source_contract(skill, helper, *, family='pro'):
+    contract = {key: helper._sha(Path(skill) / path) for key, path in CONTRACT_PATHS.items()}
+    if family == 'stu':
+        source = helper.stu_engine_source_sha256(skill)
+        if source is None:
+            raise helper.BundleUnavailable('This skill has no Stu native engine source contract',
+                status='stu_native_skill_components_missing', family=family, current_skill_preserved=True)
+        contract[STU_CONTRACT] = source
+    return contract
 
 
 def matches(root, info, wanted, helper):
     try:
         engine = helper._inside(root, info['business_engine'])
         release = helper._read(engine.parent / 'portable-engine-manifest.json')
-        return (all(release.get(key) == value for key, value in wanted.items())
-                and helper._sha(engine) == release['sha256'])
+        if (any(release.get(key) != wanted[key] for key in CONTRACT_PATHS)
+                or helper._sha(engine) != release['sha256']):
+            return False
+        if STU_CONTRACT in wanted:
+            skill = helper._inside(root, info['skill_directory'])
+            return (helper.stu_engine_source_sha256(skill) == wanted[STU_CONTRACT]
+                    and helper.verify_stu_engine(root, info, skill_root=skill) is not None)
+        return True
     except (OSError, ValueError, KeyError, TypeError):
         return False
 
 
 def _index(value, wanted, helper):
-    if value.get('schema') != INDEX_SCHEMA or value.get('source_contract') != wanted:
+    indexed_contract = value.get('source_contract')
+    if (value.get('schema') != INDEX_SCHEMA or not isinstance(indexed_contract, dict)
+            or any(indexed_contract.get(key) != expected for key, expected in wanted.items())):
         return None
     spec = value['update']
     if (not re.fullmatch(r'[a-f0-9]{64}', spec['sha256'])
@@ -51,19 +67,34 @@ def _index(value, wanted, helper):
     return spec
 
 
-def _find_index(skill, wanted, cache, helper, allow_download):
+def _find_index(skill, wanted, cache, helper, allow_download, diagnostics=None):
     # Explicit local metadata also supports fully disconnected distributions.
     explicit = os.environ.get('MCGS_UPDATE_INDEX')
+    diagnostics = diagnostics if diagnostics is not None else []
     paths = ([Path(explicit).expanduser()] if explicit else []) + [
         Path(skill) / INDEX_NAME, Path(skill).parent / INDEX_NAME,
         cache / INDEX_NAME, Path.cwd() / INDEX_NAME, Path.home() / 'Downloads' / INDEX_NAME,
     ]
-    for path in paths:
-        if path.is_file():
+    for position, path in enumerate(paths):
+        is_explicit = bool(explicit) and position == 0
+        try:
+            if not path.is_file():
+                if is_explicit:
+                    raise ValueError('Index is not a regular file')
+                continue
             candidate = _index(helper._read(path), wanted, helper)
             if candidate:
                 candidate['index_directory'] = str(path.resolve().parent)
                 return candidate
+            if is_explicit:
+                raise ValueError('Index schema or source contract does not match the current skill')
+        except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
+            item = {'path': str(path.absolute()), 'explicit': is_explicit,
+                    'status': 'release_index_rejected', 'detail': str(error)}
+            diagnostics.append(item)
+            if is_explicit:
+                raise ValueError('Explicit MCGS_UPDATE_INDEX rejected at ' + str(path.absolute()) + ': ' + str(error)) from error
+            print(json.dumps(item, ensure_ascii=False), file=sys.stderr)
     if not allow_download:
         return None
     # /latest can deliberately remain the old complete package. Search release
@@ -127,8 +158,8 @@ def _apply(skill, base, extracted, output, helper):
     return module.apply_update(base, extracted, output)
 
 
-def ensure_matching(skill, base, info, helper, allow_download=True, cache_dir=None):
-    wanted = source_contract(skill, helper)
+def ensure_matching(skill, base, info, helper, allow_download=True, cache_dir=None, *, family='pro'):
+    wanted = source_contract(skill, helper, family=family)
     cache = Path(cache_dir).expanduser().resolve() if cache_dir else helper.default_cache().resolve()
     if matches(base, info, wanted, helper):
         return base, info
@@ -145,13 +176,16 @@ def ensure_matching(skill, base, info, helper, allow_download=True, cache_dir=No
                 return root, metadata
         except (OSError, ValueError, KeyError, TypeError):
             continue
+    diagnostics = []
     try:
-        spec = _find_index(skill, wanted, cache, helper, allow_download)
+        spec = _find_index(skill, wanted, cache, helper, allow_download, diagnostics)
         if spec is None:
-            raise helper.BundleUnavailable('No published precompiled update matches the current skill source contract',
+            raise helper.BundleUnavailable('No published precompiled update matches the selected family and current skill source',
                 status='matching_engine_update_unavailable', source_contract=wanted,
+                family=family,
                 selected_bundle=str(base), current_skill_preserved=True,
-                recovery_command='run.ps1 turnkey fetch-bundle', download_enabled=allow_download)
+                recovery_command='run.ps1 turnkey fetch-bundle', download_enabled=allow_download,
+                index_diagnostics=diagnostics)
         with helper._fetch_lock(cache):
             destination = cache / 'releases' / ('u-' + spec['sha256'][:20])
             if destination.exists():
@@ -185,4 +219,6 @@ def ensure_matching(skill, base, info, helper, allow_download=True, cache_dir=No
     except (OSError, ValueError, KeyError, TypeError, zipfile.BadZipFile, http.client.HTTPException) as error:
         raise helper.BundleUnavailable('Matching precompiled update could not be prepared', detail=str(error),
             status='matching_engine_update_unavailable', source_contract=wanted,
-            current_skill_preserved=True, source_engine_rebuild_required=False) from error
+            family=family,
+            current_skill_preserved=True, source_engine_rebuild_required=False,
+            index_diagnostics=diagnostics) from error

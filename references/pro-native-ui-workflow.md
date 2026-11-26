@@ -22,6 +22,16 @@
 
 施工优先复用现有接口，不在写工程过程中顺手研发 SDK。缺功能时先保持原业务并列精确缺口；必要扩展在纯文件准备阶段完成。同页连续原生创建现可在direct中共用一次历史和末尾刷新，逐项构造与核对保留；兼容step自动合并RPC、依赖及保存边界见[在线提速合同](pro-native-performance.md)。这不代表任意跨页/派生控件都支持通用批量创建，新批次的原厂运行验收范围见相应记录。已有几何/属性批次继续复用。
 
+## Pro 公共窗口
+
+读取 `page-document-properties` 时，按页面 ID 和全名指定 `target.include_common_window:true`。结果 `common_window` 为当前 `{id,name}` 或 `null`。当前程序的字段定位暂不可用时看 `common_window_unavailable`。未请求这一项时，普通页面属性照常读取。
+
+写入前先在 Pro 内激活宿主页。用 `after.fields.common_window:{source:null,target:{id:3,name:"Title"}}` 声明原值和目标。改选时填写两个实际页面身份，清除时令 `target:null`。这一动作单独提交。原厂页面生成后核对完整双向图只改这一条边，再刷新原厂视图。宿主可有普通文本、矩形、位图、输入框、标准按钮、多状态按钮及嵌套组。接口核对这些控件的已识别属性、事件、动画缓存及标准按钮原动作数组。原生旋转仪表还需核对原厂编译器的六对表达式和缓存，启用独立图片编译的仪表需单独验证。已有原厂编译缓存的标量赋值和简单数值条件脚本也可保留。每个脚本变量必须对应当前原厂双向图的直接引用。单个页面公用事件脚本也可保留已编译的单独一条 `!SetWindow(窗口名,1)`。入口先比对其原编译程序、现有目标页面 ID 和已登记脚本引用，重编后逐字节核脚本缓存。脚本跳转目标和本次关联目标应为不同页面。标量赋值右侧也可保留已证原编译形态的 `!Rand(整数,整数)`，两个整数字面量和原调用编码须与当前已编译程序吻合。原生关系、保存回读与实际叠层显示分别验收。
+
+分派事件宿主目前接受一个无主连接、无参数和附加载荷的原厂页面 `Click`。源码可为单行注释或一条数值变量常量赋值，如 `本地计数 = 1`。注释须匹配原厂空程序结束记录。赋值须匹配原厂完整编译程序，程序中的 32 位整数及目标变量 ID 必须与当前源码、数值对象及其已登记页面引用一致。编译完成后用 `page-document-properties` 的 `events[]` 核实。修改公共窗口时，原厂生成后的完整事件对象、源码、载荷及编译数组须与前像逐字节一致。其他分派事件、脚本调用和未验证插件由当前特性的预检报告具体不支持项。
+
+原厂 E 系列样例的这条跳转在文件中有一个值为 15 的操作数，设计器打开后可能将这一字设为 0。两种完整缓存形状仍须匹配当前窗口 ID、模式和同一条原厂双向引用。在线修改前后的实机缓存逐字节核对。
+
 ## 几何与样式批次
 
 - `control-geometry-batch` 每页接受非空的不同控件集合，不再按样本写死64项；目标含当前完整 path/name/class，仍拒绝同批父子、祖孙或重复子树。组使用已证的归一化子矩形合同，核完整森林，不能只验证外框。当前入口要求原绘图 view 已存在，原 page property13 满足其前置守卫；按实际 Read/Prepare 拒绝结果处理，不暗改该字段。实际消息容量仍须满足。
@@ -55,13 +65,18 @@
 
 ## 新增原生外观接口
 
+只核对某个原生 owner 时，`control-properties` 只读请求可在 target 设置 `property_scope: "selected-owner"`。省略 component_path 时读取控件本身及直接组件元数据。包含路径时逐级定位，再读取选中的 owner。此模式不递归进入其它组件，回执会标出采集范围。请求完整属性树或读取某个尚未定位的组件时仍按原厂适配结果报告。
+
 - `control-slider-fill-visual`：只设置填充区域的低24位BGR颜色，保留原填充启用高字节、字体、表达式和数值格式；灰色槽体等独立装饰按布局处理。
 - `control-mulbutton-visual`：按当前真实状态索引和阈值修改原多态按钮的平面填充，或移除该状态自有图片框。`type=65538` 是平面填充，`type=2` 不填充，`type=0` 仍可能绘制原3D默认底色。移除状态图片不删除图库资源；保留输入/输出绑定、权限、动作、阈值和文字。
+- 多态按钮的状态定义可通过原生 `inspect` 请求 `control-mulbutton-state-catalog`。`target` 提供当前 `page_id`、`page_name`、完整 `control_path`、`control_name`、`class: "CDrawMulBtn"` 和 `rtti: ".?AVCDrawMulBtn@@"`。`before.states` 返回各状态的阈值及其精确浮点位模式、原生填充类型、完整颜色值、图片与文字帧数。控件路径和实际成员结构仍需通过原生核对。完整属性树和外观写入沿用各自的校验。
+- 在相同 `target` 里加 `"include_frame_details": true`，各状态还返回 `text_frames[].caption` 和 `image_frames[].image_mode`。具名图片帧的 `resource_name` 是该帧保存的图库资源引用名，嵌入图片只返回模式。每种帧按原生顺序给出 `frame_index`。帧类、图片归属或引用模式不符合已证结构时，此明细请求会返回对应缺口，默认状态摘要仍按原有合同读取。
+- `"include_image_frame_geometry": true` 会包含上述帧明细，并为具名图片帧显示 `frame_name`、原生局部框 `local_bounds`、父级框 `parent_bounds` 和 `subpixel_bounds_bits`。每个框依次给出左、上、右、下，双精度坐标用 16 个十六进制字符保留完整位模式。这些值来自当前设计器内存。原厂加载组内控件时可按组和控件边框展开归档中的万分比坐标，文件回读需按该组的几何关系换算。此参数用于只读查询。
 - 多态按钮的历史后验实现曾将页面属性数组index13误当 `doc+0x28C`；正确索引为9。修正只改预期投影，index13保持前像，不写原页面条件。
 
 普通 Label 的单位框需容纳原生文字边距；实际案例中的14px宽V/A、20px宽Hz有裁切。不能用单个GDI字宽或截图占位值保证原厂显示，集中做一次实际视觉核对即可，不逐控件反复打开工程。
 
-新增图元的可见/颜色动画优先用已实现的 `new_class` 原生工厂，复制真实源定义的可编辑字段；原厂构造后的完整已知值在加入工程前必须与本次期望一致。已有源动画 `CByteArray+0x14` 可含编译缓存，而原生Serialize/Deserialize克隆可能清空它；现有精确克隆入口对此仍会拒绝，不通过删除原条件或通用忽略字节数组来绕过。不要把一个可见动画工厂实例成功说成全动画类型均已验证。用户明确暂缓新增动画时，先完成静态外观，保留已有动画并如实列出未完成部分。
+动画列表用 `control-animation-list` 获取现有项及当前控件身份，可用 `native-animation-plan` 准备增、删、重排和受支持字段编辑。未修改的保留项沿用原建模对象及编译缓存。复制或替换某项仍核原厂序列化后的字段，存在差异时指出该项；可直接用组件原 setter 修改 getter 已证明的字段。新动画通过具体原厂类构造，完整预期记录与实际构造和更新值一致后才加入工程。字段及回执见[在线动画编辑](pro-animation-editing.md)。
 
 ## 图库与存储比较
 
@@ -88,6 +103,8 @@ python -B scripts/native_ui_rules.py --input extracted-evidence.json --out NEW-r
 最终一次收尾：同步必要引用（包括完整 expected edges）→以当前事实 direct 保存各页/模块→单独一次 RootSave→必要的一次原 Root85→保存检查后的统一只读 typed/forest/graph及业务比较。已有策略私有工作文档先用真正 pure-sync/close，历史 Doc83 可能内嵌全RootSave，不能叫child-only。不要为每个小步骤导出、保存、关闭重开或重跑全部功能；需要持久重载验收时再集中一次正常 Close/Open。
 
 相邻、范围明确且彼此没有回执依赖的 `page-flush` 与 `root-flush` 可交由 `run` 合并为一次 RPC。仍按顺序执行各页原生保存和一次 RootSave，并分别核对各动作结果。结果不明时先核对原请求和实际工程状态。
+
+超时后用同一连接的 `native-engineering request-result --id <原请求ID> --request-sha256 <原请求SHA256>` 查询。两项取自原回执的 `transport_state.request_id` 和 `queue_request_sha256`。`correlated_response_observed` 表示读到对应回执，原厂执行结果仍查看其中的 `result`。查询仅读取已有队列记录。
 
 Root85 的 `ok=true` 只说明调用正常返回。通过须同时满足 `native_check_passed=true`、`original_worker_call_entered=true`、`original_worker_returned=true`、`original_worker_return_int32==0` 和 `state_after.root_compile_valid_raw==1`。错误/警告计数未取得时保留 unknown/null，不伪造0，不用调用前的旧 compile1 代替检查。保留原厂UI、异常和自身持久化语义；需要提示处理时遵循已有授权，不隐藏确认。
 

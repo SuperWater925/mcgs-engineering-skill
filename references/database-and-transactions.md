@@ -48,7 +48,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCS' -Manifest 
 
 | 表 | 行范围 | 可写字段 |
 | --- | --- | --- |
-| System | ObjData、ObjPointerRule、StgyAndTrigger、MCGS_RECIPE_* | lbContext |
+| System | ObjData、ObjPointerRule、StgyAndTrigger、MCGS_RECIPE_*、已有的 MCGS_PICTURE_DATA_数字 | lbContext |
 | Stgy | 已证实的iStgyID=0容器 | lbObjects |
 | Trigger | 既有iID | lbContext |
 | WndUser | 既有iID | lbObjects |
@@ -56,7 +56,7 @@ pwsh -NoProfile -File .\run.ps1 apply -Project 'D:\工程\当前.MCS' -Manifest 
 
 `Stgy/0/lbObjects`与`System/StgyAndTrigger/lbContext`要求成对列入。调用者负责使用原生解析器证明两份策略语义同步；`native_tool.py strategy-source`已实现此证明。通用写入器校验SHA与字段范围，不声称能验证任意BLOB的业务语义。
 
-Stu和Pro使用上表同一白名单；Pro策略双容器与配方单元格已做实际提交、复读和越界检查。Pro JSON `create/edit`有有限规格适配器，通过同一运行环境执行，按全表回读验收。软件大、小版本不做准入条件。
+Stu 和 Pro 使用同一白名单。图片行用 `resources` 先核原生格式、资源身份和非目标内容。两种工程的基础 JSON `create/edit` 共用运行环境，按家族适配归档并执行全表回读。软件发行号仅记录。
 
 新建窗口要新增WndUser行，`apply`不支持；共享 `run.ps1 new-window` / `tools/新增窗口事务.ps1` 已支持 Stu/Pro，且可用 `-ExportAfter` 复用实际回读。额外窗口字段从显式 `template_key` 原行精确保留，不能任意改写。本项目用受限事务脚本做过：`20261023_IO监视/执行IO监视受限事务.ps1`，只新增清单列出的行（六列`iID/strName/strNote/lbObjects/iDeleteFlag=0/iCompileFlag=0`），其余照本入口的白名单更新与全表比对。
 - 该脚本按函数名从`scripts/stu_project.ps1`抽取`FullPath/Sha/SharedHash/ValueFingerprint/SensitiveTable/SafeSystemRow/SafeKey/Connection/ReadDatabase/Capture/StableCopy/CompareMaps/ManifestBlob`。
@@ -89,3 +89,38 @@ BLOB路径必须相对清单目录且不越界；每个字段有前指纹；重�
 ## 已打开工程的原生持久化
 
 Pro 原生桥编辑使用原厂对象服务和各模块保存链，不通过 ACE 直接写当前 live MCP。磁盘 SHA 的接续只能发生在明确已授权、正常返回且原生完整后像已核对的 own_persistence_boundary；不明外部变化拒绝接纳。commit=false 仅关闭 bridge 主动 Flush/RootSave，原厂 worker 自带保存仍可能落盘。离线工程副本继续遵循上文事务、备份和完整回读规则。
+
+## 结构编辑示例
+
+下面的 PowerShell 示例创建一份新的演示工程，读取首页三个或更多顶层控件的原始身份，删除第二项，再把最后一项移至首位。当前目录应为技能根目录，目标文件名需尚未使用。
+
+```powershell
+$sourceFile = Join-Path $PWD '结构演示-原始.MCP'
+$outputFile = Join-Path $PWD '结构演示-候选.MCP'
+$specFile = Join-Path $PWD '结构演示-编辑.json'
+if (Test-Path -LiteralPath $specFile) { throw '请指定新的规格文件名' }
+pwsh -NoProfile -File .\run.ps1 create --spec .\assets\pro-3.5-cli\examples\create-button.json --output $sourceFile
+if ($LASTEXITCODE) { throw '创建演示工程失败' }
+$native = python -B -X utf8 .\assets\pro-3.5-cli\scripts\mcgs_file.py inspect $sourceFile | ConvertFrom-Json
+if ($LASTEXITCODE) { throw '读取工程身份失败' }
+$page = $native.pages[0]
+$controls = @($page.controls)
+if ($controls.Count -lt 3) { throw '此示例需要至少三个顶层控件' }
+$remove = $controls[1]
+$last = $controls.Count - 1
+$order = @($last) + @($controls | Where-Object { $_.index -ne 1 -and $_.index -ne $last } | ForEach-Object { $_.index })
+$spec = @{
+    source_sha256 = (Get-FileHash -Algorithm SHA256 -LiteralPath $sourceFile).Hash.ToLowerInvariant()
+    pages = @(@{
+        id = $page.id
+        remove_controls = @(@{ index = $remove.index; type_id = [Convert]::ToInt32($remove.kind,16); name = $remove.name; sha256 = $remove.sha256 })
+        control_order = $order
+    })
+}
+$spec | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $specFile -Encoding utf8
+pwsh -NoProfile -File .\run.ps1 edit --source $sourceFile --spec $specFile --output $outputFile
+if ($LASTEXITCODE) { throw '候选工程生成失败' }
+python -B -X utf8 .\assets\pro-3.5-cli\scripts\mcgs_file.py inspect $outputFile
+```
+
+对比前后控件名、顺序和存留控件的 SHA。工具在排他事务中写入候选副本，并重新打开数据库验证全部表；原厂组态检查和编译记录另外采集。页及变量规格见[结构编辑字段](offline-factories.md#既有页控件和变量的结构编辑)。

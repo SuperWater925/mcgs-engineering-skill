@@ -12,7 +12,7 @@ sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'assets/pro-native-bridge/abi-adapter'))
 
 import abi_binding
-from abi_locator import CATALOG_SCHEMA, resolve_catalog
+from abi_locator import CATALOG_SCHEMA, PROPERTY_METHOD_ROLES, create_catalog, resolve_catalog
 from layout_adaptation import field_operands, resolve_model
 from module_selection import select_module_files
 from pe32 import PE32
@@ -21,7 +21,9 @@ from x86_signature import attach_reference_contexts, decode_signature
 
 
 def write_pe(path, *, dll=False, marker=0, code=()):
-    raw = bytearray(1024)
+    used = max((rva - 4096 + len(instructions) for rva, instructions in code), default=0)
+    section_size = max(512, (used + 511) // 512 * 512)
+    raw = bytearray(512 + section_size)
     raw[:2] = b'MZ'
     struct.pack_into('<I', raw, 0x3c, 0x80)
     raw[0x80:0x84] = b'PE\0\0'
@@ -30,7 +32,7 @@ def write_pe(path, *, dll=False, marker=0, code=()):
     struct.pack_into('<H', raw, optional, 0x10b)
     struct.pack_into('<III', raw, optional + 28, 0x400000, 4096, 512)
     struct.pack_into('<II', raw, optional + 56, 8192, 512)
-    struct.pack_into('<8sIIII12xI', raw, optional + 96, b'.text', 512, 4096, 512, 512, 0x60000020)
+    struct.pack_into('<8sIIII12xI', raw, optional + 96, b'.text', section_size, 4096, section_size, 512, 0x60000020)
     raw[-1] = marker
     for rva, instructions in code:
         start = 512 + rva - 4096
@@ -160,6 +162,62 @@ class AbiRoleTests(unittest.TestCase):
         operands = field_operands(model, 'mem', 0x20)
         self.assertEqual(resolve_model(model, operands, current, {'actual_rva': 0x1000}),
                          (0x1023, {(0, 1): 0x30}, True))
+
+    def test_reviewed_properties_publish_only_text_setter_with_or_without_cache(self):
+        root = self.reference.parent
+        profiles = root / 'profiles'
+        profiles.mkdir()
+        default_setter = 0x1080
+        code = [(default_setter, bytes.fromhex('c20400'))]
+        tables = {}
+        templates = []
+        entry_points = []
+        role_count = len(PROPERTY_METHOD_ROLES)
+        for index in range(role_count + 1):
+            entry = 0x1000 + index * 0x10
+            body = 0x1100 + index * 0x64
+            # The discriminator lies after a real internal JMP. A prefix-only
+            # declaration would see the same prologue in every fixture method.
+            instructions = (bytes.fromhex('558beceb029090b8') + struct.pack('<I', index + 1)
+                            + b'\x90' * 82 + bytes.fromhex('5dc20400'))
+            code.extend([(entry, b'\xe9' + struct.pack('<i', body - entry - 5)), (body, instructions)])
+            entry_points.append(entry)
+        for index, (name, displacement, roles) in enumerate(PROPERTY_METHOD_ROLES):
+            data_rva = 0x1800 + index * 0x100
+            setter = entry_points[-1] if any(slot == 5 for slot, _, _ in roles) else default_setter
+            tables[name] = {'decorated_name': name, 'vtable_rva': data_rva,
+                            'col_offset': displacement, 'constructor_displacement_offset': 0,
+                            'col_rva': data_rva + 0x24, 'type_descriptor_rva': data_rva + 0x38,
+                            'slot_entry_rvas': [default_setter] * 5 + [setter, entry_points[index], default_setter],
+                            'hierarchy': {'rva': data_rva + 0x58, 'base_array_rva': data_rva + 0x70,
+                                          'attributes': 0, 'bases': [{
+                                              'decorated_name': '.?AVIPropertyLinker@ObjectTree@@',
+                                              'contained': 0, 'attributes': 0, 'pmd': [displacement, -1, 0],
+                                              'descriptor_rva': data_rva + 0x78,
+                                              'type_descriptor_rva': 0x1600}]}}
+            templates.append((name, displacement, tuple((slot, role, len(instructions))
+                                                        for slot, role, _ in roles)))
+        write_pe(self.reference, code=code)
+        mutated = code + [(0x1100 + role_count * 0x64 + 8, b'\xf0')]
+        write_pe(self.current, marker=1, code=mutated)
+        with patch('abi_locator.PROPERTY_METHOD_ROLES', templates), patch.object(
+                rtti, 'locate_type', side_effect=lambda image, name: {'tables': [dict(tables[name])]}):
+            catalog = create_catalog({'editor': self.reference}, profiles)
+            self.assertEqual(len(catalog['types']), role_count)
+            expected_slots = [sorted(slot for slot, _, _ in roles) for _, _, roles in PROPERTY_METHOD_ROLES]
+            self.assertEqual(sum(slots.count(5) for slots in expected_slots), 1)
+            for use_cache in (True, False):
+                resolved = resolve_catalog(catalog, {'editor': self.reference}, prefer_content_cache=use_cache)
+                self.assertEqual([[slot['reference_index'] for slot in row['slot_coverage']['identified_slots']]
+                                  for row in resolved['types']], expected_slots)
+                bodies = [row['terminal_body_contract'] for row in resolved['functions']
+                          if row['names'][0].endswith(('/property-getter', '/property-setter'))]
+                self.assertEqual([row['complete_supplied_match_length'] for row in bodies],
+                                 [len(instructions)] * (role_count + 1))
+                self.assertTrue(all(row['satisfied'] for row in bodies))
+            changed = resolve_catalog(catalog, {'editor': self.current}, prefer_content_cache=False)
+        self.assertEqual([[slot['reference_index'] for slot in row['slot_coverage']['identified_slots']]
+                          for row in changed['types']], [[6]] * role_count)
 
 
 if __name__ == '__main__':

@@ -19,13 +19,16 @@ def main():
     options, rest = parser.parse_known_args()
     if not rest or any(value in ('-h', '--help') for value in rest):
         parser.print_help()
-        print('\nCommands: layout, inspect, execute/apply, stage, run, serve, close-reopen, lifecycle-read.')
+        print('\nCommands: layout, inspect, execute/apply, stage, run, serve, request-result, plan-remainder, close-reopen, lifecycle-read.')
         print('Direct edit: execute --project PROJECT.mcp --spec edit.json [--out result.json]')
+        print('Strict inspection: inspect --project PROJECT.mcp --spec selectors.json --require-all')
         print('Program: stage --program program.json --directory NEW_SESSION; run --directory NEW_SESSION')
         print('Direct run groups compatible same-page edits by encoded size; --max-merged-actions N optionally limits progress groups. --no-merge-steps disables merging.')
         print('serve keeps one Python client alive; send JSON lines with method inspect/execute/status/stop and explicit project/specification.')
         print('Pipeline: --prepare-workers N (default1,0 disables lookahead), --io-workers N (default1); all output writers drain before run returns.')
         print('Lifecycle: close-reopen --project PROJECT.mcp [--closed-copy snapshot.mcp]')
+        print('Timed-out request: request-result --id ORIGINAL_ID --request-sha256 ORIGINAL_QUEUE_SHA256')
+        print('Partial direct batch: plan-remainder --id ORIGINAL_ID --request-sha256 ORIGINAL_QUEUE_SHA256 [--replace-failed ACTION.json --out NEW_SPEC.json]')
         print('Select a connection once with --scope-config or MCGS_NATIVE_SCOPE_CONFIG. No permit is required.')
         return 0
     if not options.scope_config:
@@ -35,9 +38,9 @@ def main():
         options.scope_config = str(adjacent)
     scope_sha = options.scope_sha256 or hashlib.sha256(Path(options.scope_config).read_bytes()).hexdigest()
     layout = configure(options.scope_config, scope_sha)
-    if not rest or rest[0] not in {"layout", "stage", "run", "serve", "inspect", "prepare", "apply", "execute",
+    if not rest or rest[0] not in {"layout", "stage", "run", "serve", "inspect", "prepare", "apply", "execute", "request-result", "plan-remainder",
                                   "lifecycle-read", "prepare-close-reopen", "close-reopen"}:
-        raise ValueError("Use layout/stage/run/inspect/execute/apply/prepare/lifecycle-read/prepare-close-reopen/close-reopen; no arbitrary native operation is exposed")
+        raise ValueError("Unknown command; use --help for the supported engineering operations")
     if rest[0] == "layout":
         if len(rest) != 1:
             raise ValueError("layout takes no additional fields")

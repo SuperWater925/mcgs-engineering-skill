@@ -105,6 +105,25 @@ class BootstrapTests(unittest.TestCase):
             boot.resolve(self.skill, explicit_root=self.root / 'missing', cache_dir=self.cache)
         self.assertIn('explicit_root', result.exception.report)
 
+    def test_stu_engine_cannot_reuse_a_bundle_with_different_skill_source(self):
+        bundle = make_bundle(self.root / 'valid')
+        metadata = boot._read(bundle / 'bundle.json')
+        self.assertIsNone(boot.verify_stu_engine(bundle, metadata))
+        metadata['business_engines'] = {'stu': 'engine/stu/Stu.dll'}
+        engine = bundle / metadata['business_engines']['stu']
+        engine.parent.mkdir()
+        engine.write_bytes(b'Opaque fixture bytes')
+        engine_source = bundle / 'skill' / 'Stu.cs'
+        engine_source.write_text('current adapter source', encoding='utf-8')
+        boot._write(engine.parent / 'stu-engine-manifest.json', {
+            'family': 'stu', 'file': engine.name, 'sha256': digest(engine),
+            'sources': [{'file': engine_source.name, 'sha256': digest(engine_source)}],
+        })
+        self.assertEqual(boot.verify_stu_engine(bundle, metadata), engine)
+        engine_source.write_text('different adapter source', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, 'built from different source'):
+            boot.verify_stu_engine(bundle, metadata)
+
     def test_environment_and_arbitrary_skill_folder_find_complete_bundle(self):
         bundle = make_bundle(self.root / 'valid')
         os.environ['MCGS_BUNDLE_ROOT'] = str(bundle)

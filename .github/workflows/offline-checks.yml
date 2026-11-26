@@ -25,10 +25,36 @@ jobs:
           python-version: '3.12'
       - name: Python JSON 文档与文件指纹
         run: python scripts/check_repository.py
+      - name: 离线回归依赖
+        run: python -m pip install -r scripts/requirements-tests.txt
       - name: PowerShell 语法
         shell: pwsh
         run: ./scripts/check_powershell.ps1
       - name: 源码安装的完整包发现与获取合同
         run: python scripts/test_turnkey_bundle.py --work local-artifacts/bootstrap-fixtures
+      - name: 原生克隆回执与合批合同
+        run: python scripts/test_native_clone_batch.py
+      - name: 整页计划与回读合同
+        run: python scripts/test_pro_page_plan.py
+      - name: 假窗口目标与工具栏合同
+        run: python scripts/test_pro_hwnd.py --work local-artifacts/hwnd-fixtures
+      - name: 安装更新与入口合同
+        run: python scripts/test_turnkey_delivery.py --work local-artifacts/delivery-fixtures
+      - name: 组布局定位数据流
+        run: python scripts/test_native_group_layout.py
+      - name: 多状态控件与图片资源
+        run: python scripts/test_state_resources.py
+      - name: 离线动画列表
+        run: python scripts/test_offline_animation_edits.py
+      - name: Pro 在线动画计划
+        run: python scripts/test_pro_animation_plan.py
+      - name: 离线格式适配
+        run: python scripts/test_offline_adapters.py
+      - name: Stu 基础工程工厂
+        run: python scripts/test_stu_factory.py
+      - name: 离线工程结构、策略、配方和图库
+        run: python -m unittest discover -s scripts -p "test_offline_*.py"
+      - name: 原厂诊断回执解析
+        run: python scripts/test_native_check_result.py
       - name: 技能包与压缩内容校验
         run: python scripts/build_release.py --version v0.0.0-check --out local-artifacts/ci-release

@@ -18,6 +18,7 @@ namespace McgsInternalBridge {
    kinds.Add(NativeStrategyWorkingModelEditing.CloseKind);
    kinds.Add(NativeStrategyWorkingModelEditing.AdoptionCompletionKind);
    kinds.AddRange(NativeStrategyTriggerContextEditing.Kinds);
+   kinds.Add(NativeStrategyEventEdge.Kind);
    kinds.AddRange(NativeDataPrototypeEditing.Kinds);
    kinds.Add(NativeDataGroupDeleting.Kind);
    kinds.Add("reference-redirect");
@@ -36,7 +37,8 @@ namespace McgsInternalBridge {
    if(k==NativeStrategyWorkingModelEditing.AdoptionCompletionKind){result=NativeStrategyWorkingModelEditing.AdoptionCompletionRead(e,c,p,action);return;}
    if(k==NativeLinguistManagementEditing.Kind||k==NativeLinguistManagementEditing.ReadKind){result=NativeLinguistManagementEditing.Read(e,c,p,action);return;}
    if(k==NativeStrategyWorkingModelEditing.AdoptionDiagnosticKind){result=NativeStrategyWorkingModelEditing.AdoptionDiagnosticRead(e,c,p,action);return;}
-   if(ReadLifecycle(e,c,p,action))result=NativeStrategyWorkingModelEditing.LifecycleRead(e,c,p,action);
+   if(k==NativeStrategyEventEdge.Kind)result=NativeStrategyEventEdge.Read(e,c,p,action);
+   else if(ReadLifecycle(e,c,p,action))result=NativeStrategyWorkingModelEditing.LifecycleRead(e,c,p,action);
    else if(k==NativeButtonActionEditing.Kind)result=NativeButtonActionEditing.Read(e,c,p,action);
    else if(k==NativeControlEventEditing.Kind)result=NativeControlEventEditing.Read(e,c,p,action);
    else if(k==NativeCurrentTemplateControlOperations.CollectionKind)result=NativeCurrentTemplateControlOperations.ReadCollection(e,c,p,action);
@@ -68,7 +70,8 @@ namespace McgsInternalBridge {
    if(k==NativeCurrentTemplateControlOperations.MulButtonVisualKind){result=PreparedAdditional(e,c,p,action,NativeCurrentTemplateControlOperations.PrepareMulButtonVisual(e,c,p,action));return;}
    if(k==NativeStrategyWorkingModelEditing.AdoptionCompletionKind){result=PreparedAdditional(e,c,p,action,NativeStrategyWorkingModelEditing.AdoptionCompletionPrepare(e,c,p,action));return;}
    if(k==NativeLinguistManagementEditing.Kind){var a=NativeLinguistManagementEditing.Prepare(e,c,p,action);result=new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};return;}
-   if(IsLifecycleStrategy(action))result=PreparedAdditional(e,c,p,action,NativeStrategyWorkingModelEditing.LifecyclePrepare(e,c,p,action));
+   if(k==NativeStrategyEventEdge.Kind){var a=new NativeStrategyEventEdge.Prepared(e,c,p,action);result=new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush,NoOp=a.NoOp};}
+   else if(IsLifecycleStrategy(action))result=PreparedAdditional(e,c,p,action,NativeStrategyWorkingModelEditing.LifecyclePrepare(e,c,p,action));
    else if(k==NativeButtonActionEditing.Kind){var a=NativeButtonActionEditing.Prepare(e,c,p,action);result=new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    else if(k==NativeControlEventEditing.Kind){var a=NativeControlEventEditing.Prepare(e,c,p,action);result=new Unit{Kind=k,Resource=a,Validate=a.ValidateBefore,Apply=a.Apply,Flush=a.Flush};}
    else if(k==NativeCurrentTemplateControlOperations.CollectionKind)result=PreparedAdditional(e,c,p,action,NativeCurrentTemplateControlOperations.PrepareCollection(e,c,p,action));

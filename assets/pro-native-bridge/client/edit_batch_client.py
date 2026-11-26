@@ -108,6 +108,164 @@ def expand_receipt(receipt, request_id, request_sha):
     return full
 
 
+def correlated_receipt(client, path, request_id, payload_sha):
+    receipt = client._json(path)
+    if receipt.get("request_id") != request_id or receipt.get("queue_request_sha256") != payload_sha:
+        raise ValueError("Receipt does not correlate with submitted bytes")
+    receipt = expand_receipt(receipt, request_id, payload_sha)
+    if receipt.get("ok") is True and receipt.get("engineering_delivery_scope_sha256") != _LAYOUT.configuration_sha256:
+        raise ValueError("Native engine has not attested this exact bound delivery configuration")
+    return receipt
+
+
+def read_existing_result(request_id, payload_sha):
+    client = load_client()
+    if not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", request_id) or request_id.upper() in client.RESERVED:
+        raise ValueError("Invalid request id")
+    if not re.fullmatch(r"[a-f0-9]{64}", payload_sha):
+        raise ValueError("A lowercase SHA-256 of the original queue request is required")
+    root = RUNTIME.absolute()
+    reservation = root / "client-submissions" / (request_id + ".json")
+    metadata = client._json(reservation)
+    if metadata.get("request_id") != request_id or metadata.get("request_sha256") != payload_sha:
+        raise ValueError("The submitted request identity does not match its reservation")
+    paths = client._paths(root, request_id)
+    if not client._exists(paths["outbox"]):
+        return {"ok": False, "status": "no_correlated_response_yet",
+                "automatic_retry": False, "transport_state": client._state(root, request_id, payload_sha)}
+    return {"ok": True, "status": "correlated_response_observed", "automatic_retry": False,
+            "result": correlated_receipt(client, paths["outbox"], request_id, payload_sha)}
+
+
+def direct_remainder(specification, receipt, replacement=None):
+    """Locate a failed boundary in an ordinary direct batch, without any replay."""
+    actions = specification.get("actions")
+    if not isinstance(actions, list) or not all(
+            isinstance(action, dict) and isinstance(action.get("action_id"), str)
+            and action["action_id"] and isinstance(action.get("kind"), str)
+            and isinstance(action.get("target"), dict) and isinstance(action.get("after"), dict)
+            for action in actions):
+        raise ValueError("Remainder planning needs the original explicit action IDs, kinds, targets and after values")
+    ids = [action["action_id"] for action in actions]
+    if len(set(ids)) != len(ids):
+        raise ValueError("Original direct action IDs are repeated")
+    if ("design_preflight" in specification
+            or any(action["kind"] == "control-properties-batch" for action in actions)
+            or any(receipt.get(key) for key in (
+                "native_clone_batches", "native_factory_batches", "native_batch_finalization_failed",
+                "batch_finalization_action_id", "incomplete_native_clone_batch",
+                "incomplete_factory_batch_count_is_lower_bound"))):
+        raise ValueError("Remainder planning needs an ordinary direct batch without grouped results or design preflight")
+    count = receipt.get("completed_action_count")
+    rows = receipt.get("direct_action_results")
+    if (receipt.get("ok") is not False or receipt.get("execution_mode") != "direct"
+            or type(count) is not int or not 0 < count < len(ids)
+            or receipt.get("requested_action_count") != len(ids)
+            or receipt.get("failed_action_id") != ids[count]
+            or not isinstance(rows, list) or len(rows) != count + 1):
+        raise ValueError("Native receipt does not establish a partial success prefix with one failed action")
+    for index, row in enumerate(rows):
+        if (not isinstance(row, dict) or row.get("action_id") != ids[index]
+                or not isinstance(row.get("result"), dict)
+                or row["result"].get("ok") is not (index < count)):
+            raise ValueError("Native action results differ from the submitted prefix and failed boundary")
+    failed = rows[count]["result"]
+    claim = failed.get("permit_status")
+    # The outer trace may record writes from successful earlier actions.
+    before_claim = (failed.get("actions") == [] and isinstance(claim, dict)
+                    and claim.get("execution_mode") == "direct"
+                    and all(claim.get(key) is False for key in (
+                        "claim_call_entered", "claim_completed_returned",
+                        "claim_state_ambiguous_or_partial_possible")))
+    summary = {
+        "completed_action_ids": ids[:count],
+        "failed_action_id": ids[count],
+        "failed_before_action_claim": before_claim,
+        "unattempted_action_ids": ids[count + 1:],
+    }
+    if replacement is None:
+        return summary, None
+    if not before_claim:
+        raise ValueError("The failed action may already have modified the project; obtain current evidence before continuing")
+    original = actions[count]
+    if (not isinstance(replacement, dict) or not isinstance(replacement.get("after"), dict)
+            or any(replacement.get(key) != original[key] for key in ("action_id", "kind", "target"))):
+        raise ValueError("Replacement must have the same failed action ID, kind and target, and explicit after values")
+    remaining = [replacement, *actions[count + 1:]]
+    prior = set()
+    for action in remaining:
+        pending = [action]
+        while pending:
+            item = pending.pop()
+            if isinstance(item, dict):
+                if "$native_result" in item:
+                    reference = item["$native_result"]
+                    if (not isinstance(reference, dict) or not isinstance(reference.get("action_id"), str)
+                            or reference["action_id"] not in prior):
+                        raise ValueError("Remaining action needs an earlier native result outside the remaining actions")
+                pending.extend(item.values())
+            elif isinstance(item, list):
+                pending.extend(item)
+        prior.add(action["action_id"])
+    return summary, dict(specification, actions=remaining)
+
+
+def plan_remainder(request_id, payload_sha, replacement_path=None, output=None):
+    if (replacement_path is None) != (output is None):
+        raise ValueError("Provide both --replace-failed and --out to write a new specification")
+    observed = read_existing_result(request_id, payload_sha)
+    report = dict(observed, host_invoked=False, automatic_resume=False)
+    if observed.get("ok") is not True:
+        return report
+    report.pop("result")
+    receipt = observed["result"]
+    client = load_client()
+    paths = client._paths(RUNTIME.absolute(), request_id)
+    claim = client._json(paths["claims"])
+    token = claim.get("claim_token")
+    if (claim.get("request_id") != request_id or claim.get("request_sha256") != payload_sha
+            or claim.get("status") != "completed" or claim.get("response_published") is not True
+            or not isinstance(token, str) or not token or receipt.get("queue_claim_token") != token):
+        raise ValueError("The queue claim does not confirm this completed response")
+    raw_request = client._read(paths["processed"], CLR_MAX_LENGTH)
+    if hashlib.sha256(raw_request).hexdigest() != payload_sha:
+        raise ValueError("Processed queue request differs from the original submission")
+    original = json.loads(raw_request.decode("utf-8-sig"))
+    scope = _LAYOUT.configuration_sha256
+    if (not isinstance(original, dict) or original.get("request_id") != request_id
+            or original.get("op") != "engineering-edit-batch" or "permit_file" in original
+            or original.get("engineering_delivery_scope_sha256") != scope
+            or receipt.get("engineering_delivery_scope_sha256") != scope
+            or receipt.get("op") != original["op"]
+            or not isinstance(original.get("specification_file"), str)
+            or not isinstance(original.get("specification_sha256"), str)):
+        raise ValueError("The original request and result must belong to this direct file-based connection")
+    project = original.get("expected_project")
+    actual_project = receipt.get("actual_project")
+    if (not isinstance(project, str) or not isinstance(actual_project, str)
+            or not Path(project).is_absolute() or not Path(actual_project).is_absolute()
+            or os.path.normcase(os.path.normpath(project)) != os.path.normcase(os.path.normpath(actual_project))):
+        raise ValueError("The original request and result refer to different project paths")
+    specification, specification_sha = read_json(input_file(original["specification_file"]))
+    if specification_sha != original["specification_sha256"]:
+        raise ValueError("Original specification bytes have changed since submission")
+    replacement = read_json(input_file(replacement_path))[0] if replacement_path is not None else None
+    summary, remaining = direct_remainder(specification, receipt, replacement)
+    report.update(summary, status="verified_partial_prefix", project_path=project,
+                  request_id=request_id, queue_request_sha256=payload_sha)
+    if remaining is not None:
+        output_path = owned_file(output, False)
+        report["specification_sha256"] = write_new(output_path, remaining)
+        report.update(status="remainder_specification_written", specification_file=str(output_path))
+    return report
+
+
+def request_bytes(request, request_id, *, client=None):
+    request = dict(request, schema=1, request_id=request_id,
+        engineering_delivery_scope_sha256=_LAYOUT.configuration_sha256)
+    return (client if client is not None else load_client())._encoded(request)
+
+
 def submit(request, request_id, timeout):
     client = load_client()
     if not re.fullmatch(r"[A-Za-z0-9_-]{1,80}", request_id) or request_id.upper() in client.RESERVED:
@@ -119,9 +277,7 @@ def submit(request, request_id, timeout):
         permit, permit_sha = read_json(owned_file(request["permit_file"]))
         if permit_sha != request["permit_sha256"] or permit.get("engineering_delivery_scope_sha256") != _LAYOUT.configuration_sha256:
             raise ValueError("Permit is not exactly bound to this delivery configuration")
-    request = dict(request, schema=1, request_id=request_id,
-        engineering_delivery_scope_sha256=_LAYOUT.configuration_sha256)
-    payload = client._encoded(request)
+    payload = request_bytes(request, request_id, client=client)
     if len(payload) > CLR_MAX_LENGTH:
         raise ValueError("Queue request exceeds the native Int32 length representation")
     payload_sha = hashlib.sha256(payload).hexdigest()
@@ -175,12 +331,7 @@ def submit(request, request_id, timeout):
         while True:
             if client._exists(paths["outbox"]):
                 try:
-                    receipt = client._json(paths["outbox"])
-                    if receipt.get("request_id") != request_id or receipt.get("queue_request_sha256") != payload_sha:
-                        raise ValueError("Receipt does not correlate with submitted bytes")
-                    receipt = expand_receipt(receipt, request_id, payload_sha)
-                    if receipt.get("ok") is True and receipt.get("engineering_delivery_scope_sha256") != _LAYOUT.configuration_sha256:
-                        raise ValueError("Native engine has not attested this exact bound delivery configuration")
+                    receipt = correlated_receipt(client, paths["outbox"], request_id, payload_sha)
                 except Exception as error:
                     raise client.ReceiptError(str(error), client._state(root, request_id, payload_sha)) from error
                 try:
@@ -329,9 +480,19 @@ def main():
     commands = parser.add_subparsers(dest="command", required=True)
     plan = commands.add_parser("prepare")
     plan.add_argument("--snapshot", required=True); plan.add_argument("--spec", required=True); plan.add_argument("--out", required=True)
+    existing = commands.add_parser("request-result", help="Read an original queue result without replaying")
+    existing.add_argument("--id", required=True)
+    existing.add_argument("--request-sha256", required=True)
+    remainder = commands.add_parser("plan-remainder", help="Read a verified partial direct result and optionally draft a replacement suffix")
+    remainder.add_argument("--id", required=True)
+    remainder.add_argument("--request-sha256", required=True)
+    remainder.add_argument("--replace-failed", help="JSON object with the revised failed action")
+    remainder.add_argument("--out", help="New specification path under the configured runtime")
     inspect = commands.add_parser("inspect")
     inspect.add_argument("--project", required=True)
     inspect.add_argument("--spec", help="Optional owned logical target selectors; no mutations")
+    inspect.add_argument("--require-all", action="store_true",
+                         help="Exit 2 when the original inspection lacks any requested feature")
     apply = commands.add_parser("apply")
     apply.add_argument("--permit", help="Optional legacy prepared-permit compatibility")
     apply.add_argument("--project", help="Current Pro project for default direct execution")
@@ -343,6 +504,10 @@ def main():
     args = parser.parse_args()
     if args.command == "prepare":
         result = prepare(args.snapshot, args.spec, args.out)
+    elif args.command == "request-result":
+        result = read_existing_result(args.id, args.request_sha256)
+    elif args.command == "plan-remainder":
+        result = plan_remainder(args.id, args.request_sha256, args.replace_failed, args.out)
     else:
         # Refuse an occupied result before reserving or publishing any request.
         output = owned_file(args.out, False) if args.out else None
@@ -374,6 +539,9 @@ def main():
         if output is not None:
             write_new(output, result)
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    if (args.command == "inspect" and args.require_all and result.get("ok") is True
+            and result.get("all_requested_features_available") is not True):
+        return 2
     return 0 if result.get("ok") else 1
 
 

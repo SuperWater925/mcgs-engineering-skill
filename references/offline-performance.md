@@ -37,12 +37,22 @@ pwsh -NoProfile -File .\run.ps1 audit --export 'D:\验收\修改后导出'
 }
 ```
 
-- 只组合已有 `controls`、`strategy-source`、`recipe-cell` 能力，不执行任意代码或 SQL，不新增控件、行或配方。
+- 导出型补丁组合已有 `controls`、`resources`、`strategy-source`、`recipe-cell` 能力，修改现存的归档字段。
 - `spec` / `source` 相对批量计划目录解析，也接受明确的绝对路径。控件规格仍使用[有界修改](bounded-edits.md)的格式及原始基线 SHA。
 - 同一个控件的多项属性合进一次 `edits`；同页多个控件优先合进同一份 `controls` 规格。重复或父子重叠路径仍拒绝。
 - 步骤依次使用内存中的最新 BLOB，可修改同页的不同控件、多个策略，或同一配方组的多个单元格。后续步骤的控件前指纹须与当时内容一致。
 - 每一步保留原有解析、回环、逆向和双策略容器检查；最终清单每个字段只写一次，前指纹始终来自最初基线。任一步失败不输出最终补丁目录；实际写库仍由 `apply` 单事务完成。
 - `preparation.json` 记录各步证明和耗时；只准备候选不等于写库、语法检查或原厂编译通过。
+
+## 同时修改已有内容和工程结构
+
+有界批量计划可直接与 [edit 结构规格](offline-factories.md)联合生成工程副本：
+
+```powershell
+pwsh -NoProfile -File .\run.ps1 edit --source 'D:\工程\当前.MCP' --batch-plan 'D:\修改\批量计划.json' --spec 'D:\修改\结构规格.json' --output 'D:\验收\修改.MCP'
+```
+
+批量计划的 `input_sha256` 和结构规格的 `source_sha256` 指向同一份当前原工程。先对原对象执行批量计划，再按修改后的对象内容执行结构规格。若后续结构规格带有对同一对象的前像，须按批量改动后的正文计算。通过后，在新副本的一次 ACE 事务中一起提交并重新打开，全表核对通过后才生成指定输出。原工程保持原样。`bounded_batch` 记录完成的有界步骤数和这些步骤结束时改变的归档字段数。
 
 ## 同页控件与局部预览
 

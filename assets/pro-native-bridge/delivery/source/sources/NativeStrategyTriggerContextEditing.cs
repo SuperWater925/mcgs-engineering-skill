@@ -24,6 +24,15 @@ namespace McgsInternalBridge {
 
 
   internal static readonly string[] Kinds={Kind,FlushKind};
+  const string EventRtti=".?AVCTriggerEvent@@";
+  const string EventReadProfilePath="coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/strategy-event-trigger-read-abi-profile.json";
+  const string EventReadProfileSha="04e788d67f77b1e23e5aea148cac6b7313214577e1c7ec4ddca4a83ddd9387f1";
+
+  internal sealed class TriggerSnapshot {
+   internal readonly Dictionary<string,object> Fields;
+   internal readonly string RawHex;
+   internal TriggerSnapshot(Dictionary<string,object> fields,string rawHex){Fields=fields;RawHex=rawHex;}
+  }
 
 
 
@@ -149,7 +158,44 @@ namespace McgsInternalBridge {
 
 
 
-   internal Dictionary<string,object> Type(IntPtr p){Current();string rtti=Base.Read.MfcType(p);Need(Types.ContainsKey(rtti),"Uncovered trigger subtype.");var t=Types[rtti];ValidateType(t);Need(NativeMemory.Ptr(p,0)==Engine.Address(N(t,"vtable_rva"))&&NativeMemory.I32(p,12)==N(t,"native_type"),"Trigger class/type differs.");return t;}
+   NativeLazyFunctionProfile eventReader;
+   NativeLazyFunctionProfile EventReader {
+    get{
+     if(eventReader==null)eventReader=new NativeLazyFunctionProfile(Engine,EventReadProfilePath,EventReadProfileSha,"editor");
+     return eventReader;
+    }
+   }
+
+   Dictionary<string,object> ResolveType(IntPtr p,bool includeReadOnlyEvent){
+    Current();
+    string rtti=Base.Read.MfcType(p);
+    bool isReadOnlyEvent=includeReadOnlyEvent&&rtti==EventRtti;
+    Dictionary<string,object> type;
+    if(isReadOnlyEvent)type=M(EventReader.Profile["trigger"]);
+    else Need(Types.TryGetValue(rtti,out type),"Uncovered trigger subtype: "+rtti+".");
+    ValidateType(type);
+    IntPtr table=Engine.Address(N(type,"vtable_rva"));
+    Need(S(type,"rtti")==rtti&&NativeMemory.Ptr(p,0)==table&&NativeMemory.I32(p,12)==N(type,"native_type"),"Trigger class/type differs.");
+    if(isReadOnlyEvent){
+     // The guarded original serialization routine proves the member offsets.
+     // Match its virtual entry without ever invoking Serialize or GetRuntimeClass.
+     Need(N(type,"native_type")==4&&NativeMemory.Ptr(table,0)==EventReader.Address("EventGetRuntimeClass")&&
+          NativeMemory.Ptr(table,8)==EventReader.Address("EventSerialize"),"Event trigger original class/serialization entry differs.");
+    }
+    return type;
+   }
+
+   internal Dictionary<string,object> Type(IntPtr p){return ResolveType(p,false);}
+
+   internal int VerifyEventEdgeMethods(IntPtr p,IntPtr create,IntPtr destroy,IntPtr equals,IntPtr propertyConfirm){
+    var type=ResolveType(p,true);
+    Need(S(type,"rtti")==EventRtti,"Event edge editing requires the original concrete CTriggerEvent.");
+    IntPtr runtime=Engine.Address(N(type,"runtime_class_rva")),table=NativeMemory.Ptr(p,0);
+    Need(NativeMemory.Ptr(runtime,12)==create&&NativeMemory.Ptr(table,4)==destroy&&
+         NativeMemory.Ptr(table,11*4)==propertyConfirm&&NativeMemory.Ptr(table,12*4)==equals,
+         "Event factory, destructor, property confirm or equality entry differs.");
+    return NativeEngine.Number(L(M(EventReader.Profile["serialized_layout"])["words"])[1]);
+   }
 
 
 
@@ -159,12 +205,61 @@ namespace McgsInternalBridge {
 
 
 
-   internal Dictionary<string,object> Fields(IntPtr p){var t=Type(p);var b=new List<object>();foreach(int off in new[]{0x14,0x18,0x1C})b.Add(unchecked((uint)NativeMemory.I32(p,off)));var loop=new List<object>();if(N(t,"native_type")==2)for(int off=0x24;off<0x48;off+=4)loop.Add(unchecked((uint)NativeMemory.I32(p,off)));return new Dictionary<string,object>{{"native_record_id",NativeMemory.I32(p,4)},{"strategy_id",NativeMemory.I32(p,8)},{"native_type",NativeMemory.I32(p,12)},{"rtti",S(t,"rtti")},{"note",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,0x10),131072)},{"serialized_base_words_uint32",b},{"serialized_loop_words_uint32",loop}};}
+   void EventFields(IntPtr p,Dictionary<string,object> type,Dictionary<string,object> fields){
+    var layout=M(EventReader.Profile["serialized_layout"]);
+    var arrayType=M(EventReader.Profile["byte_array"]);
+    int cacheAt=N(layout,"cache"),expressionAt=N(layout,"expression"),size=N(type,"size");
+    var wordOffsets=L(layout["words"]);
+    Need(cacheAt==0x24&&N(arrayType,"size")==0x14&&expressionAt==cacheAt+N(arrayType,"size")&&
+         wordOffsets.Count==2&&N(layout,"expression")+12==size&&
+         NativeEngine.Number(wordOffsets[0])==expressionAt+4&&NativeEngine.Number(wordOffsets[1])==expressionAt+8,
+         "Event trigger serialized member spans differ.");
+    NativeMemory.Readable(p,size);
+    IntPtr cache=NativeMemory.Add(p,cacheAt);
+    NativeLazyFunctionProfile.CheckIdentity(arrayType,"vtable_rva","col_rva","type_rva");
+    IntPtr table=NativeMemory.Add(Mfc,N(arrayType,"vtable_rva")),col=NativeMemory.Add(Mfc,N(arrayType,"col_rva"));
+    IntPtr descriptor=NativeMemory.Add(Mfc,N(arrayType,"type_rva"));
+    Need(NativeMemory.Ptr(cache,0)==table&&NativeMemory.Ptr(table,-4)==col&&NativeMemory.I32(col,4)==0&&
+         NativeMemory.Ptr(col,12)==descriptor&&NativeMemory.Ascii(NativeMemory.Add(descriptor,8),128)==S(arrayType,"rtti"),
+         "Event trigger compiled condition is not its original MFC CByteArray.");
+    IntPtr buffer=NativeMemory.Ptr(cache,4);
+    int count=NativeMemory.I32(cache,8),capacity=NativeMemory.I32(cache,12);
+    Need(count>=0&&capacity>=count&&(count==0||buffer!=IntPtr.Zero),"Event trigger compiled condition has an invalid array extent.");
+    byte[] payload=NativeChunkedRawMemory.Read(buffer,count);
+    Need(NativeMemory.Ptr(cache,4)==buffer&&NativeMemory.I32(cache,8)==count&&NativeMemory.I32(cache,12)==capacity,
+         "Event trigger compiled condition changed during capture.");
+    fields.Add("event_expression",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,expressionAt),Int32.MaxValue/2-1));
+    var words=new List<object>();
+    foreach(object offset in wordOffsets)words.Add(unchecked((uint)NativeMemory.I32(p,NativeEngine.Number(offset))));
+    fields.Add("serialized_event_words_uint32",words);
+    fields.Add("event_cache",new Dictionary<string,object>{{"bytes",count},{"sha256",Hash(payload)},{"complete_payload_sha256",true}});
+    fields.Add("trigger_write_supported",false);
+   }
+
+   Dictionary<string,object> Fields(IntPtr p,Dictionary<string,object> type){
+    var basis=new List<object>();
+    foreach(int offset in new[]{0x14,0x18,0x1C})basis.Add(unchecked((uint)NativeMemory.I32(p,offset)));
+    var loop=new List<object>();
+    if(N(type,"native_type")==2)for(int offset=0x24;offset<0x48;offset+=4)loop.Add(unchecked((uint)NativeMemory.I32(p,offset)));
+    var fields=new Dictionary<string,object>{{"native_record_id",NativeMemory.I32(p,4)},{"strategy_id",NativeMemory.I32(p,8)},
+     {"native_type",NativeMemory.I32(p,12)},{"rtti",S(type,"rtti")},
+     {"note",NativeUsableEditPermit.ReadCurrentCString(NativeMemory.Add(p,0x10),131072)},
+     {"serialized_base_words_uint32",basis},{"serialized_loop_words_uint32",loop}};
+    if(S(type,"rtti")==EventRtti)EventFields(p,type,fields);
+    return fields;
+   }
+
+   internal Dictionary<string,object> Fields(IntPtr p){return Fields(p,Type(p));}
+   internal TriggerSnapshot Snapshot(IntPtr p,bool includeReadOnlyEvent){
+    var type=ResolveType(p,includeReadOnlyEvent);
+    var fields=Fields(p,type);
+    return new TriggerSnapshot(fields,Hex(NativeMemory.Bytes(p,N(type,"size"))));
+   }
 
 
 
 
-   internal List<object> Catalog(){var blocks=Base.Blocks();var array=Base.Array(NativeMemory.Add(Base.Root,0x22C),"RootBlocks");var contexts=Base.Array(NativeMemory.Add(Base.Root,0x240),"RootTriggers");Need(array.Count==contexts.Count,"Strategy/context ownership counts differ.");var rows=new List<object>();for(int i=0;i<array.Count;i++){IntPtr block=array[i],p=NativeMemory.Ptr(block,0x10);Need(contexts.Contains(p),"Block context is outside root ownership.");int id=NativeStrategyProfile.ReadId(Base.Read.Existing,NativeMemory.Add(block,4));Need(blocks.ContainsKey(id)&&blocks[id]==NativeMemory.Add(block,4)&&NativeMemory.I32(p,8)==id,"Trigger/block native identity differs.");var f=Fields(p);rows.Add(new Dictionary<string,object>{{"root_block_index",i},{"block_id",id},{"block_name",NativeStrategyProfile.ReadName(Base.Read.Existing,NativeMemory.Add(block,4))},{"block_complete",NativeMemory.Hex(block)},{"context",NativeMemory.Hex(p)},{"fields",f},{"dirty_byte",(int)Marshal.ReadByte(p,0x20)},{"complete_raw_hex",Hex(NativeMemory.Bytes(p,N(Type(p),"size")))}});}return rows;}
+   internal List<object> Catalog(bool includeReadOnlyEvent=false){var blocks=Base.Blocks();var array=Base.Array(NativeMemory.Add(Base.Root,0x22C),"RootBlocks");var contexts=Base.Array(NativeMemory.Add(Base.Root,0x240),"RootTriggers");Need(array.Count==contexts.Count,"Strategy/context ownership counts differ.");var rows=new List<object>();for(int i=0;i<array.Count;i++){IntPtr block=array[i],p=NativeMemory.Ptr(block,0x10);Need(contexts.Contains(p),"Block context is outside root ownership.");int id=NativeStrategyProfile.ReadId(Base.Read.Existing,NativeMemory.Add(block,4));Need(blocks.ContainsKey(id)&&blocks[id]==NativeMemory.Add(block,4)&&NativeMemory.I32(p,8)==id,"Trigger/block native identity differs.");var snapshot=Snapshot(p,includeReadOnlyEvent);rows.Add(new Dictionary<string,object>{{"root_block_index",i},{"block_id",id},{"block_name",NativeStrategyProfile.ReadName(Base.Read.Existing,NativeMemory.Add(block,4))},{"block_complete",NativeMemory.Hex(block)},{"context",NativeMemory.Hex(p)},{"fields",snapshot.Fields},{"dirty_byte",(int)Marshal.ReadByte(p,0x20)},{"complete_raw_hex",snapshot.RawHex}});}return rows;}
 
 
 
@@ -179,7 +274,7 @@ namespace McgsInternalBridge {
 
 
 
-  sealed class Cursor:IDisposable {
+  internal sealed class Cursor:IDisposable {
 
 
 
@@ -224,7 +319,7 @@ namespace McgsInternalBridge {
 
 
 
-  static List<object> Db(Api api){using(var c=new Cursor(api))return c.All();}static Dictionary<string,object> Row(List<object> rows,int id){foreach(object x in rows){var r=M(x);if(N(r,"id")==id)return r;}throw new InvalidOperationException("Trigger record absent from full cursor snapshot.");}
+  internal static List<object> Db(Api api){using(var c=new Cursor(api))return c.All();}static Dictionary<string,object> Row(List<object> rows,int id){foreach(object x in rows){var r=M(x);if(N(r,"id")==id)return r;}throw new InvalidOperationException("Trigger record absent from full cursor snapshot.");}
 
 
 

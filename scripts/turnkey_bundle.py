@@ -126,9 +126,50 @@ def _bundle_metadata(root):
         expected = path.is_dir() if key in ('bridge_artifacts', 'skill_directory') else path.is_file()
         if not expected:
             raise ValueError('Complete bundle component is missing: ' + key)
+    engines = metadata.get('business_engines', {})
+    if not isinstance(engines, dict) or engines.keys() - {'stu'}:
+        raise ValueError('Unknown optional business-engine family')
+    if 'stu' in engines:
+        stu_path = _inside(root, engines['stu'])
+        profile = _read(stu_path.parent / 'stu-engine-manifest.json')
+        if (not stu_path.is_file() or profile.get('family') != 'stu'
+                or profile.get('file') != stu_path.name):
+            raise ValueError('Complete bundle Stu engine or manifest is missing')
     if not (root / 'bundle-files.json').is_file():
         raise ValueError('Complete bundle file manifest is missing')
     return root, metadata
+
+
+def verify_stu_engine(root, metadata, *, skill_root=None):
+    engines = metadata.get('business_engines', {})
+    if not isinstance(engines, dict) or 'stu' not in engines:
+        return None
+    engine = _inside(root, engines['stu'])
+    manifest = _read(engine.parent / 'stu-engine-manifest.json')
+    if (manifest.get('family') != 'stu' or manifest.get('file') != engine.name
+            or _sha(engine) != manifest.get('sha256')):
+        raise ValueError('Stu engine differs from its own publisher manifest')
+    skill = Path(skill_root) if skill_root is not None else _inside(root, metadata['skill_directory'])
+    sources = manifest.get('sources')
+    if not isinstance(sources, list) or not sources:
+        raise ValueError('Stu engine source evidence is missing')
+    for row in sources:
+        if _sha(_inside(skill, row['file'])) != row['sha256']:
+            raise ValueError('The bundled Stu engine was built from different source: ' + row['file'])
+    return engine
+
+
+def stu_engine_source_sha256(skill_root):
+    """Fingerprint the inputs of the optional own Stu engine, independent of Windows versions."""
+    root = Path(skill_root)
+    native = root / 'assets/stu-native'
+    build = native / 'src/build-engine.py'
+    if not build.is_file():
+        return None
+    inputs = [build, *native.glob('src/*.cs'), *native.glob('profile/*.py'), native / 'profile/reference.json']
+    rows = [(path.relative_to(root).as_posix(), _sha(path)) for path in inputs]
+    content = json.dumps(sorted(rows), ensure_ascii=False, separators=(',', ':')).encode('utf-8')
+    return hashlib.sha256(content).hexdigest()
 
 
 def verify_complete(root):
@@ -148,6 +189,7 @@ def verify_complete(root):
     actual = {path.relative_to(root).as_posix().casefold() for path in root.rglob('*') if path.is_file()}
     if actual != seen | {'bundle-files.json'}:
         raise ValueError('Complete bundle files and manifest disagree')
+    verify_stu_engine(root, metadata)
     for product in metadata.get('products', []):
         index = _inside(root, product['media_manifest'])
         for relative in _read(index).get('directories', []):

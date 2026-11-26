@@ -12,6 +12,8 @@ from pathlib import Path
 import shutil
 import zipfile
 
+from turnkey_publisher_assets import read_directory, shared_bridge_payload, stu_engine_payload
+
 
 def sha(path):
     with Path(path).open('rb') as stream:
@@ -22,8 +24,8 @@ def dump(path, value):
     Path(path).write_text(json.dumps(value, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
-def copy_tree(source, target):
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.git', '__pycache__', '*.pyc', 'local-artifacts'))
+def copy_tree(source, target, *, exclude=()):
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.git', '__pycache__', '*.pyc', 'local-artifacts', *exclude))
 
 
 def extract_zip(source, target):
@@ -46,8 +48,18 @@ def assemble(args):
     target = args.output.resolve()
     if target.exists():
         raise ValueError('Output must be a fresh directory')
-    target.mkdir(parents=True)
     source = Path(__file__).resolve().parents[1]
+    bridge_build = getattr(args, 'bridge_build', None)
+    stu_build = getattr(args, 'stu_engine_build', None)
+    bridge_folder = Path(bridge_build or args.bridge)
+    bridge_assets = None
+    stu_assets = None
+    if bridge_build or stu_build:
+        bridge_assets = shared_bridge_payload(source, read_directory(bridge_folder),
+                                             verify_generated=(bridge_folder / 'source').is_dir())
+    if stu_build:
+        stu_name, stu_assets = stu_engine_payload(source, read_directory(stu_build))
+    target.mkdir(parents=True)
     copy_tree(source, target / 'skill')
     runtime = target / 'runtime'
     extract_zip(args.python_zip, runtime / 'python')
@@ -75,8 +87,19 @@ def assemble(args):
             continue  # Publisher extraction helper, never a receiver dependency.
         with zipfile.ZipFile(wheel) as archive:
             archive.extractall(packages)
-    copy_tree(args.business, target / 'engine/business')
-    copy_tree(args.bridge, target / 'engine/bridge')
+    copy_tree(args.business, target / 'engine/business', exclude=('stu',) if stu_assets is not None else ())
+    if bridge_assets is None:
+        copy_tree(bridge_folder, target / 'engine/bridge')
+    else:
+        bridge_destination = target / 'engine/bridge'
+        bridge_destination.mkdir()
+        for name, raw in bridge_assets.items():
+            (bridge_destination / name).write_bytes(raw)
+    if stu_assets is not None:
+        stu_destination = target / 'engine/business/stu'
+        stu_destination.mkdir()
+        for name, raw in stu_assets.items():
+            (stu_destination / name).write_bytes(raw)
     (target / 'tools').mkdir()
     for exe in args.tools.glob('*.exe'):
         shutil.copy2(exe, target / 'tools' / exe.name)
@@ -121,6 +144,8 @@ def assemble(args):
         'vendor_media_in_git_source': False,
         'vendor_media_distribution': 'separate_complete_bundle_release_asset',
     }
+    if stu_assets is not None:
+        manifest['business_engines'] = {'stu': 'engine/business/stu/' + stu_name}
     dump(target / 'bundle.json', manifest)
     shutil.copy2(source / 'references/turnkey-start-zh.md', target / '使用说明.md')
     shutil.copy2(source / 'references/turnkey-third-party.md', target / '第三方许可说明.md')
@@ -151,8 +176,12 @@ def assemble(args):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ('python-zip', 'powershell-zip', 'wheels', 'business', 'bridge', 'tools', 'pro-media', 'stu-media', 'ace-installer', 'output'):
+    for name in ('python-zip', 'powershell-zip', 'wheels', 'business', 'tools', 'pro-media', 'stu-media', 'ace-installer', 'output'):
         parser.add_argument('--' + name, required=True, type=Path)
+    bridges = parser.add_mutually_exclusive_group(required=True)
+    bridges.add_argument('--bridge', type=Path, help='Existing Pro publisher bridge directory')
+    bridges.add_argument('--bridge-build', type=Path, help='Publisher bridge build with current inputs and artifact manifest')
+    parser.add_argument('--stu-engine-build', type=Path, help='Optional publisher Stu DLL and source manifest')
     parser.add_argument('--zip', type=Path)
     parser.add_argument('--stage-only', action='store_true')
     parser.add_argument('--release', required=True)

@@ -30,8 +30,185 @@ namespace McgsInternalBridge {
   static void SyncStrategyNodeProjection(object value,bool permit){var map=value as Dictionary<string,object>;if(map!=null){object name,fields;if(permit&&map.TryGetValue("class_name",out name)&&map.TryGetValue("serialized_fields",out fields)){string cls=Convert.ToString(name);if(cls=="CStgyFuncCounter"||cls=="CStgyFuncTimer"||cls=="CStgyFuncProg"||cls=="CStgyFuncProc"||cls=="CStgyFuncData"||cls=="CStgyConnIF"||cls=="CStgyConnData"){var f=Map(fields);var keys=new List<string>(f.Keys);foreach(string key in keys)if(key.StartsWith("byte_arrays@0x",StringComparison.Ordinal))f[key]=new Dictionary<string,object>{{"original_expression_compiler_CByteArray",true},{"native_member",key}};}}foreach(var pair in map)SyncStrategyNodeProjection(pair.Value,permit);}else if(value is IEnumerable&&!(value is string))foreach(object item in(IEnumerable)value)SyncStrategyNodeProjection(item,permit);}
   static Dictionary<string,object> SyncSemantic(Dictionary<string,object> raw,Dictionary<string,object> action,bool generated=false){var state=SyncClone(raw);var selectedPages=SyncIds(Map(action["target"]),"page_ids");var selectedStrategies=SyncIds(Map(action["target"]),"strategy_ids");var context=Map(state["context"]);context.Remove("graph");foreach(object item in(IEnumerable)context["strategy_blocks"]){var block=Map(item);block.Remove("conditions_json");block.Remove("other_functions_json");SyncStrategyNodeProjection(block,selectedStrategies.Contains(Num(block["block_id"]))&&SyncAllows(action,"strategy_expression_byte_arrays"));}foreach(object item in(IEnumerable)context["pages"]){var page=Map(item);if(!selectedPages.Contains(Num(page["page_id"])))continue;if(SyncAllows(action,"button_resolved_action_ids"))foreach(object b in(IEnumerable)page["buttons"]){var button=Map(b);foreach(string key in new[]{"ids","release_ids"}){var array=Map(button[key]);array["values"]=new Dictionary<string,object>{{"original_button_resolved_action_ids",true},{"count",array["count"]}};}}}foreach(object rawPage in(IEnumerable)state["detailed_pages"]){var page=Map(rawPage);bool selected=selectedPages.Contains(Num(page["page_id"]));if(!selected)continue;var ps=Map(page["page_state"]);var pageIdentity=Map(ps["page"]);if(pageIdentity.ContainsKey("page_modified"))pageIdentity["page_modified"]=new Dictionary<string,object>{{"original_scoped_document_dirty_state",true}};SyncEventProjection(ps["events"],SyncAllows(action,"event_payload_and_resolved_arguments"),generated);if(SyncAllows(action,"page_common_event_byte_arrays")){var arrays=Map(Map(ps["common_events"])["binary_arrays"]);foreach(string key in new List<string>(arrays.Keys))arrays[key]=new Dictionary<string,object>{{"original_page_event_compiler_CByteArray",true},{"native_member",key}};}foreach(object rawControl in(IEnumerable)page["controls"])SyncEventProjection(Map(rawControl)["events"],SyncAllows(action,"event_payload_and_resolved_arguments"),generated);}return Map(SyncDiagnosticProjection(GenericSemantic(state)));}
   static object SyncDiagnosticProjection(object value){var map=value as Dictionary<string,object>;if(map!=null){var output=new Dictionary<string,object>();foreach(var pair in map){if(pair.Key=="raw_complete_hex"||pair.Key=="native_owner"||pair.Key=="component_iobject")continue;output.Add(pair.Key,SyncDiagnosticProjection(pair.Value));}return output;}if(value is IEnumerable&&!(value is string)){var output=new List<object>();foreach(object raw in(IEnumerable)value)output.Add(SyncDiagnosticProjection(raw));return output;}return value;}
-  internal static Dictionary<string,object> ReferenceSyncRead(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){var raw=SyncCapture(new SyncApi(e,c,project),action);return new Dictionary<string,object>{{"abi_profile_sha256",ReferenceSyncProfileSha},{"state",raw},{"semantic",SyncSemantic(raw,action)},{"derived_cache_projection_is_explicit_and_raw_evidence_retained",true}};}
-  internal static INativePreparedPageControlEdit PrepareReferenceSync(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){return new PreparedReferenceSync(new SyncApi(e,c,project),action);}
+  internal static Dictionary<string,object> ReferenceSyncRead(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){
+   if(Map(action["target"]).ContainsKey("control"))return new SelectedPictureSync(e,c,project,action).Capture();
+   var raw=SyncCapture(new SyncApi(e,c,project),action);
+   return new Dictionary<string,object>{{"abi_profile_sha256",ReferenceSyncProfileSha},{"state",raw},{"semantic",SyncSemantic(raw,action)},{"derived_cache_projection_is_explicit_and_raw_evidence_retained",true}};
+  }
+  internal static INativePreparedPageControlEdit PrepareReferenceSync(NativeEngine e,NativeContext c,string project,Dictionary<string,object> action){
+   if(Map(action["target"]).ContainsKey("control"))return new PreparedSelectedPictureSync(new SelectedPictureSync(e,c,project,action),action);
+   return new PreparedReferenceSync(new SyncApi(e,c,project),action);
+  }
+  sealed class SelectedPictureSync {
+   readonly Api references;
+   readonly NativeCurrentTemplateControlOperations.Api drawing;
+   readonly NativePageDocumentProperties.Api pageProperties;
+   readonly NativePictureResources.Api pictures;
+   readonly Dictionary<string,object> selector,scope;
+   internal readonly string Project;
+   internal readonly IntPtr DrawingObject;
+   internal readonly SyncGenerate Generate;
+   readonly IntPtr page,document,complete,module;
+   readonly string source,picturePrefix;
+
+   internal SelectedPictureSync(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> action){
+    Project=project;
+    scope=Map(action["target"]);
+    NativeMemory.Require(scope.Count==3,"Selected picture synchronization needs only page_ids, strategy_ids and control.");
+    var pages=SyncIds(scope,"page_ids");
+    NativeMemory.Require(pages.Count==1&&SyncIds(scope,"strategy_ids").Count==0,"Selected picture synchronization needs a single page and no strategies.");
+    selector=Map(scope["control"]);
+    NativeMemory.Require(selector.ContainsKey("control_path")&&Num(selector["page_id"])==pages[0]&&
+      NativePageControlPreparation.Text(selector,"class")=="CDrawMulBtn"&&
+      NativePageControlPreparation.Text(selector,"rtti")==".?AVCDrawMulBtn@@"&&
+      !selector.ContainsKey("component_path")&&!selector.ContainsKey("property_scope"),
+      "Select the exact ordinary page CDrawMulBtn owner, rather than an individual property component.");
+    references=new Api(engine,context,project);
+    drawing=new NativeCurrentTemplateControlOperations.Api(engine,context,project);
+    pageProperties=new NativePageDocumentProperties.Api(engine,context,project);
+    pictures=new NativePictureResources.Api(engine,context,project);
+    var owner=drawing.Locate(selector,out page,out document);
+    NativeMemory.Require(owner.Class.Name=="CDrawMulBtn"&&owner.Class.TypeId==0x5028,"Selected control type differs.");
+    complete=owner.Full;
+    DrawingObject=NativeOpaqueDrawState.ControlObject(complete);
+    NativeMemory.Require(DrawingObject==NativeMemory.Add(complete,4),"Selected owner does not expose the proved drawing IObject interface.");
+    source=references.Path(DrawingObject);
+    module=engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(11);
+    NativeMemory.Require(module!=IntPtr.Zero&&Num(engine.Describe(module)["module"])==11,"Current original picture resource module is absent.");
+    picturePrefix=references.Path(module)+".";
+    Generate=engine.Bind<SyncGenerate>(GenerateEntry());
+   }
+
+   IntPtr GenerateEntry(){
+    // Drawing Generate21 clears only its own source before the existing
+    // concrete compile31 repopulates all of that drawing's registered edges.
+    IntPtr primary=NativeMemory.Ptr(complete,0),iobject=NativeMemory.Ptr(DrawingObject,0);
+    NativeAbiTargetProfiles.ProvenVirtualSlot(primary,59,"selected drawing source reference preparation");
+    NativeAbiTargetProfiles.ProvenVirtualSlot(primary,31,"selected CDrawMulBtn compile");
+    return NativeAbiTargetProfiles.ProvenVirtualSlot(iobject,21,"selected drawing original Generate");
+   }
+
+   internal Dictionary<string,object> Capture(){
+    references.Shared.Current();
+    IntPtr currentPage,currentDocument;
+    var owner=drawing.Locate(selector,out currentPage,out currentDocument);
+    NativeMemory.Require(owner.Full==complete&&currentPage==page&&currentDocument==document&&references.Path(DrawingObject)==source&&
+      references.Engine.Call<NativeEngine.CdeclModule>("GetModuleObject")(11)==module&&references.Path(module)+"."==picturePrefix,
+      "Selected drawing, page or module11 reference owner changed.");
+    int matches=0;
+    foreach(var current in NativeUsableEditPermit.CurrentDrawControls(references.Engine,document,Num(selector["page_id"])))
+     if(String.Equals(Convert.ToString(current["name"]),Convert.ToString(selector["control_name"]),StringComparison.OrdinalIgnoreCase))matches++;
+    NativeMemory.Require(matches==1,"Selected drawing name is ambiguous in the page reference namespace.");
+    GenerateEntry();
+    var eventArray=NativeMemory.Add(complete,0x30);
+    pageProperties.Table(eventArray,"EventPointerArray");
+    NativeMemory.Require(NativeMemory.I32(eventArray,8)==0&&NativeAnimationListEditing.CaptureRawList(references.Engine,complete).Count==0,
+      "Selected picture synchronization supports an owner without events or animations.");
+    var stateSelector=new Dictionary<string,object>(selector);
+    stateSelector["include_frame_details"]=true;
+    var catalog=NativeCurrentTemplateControlOperations.ReadMulButtonStateCatalog(references.Engine,references.Context,Project,
+      new Dictionary<string,object>{{"target",stateSelector}});
+    var states=(IList)catalog["states"];
+    NativeMemory.Require(states.Count==2,"Selected picture synchronization needs the proved two-state drawing shape.");
+    var names=new HashSet<string>(StringComparer.Ordinal);
+    foreach(object raw in states){
+     var state=Map(raw);
+     var frames=(IList)state["image_frames"];
+     NativeMemory.Require(Num(state["text_frame_count"])==0&&frames.Count==1,"Each selected state needs one known named image frame and no text frames.");
+     var frame=Map(frames[0]);
+     object name;
+     NativeMemory.Require(Object.Equals(frame["image_mode"],"named")&&frame.TryGetValue("resource_name",out name)
+       &&name is string&&!String.IsNullOrEmpty((string)name),"Selected state contains an unnamed or embedded image.");
+     names.Add(Convert.ToString(frame["resource_name"]));
+    }
+    NativePictureResources.RequireNamedPictures(references.Engine,references.Context,Project,names);
+    var typed=NativeControlPropertyEditing.Read(references.Engine,references.Context,Project,
+      new Dictionary<string,object>{{"target",selector}});
+    var components=new List<string>();
+    foreach(object raw in (IEnumerable)typed["properties"]){
+     var property=Map(raw);
+     if(Num(property["native_type_tag"])==9)components.Add(Convert.ToString(property["component_rtti"]));
+    }
+    components.Sort(StringComparer.Ordinal);
+    NativePageControlPreparation.Same(new[]{".?AVCImageInObj@@",".?AVCImageInObj@@",".?AVCOwnerBitmap@@",".?AVCOwnerBitmap@@",".?AVMulPoint@@",".?AVMulPoint@@"},components,
+      "Selected state property components are outside the proved named-frame shape.");
+    var targets=new List<string>();
+    foreach(string name in names)targets.Add(picturePrefix+name);
+    targets.Sort(StringComparer.Ordinal);
+    return new Dictionary<string,object>{{"abi_profile_sha256",ReferenceSyncProfileSha},{"reference_sync_scope",scope},
+      {"source",source},{"picture_module_linker",picturePrefix.Substring(0,picturePrefix.Length-1)},{"named_picture_targets",targets},
+      {"graph",Graph(references)},{"typed_control",typed},{"state_catalog",catalog},{"disk_sha256",NativeMemory.Hash(Project)},
+      {"picture_module_order",pictures.OrderedNames()},{"picture_module_dirty",(int)Marshal.ReadByte(pictures.Manager,0x39)}};
+   }
+
+   internal List<string> ExpectedEdgeKeys(Dictionary<string,object> before){
+    var expected=new List<string>();
+    foreach(object raw in (IEnumerable)Map(before["graph"])["edges"]){
+     var edge=Map(raw);
+     string origin=NativePageControlPreparation.Text(edge,"source"),target=NativePageControlPreparation.Text(edge,"target");
+     if(origin==source&&target.StartsWith(picturePrefix,StringComparison.Ordinal))continue;
+     expected.Add(origin+"\0"+target);
+    }
+    foreach(string target in (IEnumerable)before["named_picture_targets"])expected.Add(source+"\0"+target);
+    expected.Sort(StringComparer.Ordinal);
+    return expected;
+   }
+  }
+  static List<string> ExactPictureSyncEdges(object edges){
+   var result=new List<string>();
+   var distinct=new HashSet<string>(StringComparer.Ordinal);
+   foreach(object raw in (IEnumerable)edges){
+    var edge=Map(raw);
+    string source=NativePageControlPreparation.Text(edge,"source"),target=NativePageControlPreparation.Text(edge,"target");
+    string key=source+"\0"+target;
+    NativeMemory.Require(edge.Count==2&&source.Length>0&&target.Length>0&&source.IndexOf('\0')<0&&target.IndexOf('\0')<0&&distinct.Add(key),
+      "Expected reference graph contains invalid or repeated edges.");
+    result.Add(key);
+   }
+   result.Sort(StringComparer.Ordinal);
+   return result;
+  }
+  sealed class PreparedSelectedPictureSync:INativePreparedPageControlEdit,INativePreparedRelatedPersistence {
+   readonly SelectedPictureSync api;
+   readonly Dictionary<string,object> action,before;
+   readonly List<string> expected;
+   internal PreparedSelectedPictureSync(SelectedPictureSync sync,Dictionary<string,object> request){
+    api=sync;action=request;
+    NativeMemory.Require(Convert.ToString(action["abi_profile_sha256"])==ReferenceSyncProfileSha,"Selected picture sync ABI differs.");
+    var after=Map(action["after"]);
+    object allow;
+    NativeMemory.Require(after.Count==2&&after.TryGetValue("allow_original_control_generate",out allow)&&Object.Equals(allow,true)
+      &&after.ContainsKey("expected_reference_edges"),"Selected sync requires explicit original control Generate and the complete expected graph.");
+    before=api.Capture();
+    NativePageControlPreparation.Before(action,before);
+    expected=api.ExpectedEdgeKeys(before);
+    NativePageControlPreparation.Same(expected,ExactPictureSyncEdges(after["expected_reference_edges"]),
+      "Selected sync expected graph must change only this drawing's module11 image links to its registered named frames.");
+   }
+   public void ValidatePersistence(NativeUsableEditPermit.Plan plan){
+    NativeMemory.Require(!plan.Commit,"Use separate page-flush and root-flush after selected picture synchronization.");
+   }
+   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){
+    NativePageControlPreparation.Same(before,api.Capture(),"Selected picture reference preimage changed before original Generate.");
+    lease.BeginApply(action);
+    lease.RequireApplying(action);
+    NativeOperationTrace.BeforeMutation("reference-sync-selected-drawing-original-generate21");
+    NativeMemory.Require(api.Generate(api.DrawingObject),"Original selected drawing Generate failed.");
+    var after=api.Capture();
+    NativePageControlPreparation.Same(expected,ExactPictureSyncEdges(Map(after["graph"])["edges"]),
+      "Original selected drawing Generate produced a different complete registered graph.");
+    foreach(string key in new[]{"typed_control","state_catalog","disk_sha256","picture_module_order","picture_module_dirty"})
+     NativePageControlPreparation.Same(before[key],after[key],"Original selected drawing Generate changed protected "+key+".");
+    lease.CompleteApply(action);
+    return new Dictionary<string,object>{{"ok",true},{"kind",ReferenceSyncKind},{"reference_sync_scope",after["reference_sync_scope"]},
+     {"source",after["source"]},{"native_control_generate_calls",1},{"page_generate_called",false},
+     {"fresh_registered_graph",after["graph"]},{"state_before",before},{"state_after",after},{"native_save_called",false}};
+   }
+   public Dictionary<string,object> Flush(NativeUsableEditPermit.Lease lease){
+    throw new InvalidOperationException("Selected picture reference synchronization does not perform an implicit save.");
+   }
+   public void Dispose(){}
+  }
   sealed class PreparedReferenceSync:INativePreparedPageControlEdit,INativePreparedRelatedPersistence {
    readonly SyncApi api;readonly Dictionary<string,object> action,before;readonly List<int> pages,strategies;readonly Dictionary<int,IntPtr> pagePointers=new Dictionary<int,IntPtr>(),blockPointers=new Dictionary<int,IntPtr>(),docs=new Dictionary<int,IntPtr>();readonly SaveDoc pageSave;readonly VI dirty,preloadDirty;readonly V0 preloadSave;Dictionary<string,object> applied;bool entered,failed,disposed;
    internal PreparedReferenceSync(SyncApi a,Dictionary<string,object> request){api=a;action=request;NativeMemory.Require(Convert.ToString(action["kind"])==ReferenceSyncKind&&Convert.ToString(action["abi_profile_sha256"])==ReferenceSyncProfileSha,"Reference sync kind/ABI differs.");pages=SyncIds(Map(action["target"]),"page_ids");strategies=SyncIds(Map(action["target"]),"strategy_ids");var after=Map(action["after"]);NativeMemory.Require(Object.Equals(after["allow_original_full_generate"],true)&&after.ContainsKey("expected_reference_edges"),"Sync requires original full Generate and the complete expected registered edges.");foreach(string key in after.Keys)NativeMemory.Require(key=="allow_original_full_generate"||key=="native_derived_cache_contract"||key=="expected_reference_edges"||key=="expected_semantic","Unknown reference-sync after field.");before=SyncCapture(api,action);NativePageControlPreparation.Before(action,new Dictionary<string,object>{{"abi_profile_sha256",ReferenceSyncProfileSha},{"state",before},{"semantic",SyncSemantic(before,action)},{"derived_cache_projection_is_explicit_and_raw_evidence_retained",true}});var nativePages=api.References.Shared.Pages();foreach(int id in pages){pagePointers.Add(id,nativePages[id]);docs.Add(id,api.References.Shared.Document(nativePages[id],id));}var nativeBlocks=api.Strategies.Base.Blocks();foreach(int id in strategies){IntPtr block=nativeBlocks[id];blockPointers.Add(id,block);api.Strategies.Base.Read.Table(block,"BlockIObject");NativeMemory.Require(api.References.Engine.Virtual(block,21)==api.Strategies.Methods["StrategyBlockUpdateReferences"],"Canonical strategy update-reference virtual differs.");}pageSave=api.References.Bind<SaveDoc>("UserDocSave");dirty=api.Strategies.Base.Read.Existing.Bind<VI>("RootSetModified");preloadDirty=api.Strategies.Base.Read.Existing.Bind<VI>("StrategyPreloadSetDirty");preloadSave=api.Strategies.Base.Read.Existing.Bind<V0>("StrategyPreloadSaveData");ValidateBefore();}

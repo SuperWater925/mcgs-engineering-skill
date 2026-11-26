@@ -20,6 +20,20 @@ namespace McgsInternalBridge {
   internal static Dictionary<string,object> Capture(NativeEngine e,NativeContext c,string p,IEnumerable<int> ids){var result=new Dictionary<string,object>();foreach(int id in Ids(ids))using(var part=Create(e,c,p,id))result.Add(id.ToString(System.Globalization.CultureInfo.InvariantCulture),part.Capture());return result;}
   internal static Dictionary<string,object> Semantic(Dictionary<string,object> captures){var result=new Dictionary<string,object>();foreach(var pair in captures){var raw=NativePageControlPreparation.Map(pair.Value);int id=Int32.Parse(pair.Key,System.Globalization.CultureInfo.InvariantCulture);if(id==2||id==4)result.Add(pair.Key,raw["semantic"]);else if(id==1){var rows=new List<object>();foreach(object value in(IEnumerable)raw["raw_known_records"]){var row=NativePageControlPreparation.Map(value);rows.Add(new Dictionary<string,object>{{"name",row["name"]},{"complete",row["complete"]},{"native_fields",row["native_fields"]},{"driver_cache_semantic",NativePageControlPreparation.Map(raw["driver_cache_semantics"])[Convert.ToString(row["name"]) ]}});}result.Add(pair.Key,rows);}else{NativeMemory.Require(id==11,"Unknown related module semantic projection.");result.Add(pair.Key,new Dictionary<string,object>{{"ordered_names",raw["ordered_names"]},{"records",PictureLogical(raw["records"])}});}}return result;}
   static object PictureLogical(object value){var map=value as Dictionary<string,object>;if(map!=null){var output=new Dictionary<string,object>();foreach(var pair in map)if(pair.Key!="raw_native_object_hex"&&pair.Key!="image_raw_native_hex"&&pair.Key!="raw_name_catalog_complete"&&pair.Key!="name_index_node")output.Add(pair.Key,PictureLogical(pair.Value));return output;}if(value is IEnumerable&&!(value is string)){var rows=new List<object>();foreach(object item in(IEnumerable)value)rows.Add(PictureLogical(item));return rows;}return value;}
+  internal static Dictionary<string,object> PictureSemanticByName(Dictionary<string,object> semantic){
+   NativeMemory.Require(semantic.Count==1&&semantic.ContainsKey("11"),"Automatic picture rename requires module 11 alone.");
+   var picture=NativePageControlPreparation.Map(semantic["11"]);
+   var records=new Dictionary<string,object>(StringComparer.Ordinal);
+   foreach(object value in (IEnumerable)picture["records"]){
+    var row=NativePageControlPreparation.Map(value);
+    string name=NativePageControlPreparation.Text(row,"name");
+    NativeMemory.Require(!records.ContainsKey(name),"A native picture name repeats in the map.");
+    records.Add(name,row);
+   }
+   // The native name hash-list may reallocate or move a node on rename.
+   // The separate ordered vector is the actual resource display order.
+   return new Dictionary<string,object>{{"11",new Dictionary<string,object>{{"ordered_names",picture["ordered_names"]},{"records",records}}}};
+  }
   internal static Prepared Prepare(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action,IEnumerable<int> ids){return new Prepared(e,c,p,action,Ids(ids));}
   internal sealed class Prepared:IDisposable {
    readonly Dictionary<string,object> action;readonly List<IParticipant> participants=new List<IParticipant>();readonly Dictionary<string,object> before;bool disposed,flushed;
@@ -27,7 +41,14 @@ namespace McgsInternalBridge {
    internal Prepared(NativeEngine e,NativeContext c,string p,Dictionary<string,object> ac,List<int> ids){action=ac;try{foreach(int id in ids)participants.Add(Create(e,c,p,id));before=Current();}catch{Dispose();throw;}}
    Dictionary<string,object> Current(){var result=new Dictionary<string,object>();foreach(var part in participants)result.Add(part.ModuleId.ToString(System.Globalization.CultureInfo.InvariantCulture),part.Capture());return result;}
    internal void ValidateBefore(){NativeMemory.Require(!disposed&&!flushed,"Module persistence participant is closed/already flushed.");NativePageControlPreparation.Same(before,Current(),"Related native module preimage changed before action claim.");}
-   internal void ValidateAfterMutation(object expectedSemantic){NativeMemory.Require(!disposed&&!flushed,"Related module semantic validation must precede its one flush.");NativePageControlPreparation.Same(expectedSemantic,Semantic(Current()),"Native reference mutation differs from explicit complete related-module semantic postimages.");}
+   internal void ValidateAfterMutation(object expectedSemantic,bool pictureRecordsByName=false){
+    NativeMemory.Require(!disposed&&!flushed,"Related module semantic validation must precede its one flush.");
+    var actual=Semantic(Current());
+    if(pictureRecordsByName)actual=PictureSemanticByName(actual);
+    NativePageControlPreparation.Same(expectedSemantic,actual,pictureRecordsByName?
+      "Native picture rename differs from the derived complete catalog postimage.":
+      "Native reference mutation differs from explicit complete related-module semantic postimages.");
+   }
    internal void ValidatePersistence(NativeUsableEditPermit.Plan plan){NativeMemory.Require(!disposed,"Module persistence participant is closed.");if(plan.Commit)foreach(var part in participants)plan.RequireModulePersistence(action,part.ModuleId);}
    internal Dictionary<string,object> FlushWithinExistingLease(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!flushed,"Module participant must flush at most once.");lease.RequireFlushing(action);flushed=true;var reports=new List<object>();foreach(var part in participants){lease.RequireModulePersistence(action,part.ModuleId);reports.Add(part.Flush(lease,action));}return new Dictionary<string,object>{{"ok",true},{"module_saves",reports},{"caller_owns_action_stage",true},{"root_save_called",false},{"file_acceptance_verified",false}};}
    public void Dispose(){if(disposed)return;disposed=true;Exception first=null;for(int i=participants.Count-1;i>=0;i--)try{participants[i].Dispose();}catch(Exception ex){if(first==null)first=ex;}if(first!=null)throw first;}

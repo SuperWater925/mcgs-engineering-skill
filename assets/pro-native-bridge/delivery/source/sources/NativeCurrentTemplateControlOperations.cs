@@ -27,8 +27,8 @@ namespace McgsInternalBridge {
   [DllImport("user32.dll")][return:MarshalAs(UnmanagedType.Bool)]static extern bool IsWindow(IntPtr hwnd);
 
   internal sealed class Class {
-   internal readonly Dictionary<string,object> Row,Primary,Object,Operations;internal readonly string Name;internal readonly int TypeId,GroupOffset;internal int Size;internal readonly bool External;
-   internal Class(Dictionary<string,object> row){Row=row;Primary=Map(row["primary"]);Object=Map(row["iobject"]);Operations=Map(row["operations"]);Name=Convert.ToString(row["class_name"]);TypeId=Num(row["type_id"]);Size=Num(row["size"]);GroupOffset=row["group_children_list_offset"]==null?0:Num(row["group_children_list_offset"]);External=Convert.ToBoolean(row["external_component_dependency"]);}
+   internal readonly Dictionary<string,object> Row,Primary,Object,Operations;internal readonly string Name;internal readonly int TypeId;internal int Size;internal int GroupOffset{get{return Row["group_children_list_offset"]==null?0:NativeLayout.Offset("group."+Name+".children");}}internal readonly bool External;
+   internal Class(Dictionary<string,object> row){Row=row;Primary=Map(row["primary"]);Object=Map(row["iobject"]);Operations=Map(row["operations"]);Name=Convert.ToString(row["class_name"]);TypeId=Num(row["type_id"]);Size=Num(row["size"]);External=Convert.ToBoolean(row["external_component_dependency"]);}
   }
   internal sealed class Node {internal IntPtr Full;internal Class Class;internal int[] Path;internal Dictionary<string,object> Opaque;internal int OpaqueGroupOffset;internal readonly List<Node> Children=new List<Node>();}
   static Dictionary<string,object> Map(object value){return NativePageControlPreparation.Map(value);}static int Num(object value){return NativeEngine.Number(value);}
@@ -39,6 +39,7 @@ namespace McgsInternalBridge {
   internal sealed class Api {
    internal readonly NativePageControlAbi Shared;internal readonly NativeEngine Engine;internal readonly NativeContext Context;
    internal readonly Dictionary<string,Dictionary<string,object>> FactoryContracts=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);
+   internal readonly Dictionary<string,Dictionary<string,object>> CloneEligibility=new Dictionary<string,Dictionary<string,object>>(StringComparer.Ordinal);
    internal readonly Dictionary<string,Class> FactoryClasses=new Dictionary<string,Class>(StringComparer.Ordinal);
    internal const string TemplateRelative="coverage-20261101/usable-edit-0001/page-control-prep/current-template-control-abi-profile.v2.json";
    readonly Dictionary<uint,Class> classes=new Dictionary<uint,Class>();readonly HashSet<IntPtr> verifiedTables=new HashSet<IntPtr>();readonly Dictionary<string,List<Dictionary<string,object>>> guards=new Dictionary<string,List<Dictionary<string,object>>>();
@@ -66,7 +67,7 @@ namespace McgsInternalBridge {
     foreach(object value in (IEnumerable)templateProfile["classes"]){
      var row=Map(value);
      if(Convert.ToString(row["class_name"])!="CDrawUnit")continue;
-     if(DirectResolved(row))groupOffset=Num(row["group_children_list_offset"]);
+     if(DirectResolved(row))try{groupOffset=NativeLayout.Offset("group.CDrawUnit.children");}catch(NativeCompatibilityException error){if(!NativeAbiTargetProfiles.IsUnavailableFeature(error))throw;}
      break;
     }
     bool isUnit;var snapshot=NativeOpaqueDrawState.Capture(full,document,groupOffset>0,out isUnit,imageRanges);
@@ -93,15 +94,79 @@ namespace McgsInternalBridge {
   static IEnumerable<Node> Flatten(List<Node> nodes){return NativeDynamicCollections.DepthFirst<Node>(nodes,delegate(Node node){return node.Children;});}
   static void RequireKnownSubtree(Node selected,string operation){NativeMemory.Require(selected!=null,"Native target is absent.");foreach(Node node in Flatten(new List<Node>{selected}))if(node.Class==null)throw new NativeAbiUnavailableException("Requested "+operation+" includes an unknown target class or child lifecycle; unrelated opaque objects remain preserved.",Api.TemplateRelative,Convert.ToString(node.Opaque["rtti"]));}
   static void RequireKnownForest(List<Node> forest,string operation){foreach(Node node in forest)RequireKnownSubtree(node,operation);}
+  static Dictionary<string,object> CloneClassEligibility(Api api,Class cls){
+   if(cls==null)return new Dictionary<string,object>{{"eligible",false},{"subtree_geometry_eligible",false},{"reason","Unknown target class/lifecycle"},{"geometry_reason","Unknown target class/lifecycle"}};
+   Dictionary<string,object> result;if(api.CloneEligibility.TryGetValue(cls.Name,out result))return result;
+   string cloneReason="",geometryReason="";
+   try{NativeMemory.Require(!cls.External,"External component lifecycle/COM contract remains unresolved for "+cls.Name);api.Bind<RectSetter>(cls,"set_rect");}
+   catch(Exception error){geometryReason=error.GetType().Name+": "+error.Message;}
+   try{api.Bind<Clone>(cls,"clone");}catch(Exception error){cloneReason=error.GetType().Name+": "+error.Message;}
+   result=new Dictionary<string,object>{{"eligible",cloneReason.Length==0&&geometryReason.Length==0},{"subtree_geometry_eligible",geometryReason.Length==0},{"reason",geometryReason.Length>0?geometryReason:cloneReason},{"geometry_reason",geometryReason},{"scope","current class clone and geometry ABI; selected subtree checked separately"}};
+   api.CloneEligibility.Add(cls.Name,result);return result;
+  }
+  static void SnapshotCloneEligibility(Api api,Node node,Dictionary<string,object> snapshot){
+   var ability=new Dictionary<string,object>(CloneClassEligibility(api,node.Class));
+   // Root clone uses the serializer once; descendants need their own geometry
+   // and lifecycle contracts, not an unused stand-alone clone entry.
+   foreach(object raw in (IEnumerable)snapshot["children"]){
+    var child=Map(raw);var eligible=Map(child["clone_eligibility"]);string reason="";
+    if(!Object.Equals(eligible["subtree_geometry_eligible"],true))reason=Convert.ToString(eligible["geometry_reason"]);
+    else{var rectangle=Integers(child["rectangle"]);bool line=Object.Equals(child["class"],"CDrawLine");if(rectangle[2]<rectangle[0]||rectangle[3]<rectangle[1]||(line?rectangle[2]==rectangle[0]&&rectangle[3]==rectangle[1]:rectangle[2]==rectangle[0]||rectangle[3]==rectangle[1]))reason="Existing descendant geometry is degenerate.";}
+    if(reason.Length>0){ability["eligible"]=false;ability["subtree_geometry_eligible"]=false;ability["reason"]="Descendant: "+reason;ability["geometry_reason"]=ability["reason"];break;}
+   }
+   ability["scope"]="current target subtree clone and geometry ABI";snapshot["clone_eligibility"]=ability;
+  }
   static Dictionary<string,object> SnapshotHeader(Api api,Node node){if(node.Class==null){var opaque=new Dictionary<string,object>(node.Opaque);opaque["path"]=node.Path;opaque["children"]=new List<object>();opaque["child_layout_interpreted"]=node.OpaqueGroupOffset!=0;return opaque;}var result=new Dictionary<string,object>{{"class",node.Class.Name},{"rtti",".?AV"+node.Class.Name+"@@"},{"type_id",node.Class.TypeId},{"size",node.Class.Size},{"path",node.Path},{"complete",NativeMemory.Hex(node.Full)},{"owner_document",NativeMemory.Hex(NativeMemory.Ptr(node.Full,NativeLayout.Offset("control.owner_document")))},{"name",NativeStrategyProfile.ReadName(api.Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))},{"native_id",NativeStrategyProfile.ReadId(api.Shared.Shared,NativeOpaqueDrawState.ControlObject(node.Full))},{"rectangle",NativePageControlAbi.Rectangle(node.Full)},{"raw_DWORD60",unchecked((uint)NativeMemory.I32(node.Full,NativeLayout.Offset("control.raw_state")))},{"raw_DWORDB0",unchecked((uint)NativeMemory.I32(node.Full,0xB0))}};result["children"]=new List<object>();return result;}
   static Dictionary<string,object> Snapshot(Api api,Node node){return NativeDynamicCollections.ProjectTree<Node,Dictionary<string,object>>(node,
    delegate(Node item){return SnapshotHeader(api,item);},delegate(Node item){return item.Children;},
    delegate(Dictionary<string,object> parent,Dictionary<string,object> child){((List<object>)parent["children"]).Add(child);},
-   delegate(Node item,Dictionary<string,object> result){if(item.Class==null)return;if(item.Class.Name=="CDrawLabel")result["caption"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0xE4),4096);if(item.Class.Name=="CDrawEdit")result["input_variable"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0x11C),1024);});}
+   delegate(Node item,Dictionary<string,object> result){SnapshotCloneEligibility(api,item,result);if(item.Class==null)return;if(item.Class.Name=="CDrawLabel")result["caption"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0xE4),4096);if(item.Class.Name=="CDrawEdit")result["input_variable"]=NativeStrategyProfile.ReadBorrowedCString(NativeMemory.Add(item.Full,0x11C),1024);});}
   static List<object> SnapshotForest(Api api,IntPtr doc,List<IntPtr> controls=null){var result=new List<object>();var seen=new HashSet<uint>();var top=controls??api.Shared.TopControls(doc);for(int i=0;i<top.Count;i++)result.Add(Snapshot(api,api.Tree(top[i],doc,new[]{i},seen,0)));return result;}
   static IEnumerable<Dictionary<string,object>> SnapshotRows(object tree){foreach(object value in (IEnumerable)tree)yield return Map(value);}
   static List<Dictionary<string,object>> FlatSnapshot(object tree){return new List<Dictionary<string,object>>(NativeDynamicCollections.DepthFirst<Dictionary<string,object>>(SnapshotRows(tree),delegate(Dictionary<string,object> row){return SnapshotRows(row["children"]);}));}
   static Dictionary<string,object> Capture(Api api,Dictionary<string,object> action){string kind=NativePageControlPreparation.Kind(action);IntPtr target=api.Shared.Page(Map(action["target"])),doc=NativeMemory.Ptr(target,NativeLayout.Offset("page.document"));var result=new Dictionary<string,object>{{"abi_profile_sha256",ProfileSha},{"target_page",api.Shared.PageSnapshot(target)},{"target_forest",SnapshotForest(api,doc)},{"view_state",api.ViewState(doc)},{"history_store_projection",NativeHistoryStoreProjection.Prepare(api.Engine,doc).Before}};IntPtr sourcePage,sourceDoc;Node selected=api.Locate(Map(action[kind=="control-template-clone"?"source":"target"]),out sourcePage,out sourceDoc);result["selected"]=Snapshot(api,selected);result["source_page"]=sourcePage==target?result["target_page"]:api.Shared.PageSnapshot(sourcePage);result["source_forest"]=sourceDoc==doc?result["target_forest"]:SnapshotForest(api,sourceDoc);if(kind=="control-template-delete"){var references=new List<object>();foreach(Node node in Flatten(new List<Node>{selected}))using(var reference=new NativeReference(api,NativeOpaqueDrawState.ControlObject(node.Full)))references.Add(new Dictionary<string,object>{{"path",node.Path},{"status",reference.Status},{"first",reference.First}});result["references"]=references;}return result;}
+  static object DesignForestProjection(object expected,object actual){
+   var expectedRows=(IList)expected;var actualRows=(IList)actual;
+   NativeMemory.Require(expectedRows.Count==actualRows.Count,"Designed control forest count changed before first mutation.");
+   var result=new List<object>();
+   for(int i=0;i<expectedRows.Count;i++){
+    var wanted=Map(expectedRows[i]);var current=Map(actualRows[i]);var row=new Dictionary<string,object>();
+    foreach(var field in wanted){
+     NativeMemory.Require(Array.IndexOf(new[]{"path","complete","native_id","name","class","owner_document","rectangle","children","caption","input_variable"},field.Key)>=0,"Unknown design forest preimage field: "+field.Key);
+     object value;NativeMemory.Require(current.TryGetValue(field.Key,out value),"Designed control preimage field disappeared: "+field.Key);
+     row[field.Key]=field.Key=="children"?DesignForestProjection(field.Value,value):value;
+    }
+    result.Add(row);
+   }
+   return result;
+  }
+  internal static Dictionary<string,object> ValidateDesignPages(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> design){
+   var api=new Api(engine,context,project);var forests=new Dictionary<int,List<Node>>();var snapshots=new Dictionary<int,List<object>>();
+   foreach(object value in (IEnumerable)design["pages"]){
+    var expected=Map(value);int id=Num(expected["page_id"]);NativeMemory.Require(!forests.ContainsKey(id),"Design repeats a page preimage.");
+    IntPtr page=api.Shared.Page(expected),doc=api.Shared.Document(page,id);
+    NativeMemory.Require(NativeMemory.Hex(page)==Convert.ToString(expected["page_iobject"])&&NativeMemory.Hex(doc)==Convert.ToString(expected["document"]),"Designed page object/document identity changed before first mutation.");
+    int[] attrs=api.Shared.Attributes(doc);NativePageControlPreparation.Same(expected["resolution"],new[]{attrs[2],attrs[3]},"Designed page resolution changed before first mutation.");
+    var forest=api.Forest(doc);forests.Add(id,forest);var trees=new List<object>();foreach(Node node in forest)trees.Add(Snapshot(api,node));snapshots.Add(id,trees);
+    NativePageControlPreparation.Same(expected["forest"],DesignForestProjection(expected["forest"],trees),"Designed control identity/geometry/order/required binding changed before first mutation.");
+   }
+   object sources;int cloneSources=0;
+   if(design.TryGetValue("clone_sources",out sources))foreach(object raw in (IEnumerable)sources){
+    var selector=Map(raw);int id=Num(selector["page_id"]);NativeMemory.Require(forests.ContainsKey(id),"Clone source page needs a design preimage.");api.Shared.Page(selector);
+    var local=new Dictionary<string,object>(selector);local.Remove("page_id");local.Remove("page_name");
+    Node node=GeometryBatchLocate(api,forests[id],local);Dictionary<string,object> found=null;
+    foreach(var row in FlatSnapshot(snapshots[id]))if(Convert.ToString(row["complete"])==NativeMemory.Hex(node.Full)){found=row;break;}
+    NativeMemory.Require(found!=null,"Clone source is outside its design page.");var ability=Map(found["clone_eligibility"]);
+    NativeMemory.Require(Object.Equals(ability["eligible"],true),"Design clone target is ineligible: "+ability["reason"]);cloneSources++;
+   }
+   int factorySources=0;
+   if(design.TryGetValue("clone_factory_classes",out sources))foreach(object raw in (IEnumerable)sources){
+    var selector=Map(raw);api.Shared.Page(selector);string name=Convert.ToString(selector["class"]);FactoryContract(api,name);
+    var ability=CloneClassEligibility(api,InstalledClass(api,name));NativeMemory.Require(Object.Equals(ability["eligible"],true),"Design prototype clone class is ineligible: "+ability["reason"]);factorySources++;
+   }
+   if(cloneSources+factorySources>0)NativeMemory.Require(NativeMemory.I32(engine.Address(0xFB21F8),0)==0,"Native clone serializer mode is active before the designed mutation sequence.");
+   return new Dictionary<string,object>{{"verified",true},{"page_count",forests.Count},{"clone_source_count",cloneSources},{"clone_factory_class_count",factorySources},{"checked_once_before_first_action",true}};
+  }
   internal static Dictionary<string,object> Read(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){var batch=CurrentCloneBatch(NativePageControlPreparation.Kind(action));return batch==null?Capture(new Api(e,c,p),action):batch.CaptureTemplate(action);}
   internal static INativePreparedPageControlEdit Prepare(NativeEngine e,NativeContext c,string p,Dictionary<string,object> action){var batch=CurrentCloneBatch(NativePageControlPreparation.Kind(action));return new Prepared(batch==null?new Api(e,c,p):batch.Template,action,batch);}
 
@@ -139,6 +204,9 @@ namespace McgsInternalBridge {
    bool disposed,complete;
    internal int AppliedCount{get;private set;}
    internal bool MutationEntered;
+   bool mutationUnverified;
+   internal void EnterMutation(){MutationEntered=true;mutationUnverified=true;}
+   internal void VerifiedMutation(){mutationUnverified=false;}
 
    internal CloneBatchScope(NativeEngine engine,NativeContext context,string project,Dictionary<string,object> target,string kind){
     var clock=Stopwatch.StartNew();
@@ -296,9 +364,16 @@ namespace McgsInternalBridge {
    }
    internal Dictionary<string,object> RefreshPartial(object firstAction,object lastAction){
     var report=IncompleteReport(firstAction,lastAction);
-    if(View==IntPtr.Zero||!MutationEntered)return report;
+    report["unverified_mutation_pending"]=mutationUnverified;
+    if(View==IntPtr.Zero||!MutationEntered||mutationUnverified||AppliedCount==0){report["partial_refresh_skipped"]=true;return report;}
     try{
-     Shared.Current();
+     ValidateCurrent();
+     NativeMemory.Require(NativeMemory.I32(Template.Engine.Address(0xFB21F8),0)==0,"Native clone serializer state is not idle; partial refresh skipped.");
+     var top=Shared.TopControls(Doc);
+     NativePageControlPreparation.Same(initialPage["attributes"],Shared.Attributes(Doc),"Partial clone prefix page attributes changed.");
+     NativePageControlPreparation.Same(initialPage["pages"],Shared.PageRows(),"Partial clone prefix page identity changed.");
+     NativePageControlPreparation.Same(expected,SnapshotForest(Template,Doc,top),"Partial clone prefix is not the last verified forest.");
+     report["verified_prefix_before_refresh"]=true;
      NativeMemory.Require(Shared.Shared.RootDoc()==Root&&Shared.Document(Page,Convert.ToInt32(initialPage["page_id"]))==Doc&&Template.View(Doc)==View,
       "Clone batch page/view changed before partial refresh.");
      NativeOperationTrace.BeforeMutation("native-clone-partial-invalidate");
@@ -408,7 +483,7 @@ namespace McgsInternalBridge {
      if(operation=="control-template-clone")NativeMemory.Require(NativeMemory.I32(api.Engine.Address(0xFB21F8),0)==0,"Native clone serializer mode is already active.");api.Shared.Slot(doc,27,0x3A3C8);api.Shared.Slot(api.Context.WindowService,12,0x21733);
     }catch{Dispose();throw;}
    }
-   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!applied,"Prepared template operation is disposed/already applied.");api.Shared.Current();NativePageControlPreparation.Same(before,batch==null?Capture(api,action):batch.CaptureTemplate(action),"Template operation preimage changed before Apply.");lease.BeginApply(action);applied=true;if(batch!=null)batch.MutationEntered=true;bool calledHistory=view!=IntPtr.Zero&&(batch==null||!history.OriginalBeforeModifyReturned);if(calledHistory){NativeOperationTrace.BeforeMutation("template-native-before-modify-history");history.ValidateBefore();beforeModify(doc,view,1,1);if(batch==null)history.OriginalStoreReturned();else batch.HistoryReturned();NativeMemory.Require(modified(doc)==1,"Original DocBeforeModify did not mark its document modified.");}NativeOperationTrace.BeforeMutation("template-root-and-page-dirty");setRoot(root,1);Marshal.WriteInt32(root,NativeLayout.Offset("document.compile_valid"),0);setDoc(doc,1);
+   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){NativeMemory.Require(!disposed&&!applied,"Prepared template operation is disposed/already applied.");api.Shared.Current();NativePageControlPreparation.Same(before,batch==null?Capture(api,action):batch.CaptureTemplate(action),"Template operation preimage changed before Apply.");lease.BeginApply(action);applied=true;if(batch!=null)batch.EnterMutation();bool calledHistory=view!=IntPtr.Zero&&(batch==null||!history.OriginalBeforeModifyReturned);if(calledHistory){NativeOperationTrace.BeforeMutation("template-native-before-modify-history");history.ValidateBefore();beforeModify(doc,view,1,1);if(batch==null)history.OriginalStoreReturned();else batch.HistoryReturned();NativeMemory.Require(modified(doc)==1,"Original DocBeforeModify did not mark its document modified.");}NativeOperationTrace.BeforeMutation("template-root-and-page-dirty");setRoot(root,1);Marshal.WriteInt32(root,NativeLayout.Offset("document.compile_valid"),0);setDoc(doc,1);
     if(operation=="control-template-delete"){NativeOperationTrace.BeforeMutation("template-native-owner-detach");remove(doc,selected.Full);NativeMemory.Require(!api.Shared.TopControls(doc).Contains(selected.Full),"Original DocRemove did not remove the exact top-level control/group.");api.Type(selected.Full);NativeOperationTrace.BeforeMutation("template-native-class-delete");delete(selected.Full);resultFull=IntPtr.Zero;}
     Node resulting=null;
     if(operation!="control-template-delete"){Node target=selected;if(operation=="control-template-clone"){NativeOperationTrace.BeforeMutation("template-class-native-deep-clone");resultFull=clone(selected.Full,doc);NativeMemory.Require(resultFull!=IntPtr.Zero&&resultFull!=selected.Full&&NativeMemory.I32(api.Engine.Address(0xFB21F8),0)==0,"Native template clone returned invalid object or left serializer mode active.");Class actual=api.Type(resultFull);NativeMemory.Require(actual.Name==selected.Class.Name,"Native clone returned another CDraw class.");IntPtr owner=NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"));NativeMemory.Require(owner==IntPtr.Zero||owner==doc,"Native clone has another document owner.");if(batch!=null)batch.RequireDetached(resultFull);else NativeMemory.Require(!api.Shared.TopControls(doc).Contains(resultFull),"Clone attached before the original owner insertion.");NativeOperationTrace.BeforeMutation("template-native-owner-insert");add(doc,resultFull);int index;if(batch!=null)index=batch.ObserveInsertion(resultFull);else{index=api.Shared.TopControls(doc).IndexOf(resultFull);NativeMemory.Require(index>=0&&NativeMemory.Ptr(resultFull,NativeLayout.Offset("control.owner_document"))==doc,"Original DocAdd did not establish the exact target owner.");}target=api.Tree(resultFull,doc,new int[]{index},new HashSet<uint>(),0);Shape(selected,target);}

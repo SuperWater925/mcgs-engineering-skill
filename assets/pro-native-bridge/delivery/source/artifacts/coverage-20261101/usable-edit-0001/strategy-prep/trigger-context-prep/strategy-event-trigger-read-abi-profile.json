@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "purpose": "Read only the persistent fields of the canonical native CTriggerEvent; never call its serialization or creation functions",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "trigger": {
+    "name": "Event",
+    "rtti": ".?AVCTriggerEvent@@",
+    "native_type": 4,
+    "size": 68,
+    "runtime_class_rva": 16441804,
+    "vtable_rva": 15010836,
+    "col_rva": 15280572,
+    "type_rva": 16442108,
+    "entries_rva": [
+      33601,
+      195746,
+      132366
+    ]
+  },
+  "byte_array": {
+    "name": "ByteArray",
+    "module": "mfc110u.dll",
+    "rtti": ".?AVCByteArray@@",
+    "size": 20,
+    "vtable_rva": 221880,
+    "col_rva": 221900,
+    "type_rva": 2768468
+  },
+  "serialized_layout": {
+    "cache": 36,
+    "expression": 56,
+    "words": [
+      60,
+      64
+    ]
+  },
+  "functions": [
+    {
+      "name": "EventGetRuntimeClass",
+      "module": "McgsSetPro.exe",
+      "rva": 33601
+    },
+    {
+      "name": "EventSerialize",
+      "module": "McgsSetPro.exe",
+      "rva": 132366
+    }
+  ],
+  "code_guards": [
+    {
+      "name": "EventGetRuntimeClassEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 33601,
+      "bytes": "e9ba69ac00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventGetRuntimeClassBody",
+      "module": "McgsSetPro.exe",
+      "rva": 11332864,
+      "bytes": "558bec51894dfcb8cce13a018be55dc3",
+      "reloc_offsets": [
+        8
+      ]
+    },
+    {
+      "name": "EventSerializeEntry",
+      "module": "McgsSetPro.exe",
+      "rva": 132366,
+      "bytes": "e99deaaa00",
+      "reloc_offsets": []
+    },
+    {
+      "name": "EventSerializeBody",
+      "module": "McgsSetPro.exe",
+      "rva": 11333552,
+      "bytes": "558bec83ec0c894dfc8b4508508b4dfce8ffd254ff8b4d08518b4dfc83c1248b55fc8b42248b5008ffd28b45088945f88b4d08e8befc57ff85c0742f8b4dfc83c138518b4df8e87cea57ff8b55fc8b423c508b4d08e8333556ff8b4dfc8b5140528b4d08e82b3856ffeb338b45fc83c038508b4df8e8dfc657ff8b4dfc83c13c518b4d08e88ba356ff8d55f4528b4d08e8467b53ff8b45fc8b4df48948408be55dc20400",
+      "reloc_offsets": []
+    }
+  ]
+}

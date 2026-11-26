@@ -4,9 +4,9 @@
 
 完整可执行示例见`examples/create.json`。create从随包通用空白数据新建数据库，逐项写入真实工程内容，不启动编辑器。
 
-顶层只接受variables和pages。variables每项接受name、type、initial、note、unit；type为boolean、number或string。数值初值须为有限数值，布尔初值为0或1；字符串直接填写文本。变量ID由工具按工程顺序分配，不由调用方猜测。
+顶层使用 `variables`、`pages`，可选 `edits` 提交初始结构操作。标量变量可使用 `boolean`、`number`、`string`，空数据组使用 type:group。数值初值须为有限数值，布尔初值为0或1；字符串直接填写文本。变量ID由工具按工程顺序分配，不由调用方猜测。
 
-pages每项接受name和controls。名称1～32字符，页名唯一；每页控件名唯一。第一项作为启动页。800×480目标模板沿用随包默认型号；更换机型、分辨率或协议配置不属于此模板参数。
+`pages` 每项可声明 `name`、`controls`、`events`、`width`、`height`、`background`、`description`。名称 1～32 字符，页名和同页控件名分别唯一。第一项作为启动页。省略尺寸时沿用模板。编辑窗体尺寸不会改动设备型号和驱动协议。
 
 控件字段：
 
@@ -45,11 +45,11 @@ bounds为`[左,上,右,下]`四整数。右大于左、下大于上；请把控�
 }
 ```
 
-从实际inspect结果填写ID、名称与SHA，不使用上述示意值。文字支持变长/变短及中文，控件记录长度会自动更新。edits可修改名称和bounds；静态标签和按钮可改文案，数字/字符输入与显示可改对应绑定及样式，数值输入可改上下限。页面 `events` 接原生打开/循环/退出源码，按钮接明确按下/释放源码；已有策略仍走共享 `strategy-source`。暂不提供变量重命名、删除、已有窗口重命名或任意未知属性修改。
+从实际inspect结果填写ID、名称与SHA，不使用上述示意值。文字支持变长/变短及中文，控件记录长度会自动更新。edits可修改名称和bounds；静态标签和按钮可改文案，数字/字符输入与显示可改对应绑定及样式，数值输入可改上下限。页面 `events` 接原生打开/循环/退出源码，按钮接明确按下/释放源码；已有策略源码可走共享 `strategy-source`，策略和触发器结构另见[策略与配方编辑](offline-program-recipe.md)。已有变量改名、删除和窗口改名按[离线工厂](../../../references/offline-factories.md)的身份和引用条件执行。
 
 原有变量的初值、note、unit可更新；新增变量通过add_variables。修改已有工程时不替换其他页面、设备、权限、策略或未知控件内容；文件级全表回读会检测意外改动。实际不支持的变量布局或控件归档分支报告具体缺口；不按软件发行版本拦截。
 
-edit 顶层 `add_pages` 接 `{id,name,template_page_id,controls,events}`；id 可省略自动分配，模板来自本次工程。新页默认空事件，不继承旧页面脚本，不改主控启动列表。已有页 `events` 未指定项保持原源码/缓存，实际更改项仅清对应缓存；`events` 字段为 `open/cycle/close/period_ms`。
+edit 顶层 `add_pages` 接 `{id,name,template_page_id,controls,events,width,height,background,description}`。ID 可省略自动分配，模板来自本次工程。新页默认空事件，不继承旧页面脚本，不改主控启动列表。已有页 `events` 未指定项保持原源码/缓存，实际更改项仅清对应缓存；`events` 字段为 `open/cycle/close/period_ms`。
 
 ## 编写需求时
 

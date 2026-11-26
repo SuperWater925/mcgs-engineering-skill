@@ -67,7 +67,7 @@ pwsh -NoProfile -File .\run.ps1 edit --source 'D:\工程\当前.mcp' --spec 'D:\
 
 ## 环境准备后的交互
 
-先检查共同基础并说明离线、在线的区别，让接收者选择，再核所选方式的依赖。离线数据库命令使用 `doctor` 检查 ACE；在线用 `native-doctor --editor-executable '<实际Pro EXE>' --install-root '<实际安装根>'` 检查文件准备前提，纯在线不依赖独立 ACE 提供程序。不要让纯离线任务先配置在线编译器，也不要把 `doctor` 退出0当作在线接入或业务就绪。`native-doctor.ready_to_prepare` 仅指文件准备，连接权限和实际业务另行核对。用户已明确说“离线”或“在线”时直接沿用，不重问。当前 Stu 只提供离线方式，其在线入口待后续更新。
+先检查共同基础并说明离线、在线的区别，让接收者选择，再核所选方式的依赖。离线数据库命令使用 `doctor` 检查 ACE。在线使用 `turnkey inventory` 识别本地编辑器，再用对应产品的 `turnkey prepare-online --family stu` 或 `--family pro` 接入。Pro 的 `native-doctor.ready_to_prepare` 只描述文件准备状态。双方业务功能以本次原生连接的实际能力为准。用户已明确选择时沿用。 [Stu 在线接入](stu-native-engineering.md) · [Pro 部署](pro-native-deployment.md)
 
 技能是 AI 的操作说明和入口；`assets/pro-native-bridge` 是实现在线操作的自有工具与源码。当前使用本机文件队列传输，不是 MCP 协议服务器，也不需要额外联网服务。
 

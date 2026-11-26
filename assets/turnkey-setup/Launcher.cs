@@ -21,7 +21,15 @@ internal static class McgsStart
         b.Append('\\', slashes * 2); b.Append('"'); return b.ToString();
     }
 
-    static string Execute(params string[] args)
+    sealed class ExecutionResult
+    {
+        public string Stdout, Stderr;
+        public int ExitCode;
+        public string DisplayText { get { return Stdout + (String.IsNullOrEmpty(Stderr) ? "" : Environment.NewLine + Stderr)
+            + Environment.NewLine + "Exit code: " + ExitCode; } }
+    }
+
+    static int Execute(string[] args, Stream output, Stream error)
     {
         string python = Path.Combine(Root, "runtime", "python", "python.exe");
         string script = Path.Combine(Root, "skill", "scripts", "turnkey.py");
@@ -30,28 +38,43 @@ internal static class McgsStart
         foreach (string arg in args) { command.Append(' '); command.Append(Quote(arg)); }
         var start = new ProcessStartInfo(python, command.ToString()) {
             UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true,
-            RedirectStandardError = true, StandardOutputEncoding = Encoding.UTF8,
-            StandardErrorEncoding = Encoding.UTF8, WorkingDirectory = Root
+            RedirectStandardError = true, WorkingDirectory = Root
         };
         using (var p = Process.Start(start)) {
-            Task<string> stdout = p.StandardOutput.ReadToEndAsync();
-            Task<string> stderr = p.StandardError.ReadToEndAsync();
+            Task stdout = p.StandardOutput.BaseStream.CopyToAsync(output);
+            Task stderr = p.StandardError.BaseStream.CopyToAsync(error);
             p.WaitForExit(); Task.WaitAll(stdout, stderr);
-            string result = stdout.Result;
-            if (!String.IsNullOrWhiteSpace(stderr.Result)) result += Environment.NewLine + stderr.Result;
-            return result;
+            return p.ExitCode;
+        }
+    }
+
+    static ExecutionResult ExecuteForDisplay(string[] args)
+    {
+        using (var output = new MemoryStream())
+        using (var error = new MemoryStream()) {
+            int code = Execute(args, output, error);
+            return new ExecutionResult { Stdout = Encoding.UTF8.GetString(output.ToArray()),
+                Stderr = Encoding.UTF8.GetString(error.ToArray()), ExitCode = code };
         }
     }
 
     [STAThread]
     public static int Main(string[] args)
     {
+        if (args.Length > 0) {
+            try {
+                using (Stream standardOutput = Console.OpenStandardOutput())
+                using (Stream error = Console.OpenStandardError())
+                    return Execute(args, standardOutput, error);
+            }
+            catch (Exception e) {
+                byte[] message = Encoding.UTF8.GetBytes(e.Message + Environment.NewLine);
+                using (Stream error = Console.OpenStandardError()) error.Write(message, 0, message.Length);
+                return 1;
+            }
+        }
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
-        if (args.Length > 0) {
-            try { Console.Write(Execute(args)); return 0; }
-            catch (Exception e) { MessageBox.Show(e.Message, "MCGS 配置未完成"); return 1; }
-        }
         var form = new Form { Text = "MCGS 工程技能 · 开箱配置", Width = 850, Height = 640,
             StartPosition = FormStartPosition.CenterScreen, Font = new Font("Microsoft YaHei UI", 10) };
         var top = new FlowLayoutPanel { Dock = DockStyle.Top, Height = 90, Padding = new Padding(12) };
@@ -62,7 +85,7 @@ internal static class McgsStart
         var verify = new Button { Text = "校验完整包", AutoSize = true };
         var readme = new Button { Text = "使用说明", AutoSize = true };
         top.Controls.AddRange(new Control[] { family, setup, install, verify, readme });
-        var note = new Label { Text = "版本不同可保留并适配，也可选原目录重装。Pro 支持离线/在线；Stu 当前仅离线。", AutoSize = true, Padding = new Padding(0, 6, 0, 0) };
+        var note = new Label { Text = "版本不同可保留并适配，也可选原目录重装。各款编辑器的可用模式见检查结果。", AutoSize = true, Padding = new Padding(0, 6, 0, 0) };
         top.Controls.Add(note);
         var output = new TextBox { Dock = DockStyle.Fill, Multiline = true, ScrollBars = ScrollBars.Both,
             ReadOnly = true, WordWrap = false, Font = new Font("Consolas", 10),
@@ -74,11 +97,11 @@ internal static class McgsStart
             setup.Enabled = install.Enabled = verify.Enabled = false;
             output.Text = "正在处理，请保留原厂向导窗口；未知结果不会自动重试。";
             try {
-                string result = await Task.Run(() => Execute(command));
-                output.Text = result;
+                ExecutionResult result = await Task.Run(() => ExecuteForDisplay(command));
+                output.Text = result.DisplayText;
                 string log = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "mcgs-engineering");
                 Directory.CreateDirectory(log);
-                File.WriteAllText(Path.Combine(log, "last-setup-result.txt"), result, new UTF8Encoding(false));
+                File.WriteAllText(Path.Combine(log, "last-setup-result.txt"), result.DisplayText, new UTF8Encoding(false));
             } catch (Exception e) { output.Text = "配置未完成：" + e.Message; }
             finally { setup.Enabled = install.Enabled = verify.Enabled = true; }
         };

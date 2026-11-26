@@ -115,7 +115,7 @@ class WindowSettings:
         # Resolve a complete property block from its actual ID/name anchor;
         # keep the original numeric variant width and every other property.
         integers={2,3,16,17,18,19,20,21}
-        layout={'id':0,'name':1,'width':6,'height':7,'background':15}
+        layout={'id':0,'name':1,'description':2,'width':6,'height':7,'background':15}
         if name not in layout:raise FormatError('Unknown window property role: '+str(name))
         candidates=[]
         for offset in range(max(0,len(self.properties)-7)):
@@ -127,7 +127,10 @@ class WindowSettings:
             if self.identity is None and (props[0].value<0 or not props[1].value):continue
             index=offset+layout[name]
             if index>=len(self.properties):continue
-            if self.properties[index].vt not in ({8} if name=='name' else integers):continue
+            if self.properties[index].vt not in ({8} if name in ('name','description') else integers):continue
+            # Original window description is property 2 of the ID, three
+            # BSTRs and seventeen I4 fields confirmed in both file families.
+            if name=='description' and tuple(prop.vt for prop in props[:21])!=(3,8,8,8)+(3,)*17:continue
             candidates.append(index)
         if len(candidates)!=1:raise FormatError('Window '+name+' layout has no unique semantic anchor; only this property operation is unsupported')
         return self.properties[candidates[0]]

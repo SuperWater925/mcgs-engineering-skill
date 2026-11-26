@@ -2,9 +2,9 @@
 
 本整合包面向 Windows x64。请完整解压到本机固定目录，再运行 `McgsStart.exe`。不要只从压缩包拖出 EXE，也不要只把 skill 子目录发给别人；运行时和预编译引擎位于相邻目录。
 
-包内包括 McgsPro 3.5.2.12210、McgsStu 3.5.3.9198 SP1 完整安装介质、统一的便携 Python/PowerShell、预编译在线业务引擎与热接桥、Codex 技能和说明。版本是安装介质信息，不是技能准入条件。Stu 当前支持离线；Pro 可选离线/在线。
+包内包括 McgsPro 3.5.2.12210、McgsStu 3.5.3.9198 SP1 完整安装介质、统一的便携 Python/PowerShell、预编译在线业务引擎与热接桥、Codex 技能和说明。上述版本是随包安装介质的信息。Pro 可在线增量组态，Stu 可在线查询、激活设计页、批量修改同页标签与几何和执行原厂检查。
 
-先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。已连接的实例沿用当前桥和队列，并按当前技能合同选择相符的业务引擎。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/turnkey-update-zh.md)
+先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。显式指定 `--destination` 时填单个技能的目录，例如 `.codex/skills/mcgs-engineering`。已连接的实例沿用当前桥和队列，并按当前技能合同选择相符的业务引擎。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/turnkey-update-zh.md)
 
 ## 首次配置
 
@@ -14,7 +14,7 @@
 4. UAC、未保存工程、原厂许可及要求重启等提示按实际情况处理；不强杀编辑器，不删除整个目录冒充卸载，不猜静默目录参数，不把旧程序 DLL 覆盖回新版本。用户工程和冲突文件保留在备份及恢复报告中。
 5. 点击“安装 Codex 技能”。原有技能先留备份，技能记录此完整包的位置。移动整包后重新点一次安装即可更新位置。
 
-环境就绪后智能体须简要说明并让使用者选择：**离线**直接处理文件，适合批量修改，通常更快；**在线**通过内部接口修改已打开 Pro，可看到变化并使用原厂保存/检查。已明确选择时沿用。Stu 直接离线，不展示未实现的在线选项。
+环境就绪后，智能体简要说明并询问可用选项。**离线**直接处理文件，适合批量修改。**在线**接入已打开的原厂编辑器，Pro 可实时编辑，Stu 当前可读目录和做原厂检查。已明确选择时沿用。
 
 ## 交给智能体的命令
 
@@ -22,7 +22,7 @@
 
 ```powershell
 pwsh -NoProfile -File .\run.ps1 turnkey inventory --family pro
-pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle
+pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle --family stu
 ```
 
 `inventory` 无需完整包，不联网下载。`fetch-bundle` 自动发现已配置的包或下载已校验的 Release 完整附件，在本机共享缓存解压；这一步不会安装/卸载 Pro 或改工程。Codex、Claude、WorkBuddy 等沿用相同入口，不要求其 skills 上级目录存在 bundle.json。可用 `--cache-dir C:\MCGS-AI` 指定较短缓存目录；已有 ZIP 可设置环境变量 `MCGS_BUNDLE_ARCHIVE`，已有解压目录可用 `--bundle-root`。`--no-download` 只查本地并返回明确下载指引。`setup` / `prepare-online` 缺完整包时会先执行同样的获取流程，不回退到重新编译引擎。
@@ -32,12 +32,20 @@ pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle
 普通方式打开 Pro 后，在线准备：
 
 ```powershell
+.\McgsRun.cmd turnkey prepare-online
+```
+
+唯一运行中的 Pro 自动选定；没有运行实例时返回实际安装候选，不自动启动软件。已有明确路径或多个实例时可指定：
+
+```powershell
 .\McgsRun.cmd turnkey prepare-online --editor "D:\McgsPro\Program\McgsSetPro.exe" --install-root "D:\McgsPro"
 ```
 
 路径替换为对方实际安装路径；同一编辑器打开多个进程时加 `--pid` 选择。先发现并复用已有桥；没有才热接，不要求桥接启动器重启软件。入口返回 `scope_config`、`scope_sha256` 和实际连接状态。随后通过 `McgsRun.cmd native-engineering` 正常调用原技能业务接口。包内 DLL 原字节复用，接收方只生成 JSON/定位资料，不运行编译器。不要让智能体重新研发或重新编译引擎。
 
 连接成功后，以回执里的 `scope_config` 和 Pro 当前打开的工程为准。可先执行 `McgsRun.cmd native-engineering --scope-config "<scope_config>" inspect --project "<当前工程.mcp>"`，再通过 `stage` 和 `run` 提交施工程序。同页连续属性默认合批，统一刷新，显式保存按程序顺序执行。
+
+Stu 运行 `McgsRun.cmd turnkey prepare-online --family stu` 并保存连接 JSON。然后用 `McgsRun.cmd native-engineering --family stu --connection "<连接回执>"` 调用[工程目录和检查](stu-native-engineering.md)。
 
 免编译时先核对当前安装的模块，匹配时复用本机已验证的 ABI 资料。需要重新定位时，耗时取决于当前程序的实际接口。纯文件准备默认等待到完成，stderr 会给出进度文件路径，可读取 `prep.json` 查看阶段和计数。需要设置准备时限时加 `--preparation-timeout 7200`（秒）。超时后检查已有输出，不能自动重跑。此参数不改变原生工程请求的超时或重放规则，也不自动续跑已停止的准备目录。
 
@@ -46,6 +54,8 @@ pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle
 重装选择已授权结果中的那一份计划，接收方智能体直接执行 `execute_argv` 对应命令，不重复询问同一选择。若返回 `installer_handoff`，把 `inspect_request` 保存为 JSON，用 `helper_executable inspect --input <请求文件>` 查看本轮安装进程树。按回执的 PID、创建时间、HWND、窗口类及文本精确调用 `set-directory` 或 `click`，每个动作使用独立 `--out` 回执；`set-directory` 只填写计划原目录。向导处理完，再调用同一计划的 `execute --plan <计划文件>` 读取实际阶段并继续回验。已创建的卸载/安装阶段只检查状态，不再次启动。未知提示、UAC或重启按实际结果交接；不能用全局点击/键盘操作误触其它窗口。
 
 离线需要同位数 ACE，包内含 x64 安装器。先运行 `McgsRun.cmd doctor` 检查；已有可用 ACE 不重复安装。缺失时用包内原厂向导安装；遇到 Office 位数冲突按提示处理，不强制移除 Office、不用绕过开关。Pro 纯在线无需 ACE。Python/PowerShell/Capstone/Pillow 均来自包内统一环境。
+
+`turnkey setup` 返回 0 时，请求模式的基础环境已就绪。退出码 2 表示未就绪或仍需选择，具体看 JSON 中的 `status`、`environment_ready`、`offline_ready` 和模式选项。旧包缺 Stu 预编译组件时仍提供离线。两款编辑器的实际连接由 `prepare-online` 确认。
 
 ## 许可和验证
 

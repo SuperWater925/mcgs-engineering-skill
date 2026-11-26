@@ -139,29 +139,35 @@ def edit_control(kind, b, edits, variables=None):
     return edit_native_control(kind, b, edits, variables)
 
 
-def page_properties(trailer, *, ident=None, name=None, width=None, height=None):
-    settings=WindowSettings.parse(trailer)
+def page_properties(trailer, *, ident=None, name=None, width=None, height=None, background=None, description=None, identity=None):
+    settings=WindowSettings.parse(trailer, identity=identity)
     if settings.to_bytes()!=trailer:
         raise ValueError('Unsupported page properties')
-    targets={key:settings.field(key) for key,value in (('id',ident),('name',name),('width',width),('height',height)) if value is not None}
-    for key,val in (('id',ident),('name',name),('width',width),('height',height)):
-        if val is None:continue
+    values={'id':ident,'name':name,'width':width,'height':height,'background':background,'description':description}
+    targets={key:settings.field(key) for key,value in values.items() if value is not None}
+    for key, target in targets.items():
+        val=values[key]
         if key in ('width','height') and (type(val)is not int or not 1<=val<=0x7fffffff):raise ValueError('Invalid native Int32 page size')
-        targets[key].value=val
+        if key=='description' and (not isinstance(val,str) or '\0' in val):raise ValueError('Page description requires text without NUL')
+        target.value=val
     return settings.to_bytes()
 
 
 class VariableRecords(list):
     """Retain the source document header while parsing its actual record layout."""
-    def __init__(self, values=(), document_header=struct.pack('<f', 12.0)):
+    def __init__(self, values=(), document_header=struct.pack('<f', 12.0), alarm_spans=None,
+                 group_member_spans=None, empty_group_spans=None):
         super().__init__(values)
         self.document_header = document_header
+        self.alarm_spans = alarm_spans
+        self.group_member_spans = group_member_spans if group_member_spans is not None else {}
+        self.empty_group_spans = empty_group_spans if empty_group_spans is not None else {}
 
 
 def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=0):
     if len(blob)<12 or u32(blob,4) != len(blob)-8:
         raise ValueError('Unsupported variable document')
-    count=u32(blob,8); pos=12; rows=[]
+    count=u32(blob,8); pos=12; rows=[]; alarm_spans={}; group_member_spans={}; empty_group_spans={}
     if count > len(blob)//100:
         raise ValueError('Invalid variable count')
     for ident in range(count):
@@ -180,8 +186,12 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=
             n=u32(blob,pos); pos+=4
             if n>count or pos>len(blob):
                 raise ValueError('Invalid variable group vector')
+            if group_index==0 and kind==0xffffffff and n==0:
+                empty_group_spans[native_id]=(pos,pos)
             if group_index==0 and kind==0xffffffff and group_strings:
+                member_start=pos
                 for _ in range(n):_,pos=string(blob,pos)
+                group_member_spans[native_id]=(member_start,pos)
             else:pos+=4*n
             if pos>len(blob):raise ValueError('Variable group vector exceeds record extent')
             if group_index==0:
@@ -190,8 +200,12 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=
                 if enabled:
                     alarms=u32(blob,pos);pos+=4
                     if alarms>len(blob)//(alarm_bytes+4):raise ValueError('Invalid alarm count')
+                    spans=[]
                     for _ in range(alarms):
+                        item_start=pos-extension_start
                         _,pos=string(blob,pos+alarm_bytes);pos+=alarm_tail
+                        spans.append((item_start,pos-extension_start,alarm_bytes))
+                    if spans:alarm_spans[native_id]=tuple(spans)
         _,pos=string(blob,pos)
         pos+=record_tail
         if pos>len(blob):raise ValueError('Variable record tail exceeds document extent')
@@ -201,7 +215,7 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=
     if pos!=len(blob) or len({r['name'] for r in rows})!=count:
         raise ValueError('Variable extent or duplicate name')
     if len({r['id'] for r in rows})!=count:raise ValueError('Duplicate native variable ID')
-    return VariableRecords(rows, blob[:4])
+    return VariableRecords(rows, blob[:4], alarm_spans, group_member_spans, empty_group_spans)
 
 
 def _variables_preserving_alarm_layout(blob, group_strings=False, record_tail=0):
@@ -279,7 +293,16 @@ def variables(blob):
             for alarm_bytes,alarm_tail in ((40,0),(52,4)):
                 try:
                     rows=_variables(blob,strings,alarm_bytes,alarm_tail,record_tail)
-                    if not any(rows==other for other in candidates):candidates.append(rows)
+                    equivalent=next((other for other in candidates if rows==other),None)
+                    if equivalent is None:candidates.append(rows)
+                    else:
+                        if rows.alarm_spans!=equivalent.alarm_spans:equivalent.alarm_spans=None
+                        for field in ('group_member_spans','empty_group_spans'):
+                            matched = getattr(rows,field)
+                            setattr(equivalent,field,{
+                                ident: span for ident, span in getattr(equivalent,field).items()
+                                if matched.get(ident) == span
+                            })
                 except (ValueError,UnicodeError,struct.error,IndexError) as exc:errors.append(str(exc))
     if not candidates:
         for strings in (False,True):

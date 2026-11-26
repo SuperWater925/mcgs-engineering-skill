@@ -120,6 +120,28 @@ class HwndTests(unittest.TestCase):
         self.probe_calls = []
         self.backend = native.Backend(22, api=self.api, project_probe=self.probe)
 
+    def test_inventory_keeps_live_windows_when_a_dialog_closes_mid_read(self):
+        windows = object.__new__(native.Win32)
+        live = {'hwnd': 1}
+        dialog = {'hwnd': 2}
+        child = {'hwnd': 3}
+        windows.top_windows = lambda: [live, dialog]
+        windows.snapshot = self.api.snapshot
+        windows.children = lambda hwnd: [child] if hwnd == 1 else []
+        def check(hwnd):
+            if hwnd == 2:
+                raise native.BackendError('Dialog closed', status='stale_window', hwnd=hwnd)
+            return hwnd
+        windows.check = check
+        self.assertEqual(windows.windows(), [live, child])
+        self.assertEqual(windows._observed_windows([1, 20, 1]), [self.api.rows[1]])
+        with self.assertRaisesRegex(native.BackendError, 'missing'):
+            windows.snapshot(20)
+        with patch.object(windows, 'children', side_effect=native.BackendError(
+                'Editor exited', status='process_exited')):
+            with self.assertRaisesRegex(native.BackendError, 'Editor exited'):
+                windows.windows()
+
     def probe(self, expected):
         self.probe_calls.append(expected)
         return {'op': 'engineering-edit-inspect', 'ok': True, 'process_id': 22,
@@ -239,6 +261,45 @@ class HwndTests(unittest.TestCase):
         result = self.run_plan(steps + steps)
         self.assertTrue(result['unknown_outcome'])
         self.assertEqual(sum(call[1] == native.WM_COMMAND for call in self.api.calls), 1)
+
+    def test_composite_tool_rejects_conflicting_nested_page_without_mouse_input(self):
+        result = self.run_plan([{'op': 'draw', 'canvas': {'hwnd': 5}, 'points': [[1, 2], [9, 10]],
+                                'tool_toolbar': {'toolbar': {'hwnd': 21}, 'label': 'Fixture tool',
+                                                 'page': {'hwnd': 3}}}])
+        self.assertEqual(result['status'], 'stopped')
+        self.assertEqual(result['steps'][0]['status'], 'canvas_page_conflict')
+        self.assertFalse(any(call[1] in (native.WM_COMMAND, native.WM_LBUTTONDOWN, native.WM_MOUSEMOVE)
+                             for call in self.api.calls))
+
+    def test_composite_tool_rechecks_active_page_and_modals_before_mouse_input(self):
+        for effect, status in ((lambda: setattr(self.api, 'active', 3), 'canvas_page_changed'),
+                               (lambda: self.api.add_dialog('Unexpected tool modal'), 'blocked_unknown_dialog')):
+            self.api.calls.clear()
+            original = self.api.send
+
+            def send(hwnd, message, wparam=0, lparam=0, **options):
+                returned = original(hwnd, message, wparam, lparam, **options)
+                if message == native.WM_COMMAND:
+                    effect()
+                return returned
+
+            with patch.object(self.api, 'send', send):
+                result = self.run_plan([{'op': 'draw', 'canvas': {'hwnd': 5}, 'points': [[1, 2], [9, 10]],
+                                        'tool_toolbar': {'toolbar': {'hwnd': 21}, 'label': 'Fixture tool'}}])
+            self.assertEqual(result['steps'][0]['status'], status)
+            self.assertFalse(any(call[1] in (native.WM_MOUSEMOVE, native.WM_LBUTTONDOWN, native.WM_LBUTTONUP)
+                                 for call in self.api.calls))
+            self.assertFalse(result['system_foreground_changed'])
+
+    def test_composite_tool_same_page_is_kept_active(self):
+        result = self.run_plan([{'op': 'draw', 'page': {'hwnd': 4}, 'canvas': {'hwnd': 5},
+                                'points': [[1, 2], [9, 10]], 'tool_toolbar': {
+                                    'toolbar': {'hwnd': 21}, 'label': 'Fixture tool', 'page': {'hwnd': 4}}}])
+        self.assertEqual(result['status'], 'completed')
+        self.assertEqual(self.api.active, 4)
+        command_index = next(index for index, call in enumerate(self.api.calls) if call[1] == native.WM_COMMAND)
+        mouse_index = next(index for index, call in enumerate(self.api.calls) if call[1] == native.WM_MOUSEMOVE)
+        self.assertTrue(any(call[1] == native.WM_MDIGETACTIVE for call in self.api.calls[command_index + 1:mouse_index]))
 
     def test_run_cli_binds_connection_before_submitting_project_identity(self):
         base = WORK / uuid.uuid4().hex

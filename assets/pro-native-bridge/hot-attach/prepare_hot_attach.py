@@ -49,7 +49,7 @@ def template_sources(templates):
 
 def main():
  global CSC
- ap=argparse.ArgumentParser();ap.add_argument('--task-root',required=True);ap.add_argument('--runtime-root',required=True);ap.add_argument('--bootstrap-root',required=True);ap.add_argument('--install-root',required=True);ap.add_argument('--editor');ap.add_argument('--host-kind',choices=['pro','own-test-message-loop','own-test-native-message-loop'],default='pro');ap.add_argument('--bootstrap-template',default=str(DEFAULT_BOOT));ap.add_argument('--ping-only',action='store_true');ap.add_argument('--csc',type=Path,default=CSC,help='Explicit x86 .NET Framework-compatible C# compiler');z=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--task-root',required=True);ap.add_argument('--runtime-root',required=True);ap.add_argument('--bootstrap-root',required=True);ap.add_argument('--install-root',required=True);ap.add_argument('--editor');ap.add_argument('--host-kind',choices=['pro','stu','own-test-message-loop','own-test-native-message-loop'],default='pro');ap.add_argument('--bootstrap-template',default=str(DEFAULT_BOOT));ap.add_argument('--ping-only',action='store_true');ap.add_argument('--csc',type=Path,default=CSC,help='Explicit x86 .NET Framework-compatible C# compiler');z=ap.parse_args()
  CSC=z.csc.resolve()
  task,runtime,boot,install=[absolute(v) for v in [z.task_root,z.runtime_root,z.bootstrap_root,z.install_root]]
  assert runtime.is_relative_to(task) and boot.is_relative_to(task) and runtime!=task and boot!=task
@@ -61,7 +61,9 @@ def main():
   if z.editor:raise ValueError('Own test executable is built here, not an external image')
   cap=None
  else:
-  if not z.editor or not editor.is_file():raise ValueError('Use --editor with the explicit actual Pro executable')
+  if not z.editor or not editor.is_file():raise ValueError('Use --editor with the explicit actual engineering executable')
+  if z.host_kind=='stu' and editor.name.casefold()!='mcgssetstu.exe':
+   raise ValueError('The Stu transport requires the actual McgsSetStu.exe executable')
   if not install.is_dir() or not editor.is_relative_to(install):raise ValueError('The explicit executable must be inside the existing installation root')
   cap=hot_capability(editor,z.host_kind)
  empty_output(boot,'BootstrapRoot')

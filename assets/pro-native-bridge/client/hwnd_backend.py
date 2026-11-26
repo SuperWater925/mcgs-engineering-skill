@@ -218,7 +218,7 @@ class Win32:
             return True
         callback = self.callback_type(top)
         self.u.EnumWindows(callback, 0)
-        return [self.snapshot(hwnd) for hwnd in tops]
+        return self._observed_windows(tops)
 
     def children(self, hwnd):
         handles = []
@@ -230,13 +230,33 @@ class Win32:
             return True
         callback = self.callback_type(child)
         self.u.EnumChildWindows(self.check(hwnd), callback, 0)
-        return [self.snapshot(item) for item in dict.fromkeys(handles)]
+        return self._observed_windows(handles)
+
+    def _observed_windows(self, handles):
+        rows = []
+        for hwnd in dict.fromkeys(handles):
+            try:
+                rows.append(self.snapshot(hwnd))
+            except BackendError as error:
+                if error.status != 'stale_window':
+                    raise
+        return rows
 
     def windows(self):
-        tops = self.top_windows()
-        rows = {row['hwnd']: row for row in tops}
-        for top in tops:
-            rows.update({row['hwnd']: row for row in self.children(top['hwnd'])})
+        rows = {}
+        for top in self.top_windows():
+            hwnd = top['hwnd']
+            try:
+                children = self.children(hwnd)
+                self.check(hwnd)
+            except BackendError as error:
+                # Dialogs can close between the two enumeration calls. Other
+                # errors, including editor exit, must still reach the caller.
+                if error.status != 'stale_window':
+                    raise
+                continue
+            rows[hwnd] = top
+            rows.update({row['hwnd']: row for row in children})
         return list(rows.values())
 
     def menu(self, hwnd):
@@ -844,8 +864,34 @@ class Backend:
         self.activate_for(row)
         return row
 
+    def canvas_owner(self, row):
+        """Read the current ownership chain without activating any window."""
+        current = self.api.snapshot(row['hwnd'])
+        while current['parent']:
+            parent = self.api.snapshot(current['parent'])
+            if parent['class_name'] == 'MDIClient':
+                return current['hwnd'], parent['hwnd']
+            current = parent
+        raise BackendError('Canvas no longer belongs to an MDI page', status='target_page_unavailable')
+
+    def verify_canvas(self, row, owner):
+        dialogs = [dialog for dialog in self.dialogs() if dialog['modal']]
+        if dialogs:
+            raise BackendError('A native dialog interrupted the drawing tool; canvas input was not sent',
+                               status='blocked_unknown_dialog', dialogs=dialogs)
+        current = self.api.snapshot(row['hwnd'])
+        if (not current['enabled'] or not current['visible']
+                or any(current[key] != row[key] for key in ('parent', 'class_name'))
+                or self.canvas_owner(current) != owner
+                or self.api.send(owner[1], WM_MDIGETACTIVE) != owner[0]):
+            raise BackendError('Drawing tool changed the active page or canvas ownership',
+                               status='canvas_page_changed', canvas=row['hwnd'], expected_page=owner[0])
+
     def draw(self, step):
         row = self.canvas(step)
+        owner = self.canvas_owner(row)
+        if step.get('page') and self.canvas_owner(self.find(step['page'])) != owner:
+            raise BackendError('Outer page conflicts with the selected canvas', status='canvas_page_conflict')
         points = step['points']
         if len(points) < 2:
             raise ValueError('Native drawing/moving requires at least two client points')
@@ -853,9 +899,15 @@ class Backend:
         if step.get('tool_menu') and step.get('tool_toolbar'):
             raise ValueError('Choose one drawing-tool selector')
         if step.get('tool_toolbar'):
-            self.toolbar_command(step['tool_toolbar'])
+            tool = step['tool_toolbar']
+            if tool.get('page') and self.canvas_owner(self.find(tool['page'])) != owner:
+                raise BackendError('Drawing toolbar page conflicts with the canvas', status='canvas_page_conflict')
+            if tool.get('expect_dialog') is not None:
+                raise BackendError('A drawing tool cannot wait for a modal before canvas input', status='canvas_modal_tool')
+            self.toolbar_command(tool)
         if step.get('tool_menu'):
             self.command({'path': step['tool_menu'], 'frame': step.get('frame')})
+        self.verify_canvas(row, owner)
         keys = (8 if step.get('control') else 0) | (4 if step.get('shift') else 0)
         self._send(row['hwnd'], WM_MOUSEMOVE, keys, packed[0])
         self._send(row['hwnd'], WM_LBUTTONDOWN, keys | 1, packed[0])

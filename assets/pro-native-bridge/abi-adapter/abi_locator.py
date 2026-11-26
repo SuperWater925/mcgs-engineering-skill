@@ -28,6 +28,16 @@ DEFAULT_CATALOG = Path(__file__).resolve().parent / 'catalogs/reference.json.gz'
 PROFILE_FIELD_MODULES = Path(__file__).resolve().parent / 'catalogs/profile-field-modules.json'
 BYTE_KEYS = ('expected_first_32_bytes', 'expected_first32', 'first32', 'bytes', 'expected_bytes', 'code_bytes', 'bytes_hex')
 RELOC_KEYS = ('relocatable_dword_offsets_in_first32', 'relocation_offsets', 'reloc_offsets', 'relocations', 'highlow_offsets')
+# Original IPropertyLinker methods with reviewed terminal byte extents in the
+# reference PE. The runtime still locates each exact method in the selected PE.
+PROPERTY_METHOD_ROLES = (
+    ('.?AVMulPoint@@', 0, ((6, 'getter', 0x17b),)),
+    ('.?AVCImageInObj@@', 4, ((6, 'getter', 0x173),)),
+    ('.?AVDrawButtonBasicPropertyProxy@@', 0, ((6, 'getter', 0x34d),)),
+    ('.?AVDrawButtonOperationPropertyProxy@@', 0, ((6, 'getter', 0x18e),)),
+    # The text setter's original property55 uses typed dispatcher slot9.
+    ('.?AVCTextInObj@@', 4, ((6, 'getter', 0x125), (5, 'setter', 0xbf))),
+)
 
 
 def digest(data):
@@ -305,7 +315,7 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
         owners = table_owner_cache[address]
         return preferred if preferred in owners else owners[0] if len(owners) == 1 else preferred
 
-    def add_signature(alias, rva, length, name, origin):
+    def add_signature(alias, rva, length, name, origin, *, complete_body=False):
         key = f'{alias}:0x{rva:x}:{length}'
         if key not in signatures:
             try:
@@ -314,7 +324,8 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                 pe = modules[alias]
                 section = pe.section_for_rva(rva)
                 match_span = min(max(length, 96), section.raw_size - (rva - section.rva))
-                model = xs.attach_reference_contexts(pe, xs.decode_signature(pe, rva, match_span))
+                model = xs.attach_reference_contexts(
+                    pe, xs.decode_signature(pe, rva, match_span, complete_body=complete_body))
                 model['guard_length'] = length
                 model.update(id=key, module=alias, names=[], origins=[], exports=[name for name, entry in modules[alias].exports.items()
                     if entry['rva'] == rva and not entry.get('forwarder') and not name.startswith('#')])
@@ -568,6 +579,47 @@ def create_catalog(reference_modules, profile_root, *, explicit_fields=None):
                 raise ValueError('Explicit field profile is not in the supplied profile root: ' + row['profile'])
             field = {'json_pointer': row['json_pointer'], 'module': alias, 'kind': row.get('kind', 'rva'), 'reference_rva': rva}
             profile['fields'] = [old for old in profile['fields'] if old['json_pointer'] != field['json_pointer']] + [field]
+    if 'editor' in modules:
+        pe = modules['editor']
+        for name, displacement, contracts in PROPERTY_METHOD_ROLES:
+            last_slot = max(slot for slot, _, _ in contracts)
+            candidates = [table for table in rtti.locate_type(pe, name)['tables']
+                          if table['col_offset'] == displacement and table['constructor_displacement_offset'] == 0
+                          and len(table['slot_entry_rvas']) > last_slot
+                          and any(base['decorated_name'] == '.?AVIPropertyLinker@ObjectTree@@'
+                                  and base['pmd'] == [displacement, -1, 0]
+                                  for base in table['hierarchy']['bases'])]
+            if len(candidates) != 1:
+                continue
+            table = candidates[0]
+            table['slot_entry_rvas'] = table['slot_entry_rvas'][:last_slot + 1]
+            key = f"editor:vtable:{table['vtable_rva']:#x}"
+            origins = list(types.get(key, {}).get('origins', []))
+            verified_slots = []
+            for slot, role, length in contracts:
+                label = name + '/property-' + role
+                origin = ('read-only-IPropertyLinker-getter:' if role == 'getter' else
+                          'text-IPropertyLinker-setter:') + key
+                entry_id = add_signature('editor', table['slot_entry_rvas'][slot], 32, label, origin)
+                if entry_id is None:
+                    continue
+                entry = signatures[entry_id]
+                if not entry['first_is_direct_thunk']:
+                    continue
+                transfer = entry['transfers'][0]
+                chain = transfer.get('target_signature_chain', [])
+                if transfer.get('target_context_status') != 'complete' or not chain:
+                    continue
+                if add_signature('editor', chain[-1]['reference_rva'], length, label + '-body', origin,
+                                 complete_body=True) is None:
+                    continue
+                entry['filter_with_complete_terminal_body'] = True
+                verified_slots.append(slot)
+                if origin not in origins:
+                    origins.append(origin)
+            if verified_slots:
+                types[key] = {'id': key, 'module': 'editor', 'reference': table, 'origins': origins,
+                              'reference_slot_allowlist': sorted(verified_slots)}
     # Import operands need logical current-export roles when ordinals or the
     # dependency basename move. Add the target function to the same conservative
     # locator, rather than treating an ordinal as an address-independent alias.
@@ -731,6 +783,12 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         context = xs.verify_context(reference.get(alias), pe, entry, matched,
                                     entry['reference_rva'], current,
                                     verify_targets=verify_targets) if matched else None
+        if entry.get('filter_with_complete_terminal_body'):
+            if context is None:
+                return None
+            terminal = terminal_contract(entry, current)
+            if not (terminal['required'] and terminal['satisfied']):
+                return None
         if context is not None:
             selected = {'actual': matched, 'context': context, 'adaptive': False}
             if identity is not None:
@@ -862,6 +920,8 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
         slots = {'reference_count': reference_slots, 'actual_count': actual_slots,
                  'ordinal_equality_used_as_method_identity': False,
                  'identified_slots': []}
+        if 'reference_slot_allowlist' in entry:
+            slots['reference_slot_allowlist'] = entry['reference_slot_allowlist']
         proof = {'id': proof_id, 'kind': 'RTTI-stable-table-subobject-role' if role_only else 'RTTI-class-COL-hierarchy-vtable', 'module': alias,
             'decorated_name': old['decorated_name'], 'reference': old, 'actual': new, 'slot_coverage': slots}
         if role_evidence is not None:
@@ -1245,7 +1305,10 @@ def resolve_catalog(catalog, actual_modules, *, reference_modules=None, prefer_c
             continue
         mapped = result['rva_maps'][row['module']]
         before, after = row['reference'], row['actual']
+        allowlist = row['slot_coverage'].get('reference_slot_allowlist')
         for reference_index, old_entry in enumerate(before['slot_entry_rvas']):
+            if allowlist is not None and reference_index not in allowlist:
+                continue
             if row['module'] in equal_modules and after['slot_entry_rvas'] == before['slot_entry_rvas']:
                 current_index = reference_index
                 method_proof = row['module'] + ':complete-PE-content-equivalence'

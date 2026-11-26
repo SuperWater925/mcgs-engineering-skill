@@ -351,11 +351,12 @@ def fonts(raw):
     for _ in range(n):
         lang=r.u32();b=r.take(28);face=r.cstring()[0]
         v=struct.unpack('<5i8B',b)
-        items.append(dict(language=lang,height=abs(v[0]),height_raw=v[0],weight=v[4],family=face,flags=flags))
+        items.append(dict(language=lang,height=abs(v[0]),height_raw=v[0],weight=v[4],family=face,flags=flags,
+                          italic=bool(v[5]),underline=bool(v[6]),strikeout=bool(v[7])))
     if r.pos!=len(raw):raise FormatError('Unexpected font suffix')
     return items
 
-def set_font(raw,height=None,family=None,weight=None):
+def set_font(raw,height=None,family=None,weight=None,italic=None,underline=None,strikeout=None):
     r=Reader(raw);flag=r.u8();n=r.u32();out=bytes([flag])+struct.pack('<I',n)
     r.count_extent(n,33,'Font language')
     for _ in range(n):
@@ -364,7 +365,27 @@ def set_font(raw,height=None,family=None,weight=None):
             if type(height)is not int or not 1<=height<=0x7fffffff:raise ValueError('Font height must fit the native signed LONG')
             struct.pack_into('<i',b,0,-height)
         if weight is not None:struct.pack_into('<i',b,16,weight)
+        for offset, value in ((20, italic), (21, underline), (22, strikeout)):
+            if value is not None:
+                if type(value) is not bool:
+                    raise ValueError("LOGFONT style flags require a boolean")
+                if bool(b[offset]) != value:
+                    b[offset] = int(value)
         if family is not None:face.value=family
         out+=lang+bytes(b)+face.to_bytes()
     if r.pos!=len(raw):raise FormatError('Unexpected font suffix')
     return out
+
+
+def edit_font(raw, changes):
+    allowed = {'height', 'weight', 'family', 'italic', 'underline', 'strikeout'}
+    if not isinstance(changes, dict) or not changes or changes.keys() - allowed:
+        raise ValueError('Unknown font property')
+    if 'weight' in changes and (type(changes['weight']) is not int or not 0 <= changes['weight'] <= 1000):
+        raise ValueError('Invalid font weight')
+    if 'family' in changes and (not isinstance(changes['family'], str) or '\0' in changes['family']):
+        raise ValueError('Expected text without NUL')
+    for name in ('italic', 'underline', 'strikeout'):
+        if name in changes and type(changes[name]) is not bool:
+            raise ValueError('LOGFONT style flags require a boolean')
+    return set_font(raw, **changes)
