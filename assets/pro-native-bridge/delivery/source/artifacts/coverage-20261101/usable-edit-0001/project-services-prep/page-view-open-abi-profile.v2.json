@@ -113,8 +113,8 @@
     ]
   },
   "max_open_views": 20,
-  "source_evidence": "page-control-prep/page-view-open-static-supplement.json",
-  "source_evidence_sha256": "92a951721517b3023fc2b4128a1349946f63871c9c08968bdf86f538cbe27b74",
+  "source_evidence": "page-control-prep/page-view-open-source-contract.json",
+  "source_evidence_sha256": "feb0f89e3d0eb9808550bb75610c5c6242d7d1d81833c266fd8fa856928f3f58",
   "open_abi": "int __thiscall(C0FrmMain*, int archivePageID); 0 is success; original reuses the service-owned C0DocUser then adds it to the native template",
   "frame_probe_abi": "bool(AL) __cdecl(CDocument*, C0FrmDraw**); AACD70 wrapper supplies unused ECX=0; no project mutation",
   "preconditions": [

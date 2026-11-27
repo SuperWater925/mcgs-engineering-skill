@@ -3,7 +3,7 @@
   "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
   "original_button_profile": {
     "file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\page-control-prep\\button-actions-abi-profile.json",
-    "sha256": "aff6bc34f939ed1f44d558688c31aac46e34c81214b4dd20a5f0daf8e0d344e6"
+    "sha256": "0f0d951f442e9b6ff2db9ea60ba4b0bf34f1a3225d5e55fa19bb782614bdde4d"
   },
   "root_cause": "Button phases use the EXE CArray<CString,CString> complete object, not MFC CStringArray. The existing generic PageEvents MFC checker was called for the wrong concrete container type.",
   "phase0": {

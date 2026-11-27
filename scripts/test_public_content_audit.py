@@ -58,6 +58,54 @@ class PublicContentTests(unittest.TestCase):
         audit.scan_member(catalog_name('source'), gzip.compress(json_bytes(catalog)))
         self.assertEqual(audit.violations[catalog_name('source')], {'instruction-record': 1})
 
+    def test_alternate_addressed_records_are_not_catalog_exceptions(self):
+        alias = {'va': '0x00001000', 'op': 'ret', 'args': []}
+        name = catalog_name('source')
+        catalog = {'schema': CATALOG_SCHEMA, 'signatures': [{'tokens': [self.token, alias]}]}
+        audit = Audit('source')
+        audit.scan_member(name, gzip.compress(json_bytes(catalog)))
+        self.assertEqual(audit.catalog_exceptions, {'normalized_signature_tokens': 1})
+        self.assertEqual(audit.violations[name], {'instruction-record': 1})
+
+    def test_alternate_addressed_records_in_compressed_artifact_fail(self):
+        evidence = [
+            {'va': '0x00001000', 'op': 'nop', 'args': ''},
+            {'address': 0x2000, 'op': 'ret', 'bytes': [0x90]},
+            {'rva': 0, 'op': 'REP STOSD', 'args': []},
+        ]
+        audit = Audit('skill')
+        audit.scan_zip(archive_bytes({'evidence.json.gz': gzip.compress(json_bytes(evidence))}))
+        self.assertEqual(audit.violations['evidence.json.gz'], {'instruction-record': 3})
+
+    def test_addressed_records_with_inline_or_no_operands_fail(self):
+        audit = Audit('source')
+        audit.scan_member('evidence.json', json_bytes([
+            {'va': '0x00001000', 'op': 'push ebp', 'source': 'fixture'},
+            {'rva': 16, 'op': 'nop'},
+        ]))
+        self.assertEqual(audit.violations['evidence.json'], {'instruction-record': 2})
+
+    def test_lone_addressed_text_instructions_without_byte_columns_fail(self):
+        audit = Audit('source')
+        audit.scan_member('sample.txt', b'00001000: nop\n')
+        audit.scan_member('sample.asm', b'.text:00002000\tret\n')
+        audit.scan_member('sample.log', b'0X00003000:jne local_label\n')
+        audit.scan_member('sample.lst', b'00004000: 90 nop\n')
+        for name in ('sample.txt', 'sample.asm', 'sample.log', 'sample.lst'):
+            self.assertEqual(audit.violations[name], {'instruction-listing': 1})
+
+    def test_address_and_byte_guards_do_not_match_alternate_records(self):
+        audit = Audit('source')
+        audit.scan_member('guard.json', json_bytes({
+            'guard_refs': [
+                {'va': '0x00001000', 'bytes': '8899'},
+                {'rva': 1, 'op': 'compare', 'args': ['prefix'], 'bytes': [0, 1]},
+                {'address': '0x00002000', 'op': 'call', 'guard_length': 4},
+            ],
+        }))
+        audit.scan_member('notes.txt', b'20261127 release inventory verified\n')
+        self.assertTrue(audit.report()['passed'])
+
     def test_schema_names_and_ordinary_references_pass(self):
         audit = Audit('source')
         audit.scan_member('references/schema.json', json_bytes({

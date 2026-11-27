@@ -41,9 +41,40 @@ UPDATE_BRIDGE_TOOL = re.compile(
 )
 NORMALIZED_MNEMONIC = re.compile(r'[a-z][a-z0-9_]*(?: [a-z][a-z0-9_]*)*\Z')
 NORMALIZED_OPERAND_PART = re.compile(r'[a-zA-Z0-9_]+\Z')
-INSTRUCTION_LINE = re.compile(
+INSTRUCTION_LINE_WITH_BYTES = re.compile(
     r'^\s*(?:0x)?[\da-fA-F]{4,16}:?\s+(?:[\da-fA-F]{2}\s+){1,16}'
-    r'[a-zA-Z][a-zA-Z0-9_.]*(?:\s+.*)?$'
+    r'([a-zA-Z][a-zA-Z0-9_.]*(?:\s+.*)?)$'
+)
+ADDRESSED_LINE = re.compile(
+    r'^\s*(?:[.a-z_][\w.]*:)?(?:0x)?[\da-f]{4,16}(?::[ \t]*|[ \t]+)(.+?)\s*$', re.I
+)
+ADDRESS_VALUE = re.compile(r'(?:0x)?[\da-f]{1,16}\Z', re.I)
+INSTRUCTION_BYTES = re.compile(r'(?:[\da-fA-F]{2}[ \t]*){1,15}\Z')
+X86_PREFIXES = {'bnd', 'lock', 'rep', 'repe', 'repne', 'repnz', 'repz'}
+X86_STRING_OPS = {'cmps', 'ins', 'lods', 'movs', 'outs', 'scas', 'stos'}
+X86_MNEMONICS = frozenset('''
+    aaa aad aam aas adc adcx add adox and andn arpl bextr blsi blsmsk blsr bound bsf bsr bswap bt
+    btc btr bts bzhi call cbw cdq cdqe clc cld cli clts cmc cmp cmps cmpxchg cpuid cqo cwd cwde
+    daa das dec div emms enter f2xm1 fabs fadd faddp fbld fbstp fchs fclex fcmov fcom fcomp fcompp
+    fcos fdecstp fdiv fdivp fdivr fdivrp ffree fiadd ficom ficomp fidiv fidivr fild fimul fincstp
+    finit fist fistp fisttp fisub fisubr fld fldcw fldenv fmul fmulp fnclex fninit fnop fnsave
+    fnstcw fnstenv fnstsw fpatan fprem fprem1 fptan frndint frstor fscale fsin fsincos fsqrt fst
+    fstcw fstenv fstp fstsw fsub fsubp fsubr fsubrp ftst fucom fucomi fucomip fucomp fucompp fwait
+    fxam fxch fxrstor fxsave fxtract fyl2x fyl2xp1 hlt idiv imul in inc ins int int1 int3 into
+    invd invlpg iret iretd iretq jcxz jecxz jmp jrcxz lahf lar lds lea leave les lfence lfs lgdt
+    lgs lidt lldt lmsw lods loop loope loopne loopnz loopz lsl lss ltr lzcnt mfence mov movbe movs
+    movsx movsxd movzx mul mulx neg nop not or out outs pause pdep pext pop popa popad popcnt popf
+    popfd popfq push pusha pushad pushf pushfd pushfq rcl rcr rdmsr rdpmc rdrand rdseed rdtsc rdtscp
+    ret retf retn rol ror rorx rsm sahf sal sar sarx sbb scas sfence sgdt shl shld shlx shr shrd shrx
+    sidt sldt smsw stc std sti stos str sub swapgs sysenter sysexit syscall sysret test tzcnt ud2
+    verr verw wait wbinvd wrmsr xadd xchg xgetbv xlat xlatb xor xrstor xsave xsetbv
+'''.split())
+X86_CONDITION = re.compile(
+    r'(?:cmov|j|set)(?:a|ae|b|be|c|e|g|ge|l|le|na|nae|nb|nbe|nc|ne|ng|nge|nl|nle|no|np|ns|nz|o|p|pe|po|s|z)\Z'
+)
+X86_VECTOR = re.compile(
+    r'v?(?:(?:add|and|andn|cmp|div|max|min|mov|mul|or|sqrt|sub|ucomi|xor)(?:apd|aps|pd|ps|sd|ss|upd|ups)'
+    r'|p(?:abs|add|and|avg|cmp|hadd|hsub|max|min|mov|mul|or|pack|shuf|sign|sll|sra|srl|sub|unpck|xor)[a-z0-9]*)\Z'
 )
 JSON_FENCE = re.compile(r'^\s*```json\s*\n(.*?)^\s*```\s*$', re.I | re.M | re.S)
 
@@ -84,10 +115,53 @@ def walk_records(document):
             stack.extend((position + ('[]',), item) for item in obj)
 
 
+def x86_operation(text: str) -> bool:
+    words = text.lower().split()
+    for word in words:
+        if word in X86_PREFIXES:
+            continue
+        if word in X86_MNEMONICS or X86_CONDITION.fullmatch(word) or X86_VECTOR.fullmatch(word):
+            return True
+        if word.endswith('d') and word[:-1] in X86_STRING_OPS:
+            return True
+        return len(word) > 3 and word[-1] in 'bwlq' and word[:-1] in X86_MNEMONICS
+    return False
+
+
+def address_value(value) -> bool:
+    return type(value) is int and 0 <= value < 2**64 or (
+        isinstance(value, str) and bool(ADDRESS_VALUE.fullmatch(value.strip()))
+    )
+
+
+def instruction_bytes(value) -> bool:
+    if isinstance(value, str):
+        return bool(INSTRUCTION_BYTES.fullmatch(value.strip()))
+    return isinstance(value, list) and 1 <= len(value) <= 15 and all(
+        type(byte) is int and 0 <= byte <= 255 for byte in value
+    )
+
+
+def alternate_instruction_record(record: dict) -> bool:
+    operation = record.get('op')
+    return (
+        isinstance(operation, str) and x86_operation(operation)
+        and any(address_value(record.get(key)) for key in ('va', 'address', 'rva'))
+        and (isinstance(record.get('args'), (str, list)) or instruction_bytes(record.get('bytes'))
+             or len(operation.split()) > 1 or len(record) == 2)
+    )
+
+
 def instruction_dump(text: str, minimum=2) -> bool:
     consecutive = 0
     for line in text.splitlines():
-        if INSTRUCTION_LINE.fullmatch(line):
+        addressed = ADDRESSED_LINE.fullmatch(line)
+        if addressed and x86_operation(addressed[1]):
+            return True
+        with_bytes = INSTRUCTION_LINE_WITH_BYTES.fullmatch(line)
+        if with_bytes:
+            if x86_operation(with_bytes[1]):
+                return True
             consecutive += 1
             if consecutive >= minimum:
                 return True
@@ -115,6 +189,8 @@ class Audit:
                     self.catalog_exceptions[exception] += 1
                 else:
                     self.flag(name, 'instruction-record')
+            elif alternate_instruction_record(record):
+                self.flag(name, 'instruction-record')
             if isinstance(record.get('complete_disassembly'), bool):
                 self.flag(name, 'complete-disassembly')
             for field in ('jump_chain', 'basic_blocks'):
