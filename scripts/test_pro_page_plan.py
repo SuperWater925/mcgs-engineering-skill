@@ -653,13 +653,17 @@ class PagePlanTests(unittest.TestCase):
             import engineering_session as session
         program, _ = compile_design(self.design, self.original)
         capability = {'ok': True, 'features': [], 'compiled_kinds': self.original['compiled_kinds']}
-        with tempfile.TemporaryDirectory(prefix='mcgs-plan-contract-') as directory, \
-                patch.object(session.batch, 'TASK', Path(directory)), \
-                patch.object(session.batch, 'RUNTIME', Path(directory)), \
-                patch.object(session.batch, 'submit', return_value=capability) as read, \
-                patch.object(session.batch, 'execute') as execute, redirect_stdout(io.StringIO()):
-            result = session.run_direct_program(program, {'session_id': 'feature-fixture'}, Path(directory),
-                                                1, prepare_workers=0)
+        with tempfile.TemporaryDirectory(prefix='mcgs-plan-contract-') as directory:
+            root = Path(directory).resolve()
+            with (
+                patch.object(session.batch, 'TASK', root),
+                patch.object(session.batch, 'RUNTIME', root),
+                patch.object(session.batch, 'submit', return_value=capability) as read,
+                patch.object(session.batch, 'execute') as execute,
+                redirect_stdout(io.StringIO()),
+            ):
+                result = session.run_direct_program(program, {'session_id': 'feature-fixture'}, root,
+                                                    1, prepare_workers=0)
         self.assertFalse(result['ok'])
         self.assertFalse(result['execution_may_be_partial'])
         self.assertEqual(result['phase'], 'inspect-feature-contracts')

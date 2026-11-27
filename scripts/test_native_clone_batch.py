@@ -107,7 +107,7 @@ class DirectRemainderTests(unittest.TestCase):
 
     def test_exact_original_bytes_and_exclusive_output(self):
         with TemporaryDirectory() as directory:
-            root = Path(directory)
+            root = Path(directory).resolve()
             specification = root / "original.json"
             spec_bytes = json.dumps(self.spec).encode()
             specification.write_bytes(spec_bytes)
