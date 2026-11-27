@@ -50,6 +50,7 @@ ADDRESSED_LINE = re.compile(
 )
 ADDRESS_VALUE = re.compile(r'(?:0x)?[\da-f]{1,16}\Z', re.I)
 INSTRUCTION_BYTES = re.compile(r'(?:[\da-fA-F]{2}[ \t]*){1,15}\Z')
+INSTRUCTION_OPERATION_FIELD = re.compile(r'[a-z][a-z0-9_.]*(?:[ \t]+[^\r\n]+)?\Z', re.I)
 X86_PREFIXES = {'bnd', 'lock', 'rep', 'repe', 'repne', 'repnz', 'repz'}
 X86_STRING_OPS = {'cmps', 'ins', 'lods', 'movs', 'outs', 'scas', 'stos'}
 X86_MNEMONICS = frozenset('''
@@ -57,7 +58,8 @@ X86_MNEMONICS = frozenset('''
     btc btr bts bzhi call cbw cdq cdqe clc cld cli clts cmc cmp cmps cmpxchg cpuid cqo cwd cwde
     daa das dec div emms enter f2xm1 fabs fadd faddp fbld fbstp fchs fclex fcmov fcom fcomp fcompp
     fcos fdecstp fdiv fdivp fdivr fdivrp ffree fiadd ficom ficomp fidiv fidivr fild fimul fincstp
-    finit fist fistp fisttp fisub fisubr fld fldcw fldenv fmul fmulp fnclex fninit fnop fnsave
+    finit fist fistp fisttp fisub fisubr fld fld1 fldcw fldenv fldl2e fldl2t fldlg2 fldln2 fldpi fldz
+    fmul fmulp fnclex fninit fnop fnsave
     fnstcw fnstenv fnstsw fpatan fprem fprem1 fptan frndint frstor fscale fsin fsincos fsqrt fst
     fstcw fstenv fstp fstsw fsub fsubp fsubr fsubrp ftst fucom fucomi fucomip fucomp fucompp fwait
     fxam fxch fxrstor fxsave fxtract fyl2x fyl2xp1 hlt idiv imul in inc ins int int1 int3 into
@@ -144,11 +146,23 @@ def instruction_bytes(value) -> bool:
 
 def alternate_instruction_record(record: dict) -> bool:
     operation = record.get('op')
-    return (
-        isinstance(operation, str) and x86_operation(operation)
-        and any(address_value(record.get(key)) for key in ('va', 'address', 'rva'))
-        and (isinstance(record.get('args'), (str, list)) or instruction_bytes(record.get('bytes'))
-             or len(operation.split()) > 1 or len(record) == 2)
+    if not isinstance(operation, str):
+        return False
+    addresses = {key for key in ('va', 'address', 'rva') if address_value(record.get(key))}
+    if not addresses:
+        return False
+    args = record.get('args')
+    has_bytes = instruction_bytes(record.get('bytes'))
+    # The two raw three-column formats are identifiable even when their opcode
+    # is absent from the mnemonic list used to distinguish text from prose.
+    if len(addresses) == 1 and INSTRUCTION_OPERATION_FIELD.fullmatch(operation.strip()):
+        columns = record.keys() - addresses
+        byte_column = columns == {'op', 'bytes'} and has_bytes
+        argument_column = columns == {'op', 'args'} and isinstance(args, str)
+        if byte_column or argument_column:
+            return True
+    return x86_operation(operation) and (
+        isinstance(args, (str, list)) or has_bytes or len(operation.split()) > 1 or len(record) == 2
     )
 
 

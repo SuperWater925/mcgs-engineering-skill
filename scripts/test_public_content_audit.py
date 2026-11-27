@@ -85,6 +85,14 @@ class PublicContentTests(unittest.TestCase):
         ]))
         self.assertEqual(audit.violations['evidence.json'], {'instruction-record': 2})
 
+    def test_raw_three_column_records_with_extended_opcode_fail(self):
+        audit = Audit('source')
+        audit.scan_member('evidence.json', json_bytes([
+            {'va': '0x00001000', 'op': 'vpternlogd zmm0, zmm1, zmm2, 0xff', 'bytes': '62f3754825c2ff'},
+            {'address': 8192, 'op': 'vfmadd231ps', 'args': 'ymm0, ymm1, ymm2'},
+        ]))
+        self.assertEqual(audit.violations['evidence.json'], {'instruction-record': 2})
+
     def test_lone_addressed_text_instructions_without_byte_columns_fail(self):
         audit = Audit('source')
         audit.scan_member('sample.txt', b'00001000: nop\n')
