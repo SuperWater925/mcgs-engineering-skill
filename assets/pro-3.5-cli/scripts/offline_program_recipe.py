@@ -1,5 +1,6 @@
 """Typed recipe and strategy edits on an exported candidate database."""
 from copy import deepcopy
+import struct
 
 import native_format as fmt
 import mcgs_recipe_strategy as archive
@@ -97,30 +98,37 @@ def verified_recipe_control(control, definition):
     return common, plugin, core
 
 
-def recipe_windows(data, encoded):
+def recipe_windows(data, encoded, source_literals=()):
     from mcs_window_archive import WindowArchive
 
+    probes = (encoded, *source_literals)
     for row in data["WndUser"]["rows"]:
         raw = fmt.archive(row["lbObjects"])
-        if encoded not in raw:
+        if not any(token in raw for token in probes):
             continue
         window = WindowArchive.parse(raw)
-        if window.to_bytes() != raw or encoded in window.trailer or encoded in window.prefix:
+        if window.to_bytes() != raw or any(token in window.trailer or token in window.prefix for token in probes):
             raise ValueError("Unsupported window layout for recipe migration")
         yield row, window
 
 
-def rewrite_recipe_tree(control, encoded, visit):
+def rewrite_recipe_tree(control, encoded, visit, source_literals=()):
     from 原生界面样式 import GroupArchive
 
-    if encoded not in control.payload:
+    probes = (encoded, *source_literals)
+    if not any(token in control.payload for token in probes):
         return control
     if control.type_id != 0x503a:
         return visit(control)
     group = GroupArchive.parse(control)
     if group.to_record().to_bytes() != control.to_bytes():
         raise ValueError("Recipe consumer parent group fails byte roundtrip")
-    group.children[:] = [rewrite_recipe_tree(child, encoded, visit) for child in group.children]
+    if source_literals:
+        common = group.common
+        envelope = (common.prefix, common.name.to_bytes(), common.metadata.value, group.tail)
+        if any(token in part for token in probes for part in envelope):
+            raise ValueError('An unsupported group envelope also references the recipe')
+    group.children[:] = [rewrite_recipe_tree(child, encoded, visit, source_literals) for child in group.children]
     return group.to_record()
 
 
@@ -161,43 +169,125 @@ def prepare_recipe_consumer_rename(data, original, renamed):
     return edits
 
 
-def sync_recipe_columns(data, original, changed, index, operation, template_index=None):
+def recipe_refresh_targets(data, row, window, definition, encoded):
+    page_name = row['strName']
+    if sum(candidate['strName'].casefold() == page_name.casefold() for candidate in data['WndUser']['rows']) != 1:
+        return set()
+    try:
+        names = [fmt.common(control.payload)['name'].casefold() for control in window.controls]
+    except (ValueError, UnicodeError, struct.error):
+        return set()
+    targets = set()
+    for control in window.controls:
+        if control.type_id == 0x503d and encoded in control.payload:
+            common, _, _ = verified_recipe_control(control, definition)
+            if names.count(common.name.value.casefold()) == 1:
+                targets.add(f'{page_name}.{common.name.value}.Refresh')
+    return targets
+
+
+def rewrite_recipe_controls(data, original, changed, edit_columns, *, order_only=False):
     from mcs_plugin_controls import RecipeCore, utf8_write
     from mcs_recipe_association import require_recipe_association
     from mcs_window_archive import WindowArchive
 
     encoded = utf8_write(original.name)
+    if order_only:
+        version = fmt.archive(one(data['System']['rows'], 'strName', 'MCGSVER')['lbContext'])
+        order_only = identify_family(version.decode('utf-16le').rstrip('\0')) == 'Pro'
+    source_literals = ()
+    if order_only:
+        from mcgs_text import narrow_encoding
+        literal = f'"{original.name}"'
+        source_literals = (literal.encode('utf-16le'), literal.encode('utf-8'))
+        encoding = narrow_encoding()
+        narrow = literal.encode(encoding, errors='replace')
+        if narrow.decode(encoding) == literal and narrow not in source_literals:
+            source_literals += (narrow,)
+    variables = None
+
     def rewrite(control):
+        nonlocal variables
+        if order_only and control.type_id == 0x5027:
+            from offline_recipe_references import require_recipe_reorder_safe_button
+            if variables is None:
+                objects = one(data['System']['rows'], 'strName', 'ObjData')['lbContext']
+                variables = {record['name']: record for record in fmt.variables(fmt.archive(objects))}
+            require_recipe_reorder_safe_button(control, original.name, refresh_targets, variables)
+            return control
         common, plugin, core = verified_recipe_control(control, original)
-        # Zero is the control-only serial column; group field zero follows it.
-        slot = index + 1
-        if operation == "delete_column":
-            del core.columns[slot]
-        else:
-            target = changed.fields[index]
-            if operation == "insert_column":
-                core.columns.insert(slot, deepcopy(core.columns[template_index + 1]))
-            if target.data_type != core.columns[slot].values[0]:
-                raise ValueError("Changing a bound recipe column type requires native display settings")
-            core.columns[slot].binding = target.binding
-            core.columns[slot].title = target.title
+        edit_columns(core.columns)
         plugin.core = core.to_bytes()
         require_recipe_association(RecipeCore.parse(plugin.core), changed)
         return common.restore_projected(plugin.to_record())
 
-    for row, window in recipe_windows(data, encoded):
-        window.controls[:] = [rewrite_recipe_tree(control, encoded, rewrite) for control in window.controls]
+    for row, window in recipe_windows(data, encoded, source_literals):
+        refresh_targets = recipe_refresh_targets(data, row, window, original, encoded) if order_only else set()
+        window.controls[:] = [rewrite_recipe_tree(control, encoded, rewrite, source_literals) for control in window.controls]
         result = window.to_bytes()
         if WindowArchive.parse(result).to_bytes() != result:
             raise ValueError("Updated recipe window fails byte roundtrip")
-        row["lbObjects"] = fmt.wrap_like(row["lbObjects"], result)
+        if result != fmt.archive(row["lbObjects"]):
+            row["lbObjects"] = fmt.wrap_like(row["lbObjects"], result)
+
+
+def sync_recipe_columns(data, original, changed, index, operation, template_index=None):
+    def update(columns):
+        # Zero is the control-only serial column; group field zero follows it.
+        slot = index + 1
+        if operation == "delete_column":
+            del columns[slot]
+        else:
+            target = changed.fields[index]
+            template = deepcopy(columns[template_index + 1]) if template_index is not None else None
+            if operation == "insert_column":
+                columns.insert(slot, template)
+            elif template is not None:
+                columns[slot] = template
+            if target.data_type != columns[slot].values[0]:
+                raise ValueError("Changing a bound recipe column type requires native display settings")
+            columns[slot].binding = target.binding
+            columns[slot].title = target.title
+
+    rewrite_recipe_controls(data, original, changed, update)
+
+
+def reorder_recipe_columns(data, group, order, sync):
+    n = len(group.fields)
+    if (not isinstance(order, list) or len(order) != n - 1 or any(type(i) is not int for i in order)
+            or sorted(order) != list(range(1, n))):
+        raise ValueError("Recipe column order must be a permutation of all nonreserved field indices")
+    if order == list(range(1, n)):
+        return
+    original = deepcopy(group) if sync else None
+    permutation = [0, *order]
+    group.fields = [group.fields[i] for i in permutation]
+    group.records = [[row[i] for i in permutation] for row in group.records]
+    if sync:
+        def update(columns):
+            columns[2:] = [columns[i + 1] for i in order]
+
+        rewrite_recipe_controls(data, original, group, update, order_only=True)
 
 
 def recipe_edits(data, edits):
     rows, index, names, groups = recipe_state(data)
     variables = None
+    language_texts = None
 
-    def column(spec):
+    def require_column_title(title):
+        nonlocal language_texts
+        if not title.startswith('\x07'):
+            return
+        text_id = fmt.language_text_id(title)
+        if text_id is None:
+            raise ValueError('Recipe column title has an invalid native language text ID')
+        if language_texts is None:
+            language_texts = fmt.language_texts(data)
+        if text_id not in language_texts:
+            raise ValueError(f'Recipe column title text ID {text_id} is missing from the current project')
+
+    def column(spec, current_title=None):
         nonlocal variables
         keys(spec, ("binding", "title", "type"), ("binding", "title", "type"))
         binding, title, kind = text(spec["binding"]), text(spec["title"]), spec["type"]
@@ -207,6 +297,8 @@ def recipe_edits(data, edits):
             variables = fmt.variables(fmt.archive(one(rows, "strName", "ObjData")["lbContext"]))
         if one(variables, "name", binding)["kind"] != kind:
             raise ValueError("Recipe binding type differs from target variable")
+        if title != current_title:
+            require_column_title(title)
         return archive.RecipeField(binding, title, kind)
 
     def record(values, width):
@@ -236,6 +328,7 @@ def recipe_edits(data, edits):
                     raise ValueError("Cannot determine first recipe group layout")
                 first = archive.RecipeField("", "配方名称", 3)
                 marker, tail = layouts[family]
+            require_column_title(first.title)
             fields = [first] + [column(c) for c in edit.get("columns", [])]
             items = [record(r, len(fields)) for r in edit.get("records", [])]
             group = archive.RecipeGroup(marker, name, fields, items, tail)
@@ -253,10 +346,12 @@ def recipe_edits(data, edits):
             if name not in groups:
                 raise ValueError("Unknown registered recipe group")
             row, group = groups[name]
-            structural = op in ("delete_group", "insert_column", "delete_column")
+            structural = op in ("delete_group", "insert_column", "delete_column", "reorder_columns")
+            updated_column = None
             if op == "update_column":
                 i = position(edit["index"], len(group.fields))
-                structural = column(edit["column"]) != group.fields[i]
+                updated_column = column(edit["column"], group.fields[i].title)
+                structural = updated_column != group.fields[i]
             sync = edit.get("sync_controls", False)
             if type(sync) is not bool:
                 raise ValueError("sync_controls must be boolean")
@@ -311,10 +406,13 @@ def recipe_edits(data, edits):
                     group.records.insert(i, record(edit["values"], len(group.fields)))
                 else:
                     group.records[i] = record(edit["values"], len(group.fields))
+            elif op == "reorder_columns":
+                keys(edit, ("op", "name", "order", "sync_controls"), ("order",))
+                reorder_recipe_columns(data, group, edit["order"], sync)
             elif op in ("insert_column", "update_column", "delete_column"):
                 allowed = {"op", "name", "index"}
                 allowed.add("sync_controls")
-                if sync and op == "insert_column":
+                if sync and op != "delete_column":
                     allowed.add("display_template_index")
                 if op != "delete_column":
                     allowed.update(("column", "values"))
@@ -322,19 +420,26 @@ def recipe_edits(data, edits):
                 i = position(edit["index"], len(group.fields), op == "insert_column")
                 if i == 0:
                     raise ValueError("The native name column is required")
+                field = updated_column if op == "update_column" else column(edit["column"]) if op == "insert_column" else None
                 if sync:
                     original = deepcopy(group)
                     template_index = None
-                    if op == "insert_column":
+                    changing_type = op == "update_column" and field.data_type != group.fields[i].data_type
+                    if op == "insert_column" or changing_type:
+                        if changing_type and "display_template_index" not in edit:
+                            raise ValueError("Changing a bound recipe column type requires native display settings")
                         template_index = position(edit.get("display_template_index"), len(group.fields))
                         if template_index == 0:
-                            raise ValueError("An inserted display column requires a nonreserved template")
+                            raise ValueError("A recipe display column requires a nonreserved template")
+                        if group.fields[template_index].data_type != field.data_type:
+                            raise ValueError("Recipe display template type differs from the new field type")
+                    elif "display_template_index" in edit:
+                        raise ValueError("A display template is only used for insertion or column type changes")
                 if op == "delete_column":
                     del group.fields[i]
                     for r in group.records:
                         del r[i]
                 else:
-                    field = column(edit["column"])
                     if op == "insert_column" or "values" in edit:
                         values = record(edit.get("values", []), len(group.records))
                         for r, v in zip(group.records, values):
@@ -647,6 +752,56 @@ def require_unused_names(data, names, projected):
                         raise ValueError(f"Possible name reference in {table}.{field}{owner}: {name!r}")
 
 
+def require_strategy_metadata_target(registry, trigger_rows, block, kind=None):
+    ident = block.fields["tail_words"][2]
+    linked = [row for row in registry.triggers if row.fields["strategy_id"] == ident]
+    if len(linked) != 1:
+        raise ValueError("Strategy metadata editing requires exactly one linked native trigger")
+    trigger = linked[0]
+    class_name = trigger.class_name
+    if kind is not None and class_name != kind:
+        raise ValueError("Selected strategy has a different native trigger type")
+    if class_name == "CTriggerLoop" and ident >= 2:
+        linked_loop_pair(registry, trigger_rows, block)
+    elif class_name == "CTriggerEvent" and ident >= 3:
+        linked_event_row(registry, trigger_rows, block)
+    elif class_name != "CTriggerUser" or trigger.fields["trigger_type"] != 3:
+        raise ValueError("Strategy metadata requires a native user trigger or a supported custom Loop/Event trigger")
+
+
+def strategy_content_nodes(block):
+    """Walk the known native row, cell, condition and program ownership."""
+    for row in block.fields["rows"]:
+        if row is None:
+            continue
+        if row.class_name != "CStrategyRow":
+            raise ValueError("Unrecognized native strategy row")
+        yield row
+        for cell in row.fields["cells"]:
+            if cell is None:
+                continue
+            if cell.class_name != "CStrategyCell":
+                raise ValueError("Unrecognized native strategy cell")
+            yield cell
+            for field, expected_class in (("conditions", "CStgyConnIF"), ("actions", "CStgyFuncProg")):
+                for node in cell.fields[field]:
+                    if node is None:
+                        continue
+                    if node.class_name != expected_class:
+                        raise ValueError("Unrecognized native strategy condition or action")
+                    yield node
+
+
+def require_owned_timed_strategy_body(registry, block):
+    nodes = list(strategy_content_nodes(block))
+    if not any(node.class_name == "CStgyFuncProg" for node in nodes):
+        raise ValueError("Nonempty custom Loop/Event deletion requires recognized native script actions")
+    identities = {id(node) for node in nodes}
+    for other in registry.strategies:
+        if other is not block and any(id(node) in identities for node in strategy_content_nodes(other)):
+            raise ValueError("Native strategy contents are shared with another block")
+
+
 def strategy_edits(data, edits):
     row, registry_row, registry = strategy_state(data)
     trigger_rows = data["Trigger"]["rows"]
@@ -741,24 +896,24 @@ def strategy_edits(data, edits):
             keys(edit, ("op", "name"))
             strategy_id = block.fields["tail_words"][2]
             if op == "delete_event_strategy":
-                if strategy_id < 3 or block.fields["rows"]:
-                    raise ValueError("Only an empty custom Event can be removed")
+                if strategy_id < 3:
+                    raise ValueError("Only a custom Event can be removed")
                 trigger, linked_row = linked_event_row(registry, trigger_rows, block)
+            elif op == "delete_loop_strategy":
+                if strategy_id < 2:
+                    raise ValueError("Only a custom Loop can be removed")
+                trigger, linked_row, _ = linked_loop_pair(registry, trigger_rows, block)
             else:
-                delete_loop = op == "delete_loop_strategy"
-                expected_class = "CTriggerLoop" if delete_loop else "CTriggerUser"
                 linked = [t for t in registry.triggers if t.fields["strategy_id"] == strategy_id]
-                if len(linked) != 1 or linked[0].class_name != expected_class:
-                    label = "Loop" if delete_loop else "user"
-                    raise ValueError(f"Operation requires a single native {label} trigger")
-                if delete_loop and (strategy_id < 2 or block.fields["rows"]):
-                    raise ValueError("Only an empty custom Loop can be removed")
+                if len(linked) != 1 or linked[0].class_name != "CTriggerUser":
+                    raise ValueError("Operation requires a single native user trigger")
                 trigger = linked[0]
                 linked_row = one(trigger_rows, "lStgyID", strategy_id)
-                kind = 2 if delete_loop else 3
-                if (linked_row["lType"] != kind or trigger.fields["trigger_type"] != kind
+                if (linked_row["lType"] != 3 or trigger.fields["trigger_type"] != 3
                         or linked_row["iID"] != trigger.fields["trigger_id"]):
                     raise ValueError("Delete requires an exact linked trigger row")
+            if op != "delete_user_strategy" and block.fields["rows"]:
+                require_owned_timed_strategy_body(registry, block)
             # Each serializer builds its own MFC map from surviving nodes.
             # Database IDs in their fields are independent of map positions.
             registry.strategies.remove(block)
@@ -768,15 +923,12 @@ def strategy_edits(data, edits):
                 (id(row), "lbObjects"): archive.serialize_strategy_array(registry.strategies),
                 (id(registry_row), "lbContext"): registry.serialize()})
             continue
-        if op in ("rename_user_strategy", "set_strategy_comment"):
-            strategy_id = block.fields["tail_words"][2]
-            linked = [t for t in registry.triggers if t.fields["strategy_id"] == strategy_id]
-            if len(linked) != 1 or linked[0].class_name != "CTriggerUser":
-                raise ValueError("Operation requires a single native user trigger")
+        rename_classes = {"rename_user_strategy": "CTriggerUser", "rename_loop_strategy": "CTriggerLoop",
+                          "rename_event_strategy": "CTriggerEvent"}
+        if op in rename_classes or op == "set_strategy_comment":
+            require_strategy_metadata_target(registry, trigger_rows, block, rename_classes.get(op))
             if op == "set_strategy_comment":
                 keys(edit, ("op", "name", "comment"), ("comment",))
-                if linked[0].fields["trigger_type"] != 3:
-                    raise ValueError("Strategy comment requires the native user trigger type")
                 comment = text(edit["comment"], empty=True)
                 if block.fields["comment"] != comment:
                     block.fields["comment"] = comment

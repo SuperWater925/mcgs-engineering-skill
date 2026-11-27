@@ -153,11 +153,16 @@ namespace McgsInternalBridge {
                 return controls;
             }
 
-            private void VisitWindows(Action<Window> visit) {
+            private IntPtr UserWindowManager() {
                 context.RequireProject();
                 Abi.CheckTable(context.Ptr(context.Root, "root_window_model"), "root_window_model");
                 IntPtr manager = Abi.Bind<GetModuleObject>("get_module_object")(0);
                 Abi.CheckTable(manager, "page_manager");
+                return manager;
+            }
+
+            private void VisitWindows(Action<Window> visit) {
+                IntPtr manager = UserWindowManager();
                 IntPtr service = IntPtr.Add(manager, Abi.Offset("page_manager_service"));
                 Abi.CheckTable(service, "window_service");
                 Enumerate(manager, "page_manager", "page_first", "page_next", "page_count", page => {

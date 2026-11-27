@@ -1,11 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.InteropServices;
 
 namespace McgsInternalBridge {
     public static partial class EngineEntry {
         private const string DataCatalogAction = "data-catalog", DataReadAction = "data-read", DataEditAction = "data-edit";
-        private static readonly string[] DataTextFields = { "comment", "unit" };
+        private static readonly string[] DataTextFields = { "comment", "unit", "initial_text" };
+
+        private static int DataTextSetterSlot(string field) {
+            switch (field) {
+                case "comment": return 37;
+                case "unit": return 30;
+                case "initial_text": return 29;
+                default: throw new InvalidOperationException("No native Stu setter is registered for " + field + ".");
+            }
+        }
 
         private static bool IsDataAction(string action) {
             return action == DataCatalogAction || action == DataReadAction || action == DataEditAction;
@@ -24,7 +34,14 @@ namespace McgsInternalBridge {
                 internal string Name, Comment, Unit, Initial;
 
                 internal VariableRecord(IntPtr pointer, int index) { Object = pointer; Index = index; }
-                internal string Field(string field) { return field == "comment" ? Comment : Unit; }
+                internal string Field(string field) {
+                    switch (field) {
+                        case "comment": return Comment;
+                        case "unit": return Unit;
+                        case "initial_text": return Initial;
+                        default: throw new InvalidOperationException("Unrecognized Stu variable field: " + field + ".");
+                    }
+                }
 
                 internal Dictionary<string, object> Value() {
                     return new Dictionary<string, object> {
@@ -72,7 +89,7 @@ namespace McgsInternalBridge {
                     result["record"] = original.Value();
                     if (!editing) return;
 
-                    Require(kind == 1 || kind == 2 || kind == 3, "Only original Stu scalar variables support comment and unit edits.");
+                    Require(kind == 1 || kind == 2 || kind == 3, "Only original Stu scalar variables support these edits.");
                     var changes = PlanVariableText(options, original);
                     if (changes.Count == 0) {
                         result["operation_phase"] = "complete";
@@ -85,7 +102,7 @@ namespace McgsInternalBridge {
                     foreach (var change in changes) {
                         Abi.RequireFeature("data-edit-" + change.Field);
                         string function = "set_data_" + change.Field;
-                        Abi.CheckSlot(service, "data_service", change.Field == "comment" ? 37 : 30, function);
+                        Abi.CheckSlot(service, "data_service", DataTextSetterSlot(change.Field), function);
                         change.Setter = Abi.Bind<SetVariableText>(function);
                     }
                     Abi.CheckSlot(service, "data_service", 2, "save_data_module");
@@ -255,30 +272,42 @@ namespace McgsInternalBridge {
                 var before = StuNativeProfile.Map(options["before"]);
                 var after = StuNativeProfile.Map(options["after"]);
                 Require(before.Count != 0 && before.Count == after.Count && before.Count <= DataTextFields.Length,
-                    "A Stu scalar edit needs matching original and desired comment or unit fields.");
+                    "A Stu scalar edit needs matching original and desired comment, unit or initial text fields.");
                 var result = new List<VariableTextChange>();
                 foreach (var item in before) {
                     object requested;
                     string prior = item.Value as string;
                     Require(Array.IndexOf(DataTextFields, item.Key) >= 0 && prior != null && prior == original.Field(item.Key),
-                        "The original Stu comment or unit differs from its edit preimage.");
+                        "The selected Stu data field differs from its edit preimage: " + item.Key);
                     Require(after.TryGetValue(item.Key, out requested) && requested is string, "The requested Stu data field value is not text.");
                     string next = (string)requested;
                     Require(next.Length <= 32768 && next.IndexOf('\0') < 0, "The requested Stu data text does not fit the native string contract.");
-                    if (next != prior) result.Add(new VariableTextChange { Field = item.Key, After = next });
+                    if (next == prior) continue;
+                    if (item.Key == "initial_text") ValidateVariableInitialText(original.Kind, next);
+                    result.Add(new VariableTextChange { Field = item.Key, After = next });
                 }
                 return result;
             }
 
-            private static void VerifyVariableRecord(VariableRecord before, VariableRecord after, List<VariableTextChange> changes) {
-                string comment = before.Comment, unit = before.Unit;
-                if (changes != null) foreach (var change in changes) {
-                    if (change.Field == "comment") comment = change.After;
-                    else unit = change.After;
-                }
+            private static void ValidateVariableInitialText(int kind, string text) {
+                if (kind == 3) return;
+                double initial;
+                Require(Double.TryParse(text, NumberStyles.Float, CultureInfo.InvariantCulture, out initial)
+                    && !Double.IsNaN(initial) && !Double.IsInfinity(initial),
+                    "The Stu numeric initial value requires finite invariant decimal text.");
+                if (kind == 1) Require(initial == 0 || initial == 1, "The Stu Boolean initial value must be zero or one.");
+            }
+
+            private static void VerifyVariableRecord(VariableRecord before, VariableRecord after, List<VariableTextChange> changes,
+                string replacementName = null) {
                 Require(before.Object == after.Object && before.Index == after.Index && before.Id == after.Id && before.Kind == after.Kind &&
-                    before.Name == after.Name && before.Initial == after.Initial && comment == after.Comment && unit == after.Unit,
-                    "The original Stu variable identity, requested text or unrelated data changed: " + before.Name);
+                    (replacementName ?? before.Name) == after.Name, "The original Stu variable identity changed: " + before.Name);
+                foreach (string field in DataTextFields) {
+                    var change = changes == null ? null : changes.Find(item => item.Field == field);
+                    string expected = change == null ? before.Field(field) : change.After;
+                    Require(after.Field(field) == expected,
+                        "The original Stu variable does not retain the expected " + field + ": " + before.Name);
+                }
             }
 
             private void SaveVariableChanges(IntPtr manager, IntPtr service, Dictionary<string, object> result) {

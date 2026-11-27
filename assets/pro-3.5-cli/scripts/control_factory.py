@@ -20,14 +20,15 @@ if str(NATIVE) not in sys.path:
 from mcs_window_archive import ControlRecord, WindowSettings, Reader, write_count, write_cstring
 from mcs_button_control import ButtonArchive
 from mcs_input_text import InputRecord, InputMetadata, LabelRecord, unit_slot
-from 原生界面样式 import CommonEnvelope, GroupArchive, set_font
+from 原生界面样式 import CommonEnvelope, GenericMetadata, GroupArchive, set_font
 from 可见动画归档 import 添加可见条件
-from 窗口事件归档 import 窗口事件, 设置窗口事件
+from 窗口事件归档 import (WINDOW_DISPATCH_ACTIONS, WINDOW_MOUSE_DOWN_SOURCE, 初始化页面派发事件,
+                   编辑页面派发, 窗口事件, 设置窗口事件)
 from control_geometry import resize, GEOMETRY_TYPES
 from 当前存盘浏览样式 import SAVED_DATA_STYLE_FIELDS, SAVED_DATA_TYPE
 from 原生趋势样式 import HISTORY_CURVE_EDIT_FIELDS
 
-TYPES = {'label': 0x5008, 'line': 0x5002, 'rectangle': 0x5004,
+TYPES = {'label': 0x5008, 'line': 0x5002, 'rectangle': 0x5004, 'ellipse': 0x5006, 'bitmap': 0x5009,
          'button': 0x5027, 'multi-state-button': 0x5028, 'multi-state-display': 0x502a,
          'numeric-input': 0x5025, 'character-input': 0x5025,
          'numeric-display': 0x5025, 'character-display': 0x5025}
@@ -149,7 +150,7 @@ def _local_primitive(control_type, source_pages, neutral):
 
 
 def primitive_record(control_type, primitives=None, source_pages=()):
-    """Return a neutral Pro template, with no project binding or button source."""
+    """Return a native template with no project binding or button source."""
     if control_type not in TYPES:
         raise ValueError('Unsupported control type: ' + str(control_type))
     if primitives is None:
@@ -160,6 +161,12 @@ def primitive_record(control_type, primitives=None, source_pages=()):
     if preset is None or preset['kind'] != TYPES[control_type]:
         raise ValueError('No matching neutral Pro primitive for ' + control_type)
     value = record(preset['kind'], bytes.fromhex(preset['payload']))
+    if control_type in PLUGIN_PATHS:
+        # Each designer supplies its own unbound external component defaults.
+        family = primitives.get('family', 'Pro')
+        if getattr(source_pages, 'family', family) != family:
+            raise ValueError('No matching native ' + control_type + ' primitive for this project family')
+        return value
     if control_type in DEFAULT_DISPLAY_TYPES:
         if getattr(source_pages, 'family', None) == 'Stu' and primitives.get('family') != 'Stu':
             raise ValueError('No neutral Stu primitive for ' + control_type)
@@ -366,8 +373,43 @@ def edit_plugin(value, edits, expected=None):
     return edited.to_record()
 
 
-def edit_control(kind, payload, edits, variables=None):
+CONTROL_CLICK_TYPES = {0x5004: 275, 0x5008: 282, 0x5028: 262}
+
+
+def control_click_event(value):
+    native_type = CONTROL_CLICK_TYPES.get(value.type_id)
+    if native_type is None:
+        raise ValueError('Click script editing requires a verified native control class')
+    common = _common(value)
+    metadata = GenericMetadata.parse(common.metadata.value)
+    if metadata.to_bytes() != common.metadata.value or len(metadata.events) != 1:
+        raise ValueError('Expected one round-tripping native control event')
+    event = metadata.events[0]
+    if not event.is_unparameterized_click(native_type):
+        raise ValueError('Expected the verified unparameterized native control Click event')
+    return common, metadata, event
+
+
+def edit_control_click(value, spec):
+    common, metadata, event = control_click_event(value)
+    event.set_click_source(spec)
+    common.metadata.value = metadata.to_bytes()
+    result = common.to_record()
+    _, checked_metadata, checked = control_click_event(result)
+    if checked_metadata.to_bytes() != metadata.to_bytes() or checked.source.value != spec['source']:
+        raise ValueError('Native control Click edit did not round-trip')
+    return result
+
+
+def edit_control(kind, payload, edits, variables=None, *, picture_references=None):
     """Edit supported original classes, restoring every unmodified animation."""
+    if isinstance(edits, dict) and 'click_event_source' in edits:
+        if edits.keys() != {'click_event_source'}:
+            raise ValueError('Native control Click script requires a dedicated edit')
+        return edit_control_click(record(kind, payload), edits['click_event_source']).payload
+    if kind == 0x5009 and isinstance(edits, dict) and 'bitmap_picture' in edits:
+        from control_patch import edit
+        return edit(record(kind, payload), edits, picture_references=picture_references).payload
     if kind in (0x5006, 0x5039, 0x503d) and isinstance(edits, dict) and edits.keys() == {'animations'}:
         from control_patch import edit
         return edit(record(kind, payload), edits).payload
@@ -401,11 +443,11 @@ def edit_control(kind, payload, edits, variables=None):
         shared.update({k: edits[k] for k in ("bounds", "fill", "border") if k in edits})
         if shared:
             from control_patch import edit
-            value = edit(value, shared)
+            value = edit(value, shared, picture_references=picture_references)
         return value.payload
     if shared:
         from control_patch import edit
-        value = edit(record(kind, payload), shared)
+        value = edit(record(kind, payload), shared, picture_references=picture_references)
         if not edits:
             return value.payload
         payload = value.payload
@@ -605,12 +647,29 @@ def new_default_data_display(value, name, bounds):
 
 
 def make_control(item, variables, primitives=None, source_pages=()):
+    if isinstance(item, dict) and item.get('type') == 'bitmap':
+        base = {'type', 'name', 'bounds'}
+        if item.keys() == base | {'clone_from'}:
+            value = resolve_clone(source_pages, item['clone_from'], 'bitmap')
+        elif (item.keys() == base | {'bitmap_picture'} and isinstance(item['bitmap_picture'], dict)
+              and item['bitmap_picture'].keys() == {'embedded_hex'}):
+            from control_patch import edit
+            value = edit(primitive_record('bitmap', primitives), {'bitmap_picture': item['bitmap_picture']})
+        else:
+            raise ValueError('New bitmap requires type/name/bounds and embedded_hex or an explicit clone_from')
+        return value.type_id, edit_control(value.type_id, value.payload,
+                                          {'name': item['name'], 'bounds': item['bounds']})
     if isinstance(item, dict) and item.get('type') in PLUGIN_PATHS:
-        required = {'type','name','bounds','clone_from'}
-        if not required <= set(item):
-            raise ValueError('External component requires a fingerprinted current-project clone_from')
         kind = item['type']
-        source = resolve_clone(source_pages, item['clone_from'], kind)
+        required = {'type', 'name', 'bounds'}
+        if 'clone_from' in item:
+            if not required <= item.keys():
+                raise ValueError('External component requires type, name and bounds with clone_from')
+            source = resolve_clone(source_pages, item['clone_from'], kind)
+        elif item.keys() == required:
+            source = primitive_record(kind, primitives, source_pages)
+        else:
+            raise ValueError('Default ' + kind + ' requires only type, name and bounds')
         edits = {field:value for field,value in item.items() if field not in ('type','clone_from')}
         return source.type_id, edit_plugin(source, edits, expected=kind).payload
     if isinstance(item, dict) and item.get('type') == 'group':
@@ -641,15 +700,34 @@ def make_control(item, variables, primitives=None, source_pages=()):
     return value.type_id, value.payload
 
 
-def page_events(trailer, changes, fresh=False):
-    if not isinstance(changes, dict) or set(changes) - {'open', 'cycle', 'close', 'period_ms'}:
-        raise ValueError('Page events accept open/cycle/close/period_ms')
-    settings = WindowSettings.parse(trailer); before = 窗口事件.解析(settings.event_tail)
+def page_events(trailer, changes, fresh=False, *, family='Pro'):
+    if not isinstance(changes, dict) or changes.keys() - {'open', 'cycle', 'close', 'period_ms'} - WINDOW_DISPATCH_ACTIONS:
+        raise ValueError('Page events accept open/cycle/close/period_ms or one supported dispatch operation')
+    dispatch = changes.keys() & WINDOW_DISPATCH_ACTIONS
+    if len(dispatch) > 1 or (fresh and dispatch - {'add_click_event_source'}):
+        raise ValueError('Specify one window dispatch operation; new pages only allow add_click_event_source')
+    settings = WindowSettings.parse(trailer)
+    editing_mouse_down = WINDOW_MOUSE_DOWN_SOURCE in dispatch
+    protected = False
+    if family == 'Stu':
+        protected = bool(settings.password_data) or settings.to_bytes() != trailer
+    elif editing_mouse_down:
+        # Original unprotected Pro windows store an empty ANSI string and one opaque byte.
+        native_empty = len(settings.password_data) == 2 and settings.password_data[:1] == b'\0'
+        protected = not native_empty or settings.to_bytes() != trailer
+    if dispatch and protected:
+        raise ValueError('Window dispatch requires unprotected window settings that round-trip exactly')
+    before = 窗口事件.解析(settings.event_tail)
     defaults = ('', '', '') if fresh else (before.打开, before.循环, before.退出)
     if fresh:
         before.编译缓存 = [b'', b'', b'']
-        settings.event_tail = before.序列化()
+        source_tail = before.序列化()
+        settings.event_tail = 初始化页面派发事件(source_tail)
+        if protected and settings.event_tail != source_tail:
+            raise ValueError('Stu window Click requires unprotected window settings that round-trip exactly')
     settings.event_tail = 设置窗口事件(settings.event_tail,
         changes.get('open', defaults[0]), changes.get('cycle', defaults[1]),
         changes.get('close', defaults[2]), changes.get('period_ms', 100 if fresh else before.周期毫秒))
+    for operation in dispatch:
+        settings.event_tail = 编辑页面派发(settings.event_tail, operation, changes[operation], family=family)
     return settings.to_bytes()

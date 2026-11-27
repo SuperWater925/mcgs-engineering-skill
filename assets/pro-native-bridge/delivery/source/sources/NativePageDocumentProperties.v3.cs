@@ -84,7 +84,7 @@ namespace McgsInternalBridge {
    readonly NativeEngine.ThisPointer getView;
    readonly NativePageViewOperations.Api views;
    readonly object expectedEdges,hostControls;
-   internal readonly bool ScriptedHost,NeutralPageClick,ConstantPageClick;
+   internal readonly bool ScriptedHost,NeutralPageClick,ConstantPageClick,WindowPageClick;
    internal readonly int ScriptWindowReferenceCount,ScriptRandomCallCount;
    internal readonly object Selection;
    internal int VerifiedInputLimitProjections{get;private set;}
@@ -325,7 +325,7 @@ namespace McgsInternalBridge {
     NativeMemory.Require(index==expected.Count,"The original Rand script has no complete matching set of compiled integer calls.");
    }
 
-   static string ScriptWindowEdge(Api api,Dictionary<int,IntPtr> pages,string ownerPath,string name,string cache){
+   static string ScriptWindowEdge(Api api,Dictionary<int,IntPtr> pages,string ownerPath,string name,string cache,bool pageClick=false){
     IntPtr target=IntPtr.Zero;
     int targetId=-1;
     foreach(var page in pages)
@@ -335,11 +335,19 @@ namespace McgsInternalBridge {
      }
     NativeMemory.Require(target!=IntPtr.Zero&&targetId>=0,"The original SetWindow script target page is absent.");
     api.Pages.Document(target,targetId);
-    string nativeId=NativeI4Hex(targetId);
-    string suffix="03000000"+nativeId+"0001";
-    NativeMemory.Require(cache==SetWindowModeOneProgramPrefix+"0f000000"+suffix||
-      cache==SetWindowModeOneProgramPrefix+"00000000"+suffix,
-      "The original SetWindow script cache differs from the current target ID and compiled mode-1 shape.");
+    if(pageClick){
+     // Distinct pages 2 and 21 compiled to the same CEventDispatch program. The
+     // page name and the original registered edge establish the target identity.
+     const string dispatchSuffix="03000000020000000001";
+     NativeMemory.Require(cache==SetWindowModeOneProgramPrefix+"00000000"+dispatchSuffix||
+       cache==SetWindowModeOneProgramPrefix+"02000000"+dispatchSuffix,
+       "The original page Click SetWindow cache differs from its observed compiled mode-1 shape.");
+    }else{
+     string suffix="03000000"+NativeI4Hex(targetId)+"0001";
+     NativeMemory.Require(cache==SetWindowModeOneProgramPrefix+"0f000000"+suffix||
+       cache==SetWindowModeOneProgramPrefix+"00000000"+suffix,
+       "The original SetWindow script cache differs from the current target ID and compiled mode-1 shape.");
+    }
     return ownerPath+"\0"+api.Refs.Path(target);
    }
 
@@ -376,7 +384,8 @@ namespace McgsInternalBridge {
     edges.Sort(StringComparer.Ordinal);
     return edges;
    }
-   static string PageClickDataEdge(Api api,IList events,string ownerPath){
+   static string PageClickEdge(Api api,Dictionary<int,IntPtr> pages,IList events,string ownerPath,out bool setWindow){
+    setWindow=false;
     if(events.Count==0)return null;
     NativeMemory.Require(events.Count==1,"Common window editing accepts at most one compiled page Click.");
     var click=M(events[0]);
@@ -392,11 +401,16 @@ namespace McgsInternalBridge {
      return null;
     }
     var lines=ActiveScriptLines(source);
+    Match call=lines.Count==1?SetWindowModeOne.Match(lines[0]):Match.Empty;
+    if(call.Success){
+     setWindow=true;
+     return ScriptWindowEdge(api,pages,ownerPath,call.Groups["window"].Value,cache,pageClick:true);
+    }
     Match assignment=lines.Count==1?ConstantClickAssignment.Match(lines[0]):Match.Empty;
     int value=0;
     NativeMemory.Require(assignment.Success&&Int32.TryParse(assignment.Groups["value"].Value,
       NumberStyles.AllowLeadingSign,CultureInfo.InvariantCulture,out value),
-      "The original page Click needs a single comment or a single signed 32-bit constant assignment.");
+      "The original page Click needs a comment, signed integer assignment or standalone SetWindow(name,1).");
     string name=assignment.Groups["destination"].Value;
     var data=new NativeDataEngineering.Api(api.Engine,api.Context,api.Pages.Project);
     IntPtr variable=data.DataObjects().Find(p=>C(NativeMemory.Add(p,8),256)==name);
@@ -447,39 +461,29 @@ namespace McgsInternalBridge {
      id=next;
     }
     string ownerPath=api.Refs.Path(page);
-    string pageClickEdge=PageClickDataEdge(api,pageEvents,ownerPath);
+    bool pageClickSetsWindow;
+    string pageClickEdge=PageClickEdge(api,pages,pageEvents,ownerPath,out pageClickSetsWindow);
     string from=oldId==-1?null:ownerPath+"\0"+api.Refs.Path(pages[oldId]);
     string to=newId==-1?null:ownerPath+"\0"+api.Refs.Path(pages[newId]);
     var graph=Edges(api);
-    var expected=new List<string>();
-    var directNonCommonEdges=new List<string>();
-    bool sourceFound=false;
-    foreach(string edge in graph){
-     if(edge==from){
-      NativeMemory.Require(!sourceFound,"The current common window has a duplicate registered edge.");
-      sourceFound=true;
-      continue;
-     }
-     if(edge.StartsWith(ownerPath+"\0",StringComparison.Ordinal))directNonCommonEdges.Add(edge);
-     expected.Add(edge);
-    }
-    NativeMemory.Require(sourceFound==(from!=null),"The current common window and its registered native edge disagree.");
     var windowEdges=new List<string>();
     int randomCalls=0;
     var scriptEdges=scripted?ScriptEdges(api,pages,snapshot["common_events"],ownerPath,windowEdges,out randomCalls):new List<string>();
-    NativeMemory.Require(!windowEdges.Contains(from)&&!windowEdges.Contains(to),
-      "A selected common window is also an independent SetWindow target; this overlapping reference is outside the current contract.");
-    var expectedDirectScriptEdges=new List<string>(scriptEdges);
-    expectedDirectScriptEdges.AddRange(windowEdges);
-    if(pageClickEdge!=null&&!expectedDirectScriptEdges.Contains(pageClickEdge))expectedDirectScriptEdges.Add(pageClickEdge);
-    expectedDirectScriptEdges.Sort(StringComparer.Ordinal);
-    Same(expectedDirectScriptEdges,directNonCommonEdges,"Host direct references differ from its verified script and common-window targets.");
-    NativeMemory.Require(to==null||!expected.Contains(to),"New common window already has an independent source edge.");
-    if(to!=null)expected.Add(to);
+    var independent=new HashSet<string>(scriptEdges,StringComparer.Ordinal);
+    independent.UnionWith(windowEdges);
+    if(pageClickEdge!=null)independent.Add(pageClickEdge);
+    var expectedBefore=new HashSet<string>(independent,StringComparer.Ordinal);
+    if(from!=null)expectedBefore.Add(from);
+    var observed=graph.FindAll(edge=>edge.StartsWith(ownerPath+"\0",StringComparison.Ordinal));
+    var expectedDirect=new List<string>(expectedBefore);expectedDirect.Sort(StringComparer.Ordinal);
+    Same(expectedDirect,observed,"Host direct references differ from its verified script and common-window targets.");
+    var expected=new List<string>(graph);
+    if(from!=null&&!independent.Contains(from))expected.Remove(from);
+    if(to!=null&&!independent.Contains(to))expected.Add(to);
     expected.Sort(StringComparer.Ordinal);
     var captured=new Dictionary<string,object>{{"source",source},{"target",target},{"target_chain",chain},
       {"registered_reference_edges",graph},{"expected_registered_reference_edges",expected}};
-    if(pageClickEdge!=null)captured["compiled_constant_page_click_data_edge"]=pageClickEdge;
+    if(pageClickEdge!=null)captured[pageClickSetsWindow?"compiled_page_click_set_window_edge":"compiled_constant_page_click_data_edge"]=pageClickEdge;
     else if(pageEvents.Count!=0)captured["compiled_neutral_page_click"]=true;
     if(scripted)captured["script_data_reference_edges"]=scriptEdges;
     if(randomCalls>0)captured["script_random_call_count"]=randomCalls;
@@ -503,6 +507,7 @@ namespace McgsInternalBridge {
     ScriptedHost=proof.ContainsKey("script_data_reference_edges");
     NeutralPageClick=proof.ContainsKey("compiled_neutral_page_click");
     ConstantPageClick=proof.ContainsKey("compiled_constant_page_click_data_edge");
+    WindowPageClick=proof.ContainsKey("compiled_page_click_set_window_edge");
     ScriptWindowReferenceCount=proof.ContainsKey("script_window_reference_edges")?((IList)proof["script_window_reference_edges"]).Count:0;
     ScriptRandomCallCount=proof.ContainsKey("script_random_call_count")?N(proof,"script_random_call_count"):0;
     proof.TryGetValue("populated_host_controls",out hostControls);
@@ -573,7 +578,7 @@ namespace McgsInternalBridge {
    public void ValidatePersistence(NativeUsableEditPermit.Plan plan){if(plan.Commit&&mainAffected)plan.RequireMainControlPersistence(action);}
    object ExpectedWords(){var words=new Dictionary<string,object>(M(before["native_I4_properties"]));foreach(var value in writes)words[value.Key.ToString(CultureInfo.InvariantCulture)]=value.Value;if(historyProjectionRequested)words["13"]=0U;return words;}
    void Verify(bool savedMain){api.Pages.Current();var drawTree=NativeUsableEditPermit.CurrentDrawControls(api.Engine,doc,N(M(action["target"]),"page_id"));if(commonWindow!=null)commonWindow.Verify(drawTree);NativeMemory.Require(api.Pages.Document(page,N(M(action["target"]),"page_id"))==doc,"Page document identity changed.");var words=new Dictionary<string,object>();for(int i=4;i<=20;i++)words.Add(i.ToString(CultureInfo.InvariantCulture),unchecked((uint)NativeMemory.I32(doc,NativeLayout.Offset("document.attributes")+(i-4)*4)));Same(ExpectedWords(),words,"Page properties changed an unplanned native setting.");Same(description==null?before["description"]:C(description.Storage,131072),C(NativeMemory.Add(doc,0x260),131072),"Page description differs.");Same(before["read_only_string264"],C(NativeMemory.Add(doc,0x264),131072),"Untouched page string264 changed.");if(password==null)Same(before["password"],Password(doc),"Page password metadata changed without permission.");else{var expected=new Dictionary<string,object>{{"gate",checked(C(password.Storage,32767).Length*2+2)},{"utf16_length",C(password.Storage,32767).Length},{"utf16_sha256",Hash(Encoding.Unicode.GetBytes(C(password.Storage,32767)))},{"plaintext_disclosed",false}};Same(expected,Password(doc),"Page password original CString/gate update differs.");}var commonExpected=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(NativeUsableEditPermit.Json(before["common_events"]));foreach(var value in eventSources)M(commonExpected["sources"])["0x"+value.Key.ToString("X")]=C(value.Value.Storage,1048576);if(eventScalar.HasValue)commonExpected["scalar158_raw_uint32"]=eventScalar.Value;var commonActual=CommonEvents(api,doc);if(commonWindow!=null)Same(CommonWindowEdit.HostEvents(commonExpected),CommonWindowEdit.HostEvents(commonActual),"The common window edit changed host page scripts, parameters or existing compiled program content.");else Same(commonExpected,commonActual,"Window common event source/parameter/cache differs from the exact expected edit.");Same(before["events"],Events(api,doc),"Page settings changed a native event/compiled payload/runtime byte.");Same(historyState.AfterStoreSnapshot(before["draw_tree"]),drawTree,"Page settings changed a nested control owner/geometry/raw state.");var oldPage=M(before["page"]);Same(oldPage["pages"],api.Pages.PageRows(),"Page settings changed page list/name/ID.");Same(historyState.AfterStoreSnapshot(oldPage["top_level_controls"]),api.Pages.ControlRows(doc),"Page settings changed a top-level control owner/geometry/raw state.");IntPtr manager,currentDoc;var current=NativeReferencedPageEditing.PagePropertiesMainRead(api.Refs,out manager,out currentDoc);NativeMemory.Require(manager==mainManager&&currentDoc==mainDoc,"MainCtrl callback document identity changed.");var expectedMain=new JavaScriptSerializer{MaxJsonLength=Int32.MaxValue}.Deserialize<Dictionary<string,object>>(NativeUsableEditPermit.Json(before["main_control"]));if(mainAffected){var array=M(M(expectedMain["arrays"])["AuxIds"]);var values=new List<object>();int id=NativeMemory.I32(doc,NativeLayout.Offset("document.archive_id"));bool found=false;foreach(object value in(IEnumerable)array["values"]){if(Bits(value)==unchecked((uint)id)){found=true;if(writes[12]==0)continue;}values.Add(value);}if(!found&&writes[12]!=0)values.Add(unchecked((uint)id));array["values"]=values;array["count"]=values.Count;array["capacity"]=M(M(current["arrays"])["AuxIds"])["capacity"];}if(savedMain)M(expectedMain["settings_strings"])["0x168"]=unchecked((int)Bits(M(expectedMain["settings_scalars"])["0x150"])).ToString(CultureInfo.InvariantCulture);Same(NativeReferencedPageEditing.PagePropertiesMainValues(expectedMain),NativeReferencedPageEditing.PagePropertiesMainValues(current),"Page settings callback changed MainCtrl beyond the exact page-ID auxiliary membership.");}
-   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){ValidateBefore();lease.BeginApply(action);try{NativeMemory.Require(unchecked((uint)NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated")))==historyBefore&&(historyBefore==0||historyProjectionRequested),"Original history property13 preimage/permission differs.");api.Check("OriginalHistoryGenerated13Store");api.Pages.Slot(doc,96,0x3CBE6);api.Check("UserDocBeforeModify");NativeOperationTrace.BeforeMutation("usable-page-document-properties-original-before-modify");historyState.ValidateBefore();beforeModify(doc,IntPtr.Zero,1,1);historyState.OriginalStoreReturned();NativeMemory.Require(NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated"))==0,"Original history serializer did not return exact property13 raw0 projection.");if(commonWindow!=null)commonWindow.Apply(lease,action);foreach(var source in eventSources){lease.RequireApplying(action);NativeOperationTrace.BeforeMutation("usable-original-window-dialog-event-source-"+source.Key.ToString("X"));assign(NativeMemory.Add(doc,source.Key),source.Value.Storage);}if(eventScalar.HasValue){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-event-scalar158");Marshal.WriteInt32(doc,0x158,unchecked((int)eventScalar.Value));}foreach(var field in writes){lease.RequireApplying(action);if(field.Key==16){api.Check("DocFlagsSet");for(int bit=1;bit<=2;bit*=2){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-flag-"+bit);flags(doc,bit,(field.Value&(uint)bit)!=0?1:0);}}else{api.Check("OriginalWindowPropertyCommand");api.Check("OriginalDocGeometryStyleStores");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-I4-property-"+field.Key);Marshal.WriteInt32(doc,0x268+(field.Key-4)*4,unchecked((int)field.Value));}}if(description!=null){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-description");assign(NativeMemory.Add(doc,0x260),description.Storage);}if(password!=null){api.Check("OriginalDocPasswordStores");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-password");assign(NativeMemory.Add(doc,0x2B4),password.Storage);Marshal.WriteInt32(doc,0x2B0,checked(C(password.Storage,32767).Length*2+2));}if(mainAffected){lease.RequireApplying(action);api.Check("MainAuxPresenceUpdate");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-mainctrl-aux-presence");aux(NativeMemory.Add(mainManager,0x34),auxId,auxValue);}IntPtr view=api.Pages.Bind<NativeEngine.ThisPointer>("size","GetUserView")(doc);if(view!=IntPtr.Zero){api.Table(view,"DrawingView");NativeMemory.Require(NativeMemory.Ptr(view,0x74)==doc,"Original page drawing view belongs to another document.");api.Check("ViewInvalidate");NativeOperationTrace.BeforeMutation("usable-page-properties-original-view-invalidate");invalidate(view,1);api.Check("ViewUpdate");NativeOperationTrace.BeforeMutation("usable-page-properties-original-view-update");update(view);}Verify(false);applied=true;lease.CompleteApply(action);var result=NativePageControlPreparation.Result(Kind);result["native_I4_properties"]=ExpectedWords();result["original_history_property13_projection"]=new Dictionary<string,object>{{"explicitly_permitted",historyProjectionRequested},{"before_raw_uint32",historyBefore},{"after_raw_uint32",unchecked((uint)NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated")))},{"adapter_wrote_field_directly",commonWindow!=null}};if(commonWindow!=null){result["common_window"]=commonWindow.Selection;result["common_window_original_graph_regenerated"]=true;result["common_window_original_view_refreshed"]=true;result["common_window_original_empty_event_cache_projection"]=true;result["common_window_populated_host_control_state_verified"]=commonWindow.PopulatedHost;result["common_window_original_input_limit_cache_projection_count"]=commonWindow.VerifiedInputLimitProjections;result["common_window_scripted_host_preserved"]=commonWindow.ScriptedHost;if(commonWindow.NeutralPageClick)result["common_window_neutral_page_click_preserved"]=true;if(commonWindow.ConstantPageClick)result["common_window_constant_page_click_preserved"]=true;result["common_window_original_script_window_reference_count"]=commonWindow.ScriptWindowReferenceCount;result["common_window_original_script_random_call_count"]=commonWindow.ScriptRandomCallCount;result["common_window_overlay_verified"]=false;}result["main_control_aux_membership_callback"]=mainAffected;result["common_event_sources_changed"]=eventSources.Count;result["common_event_scalar_changed"]=eventScalar.HasValue;result["dispatch_event_setter_called"]=false;result["source_binary_recompile_deferred_to_original_final_check"]=eventSources.Count>0||eventScalar.HasValue;result["language_mutator_called"]=false;result["doc85_compile_called"]=commonWindow!=null;result["password_plaintext_disclosed"]=false;return result;}catch{failed=true;throw;}}
+   public Dictionary<string,object> Apply(NativeUsableEditPermit.Lease lease){ValidateBefore();lease.BeginApply(action);try{NativeMemory.Require(unchecked((uint)NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated")))==historyBefore&&(historyBefore==0||historyProjectionRequested),"Original history property13 preimage/permission differs.");api.Check("OriginalHistoryGenerated13Store");api.Pages.Slot(doc,96,0x3CBE6);api.Check("UserDocBeforeModify");NativeOperationTrace.BeforeMutation("usable-page-document-properties-original-before-modify");historyState.ValidateBefore();beforeModify(doc,IntPtr.Zero,1,1);historyState.OriginalStoreReturned();NativeMemory.Require(NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated"))==0,"Original history serializer did not return exact property13 raw0 projection.");if(commonWindow!=null)commonWindow.Apply(lease,action);foreach(var source in eventSources){lease.RequireApplying(action);NativeOperationTrace.BeforeMutation("usable-original-window-dialog-event-source-"+source.Key.ToString("X"));assign(NativeMemory.Add(doc,source.Key),source.Value.Storage);}if(eventScalar.HasValue){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-event-scalar158");Marshal.WriteInt32(doc,0x158,unchecked((int)eventScalar.Value));}foreach(var field in writes){lease.RequireApplying(action);if(field.Key==16){api.Check("DocFlagsSet");for(int bit=1;bit<=2;bit*=2){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-flag-"+bit);flags(doc,bit,(field.Value&(uint)bit)!=0?1:0);}}else{api.Check("OriginalWindowPropertyCommand");api.Check("OriginalDocGeometryStyleStores");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-I4-property-"+field.Key);Marshal.WriteInt32(doc,0x268+(field.Key-4)*4,unchecked((int)field.Value));}}if(description!=null){NativeOperationTrace.BeforeMutation("usable-original-window-dialog-description");assign(NativeMemory.Add(doc,0x260),description.Storage);}if(password!=null){api.Check("OriginalDocPasswordStores");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-password");assign(NativeMemory.Add(doc,0x2B4),password.Storage);Marshal.WriteInt32(doc,0x2B0,checked(C(password.Storage,32767).Length*2+2));}if(mainAffected){lease.RequireApplying(action);api.Check("MainAuxPresenceUpdate");NativeOperationTrace.BeforeMutation("usable-original-window-dialog-mainctrl-aux-presence");aux(NativeMemory.Add(mainManager,0x34),auxId,auxValue);}IntPtr view=api.Pages.Bind<NativeEngine.ThisPointer>("size","GetUserView")(doc);if(view!=IntPtr.Zero){api.Table(view,"DrawingView");NativeMemory.Require(NativeMemory.Ptr(view,0x74)==doc,"Original page drawing view belongs to another document.");api.Check("ViewInvalidate");NativeOperationTrace.BeforeMutation("usable-page-properties-original-view-invalidate");invalidate(view,1);api.Check("ViewUpdate");NativeOperationTrace.BeforeMutation("usable-page-properties-original-view-update");update(view);}Verify(false);applied=true;lease.CompleteApply(action);var result=NativePageControlPreparation.Result(Kind);result["native_I4_properties"]=ExpectedWords();result["original_history_property13_projection"]=new Dictionary<string,object>{{"explicitly_permitted",historyProjectionRequested},{"before_raw_uint32",historyBefore},{"after_raw_uint32",unchecked((uint)NativeMemory.I32(doc,NativeLayout.Offset("document.history_generated")))},{"adapter_wrote_field_directly",commonWindow!=null}};if(commonWindow!=null){result["common_window"]=commonWindow.Selection;result["common_window_original_graph_regenerated"]=true;result["common_window_original_view_refreshed"]=true;result["common_window_original_empty_event_cache_projection"]=true;result["common_window_populated_host_control_state_verified"]=commonWindow.PopulatedHost;result["common_window_original_input_limit_cache_projection_count"]=commonWindow.VerifiedInputLimitProjections;result["common_window_scripted_host_preserved"]=commonWindow.ScriptedHost;if(commonWindow.NeutralPageClick)result["common_window_neutral_page_click_preserved"]=true;if(commonWindow.ConstantPageClick)result["common_window_constant_page_click_preserved"]=true;if(commonWindow.WindowPageClick)result["common_window_set_window_page_click_preserved"]=true;result["common_window_original_script_window_reference_count"]=commonWindow.ScriptWindowReferenceCount;result["common_window_original_script_random_call_count"]=commonWindow.ScriptRandomCallCount;result["common_window_overlay_verified"]=false;}result["main_control_aux_membership_callback"]=mainAffected;result["common_event_sources_changed"]=eventSources.Count;result["common_event_scalar_changed"]=eventScalar.HasValue;result["dispatch_event_setter_called"]=false;result["source_binary_recompile_deferred_to_original_final_check"]=eventSources.Count>0||eventScalar.HasValue;result["language_mutator_called"]=false;result["doc85_compile_called"]=commonWindow!=null;result["password_plaintext_disclosed"]=false;return result;}catch{failed=true;throw;}}
    public Dictionary<string,object> Flush(NativeUsableEditPermit.Lease lease){NativeMemory.Require(applied&&!failed&&!disposed,"Page settings Apply must complete before Flush.");lease.BeginFlush(action);try{Verify(false);api.Pages.Slot(doc,83,0x23308);api.Check("UserDocSave");NativeOperationTrace.BeforeMutation("usable-page-properties-original-doc83");int pageReturn=savePage(doc,IntPtr.Zero);NativeMemory.Require(pageReturn==0&&NativeMemory.I32(doc,NativeLayout.Offset("document.modified"))==0,"Original UserDoc83 did not return success/clean.");bool saved=false;if(mainAffected){lease.RequireMainControlPersistence(action);api.Pages.Slot(mainDoc,83,0x118B);api.Check("MainDocSave");NativeOperationTrace.BeforeMutation("usable-page-properties-original-mainctrl-doc83");NativeMemory.Require(saveMain(mainDoc,IntPtr.Zero)==0&&NativeMemory.I32(mainDoc,NativeLayout.Offset("document.modified"))==0,"Original related MainCtrl Doc83 did not return success/clean.");saved=true;}Verify(saved);lease.CompleteFlush(action);return new Dictionary<string,object>{{"ok",true},{"native_page_doc83_return",pageReturn},{"main_control_doc83_saved",saved},{"full_serialization_acceptance_pending",true},{"root_save_called",false}};}catch{failed=true;throw;}}
    public void Dispose(){if(disposed)return;disposed=true;for(int i=owned.Count-1;i>=0;i--)owned[i].Dispose();owned.Clear();if(auxId!=IntPtr.Zero){Marshal.FreeHGlobal(auxId);auxId=IntPtr.Zero;}if(auxValue!=IntPtr.Zero){Marshal.FreeHGlobal(auxValue);auxValue=IntPtr.Zero;}}
   }

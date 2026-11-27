@@ -69,6 +69,36 @@ ID、名称、路径、控件类和大小以本次工程实际值为准。也可
 
 新增、调整页面分辨率和删除空页通过 `native-page-plan prepare-pages --design … --snapshot … --program …` 生成第一阶段。设计格式为 `mcgs-page-setup/v1`，需要项目完整路径和 `operations`。每个操作包含 `operation`（`create`、`size` 或 `delete`）与 `name`。已有页需给出 `id`，调整尺寸需提供 `resolution`。新页可同时提供分辨率，调整请求读取实际新页 ID。结构阶段完成后重新采集，再编译和保存画面，便于使用新对象、尺寸与路径。
 
+### 原厂组合和拆组
+
+打开或激活目标设计页，再为当前页面和顶层控件准备一份组合设计。组合以原厂文档层序接收控件，生成新的符号组。拆组传入一个 native `CDrawCell` 的现有身份。每个选择器使用实际路径、名称与类，可同时给出本次原生 ID 和完整对象地址。以下是组合规格示例。
+
+```json
+{
+  "schema": "mcgs-page-group-design/v1",
+  "project_path": "D:/Test/Project.mcp",
+  "page": {"id": 3, "name": "Title"},
+  "operation": "group",
+  "save": true,
+  "controls": [
+    {"path": [0], "name": "矩形1", "class": "CDrawRect"},
+    {"path": [2], "name": "椭圆1", "class": "CDrawEllipse"}
+  ]
+}
+```
+
+```powershell
+.\run.ps1 native-page-plan group-inspect --design group.json --out group-inspect.json
+.\run.ps1 native-page-plan prepare-groups --design group.json --capture group-before.json --program group-program.json --readback group-readback.json --review group-review.json
+.\run.ps1 native-page-plan group-report --review group-review.json --capture group-after.json --out group-result.json
+```
+
+第一条生成原生 `inspect` 的只读规格，回执保存为 `group-before.json`。第二条从本次回执生成标准工程程序，正常使用 `stage`、`run`。当前支持使用原厂基类坐标虚槽且无事件、无动画的静态矩形、椭圆、标签和线段。按 Win32 `MulDiv` 语义转换坐标，线段保留有向端点。拆组需从实际目录定位当前 `CDrawCell`，并核对每个子件的同一坐标合同。原生执行前重新核对当前目标页面的活动设计器、绘图树、选择、属性、链接及引用图，并独立复算成员的预期坐标、属性和原厂选择。入组成员的外部入引用、拆组容器本身的引用、未证坐标角色及顶层名称冲突都会阻止计划执行。
+
+组合时可显式设置 `flatten_selected_cells: true`，选入同页一个或多个顶层静态 `CDrawCell`。原厂组合会移除所选旧容器，把其直接子件和选中的普通控件按文档顺序放入同一新组。计划先把旧组局部坐标换算成页面坐标，再以新组实际包围框计算局部坐标。只接收上述四类静态叶件，仍逐件比对地址、属性、原注册路径及全图。旧容器的出入引用、现有成员的外部入引用、嵌套容器和重复名称都会阻止写入。
+
+第三条用 `group-readback.json` 另做一次原生 `inspect`，从回执独立检查同一实例中的页面身份、页面目录、每件位置、绘图父子树、原生对象身份、属性和完整注册引用。原厂组合前后，既有成员的注册对象路径仍以页面为前缀，绘图树中的新父级另行核对。原厂保存结果查 `page-flush` 和 `root-flush` 回执。文件、组态检查、重开和模拟另留实际证据。在线跨两个既有组迁移仍需专用原厂入口及引用适配。
+
 ```powershell
 .\run.ps1 native-page-plan compile --design design.json --snapshot before.json --program program.json --review review.json
 ```
@@ -129,5 +159,7 @@ ID、名称、路径、控件类和大小以本次工程实际值为准。也可
 本机实测一个联合计划在先执行 `page-flush` 后，语言新记录已可从文件读取，语言模块的 `modified` 已为 0。此时独立 `language-flush` 会拒绝。依照已完成动作和实际文件回读，保留语言写入和页面保存，只完成剩余的根工程保存，再运行独立回读计划。
 
 每条检查包含 `id`、`domain`、`selector`（原生 `kind`、`target` 和可选 `after`）以及 `expected` 列表。每项 expected 包含相对于当前原生 `before` 的 JSON Pointer 和预期 `value`，例如 `{"pointer":"/record/comment","value":"Reviewed"}`。每个域提供至少一条检查。先正常 stage/run 编辑，结束后独立 stage/run 验证程序，最后执行 `native-page-plan project-report --review review.json --readback-session <验证会话目录> --out result.json`。报告比较指定的业务值并核对请求身份。文件回读、原厂检查、关闭重开和模拟分别保留自己的验收凭据。实际功能仍由本机原生适配决定。
+
+检查选择器可用 `{"$ref":"/steps/<检查ID>/inspect/..."}` 引用本次独立会话之前一条检查的原厂回执。报告先核对来源请求，再用解析后的选择器核对实际请求和回读。来源缺失或身份不符时，依赖该来源的检查标为 `unverified`。
 
 可见条件回读只对已见的 CAniVisible 常量 1 记录识别空缓存转为特定 32 字节原厂结果。检查证据需含本次 `review_id`、原厂 Root85 类型与工作线程返回及编译有效值，检查后状态需对应重开前的工程、进程、根和文件指纹。任何其它缓存值、记录字段差异或证据缺失均沿用完整记录比较。

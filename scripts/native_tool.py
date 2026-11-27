@@ -362,23 +362,23 @@ def recipe_cell(export,name,row,column,value,output):
 
 def controls_patch(export,spec,output):
     import control_patch as cp
+    from picture_resources import uses_picture_reference
+    from 当前存盘浏览样式 import needs_saved_data_variables
     if set(spec)!={'input_sha256','controls'} or spec['input_sha256']!=export.index['sha256']:
         raise ValueError('Control spec requires current input_sha256 and controls')
     if not isinstance(spec['controls'],list) or not spec['controls']:raise ValueError('Empty controls list')
     family=export.index.get('project_family')
     variables={}
-    if any('binding' in change.get('edits',{}) for change in spec['controls']):
+    edits=[change.get('edits',{}) for change in spec['controls']]
+    needs_browser_catalog=any(needs_saved_data_variables(change) for change in edits)
+    if needs_browser_catalog or any('binding' in change for change in edits):
         plain=unwrapped(export.blob('System','ObjData','lbContext'))
-        if family=='Pro':rows=pro_format().variables(plain)
+        if family=='Pro' or needs_browser_catalog:rows=pro_format().variables(plain)
         else:
             _,objects_rows=objects.parse(plain)
             rows=[{'name':r.name.value,'kind':r.kind,'id':r.id} for r in objects_rows]
         variables={v['name']:v for v in rows}
-    def has_picture_reference(value):
-        if isinstance(value,dict):return 'reference' in value or any(has_picture_reference(v) for v in value.values())
-        if isinstance(value,list):return any(has_picture_reference(v) for v in value)
-        return False
-    references=picture_reference_index(export) if has_picture_reference(spec['controls']) else None
+    references=picture_reference_index(export) if uses_picture_reference(edits) else None
     windows={};originals={};plain_originals={};paths=[];replacements={}
     for change in spec['controls']:
         if set(change)!={'window','path','sha256','edits'}:raise ValueError('Control operation requires window/path/sha256/edits')
@@ -418,11 +418,14 @@ def controls_patch(export,spec,output):
 def picture_reference_index(export):
     from picture_resources import PictureResource
     identities={}
+    used_names=set()
     for table,key in export.rows:
         if table=='System' and re.fullmatch(r'MCGS_PICTURE_DATA_[0-9]+',key):
             q=PictureResource.parse(unwrapped(export.blob(table,key,'lbContext')))
             identity=q.name.value
-            if not identity or identity in identities:raise ValueError('Empty or ambiguous library picture reference name')
+            folded=identity.casefold()
+            if not identity or folded in used_names:raise ValueError('Empty or ambiguous library picture reference name')
+            used_names.add(folded)
             identities[identity]=key
     return identities
 

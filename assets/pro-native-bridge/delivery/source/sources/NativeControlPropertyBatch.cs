@@ -66,6 +66,31 @@ namespace McgsInternalBridge {
     NativeMemory.Require(Convert.ToString(PageState["document"])==NativeMemory.Hex(Doc)&&Convert.ToString(PageState["view"])==NativeMemory.Hex(View),"Property batch page snapshot disagrees with the current document/view.");
    }
   }
+  // Keep guard order and individual comparisons. A design can check the
+  // same owner more than once without creating a duplicate write target.
+  internal sealed class DesignStyleCapture {
+   readonly Api api;
+   readonly Dictionary<int,BatchSelection> pages=new Dictionary<int,BatchSelection>();
+   internal DesignStyleCapture(NativeEngine engine,NativeContext context,string project){api=new Api(engine,context,project);}
+   internal Dictionary<string,object> Read(Dictionary<string,object> target,IEnumerable requested){
+    int id=NativePageControlPreparation.Number(target,"page_id");
+    BatchSelection current;
+    if(!pages.TryGetValue(id,out current)){
+     current=new BatchSelection(api,target);
+     pages.Add(id,current);
+    }else{
+     IntPtr page;
+     NativeMemory.Require(api.Common.Pages().TryGetValue(id,out page)&&page==current.Page,
+      "Design style page identity changed during capture.");
+     NativeMemory.Require(NativeStrategyProfile.ReadName(api.Common.Shared,page)==NativePageControlPreparation.Text(target,"page_name"),
+      "Requested page name differs.");
+     NativeMemory.Require(api.Common.Document(page,id)==current.Doc,
+      "Design style document identity changed during capture.");
+    }
+    return Capture(api,target,current,requested).Snapshot;
+   }
+  }
+
   static BatchSelection CaptureBatch(Api api,Dictionary<string,object> action){
    var parent=Map(action["target"]);var batch=new BatchSelection(api,parent);
    var propertyOwners=new HashSet<string>(StringComparer.Ordinal);var rows=new List<object>();

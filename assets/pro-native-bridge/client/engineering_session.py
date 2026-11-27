@@ -22,6 +22,7 @@ import uuid
 import edit_batch_client as batch
 
 from native_delivery_config import current as delivery_layout
+from page_plan import resolve_session_references, session_pointer_parts as pointer_parts, session_references as references
 _LAYOUT = delivery_layout()
 ROOT = _LAYOUT.working_root
 PURPOSE = "native-engineering-session-program"
@@ -958,52 +959,8 @@ def within_root(path, exists=True):
     return path
 
 
-def pointer_parts(pointer):
-    if not isinstance(pointer, str) or not pointer.startswith("/steps/"):
-        raise ValueError("A result reference must start with /steps/")
-    parts = []
-    for part in pointer[1:].split("/"):
-        if re.search(r"~(?![01])", part):
-            raise ValueError("Invalid JSON pointer escape")
-        parts.append(part.replace("~1", "/").replace("~0", "~"))
-    if len(parts) < 4 or parts[2] not in ("inspect", "apply"):
-        raise ValueError("Reference must select a prior step's inspect/apply receipt")
-    return parts
-
-
-def references(value):
-    if isinstance(value, dict):
-        if "$ref" in value:
-            if set(value) != {"$ref"}:
-                raise ValueError("A result reference must contain only $ref")
-            yield pointer_parts(value["$ref"])
-        else:
-            for child in value.values():
-                yield from references(child)
-    elif isinstance(value, list):
-        for child in value:
-            yield from references(child)
-
-
 def resolve(value, results):
-    if isinstance(value, dict):
-        if "$ref" in value:
-            selected = results
-            for part in pointer_parts(value["$ref"]):
-                if isinstance(selected, list):
-                    if not re.fullmatch(r"0|[1-9][0-9]*", part):
-                        raise ValueError("Result reference array index is invalid")
-                    selected = selected[int(part)]
-                elif isinstance(selected, dict):
-                    selected = selected[part]
-                else:
-                    raise ValueError("Result reference crosses a scalar")
-            # Copy the selected JSON value; never mutate a retained receipt.
-            return json_copy(selected)
-        return {key: resolve(child, results) for key, child in value.items()}
-    if isinstance(value, list):
-        return [resolve(child, results) for child in value]
-    return value
+    return resolve_session_references(value, results, json_copy)
 
 
 def native_references(value):

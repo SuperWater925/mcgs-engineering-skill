@@ -1,6 +1,7 @@
 """McgsPro native fields, selected by structure with original headers kept."""
 import base64
 import math
+import re
 import struct
 from pathlib import Path
 import sys
@@ -9,7 +10,7 @@ from functools import lru_cache
 _native = Path(__file__).resolve().parents[3] / 'scripts/native'
 if str(_native) not in sys.path:
     sys.path.insert(0, str(_native))
-from mcs_window_archive import ControlRecord, WindowSettings, write_count, write_cstring
+from mcs_window_archive import ControlRecord, Reader, WindowSettings, write_count, write_cstring
 from mcgs_text import narrow_encoding
 from 原生界面样式 import CommonEnvelope
 from mcs_input_text import InputRecord
@@ -18,6 +19,75 @@ import mcgs_native_zip as native_zip
 
 def binary(value):
     return base64.b64decode(value['binary'], validate=True)
+
+
+def language_text_id(value):
+    token = re.fullmatch(r'\x07(0|[1-9][0-9]{0,9})', value)
+    ident = int(token[1]) if token else None
+    return ident if ident is not None and ident <= 0xffffffff else None
+
+
+def _read_language_texts(raw, offset):
+    reader = Reader(raw, offset)
+    count = reader.u32()
+    reader.count_extent(count, 4, 'Selected languages')
+    selected = [reader.u32() for _ in range(count)]
+    count = reader.u32()
+    reader.count_extent(count, 23, 'Language definitions')
+    definitions = set()
+    for _ in range(count):
+        language_id = reader.u32()
+        if language_id in definitions:
+            raise ValueError('Repeated language definition')
+        definitions.add(language_id)
+        reader.cstring()
+        for _ in range(2):
+            reader.cstring()
+            reader.take(8)
+    if not definitions or len(set(selected)) != len(selected) or not set(selected) <= definitions:
+        raise ValueError('Unrecognized language selection and definition extent')
+
+    count = reader.u32()
+    reader.count_extent(count, 8, 'Language text IDs')
+    rows = {}
+    for _ in range(count):
+        text_id = reader.u32()
+        if text_id in rows:
+            raise ValueError('Repeated language text ID')
+        translations = {}
+        entries = reader.u32()
+        reader.count_extent(entries, 5, 'Language translations')
+        for _ in range(entries):
+            language_id = reader.u32()
+            if language_id in translations:
+                raise ValueError('Repeated translation language in text ID')
+            translations[language_id] = reader.cstring()[0]
+        rows[text_id] = translations
+    reader.take(4)
+    if reader.pos != len(raw):
+        raise ValueError('Unrecognized language text archive suffix')
+    return rows
+
+
+def language_texts(data):
+    rows = [row for row in data['System']['rows'] if row['strName'] == 'MCGSLINGUIST']
+    if len(rows) != 1:
+        raise ValueError('Expected one current MCGSLINGUIST archive')
+    blob = rows[0].get('lbContext')
+    if not isinstance(blob, dict) or not isinstance(blob.get('binary'), str):
+        raise ValueError('Current MCGSLINGUIST archive has no binary content')
+    raw = archive(blob)
+    matches = []
+    for offset in (12, 16):
+        try:
+            entries = _read_language_texts(raw, offset)
+        except (ValueError, struct.error):
+            continue
+        if entries not in matches:
+            matches.append(entries)
+    if len(matches) != 1:
+        raise ValueError('MCGSLINGUIST text dictionary cannot be parsed unambiguously')
+    return matches[0]
 
 
 def wrap(value):
@@ -133,10 +203,10 @@ def common(b):
             'name': name, 'name_pos': name_pos, 'name_end': end}
 
 
-def edit_control(kind, b, edits, variables=None):
+def edit_control(kind, b, edits, variables=None, *, picture_references=None):
     # Reuse the same original Pro class codecs for creation and existing edits.
     from control_factory import edit_control as edit_native_control
-    return edit_native_control(kind, b, edits, variables)
+    return edit_native_control(kind, b, edits, variables, picture_references=picture_references)
 
 
 def page_properties(trailer, *, ident=None, name=None, width=None, height=None, background=None, description=None, identity=None):
@@ -156,18 +226,20 @@ def page_properties(trailer, *, ident=None, name=None, width=None, height=None, 
 class VariableRecords(list):
     """Retain the source document header while parsing its actual record layout."""
     def __init__(self, values=(), document_header=struct.pack('<f', 12.0), alarm_spans=None,
-                 group_member_spans=None, empty_group_spans=None):
+                 group_member_spans=None, empty_group_spans=None, group_id_member_spans=None):
         super().__init__(values)
         self.document_header = document_header
         self.alarm_spans = alarm_spans
         self.group_member_spans = group_member_spans if group_member_spans is not None else {}
         self.empty_group_spans = empty_group_spans if empty_group_spans is not None else {}
+        self.group_id_member_spans = group_id_member_spans if group_id_member_spans is not None else {}
 
 
 def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=0):
     if len(blob)<12 or u32(blob,4) != len(blob)-8:
         raise ValueError('Unsupported variable document')
     count=u32(blob,8); pos=12; rows=[]; alarm_spans={}; group_member_spans={}; empty_group_spans={}
+    group_id_member_spans={}
     if count > len(blob)//100:
         raise ValueError('Invalid variable count')
     for ident in range(count):
@@ -188,10 +260,14 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=
                 raise ValueError('Invalid variable group vector')
             if group_index==0 and kind==0xffffffff and n==0:
                 empty_group_spans[native_id]=(pos,pos)
-            if group_index==0 and kind==0xffffffff and group_strings:
+            if group_index==0 and kind==0xffffffff:
                 member_start=pos
-                for _ in range(n):_,pos=string(blob,pos)
-                group_member_spans[native_id]=(member_start,pos)
+                if group_strings:
+                    for _ in range(n):_,pos=string(blob,pos)
+                    group_member_spans[native_id]=(member_start,pos)
+                else:
+                    pos+=4*n
+                    group_id_member_spans[native_id]=(member_start,pos)
             else:pos+=4*n
             if pos>len(blob):raise ValueError('Variable group vector exceeds record extent')
             if group_index==0:
@@ -215,7 +291,7 @@ def _variables(blob,group_strings=False,alarm_bytes=40,alarm_tail=0,record_tail=
     if pos!=len(blob) or len({r['name'] for r in rows})!=count:
         raise ValueError('Variable extent or duplicate name')
     if len({r['id'] for r in rows})!=count:raise ValueError('Duplicate native variable ID')
-    return VariableRecords(rows, blob[:4], alarm_spans, group_member_spans, empty_group_spans)
+    return VariableRecords(rows, blob[:4], alarm_spans, group_member_spans, empty_group_spans, group_id_member_spans)
 
 
 def _variables_preserving_alarm_layout(blob, group_strings=False, record_tail=0):
@@ -297,7 +373,7 @@ def variables(blob):
                     if equivalent is None:candidates.append(rows)
                     else:
                         if rows.alarm_spans!=equivalent.alarm_spans:equivalent.alarm_spans=None
-                        for field in ('group_member_spans','empty_group_spans'):
+                        for field in ('group_member_spans','empty_group_spans','group_id_member_spans'):
                             matched = getattr(rows,field)
                             setattr(equivalent,field,{
                                 ident: span for ident, span in getattr(equivalent,field).items()
@@ -317,7 +393,7 @@ def variables(blob):
 
 
 def pack_variables(rows):
-    body=b''
+    body=bytearray()
     for i,row in enumerate(rows):
         prefix=row['prefix'];_,middle=string(prefix,36);old_initial,end=string(prefix,middle+28)
         prefix=bytearray(prefix if old_initial==row['initial'] else prefix[:middle+28]+text(row['initial'])+prefix[end:])
@@ -327,7 +403,7 @@ def pack_variables(rows):
         def source_text(key):
             source=row.get('_text_source',{}).get(key)
             return source[1] if source is not None and source[0]==row[key] else text(row[key])
-        body+=source_text('name')+source_text('note')+source_text('unit')+bytes(prefix)+row['extension']
+        body.extend(source_text('name')+source_text('note')+source_text('unit')+bytes(prefix)+row['extension'])
     result=getattr(rows,'document_header',struct.pack('<f',12.))+struct.pack('<II',len(body)+4,len(rows))+body
     variables(result)
     return result

@@ -92,33 +92,41 @@ def mentions(raw, old):
             or any(target in raw[i:].decode('utf-16le', errors='replace').casefold() for i in (0, 1)))
 
 
-def matching(picture, old):
+def matching(picture, old, redact_known):
     if not picture:
         return False
     q = Picture.parse(picture)
-    return q.mode == 0x80 and q.reference.value.casefold() == old.casefold()
+    if q.mode != 0x80:
+        return False
+    reference, target = q.reference.value.casefold(), old.casefold()
+    return target in reference if redact_known else reference == target
 
 
-def rewrite_record(record, old, new):
+def rewrite_record(record, old, new, redact_known=False):
     if not mentions(record.payload, old):
         return record
     if record.type_id == 0x503a:
         group = GroupArchive.parse(record)
-        group.children[:] = [rewrite_record(child, old, new) for child in group.children]
+        group.children[:] = [rewrite_record(child, old, new, redact_known) for child in group.children]
         return group.to_record()
     changes = {}
+    if record.type_id == 0x5009:
+        common = CommonEnvelope.parse(record)
+        if matching(common.content, old, redact_known):
+            changes['bitmap_picture'] = {'reference': new}
     if record.type_id == 0x5027:
         common = CommonEnvelope.parse(record)
         button = ButtonArchive.parse(common.project_without_animations())
         slots = {slot: {'reference': new} for slot, raw in (
-            ('primary', button.picture), ('properties', button.metadata.properties.picture)) if matching(raw, old)}
+            ('primary', button.picture), ('properties', button.metadata.properties.picture))
+                 if matching(raw, old, redact_known)}
         if slots:
             changes['button_pictures'] = slots
     if record.type_id in (0x5028, 0x502a):
         states = []
         for state, children in enumerate(MultiState.parse(record).images):
             images = [{'child': i, 'picture': {'reference': new}} for i, child in enumerate(children)
-                      if matching(child.picture, old)]
+                      if matching(child.picture, old, redact_known)]
             if images:
                 states.append({'state': state, 'images': images})
         if states:
@@ -126,10 +134,10 @@ def rewrite_record(record, old, new):
     return edit(record, changes, picture_references={new}) if changes else record
 
 
-def rewrite_window(raw, old, new):
+def rewrite_window(raw, old, new, redact_known=False):
     window = WindowArchive.parse(raw)
     require(window.to_bytes() == raw, 'Window archive does not round-trip')
-    window.controls[:] = [rewrite_record(record, old, new) for record in window.controls]
+    window.controls[:] = [rewrite_record(record, old, new, redact_known) for record in window.controls]
     result = window.to_bytes()
     require(WindowArchive.parse(result).to_bytes() == result, 'Changed window archive does not round-trip')
     return result
@@ -154,14 +162,20 @@ def check_references(data, old, new, resources):
                 raw = archive(value)
                 if not mentions(raw, old):
                     continue
-                require(new is not None and table == 'WndUser' and field == 'lbObjects',
+                require(table == 'WndUser' and field == 'lbObjects',
                         f'Picture reference requires resolution in {table}.{field}')
-                # Remove known references in a disposable projection and rescan
-                # for residual mentions independently of the requested new name.
-                probe = '\ue001' if old == '\ue000' else '\ue000'
-                require(not mentions(rewrite_window(raw, old, probe), old),
+                # A different known resource can share the same name prefix.
+                # Strip those complete references only in a disposable scan
+                # projection, keeping exact name matches for the real edit.
+                probe = 'x' if old.casefold() != 'x' else 'y'
+                require(not mentions(rewrite_window(raw, old, probe, redact_known=True), old),
                         'Window contains an additional opaque picture reference')
-                row[field] = wrap_like(value, rewrite_window(raw, old, new))
+                if new is None:
+                    require(rewrite_window(raw, old, probe) == raw, 'Window contains a live picture reference')
+                else:
+                    replacement = rewrite_window(raw, old, new)
+                    if replacement != raw:
+                        row[field] = wrap_like(value, replacement)
 
 
 def require_unreferenced_slots(data, resources):

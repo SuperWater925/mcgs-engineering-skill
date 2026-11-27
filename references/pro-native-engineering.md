@@ -55,6 +55,8 @@ Pro 可从当前已加载页面的单个静态矩形或斜线创建原生图库 
 
 普通 `reference-graph` 可读取已存在的 `CTriggerEvent`。策略记录通过共用原生策略目录取得，`trigger_fields` 提供策略 ID、触发器记录 ID、条件表达式、两个完整原生尾词，以及编译条件缓存的字节数和全量 SHA-256。正反向引用边仍由原厂已登记图读取，包含原有所有策略和其它消费者。Event 字段按当前程序的原生类、虚表、序列化成员布局及 MFC 字节数组身份进行只读定位。`trigger_write_supported=false` 表示通用触发器和策略生命周期入口仍使用原有四类写入合同。
 
+`reference-sync` 按指定页面生成并保存时，可同时捕获工程中未选中的 Event 策略及完整引用图。作用域可使用非空 `page_ids` 和空 `strategy_ids`。通用同步准备阶段会拒绝把只读 Event 策略选入 `strategy_ids`。
+
 `strategy-event-edge` 修改现有 Event 的条件选项。目标用当前策略的 `block_id` 与 `block_name`，例如 `{"kind":"strategy-event-edge","target":{"block_id":15,"block_name":"AuditEventOnFall"},"after":{"edge":"rising"}}`。原生读取可用空 `after` 查询当前值。可写 `rising`（正跳变）、`falling`（负跳变）及 `change`（数据变化）。读取可报告已存的 0→1→0 和 1→0→1，已验原厂编译器会拒绝这两种条件。策略和 Trigger 行各自保留现有表达式及编译缓存。更改前在 Pro 内部工作台选中该策略的可见管理行，目标同名私有工作编辑器须关闭。该步骤不改变系统前台窗口。
 
 编辑使用 `commit:true`，在同次请求里通过原厂写入所选 Trigger 行。内存和 DAO 行各自保留原有的条件表达式、缓存、延时与身份，并核对完整已登记引用图。设置 `root_save:true` 可在本批末尾执行一次原厂工程保存，也可与其它操作集中使用一次 `root-flush` 保存根归档。请求正好等于当前跳变模式时无工程写入。工程检查及关闭重开按统一阶段另行回执。
@@ -70,6 +72,10 @@ Pro 可从当前已加载页面的单个静态矩形或斜线创建原生图库 
 - 原厂只重建所选控件的引用。核对完整双向图、原生图文状态、图库目录和文件哈希。另行集中保存该页和工程。其他按钮形态使用各自已验证的整页同步或正常关闭重开。
 
 已有文字帧的路径为 `分段点`、`文本列表` 及各级实际 occurrence。只修改当前读取的 `动画文本`（原生 tag 8）时，原厂保持其颜色、字体和位置等其它已读属性。随后核文件中的文字与同一状态原生回读。
+
+`language-management-catalog` 返回 Pro 工程的 `current_language_id`、`preview_language_id` 和已配置原生 ID。要调整其中一项，在 `language-management-batch` 的 `after.operations` 写入 `{"operation":"language-selectors","expected_preview_language_id":0,"preview_language_id":1}`。同一操作可用对应的 `expected_current_language_id` 和 `current_language_id` 改当前语言。每项必须提供本次实际旧 ID，目标 ID 必须已配置并有项目定义。选择器变更放在文本操作之前。批次同时指定 `refresh_configured_font_map:false`、`allow_original_font_cache_changes:false` 即可保留现有字体映射。
+
+写入时核对当前 CLinguist 虚表分派及实际原厂 setter，提交后回读两个选择值、配置、定义和文本映射。用已有 `language-flush` 和 `root-flush` 完成归档保存，再独立核对 `MCGSLINGUIST` 和原厂重开。已在 Pro 3.5.2.12210 原厂分别将预览语言与当前语言从 0 调为 1，保存后原厂检查为 0 错误，独立归档与同进程重开均读到 1。运行画面使用自身的语言选择与显示流程。
 
 本机已配置桥可沿原 TaskRoot/RuntimeRoot 使用新工程 scope。首次搬到另一任务或电脑时，先检查当前进程已有桥；普通启动且未接桥的 Pro 优先使用热接入口，按本次目录配置生成自有工具并连接。原 Addins/桥接启动器部署是可选兼容路径，不是每次在线修改的前提。只复制客户端或 scope 不会完成桥接。原桥的引擎加载目录和命名规则继续保留，部署时 DLL 与同名 `.scope.json` 必须一起放到该目录。
 

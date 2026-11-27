@@ -1,15 +1,16 @@
 """Edit verified fields of existing ObjData alarm items."""
 from __future__ import annotations
 
+from collections import Counter
 from hashlib import sha256
 import math
-import re
 import struct
 
 import native_format as native
 from mcs_button_control import CString
 from mcs_window_archive import Reader
 from offline_structure import exact
+from native_format import language_texts as _language_texts
 
 
 BASE_VALUE_FORMATS = {40: "<f", 52: "<d"}
@@ -17,80 +18,52 @@ BASE_VALUE_OFFSET = 16
 UPPER_LIMIT_FIELD = "upper_limit_value"
 SWITCH_EQUALS_FIELD = "switch_equals_value"
 MESSAGE_FIELD = "message_text_id"
+UNVERIFIED_MIRROR = "Nonempty Alarm table has no verified mirror mapping to ObjData definitions"
 
 
-def _require_alarm_layout(data, records):
-    table = data.get("Alarm", {})
-    rows = table.get("rows")
+def _physical_alarm_rows(data):
+    rows = data.get("Alarm", {}).get("rows")
     if not isinstance(rows, list):
         raise ValueError("The project has no readable Alarm table")
-    if rows:
-        raise ValueError("Nonempty Alarm table has no verified mirror mapping to ObjData definitions")
+    return rows
+
+
+def _physical_object_id_counts(rows):
+    if any(type(row.get("iDataObjID")) is not int for row in rows):
+        return None
+    return Counter(row["iDataObjID"] for row in rows)
+
+
+def inspect_alarm_storage(data, records):
+    rows = _physical_alarm_rows(data)
+    result = {"physical_rows": len(rows), "objdata_alarm_items": None,
+              "physical_to_objdata_mapping_verified": False}
+    if records.alarm_spans is not None:
+        result["objdata_alarm_items"] = sum(map(len, records.alarm_spans.values()))
+    if not rows:
+        return result
+    result.update(physical_source="Alarm", objdata_source="System/ObjData",
+                  active_storage_verified=False, objdata_write_unavailable=UNVERIFIED_MIRROR)
+    ids = _physical_object_id_counts(rows)
+    if ids is None:
+        return result
+    object_ids = {record["id"] for record in records}
+    result["physical_rows_with_existing_object_id"] = sum(count for ident, count in ids.items() if ident in object_ids)
+    if records.alarm_spans is not None:
+        result["physical_rows_with_objdata_alarm_object_id"] = sum(count for ident, count in ids.items()
+                                                                   if records.alarm_spans.get(ident))
+    return result
+
+
+def _require_objdata_alarms(records):
     if records.alarm_spans is None:
         raise ValueError("ObjData alarm items lack unique verified record boundaries")
 
 
-def _read_language_texts(raw, offset):
-    reader = Reader(raw, offset)
-    count = reader.u32()
-    reader.count_extent(count, 4, "Selected languages")
-    selected = [reader.u32() for _ in range(count)]
-    count = reader.u32()
-    reader.count_extent(count, 23, "Language definitions")
-    definitions = set()
-    for _ in range(count):
-        language_id = reader.u32()
-        if language_id in definitions:
-            raise ValueError("Repeated language definition")
-        definitions.add(language_id)
-        reader.cstring()
-        for _ in range(2):
-            reader.cstring()
-            reader.take(8)
-    if not definitions or len(set(selected)) != len(selected) or not set(selected) <= definitions:
-        raise ValueError("Unrecognized language selection and definition extent")
-
-    count = reader.u32()
-    reader.count_extent(count, 8, "Language text IDs")
-    rows = {}
-    for _ in range(count):
-        text_id = reader.u32()
-        if text_id in rows:
-            raise ValueError("Repeated language text ID")
-        translations = {}
-        entries = reader.u32()
-        reader.count_extent(entries, 5, "Language translations")
-        for _ in range(entries):
-            language_id = reader.u32()
-            if language_id in translations:
-                raise ValueError("Repeated translation language in text ID")
-            translations[language_id] = reader.cstring()[0]
-        rows[text_id] = translations
-    reader.take(4)
-    if reader.pos != len(raw):
-        raise ValueError("Unrecognized language text archive suffix")
-    return rows
-
-
-def _language_texts(data):
-    rows = [r for r in data["System"]["rows"] if r["strName"] == "MCGSLINGUIST"]
-    if len(rows) != 1:
-        raise ValueError("Expected one current MCGSLINGUIST archive")
-    archive = rows[0].get("lbContext")
-    if not isinstance(archive, dict) or not isinstance(archive.get("binary"), str):
-        raise ValueError("Current MCGSLINGUIST archive has no binary content")
-    raw = native.archive(archive)
-    matches = []
-    for offset in (12, 16):
-        try:
-            entries = _read_language_texts(raw, offset)
-        except (ValueError, struct.error):
-            continue
-        if entries not in matches:
-            matches.append(entries)
-    if len(matches) != 1:
-        raise ValueError("MCGSLINGUIST text dictionary cannot be parsed unambiguously")
-    return matches[0]
+def _require_alarm_layout(data, records):
+    if _physical_alarm_rows(data):
+        raise ValueError(UNVERIFIED_MIRROR)
+    _require_objdata_alarms(records)
 
 
 def _message_reference(record, span):
@@ -99,11 +72,7 @@ def _message_reference(record, span):
     message = CString.parse(reader)
     if reader.pos + (4 if item_width == 52 else 0) != end:
         raise ValueError("Native alarm message CString does not match its item boundary")
-    token = re.fullmatch(r"\x07(0|[1-9][0-9]{0,9})", message.value)
-    text_id = int(token[1]) if token else None
-    if text_id is not None and text_id > 0xffffffff:
-        text_id = None
-    return message, reader.pos, text_id
+    return message, reader.pos, native.language_text_id(message.value)
 
 
 def _snapshot(record, index, span, language_texts=None):
@@ -142,16 +111,27 @@ def _snapshot(record, index, span, language_texts=None):
 
 
 def inspect_alarm_definitions(data, records):
-    _require_alarm_layout(data, records)
+    rows = _physical_alarm_rows(data)
+    _require_objdata_alarms(records)
     if not records.alarm_spans:
         return []
-    try:
-        language_texts = _language_texts(data)
-    except ValueError:
-        language_texts = None
-    return [_snapshot(record, index, span, language_texts)
-            for record in records
-            for index, span in enumerate(records.alarm_spans.get(record["id"], ()))]
+    language_texts = None
+    if not rows:
+        try:
+            language_texts = _language_texts(data)
+        except ValueError:
+            pass
+    definitions = [_snapshot(record, index, span, language_texts)
+                   for record in records
+                   for index, span in enumerate(records.alarm_spans.get(record["id"], ()))]
+    if rows:
+        ids = _physical_object_id_counts(rows)
+        for item in definitions:
+            hits = ids[item["variable"]["id"]] if ids is not None else None
+            item.update(storage_source="System/ObjData", physical_rows_with_same_object_id=hits,
+                        editable=False, upper_limit_value_editable=False,
+                        switch_equals_value_editable=False, message_text_id_editable=False)
+    return definitions
 
 
 def _encoded_upper_limit(value, item_width):

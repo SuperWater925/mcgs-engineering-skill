@@ -11,6 +11,7 @@ from page_plan import compile_design, compile_page_setup, normalize_receipts, re
 from page_plan import (DESIGN, REVIEW, SNAPSHOT, FOLLOWUP_DETAIL_KINDS, fields, forest_paths, path_key,
                        require, require_native_length, selector)
 from page_readback_report import applied_objects, match_control, render_review
+from page_group_plan import compile_groups, inspect_groups, report_groups
 from project_plan import compile_project, json_bytes, report_readback
 
 
@@ -150,6 +151,18 @@ def main():
     setup.add_argument('--design', required=True)
     setup.add_argument('--snapshot', required=True)
     setup.add_argument('--program', required=True, type=Path)
+    group_inspect = commands.add_parser('group-inspect')
+    group_inspect.add_argument('--design', required=True)
+    group_inspect.add_argument('--out', required=True, type=Path)
+    groups = commands.add_parser('prepare-groups')
+    groups.add_argument('--design', required=True)
+    groups.add_argument('--capture', required=True)
+    for output in ('program', 'readback', 'review'):
+        groups.add_argument('--' + output, required=True, type=Path)
+    group_report = commands.add_parser('group-report')
+    group_report.add_argument('--review', required=True)
+    group_report.add_argument('--capture', required=True)
+    group_report.add_argument('--out', required=True, type=Path)
     capture = commands.add_parser('snapshot')
     capture.add_argument('--receipts', required=True, nargs='+')
     capture.add_argument('--viewport')
@@ -202,6 +215,20 @@ def main():
         write(args.program, encoded(program))
         print(encoded({'actions': len(program['steps'][0]['specification']['actions']),
                        'native_execution_performed': False, 'recapture_after_setup': True}))
+    elif args.command == 'group-inspect':
+        write(args.out, encoded(inspect_groups(read(args.design))))
+    elif args.command == 'prepare-groups':
+        paths = (args.program, args.readback, args.review)
+        require(len({path.resolve() for path in paths}) == len(paths) and not any(path.exists() for path in paths),
+                'Choose three distinct new paths for the group program, readback and review')
+        outputs = [encoded(value) for value in compile_groups(read(args.design), read(args.capture))]
+        for path, content in zip(paths, outputs):
+            write(path, content)
+        print(encoded({'native_execution_performed': False, 'fresh_readback_required': True}))
+    elif args.command == 'group-report':
+        result = report_groups(read(args.review), read(args.capture))
+        write(args.out, encoded(result))
+        return 0 if result['business_readback_passed'] else 1
     elif args.command == 'project':
         paths = (args.program, args.readback, args.review)
         require(len({path.resolve() for path in paths}) == len(paths) and not any(path.exists() for path in paths),

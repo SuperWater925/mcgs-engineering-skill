@@ -49,7 +49,7 @@ bounds为`[左,上,右,下]`四整数。右大于左、下大于上；请把控�
 
 原有变量的初值、note、unit可更新；新增变量通过add_variables。修改已有工程时不替换其他页面、设备、权限、策略或未知控件内容；文件级全表回读会检测意外改动。实际不支持的变量布局或控件归档分支报告具体缺口；不按软件发行版本拦截。
 
-edit 顶层 `add_pages` 接 `{id,name,template_page_id,controls,events,width,height,background,description}`。ID 可省略自动分配，模板来自本次工程。新页默认空事件，不继承旧页面脚本，不改主控启动列表。已有页 `events` 未指定项保持原源码/缓存，实际更改项仅清对应缓存；`events` 字段为 `open/cycle/close/period_ms`。
+edit 顶层 `add_pages` 接 `{id,name,template_page_id,controls,events,width,height,background,description}`。ID 可省略自动分配，模板来自本次工程。新页默认使用空脚本和空的已识别派发列表，保留母页公共窗设置。已有页 `events` 可指定 `open/cycle/close/period_ms`；Pro 已证的窗口 `Click` 也可由 `events` 新增、改源码或删除。 [页面及事件规格](../../../references/offline-factories.md#pro-页面与事件)
 
 ## 编写需求时
 

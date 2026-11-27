@@ -99,7 +99,7 @@ namespace McgsInternalBridge {
                     IntPtr row;
                     Require(RecipeCell(selected, rowIndex, columnIndex, out row) == before, "The live Stu recipe cell differs from the requested preimage.");
                     string keyName = "MCGS_RECIPE_" + name;
-                    byte[] original = ReadRecipeArchive(keyName);
+                    byte[] original = ReadNamedArchive(keyName);
                     int begin, end;
                     Require(ReadArchivedRecipeCell(original, selected, rowIndex, columnIndex, out begin, out end) == before,
                         "The live and persisted Stu recipe preimages differ.");
@@ -336,7 +336,7 @@ namespace McgsInternalBridge {
                 } finally { Marshal.FreeHGlobal(filename); }
             }
 
-            private byte[] ReadRecipeArchive(string key) {
+            private byte[] ReadNamedArchive(string key, bool allowMissing = false, int maximumLength = Int32.MaxValue) {
                 var construct = Abi.BindImport<ConstructRecipeBytes>("construct_recipe_byte_array");
                 var destroy = Abi.BindImport<DestroyRecipeBytes>("destroy_recipe_byte_array");
                 var read = Abi.Bind<ReadNamedRecipeBytes>("read_named_recipe_bytes");
@@ -348,14 +348,16 @@ namespace McgsInternalBridge {
                     for (int offset = 0; offset < size; offset += sizeof(int)) Marshal.WriteInt32(storage, offset, 0);
                     name = Marshal.StringToHGlobalUni(key);
                     created = construct(storage) == storage;
-                    Require(created, "Stu failed to construct the native recipe byte array.");
+                    Require(created, "Stu failed to construct the native named archive byte array.");
                     Abi.CheckRecipeMfcArray(storage, "recipe_byte_array");
                     context.RequireProject();
-                    Require(read(context.Root, name, storage), "The original Stu root cannot read the selected named recipe archive.");
+                    bool exists = read(context.Root, name, storage);
+                    Require(exists || allowMissing, "The original Stu root cannot read the selected named archive.");
+                    if (!exists) return null;
                     Abi.CheckRecipeMfcArray(storage, "recipe_byte_array");
                     int length;
                     IntPtr bytes = RecipeArray(storage, 1, out length);
-                    Require(length >= sizeof(int), "The original Stu recipe archive is incomplete.");
+                    Require(length >= sizeof(int) && length <= maximumLength, "The original Stu named archive extent is invalid.");
                     var result = new byte[length];
                     Marshal.Copy(bytes, result, 0, length);
                     return result;
@@ -421,7 +423,7 @@ namespace McgsInternalBridge {
 
             private void VerifySavedRecipe(string key, byte[] original, RecipeRecord recipe, int rowIndex, int column,
                 string expected, int begin, int end, int version) {
-                byte[] saved = ReadRecipeArchive(key);
+                byte[] saved = ReadNamedArchive(key);
                 int actualBegin, actualEnd;
                 Require(ReadArchivedRecipeCell(saved, recipe, rowIndex, column, out actualBegin, out actualEnd) == expected &&
                     BitConverter.ToInt32(saved, 0) == version && begin == actualBegin &&

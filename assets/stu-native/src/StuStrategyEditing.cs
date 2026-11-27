@@ -250,7 +250,7 @@ namespace McgsInternalBridge {
                 } catch (InvalidOperationException error) { result["strategy_observation_error"] = error.Message; }
             }
 
-            private List<object> StrategyPreservationProof(List<StrategyBlock> blocks, IntPtr changedProgram) {
+            private List<object> StrategyPreservationProof(List<StrategyBlock> blocks, IntPtr? changedProgram) {
                 var projection = new List<object>();
                 int selectedPositions = 0;
                 foreach (var block in blocks) {
@@ -262,7 +262,7 @@ namespace McgsInternalBridge {
                         Abi.CheckTable(row, "strategy_row");
                         IntPtr program = context.Ptr(row, "strategy_row_action"), cell = context.Ptr(row, "strategy_row_cell");
                         projection.AddRange(new object[] { row, program, cell });
-                        if (program == changedProgram) selectedPositions++;
+                        if (changedProgram.HasValue && program == changedProgram.Value) selectedPositions++;
                         else if (program != IntPtr.Zero && Abi.IsTable(program, "strategy_program"))
                             projection.Add(StrategySource(program));
                         if (cell == IntPtr.Zero) continue;
@@ -275,7 +275,8 @@ namespace McgsInternalBridge {
                         }
                     }
                 }
-                Require(selectedPositions == 1, "The selected original Stu Prog object is absent or shared between strategy rows.");
+                Require(selectedPositions == (changedProgram.HasValue ? 1 : 0),
+                    "The selected original Stu Prog object is absent or shared between strategy rows.");
                 return projection;
             }
 

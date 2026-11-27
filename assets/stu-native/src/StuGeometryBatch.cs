@@ -32,6 +32,8 @@ namespace McgsInternalBridge {
                 internal IntPtr Control;
                 internal int[] Before, After;
                 internal SetRectangle Set;
+                internal List<object> ShapeStyle;
+                internal int ShapeMode;
 
                 internal bool Changed { get { return !EqualRectangle(Before, After); } }
             }
@@ -61,8 +63,18 @@ namespace McgsInternalBridge {
                             "The actual Stu control rectangle differs from its exact preimage: " + edit.Name);
                         if (!edit.Changed) continue;
                         RectangleClass kind;
-                        Require(RectangleClasses.TryGetValue(edit.Rtti, out kind),
-                            "The selected Stu control has no verified original rectangle setter: " + edit.Rtti);
+                        if (!RectangleClasses.TryGetValue(edit.Rtti, out kind)) {
+                            DefaultShapeClass shape;
+                            Require(DefaultShapeClasses.TryGetValue(edit.Rtti, out shape) && shape.Factory.TypeId == edit.TypeId,
+                                "The selected Stu control has no verified original rectangle setter: " + edit.Rtti);
+                            kind = shape.Geometry;
+                            Abi.RequireFeature(kind.Feature);
+                            CheckOrdinaryControlType(edit.Control, kind, shape.Factory);
+                            edit.ShapeMode = context.Word(document, "clone_document_mode");
+                            Require(edit.ShapeMode == 0 || edit.ShapeMode == 1,
+                                "Stu static shape geometry requires original drawing mode 0 or 1.");
+                            edit.ShapeStyle = ReadStaticShapeStyle(edit.Control);
+                        }
                         Abi.RequireFeature(kind.Feature);
                         Abi.CheckSlot(edit.Control, kind.Table, 21, kind.Setter);
                         edit.Set = Abi.Bind<SetRectangle>(kind.Setter);
@@ -86,11 +98,13 @@ namespace McgsInternalBridge {
                             Require(ReadControlType(document, edit) == edit.Rtti &&
                                 EqualRectangle(ReadRectangle(edit.Control), edit.Before),
                                 "The Stu rectangle or native control identity changed before its assignment: " + edit.Name);
+                            VerifyShapeGeometryContext(document, edit);
                             Marshal.Copy(edit.After, 0, bounds, 4);
                             edit.Set(edit.Control, bounds, IntPtr.Zero);
                             Require(ReadControlType(document, edit) == edit.Rtti &&
                                 EqualRectangle(ReadRectangle(edit.Control), edit.After),
                                 "The Stu original rectangle setter did not return the requested geometry: " + edit.Name);
+                            VerifyShapeGeometryContext(document, edit);
                             receipt["completed_count"] = ++completed;
                         }
                         page.RefreshAndSave(() => VerifyGeometry(document, changes, true),
@@ -121,7 +135,15 @@ namespace McgsInternalBridge {
                         "The original Stu rectangle target moved to a different path: " + edit.Name);
                     Require(EqualRectangle(ReadRectangle(edit.Control), written ? edit.After : edit.Before),
                         "The original Stu top-level rectangle does not match its expected value: " + edit.Name);
+                    VerifyShapeGeometryContext(document, edit);
                 }
+            }
+
+            private void VerifyShapeGeometryContext(IntPtr document, RectangleChange edit) {
+                if (edit.ShapeStyle == null) return;
+                Require(context.Word(document, "clone_document_mode") == edit.ShapeMode &&
+                    EqualPayload(edit.ShapeStyle, ReadStaticShapeStyle(edit.Control)),
+                    "The original Stu shape style or drawing mode changed: " + edit.Name);
             }
 
             private List<object> ObserveGeometry(Window window, IntPtr document, List<RectangleChange> changes) {
@@ -146,6 +168,10 @@ namespace McgsInternalBridge {
                             ReadControlType(document, edit) == edit.Rtti,
                             "The original Stu geometry target cannot be read at its selected path.");
                         row["actual"] = RectangleValue(ReadRectangle(edit.Control));
+                        if (edit.ShapeStyle != null) {
+                            VerifyShapeGeometryContext(document, edit);
+                            row["original_style_preserved"] = true;
+                        }
                     } catch (InvalidOperationException error) {
                         row["actual_unavailable"] = error.Message;
                     }
@@ -170,13 +196,22 @@ namespace McgsInternalBridge {
                     Require(index >= 0 && indices.Add(index), "A Stu geometry path is invalid or selected twice.");
                     int[] before = ParseRectangle(row["before"]);
                     int[] after = ParseRectangle(row["after"]);
-                    long width = (long)after[2] - after[0], height = (long)after[3] - after[1];
-                    Require(width > 0 && width <= Int32.MaxValue && height > 0 && height <= Int32.MaxValue,
-                        "The requested Stu rectangle must have a positive width and height within Int32.");
+                    int typeId = StuNativeProfile.Number(row["native_type_id"]);
+                    RequireGeometryBounds(after, typeId);
                     changes.Add(new RectangleChange { Index = index, Name = NativeEngineeringDeliveryLayout.Value(row, "control_name"),
-                        TypeId = StuNativeProfile.Number(row["native_type_id"]), Before = before, After = after });
+                        TypeId = typeId, Before = before, After = after });
                 }
                 return changes;
+            }
+
+            private static void RequireGeometryBounds(int[] coords, int typeId) {
+                long width = (long)coords[2] - coords[0], height = (long)coords[3] - coords[1];
+                if (typeId == DefaultLineType)
+                    Require((width != 0 || height != 0) && Math.Abs(width) <= Int32.MaxValue && Math.Abs(height) <= Int32.MaxValue,
+                        "A Stu line requires distinct ordered endpoints with Int32 axis spans.");
+                else
+                    Require(width > 0 && width <= Int32.MaxValue && height > 0 && height <= Int32.MaxValue,
+                        "The requested Stu rectangle must have a positive width and height within Int32.");
             }
 
             private static int[] ParseRectangle(object raw) {

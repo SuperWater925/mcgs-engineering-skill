@@ -13,6 +13,161 @@ import mcgs_file as project
 
 
 class StuFactory(unittest.TestCase):
+    def test_default_alarm_table_uses_original_family_core_and_keeps_explicit_clone(self):
+        import hashlib
+        from mcs_plugin_controls import PluginControl
+        from mcs_window_archive import WindowArchive
+        from 原生界面样式 import CommonEnvelope
+
+        expected = {
+            'Pro': (0x55b1b, '376598c927b1c91275222f3dbcc736064b4056e1fc103a8e330601a8886c43f8'),
+            'Stu': (0x55b36, 'a58b578ee63493afad274b0088809fac7baf8ea9f1fbf6750744b3ab4c481367'),
+        }
+        control = {'type': 'alarm-table', 'name': '报警浏览', 'bounds': [10, 20, 310, 150]}
+        for family, (schema, digest) in expected.items():
+            with self.subTest(family=family):
+                data = project.create_data({'pages': [{'name': '报警页', 'controls': [control]}]}, family)
+                raw = project.f.archive(data['WndUser']['rows'][0]['lbObjects'])
+                original, = WindowArchive.parse(raw).controls
+                common = CommonEnvelope.parse(original)
+                plugin = PluginControl.parse(common.project_without_animations())
+                self.assertEqual((original.type_id, common.name.value, common.rect),
+                                 (0x503d, control['name'], tuple(control['bounds'])))
+                self.assertEqual(common.animations, [])
+                self.assertEqual(plugin.path, control_factory.PLUGIN_PATHS['alarm-table'])
+                self.assertEqual((int.from_bytes(plugin.core[16:20], 'little'), hashlib.sha256(plugin.core).hexdigest()),
+                                 (schema, digest))
+
+                clone = {**control, 'name': '复制报警浏览', 'bounds': [35, 42, 436, 190],
+                         'clone_from': {'page_id': 1, 'path': [0], 'name': control['name'], 'kind': '0x503d',
+                                        'sha256': hashlib.sha256(original.payload).hexdigest()}}
+                updated = project.edit_data(data, {'pages': [{'id': 1, 'add_controls': [clone]}]})
+                raw = project.f.archive(updated['WndUser']['rows'][0]['lbObjects'])
+                first, duplicate = WindowArchive.parse(raw).controls
+                self.assertEqual(first.to_bytes(), original.to_bytes())
+                copied = CommonEnvelope.parse(duplicate)
+                self.assertEqual((copied.name.value, copied.rect), (clone['name'], tuple(clone['bounds'])))
+                self.assertEqual(PluginControl.parse(copied.project_without_animations()).core, plugin.core)
+
+                primitives = project.load_factory_asset('primitives', family)
+                with self.assertRaisesRegex(ValueError, 'only type, name and bounds'):
+                    control_factory.make_control({**control, 'row_height': 30}, {}, primitives)
+
+    def test_vendor_default_recipe_and_xy_keep_unbound_native_core(self):
+        import hashlib
+        from mcs_plugin_controls import PluginControl, RecipeCore, XYCore
+        from mcs_window_archive import WindowArchive
+        from 原生界面样式 import CommonEnvelope
+
+        expected = {
+            'Stu': {
+                'recipe-table': '3e60d8baae2091b6041b1dcba67ea1f7d58462a8c64febe5237766cb488102e9',
+                'xy-curve': '4b2a6fc114505ff7989d9707de44dad015c504af3967f0699cb3473aa65ef724',
+            },
+            'Pro': {
+                'recipe-table': 'a97dfc3c7a44ff6cc1b7b78fbea5dca0e6f1ba5a20180211a8a2be8741af3410',
+                'xy-curve': '77bbbacb99a54ac47036d1df5a9c2fe29b256c6b1ea773696b920b0a4a28651b',
+            },
+        }
+        specifications = [
+            {'type': 'recipe-table', 'name': 'AuditRecipe', 'bounds': [26, 20, 176, 150]},
+            {'type': 'xy-curve', 'name': 'AuditXY', 'bounds': [185, 20, 360, 150]},
+        ]
+        for family, native_digests in expected.items():
+            with self.subTest(family=family):
+                data = project.create_data({'pages': [{'name': 'AuditPlugins', 'controls': specifications}]}, family)
+                raw = project.f.archive(data['WndUser']['rows'][0]['lbObjects'])
+                controls = WindowArchive.parse(raw).controls
+                for spec, saved in zip(specifications, controls, strict=True):
+                    common = CommonEnvelope.parse(saved)
+                    plugin = PluginControl.parse(common.project_without_animations())
+                    self.assertEqual(saved.type_id, 0x503d)
+                    self.assertEqual((common.name.value, common.rect, common.animations),
+                                     (spec['name'], tuple(spec['bounds']), []))
+                    self.assertEqual(plugin.path, control_factory.PLUGIN_PATHS[spec['type']])
+                    self.assertEqual(hashlib.sha256(plugin.core).hexdigest(), native_digests[spec['type']])
+                    if spec['type'] == 'recipe-table':
+                        core = RecipeCore.parse(plugin.core)
+                        self.assertEqual((core.group, core.columns, core.fields['visible_expression']), ('', [], ''))
+                    else:
+                        core = XYCore.parse(plugin.core)
+                        self.assertEqual(len(core.curves), 8)
+                        self.assertFalse(core.fields['m108'] or core.tail['visible_cache'])
+
+                recipe, xy = controls
+                clone = {**specifications[1], 'name': 'ClonedXY', 'bounds': [20, 160, 180, 300],
+                         'clone_from': {'page_id': 1, 'path': [1], 'name': 'AuditXY', 'kind': '0x503d',
+                                        'sha256': hashlib.sha256(xy.payload).hexdigest()}}
+                updated = project.edit_data(data, {'pages': [{'id': 1, 'add_controls': [clone]}]})
+                raw = project.f.archive(updated['WndUser']['rows'][0]['lbObjects'])
+                first, second, copied = WindowArchive.parse(raw).controls
+                self.assertEqual((first.payload, second.payload), (recipe.payload, xy.payload))
+                copied = CommonEnvelope.parse(copied)
+                self.assertEqual(copied.name.value, clone['name'])
+                self.assertEqual(hashlib.sha256(PluginControl.parse(copied.project_without_animations()).core).hexdigest(),
+                                 native_digests['xy-curve'])
+                primitives = project.load_factory_asset('primitives', family)
+                with self.assertRaisesRegex(ValueError, 'only type, name and bounds'):
+                    control_factory.make_control({**specifications[0], 'row_height': 32}, {}, primitives)
+
+    def test_new_embedded_bitmap_and_existing_bitmap_clone_use_native_geometry(self):
+        import hashlib
+        from test_state_resources import raster
+        from mcs_window_archive import WindowArchive
+        from picture_resources import Picture
+        from 原生界面样式 import CommonEnvelope
+
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                image = raster()
+                bounds = [10, 20, 42, 62]
+                data = project.create_data({'pages': [{'name': 'EmbeddedSource', 'controls': [
+                    {'type': 'bitmap', 'name': 'EmbeddedImage', 'bounds': bounds,
+                     'bitmap_picture': {'embedded_hex': image.hex()}},
+                ]}]}, family)
+                original = WindowArchive.parse(project.f.archive(data['WndUser']['rows'][0]['lbObjects'])).controls[0]
+                common = CommonEnvelope.parse(original)
+                picture = Picture.parse(common.content)
+                self.assertEqual((original.type_id, common.name.value, common.rect), (0x5009, 'EmbeddedImage', tuple(bounds)))
+                self.assertEqual((picture.mode, picture.width, picture.height, picture.payload), (2, 2, 3, image))
+                clone = {'type': 'bitmap', 'name': 'EmbeddedClone', 'bounds': [10, 72, 42, 122],
+                         'clone_from': {'page_id': 1, 'path': [0], 'name': 'EmbeddedImage',
+                                        'kind': '0x5009', 'sha256': hashlib.sha256(original.payload).hexdigest()}}
+                updated = project.edit_data(data, {'pages': [{'id': 1, 'add_controls': [clone]}]})
+                records = WindowArchive.parse(project.f.archive(updated['WndUser']['rows'][0]['lbObjects'])).controls
+                self.assertEqual(records[0].to_bytes(), original.to_bytes())
+                duplicate = CommonEnvelope.parse(records[1])
+                self.assertEqual((duplicate.name.value, duplicate.rect, duplicate.content),
+                                 ('EmbeddedClone', tuple(clone['bounds']), common.content))
+
+    def test_saved_data_column_layout_clones_drops_and_reorders_complete_existing_rows(self):
+        from control_patch import edit
+        from 原生界面样式 import CommonEnvelope
+        from 当前存盘浏览样式 import parse_record, saved_data_style
+
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                record = control_factory.primitive_record('saved-data-browser', project.load_factory_asset('primitives', family))
+                before = parse_record(record)
+                spec = {'saved_data_column_layout': [3, {'clone_index': 2}, 1],
+                        'saved_data_columns': [{'index': 1, 'title': 'New column', 'width': 144}]}
+                changed = edit(record, spec)
+                after = parse_record(changed)
+                columns = saved_data_style(changed)['saved_data_columns']
+                self.assertEqual(len(columns), 3)
+                self.assertEqual((columns[1]['title'], columns[1]['width']), ('New column', 144))
+                self.assertEqual(after.metadata['columns'][0], before.metadata['columns'][3])
+                self.assertEqual(after.metadata['columns'][2], before.metadata['columns'][1])
+                before_content, after_content = (CommonEnvelope.parse(item).content for item in (record, changed))
+                self.assertEqual(before_content[before.metadata['column_end_offset']:],
+                                 after_content[after.metadata['column_end_offset']:])
+                with self.assertRaisesRegex(ValueError, 'clone_index'):
+                    edit(record, {'saved_data_column_layout': [0, 0]})
+                bound = edit(record, {'saved_data_columns': [{'index': 0, 'output_variable': 'Result'}]},
+                             {'Result': {'kind': 2}})
+                with self.assertRaisesRegex(ValueError, 'without an output binding'):
+                    edit(bound, {'saved_data_column_layout': [{'clone_index': 0}, 1]})
+
     def test_family_and_missing_local_primitive(self):
         with self.assertRaisesRegex(ValueError, 'neutral Stu primitive'):
             control_factory.primitive_record('label', source_pages=project.SourcePages([], 'Stu'))
@@ -193,7 +348,7 @@ class StuFactory(unittest.TestCase):
                 self.assertEqual(saved_data_style(result)['saved_data_source'], selection)
                 self.assertEqual(saved_data_style(result)['saved_data_columns'][0]['data_name'], 'Clock')
                 self.assertEqual(parse_record(result).metadata['native_field_list'], parse_record(with_fields).metadata['native_field_list'])
-                with self.assertRaisesRegex(ValueError, 'same native column fields and types'):
+                with self.assertRaisesRegex(ValueError, 'full native member boundary'):
                     group = dict(group, extension=b'\x01\0\0\0' + write_cstring('ToTime'))
                     edit(with_fields, collect, variables=dict(variables, NewCollection=group))
 
@@ -256,6 +411,167 @@ class StuFactory(unittest.TestCase):
                 self.assertEqual(saved_data_style(english)['saved_data_fields'][0],
                                  {'name': 'MCGSIndexID', 'native_type': 1})
 
+    def test_saved_data_alarm_secondary_time_formats_use_final_column_fields(self):
+        from control_patch import edit
+        from 当前存盘浏览样式 import saved_data_style
+
+        date = 'yyyy-MM-dd hh:mm:ss'
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                original = control_factory.primitive_record(
+                    'saved-data-browser', project.load_factory_asset('primitives', family))
+                alarm = edit(original, {'saved_data_source': {'kind': 'alarm_history'},
+                                        'saved_data_columns': [
+                                            {'index': 1, 'data_name': 'TIMEE', 'display_format': date},
+                                            {'index': 0, 'data_name': 'TIMES'},
+                                            {'index': 2, 'data_name': 'TIMEA', 'display_format': 'yyyy-MM-dd hh-mm-ss'},
+                                            {'index': 3, 'data_name': 'VALUE', 'display_format': '0|0'},
+                                        ]})
+                settings = saved_data_style(alarm)
+                self.assertEqual(settings['saved_data_source']['group'], 'MCGS_ALARM')
+                columns = settings['saved_data_columns']
+                self.assertEqual([(row['data_name'], row['display_format']) for row in columns[1:4]],
+                                 [('TIMEE', date), ('TIMEA', 'yyyy-MM-dd hh-mm-ss'), ('VALUE', '0|0')])
+                self.assertEqual(columns[0]['display_format'],
+                                 saved_data_style(original)['saved_data_columns'][0]['display_format'])
+                self.assertEqual(columns[4:], saved_data_style(original)['saved_data_columns'][4:])
+
+                for legacy in ('0|0', ''):
+                    result = saved_data_style(edit(alarm, {'saved_data_columns': [
+                        {'index': 1, 'display_format': legacy}]}))
+                    self.assertEqual(result['saved_data_columns'][1]['display_format'], legacy)
+                for arbitrary in ('yyyy hh whatever', 'foo|bar'):
+                    with self.assertRaisesRegex(ValueError, 'alarm date format'):
+                        edit(alarm, {'saved_data_columns': [{'index': 1, 'display_format': arbitrary}]})
+
+                with self.assertRaisesRegex(ValueError, 'two values separated'):
+                    edit(alarm, {'saved_data_columns': [
+                        {'index': 0, 'data_name': ''}, {'index': 1, 'display_format': 'yyyy-MM-dd hh-mm-ss'}]})
+                with self.assertRaisesRegex(ValueError, 'two values separated'):
+                    edit(alarm, {'saved_data_columns': [
+                        {'index': 2, 'data_name': 'VALUE', 'display_format': date}]})
+                with self.assertRaisesRegex(ValueError, 'two values separated'):
+                    edit(original, {'saved_data_source': {'kind': 'operation_log'}, 'saved_data_columns': [
+                        {'index': 0, 'data_name': 'MCGS_TIME', 'display_format': date}]})
+
+    def test_saved_data_groups_rebuild_in_native_member_order_after_system_sources(self):
+        from control_patch import edit
+        from mcs_window_archive import write_cstring
+        from 当前存盘浏览样式 import parse_record, saved_data_style
+
+        neutral_tail = bytes(8) + write_cstring('')
+        variables = {'Material': {'kind': 3, 'id': 32}, 'Pressure': {'kind': 2, 'id': 48},
+                     'Result': {'kind': 1, 'id': 61}, 'SelectedText': {'kind': 3, 'id': 72}}
+        variables['OrderedGroup'] = {
+            'kind': 0xffffffff,
+            'extension': b'\x02\x00\x00\x00' + write_cstring('Pressure') + write_cstring('Material') + neutral_tail,
+        }
+        variables['AnotherGroup'] = {
+            'kind': 0xffffffff,
+            'extension': b'\x02\x00\x00\x00\x3d\x00\x00\x00\x20\x00\x00\x00' + neutral_tail,
+        }
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                original = control_factory.primitive_record(
+                    'saved-data-browser', project.load_factory_asset('primitives', family))
+                alarm = edit(original, {
+                    'saved_data_source': {'kind': 'alarm_history', 'index_field': 'MCGSIndexID'},
+                    'saved_data_columns': [
+                        {'index': 0, 'data_name': 'VALNAME', 'title': '记录', 'output_variable': 'SelectedText'},
+                        {'index': 1, 'data_name': 'VALUE'}, {'index': 2, 'data_name': 'MCGSIndexID'},
+                    ],
+                }, variables)
+                first_target = {'kind': 'group', 'group': 'OrderedGroup'}
+                with self.assertRaisesRegex(ValueError, 'explicit target field for column 0'):
+                    edit(alarm, {'saved_data_source': first_target}, variables)
+
+                first = edit(alarm, {'saved_data_source': first_target, 'saved_data_columns': [
+                    {'index': 0, 'data_name': 'Material'}, {'index': 1, 'data_name': 'Pressure'},
+                ]}, variables)
+                second_target = {'kind': 'group', 'group': 'AnotherGroup'}
+                second = edit(first, {'saved_data_source': second_target,
+                                      'saved_data_columns': [{'index': 1, 'data_name': ''}]}, variables)
+                for record, target, membership, columns in [
+                    (first, first_target, [('Pressure', 2), ('Material', 3)],
+                     ['Material', 'Pressure', 'MCGSIndexID']),
+                    (second, second_target, [('Result', 1), ('Material', 3)],
+                     ['Material', '', 'MCGSIndexID']),
+                ]:
+                    native = parse_record(record)
+                    snapshot = saved_data_style(record)
+                    self.assertEqual(snapshot['saved_data_source'], target)
+                    self.assertEqual(snapshot['saved_data_fields'], [
+                        {'name': name, 'native_type': word} for name, word in
+                        [('MCGSIndexID', 1), ('MCGS_Time', 10), *membership]])
+                    self.assertEqual([column['data_name'] for column in snapshot['saved_data_columns'][:3]], columns)
+                    self.assertEqual(len(snapshot['saved_data_columns']), 8)
+                    self.assertEqual(snapshot['saved_data_columns'][0]['title'], '记录')
+                    self.assertEqual(snapshot['saved_data_columns'][0]['output_variable'], 'SelectedText')
+                    self.assertTrue(all(native.metadata['native_config_member_map'][key]['value'] == 'MCGS_Time'
+                                        for key in ('1cc', '1d4')))
+                    self.assertEqual(edit(record, {'saved_data_source': target}).payload, record.payload)
+
+    def test_shared_controls_source_switch_reads_the_actual_project_variables(self):
+        import copy
+        import hashlib
+        import struct
+        from mcs_window_archive import WindowArchive
+        from native_tool import BatchExport, ProjectBatchSource, controls_patch, unwrapped
+        from 当前存盘浏览样式 import saved_data_style
+
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family), tempfile.TemporaryDirectory() as folder:
+                data = project.create_data({
+                    'variables': [{'name': 'ProcessValue', 'type': 'number'},
+                                  {'name': 'ResultValue', 'type': 'number'},
+                                  {'name': 'StartTime', 'type': 'string'},
+                                  {'name': 'EndTime', 'type': 'string'},
+                                  {'name': 'ProcessGroup', 'type': 'group'}],
+                    'pages': [{'name': 'Readback', 'controls': [
+                        {'type': 'saved-data-browser', 'name': 'History', 'bounds': [0, 0, 180, 90]},
+                        {'type': 'label', 'name': 'Keep', 'bounds': [0, 90, 100, 120]},
+                    ]}],
+                }, family)
+                catalog = project.system(data, 'ObjData')
+                rows = project.f.variables(project.f.archive(catalog['lbContext']))
+                group, = [row for row in rows if row['name'] == 'ProcessGroup']
+                group['extension'] = struct.pack('<I', 1) + project.f.text('ProcessValue') + group['extension'][4:]
+                catalog['lbContext'] = project.f.wrap_like(catalog['lbContext'], project.f.pack_variables(rows))
+
+                def page(current):
+                    return WindowArchive.parse(project.f.archive(current['WndUser']['rows'][0]['lbObjects']))
+
+                def edit_page(current, edits):
+                    record = page(current).controls[0]
+                    return project.edit_data(copy.deepcopy(current), {'pages': [{'id': 1, 'controls': [{
+                        'name': 'History', 'sha256': hashlib.sha256(record.payload).hexdigest(), 'edits': edits,
+                    }]}]})
+
+                system_source = edit_page(data, {'saved_data_source': {'kind': 'alarm_history'},
+                                                 'saved_data_columns': [{'index': 0, 'data_name': 'VALUE'}]})
+                edits = {'saved_data_source': {'kind': 'group', 'group': 'ProcessGroup'},
+                         'saved_data_time_filter': {'mode': 'variables', 'start_variable': 'StartTime',
+                                                    'end_variable': 'EndTime'},
+                         'saved_data_columns': [{'index': 0, 'data_name': 'ProcessValue',
+                                                 'output_variable': 'ResultValue'}]}
+                before = page(system_source)
+                expected = page(edit_page(system_source, edits))
+                baseline = '0' * 64
+                export = BatchExport(ProjectBatchSource(system_source, baseline, family))
+                spec = {'input_sha256': baseline, 'controls': [{
+                    'window': 1, 'path': [0], 'sha256': hashlib.sha256(before.controls[0].payload).hexdigest(),
+                    'edits': edits,
+                }]}
+                output = Path(folder) / 'controls'
+                controls_patch(export, spec, output)
+                candidate = WindowArchive.parse(unwrapped((output / 'window-1.bin').read_bytes()))
+                self.assertEqual(candidate.to_bytes(), expected.to_bytes())
+                self.assertEqual(candidate.controls[1].to_bytes(), before.controls[1].to_bytes())
+                actual = saved_data_style(candidate.controls[0])
+                self.assertEqual(actual['saved_data_source'], edits['saved_data_source'])
+                self.assertEqual(actual['saved_data_columns'][0]['output_variable'], 'ResultValue')
+                self.assertEqual(actual['saved_data_time_filter']['end_variable'], 'EndTime')
+
     def test_failed_candidate_does_not_occupy_output(self):
         def fail(output, spec, source):
             output.write_bytes(b'partial')
@@ -268,6 +584,8 @@ class StuFactory(unittest.TestCase):
 
     @unittest.skipUnless(os.environ.get('MCGS_STU_FACTORY_FIXTURE'), 'requires original Stu template and ACE')
     def test_native_template_roundtrip(self):
+        from test_state_resources import raster
+
         src = Path(os.environ['MCGS_STU_FACTORY_FIXTURE'])
         before = project.read(src)
         self.assertEqual(project.project_family(before), 'Stu')
@@ -280,6 +598,8 @@ class StuFactory(unittest.TestCase):
             item = {'name': typ, 'type': typ, 'bounds': [10, 10, 110, 50]}
             if typ in control_factory.INPUT_TYPES:
                 item['binding'] = '试验字符' if typ.startswith('character') else '试验数值'
+            if typ == 'bitmap':
+                item['bitmap_picture'] = {'embedded_hex': raster().hex()}
             controls.append(item)
         page = {'id': 85, 'template_page_id': 2, 'name': '试验画面', 'controls': controls}
         spec = {'source_sha256': digest, 'add_variables': variables, 'add_pages': [page]}

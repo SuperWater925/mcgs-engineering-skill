@@ -135,14 +135,18 @@ namespace McgsInternalBridge {
    var identity=DirectSummary(engine,context);
    NativeMemory.Require(Object.Equals(identity["disk_sha256"],design["project_sha256"])&&Object.Equals(identity["root"],design["root"]),"Designed project file/root identity changed before first mutation.");
    var result=NativeCurrentTemplateControlOperations.ValidateDesignPages(engine,context,project,design);object rows;
-   if(design.TryGetValue("style_preimages",out rows))foreach(object value in (IEnumerable)rows){
-    var item=Map(value);var action=new Dictionary<string,object>{{"kind","control-properties"},{"target",item["target"]},{"after",new Dictionary<string,object>{{"properties",item["properties"]}}}};
-    var observed=NativeControlPropertyEditing.Read(engine,context,project,action);var actual=new List<object>();
-    foreach(object requested in (IEnumerable)item["properties"]){var property=Map(requested);Dictionary<string,object> match=null;
-     foreach(object raw in (IEnumerable)observed["properties"]){var row=Map(raw);if(!Object.Equals(row["native_owner"],observed["selected_owner"])||!Object.Equals(row["native_key"],property["native_key"])||Convert.ToInt32(row["native_type_tag"])!=Convert.ToInt32(property["native_type_tag"]))continue;NativeMemory.Require(match==null,"Design style getter key/type is ambiguous.");match=row;}
-     NativeMemory.Require(match!=null,"Design style getter key/type disappeared.");actual.Add(new Dictionary<string,object>{{"native_key",match["native_key"]},{"native_type_tag",match["native_type_tag"]},{"value",match["value"]}});
+   if(design.TryGetValue("style_preimages",out rows)){
+    NativeControlPropertyEditing.DesignStyleCapture capture=null;
+    foreach(object value in (IEnumerable)rows){
+     if(capture==null)capture=new NativeControlPropertyEditing.DesignStyleCapture(engine,context,project);
+     var item=Map(value);var requested=(IEnumerable)item["properties"];
+     var observed=capture.Read(Map(item["target"]),requested);var actual=new List<object>();
+     foreach(object rawRequested in requested){var property=Map(rawRequested);Dictionary<string,object> match=null;
+      foreach(object raw in (IEnumerable)observed["properties"]){var row=Map(raw);if(!Object.Equals(row["native_owner"],observed["selected_owner"])||!Object.Equals(row["native_key"],property["native_key"])||Convert.ToInt32(row["native_type_tag"])!=Convert.ToInt32(property["native_type_tag"]))continue;NativeMemory.Require(match==null,"Design style getter key/type is ambiguous.");match=row;}
+      NativeMemory.Require(match!=null,"Design style getter key/type disappeared.");actual.Add(new Dictionary<string,object>{{"native_key",match["native_key"]},{"native_type_tag",match["native_type_tag"]},{"value",match["value"]}});
+     }
+     NativePageControlPreparation.Same(item["properties"],actual,"Designed style sample changed before first mutation.");
     }
-    NativePageControlPreparation.Same(item["properties"],actual,"Designed style sample changed before first mutation.");
    }
    if(design.TryGetValue("button_preimages",out rows))foreach(object value in (IEnumerable)rows){
     var item=Map(value);var action=new Dictionary<string,object>{{"kind",NativeButtonActionEditing.Kind},{"target",item["target"]},{"after",new Dictionary<string,object>()}};

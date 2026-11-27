@@ -6,6 +6,41 @@ using System.Runtime.InteropServices;
 namespace McgsInternalBridge {
     public static partial class EngineEntry {
         private const string NativeCreateAction = "control-native-create-batch";
+        private const int DefaultLineType = 0x5002;
+        private const int DefaultRectangleType = 0x5004;
+
+        private static readonly Dictionary<string, DefaultShapeClass> DefaultShapeClasses =
+            new Dictionary<string, DefaultShapeClass>(StringComparer.Ordinal) {
+                {".?AVCDrawLine@@", new DefaultShapeClass(DefaultLineType, "line", "set_default_line_endpoints")},
+                {".?AVCDrawRect@@", new DefaultShapeClass(DefaultRectangleType, "rectangle", "set_default_rectangle_bounds")}
+            };
+
+        private sealed class DefaultShapeClass {
+            internal readonly TemplateClass Factory;
+            internal readonly RectangleClass Geometry;
+
+            internal DefaultShapeClass(int typeId, string name, string setter) {
+                string feature = "control-create-" + name;
+                string table = "default_" + name;
+                Factory = new TemplateClass(typeId, null, feature, table + "_view", null, "delete_default_" + name);
+                Geometry = new RectangleClass("control-geometry-" + name, table, setter);
+            }
+        }
+
+        private static int AddShapeCapabilities(StuNativeProfile abi, Dictionary<string, object> classes, bool creating) {
+            int available = 0;
+            foreach (var entry in DefaultShapeClasses) {
+                try {
+                    abi.RequireFeature(entry.Value.Geometry.Feature);
+                    if (creating) abi.RequireFeature(entry.Value.Factory.CreateFeature);
+                    classes[entry.Key] = new Dictionary<string, object> {{"state", "located"}};
+                    available++;
+                } catch (InvalidOperationException error) {
+                    classes[entry.Key] = new Dictionary<string, object> {{"state", "unavailable"}, {"reason", error.Message}};
+                }
+            }
+            return available;
+        }
 
         private sealed partial class StuDocument {
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -125,11 +160,25 @@ namespace McgsInternalBridge {
             }
 
             private List<object> ReadOriginalDefaults(IntPtr control, int typeId) {
+                if (typeId == DefaultLineType || typeId == DefaultRectangleType) return ReadStaticShapeStyle(control);
                 var defaults = ReadOrdinaryControlPayload(control, typeId);
                 if (typeId == 0x5025)
                     Require(Object.Equals(defaults[0], String.Empty) && Object.Equals(defaults[1], -1) && Object.Equals(defaults[2], 0),
                         "The original default Stu input did not retain its empty variable binding.");
                 return defaults;
+            }
+
+            private List<object> ReadStaticShapeStyle(IntPtr control) {
+                Require(IsStaticLabel(control), "The original Stu shape has an event or animation.");
+                var style = new List<object> {
+                    context.Word(control, "default_shape_pen_marker"),
+                    context.Word(control, "default_shape_brush_marker")
+                };
+                int pen = Abi.Offset("default_shape_pen");
+                int brush = Abi.Offset("default_shape_brush");
+                for (int i = 0; i < 4; i++) style.Add(StuNativeProfile.Word(control, pen + sizeof(int) * i));
+                for (int i = 0; i < 3; i++) style.Add(StuNativeProfile.Word(control, brush + sizeof(int) * i));
+                return style;
             }
 
             private void VerifyCreatedControl(IntPtr document, DefaultCreateChange change) {
@@ -199,12 +248,16 @@ namespace McgsInternalBridge {
                         change.Geometry = RectangleClasses[entry.Key];
                         break;
                     }
-                    Require(change.Kind != null, "The requested Stu type is not an ordinary label, input or standard button.");
+                    if (change.Kind == null) foreach (var entry in DefaultShapeClasses) {
+                        if (entry.Value.Factory.TypeId != typeId) continue;
+                        change.Rtti = entry.Key;
+                        change.Kind = entry.Value.Factory;
+                        change.Geometry = entry.Value.Geometry;
+                        break;
+                    }
+                    Require(change.Kind != null, "The requested Stu type has no verified original default factory.");
                     change.Rectangle = ParseRectangle(row["after"]);
-                    long width = (long)change.Rectangle[2] - change.Rectangle[0];
-                    long height = (long)change.Rectangle[3] - change.Rectangle[1];
-                    Require(width > 0 && width <= Int32.MaxValue && height > 0 && height <= Int32.MaxValue,
-                        "A new Stu control requires positive Int32 width and height.");
+                    RequireGeometryBounds(change.Rectangle, typeId);
                     rows.Add(change);
                 }
                 return rows;

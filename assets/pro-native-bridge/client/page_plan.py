@@ -51,6 +51,51 @@ def identifier(value):
     return value
 
 
+def session_pointer_parts(pointer):
+    require(isinstance(pointer, str) and pointer.startswith('/steps/'),
+            'A result reference must start with /steps/')
+    parts = []
+    for part in pointer[1:].split('/'):
+        require(not re.search(r'~(?![01])', part), 'Invalid JSON pointer escape')
+        parts.append(part.replace('~1', '/').replace('~0', '~'))
+    require(len(parts) >= 4 and parts[2] in ('inspect', 'apply'),
+            "Reference must select a prior step's inspect/apply receipt")
+    return parts
+
+
+def session_references(value):
+    if isinstance(value, dict):
+        if '$ref' in value:
+            require(set(value) == {'$ref'}, 'A result reference must contain only $ref')
+            yield session_pointer_parts(value['$ref'])
+        else:
+            for child in value.values():
+                yield from session_references(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from session_references(child)
+
+
+def resolve_session_references(value, results, copy_value=copy.deepcopy):
+    if isinstance(value, dict):
+        if '$ref' in value:
+            require(set(value) == {'$ref'}, 'A result reference must contain only $ref')
+            selected = results
+            for part in session_pointer_parts(value['$ref']):
+                if isinstance(selected, list):
+                    require(re.fullmatch(r'0|[1-9][0-9]*', part), 'Result reference array index is invalid')
+                    selected = selected[int(part)]
+                elif isinstance(selected, dict):
+                    selected = selected[part]
+                else:
+                    raise ValueError('Result reference crosses a scalar')
+            return copy_value(selected)
+        return {key: resolve_session_references(child, results, copy_value) for key, child in value.items()}
+    if isinstance(value, list):
+        return [resolve_session_references(child, results, copy_value) for child in value]
+    return value
+
+
 def int_vector(value, count):
     require(isinstance(value, list) and len(value) == count and all(type(item) is int for item in value),
             f'Expected {count} integer values')

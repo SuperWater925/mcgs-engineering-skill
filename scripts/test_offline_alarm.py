@@ -181,7 +181,9 @@ class OfflineAlarmTests(unittest.TestCase):
                 self.assertEqual(data,original)
                 unknown = copy.deepcopy(data)
                 unknown['Alarm']['rows'].append({'iAlarmID':1})
-                self.assertIn('mirror mapping',m.inspect_data(unknown)['alarm_definitions_unavailable'])
+                entry, = m.inspect_data(unknown)['alarm_definitions']
+                self.assertIsNone(entry['physical_rows_with_same_object_id'])
+                self.assertFalse(entry['editable'])
                 with self.assertRaisesRegex(ValueError, 'mirror mapping'):
                     m.edit_data(unknown, {'alarm_edits':[{**selector,'priority':20}]})
 
@@ -193,6 +195,40 @@ class OfflineAlarmTests(unittest.TestCase):
                 self.assertEqual(len(after_raw),len(before_raw))
                 self.assertEqual([(old,new) for old,new in zip(before_raw,after_raw) if old!=new],[(7,42)])
                 self.assertEqual(set(k for k in data if data[k]!=original[k]),{'System'})
+
+    def test_nonempty_physical_table_reports_objdata_without_authorizing_edits(self):
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                data = sample_project(family, default_source=True, alarm_kind=6,
+                                      sensor_type='boolean', base_value=1)
+                initial, = m.inspect_data(data)['alarm_definitions']
+                target_id = initial['variable']['id']
+                data['Alarm']['rows'] = [
+                    {'iAlarmID': 1, 'iDataObjID': target_id, 'strNote': 'Physical private note'},
+                    {'iAlarmID': 2, 'iDataObjID': target_id, 'strNote': 'Different physical note'},
+                    {'iAlarmID': 3, 'iDataObjID': -1, 'strNote': 'Unbound'},
+                ]
+                before = copy.deepcopy(data)
+                view = m.inspect_data(data)
+                storage = view['alarm_storage']
+                self.assertEqual((storage['physical_source'], storage['objdata_source']), ('Alarm', 'System/ObjData'))
+                self.assertEqual((storage['physical_rows'], storage['objdata_alarm_items']), (3, 1))
+                self.assertEqual(storage['physical_rows_with_existing_object_id'], 2)
+                self.assertEqual(storage['physical_rows_with_objdata_alarm_object_id'], 2)
+                self.assertFalse(storage['active_storage_verified'])
+                self.assertFalse(storage['physical_to_objdata_mapping_verified'])
+                self.assertNotIn('Physical private note', str(storage))
+                self.assertIn('mirror mapping', storage['objdata_write_unavailable'])
+                entry, = view['alarm_definitions']
+                self.assertEqual(entry, dict(initial, storage_source='System/ObjData',
+                                             physical_rows_with_same_object_id=2, editable=False,
+                                             switch_equals_value_editable=False))
+                self.assertEqual(entry['switch_equals_value'], 1)
+                self.assertNotIn('message_translations', entry)
+                with self.assertRaisesRegex(ValueError, 'mirror mapping'):
+                    m.edit_data(data, {'alarm_edits': [{**{key: entry[key] for key in ('variable', 'index', 'sha256')},
+                                                      'enabled': False}]})
+                self.assertEqual(data, before)
 
 
 if __name__=='__main__':

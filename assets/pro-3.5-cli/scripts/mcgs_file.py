@@ -18,8 +18,9 @@ import native_format as f
 from mcgs_family import identify_family
 from mcs_input_text import InputRecord
 from mcs_window_archive import ControlRecord, FormatError, WindowSettings
-from 窗口事件归档 import STU_COMMON_WINDOW_LAYERS, 读取公共窗口槽, 改选公共窗口
-from control_factory import make_control, page_events, record
+from 窗口事件归档 import (STU_COMMON_WINDOW_LAYERS, WINDOW_DISPATCH_ACTIONS, WINDOW_MOUSE_DOWN_SOURCE, 读取公共窗口槽,
+                  改选公共窗口, 读取页面Click, 读取页面MouseDown)
+from control_factory import CONTROL_CLICK_TYPES, control_click_event, edit_control_click, make_control, page_events, record
 import offline_structure as structure
 
 if hasattr(sys.stdout, 'reconfigure'):
@@ -82,12 +83,14 @@ def set_variables(data, additions, updates, *, factory=False):
     validate_initial = {item['name'] for item in additions}
     validate_initial.update(item['name'] for item in updates if 'initial' in item)
     next_id = max((record['id'] for record in rows), default=-1) + 1 if additions else None
+    known_names = {record['name'].casefold() for record in rows}
     for item in additions:
         if set(item)-{'name','type','initial','note','unit'}:
             raise ValueError('Unknown variable property')
         name=title(item['name']);kind=item['type']
-        if any(r['name'].casefold()==name.casefold() for r in rows) or kind not in templates['variables']:
+        if name.casefold() in known_names or kind not in templates['variables']:
             raise ValueError('Duplicate variable or unsupported type')
+        known_names.add(name.casefold())
         template=templates['variables'][kind]
         ident = next_id
         next_id += 1
@@ -245,12 +248,13 @@ def inherited_page_description(settings, fallback):
         return fallback
 
 
-def create_data(spec,family='Pro'):
-    if set(spec)-{'variables','pages','edits'}:raise ValueError('Unknown project property')
+def create_data(spec,family='Pro',*,pending_event_generation=None):
+    if set(spec)-{'variables','variable_arrays','pages','edits'}:raise ValueError('Unknown project property')
     data=load_factory_asset('blank-project',family)
     if project_family(data)!=family:raise ValueError('Factory seed family mismatch')
     presets=load_factory_asset('primitives',family)
-    variables=set_variables(data,spec.get('variables',[]),[],factory=True)
+    additions=spec.get('variables',[])+structure.expand_variable_arrays(spec.get('variable_arrays',[]))
+    variables=set_variables(data,additions,[],factory=True)
     base=data['WndUser']['rows'][0];header,_,trailer=f.window(f.archive(base['lbObjects']))
     note_column=page_columns(data)[2]
     page_settings=WindowSettings.parse(trailer,identity=(base['iID'],base['strName']))
@@ -263,7 +267,8 @@ def create_data(spec,family='Pro'):
         row=copy.deepcopy(base);row.update(iID=ident,strName=name,iCompileFlag=0)
         new_trailer=f.page_properties(trailer,ident=ident,name=name,**page_display_properties(item))
         row[note_column]=item.get('description',default_note)
-        new_trailer=page_events(new_trailer,item.get('events',{}),fresh=True)
+        new_trailer=page_events(new_trailer,item.get('events',{}),fresh=True,family=family)
+        record_pending_window_dispatch(pending_event_generation, ident, name, new_trailer, item.get('events', {}), family)
         row['lbObjects']=f.wrap_like(base['lbObjects'],f.pack_window(header,controls,new_trailer))
         pages.append(row)
     if not pages or len({r['strName'] for r in pages})!=len(pages):raise ValueError('Unique nonempty page list required')
@@ -276,13 +281,15 @@ def create_data(spec,family='Pro'):
             raise ValueError('Initial edits require an edit specification without source_sha256')
         if 'delete_data_groups' in edits:
             raise ValueError('Data group deletion requires an existing source project')
-        return edit_data(data,edits)
+        return edit_data(data,edits,pending_event_generation=pending_event_generation)
     return data
 
 
 def inspect_controls(records):
     from control_factory import GroupArchive
-    from 原生趋势样式 import HISTORY_CURVE_TYPE, history_curve_pens
+    from animation_edits import CLICK_PAGE_CONTROL_TYPES, inspect_items
+    from 原生界面样式 import CommonEnvelope
+    from 原生趋势样式 import HISTORY_CURVE_TYPE, history_curve_configuration, history_curve_pens
     from 当前存盘浏览样式 import SAVED_DATA_TYPE, saved_data_style
 
     controls=[]
@@ -292,11 +299,27 @@ def inspect_controls(records):
             props=f.common(b);c.update(name=props['name'],bounds=props['bounds'])
             if kind==0x5008 and f.u32(b,props['name_end'])==12:
                 c['text']=f.string(b,props['name_end']+14)[0]
+            if kind in CONTROL_CLICK_TYPES:
+                try:
+                    _, _, event = control_click_event(record(kind, b))
+                    c['click_event_source'] = {**event.click_identity(), 'source': event.source.value,
+                                               'compiled_size': len(event.compiled.value)}
+                except (ValueError, UnicodeError, struct.error):
+                    pass
+            if kind in CLICK_PAGE_CONTROL_TYPES and b'CAniClick' in b:
+                try:
+                    pages = [{key: item[key] for key in ('index', 'sha256', 'page_target')}
+                             for item in inspect_items(CommonEnvelope.parse(record(kind, b))) if 'page_target' in item]
+                    if pages:
+                        c['click_animation_pages'] = pages
+                except (ValueError, UnicodeError, struct.error):
+                    pass
             if kind == HISTORY_CURVE_TYPE:
                 try:
                     pens = history_curve_pens(record(kind,b))
                     c['history_curve_pens'] = pens
                     c['history_curve_colors'] = [{'trace_index': pen['trace_index'], 'color': pen['color']} for pen in pens]
+                    c.update(history_curve_configuration(record(kind, b)))
                 except (ValueError, UnicodeError, struct.error) as error:
                     c['history_curve_colors_unavailable'] = str(error)
                     c['history_curve_pens_unavailable'] = str(error)
@@ -315,7 +338,7 @@ def inspect_controls(records):
 
 
 def inspect_data(data):
-    result={'version':f.archive(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00'),
+    result={'version':project_version(data),
             'variables':[], 'pages':[]}
     family = None
     try:
@@ -327,8 +350,14 @@ def inspect_data(data):
     variables=f.variables(f.archive(system(data,'ObjData')['lbContext']))
     for row in variables:
         result['variables'].append({k:row[k] for k in ('id','name','kind','initial','note','unit')})
-    result['data_groups']=structure.inspect_data_groups(variables)
-    from offline_alarm import inspect_alarm_definitions
+    storage_template = (load_factory_asset('primitives', family)['variables']['group']
+                        if family and result['version'] in structure.HISTORY_STORAGE_PROFILES else None)
+    result['data_groups']=structure.inspect_data_groups(variables, storage_template=storage_template, version=result['version'])
+    from offline_alarm import inspect_alarm_definitions, inspect_alarm_storage
+    try:
+        result['alarm_storage']=inspect_alarm_storage(data,variables)
+    except ValueError as error:
+        result['alarm_storage_unavailable']=str(error)
     try:
         result['alarm_definitions']=inspect_alarm_definitions(data,variables)
     except ValueError as error:
@@ -351,6 +380,19 @@ def inspect_data(data):
                 page['common_page_layers']=dict(zip(STU_COMMON_WINDOW_LAYERS,references,strict=True))
         except (ValueError, struct.error) as error:
             page['common_page_unavailable']=str(error)
+        try:
+            click = 读取页面Click(settings.event_tail)
+            page['click_event_source'] = {**click.click_identity(), 'source': click.source.value,
+                                         'compiled_size': len(click.compiled.value)}
+        except (ValueError, struct.error):
+            pass
+        try:
+            mouse_down, bindings = 读取页面MouseDown(settings.event_tail, family=family)
+            page[WINDOW_MOUSE_DOWN_SOURCE] = {**mouse_down.identity(), 'source': mouse_down.source.value,
+                                               'compiled_size': len(mouse_down.compiled.value),
+                                               'parameter_bindings': bindings}
+        except (ValueError, struct.error):
+            pass
         result['pages'].append(page)
     return result
 
@@ -425,13 +467,95 @@ def change_common_page(data, owner, trailer, change, family):
     return settings.to_bytes()
 
 
-def edit_data(data,spec):
-    if set(spec)-{'source_sha256','add_variables','variables','delete_variables','rename_variables','data_group_orders','data_group_members','delete_data_groups','retarget_main_pages','main_page_lists','pages','add_pages','rename_pages','delete_pages','picture_library','recipe_edits','strategy_edits','alarm_edits'}:raise ValueError('Unknown edit property')
+def record_pending_window_dispatch(pending, page_id, page_name, trailer, changes, family):
+    if pending is None:
+        return
+    actions = changes.keys() & WINDOW_DISPATCH_ACTIONS
+    if not actions:
+        return
+    operation, = actions
+    if operation == 'delete_click_event':
+        identity = changes[operation]
+    else:
+        settings = WindowSettings.parse(trailer, identity=(page_id,page_name))
+        event = (读取页面MouseDown(settings.event_tail, family=family)[0] if operation == WINDOW_MOUSE_DOWN_SOURCE else
+                 读取页面Click(settings.event_tail))
+        if event.compiled.value:
+            return
+        identity = event.identity()
+    pending.append({'page_id': page_id, 'page_name': page_name, 'owner': 'window', 'operation': operation,
+                    'event_type_id': identity['event_type_id'], 'event_id': identity['event_id'],
+                    'event_name': identity['name'],
+                    'required_action': 'page-native-generate' if family == 'Stu' else 'reference-sync'})
+
+
+def record_pending_control_click(receipt, page, change, kind, payload, family):
+    if receipt is None or 'click_event_source' not in change['edits']:
+        return
+    _, _, event = control_click_event(record(kind, payload))
+    if not event.compiled.value:
+        pending = {'page_id': page['iID'], 'control_name': change['name'],
+                   'event_type_id': event.event_id, 'event_id': event.kind,
+                   'event_name': event.event_name.value,
+                   'required_action': 'reference-sync' if family == 'Pro' else 'compile'}
+        if 'path' in change:
+            pending['control_path'] = change['path']
+        receipt.append(pending)
+
+
+def edit_control_path(records, change, edit):
+    from control_patch import at_path, replace_path
+    from 原生界面样式 import CommonEnvelope
+
+    path = change['path']
+    if (not isinstance(path, list) or not path or any(type(index) is not int or index < 0 for index in path)
+            or path[0] >= len(records)):
+        raise ValueError('Control path requires valid sibling indexes')
+    root = record(*records[path[0]])
+    siblings = [root]
+    local_path = [0, *path[1:]]
+    original = at_path(siblings, local_path)
+    if (hashlib.sha256(original.payload).hexdigest() != change['sha256']
+            or CommonEnvelope.parse(original).name.value != change['name']):
+        raise ValueError('Control path/name/SHA preimage mismatch')
+    changed = edit(original)
+    replace_path(siblings, local_path, changed)
+    updated = siblings[0]
+    if at_path(siblings, local_path).payload != changed.payload:
+        raise ValueError('Changed control did not round-trip through its group path')
+    replace_path(siblings, local_path, original)
+    if siblings[0].payload != root.payload:
+        raise ValueError('Control path edit changed another native field')
+    records[path[0]] = updated.type_id, updated.payload
+    return changed
+
+
+def validate_click_animation_page(rows, selector):
+    if (not isinstance(selector, dict) or selector.keys() != {'id', 'name'}
+            or type(selector['id']) is not int or not 0 < selector['id'] <= 0x7fffffff
+            or not isinstance(selector['name'], str) or not selector['name'] or '\0' in selector['name']):
+        raise ValueError('Click animation page requires a current native ID and exact name')
+    match = [row for row in rows if row['iID'] == selector['id']
+             or row['strName'].casefold() == selector['name'].casefold()]
+    if (len(match) != 1 or (match[0]['iID'], match[0]['strName'], match[0]['iDeleteFlag'])
+            != (selector['id'], selector['name'], 0)):
+        raise ValueError('Click animation page ID/name does not uniquely match an active window')
+    _, _, trailer = f.window(f.archive(match[0]['lbObjects']))
+    settings = WindowSettings.parse(trailer, identity=(selector['id'], selector['name']))
+    if (settings.field('id').value, settings.field('name').value) != (selector['id'], selector['name']):
+        raise ValueError('Click animation page settings identity differs')
+
+
+def edit_data(data,spec,*,pending_event_generation=None):
+    if set(spec)-{'source_sha256','add_variables','variable_arrays','variables','delete_variables','rename_variables','data_group_orders','data_group_members','data_group_storage','data_group_archive_settings','delete_data_groups','retarget_main_pages','main_page_lists','pages','add_pages','rename_pages','delete_pages','picture_library','recipe_edits','strategy_edits','alarm_edits'}:raise ValueError('Unknown edit property')
     group_deletions=structure.data_group_deletions(spec) if 'delete_data_groups' in spec else []
     originals=copy.deepcopy(data['WndUser']['rows']); source_pages=SourcePages(originals, project_family(data))
-    variables=(set_variables(data,spec.get('add_variables',[]),spec.get('variables',[]))
-               if spec.get('add_variables') or spec.get('variables') else VariableCatalog(data))
+    additions=spec.get('add_variables',[])+structure.expand_variable_arrays(spec.get('variable_arrays',[]))
+    variables=(set_variables(data,additions,spec.get('variables',[]))
+               if additions or spec.get('variables') else VariableCatalog(data))
     primitives=load_factory_asset('primitives',source_pages.family)
+    from picture_resources import uses_picture_reference
+    picture_references = None
     for page in spec.get('pages',[]):
         if set(page)-{'id','controls','add_controls','events','remove_controls','control_order','groups','group_operations','width','height','background','description','common_page'}:raise ValueError('Unknown page edit')
         row=one(r for r in data['WndUser']['rows'] if r['iID']==page['id'])
@@ -463,6 +587,25 @@ def edit_data(data,spec):
         if removals or 'control_order' in page:
             records=structure.arrange_controls(records,removals,page.get('control_order'))
         for change in page.get('controls',[]):
+            if set(change) == {'name', 'sha256', 'edits', 'path'}:
+                edits = change['edits']
+                if not isinstance(edits, dict):
+                    raise ValueError('Control path requires a dedicated native Click edit')
+                if edits.keys() == {'click_event_source'}:
+                    changed = edit_control_path(records, change, lambda original: edit_control_click(original, edits['click_event_source']))
+                    record_pending_control_click(pending_event_generation, row, change, changed.type_id,
+                                                 changed.payload, source_pages.family)
+                elif edits.keys() == {'click_animation_page'}:
+                    from animation_edits import retarget_click_animation
+                    action = edits['click_animation_page']
+                    if not isinstance(action, dict) or action.keys() != {'index', 'sha256', 'source', 'target'}:
+                        raise ValueError('Click animation page requires index, sha256, source and target')
+                    for key in ('source', 'target'):
+                        validate_click_animation_page(data['WndUser']['rows'], action[key])
+                    edit_control_path(records, change, lambda original: retarget_click_animation(original, **action))
+                else:
+                    raise ValueError('Control path requires a dedicated native Click edit')
+                continue
             if set(change)!={'name','sha256','edits'}:raise ValueError('Name, sha256 and edits required')
             hits=[]
             for index,(kind,b) in enumerate(records):
@@ -473,7 +616,12 @@ def edit_data(data,spec):
             if hashlib.sha256(b).hexdigest()!=change['sha256']:raise ValueError('Control preimage mismatch')
             edits=dict(change['edits'])
             if 'name' in edits:title(edits['name'])
-            changed=f.edit_control(kind,b,edits,variables)
+            if picture_references is None and uses_picture_reference(edits):
+                from offline_picture_library import library
+                _, names, _ = library(data['System']['rows'])
+                picture_references = {name.value for name in names}
+            changed=f.edit_control(kind,b,edits,variables,picture_references=picture_references)
+            record_pending_control_click(pending_event_generation, row, change, kind, changed, source_pages.family)
             if 'name' in edits and edits['name'] != change['name']:
                 old = change['name']
                 structure.require_unreferenced(data, row['strName']+'.'+old, excluded_page=row['iID'])
@@ -550,7 +698,24 @@ def edit_data(data,spec):
             try:names.append(f.common(b)['name'])
             except (ValueError,UnicodeError,struct.error):pass
         if len(set(names))!=len(names):raise ValueError('Duplicate control name')
-        if 'events' in page:trailer=page_events(trailer,page['events'])
+        if 'events' in page:
+            events = page['events']
+            editing_mouse_down = isinstance(events, dict) and WINDOW_MOUSE_DOWN_SOURCE in events
+            if (row['iDeleteFlag'] and (editing_mouse_down or
+                    source_pages.family == 'Stu' and isinstance(events, dict) and events.keys() & WINDOW_DISPATCH_ACTIONS)):
+                raise ValueError('Window dispatch requires an active page')
+            if editing_mouse_down:
+                settings = WindowSettings.parse(trailer, identity=(row['iID'], row['strName']))
+                if (settings.field('id').value, settings.field('name').value) != settings.identity:
+                    raise ValueError('MouseDown window settings do not match the active page')
+                _, bindings = 读取页面MouseDown(settings.event_tail, family=source_pages.family)
+                bound = bindings[0]
+                target = variables.get(bound['name'])
+                if not target or (target['id'], target['kind']) != (bound['id'], bound['native_type_word']):
+                    raise ValueError('MouseDown first parameter differs from the named number variable')
+            trailer=page_events(trailer,events,family=source_pages.family)
+            record_pending_window_dispatch(pending_event_generation, row['iID'], row['strName'], trailer, events,
+                                           source_pages.family)
         updated_window=f.pack_window(header,records,trailer,validate_settings='events' in page)
         if updated_window!=original_window:row['lbObjects']=f.wrap_like(row['lbObjects'],updated_window)
         if common_page_changed or set(page)-{'id','description','common_page'} or set(page)=={'id'}:
@@ -564,7 +729,10 @@ def edit_data(data,spec):
         if type(ident)is not int or not 0<ident<=2147483647 or ident in ids or name.casefold() in names:raise ValueError('New page ID/name is invalid or repeated')
         header,_,trailer=f.window(f.archive(template['lbObjects']))
         settings=WindowSettings.parse(trailer,identity=(template['iID'],template['strName'])).clone(ident,name)
-        trailer=page_events(f.page_properties(settings.to_bytes(), **page_display_properties(page)),page.get('events',{}),fresh=True)
+        events=page.get('events',{})
+        trailer=page_events(f.page_properties(settings.to_bytes(), **page_display_properties(page)),events,fresh=True,
+                            family=source_pages.family)
+        record_pending_window_dispatch(pending_event_generation, ident, name, trailer, events, source_pages.family)
         records=[control(c,variables,primitives,source_pages) for c in page.get('controls',[])]
         if len({f.common(b)['name'] for _,b in records})!=len(records):raise ValueError('Duplicate new page control name')
         row=copy.deepcopy(template);row.update(iID=ident,strName=name,iCompileFlag=0,iDeleteFlag=0)
@@ -591,6 +759,10 @@ def edit_data(data,spec):
         structure.replace_data_group_members(data,spec['data_group_members'],primitives['variables']['group'],source_pages.family)
     if 'data_group_orders' in spec:
         structure.reorder_data_groups(data,spec['data_group_orders'])
+    if 'data_group_storage' in spec:
+        structure.edit_history_storage(data,spec['data_group_storage'],primitives['variables']['group'],project_version(data))
+    if 'data_group_archive_settings' in spec:
+        structure.edit_history_archive_settings(data,spec['data_group_archive_settings'],primitives['variables']['group'],project_version(data))
     if group_deletions:
         structure.delete_default_data_groups(data,group_deletions,primitives['variables']['group'])
     return data
@@ -610,9 +782,12 @@ def ensure_output(path,suffix):
     return path
 
 
+def project_version(data):
+    return f.archive(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00')
+
+
 def project_family(data):
-    version=f.archive(system(data,'MCGSVER')['lbContext']).decode('utf-16le').rstrip('\x00')
-    family=identify_family(version)
+    family=identify_family(project_version(data))
     if family not in ('Stu','Pro'):raise ValueError('Unrecognized native project family')
     return family
 
@@ -639,6 +814,7 @@ def write_project(output,spec,source=None,*,batch_plan=None):
 
 def _build_candidate(output,spec,source,*,batch_plan=None):
     batch_result=None
+    pending_event_generation=[]
     if source:
         source=Path(source).resolve()
         before_sha=sha(source)
@@ -653,7 +829,7 @@ def _build_candidate(output,spec,source,*,batch_plan=None):
             if str(scripts) not in sys.path:sys.path.insert(0,str(scripts))
             from native_tool import apply_project_batch
             batch_result=apply_project_batch(after,before_sha,family,batch_plan)
-        after=edit_data(after,spec)
+        after=edit_data(after,spec,pending_event_generation=pending_event_generation)
         if sha(source)!=before_sha:raise ValueError('Source changed while planning')
         with source.open('rb') as src,output.open('xb') as dst:shutil.copyfileobj(src,dst)
         if sha(output)!=before_sha:raise ValueError('Copied source differs before transaction')
@@ -724,7 +900,9 @@ def _build_candidate(output,spec,source,*,batch_plan=None):
         ordered_renumbers = [op for _, op in sorted(picture_renumbers, key=lambda item: item[0])]
         db({'action':'write','path':str(output),'changes':removals+ordered_renumbers+changes,'expected_sha256':before_sha})
     else:
-        before_sha=None;after=create_data(spec,'Stu' if output.suffix.lower()=='.mcs' else 'Pro')
+        before_sha=None
+        after=create_data(spec, 'Stu' if output.suffix.lower()=='.mcs' else 'Pro',
+                          pending_event_generation=pending_event_generation)
         db({'action':'create','path':str(output),'seed':after})
     actual=read(output)
     if canonical(actual)!=canonical(after):
@@ -734,6 +912,7 @@ def _build_candidate(output,spec,source,*,batch_plan=None):
             'source_unchanged':True if source else None,'tables_checked':len(actual),
             'pages':len(actual['WndUser']['rows']),'host_validation':'pending','physically_tested':False}
     if batch_result is not None:result['bounded_batch']=batch_result
+    if pending_event_generation:result['pending_original_event_generation']=pending_event_generation
     return result
 
 

@@ -95,6 +95,16 @@ class AnimationPlanTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "original VMove animation slot"):
             prepare(self.capture, list(reversed(design)))
 
+        compiled = {**item, "strings": {"2c": "循环加"}, "byte_arrays_hex": {
+            "14": "030000000000000001000000030000000000000026190000002c0000000001"}}
+        self.capture["items"] = [compiled, self.record]
+        after = prepare(self.capture, [{"update": 0, "fields": {"expression": "another_tag"}}, {"keep": 1}])["after"]
+        self.assertTrue(after["items"][0]["restore_observed_vmove_clone"])
+        self.assertEqual(after["items"][0]["expected_record"], {
+            **item, "strings": {"2c": "another_tag"}, "byte_arrays_hex": {"14": ""}})
+        self.assertEqual(after["expected_existing_items"], [compiled, self.record])
+        self.assertEqual(after["items"][1]["expected_record"], self.record)
+
         unknown = {**item,"byte_arrays_hex":{"14":"01"}}
         self.capture["items"] = [unknown]
         with self.assertRaisesRegex(ValueError, "observed original serialization layout"):

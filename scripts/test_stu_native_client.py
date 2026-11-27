@@ -233,6 +233,20 @@ class StuNativeClientTests(unittest.TestCase):
         self.assertEqual(stu.exit_status(result), 2)
         self.assertEqual(stu.exit_status(dict(result, root_save_verified=True)), 0)
 
+    def test_stock_trigger_ids_can_repeat_across_verified_distinct_owners(self):
+        raw_system_id = 1246576928
+        records = [
+            {'trigger_id': raw_system_id, 'block_id': i, 'block_name': name, 'native_type': i,
+             'native_class': kind, 'note': '', 'raw_common_fields': [0, 0, 0]}
+            for i, (name, kind) in enumerate((('启动策略', 'CTriggerStart'), ('退出策略', 'CTriggerEnd')))
+        ]
+        native = self.receipt(stu.TRIGGER_CATALOG_COMMAND, triggers=records, trigger_count=2,
+                              unavailable=[], all_requested_features_available=True)
+        self.queue.submit.return_value = native
+        self.assertEqual(stu.exit_status(self.execute(stu.TRIGGER_CATALOG_COMMAND)), 0)
+        self.queue.submit.return_value = dict(native, triggers=[records[0], dict(records[1], block_id=0)])
+        self.assertFalse(self.execute(stu.TRIGGER_CATALOG_COMMAND)['ok'])
+
     def test_label_batch_guards_both_original_captions_and_the_color_word(self):
         inconsistent = self.label(caption='编辑器值', primary='主语言值')
         inconsistent['after'] = {'caption': '新的值'}
@@ -261,15 +275,38 @@ class StuNativeClientTests(unittest.TestCase):
         changes = (self.geometry(), self.geometry(path=[16], before=[-12, -8, 2, 3], after=[-9, -8, 5, 3],
                                                   native_type=0x5025))
         spec, options = self.batch_spec(*changes)
-        actual = [{'top_level_path': row['top_level_path'], 'actual': row['after']} for row in changes]
-        self.queue.submit.return_value = self.receipt('control-geometry-batch', read_only=False, write_attempted=True,
-            completed_count=2, view_refresh_verified=True, page_save_verified=True, root_save_verified=True,
-            changes=actual)
+        actual = [self.geometry_result(row) for row in changes]
+        self.queue.submit.return_value = self.geometry_receipt(actual)
         result = self.execute('control-geometry-batch', spec=spec)
         self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
         self.queue.submit.assert_called_once()
         self.assertEqual(result['changes'], actual)
         self.assertEqual(stu.exit_status(result), 0)
+
+    def geometry_result(self, entry, **fields):
+        return {**{key: entry[key] for key in ('top_level_path', 'control_name', 'native_type_id', 'before')},
+                'native_class': stu.NATIVE_CONTROL_RTTI[entry['native_type_id']], 'actual': entry['after'], **fields}
+
+    def geometry_receipt(self, rows):
+        return self.receipt(stu.GEOMETRY_COMMAND, status='applied_and_saved', read_only=False,
+            write_attempted=True, native_result_may_be_partial=False, completed_count=len(rows),
+            page_view={'page_id': 2, 'page': '显示页', 'exact_page_is_active': True},
+            view_refresh_verified=True, page_save_verified=True, root_save_verified=True, changes=rows)
+
+    def test_geometry_preserves_directed_line_endpoints_and_static_shape_style(self):
+        line = self.geometry(native_type=0x5002, before=[20, 10, 20, 60], after=[65, 60, 30, 60])
+        rect = self.geometry(path=[29], native_type=0x5004, after=[30, 60, 100, 91])
+        spec, _ = self.batch_spec(line, rect)
+        actual = [self.geometry_result(entry, original_style_preserved=True) for entry in (line, rect)]
+        self.queue.submit.return_value = self.geometry_receipt(actual)
+        result = self.execute(stu.GEOMETRY_COMMAND, spec=spec)
+        self.assertEqual(stu.exit_status(result), 0)
+        for wrong in (dict(actual[0], actual={'rect': [30, 60, 65, 60]}),
+                      dict(actual[0], original_style_preserved=False), dict(actual[0], top_level_path=[49])):
+            self.queue.submit.return_value = self.geometry_receipt([wrong, actual[1]])
+            failure = self.execute(stu.GEOMETRY_COMMAND, spec=spec)
+            self.assertEqual(failure['mismatches'], ['geometry_changes'])
+            self.assertEqual(failure['native_receipt']['changes'][0], wrong)
 
     def test_geometry_rejects_nested_paths_and_unrepresentable_rectangles(self):
         for changes in ((self.geometry(path=[57, 3]),), (self.geometry(path=[False]),),
@@ -393,13 +430,12 @@ class StuNativeClientTests(unittest.TestCase):
         )
 
     def creation_receipt(self, changes):
-        native_classes = {0x5008: '.?AVCDrawLabel@@', 0x5025: '.?AVCDrawEdit@@', 0x5027: '.?AVCDrawButton@@'}
         result = []
         for offset, requested in enumerate(changes):
             native_type = requested['native_type_id']
             result.append({'native_type_id': native_type, 'phase': 'verified',
                            'actual': {'control_name': f'控件{offset + 200}', 'top_level_path': [12 + offset],
-                                      'native_type_id': native_type, 'native_class': native_classes[native_type],
+                                      'native_type_id': native_type, 'native_class': stu.NATIVE_CONTROL_RTTI[native_type],
                                       'rect': requested['after']['rect'], 'original_defaults_preserved': True}})
         view = {'page_id': 2, 'page': '显示页', 'exact_page_is_active': True}
         return self.receipt(stu.CREATE_COMMAND, status='applied_and_saved', read_only=False, write_attempted=True,
@@ -428,6 +464,27 @@ class StuNativeClientTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     self.execute(stu.CREATE_COMMAND, spec=spec)
         self.queue.submit.assert_not_called()
+
+    def test_native_creation_preserves_ordered_horizontal_and_vertical_line_endpoints(self):
+        line = 0x5002
+        choices = (
+            {'native_type_id': line, 'after': {'rect': [180, 110, 60, 110]}},
+            {'native_type_id': line, 'after': {'rect': [100, 170, 100, 30]}},
+            {'native_type_id': 0x5004, 'after': {'rect': [20, 20, 80, 60]}},
+        )
+        spec, options = self.batch_spec(*choices)
+        good = self.creation_receipt(options['changes'])
+        self.queue.submit.return_value = good
+        result = self.execute(stu.CREATE_COMMAND, spec=spec)
+        self.assertEqual(stu.exit_status(result), 0)
+        reversed_response = deepcopy(good)
+        reversed_response['changes'][0]['actual']['rect'] = [60, 110, 180, 110]
+        self.queue.submit.return_value = reversed_response
+        self.assertEqual(self.execute(stu.CREATE_COMMAND, spec=spec)['mismatches'], ['creation_changes'])
+        for invalid in ([10, 10, 10, 10], [-0x80000000, 0, 0, 0]):
+            bad_spec, _ = self.batch_spec({'native_type_id': line, 'after': {'rect': invalid}})
+            with self.assertRaisesRegex(ValueError, 'distinct ordered endpoints'):
+                self.execute(stu.CREATE_COMMAND, spec=bad_spec)
 
     def test_native_creation_receipt_requires_original_defaults_and_exact_append(self):
         choices = self.creation_sources()
@@ -610,8 +667,309 @@ class StuNativeClientTests(unittest.TestCase):
                 self.execute(stu.PAGE_BACKGROUND_EDIT_COMMAND, spec=self.page_spec(dict(options, after=after)))
         self.queue.submit.assert_called_once()
 
+    def test_page_description_uses_current_identity_and_verifies_exact_native_save(self):
+        page = {'page_id': 21, 'page': '公共窗口_主页'}
+        before = {**page, 'description': '原说明'}
+        after = {**page, 'description': '试验\r\n说明'}
+        self.queue.submit.return_value = self.receipt(stu.PAGE_DESCRIPTION_READ_COMMAND, page_description=before)
+        result = self.execute(stu.PAGE_DESCRIPTION_READ_COMMAND, **page)
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], page)
+        native = self.receipt(stu.PAGE_DESCRIPTION_EDIT_COMMAND, status='applied_and_saved',
+            read_only=False, write_attempted=True, native_result_may_be_partial=False,
+            page_view={**page, 'exact_page_is_active': True}, before=before, page_description=after,
+            adjacent_string_preserved=True, completed_count=1,
+            view_refresh_verified=True, page_save_verified=True, root_save_verified=True)
+        self.queue.submit.return_value = native
+        options = {**page, 'before': {'description': before['description']},
+                   'after': {'description': after['description']}}
+        spec = self.page_spec(options)
+        result = self.execute(stu.PAGE_DESCRIPTION_EDIT_COMMAND, spec=spec)
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.assertEqual(stu.exit_status(dict(result, page_save_verified=False)), 2)
+        for broken in (dict(native, before=dict(before, description='其他')),
+                       dict(native, page_description=dict(after, description='其他')),
+                       dict(native, adjacent_string_preserved=False)):
+            self.queue.submit.return_value = broken
+            failure = self.execute(stu.PAGE_DESCRIPTION_EDIT_COMMAND, spec=spec)
+            self.assertEqual(failure['mismatches'], ['page_description'])
+            self.assertEqual(failure['native_receipt'], broken)
+            self.assertFalse(failure['automatic_retry'])
+
+    def test_page_description_no_op_and_validation(self):
+        selection = {'page_id': 21, 'page': '公共窗口_主页'}
+        empty = {'description': ''}
+        stored = {**selection, **empty}
+        options = {**selection, 'before': empty, 'after': empty}
+        self.queue.submit.return_value = self.receipt(stu.PAGE_DESCRIPTION_EDIT_COMMAND, status='no_changes',
+            write_attempted=False, native_result_may_be_partial=False,
+            before=stored, page_description=stored, adjacent_string_preserved=True, completed_count=0,
+            view_refresh_verified=False, page_save_verified=False, root_save_verified=False)
+        result = self.execute(stu.PAGE_DESCRIPTION_EDIT_COMMAND, spec=self.page_spec(options))
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertNotIn('page_view', result)
+        for after in ({'description': '\0'}, {'description': '𠀀' * 16385}, {'text': ''}):
+            with self.assertRaises(ValueError):
+                self.execute(stu.PAGE_DESCRIPTION_EDIT_COMMAND, spec=self.page_spec(dict(options, after=after)))
+        self.queue.submit.assert_called_once()
+
     def data_selector(self):
         return {'name': '十进制输入右上', 'native_id': 16, 'native_type': 2}
+
+    def test_page_rename_checks_registered_paths_and_exact_saved_page(self):
+        selection = {'page_id': 44, 'page': '原页面'}
+        before = {'target_linker': 'MCGS.用户窗口.原页面', 'status': 0, 'first_reference_linker': ''}
+        self.queue.submit.return_value = self.receipt(stu.PAGE_REFERENCE_READ_COMMAND, page_id=44,
+                                                     before_reference=before, registered_incoming_edges=[])
+        self.assertEqual(stu.exit_status(self.execute(stu.PAGE_REFERENCE_READ_COMMAND, **selection)), 0)
+        options = {**selection, 'expected_reference': before, 'after': '新页面'}
+        native = self.receipt(stu.PAGE_RENAME_COMMAND, page_id=44, before_reference=before,
+            after_reference=dict(before, target_linker='MCGS.用户窗口.新页面'), old_reference_after=before,
+            old_name='原页面', new_name='新页面', read_only=False, status='applied_and_saved',
+            registered_incoming_edges=[], complete_registered_graph_preserved=True,
+            write_attempted=True, native_result_may_be_partial=False, original_active_view_preserved=True,
+            root_save_verified=True, page_save_verified=True, saved_page_ids=[44], completed_count=1)
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        result = self.execute(stu.PAGE_RENAME_COMMAND, spec=spec)
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.assertEqual(stu.exit_status(dict(native, saved_page_ids=[43, 44])), 2)
+        self.queue.submit.return_value = dict(native, after_reference=before)
+        mismatch = self.execute(stu.PAGE_RENAME_COMMAND, spec=spec)
+        self.assertEqual(mismatch['mismatches'], ['registered_reference'])
+        self.assertFalse(mismatch['automatic_retry'])
+
+    def test_reference_rename_requires_one_exact_strategy_consumer_or_no_registered_consumers(self):
+        selection = self.data_selector()
+        old = {'target_linker': 'MCGS.实时数据库.十进制输入右上', 'status': 1,
+               'first_reference_linker': 'MCGS.用户策略.记录窗口'}
+        consumer = {'block_id': 10, 'block_name': '记录窗口', 'row_index': 1, 'source_sha256_utf16le': '1' * 64}
+        options = {**selection, 'after': '审计变量', 'expected_reference': old, 'expected_consumer': consumer}
+        native = self.receipt(stu.DATA_RENAME_COMMAND, record=self.data_record(name='审计变量'),
+            before_reference=old, after_reference=dict(old, target_linker='MCGS.实时数据库.审计变量'),
+            old_reference_after=dict(old, status=0, first_reference_linker=''), old_name=selection['name'], new_name='审计变量',
+            registered_incoming_edges=[{'source': old['first_reference_linker'], 'target': old['target_linker']}],
+            complete_registered_graph_preserved=True,
+            strategy_consumer={**{key: consumer[key] for key in ('block_id', 'block_name', 'row_index')},
+                               'source_before_sha256_utf16le': '1' * 64, 'source_after_sha256_utf16le': '2' * 64},
+            status='applied_and_saved', read_only=False, write_attempted=True, native_result_may_be_partial=False,
+            root_save_verified=True, data_module_saved=True, project_saved=True, unselected_native_records_verified=True,
+            original_active_view_preserved=True, completed_count=1)
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.DATA_RENAME_COMMAND, spec=spec)), 0)
+        self.queue.submit.return_value = dict(native, strategy_consumer=dict(native['strategy_consumer'], row_index=2))
+        self.assertEqual(self.execute(stu.DATA_RENAME_COMMAND, spec=spec)['mismatches'], ['registered_reference'])
+        self.queue.submit.return_value = dict(native, registered_incoming_edges=[
+            *native['registered_incoming_edges'], {'source': '第二个消费者', 'target': old['target_linker']}])
+        self.assertEqual(self.execute(stu.DATA_RENAME_COMMAND, spec=spec)['mismatches'], ['registered_reference'])
+        with self.assertRaises(ValueError):
+            self.execute(stu.DATA_RENAME_COMMAND, spec=self.page_spec(dict(options, expected_reference=dict(old, status=2))))
+        with self.assertRaises(ValueError):
+            self.execute(stu.DATA_RENAME_COMMAND, spec=self.page_spec(
+                {key: value for key, value in options.items() if key != 'expected_consumer'}))
+
+    def test_control_reference_rename_binds_the_label_and_checks_zero_edges_and_saves(self):
+        selection = {'page_id': 1, 'page': 'AuditMain', 'top_level_path': [1],
+                     'control_name': 'AuditTitle', 'native_type_id': 0x5008}
+        before = {'target_linker': 'MCGS.用户窗口.AuditMain.AuditTitle', 'status': 0, 'first_reference_linker': ''}
+        control = {'name': 'AuditTitle', 'native_type_id': 0x5008, 'top_level_path': [1],
+                   'native_class': '.?AVCDrawLabel@@', 'document_owned': True}
+        fields = {'page_id': 1, 'page': 'AuditMain', 'before_reference': before,
+                  'registered_incoming_edges': [], 'registered_outgoing_edges': []}
+        self.queue.submit.return_value = self.receipt(stu.CONTROL_REFERENCE_READ_COMMAND, control=control, **fields)
+        self.assertEqual(stu.exit_status(self.execute(stu.CONTROL_REFERENCE_READ_COMMAND, spec=self.page_spec(selection))), 0)
+        options = dict(selection, after='NewTitle', expected_reference=before)
+        native = self.receipt(stu.CONTROL_RENAME_COMMAND, control=dict(control, name='NewTitle'), **fields,
+                              after_reference=dict(before, target_linker='MCGS.用户窗口.AuditMain.NewTitle'),
+                              old_reference_after=before, old_name='AuditTitle', new_name='NewTitle',
+                              read_only=False, status='applied_and_saved', native_result_may_be_partial=False,
+                              reference_scope_zero_edges=True, complete_registered_graph_preserved=True,
+                              page_save_verified=True, root_save_verified=True, write_attempted=True,
+                              target_view_closed=True, saved_page_ids=[1])
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.queue.submit.return_value = dict(native, saved_page_ids=[2])
+        self.assertEqual(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)['mismatches'], ['control_reference'])
+        with self.assertRaises(ValueError):
+            self.execute(stu.CONTROL_RENAME_COMMAND, spec=self.page_spec(dict(options, top_level_path=[1, 0])))
+
+    def test_serial_baud_receipt_requires_the_same_parent_and_all_other_native_fields(self):
+        options = {'path': ['通用父设备_串口0'], 'native_id': 4, 'field': 'baud_rate', 'before': 9600, 'after': 19200}
+        record = {'path': options['path'], 'name': options['path'][0], 'driver_key': '通用父设备_串口',
+                  'native_class': 'CDevHalComm', 'native_id': 4, 'port_number': 1, 'baud_rate': 9600,
+                  'data_bits': 8, 'stop_bits': '1', 'parity': 'none', 'child_driver_count': 0,
+                  'native_codes': {'port_number': 1, 'baud_rate': 6, 'data_bits': 1, 'stop_bits': 0, 'parity': 0}}
+        self.queue.submit.return_value = self.receipt(
+            stu.SERIAL_READ_COMMAND, record=record, status='serial_config_read',
+            explicit_driver_runtime_calls=0, write_attempted=False, native_result_may_be_partial=False)
+        self.assertEqual(stu.exit_status(self.execute(stu.SERIAL_READ_COMMAND,
+                                                     spec=self.page_spec({'path': options['path']}))), 0)
+        after = dict(record, baud_rate=19200, native_codes=dict(record['native_codes'], baud_rate=8))
+        check = {'ok': True, 'native_compile_executed': True, 'native_compile_verified': True,
+                 'compile_result': 0, 'compile_valid': 1, 'errors': 0, 'warnings': 0}
+        native = self.receipt(stu.SERIAL_EDIT_COMMAND, previous_record=record, record=after, status='serial_config_saved',
+                              modified_field='baud_rate', device_document_saved=True, project_saved=True,
+                              read_only=False, explicit_driver_runtime_calls=0, write_attempted=True,
+                              native_result_may_be_partial=False, original_check=check)
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.SERIAL_EDIT_COMMAND, spec=spec)), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.assertTrue(stu.serial_record_matches(dict(record, driver_key='通用串口父设备')))
+        self.assertFalse(stu.serial_record_matches(dict(record, driver_key='通用父设备_以太网')))
+        self.queue.submit.return_value = dict(native, record=dict(after, child_driver_count=1))
+        self.assertEqual(self.execute(stu.SERIAL_EDIT_COMMAND, spec=spec)['mismatches'], ['serial_device'])
+        self.queue.submit.return_value = dict(native, original_check=dict(check, native_compile_verified=False, errors=1))
+        self.assertEqual(self.execute(stu.SERIAL_EDIT_COMMAND, spec=spec)['mismatches'], ['serial_device'])
+        with self.assertRaises(ValueError):
+            self.execute(stu.SERIAL_EDIT_COMMAND, spec=self.page_spec(dict(options, after=38400)))
+
+    def test_control_rename_requires_the_complete_expected_consumer_set_and_saved_pages(self):
+        chosen = {'page_id': 35, 'page': 'History', 'top_level_path': [1],
+                  'control_name': 'Records', 'native_type_id': 0x5033}
+        target = 'MCGS.用户窗口.History.Records'
+        owners = ['MCGS.用户窗口.Home', 'MCGS.用户策略.Report']
+        before = {'target_linker': target, 'status': 1, 'first_reference_linker': owners[0]}
+        consumers = [
+            {'kind': 'page-open', 'owner': owners[0], 'page_id': 55, 'page': 'Home',
+             'source_sha256_utf16le': '1' * 64},
+            {'kind': 'strategy-prog', 'owner': owners[1], 'block_id': 54, 'block_name': 'Report',
+             'row_index': 0, 'source_sha256_utf16le': '2' * 64},
+        ]
+        options = dict(chosen, after='NewRecords', expected_reference=before,
+                       expected_graph_sha256='a' * 64, expected_consumers=consumers)
+        control = {'name': 'NewRecords', 'native_type_id': 0x5033, 'top_level_path': [1],
+                   'native_class': '.?AVCDrawSaveData@@', 'document_owned': True}
+        native = self.receipt(stu.CONTROL_RENAME_COMMAND, page_id=35, page='History', control=control,
+                              before_reference=before, after_reference=dict(before, target_linker='MCGS.用户窗口.History.NewRecords',
+                                                                           first_reference_linker=owners[1]),
+                              old_reference_after=dict(before, status=0, first_reference_linker=''), old_name='Records',
+                              new_name='NewRecords', registered_incoming_edges=[{'source': owner, 'target': target} for owner in owners],
+                              registered_outgoing_edges=[], reference_consumers=consumers,
+                              reference_consumers_after=[dict(row, source_sha256_utf16le='3' * 64) for row in consumers],
+                              registered_graph_sha256='a' * 64, registered_graph_sha256_after='b' * 64,
+                              read_only=False, status='applied_and_saved', native_result_may_be_partial=False,
+                              complete_registered_graph_preserved=True, page_save_verified=True, root_save_verified=True,
+                              write_attempted=True, target_view_closed=True, saved_page_ids=[35, 55],
+                              strategy_save_verified=True)
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.queue.submit.return_value = dict(native, saved_page_ids=[35])
+        self.assertEqual(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)['mismatches'], ['control_reference'])
+        self.queue.submit.return_value = dict(native, registered_incoming_edges=native['registered_incoming_edges'][:1])
+        self.assertEqual(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)['mismatches'], ['control_reference'])
+        self.queue.submit.return_value = dict(native, after_reference=dict(native['after_reference'], first_reference_linker='unknown'))
+        self.assertEqual(self.execute(stu.CONTROL_RENAME_COMMAND, spec=spec)['mismatches'], ['control_reference'])
+
+    def test_recipe_reference_rename_binds_old_and_new_archive_digests_separately(self):
+        before = {'target_linker': 'MCGS.配方.AuditRecipeOld', 'status': 0, 'first_reference_linker': ''}
+        options = {'group_name': 'AuditRecipeOld', 'after': 'AuditRecipeNew', 'expected_recipe_index': 0,
+                   'expected_reference': before, 'expected_archive_sha256': 'a' * 64, 'expected_index_sha256': 'b' * 64}
+        original = {'group_name': 'AuditRecipeOld', 'recipe_index': 0, 'recipe_count': 1,
+                    'before_reference': before, 'registered_incoming_edges': [],
+                    'recipe_archive_sha256': 'a' * 64, 'recipe_index_sha256': 'b' * 64,
+                    'consumer_scope': {'user_pages': 1, 'pages_with_controls': 0, 'pages_with_source': 0,
+                                       'pages_with_dispatch': 0, 'strategy_blocks': 3, 'strategies_with_rows': 0,
+                                       'event_triggers': 0},
+                    'no_recipe_consumers_verified': True}
+        self.queue.submit.return_value = self.receipt(stu.RECIPE_REFERENCE_READ_COMMAND,
+                                                     record={'group_name': 'AuditRecipeOld'}, **original)
+        self.assertEqual(stu.exit_status(self.execute(stu.RECIPE_REFERENCE_READ_COMMAND,
+                                                     spec=self.page_spec({'group_name': 'AuditRecipeOld'}))), 0)
+        native = self.receipt(stu.RECIPE_RENAME_COMMAND, record={'group_name': 'AuditRecipeNew'}, **original,
+                              old_name='AuditRecipeOld', new_name='AuditRecipeNew', old_reference_after=before,
+                              after_reference=dict(before, target_linker='MCGS.配方.AuditRecipeNew'),
+                              before_recipe_archive_sha256='a' * 64, before_recipe_index_sha256='b' * 64,
+                              saved_recipe_archive_sha256='c' * 64, saved_recipe_index_sha256='d' * 64,
+                              write_attempted=True, recipe_save_verified=True, root_save_verified=True,
+                              project_saved=True, native_index_verified=True, target_recipe_payload_preserved=True,
+                              old_named_blob_preserved=True, read_only=False, native_result_may_be_partial=False,
+                              status='applied_and_saved')
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.queue.submit.return_value = dict(native, saved_recipe_index_sha256='b' * 64)
+        self.assertEqual(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)['mismatches'], ['recipe_reference'])
+        self.queue.submit.return_value = dict(native, consumer_scope=dict(original['consumer_scope'], pages_with_source=1))
+        self.assertEqual(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)['mismatches'], ['recipe_reference'])
+        with self.assertRaises(ValueError):
+            self.execute(stu.RECIPE_RENAME_COMMAND, spec=self.page_spec(dict(options, expected_index_sha256='x')))
+
+    def test_recipe_reference_consumer_receipts_bind_controls_scripts_and_saved_pages(self):
+        owner = 'MCGS.用户窗口.Folder.Directory'
+        before = {'target_linker': 'MCGS.配方.OldGroup', 'status': 1, 'first_reference_linker': owner}
+        consumers = {
+            'recipe_controls': [{'page_id': 45, 'page_name': 'Folder', 'control_name': 'Directory',
+                                 'reference_linker': owner, 'recipe_name': 'OldGroup', 'plugin_image_sha256': '1' * 64}],
+            'script_literal_references': [
+                {'kind': 'strategy', 'owner_id': 25, 'owner_name': 'Load', 'index': 0,
+                 'literal_count': 10, 'source_sha256_utf16le': '2' * 64},
+                {'kind': 'close', 'owner_id': 46, 'owner_name': 'Window', 'index': 2,
+                 'literal_count': 2, 'source_sha256_utf16le': '3' * 64},
+            ],
+        }
+        fields = dict(group_name='OldGroup', recipe_index=110, recipe_count=113, before_reference=before,
+                      record={'group_name': 'OldGroup'}, recipe_archive_sha256='a' * 64, recipe_index_sha256='b' * 64,
+                      consumer_scope={'user_pages': 2, 'pages_with_controls': 1, 'pages_with_source': 1,
+                                      'pages_with_dispatch': 0, 'strategy_blocks': 1, 'strategies_with_rows': 1,
+                                      'event_triggers': 0}, no_recipe_consumers_verified=False,
+                      registered_incoming_edges=[{'source': owner, 'target': before['target_linker']}],
+                      referenced_consumers_supported=True, recipe_consumers=consumers, unsupported_recipe_consumer_reasons=[])
+        read_options = {'group_name': 'OldGroup', 'include_referenced_consumers': True}
+        original = self.receipt(stu.RECIPE_REFERENCE_READ_COMMAND, **fields)
+        self.queue.submit.return_value = original
+        self.assertEqual(stu.exit_status(self.execute(stu.RECIPE_REFERENCE_READ_COMMAND, spec=self.page_spec(read_options))), 0)
+        self.queue.submit.return_value = dict(original, referenced_consumers_supported=False,
+                                              unsupported_recipe_consumer_reasons=['dynamic recipe selector'])
+        self.assertEqual(stu.exit_status(self.execute(stu.RECIPE_REFERENCE_READ_COMMAND, spec=self.page_spec(read_options))), 0)
+        options = dict(group_name='OldGroup', after='NewGroup', expected_recipe_index=110, expected_reference=before,
+                       expected_archive_sha256='a' * 64, expected_index_sha256='b' * 64, expected_consumers=consumers)
+        updated = {
+            'recipe_controls': [dict(row, recipe_name='NewGroup') for row in consumers['recipe_controls']],
+            'script_literal_references': [dict(row, source_sha256_utf16le='4' * 64)
+                                          for row in consumers['script_literal_references']],
+        }
+        updates = [dict(row, source_after_sha256_utf16le='4' * 64) for row in consumers['script_literal_references']]
+        native = self.receipt(stu.RECIPE_RENAME_COMMAND, **dict(fields, record={'group_name': 'NewGroup'}),
+                              old_name='OldGroup', new_name='NewGroup', old_reference_after=dict(before, status=0, first_reference_linker=''),
+                              after_reference=dict(before, target_linker='MCGS.配方.NewGroup'),
+                              before_recipe_archive_sha256='a' * 64, before_recipe_index_sha256='b' * 64,
+                              saved_recipe_archive_sha256='c' * 64, saved_recipe_index_sha256='d' * 64,
+                              recipe_consumers_after=updated, script_updates=updates, saved_page_ids=[45, 46],
+                              write_attempted=True, recipe_save_verified=True, root_save_verified=True,
+                              project_saved=True, native_index_verified=True, target_recipe_payload_preserved=True,
+                              old_named_blob_preserved=True, read_only=False, native_result_may_be_partial=False,
+                              status='applied_and_saved', complete_registered_graph_preserved=True, strategy_save_verified=True)
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)), 0)
+        self.queue.submit.return_value = dict(native, script_updates=updates[:1])
+        self.assertEqual(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)['mismatches'], ['recipe_reference'])
+        self.queue.submit.return_value = dict(native, saved_page_ids=[45])
+        self.assertEqual(self.execute(stu.RECIPE_RENAME_COMMAND, spec=spec)['mismatches'], ['recipe_reference'])
+
+    def test_trigger_catalog_distinguishes_complete_records_and_partial_results(self):
+        known = {'trigger_id': 5, 'block_id': 4, 'block_name': '策略', 'native_type': 2, 'native_class': 'CTriggerLoop',
+                 'note': '循环', 'raw_common_fields': [0, 0, 0],
+                 'schedule': {'native_mode': 0, 'native_calendar_period': 123, 'interval_ms': 1000,
+                              'month': 1, 'day': 1, 'hour': 0, 'minute': 0, 'second': 0}}
+        native = self.receipt(stu.TRIGGER_CATALOG_COMMAND, triggers=[known], trigger_count=1,
+                              unavailable=[], all_requested_features_available=True)
+        self.queue.submit.return_value = native
+        self.assertEqual(stu.exit_status(self.execute(stu.TRIGGER_CATALOG_COMMAND)), 0)
+        self.queue.submit.return_value = dict(native, all_requested_features_available=False,
+                                              unavailable=[{'block_id': 5, 'reason': 'unknown'}])
+        result = self.execute(stu.TRIGGER_CATALOG_COMMAND)
+        self.assertEqual(result['triggers'], [known])
+        self.assertEqual(stu.exit_status(result), 2)
 
     def data_record(self, **fields):
         return {**self.data_selector(), 'index': 11, 'comment': '', 'unit': '', 'initial_text': '30', **fields}
@@ -665,11 +1023,24 @@ class StuNativeClientTests(unittest.TestCase):
         self.assertEqual(stu.exit_status(dict(result, data_module_saved=True)), 2)
         for invalid in (dict(options, native_type=-1), dict(options, native_id=True),
                         dict(options, after={'unit': ''}),
-                        dict(options, before={'initial_text': '30'}, after={'initial_text': '31'})):
+                        dict(options, before={'address': '30'}, after={'address': '31'}),
+                        dict(options, before={'initial_text': '30'}, after={'initial_text': 31})):
             with self.subTest(invalid=invalid):
                 with self.assertRaises(ValueError):
                     self.execute(stu.DATA_EDIT_COMMAND, spec=self.page_spec(invalid))
         self.queue.submit.assert_called_once()
+
+    def test_data_edit_initial_value_checks_exact_native_result(self):
+        options = {**self.data_selector(), 'before': {'initial_text': '30'}, 'after': {'initial_text': '31.25'}}
+        native = self.receipt(stu.DATA_EDIT_COMMAND, status='applied_and_saved', read_only=False,
+                              write_attempted=True, data_module_saved=True, project_saved=True,
+                              unselected_native_records_verified=True,
+                              modified_fields=['initial_text'], record=self.data_record(initial_text='31.25'))
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.DATA_EDIT_COMMAND, spec=spec)), 0)
+        self.queue.submit.return_value = dict(native, record=self.data_record(initial_text='31.250'))
+        self.assertEqual(self.execute(stu.DATA_EDIT_COMMAND, spec=spec)['mismatches'], ['variable_record'])
 
     def test_recipe_catalog_summary_and_exact_read_paging(self):
         summary = {'group_name': 'AuditStuMemo', 'row_count': 2, 'column_count': 2}
@@ -779,6 +1150,129 @@ class StuNativeClientTests(unittest.TestCase):
         self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
         self.queue.submit.return_value = dict(read, source_sha256_utf16le='f' * 64)
         self.assertEqual(self.execute(stu.STRATEGY_READ_COMMAND, spec=spec)['mismatches'], ['strategy_source'])
+
+    def test_language_catalog_uses_current_native_definitions_and_exact_text_selector(self):
+        text = {'text_id': 10437, 'translations': [{'language_id': 0, 'text': '验收文字'}]}
+        definitions = [{'language_id': 0, 'name': '中文', 'font_primary': '宋体', 'font_alternate': '宋体'}]
+        receipt = self.receipt(stu.LANGUAGE_CATALOG_COMMAND, language_definitions=definitions,
+                               configured_language_ids=[0], current_language_id=0, preview_language_id=0,
+                               language_dirty=0, next_project_text_id=10438, project_text_count=3, project_texts=[text])
+        self.queue.submit.return_value = receipt
+        spec = self.page_spec({'text_id': 10437})
+        result = self.execute(stu.LANGUAGE_CATALOG_COMMAND, spec=spec)
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], {'text_id': 10437})
+        self.assertEqual(self.execute(stu.LANGUAGE_CATALOG_COMMAND, spec=self.page_spec({'text_id': 10436}))['mismatches'],
+                         ['language_state'])
+        self.assertEqual(stu.exit_status(dict(result, configured_language_ids=[1])), 2)
+        for invalid in ({'text_id': 10437, 'offset': 1}, {'text_id': 0}, {'limit': 1025}, {'offset': True}):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                self.execute(stu.LANGUAGE_CATALOG_COMMAND, spec=self.page_spec(invalid))
+
+    def language_saved(self, operation, **result):
+        return self.receipt(operation, configured_language_ids=[0, 1], current_language_id=0, preview_language_id=0,
+                            next_project_text_id=10438, language_id=1, read_only=False, write_attempted=True,
+                            native_result_may_be_partial=False, automatic_retry=False, language_module_saved=True,
+                            root_save_verified=True, unselected_translations_verified=True, language_selectors_preserved=True,
+                            status='applied_and_saved', **result)
+
+    def test_language_text_write_uses_null_preimage_and_checks_exact_saved_translation(self):
+        options = {'text_id': 10437, 'language_id': 1, 'before': None, 'after': 'Fixture translation 确认'}
+        native = self.language_saved(stu.LANGUAGE_TEXT_COMMAND, text_id=10437, text=options['after'])
+        self.queue.submit.return_value = native
+        result = self.execute(stu.LANGUAGE_TEXT_COMMAND, spec=self.page_spec(options))
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(stu.exit_status(dict(result, language_module_saved=False)), 2)
+        self.queue.submit.return_value = dict(native, text='A different saved value')
+        mismatch = self.execute(stu.LANGUAGE_TEXT_COMMAND, spec=self.page_spec(options))
+        self.assertEqual(mismatch['mismatches'], ['language_state'])
+        self.assertEqual(mismatch['native_receipt']['text'], 'A different saved value')
+        self.assertFalse(mismatch['automatic_retry'])
+        for invalid in (dict(options, before=options['after']), dict(options, after='a\0b'),
+                        dict(options, language_id=True), dict(options, before=1)):
+            with self.subTest(invalid=invalid), self.assertRaises(ValueError):
+                self.execute(stu.LANGUAGE_TEXT_COMMAND, spec=self.page_spec(invalid))
+        self.assertEqual(self.queue.submit.call_count, 2)
+
+    def test_language_add_preserves_existing_order_and_has_a_separate_font_refresh_receipt(self):
+        options = {'language_id': 1, 'language_name': '英语', 'expected_configured_language_ids': [0]}
+        native = self.language_saved(stu.LANGUAGE_ADD_COMMAND, language_name='英语', native_font_mapping_refreshed=True)
+        self.queue.submit.return_value = native
+        result = self.execute(stu.LANGUAGE_ADD_COMMAND, spec=self.page_spec(options))
+        self.assertEqual(stu.exit_status(result), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.assertEqual(stu.exit_status(dict(result, native_font_mapping_refreshed=False)), 2)
+        self.queue.submit.return_value = dict(native, configured_language_ids=[1, 0])
+        self.assertEqual(self.execute(stu.LANGUAGE_ADD_COMMAND, spec=self.page_spec(options))['mismatches'], ['language_state'])
+        with self.assertRaises(ValueError):
+            self.execute(stu.LANGUAGE_ADD_COMMAND, spec=self.page_spec(dict(options, expected_configured_language_ids=[0, 1])))
+
+    def picture_record(self, **values):
+        return {'index': 1, 'name': '验收图片', 'content_hash': 'NativeImageDigest', 'image_kind': 2,
+                'cached_bytes': 125, 'file_format': 'png', 'reference_only': False, **values}
+
+    def test_picture_catalog_keeps_original_index_and_range(self):
+        native = self.receipt(stu.PICTURE_CATALOG_COMMAND, picture_count=2, records=[self.picture_record()],
+                              picture_module_dirty=0, root_document_dirty=0, automatic_retry=False)
+        self.queue.submit.return_value = native
+        spec = self.page_spec({'offset': 1, 'limit': 1})
+        self.assertEqual(stu.exit_status(self.execute(stu.PICTURE_CATALOG_COMMAND, spec=spec)), 0)
+        self.queue.submit.return_value = dict(native, records=[self.picture_record(index=0)])
+        self.assertEqual(self.execute(stu.PICTURE_CATALOG_COMMAND, spec=spec)['mismatches'], ['picture_state'])
+
+    def test_picture_import_copy_and_replace_require_separate_native_save_and_archive_proofs(self):
+        sha = 'e' * 64
+        source = str(self.root / 'source.png')
+        for operation, options, index, count, identity in (
+                (stu.PICTURE_IMPORT_COMMAND, {'source_file': source, 'source_sha256': sha}, 1, 2, False),
+                (stu.PICTURE_COPY_COMMAND, {'source_name': '原图片', 'source_content_hash': 'NativeImageDigest'}, 1, 2, False),
+                (stu.PICTURE_REPLACE_COMMAND, {'source_file': source, 'source_sha256': sha, 'expected_content_hash': 'OldDigest'}, 0, 1, True)):
+            with self.subTest(command=operation):
+                spec = self.page_spec({'name': '验收图片', 'expected_count': 1, **options})
+                native = self.receipt(operation, picture_count=count, record=self.picture_record(index=index), file_sha256=sha,
+                          native_catalog_preserved=True, native_archive_readback_verified=True, native_module_saved=True,
+                          root_saved=True, native_object_identity_preserved=identity, input_header_normalized=False,
+                          read_only=False, write_attempted=True, native_result_may_be_partial=False, automatic_retry=False,
+                          status='applied_and_saved')
+                self.queue.submit.return_value = native
+                self.assertEqual(stu.exit_status(self.execute(operation, spec=spec)), 0)
+                self.assertEqual(stu.exit_status(dict(native, root_saved=False)), 2)
+                self.queue.submit.return_value = dict(native, native_archive_readback_verified=False)
+                mismatch = self.execute(operation, spec=spec)
+                self.assertEqual(mismatch['mismatches'], ['picture_state'])
+                self.assertIn('native_receipt', mismatch)
+                self.assertFalse(mismatch['automatic_retry'])
+
+    def test_picture_export_confirms_the_exact_created_file_bytes(self):
+        path = self.root / 'export.png'
+        payload = b'fixture image bytes'
+        path.write_bytes(payload)
+        spec = self.page_spec({'name': '验收图片', 'expected_content_hash': 'NativeImageDigest', 'destination_file': str(path)})
+        self.queue.submit.return_value = self.receipt(stu.PICTURE_EXPORT_COMMAND, picture_count=2, record=self.picture_record(),
+            destination_file=str(path), file_written=True, file_bytes=len(payload), file_sha256=hashlib.sha256(payload).hexdigest(),
+            automatic_retry=False)
+        self.assertEqual(stu.exit_status(self.execute(stu.PICTURE_EXPORT_COMMAND, spec=spec)), 0)
+        path.write_bytes(b'other file contents')
+        mismatch = self.execute(stu.PICTURE_EXPORT_COMMAND, spec=spec)
+        self.assertEqual(mismatch['mismatches'], ['picture_export_file'])
+        self.assertTrue(mismatch['native_receipt']['file_written'])
+
+    def test_page_generation_requires_the_exact_active_page_and_original_saves(self):
+        options = {'page_id': 24, 'page': '验收窗口', 'expected_top_level_count': 3}
+        native = self.receipt(stu.PAGE_GENERATE_COMMAND, page_id=24, page='验收窗口', top_level_control_count=3,
+                              page_view={'page_id': 24, 'page': '验收窗口', 'exact_page_is_active': True},
+                              native_page_generate_return=True, native_selected_page_generated=True, view_refresh_verified=True,
+                              page_save_verified=True, root_save_verified=True, write_attempted=True, completed_count=1,
+                              read_only=False, native_result_may_be_partial=False, automatic_retry=False, status='applied_and_saved')
+        self.queue.submit.return_value = native
+        spec = self.page_spec(options)
+        self.assertEqual(stu.exit_status(self.execute(stu.PAGE_GENERATE_COMMAND, spec=spec)), 0)
+        self.assertEqual(self.queue.submit.call_args.args[0]['options'], options)
+        self.queue.submit.return_value = dict(native, top_level_control_count=2)
+        retry = self.execute(stu.PAGE_GENERATE_COMMAND, spec=spec)
+        self.assertEqual(retry['mismatches'], ['generated_page'])
+        self.assertFalse(retry['automatic_retry'])
 
     def test_strategy_edit_needs_exact_original_source_and_separate_native_results(self):
         source = "状态监控=0\r\n' Stu 原厂策略验收"

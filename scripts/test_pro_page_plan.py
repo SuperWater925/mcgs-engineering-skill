@@ -1,6 +1,7 @@
 """Page designer fixtures. These do not launch or mutate Pro."""
 import copy
 from contextlib import redirect_stdout
+from hashlib import sha256
 import io
 from pathlib import Path
 import tempfile
@@ -10,10 +11,13 @@ from unittest.mock import patch
 
 import pro_page_plan
 
+from page_group_plan import COORDINATES, DESIGN as GROUP_DESIGN, FLATTEN_CELLS, compile_groups, inspect_groups, report_groups
 from page_plan import compile_design, compile_page_setup, normalize_receipts, require_native_length
 from page_readback_report import compare_animations, render_review
+from project_plan import DESIGN as PROJECT_DESIGN, compile_project, json_bytes, report_readback, session_program
 
 PROJECT = 'D:/sample/Evidence.mcp'
+PAGE_LINKER = 'MCGS.User windows.Title'
 
 
 def control(index, name, rectangle, complete=None, native_id=None, class_name='CDrawRect'):
@@ -45,6 +49,104 @@ def capture(forest):
                 {'kind': 'button-actions-batch', 'target': {}, 'before': {
                     'page': page, 'control': forest[0], 'phases': [{'phase': 0, 'texts': ['Navigate']}]}}
             ]}
+
+
+class GroupPlanTests(unittest.TestCase):
+    def setUp(self):
+        first = control(0, 'Box', [10, 10, 50, 50])
+        second = control(1, 'Line', [90, 70, 70, 110], class_name='CDrawLine')
+        first['type_id'], second['type_id'] = 0x5004, 0x5005
+        self.original = [first, second]
+        self.design = {'schema': GROUP_DESIGN, 'project_path': PROJECT, 'page': {'id': 3, 'name': 'Title'},
+                       'operation': 'group', 'controls': [{key: row[key] for key in ('path', 'name', 'class')}
+                                                          for row in reversed(self.original)]}
+
+    def original_receipt(self, action, roots):
+        receipt = capture(self.original)
+        page = receipt['action_preimages'][0]['before']['page']
+        page.update(view='0x00000002', pages=[{'id': 3, 'name': 'Title'}])
+        rows = [row for root in roots for row in [root, *root['children']]]
+        before = {'page': page, 'page_linker': PAGE_LINKER, 'forest': roots, 'group_preimage_sha256': '1' * 64,
+                  'coordinate_roles': [{'complete': row['complete'], 'model': {
+                      'CDrawRect': 'bounding-rectangle', 'CDrawLine': 'directed-line',
+                      'CDrawCell': 'native-cell-container'}[row['class']]} for row in rows],
+                  'control_properties': [{'complete': row['complete'], 'properties': []} for row in rows],
+                  'control_linkers': [{'complete': row['complete'], 'linker': PAGE_LINKER + '.' + row['name']}
+                                      for row in rows],
+                  'reference_graph': {'edges': [], 'edge_count': 0, 'complete_registered_native_graph': True,
+                                      'bidirectional_edges_consistent': True}}
+        receipt['action_preimages'] = [{**action, 'before': before}]
+        receipt['features'].append(COORDINATES)
+        receipt['compiled_kinds'].extend(('control-group', 'control-ungroup'))
+        receipt['all_requested_features_available'] = True
+        return receipt
+
+    def planned(self):
+        action, = inspect_groups(self.design)['actions']
+        receipt = self.original_receipt(action, self.original)
+        program, inspection, review = compile_groups(self.design, receipt)
+        return program, inspection, review
+
+    def grouped_roots(self):
+        group = control(0, 'Cell', [10, 10, 90, 110], complete='0x00000020', class_name='CDrawCell')
+        group['type_id'] = 0x5039
+        group['children'] = [{**old, 'path': [0, index], 'rectangle': rect} for index, (old, rect) in enumerate(
+            zip(self.original, ([0, 0, 5000, 4000], [10000, 6000, 7500, 10000])))]
+        return [group]
+
+    def test_group_preserves_page_scoped_linkers_and_reversed_line_endpoints(self):
+        program, inspection, review = self.planned()
+        spec = program['steps'][0]['specification']
+        activate, group = spec['actions']
+        self.assertEqual(activate['kind'], 'page-view-open')
+        self.assertIn(COORDINATES, spec['required_features'])
+        self.assertEqual([row['control_path'] for row in group['target']['controls']], [[0], [1]])
+        self.assertEqual(group['after']['surviving_controls'][1]['rectangle'], [10000, 6000, 7500, 10000])
+        later = self.original_receipt(inspection['actions'][0], self.grouped_roots())
+        self.assertTrue(report_groups(review, later)['business_readback_passed'])
+        later['action_preimages'][0]['before']['control_linkers'][1]['linker'] = PAGE_LINKER + '.Cell.Box'
+        self.assertEqual([row['field'] for row in report_groups(review, later)['differences']], ['linker'])
+
+    def test_ungroup_against_exact_native_page_and_independent_graph(self):
+        roots = self.grouped_roots()
+        self.design.update(operation='ungroup', controls=[{'path': [0], 'class': 'CDrawCell', 'name': 'Cell'}],
+                           save=True)
+        action, = inspect_groups(self.design)['actions']
+        program, inspection, review = compile_groups(self.design, self.original_receipt(action, roots))
+        self.assertEqual([step['step_id'] for step in program['steps']], ['group-edit', 'group-save'])
+        recovered = self.original_receipt(inspection['actions'][0], self.original)
+        self.assertTrue(report_groups(review, recovered)['business_readback_passed'])
+        recovered['action_preimages'][0]['before']['page']['view'] = '0x00000009'
+        self.assertEqual([row['field'] for row in report_groups(review, recovered)['differences']], ['page_identity'])
+        recovered['action_preimages'][0]['before']['reference_graph']['bidirectional_edges_consistent'] = False
+        with self.assertRaisesRegex(ValueError, 'bidirectional'):
+            report_groups(review, recovered)
+
+    def test_group_flattens_only_explicit_static_cells_and_recomputes_world_bounds(self):
+        cell, = self.grouped_roots()
+        cell['children'][0]['rectangle'] = [1250, 1000, 5000, 4000]
+        extra = control(1, 'Far box', [110, 120, 170, 160], complete='0x00000022')
+        extra['type_id'] = 0x5004
+        self.design['controls'] = [{key: row[key] for key in ('path', 'name', 'class')} for row in (extra, cell)]
+        action, = inspect_groups(self.design)['actions']
+        current = self.original_receipt(action, [cell, extra])
+        current['features'].append(FLATTEN_CELLS)
+        with self.assertRaisesRegex(ValueError, 'explicit flatten_selected_cells'):
+            compile_groups(self.design, current)
+        self.design['flatten_selected_cells'] = True
+        program, _, review = compile_groups(self.design, current)
+        spec = program['steps'][0]['specification']
+        self.assertIn(FLATTEN_CELLS, spec['required_features'])
+        group = spec['actions'][1]
+        self.assertTrue(group['after']['flatten_selected_cells'])
+        self.assertEqual(group['after']['group_rectangle'], [20, 20, 170, 160])
+        self.assertEqual([row['name'] for row in group['after']['surviving_controls']], ['Box', 'Line', 'Far box'])
+        self.assertEqual(group['after']['surviving_controls'][0]['rectangle'], [0, 0, 2000, 2143])
+        self.assertEqual([row['name'] for row in review['expected_forest'][0]['children']], ['Box', 'Line', 'Far box'])
+        graph = current['action_preimages'][0]['before']['reference_graph']
+        graph.update(edge_count=1, edges=[{'source': PAGE_LINKER + '.Cell', 'target': 'MCGS.Resource'}])
+        with self.assertRaisesRegex(ValueError, 'old group.*registered reference'):
+            compile_groups(self.design, current)
 
 
 class PagePlanTests(unittest.TestCase):
@@ -609,6 +711,73 @@ class PagePlanTests(unittest.TestCase):
         self.assertIn(feature, spec['required_features'])
         action = next(row for row in spec['actions'] if row['kind']=='control-animation-list')
         self.assertTrue(action['after']['items'][0]['restore_observed_vmove_clone'])
+
+
+class ProjectReadbackTests(unittest.TestCase):
+    def design(self):
+        action = {'action_id': 'page-edit', 'kind': 'page-document-properties',
+                  'target': {'page_id': 32, 'page_name': 'Caller'}, 'after': {'fields': {}}}
+        return {'schema': PROJECT_DESIGN, 'project_path': PROJECT, 'sections': [
+            {'domain': 'pages', 'program': session_program(PROJECT, [
+                {'step_id': 'edit', 'specification': {'actions': [action]}}])}], 'checks': [
+            {'id': 'catalog', 'domain': 'pages',
+             'selector': {'kind': 'page-catalog-read', 'target': {}},
+             'expected': [{'pointer': '/page/id', 'value': 32}]},
+            {'id': 'properties', 'domain': 'pages',
+             'selector': {'kind': 'page-document-properties', 'target': {'page_name': 'Caller',
+                          'page_id': {'$ref': '/steps/catalog/inspect/action_preimages/0/before/page/id'}}},
+             'expected': [{'pointer': '/comment', 'value': 'current'}]}]}
+
+    def test_readback_resolves_an_earlier_verified_receipt(self):
+        design = self.design()
+        _, program, review = compile_project(design)
+        with tempfile.TemporaryDirectory() as directory:
+            directory = Path(directory)
+
+            def write(name, value):
+                data = json_bytes(value)
+                (directory / f'{name}.json').write_bytes(data)
+                return sha256(data).hexdigest()
+
+            write('manifest', {'purpose': program['purpose'], 'project_path': PROJECT,
+                  'source_program_sha256': review['readback_sha256'], 'program_sha256': write('program', program),
+                  'session_id': 'readback', 'engineering_delivery_scope_sha256': 'scope'})
+            write('execution-result', {'ok': True, 'session_id': 'readback', 'execution_mode': 'direct',
+                  'completed_steps': ['catalog', 'properties']})
+            for index, (target, before) in enumerate((({}, {'page': {'id': 32}}),
+                    ({'page_name': 'Caller', 'page_id': 32}, {'comment': 'current'}))):
+                step = program['steps'][index]
+                name = step['step_id']
+                prefix = f'{index + 1:04d}-{name}'
+                specification = copy.deepcopy(step['specification'])
+                action = specification['actions'][0]
+                action['target'] = target
+                spec_sha = write(prefix + '-specification', specification)
+                write(prefix + '-begin', {'step_id': name, 'specification_sha256': spec_sha})
+                receipt = {'ok': True, 'op': 'engineering-edit-inspect', 'write_attempted': False,
+                           'request_id': f'eng_readback_{index:04d}_read', 'actual_project': PROJECT,
+                           'engineering_delivery_scope_sha256': 'scope',
+                           'action_preimages': [dict(action, before=before)]}
+                write(prefix + '-inspect', receipt)
+                if index == 0:
+                    catalog_receipt = receipt
+            self.assertTrue(report_readback(review, directory)['business_readback_passed'])
+            catalog_receipt['request_id'] = 'another-request'
+            write('0001-catalog-inspect', catalog_receipt)
+            report = report_readback(review, directory)
+            self.assertFalse(report['business_readback_passed'])
+            self.assertEqual([check['status'] for check in report['checks']], ['unverified', 'unverified'])
+
+    def test_readback_rejects_forward_or_apply_references_at_design_time(self):
+        design = self.design()
+        design['checks'].reverse()
+        with self.assertRaisesRegex(ValueError, 'earlier check receipt'):
+            compile_project(design)
+        design = self.design()
+        reference = design['checks'][1]['selector']['target']['page_id']
+        reference['$ref'] = reference['$ref'].replace('/inspect/', '/apply/')
+        with self.assertRaisesRegex(ValueError, 'earlier check receipt'):
+            compile_project(design)
 
 
 if __name__ == '__main__':

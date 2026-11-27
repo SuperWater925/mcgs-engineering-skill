@@ -40,6 +40,10 @@ jobs:
         run: python scripts/test_pro_hwnd.py --work local-artifacts/hwnd-fixtures
       - name: 安装更新与入口合同
         run: python scripts/test_turnkey_delivery.py --work local-artifacts/delivery-fixtures
+      - name: 发布附件索引和校验合同
+        run: python scripts/test_turnkey_publisher_assets.py
+      - name: Stu 在线客户端和回执合同
+        run: python scripts/test_stu_native_client.py
       - name: 组布局定位数据流
         run: python scripts/test_native_group_layout.py
       - name: 多状态控件与图片资源

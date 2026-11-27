@@ -12,6 +12,18 @@ from mcs_window_archive import Reader, WindowArchive, WindowSettings
 from 窗口事件归档 import 读取公共窗口槽
 
 
+HISTORY_STORAGE_PROFILES = {
+    "McgsStu 3.5.3.9198 SP1": ("Stu", struct.pack("<f", 16.0),
+                               ((8, 100, 1), (20, 0, 1), (48, 0, 1), (52, 0, 0x6400), (56, 0, 1))),
+    "McgsPro 3.5.2.12210": ("Pro", struct.pack("<f", 13.0), ((20, 0, 1), (52, 0, 2000))),
+}
+HISTORY_ARCHIVE_SETTING_OFFSETS = {
+    "Pro": {"period_100ms": 8},
+    "Stu": {"period_100ms": 8, "capacity_kb": 52},
+}
+MAX_STORAGE_SETTING = 0x7fffffff
+
+
 def key(value):
     if not isinstance(value, str) or not value.strip() or "\0" in value:
         raise ValueError("Expected a nonempty native object name")
@@ -445,21 +457,30 @@ def _rebind_input_windows(pages, old_binding, new_name):
         page["iCompileFlag"] = 0
 
 
-def _data_group_members(group, span, by_name):
+def _group_member_span(records, ident):
+    span = records.group_member_spans.get(ident)
+    return (span, False) if span is not None else (records.group_id_member_spans.get(ident), True)
+
+
+def _data_group_members(group, span, by_name, by_native_id=None):
     extension = group["extension"]
     count = native.u32(extension, 0)
     if count and span is None:
-        raise ValueError("Current group member vector is not an unambiguous native CString list")
+        raise ValueError("Current group member vector has no unambiguous native encoding")
     end = 4 + (span[1] - span[0] if span else 0)
     members, encoded = [], {}
     pos = 4
     for _ in range(count):
-        member_name, next_pos = native.string(extension, pos)
-        member = by_name.get(member_name)
+        if by_native_id is None:
+            member_name, next_pos = native.string(extension, pos)
+            member = by_name.get(member_name)
+        else:
+            member = by_native_id.get(native.u32(extension, pos))
+            next_pos = pos + 4
         if member is None or member["kind"] not in (1, 2, 3):
             raise ValueError("Current group member does not identify an exact scalar")
         ident = member["id"]
-        members.append({"id": ident, "name": member_name})
+        members.append({"id": ident, "name": member["name"]})
         encoded[ident] = extension[pos:next_pos]
         pos = next_pos
     if pos != end:
@@ -472,8 +493,9 @@ def _data_group_members(group, span, by_name):
     return members, encoded, supported
 
 
-def inspect_data_groups(records):
+def inspect_data_groups(records, *, storage_template=None, version=None):
     by_name = {record["name"]: record for record in records}
+    by_id = {record["id"]: record for record in records}
     groups = []
     for record in records:
         if record["kind"] != 0xffffffff:
@@ -481,8 +503,18 @@ def inspect_data_groups(records):
         ident = record["id"]
         group = {"id": ident, "name": record["name"], "order_editable": False}
         try:
-            members, _, supported = _data_group_members(record, records.group_member_spans.get(ident), by_name)
+            span, uses_ids = _group_member_span(records, ident)
+            members, _, supported = _data_group_members(record, span, by_name, by_id if uses_ids else None)
             group.update(members=members, order_editable=supported and len(members)>1)
+            if storage_template is not None and supported and members and not uses_ids:
+                profiles = _history_storage_profiles(record, span, records, storage_template, version)
+                if record["prefix"] == profiles.get("default"):
+                    group["history_storage"] = "default"
+                elif profiles:
+                    family = HISTORY_STORAGE_PROFILES[version][0]
+                    settings = _history_archive_settings(record["prefix"], profiles["archive"], family)
+                    if settings is not None:
+                        group.update(history_storage="archive", archive_settings=settings)
         except ValueError as error:
             group["members_unavailable"] = str(error)
         groups.append(group)
@@ -525,11 +557,11 @@ def _data_object_id_vectors(record, records):
     extension = record["extension"]
     entries = native.u32(extension, 0)
     if record["kind"] == 0xffffffff:
-        span = records.group_member_spans.get(record["id"])
+        span, uses_ids = _group_member_span(records, record["id"])
         if entries and span is None:
             raise ValueError("Another data group has an unresolved member vector")
         pos = 4 + (span[1] - span[0] if span else 0)
-        first = ()
+        first = struct.iter_unpack("<I", extension[4:pos]) if uses_ids else ()
     else:
         pos = 4 + entries * 4
         first = struct.iter_unpack("<I", extension[4:pos])
@@ -567,6 +599,115 @@ def _default_data_group_prefix(neutral, ident):
     return prefix[:native_id] + struct.pack("<I", ident) + prefix[native_id+4:]
 
 
+def _history_storage_profiles(group, span, records, neutral, version=None, *, family=None):
+    schema = HISTORY_STORAGE_PROFILES.get(version)
+    if family is not None:
+        schema = next((profile for profile in HISTORY_STORAGE_PROFILES.values()
+                       if profile[:2] == (family, records.document_header)), None)
+    if (schema is None or records.document_header != schema[1] or span is None
+            or group["extension"][4+span[1]-span[0]:] != bytes.fromhex(neutral["extension"])[4:]):
+        return {}
+    _, _, fields = schema
+    default = _default_data_group_prefix(neutral, group["id"])
+    if len(default) != 98 or any(native.u32(default, offset) != before
+                                 for offset, before, _ in fields):
+        return {}
+    # Transfer the measured fields together as one original storage preset.
+    archive = bytearray(default)
+    for offset, _, after in fields:
+        struct.pack_into("<I", archive, offset, after)
+    return {"default": default, "archive": bytes(archive)}
+
+
+def _history_archive_settings(prefix, archive, family):
+    if len(prefix) != len(archive):
+        return None
+    offsets = HISTORY_ARCHIVE_SETTING_OFFSETS[family]
+    settings = {field: native.u32(prefix, offset) for field, offset in offsets.items()}
+    if any(not 1 <= value <= MAX_STORAGE_SETTING for value in settings.values()):
+        return None
+    matched = bytearray(archive)
+    for field, offset in offsets.items():
+        struct.pack_into("<I", matched, offset, settings[field])
+    if prefix == matched:
+        return settings
+    return None
+
+
+def _history_storage_target(data, operation, neutral, version, purpose):
+    row, = [item for item in data["System"]["rows"] if item["strName"] == "ObjData"]
+    original = native.archive(row["lbContext"])
+    records = native.variables(original)
+    if native.pack_variables(records) != original:
+        raise ValueError("Original ObjData storage archive did not round-trip")
+    group = _data_group_target(operation, {item["id"]: item for item in records}, purpose)
+    span, uses_ids = _group_member_span(records, group["id"])
+    profiles = _history_storage_profiles(group, span, records, neutral, version)
+    if uses_ids or not profiles:
+        raise ValueError(purpose + " preimage differs from the verified nonempty user group")
+    members, _, supported = _data_group_members(group, span, {item["name"]: item for item in records})
+    if not supported or not members:
+        raise ValueError(purpose + " preimage differs from the verified nonempty user group")
+    return row, records, group, profiles
+
+
+def _write_history_storage(row, records):
+    changed = native.pack_variables(records)
+    reread = native.variables(changed)
+    if (reread != records or reread.document_header != records.document_header
+            or reread.alarm_spans != records.alarm_spans
+            or reread.group_member_spans != records.group_member_spans
+            or reread.group_id_member_spans != records.group_id_member_spans
+            or reread.empty_group_spans != records.empty_group_spans):
+        raise ValueError("Data group storage reread differs outside the selected prefix")
+    row["lbContext"] = native.wrap_like(row["lbContext"], changed)
+
+
+def edit_history_storage(data, operation, neutral, version):
+    if version not in HISTORY_STORAGE_PROFILES:
+        raise ValueError("Data group storage requires a verified project release")
+    purpose = "Data group storage"
+    exact(operation, ("id", "name", "before", "after"), purpose)
+    before, after = operation["before"], operation["after"]
+    if (before, after) not in (("default", "archive"), ("archive", "default")):
+        raise ValueError("Data group storage requires a change between default and archive")
+    row, records, group, profiles = _history_storage_target(data, operation, neutral, version, purpose)
+    if group["prefix"] != profiles[before]:
+        raise ValueError(purpose + " preimage differs from the verified nonempty user group")
+    group["prefix"] = profiles[after]
+    _write_history_storage(row, records)
+
+
+def edit_history_archive_settings(data, operation, neutral, version):
+    purpose = "Data group archive settings"
+    schema = HISTORY_STORAGE_PROFILES.get(version)
+    if schema is None:
+        raise ValueError(purpose + " require a verified project release")
+    exact(operation, ("id", "name", "before", "after"), purpose)
+    family = schema[0]
+    offsets = HISTORY_ARCHIVE_SETTING_OFFSETS[family]
+    before, after = operation["before"], operation["after"]
+    if (not isinstance(before, dict) or not isinstance(after, dict) or not before
+            or before.keys() != after.keys() or before.keys() - offsets.keys()):
+        raise ValueError(purpose + " require matching supported fields")
+    if any(type(value) is not int or not 1 <= value <= MAX_STORAGE_SETTING
+           for value in (*before.values(), *after.values())):
+        raise ValueError(purpose + " require positive signed 32-bit integers")
+    if before == after:
+        raise ValueError(purpose + " require at least one changed value")
+    row, records, group, profiles = _history_storage_target(data, operation, neutral, version, purpose)
+    settings = _history_archive_settings(group["prefix"], profiles["archive"], family)
+    if settings is None:
+        raise ValueError(purpose + " require the verified enabled timed disk storage preimage")
+    if any(settings[field] != value for field, value in before.items()):
+        raise ValueError(purpose + " before values differ from the current archive")
+    prefix = bytearray(group["prefix"])
+    for field, value in after.items():
+        struct.pack_into("<I", prefix, offsets[field], value)
+    group["prefix"] = bytes(prefix)
+    _write_history_storage(row, records)
+
+
 def data_group_deletions(spec):
     selectors = spec["delete_data_groups"]
     if not isinstance(selectors, list) or not selectors:
@@ -582,7 +723,9 @@ def data_group_deletions(spec):
     edits = spec.get("data_group_orders", [])
     if not isinstance(edits, list):
         raise ValueError("data_group_orders requires a list")
-    for edit in [spec.get("data_group_members"), *edits, *(spec.get("add_variables") or [])]:
+    for edit in [spec.get("data_group_members"), spec.get("data_group_storage"),
+                 spec.get("data_group_archive_settings"),
+                 *edits, *(spec.get("add_variables") or [])]:
         if not isinstance(edit, dict):
             continue
         ident, name = edit.get("id"), edit.get("name")
@@ -626,7 +769,7 @@ def replace_data_group_members(data, operation, neutral, family):
     by_name = {record["name"]: record for record in records}
     group = _data_group_target(operation, by_id, "Data group membership")
     ident = group["id"]
-    span = records.group_member_spans.get(ident)
+    span, uses_ids = _group_member_span(records, ident)
     # An archive with only empty groups can have a unique count boundary
     # without distinguishing an empty CString vector from an empty ID vector.
     # Each original reader switches from IDs to CString at its own archive schema boundary.
@@ -634,21 +777,28 @@ def replace_data_group_members(data, operation, neutral, family):
     pro_cutoff, = struct.unpack("<f", struct.pack("<f", 12.1))
     uses_names = ((family == "Stu" and archive_version > 12.5)
                   or (family == "Pro" and archive_version >= pro_cutoff))
-    if (span is None and uses_names and math.isfinite(archive_version)
+    pro_legacy_ids = family == "Pro" and archive_version == 12.0
+    if (span is None and (uses_names or pro_legacy_ids) and math.isfinite(archive_version)
             and not group["note"] and not group["unit"]
             and all(record["id"] in records.empty_group_spans for record in records
                     if record["kind"] == 0xffffffff)):
         span = records.empty_group_spans.get(ident)
+        uses_ids = pro_legacy_ids
     if span is None:
-        raise ValueError("Current ObjData does not identify a native CString group vector")
-    members, encoded, supported = _data_group_members(group, span, by_name)
+        raise ValueError("Current ObjData does not identify a native group member vector")
+    members, encoded, supported = _data_group_members(group, span, by_name, by_id if uses_ids else None)
     begin, end = span
     suffix = 4 + end - begin
     extension = group["extension"]
     default_prefix = _default_data_group_prefix(neutral, ident)
-    if (not supported or group["prefix"]!=default_prefix or
-            extension[suffix:]!=bytes.fromhex(neutral["extension"])[4:]):
-        raise ValueError("Data group membership requires the verified default storage and auxiliary fields")
+    if not supported or extension[suffix:] != bytes.fromhex(neutral["extension"])[4:]:
+        raise ValueError("Data group membership requires the verified auxiliary fields")
+    archived = group["prefix"] != default_prefix
+    if archived:
+        profiles = _history_storage_profiles(group, span, records, neutral, family=family)
+        if (uses_ids or not members or not profiles
+                or _history_archive_settings(group["prefix"], profiles["archive"], family) is None):
+            raise ValueError("Data group membership requires the verified default or timed storage preimage")
 
     current = {member["id"]: member for member in members}
     if _data_group_selectors(operation["before"], current) != list(current):
@@ -657,11 +807,16 @@ def replace_data_group_members(data, operation, neutral, family):
     wanted = _data_group_selectors(operation["after"], scalars)
     if len(set(wanted))!=len(wanted):
         raise ValueError("Data group members must be distinct existing user scalars")
+    if archived and not wanted:
+        raise ValueError("A timed storage group must retain at least one member")
     _require_unreferenced_data_group(data, group, records)
 
-    vector = struct.pack("<I", len(wanted)) + b"".join(
-        encoded[member_id] if member_id in encoded else scalars[member_id]["_text_source"]["name"][1]
-        for member_id in wanted)
+    if uses_ids:
+        vector = b"".join(struct.pack("<I", member_id) for member_id in wanted)
+    else:
+        vector = b"".join(encoded[member_id] if member_id in encoded else
+                          scalars[member_id]["_text_source"]["name"][1] for member_id in wanted)
+    vector = struct.pack("<I", len(wanted)) + vector
     if original[begin-4:end] != extension[:suffix]:
         raise ValueError("Data group span does not match its native record")
     result = original[:begin-4] + vector + original[end:]
@@ -671,8 +826,9 @@ def replace_data_group_members(data, operation, neutral, family):
     expected = [edited if record is group else record for record in records]
     if reread!=expected or reread.document_header!=records.document_header or reread.alarm_spans!=records.alarm_spans:
         raise ValueError("Data group membership reread differs outside the selected vector")
-    after, _, _ = _data_group_members(edited, reread.group_member_spans.get(ident), by_name)
-    if after != operation["after"]:
+    reread_span, reread_uses_ids = _group_member_span(reread, ident)
+    after, _, _ = _data_group_members(edited, reread_span, by_name, by_id if reread_uses_ids else None)
+    if after != operation["after"] or (wanted and uses_ids != reread_uses_ids):
         raise ValueError("Data group member identities differ after native reread")
     row["lbContext"] = native.wrap_like(row["lbContext"], result)
 
@@ -693,8 +849,8 @@ def reorder_data_groups(data, operations):
         ident = group["id"]
         if ident in replacements:
             raise ValueError("Data group reorder requires a unique current group ID and name")
-        span = records.group_member_spans.get(ident)
-        before, encoded, supported = _data_group_members(group, span, by_name)
+        span, uses_ids = _group_member_span(records, ident)
+        before, encoded, supported = _data_group_members(group, span, by_name, by_id if uses_ids else None)
         if not supported or len(before)<2:
             raise ValueError("Data group requires distinct user scalar members and empty alarm and auxiliary fields")
         by_member_id = {member["id"]: member for member in before}
@@ -718,9 +874,48 @@ def reorder_data_groups(data, operations):
     expected = [replacements.get(record["id"], record) for record in records]
     if (reread != expected or reread.document_header != records.document_header
             or reread.alarm_spans != records.alarm_spans
-            or reread.group_member_spans != records.group_member_spans):
+            or reread.group_member_spans != records.group_member_spans
+            or reread.group_id_member_spans != records.group_id_member_spans):
         raise ValueError("Data group reread did not preserve the native variable records and layout")
     row["lbContext"] = native.wrap_like(row["lbContext"], changed)
+
+
+def expand_variable_arrays(specs):
+    """Expand the original naming pattern into ordinary scalar additions."""
+    if not isinstance(specs, list):
+        raise ValueError("variable_arrays must be an array")
+    additions = []
+    for spec in specs:
+        required = {"name_template", "type", "count"}
+        choices = {"start", "step", "number_mode", "zero_padding_width", "initial", "initials", "note", "unit"}
+        if not isinstance(spec, dict) or not required <= spec.keys() or spec.keys() - required - choices:
+            raise ValueError("Native scalar array naming requires name_template, type and count")
+        template = spec["name_template"]
+        if not isinstance(template, str) or not template or "\0" in template or spec["type"] not in ("boolean", "number", "string"):
+            raise ValueError("Native scalar array needs a name template and a scalar type")
+        count, start, step = spec["count"], spec.get("start", 1), spec.get("step", 1)
+        mode, width = spec.get("number_mode", 0), spec.get("zero_padding_width", 0)
+        if (any(type(value) is not int for value in (count, start, step, mode, width))
+                or not 1 <= count <= 50000 or start < 0 or step < 1
+                or start + (count - 1) * step > 0x7fffffff or mode not in (0, 1, 2) or not 0 <= width <= 128):
+            raise ValueError("Native scalar array index, count, radix or name width is out of range")
+        if "initials" in spec:
+            initials = spec["initials"]
+            if "initial" in spec or not isinstance(initials, list) or len(initials) != count:
+                raise ValueError("Provide either one initial value or one initial value per generated scalar")
+        else:
+            initials = [spec.get("initial", "0")] * count
+        if count > 1 and "{R}" not in template:
+            template += "{R}"
+        number_format = "dxo"[mode]
+        for index, initial in enumerate(initials):
+            number = format(start + index * step, number_format).zfill(width)
+            name = template.replace("{R}", number)
+            if not name.isidentifier() or len(name.encode("utf-8")) > 128:
+                raise ValueError("Native scalar array must expand into user identifiers within 128 UTF-8 bytes")
+            additions.append(dict(name=name, type=spec["type"], initial=initial,
+                                  note=spec.get("note", ""), unit=spec.get("unit", "")))
+    return additions
 
 
 def remove_variables(data, selectors, renames=()):

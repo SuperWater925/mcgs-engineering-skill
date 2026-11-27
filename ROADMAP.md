@@ -2,7 +2,7 @@
 
 本清单列昆仑通态 Stu 和 Pro 离线、在线组态的后续工作。这里是任务提案，已验收的能力以产品使用说明和回执为准。请通过 [Issue 模板](https://github.com/SuperWater925/mcgs-engineering-skill/issues/new/choose) 引用任务编号认领，并在对应 Issue 中更新进度。
 
-Pro 已交付原生编辑、热接、同页批次及后台准备和回执流水线。Stu 已交付热接、工程和控件目录、设计页激活、标签和几何编辑、原厂模板复制及组态检查。0102 新业务优化仍待真实工程复测。 [Pro 流水线验证](references/pro-native-pipeline-validation.json) · [Stu 原生在线说明](references/stu-native-engineering.md)
+Pro 已交付原生编辑、热接、同页批次及后台准备和回执流水线。Stu 已交付热接、原生页面与控件操作、已验证的工程模块编辑、组态检查及同进程关开。0102 新业务优化仍待真实工程复测。 [Pro 流水线验证](references/pro-native-pipeline-validation.json) · [Stu 原生在线说明](references/stu-native-engineering.md)
 
 ## DOC 01 安装说明实测
 

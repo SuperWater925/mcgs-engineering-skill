@@ -15,6 +15,7 @@ from native_format import archive, wrap_like
 from offline_picture_library import LIST, PREFIX, edit_picture_library, library
 from mcs_window_archive import WindowArchive
 from picture_resources import Picture
+from control_patch import edit as edit_control
 from 原生界面样式 import CommonEnvelope, MultiState
 
 
@@ -25,6 +26,14 @@ def fixture():
 def add(name, identity='abcdef0123456789abcdef0123456789'):
     q = PictureResource(string('Source native resource'), string(identity), 2, 2, 3, raster())
     return {'action': 'add', 'name': name, 'resource_hex': q.to_bytes().hex()}
+
+
+def named_bitmap(reference, name):
+    common = CommonEnvelope.parse(states())
+    common.record.type_id = 0x5009
+    common.name.value = name
+    common.content = Picture(0x80, reference=string(reference)).to_bytes()
+    return common.to_record()
 
 
 class PictureLifecycle(unittest.TestCase):
@@ -187,6 +196,57 @@ class PictureLifecycle(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'opaque picture reference'):
             edit_picture_library(data, [{'action': 'rename', 'name': 'Picture1 changed', 'new_name': 'Next'}])
         self.assertEqual(data, before)
+
+    def test_static_bitmap_rename_and_one_control_redirect_use_complete_native_names(self):
+        data = fixture()
+        edit_picture_library(data, [add('Picture2'), add('Picture21', '1' * 32)])
+        row = data['WndUser']['rows'][0]
+        initial = row['lbObjects']
+        before = WindowArchive.parse(archive(initial))
+        original = named_bitmap('Picture2', 'Bitmap One')
+        other = named_bitmap('Picture21', 'Bitmap Two')
+        before.controls[:] = [original, other]
+        row['lbObjects'] = wrap_like(initial, before.to_bytes())
+        edit_picture_library(data, [{'action': 'rename', 'name': 'Picture2', 'new_name': 'Overview'}])
+        actual = WindowArchive.parse(archive(data['WndUser']['rows'][0]['lbObjects']))
+        expected, sibling = actual.controls
+        self.assertEqual(sibling.to_bytes(), other.to_bytes())
+        commons = [CommonEnvelope.parse(record) for record in (original, expected)]
+        self.assertEqual(Picture.parse(commons[-1].content).reference.value, 'Overview')
+        commons[-1].content = commons[0].content
+        self.assertEqual(commons[-1].to_record().to_bytes(), original.to_bytes())
+        self.assertEqual(actual.trailer, before.trailer)
+        self.assertEqual(actual.prefix, before.prefix)
+        update = edit_control(expected, {'bitmap_picture': {'reference': 'Picture21'}},
+                              picture_references={'Overview', 'Picture21'})
+        self.assertEqual(Picture.parse(CommonEnvelope.parse(update).content).reference.value, 'Picture21')
+        with self.assertRaisesRegex(ValueError, 'live picture reference'):
+            edit_picture_library(data, [{'action': 'delete', 'name': 'Picture21'}])
+        with self.assertRaisesRegex(ValueError, 'resolve'):
+            edit_control(expected, {'bitmap_picture': {'reference': 'Missing'}}, picture_references={'Overview'})
+
+    def test_static_bitmap_public_project_edit_uses_existing_picture_catalog(self):
+        import mcgs_file as project
+
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                data = project.create_data({'pages': [{'name': 'Test'}]}, family)
+                edit_picture_library(data, [add('Picture2'), add('Picture21', '1' * 32)])
+                row = data['WndUser']['rows'][0]
+                original = row['lbObjects']
+                window = WindowArchive.parse(archive(original))
+                window.controls[:] = [named_bitmap('Picture2', 'Bitmap')]
+                row['lbObjects'] = wrap_like(original, window.to_bytes())
+                change = {'name': 'Bitmap', 'sha256': hashlib.sha256(window.controls[0].payload).hexdigest(),
+                          'edits': {'bitmap_picture': {'reference': 'Picture21'}}}
+                result = project.edit_data(copy.deepcopy(data), {'pages': [{'id': 1, 'controls': [change]}]})
+                self.assertEqual(result['System'], data['System'])
+                window = WindowArchive.parse(archive(result['WndUser']['rows'][0]['lbObjects']))
+                picture = Picture.parse(CommonEnvelope.parse(window.controls[0]).content)
+                self.assertEqual(picture.reference.value, 'Picture21')
+                change['edits']['bitmap_picture']['reference'] = 'Missing'
+                with self.assertRaisesRegex(ValueError, 'resolve'):
+                    project.edit_data(copy.deepcopy(data), {'pages': [{'id': 1, 'controls': [change]}]})
 
     def test_compound_operation_atomic_on_bad_input(self):
         data = fixture()

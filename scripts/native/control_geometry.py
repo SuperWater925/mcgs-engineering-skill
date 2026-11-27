@@ -1,7 +1,10 @@
 """One archive-aware geometry dispatch used by every offline entry point."""
-from 原生界面样式 import CommonEnvelope, MultiState
+import struct
 
-SIMPLE_TYPES = frozenset((0x5002, 0x5004, 0x5008, 0x5025, 0x5027))
+from 原生界面样式 import CommonEnvelope, GenericMetadata, MultiState
+
+STATIC_BODY_TYPES = frozenset((0x5006, 0x5009))
+SIMPLE_TYPES = frozenset((0x5002, 0x5004, 0x5008, 0x5025, 0x5027)) | STATIC_BODY_TYPES
 GEOMETRY_TYPES = SIMPLE_TYPES | {0x5028, 0x502a}
 
 
@@ -23,5 +26,24 @@ def resize(record, bounds):
     value = CommonEnvelope.parse(record)
     if value.to_record().payload != record.payload:
         raise ValueError('Geometry envelope does not round-trip')
+    if record.type_id in STATIC_BODY_TYPES:
+        if (value.animations or struct.unpack_from('<I', value.prefix, 4)[0] & 0x100
+                or GenericMetadata.parse(value.metadata.value).events):
+            raise ValueError('Ellipse or bitmap bounds require a static unlinked control without dispatch events')
+        if record.type_id == 0x5006 and value.content:
+            raise ValueError('Ellipse has an unrecognized geometry body')
+        if record.type_id == 0x5009:
+            from picture_resources import Picture
+            picture = Picture.parse(value.content)
+            named = picture.mode == 0x80 and bool(picture.reference.value)
+            embedded = picture.mode == 2 and bool(picture.width and picture.height and picture.payload)
+            if not (named or embedded):
+                raise ValueError('Bitmap geometry requires an existing named or embedded image')
     value.set_rect(bounds)
-    return value.to_record()
+    result = value.to_record()
+    if record.type_id in STATIC_BODY_TYPES:
+        start = value.rect_offset
+        expected = record.payload[:start] + struct.pack('<4i', *bounds) + record.payload[start+16:]
+        if result.payload != expected:
+            raise ValueError('Ellipse or bitmap changed outside its original rectangle slice')
+    return result

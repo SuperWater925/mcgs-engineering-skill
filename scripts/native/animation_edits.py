@@ -1,15 +1,18 @@
 """Bounded edits of the serialized CDraw animation list."""
 import copy
 import hashlib
+import math
 import struct
 
 from mcs_window_archive import Reader, write_count, write_cstring
+from mcs_button_control import Array, CString
 from 原生界面样式 import CommonEnvelope, animation
 from 可见动画归档 import VisibleObject, SUPPORTED_TYPES, CLASS_HEADER
 
 
 BLINK_ENUMS = (("speed", ("fast", "normal", "slow")), ("mode", ("visibility", "properties")))
 BLINK_COLORS = ("text_color", "border_color", "fill_color")
+CLICK_PAGE_CONTROL_TYPES = frozenset({0x5008, 0x5009, 0x5039})
 
 
 def _blink_properties(words):
@@ -21,6 +24,25 @@ def _blink_properties(words):
             properties[key + "_raw"] = value
     properties.update({key: value & 0xffffff for key, value in zip(BLINK_COLORS, words[2:])})
     return properties
+
+
+def _constant_input_limits(detail):
+    if (detail.get('encoding') != 'input-flags' or detail.get('flags') != 0
+            or detail.get('input_kind') != 0):
+        return {}
+    limits = {key: struct.unpack('<f', bytes.fromhex(detail[key]))[0] for key in ('minimum', 'maximum')}
+    return limits if all(map(math.isfinite, limits.values())) else {}
+
+
+def _click_page_target(detail):
+    if detail['class_name'] != 'CAniClick' or detail['expression'] or detail['reserved_word'] != 0:
+        return None
+    texts, flags, ids = (detail[name] for name in ('action_texts', 'action_flags', 'action_ids'))
+    if (flags != [0, 1, 0, 0, 0, 0, 0, 0] or len(texts) != 8 or len(ids) != 8
+            or not texts[1] or not 0 < ids[1] <= 0x7fffffff or any(texts[:1] + texts[2:])
+            or any(value != 0xffffffff for value in ids[:1] + ids[2:]) or detail['tail_arrays'] != [b'', b'']):
+        return None
+    return {'id': ids[1], 'name': texts[1]}
 
 
 def _items(common):
@@ -48,9 +70,56 @@ def inspect_items(common):
          "independent": raw.startswith(b"\xff\xff"), "tag": _tag_kind(raw)[0], "expression": detail["expression"],
          **{key: detail[key] for key in ("mode", "thresholds", "off_text", "on_text") if key in detail},
          **({"colors": [value & 0xffffff for value in detail["colors"]]} if "colors" in detail else {}),
+         **({'page_target': route} if (route := _click_page_target(detail)) else {}),
+         **_constant_input_limits(detail),
          **(_blink_properties(detail["blink_words"]) if "blink_words" in detail else {})}
         for index, (detail, raw) in enumerate(_items(common))
     ]
+
+
+def retarget_click_animation(record, index, sha256, source, target):
+    """Keep a proved direct page action's other slots and native bytes intact."""
+    if record.type_id not in CLICK_PAGE_CONTROL_TYPES:
+        raise ValueError('Unsupported control class for direct Click animation page selection')
+    common = CommonEnvelope.parse(record)
+    previous = _items(common)
+    if type(index) is not int or not 0 <= index < len(previous):
+        raise ValueError('Invalid Click animation index')
+    detail, raw = previous[index]
+    if hashlib.sha256(raw).hexdigest() != sha256 or common.to_record().payload != record.payload:
+        raise ValueError('Click animation preimage differs')
+    if _click_page_target(detail) != source or source == target:
+        raise ValueError('Expected the current single direct native Click animation page target and a different replacement')
+    kind, body = _tag_kind(raw)
+    rows = _map_rows(previous)
+    if kind == 'object' or sum(row[0] == rows[index][0] for row in rows) != 1:
+        raise ValueError('Click animation aliases cannot be changed independently')
+    scan = Reader(raw, body)
+    if kind == 'declaration':
+        scan.u16()
+        scan.take(scan.u16())
+    scan.take(4)
+    CString.parse(scan)
+    start = scan.pos
+    texts, flags, ids = Array.parse(scan, True), Array.parse(scan), Array.parse(scan)
+    texts.items[1].value = target['name']
+    ids.items[1] = target['id']
+    edited = raw[:start] + texts.to_bytes() + flags.to_bytes() + ids.to_bytes() + raw[scan.pos:]
+    count = Reader(record.payload, common.animation_start)
+    count.count()
+    begin = count.pos + sum(len(old) for _, old in previous[:index])
+    result = copy.deepcopy(record)
+    result.payload = record.payload[:begin] + edited + record.payload[begin + len(raw):]
+    flag = common.animation_end + len(edited) - len(raw)
+    body = bytearray(result.payload)
+    struct.pack_into('<H', body, flag, struct.unpack_from('<H', body, flag)[0] | 1)
+    result.payload = bytes(body)
+    roundtrip = CommonEnvelope.parse(result)
+    after = _items(roundtrip)
+    if (roundtrip.to_record().payload != result.payload or _click_page_target(after[index][0]) != target
+            or [item[1] for item in after] != [value if i != index else edited for i, (_, value) in enumerate(previous)]):
+        raise ValueError('Changed Click animation did not round-trip')
+    return result
 
 
 def _visible_values(item, fields):
@@ -86,6 +155,8 @@ def _edit_fields(name, raw, fields):
         if reader.pos != len(raw):
             raise ValueError("Visibility extent differs")
         return _visible_values(visible, fields)
+    if name == 'CAniInput':
+        return _edit_input_limits(raw, fields)
     simple = {"CAniBrush", "CAniTextColor", "CAniOutput", "CAniBlink", "CAniVMove", "CAniSize"}
     if name not in simple:
         raise ValueError("Field editing is unsupported for " + name)
@@ -152,6 +223,27 @@ def _edit_fields(name, raw, fields):
             if key in fields:
                 tail[offset:offset + 8] = _movement_pair(key, fields[key])
     return prefix + tail
+
+
+def _edit_input_limits(raw, fields):
+    if not isinstance(fields, dict) or not fields or fields.keys() - {'minimum', 'maximum'}:
+        raise ValueError('Input animation supports native constant minimum/maximum edits')
+    decoded = Reader(raw)
+    detail, _ = animation(decoded)
+    original = _constant_input_limits(detail)
+    if not original or decoded.pos != len(raw):
+        raise ValueError('Input animation lacks the verified constant numeric layout')
+    requested = original | fields
+    if any(type(n) not in (int, float) or not -3.4028234663852886e38 <= n <= 3.4028234663852886e38
+           for n in requested.values()):
+        raise ValueError('Input animation limits must be finite float32 values')
+    limits = struct.pack('<2f', requested['maximum'], requested['minimum'])
+    maximum, minimum = struct.unpack('<2f', limits)
+    if minimum > maximum:
+        raise ValueError('Input animation minimum exceeds maximum')
+    # The verified flags=0 serialization ends with maximum, minimum, then
+    # three independent DWORDs. Keep the expressions and flag modes verbatim.
+    return raw[:-20] + limits + raw[-12:]
 
 
 def _edit_blink_properties(tail, fields):

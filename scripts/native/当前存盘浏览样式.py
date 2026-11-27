@@ -15,7 +15,7 @@ from 旧下拉框与历史表样式 import NativeStyle, SAVE_COLUMN_TEXT_FIELDS,
 SAVED_DATA_TYPE = 0x5033
 SAVED_DATA_STYLE_FIELDS = frozenset({'row_height', 'saved_data_colors', 'saved_data_columns',
                                     'saved_data_fonts', 'saved_data_time_parts', 'saved_data_time_filter',
-                                    'saved_data_source'})
+                                    'saved_data_source', 'saved_data_column_layout'})
 FONT_ROLES = {role: key for key, role in SAVE_ROLES.items() if key.endswith('_font')}
 COLOR_ROLES = {role: key for key, role in SAVE_ROLES.items()
                if role not in FONT_ROLES and role not in {'row_height', 'inner_rect'}}
@@ -39,7 +39,7 @@ TIME_FILTER_PERIODS = ('today', 'this_month', 'this_week', 'previous_day', 'prev
 TIME_FILTER_SPLIT_RANGES = ((0, 23), (1, 31), (1, 7), (0, 23), (1, 31), (1, 7))
 MAX_RECENT_MINUTES = 0x2222222
 DATA_SOURCE_KINDS = ('group', 'alarm_history', 'operation_log')
-GROUP_BUILT_IN_FIELDS = {'MCGS序号': 1, 'MCGS_Time': 10}
+GROUP_TIME_FIELD = ('MCGS_Time', 10)
 SYSTEM_INDEX_FIELDS = ('MCGS序号', 'MCGSIndexID')
 # Both native Source dialogs build the same ordered CString/DWORD vectors.
 # The sequence row comes from the same localized resource in every mode.
@@ -55,6 +55,22 @@ SYSTEM_SAVED_DATA_SOURCES = {
     )),
 }
 SYSTEM_TIME_KEY_MEMBERS = ('1cc', '1d4')
+ALARM_DATE_COLUMNS = frozenset({'TIMEE', 'TIMEA'})
+ALARM_DATE_FORMATS = frozenset({'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd hh-mm-ss'})
+
+
+def needs_saved_data_variables(edits):
+    source = edits.get('saved_data_source')
+    if isinstance(source, dict) and source.get('kind') == 'group':
+        return True
+    time_filter = edits.get('saved_data_time_filter')
+    if isinstance(time_filter, dict) and (time_filter.get('mode') == 'variables' or
+                                         any(time_filter.get(key) for key in TIME_FILTER_BINDINGS)):
+        return True
+    columns = edits.get('saved_data_columns')
+    return isinstance(columns, list) and any(
+        isinstance(column, dict) and column.get('output_variable') for column in columns)
+
 
 def parse_current_save_data(data):
     r=Reader(data)
@@ -160,32 +176,93 @@ def source_string_patch(layout, member, value):
     return (start, start+len(old.wire), write_cstring(value, wide=old.wide))
 
 
-def edit_group_source(layout, changes, variables, current):
-    if changes.keys() != {'kind', 'group'} or not isinstance(changes['group'], str):
-        raise ValueError('Saved-data group source selection requires a named group')
-    if current == changes:
-        return changes, None, {}, []
-    if current['kind'] != 'group':
-        raise ValueError('Saved-data source selection currently preserves the original group field layout')
-    group_name = changes['group']
-    group = variables.get(group_name) if variables is not None else None
-    if group is None or group['kind'] != 0xffffffff:
-        raise ValueError('Saved-data source requires an existing native data group')
+def group_member_vector(group, variables):
+    """Read the original ordered group member vector at its archive boundary."""
+    raw = group['extension']
+    count = Reader(raw).u32()
 
-    reader = Reader(group['extension'])
-    count = reader.u32()
-    reader.count_extent(count, 1, 'Saved-data source group members')
-    fields = dict(GROUP_BUILT_IN_FIELDS)
-    for _ in range(count):
-        member = reader.cstring()[0]
-        record = variables.get(member)
-        if record is None or record['kind'] not in (1, 2, 3) or member in fields:
-            raise ValueError('Saved-data source group must have distinct scalar members')
-        fields[member] = record['kind']
-    cached = source_fields(layout)
-    if len(cached) != len(fields) or dict(cached) != fields:
-        raise ValueError('Saved-data source must have the same native column fields and types')
-    return changes, None, {}, [source_string_patch(layout, '144', group_name)]
+    def tail_fits(reader):
+        if reader.pos == len(raw):
+            # A catalog can provide the isolated vector for an equivalent
+            # source retarget. A rebuilt layout needs the full record boundary.
+            return False
+        if reader.u32() != 0:
+            raise ValueError('Unsupported saved-data group storage flags')
+        length = reader.u32()
+        reader.count_extent(length, 4, 'Saved-data auxiliary group members')
+        reader.take(length * 4)
+        reader.cstring()
+        if len(raw) - reader.pos not in (0, 12):
+            raise ValueError('Unsupported saved-data group record tail')
+        return True
+
+    candidates = []
+    try:
+        reader = Reader(raw, 4)
+        reader.count_extent(count, 1, 'Saved-data source group members')
+        names = tuple(reader.cstring()[0] for _ in range(count))
+        if all(variables.get(name, {}).get('kind') in (1, 2, 3) for name in names):
+            candidates.append((names, tail_fits(reader)))
+    except ValueError:
+        pass
+    if count:
+        try:
+            reader = Reader(raw, 4)
+            reader.count_extent(count, 4, 'Saved-data source group member IDs')
+            ids = [reader.u32() for _ in range(count)]
+            if tail_fits(reader):
+                required = set(ids)
+                by_id = {}
+                for name, record in variables.items():
+                    ident = record.get('id')
+                    if ident in required and record.get('kind') in (1, 2, 3):
+                        by_id[ident] = name if ident not in by_id else None
+                names = tuple(by_id.get(ident) for ident in ids)
+                if None not in names and (names, True) not in candidates:
+                    candidates.append((names, True))
+        except ValueError:
+            pass
+    if len(candidates) != 1:
+        raise ValueError('Saved-data group requires a unique native scalar member vector')
+    return candidates[0]
+
+
+def rebuild_source(layout, current, expected, native, fields, time_key):
+    if current == expected and native == fields:
+        return expected, None, {}, []
+    if (layout.metadata.get('trailing_binding_present') and
+            (layout.metadata.get('trailing_object_id') != 0xffffffff or layout.metadata.get('trailing_object_name'))):
+        raise ValueError('Saved-data source retains a separate native object binding')
+
+    config = layout.metadata['native_config_member_map']
+    patches = []
+    time_fields = {name.casefold() for name, word in fields if word == 10}
+    old_time_fields = {name.casefold() for name, word in native if word == 10}
+    expected_time = {}
+    for member in SYSTEM_TIME_KEY_MEMBERS:
+        old = config[member]['value']
+        if old in ('', 'MCGS_Time', 'TIMES') or (expected['kind'] == 'group' and old.casefold() in old_time_fields):
+            value = time_key
+        elif old.casefold() in time_fields:
+            value = old
+        else:
+            raise ValueError(f'Saved-data time field {old!r} is not a timestamp in {expected["kind"]}')
+        expected_time[member] = value
+        if value != old:
+            patches.append(source_string_patch(layout, member, value))
+    if current != expected:
+        offset = config['140']['offset']
+        patches.extend([
+            (offset, offset+4, struct.pack('<I', DATA_SOURCE_KINDS.index(expected['kind']))),
+            source_string_patch(layout, '144', expected['group']),
+        ])
+    if native != fields:
+        wide = native[0][0].wide if native else config['144']['value'].wide
+        prefix = struct.pack('<I', len(fields)) + b''.join(
+            write_cstring(name, wide=wide) + struct.pack('<I', word) for name, word in fields
+        )
+        patches.append((6, layout.metadata['native_field_prefix_bytes'], prefix))
+    return expected, fields, expected_time, patches
 
 
 def edit_data_source(layout, changes, variables):
@@ -193,13 +270,15 @@ def edit_data_source(layout, changes, variables):
         raise ValueError('Saved-data source selection requires a known kind')
     kind = changes['kind']
     current = data_source(layout)
+    if kind not in DATA_SOURCE_KINDS or changes.keys() - {'kind', 'group', 'index_field'}:
+        raise ValueError('Saved-data source must select group, alarm_history or operation_log')
     if kind == 'group':
-        return edit_group_source(layout, changes, variables, current)
-    if kind not in SYSTEM_SAVED_DATA_SOURCES or changes.keys() - {'kind', 'group', 'index_field'}:
-        raise ValueError('Saved-data system source must select alarm_history or operation_log')
-    system_name, time_key, fixed_fields = SYSTEM_SAVED_DATA_SOURCES[kind]
-    if 'group' in changes and changes['group'] != system_name:
-        raise ValueError(f'Saved-data {kind} uses the original source name {system_name}')
+        name = changes.get('group')
+        if not isinstance(name, str) or not name or '\0' in name:
+            raise ValueError('Saved-data group source selection requires a named group')
+        expected = {'kind': 'group', 'group': name}
+        if current == expected and 'index_field' not in changes:
+            return expected, None, {}, []
     if current['kind'] not in DATA_SOURCE_KINDS:
         raise ValueError('Current saved-data source kind cannot be identified')
     native = source_fields(layout)
@@ -208,47 +287,32 @@ def edit_data_source(layout, changes, variables):
         stored_name, _, stored_fields = SYSTEM_SAVED_DATA_SOURCES[current['kind']]
         if current['group'] != stored_name or original_index is None or native != [(original_index, 1), *stored_fields]:
             raise ValueError('Current saved-data system source fields do not match its original layout')
-    if (layout.metadata.get('trailing_binding_present') and
-            (layout.metadata.get('trailing_object_id') != 0xffffffff or layout.metadata.get('trailing_object_name'))):
-        raise ValueError('Saved-data source retains a separate native object binding')
     if native and original_index is None and 'index_field' not in changes:
         raise ValueError('Saved-data source index field is unrecognized; select its exact native language name')
     index = changes.get('index_field', original_index or SYSTEM_INDEX_FIELDS[0])
     if index not in SYSTEM_INDEX_FIELDS:
         raise ValueError('Saved-data source index_field must be MCGS序号 or MCGSIndexID')
-    fields = [(index, 1), *fixed_fields]
-    expected = {'kind': kind, 'group': system_name}
-    if current == expected and native == fields:
-        return expected, None, {}, []
+    if kind in SYSTEM_SAVED_DATA_SOURCES:
+        name, time_key, fixed_fields = SYSTEM_SAVED_DATA_SOURCES[kind]
+        if 'group' in changes and changes['group'] != name:
+            raise ValueError(f'Saved-data {kind} uses the original source name {name}')
+        return rebuild_source(layout, current, {'kind': kind, 'group': name}, native,
+                              [(index, 1), *fixed_fields], time_key)
 
-    config = layout.metadata['native_config_member_map']
-    changes_to_archive = []
-    time_fields = {name.casefold() for name, word in fields if word == 10}
-    expected_time = {}
-    for member in SYSTEM_TIME_KEY_MEMBERS:
-        old = config[member]['value']
-        if old in ('', 'MCGS_Time', 'TIMES'):
-            value = time_key
-        elif old.casefold() in time_fields:
-            value = old
-        else:
-            raise ValueError(f'Saved-data time field {old!r} is not a timestamp in {kind}')
-        expected_time[member] = value
-        if value != old:
-            changes_to_archive.append(source_string_patch(layout, member, value))
-    if current != expected:
-        offset = config['140']['offset']
-        changes_to_archive.extend([
-            (offset, offset+4, struct.pack('<I', DATA_SOURCE_KINDS.index(kind))),
-            source_string_patch(layout, '144', system_name),
-        ])
-    if native != fields:
-        wide = native[0][0].wide if native else config['144']['value'].wide
-        prefix = struct.pack('<I', len(fields)) + b''.join(
-            write_cstring(name, wide=wide) + struct.pack('<I', word) for name, word in fields
-        )
-        changes_to_archive.append((6, layout.metadata['native_field_prefix_bytes'], prefix))
-    return expected, fields, expected_time, changes_to_archive
+    if current == expected and index == original_index:
+        return expected, None, {}, []
+    group = variables.get(name) if variables is not None else None
+    if group is None or group['kind'] != 0xffffffff:
+        raise ValueError('Saved-data source requires an existing native data group')
+    members, full_boundary = group_member_vector(group, variables)
+    fields = [(index, 1), GROUP_TIME_FIELD, *((member, variables[member]['kind']) for member in members)]
+    if len({field.casefold() for field, _ in fields}) != len(fields):
+        raise ValueError('Saved-data source group requires unique original field names')
+    if current['kind'] == 'group' and native == fields:
+        return expected, None, {}, [source_string_patch(layout, '144', name)]
+    if not full_boundary:
+        raise ValueError('Rebuilding saved-data group fields requires the full native member boundary')
+    return rebuild_source(layout, current, expected, native, fields, GROUP_TIME_FIELD[0])
 
 def edit_time_filter(layout, changes, variables):
     allowed = TIME_FILTER_MEMBERS.keys() | TIME_FILTER_BINDINGS.keys()
@@ -323,6 +387,65 @@ def saved_data_style(record):
                 for index, column in enumerate(layout.metadata["columns"])]}
 
 
+def arrange_columns(layout, order, content):
+    if not isinstance(order, list) or not order or len(order) > 0xffffffff:
+        raise ValueError('Saved-data column layout must contain at least one native column')
+    columns = layout.metadata['columns']
+    spans = layout.metadata['column_spans']
+    first = spans[0]['width'][0]
+    stop = layout.metadata['column_end_offset']
+    used = set()
+    pieces = []
+    expected = []
+    for item in order:
+        if type(item) is int:
+            index = item
+            if index in used:
+                raise ValueError('Repeat a saved-data column using an explicit clone_index')
+            used.add(index)
+        elif isinstance(item, dict) and item.keys() == {'clone_index'} and type(item['clone_index']) is int:
+            index = item['clone_index']
+            if (0 <= index < len(columns) and (columns[index]['texts'][4] or
+                                               columns[index]['words'] not in ([0, 0], [0, 0xffffffff]))):
+                raise ValueError('Saved-data column clones require a template without an output binding')
+        else:
+            raise ValueError('Saved-data column layout entries require an index or clone_index')
+        if index < 0 or index >= len(columns):
+            raise ValueError('Saved-data column layout index is out of range')
+        start = spans[index]['width'][0]
+        end = spans[index]['compiled_output'][1]
+        pieces.append(content[start:end])
+        expected.append(columns[index])
+    rebuilt = b''.join((content[:first-4], struct.pack('<I', len(order)), *pieces, content[stop:]))
+    checked = parse_current_save_data(rebuilt)
+    if checked.metadata['columns'] != expected:
+        raise ValueError('Saved-data column layout readback differs')
+    return rebuilt, checked
+
+
+def validate_column_formats(layout, columns, formats, source_types):
+    source = data_source(layout)
+    is_alarm = source == {'kind': 'alarm_history', 'group': SYSTEM_SAVED_DATA_SOURCES['alarm_history'][0]}
+    data_index = SAVE_COLUMN_TEXT_FIELDS['data_name']
+    time_columns = [index for index, column in enumerate(columns)
+                    if source_types.get(column['texts'][data_index]) == 10]
+    secondary_alarm_dates = {index for index in time_columns[1:]
+                             if is_alarm and columns[index]['texts'][data_index] in ALARM_DATE_COLUMNS}
+    for index, value in formats.items():
+        if index in secondary_alarm_dates and value in ALARM_DATE_FORMATS:
+            continue
+        parts = value.split('|')
+        numeric = len(parts) == 2 and all(re.fullmatch(r'[+-]?[0-9]+', part.strip()) for part in parts)
+        if index in secondary_alarm_dates and not numeric:
+            raise ValueError('Saved-data alarm date format requires a supported date pattern or a numeric format')
+        if len(parts) != 2:
+            raise ValueError('Saved-data display format requires two values separated by |')
+        if numeric:
+            places, spaces = map(int, parts)
+            if not -1 <= places <= 15 or not 0 <= spaces <= 1024:
+                raise ValueError('Saved-data display format requires -1..15 decimal places and 0..1024 trailing spaces')
+
+
 def edit_columns(layout, changes, styled, variables=None):
     if not isinstance(changes, list) or not changes:
         raise ValueError("Saved-data columns require a nonempty array of column edits")
@@ -330,7 +453,8 @@ def edit_columns(layout, changes, styled, variables=None):
     spans = layout.metadata["column_spans"]
     desired = {}
     replacements = []
-    source_names = {row['name'] for row in layout.metadata['native_field_list']}
+    formats = {}
+    source_types = dict(source_fields(layout))
     allowed = {'width', 'alignment'} | SAVE_COLUMN_TEXT_FIELDS.keys()
     for edit in changes:
         if (not isinstance(edit, dict) or edit.keys() - allowed - {'index'}
@@ -362,7 +486,7 @@ def edit_columns(layout, changes, styled, variables=None):
                 raise ValueError(f'Saved-data column {field} refers to a language entry; edit the language entry separately')
             if not isinstance(value, str) or '\0' in value or value.startswith('\x07'):
                 raise ValueError(f'Saved-data column {field} must be literal text without NUL')
-            if field == 'data_name' and value != old and value not in source_names:
+            if field == 'data_name' and value and value != old and value not in source_types:
                 raise ValueError('Saved-data column must use a field declared by the current native data source')
             if field == 'output_variable' and value != old:
                 if value:
@@ -374,16 +498,14 @@ def edit_columns(layout, changes, styled, variables=None):
                 expected['words'] = [0, 0xffffffff]
                 replacements.append((*spans[index]['compiled_output'], struct.pack('<2I', *expected['words'])))
             if field == 'display_format' and value and value != old:
-                parts = value.split('|')
-                if len(parts) != 2:
-                    raise ValueError('Saved-data display format requires two values separated by |')
-                if all(re.fullmatch(r'[+-]?[0-9]+', part.strip()) for part in parts):
-                    places, spaces = map(int, parts)
-                    if not -1 <= places <= 15 or not 0 <= spaces <= 1024:
-                        raise ValueError('Saved-data display format requires -1..15 decimal places and 0..1024 trailing spaces')
+                formats[index] = value
             if value != old:
                 replacements.append((*spans[index][field], write_cstring(value, wide=old.wide)))
             expected['texts'][text_index] = value
+
+    if formats:
+        final_columns = [desired.get(index, column) for index, column in enumerate(columns)]
+        validate_column_formats(layout, final_columns, formats, source_types)
 
     cursor = 0
     chunks = []
@@ -445,10 +567,12 @@ def edit_saved_data_style(record, changes, variables=None):
     for start, stop, wire in sorted(native_strings, reverse=True):
         common.content = common.content[:start] + wire + common.content[stop:]
     expected_columns = {}
+    # Source edits can resize the leading field vector. Column-order edits
+    # happen before field edits, whose indexes refer to the resulting slots.
+    column_layout = parse_current_save_data(common.content) if target_fields is not None else layout
+    if 'saved_data_column_layout' in changes:
+        common.content, column_layout = arrange_columns(column_layout, changes['saved_data_column_layout'], common.content)
     if "saved_data_columns" in changes:
-        # A new source can resize the leading field vector. Use its actual
-        # column offsets and field names for the edits in the same transaction.
-        column_layout = parse_current_save_data(common.content) if target_fields is not None else layout
         common.content, expected_columns = edit_columns(
             column_layout, changes["saved_data_columns"], common.content, variables)
     result = common.to_record()
@@ -475,7 +599,7 @@ def edit_saved_data_style(record, changes, variables=None):
                          (index not in remapped and original_types.get(name) != new_types[name])):
                 raise ValueError(f'Saved-data source requires an explicit target field for column {index}: {name}')
     if expected_columns:
-        expected = layout.metadata["columns"][:]
+        expected = column_layout.metadata["columns"][:]
         for index, column in expected_columns.items():
             expected[index] = column
         if checked.metadata["columns"] != expected:

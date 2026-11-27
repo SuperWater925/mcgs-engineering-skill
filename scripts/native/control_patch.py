@@ -8,21 +8,30 @@ from mcs_input_text import InputRecord, LabelRecord, InputMetadata
 from mcs_button_control import ButtonArchive
 from control_geometry import resize
 from 当前存盘浏览样式 import SAVED_DATA_STYLE_FIELDS, edit_saved_data_style
-from 原生趋势样式 import HISTORY_CURVE_EDIT_FIELDS, edit_history_curve_colors, edit_history_curve_pens
+from 原生趋势样式 import (
+    HISTORY_CURVE_EDIT_FIELDS, edit_history_curve_colors, edit_history_curve_pens,
+    edit_history_curve_ranges, edit_history_curve_visibility, edit_history_curve_x_length,
+)
 
 def text(value):
     if not isinstance(value,str) or '\0' in value:raise ValueError('Expected text without NUL')
     return value
 
 def edit(record,changes,variables=None,picture_references=None):
-    allowed={'bounds','fill','border','text','font','unit','binding','minimum','maximum','press_source','release_source','repair_input_metadata','state_edits','state_layout','button_pictures','animations'} | SAVED_DATA_STYLE_FIELDS | HISTORY_CURVE_EDIT_FIELDS
+    allowed={'bounds','fill','border','text','font','unit','binding','minimum','maximum','press_source','release_source','repair_input_metadata','state_edits','state_layout','button_pictures','bitmap_picture','animations'} | SAVED_DATA_STYLE_FIELDS | HISTORY_CURVE_EDIT_FIELDS
     if not isinstance(changes,dict):raise ValueError('Control edit must be an object')
     if not changes or set(changes)-allowed:raise ValueError('Unknown or empty control edit')
     if HISTORY_CURVE_EDIT_FIELDS & changes.keys():
         if len(changes) != 1:
-            raise ValueError('History curve pens require a dedicated edit')
+            raise ValueError('History curve fields require a dedicated edit')
         if 'history_curve_colors' in changes:
             return edit_history_curve_colors(record, changes['history_curve_colors'])
+        if 'history_curve_ranges' in changes:
+            return edit_history_curve_ranges(record, changes['history_curve_ranges'])
+        if 'history_curve_visibility' in changes:
+            return edit_history_curve_visibility(record, changes['history_curve_visibility'])
+        if 'history_curve_x_length' in changes:
+            return edit_history_curve_x_length(record, changes['history_curve_x_length'])
         return edit_history_curve_pens(record, changes['history_curve_pens'])
     if SAVED_DATA_STYLE_FIELDS & changes.keys():
         if changes.keys() - SAVED_DATA_STYLE_FIELDS:
@@ -52,6 +61,13 @@ def edit(record,changes,variables=None,picture_references=None):
     if 'state_edits' in changes:
         if special!={'state_edits'}:raise ValueError('State edits cannot be mixed with other class-specific properties')
         return edit_states(record,changes['state_edits'],picture_references)
+    if 'bitmap_picture' in special:
+        if record.type_id != 0x5009 or special != {'bitmap_picture'}:
+            raise ValueError('bitmap_picture requires a native bitmap and no other class-specific properties')
+        from picture_resources import replace_picture
+        cm = CommonEnvelope.parse(record)
+        cm.content = replace_picture(cm.content, changes['bitmap_picture'], picture_references)
+        return cm.to_record()
     projected=cm.project_without_animations()
     kind=record.type_id
     parsers={0x5008:LabelRecord,0x5025:InputRecord,0x5027:ButtonArchive}

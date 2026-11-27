@@ -34,6 +34,88 @@ class AnimationEdits(unittest.TestCase):
         self.assertEqual(common.animations[0]["expression"], "Flag")
         self.assertEqual(LabelRecord.parse(common.project_without_animations()).caption, "Run")
 
+    def test_existing_native_label_input_updates_only_constant_limits(self):
+        # Exact constant-limit animation from the common official G-series project.
+        body = bytes.fromhex(
+            'ffff0000090043416e69496e707574cd8ca243fffeff087065575b938f65515f00005f73518b570000000000000000'
+            'fffeff06070031003000300039003600fffeff06070031003000300039003500fffeff06070031003000300039003400'
+            'f9021550f90215d0650000000000000000000000')
+        label = control_factory.primitive_record('label')
+        before = CommonEnvelope.parse(label)
+        label.payload = label.payload[:before.animation_start] + write_count(1) + body + label.payload[before.animation_end:]
+        selected, = sources(label)
+        updated = changes(label, [{**selected, 'set': {'minimum': -3, 'maximum': 27}}])
+        common = CommonEnvelope.parse(updated)
+        actual, = inspect_items(common)
+        self.assertEqual((actual['minimum'], actual['maximum']), (-3, 27))
+        expected_body = body[:-20] + struct.pack('<ff', 27, -3) + body[-12:]
+        self.assertEqual(updated.payload[common.animation_start:common.animation_end], write_count(1) + expected_body)
+        self.assertEqual(common.content, before.content)
+        self.assertEqual(common.metadata.to_bytes(), before.metadata.to_bytes())
+        with self.assertRaisesRegex(ValueError, 'minimum exceeds'):
+            changes(label, [{**selected, 'set': {'minimum': 30, 'maximum': 27}}])
+
+    def test_click_animation_retargets_only_current_native_page_identity(self):
+        import copy
+        import mcgs_file as m
+        from control_patch import at_path, replace_path
+        from mcs_window_archive import WindowArchive
+        from animation_edits import retarget_click_animation
+
+        fields = (write_count(8) + write_cstring('') + write_cstring('PreviousPage') + write_cstring('') * 6
+                  + write_count(8) + struct.pack('<8I', 0, 1, 0, 0, 0, 0, 0, 0)
+                  + write_count(8) + struct.pack('<8I', 0xffffffff, 2, *([0xffffffff] * 6)))
+        raw = b'\xff\xff\0\0\x09\0CAniClick' + struct.pack('<f', 1) + write_cstring('') + fields + bytes(8)
+        previous = {'id': 2, 'name': 'PreviousPage'}
+        replacement = {'id': 3, 'name': '替代页面'}
+        for family in ('Stu', 'Pro'):
+            with self.subTest(family=family):
+                project = m.create_data({'pages': [
+                    {'name': 'StartPage', 'controls': [{'type': 'group', 'name': 'RouteGroup', 'bounds': [10, 10, 70, 70],
+                        'children': [{'type': 'label', 'name': 'RouteLabel', 'text': 'Route', 'bounds': [0, 0, 7000, 7000]}]}]},
+                    {'name': previous['name']}, {'name': replacement['name']}]}, family)
+                row = project['WndUser']['rows'][0]
+                window = WindowArchive.parse(m.f.archive(row['lbObjects']))
+                path = [0, 0]
+                host = at_path(window.controls, path)
+                common = CommonEnvelope.parse(host)
+                host.payload = (host.payload[:common.animation_start] + write_count(1) + raw
+                                + struct.pack('<H', 1) + host.payload[common.animation_end + 2:])
+                replace_path(window.controls, path, host)
+                row['lbObjects'] = m.f.wrap_like(row['lbObjects'], window.to_bytes())
+
+                def current(data):
+                    return m.inspect_data(data)['pages'][0]['controls'][0]['children'][0]
+
+                def specification(current, before, after):
+                    animation, = current['click_animation_pages']
+                    action = {key: animation[key] for key in ('index', 'sha256')}
+                    edit = {'name': current['name'], 'path': path, 'sha256': current['sha256'],
+                            'edits': {'click_animation_page': dict(action, source=before, target=after)}}
+                    return {'pages': [{'id': 1, 'controls': [edit]}]}
+
+                first = current(project)
+                self.assertEqual(first['click_animation_pages'][0]['page_target'], previous)
+                after = m.edit_data(copy.deepcopy(project), specification(first, previous, replacement))
+                second = current(after)
+                self.assertEqual(second['click_animation_pages'][0]['page_target'], replacement)
+                back = m.edit_data(after, specification(second, replacement, previous))
+                self.assertEqual(m.canonical(back), m.canonical(project))
+                for bad in ({'id': 2, 'name': replacement['name']}, {'id': 33, 'name': 'Unknown'}):
+                    with self.assertRaisesRegex(ValueError, 'uniquely match'):
+                        m.edit_data(copy.deepcopy(project), specification(first, previous, bad))
+                stale = specification(first, previous, replacement)
+                stale['pages'][0]['controls'][0]['edits']['click_animation_page']['sha256'] = '0' * 64
+                with self.assertRaisesRegex(ValueError, 'animation preimage'):
+                    m.edit_data(copy.deepcopy(project), stale)
+                common = CommonEnvelope.parse(host)
+                with_alias = copy.deepcopy(host)
+                with_alias.payload = (host.payload[:common.animation_start] + write_count(2) + raw + b'\x02\0'
+                                      + host.payload[common.animation_end:])
+                selector = inspect_items(CommonEnvelope.parse(with_alias))[0]
+                with self.assertRaisesRegex(ValueError, 'aliases cannot be changed'):
+                    retarget_click_animation(with_alias, 0, selector['sha256'], previous, replacement)
+
     def test_visible_edit_and_remove(self):
         src = sources(self.visible)
         before = CommonEnvelope.parse(self.visible)

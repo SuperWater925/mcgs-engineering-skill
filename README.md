@@ -1,6 +1,6 @@
 # 昆仑通态 MCGS 工程编辑技能（Stu / Pro）
 
-给 Claude Code / Codex 使用的技能，离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程，也可通过 Pro 内部原生接口在线编辑已打开的工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及 PowerShell 7 / Python 环境，离线数据库层使用 ACE。** Stu 当前使用离线流程，Pro 可选择离线或在线。
+给 Claude Code / Codex 使用的技能，支持离线读取、检查和修改 McgsStu `.MCS`、McgsPro `.MCP` 工程，也可通过各自的原生接口在线编辑已打开的工程。**两种软件共用一个技能、一个 `run.ps1` 主入口及 PowerShell 7 / Python 环境，离线数据库层使用 ACE。** [Stu 在线能力](references/stu-native-engineering.md) · [Pro 在线能力](references/pro-native-engineering.md)
 
 **不限定软件大版本或小版本。** 版本号只记录，按实际数据库、归档结构、引用、完整回环与有限修改边界判断能力。保留原版本字段和未知字节，未知结构明确报告。
 
@@ -10,13 +10,13 @@
 
 [下载技能包](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) · [更新记录](CHANGELOG.md) · [验证范围](references/unified-validation.md) · [贡献指南](CONTRIBUTING.md)
 
-本地新版统一了 Stu 和 Pro 的工程工厂。Stu 可用 `create` 新建空白或模板工程。两款可用 `edit` 加变量、页面、基础图元、默认历史曲线和存盘浏览，并共用离线动画编辑。Pro 在线动画计划支持从当前回执编排增删和排序，保留未改动画的原对象。[离线工厂](references/offline-factories.md) · [离线动画](references/offline-animation-edits.md) · [在线动画](references/pro-animation-editing.md)
+Stu 和 Pro 共用工程工厂。Stu 可用 `create` 新建空白或模板工程。两款可用 `edit` 加变量、页面、基础图元、默认历史曲线和存盘浏览，并共用离线动画编辑。Pro 在线动画计划支持从当前回执编排增删和排序，保留未改动画的原对象。[离线工厂](references/offline-factories.md) · [离线动画](references/offline-animation-edits.md) · [在线动画](references/pro-animation-editing.md)
 
-2026-11-17 本地待审核更新补齐前轮复查的 15 项遗漏及 2 项条件风险：计划前像、实例关联、组内顺序、克隆资格、依赖闭包、批次回执和旧引擎能力均按实际合同核对；同时补全自动发现、入口运行时、旧备份迁移、启动器退出码和离线 CI。此更新尚未发布，不代表上方下载链接已含这些改动。范围与本地交付流程见[本地审核更新](references/local-review-delivery.md)。
+2026-11-27 公开增量包含已验收的 Stu 和 Pro 源码与预编译引擎，复用 11 月 6 日完整包的运行时和安装介质。新增或扩展了两系离线控件工厂、窗口事件、历史与存盘组设置，以及各自已验证的在线组态操作。 [下载及验收范围](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.27-engineering-update) · [小更新说明](references/turnkey-update-zh.md)
 
 离线另增已有多状态控件的状态颜色、文字/字体/图片槽，以及现有原生图库的有限编辑。VECT/CDrawCell 保持原分配和非目标子元件；已识别的 BMP/PNG/JPEG 可替换内容，保留图库名称及身份。共用源 SHA、前指纹和事务提交守卫，详细字段及影响范围见[状态与图库编辑](references/state-resource-edits.md)。纯回归与本轮原厂验收分别记录，不能把既有同版本验证外推为本次通过。
 
-首次使用推荐[完整整合包下载](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest)，按[开箱配置说明](references/turnkey-start-zh.md)运行：统一便携运行时、预编译自有在线引擎/热接桥，以及单独许可的完整 Pro/Stu 安装介质。已安装源码技能（包括 WorkBuddy）可直接运行 `run.ps1 turnkey fetch-bundle` 自动获取；`inventory` 无需完整包，`setup/prepare-online` 缺包时自动获取，不要求 skills 上级目录存在 bundle.json，不退回重建引擎。软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。完整介质仅随 Release 完整附件提供；源码技能 ZIP 本身不含编译后的引擎和运行时。
+首次使用可下载完整基底，再按开箱说明应用增量。完整包提供统一便携运行时、预编译在线引擎、热接桥及单独许可的 Pro/Stu 安装介质。已安装源码技能（包括 WorkBuddy）可运行 `run.ps1 turnkey fetch-bundle` 获取匹配的整合包，`inventory` 可只查询本机安装。软件版本不同时可选择保留并适配，或备份后在原目录卸载重装。 [公开完整基底](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey-bootstrap) · [开箱配置说明](references/turnkey-start-zh.md)
 
 本版逐项处理跨版本复查发现的实际消费遗漏：补齐共用压缩读取、局部页面/变量依赖和数据库类型，缩小在线摘要与接口预检范围，完善模块发现和部署，区分工具配额与真实格式能力。既有桥按实际所需能力更新业务引擎；普通小请求可复用连接。规则见[逐项处理](references/compatibility-resolution.md)，实际证据见[本轮验证](references/compatibility-resolution-validation.json)。
 
@@ -39,12 +39,12 @@
 | 原生动画列表 | `audit` / `controls` | 离线共用；在线有 `native-animation-plan` |
 | 模板新页、克隆页及事件 | 共享 `new_window/clone_window`、`new-window` | 同左；JSON `add_pages/events` |
 | 模板控件工厂、样式、预览、文字检查、受限新增窗口 | 共用 `tools/` 工具链 | 已接 Pro 变量、封套、模板及受限事务；未知厂商控件保留 |
-| 已打开工程的原生页面、控件、策略、数据库、配方、设备和资源编辑 | 本版不提供在线入口 | `native-engineering`，按已闭合 ABI 与实际产品能力执行 |
-| 原厂保存、检查、关闭重开 | 离线输出后另行验收 | 在线原生入口；各项结果分别记录 |
+| 已打开工程的原生组态 | `native-engineering --family stu`，涵盖页面、控件及已验证的变量、策略、配方和可见动画操作 | `native-engineering`，按已闭合的原生接口支持页面、控件及工程模块 |
+| 原厂保存、检查、关闭重开 | 在线入口分别记录结果 | 在线入口分别记录结果 |
 
 离线字段、命令和规格见[有界修改](references/bounded-edits.md)、[Pro 适配](references/pro-adapter.md)、[共享界面工具](references/ui-tools.md)。离线工厂不提供任意新控件或通用表增删；在线原生能力见[工程入口](references/pro-native-engineering.md)。本技能不提供设备协议生成、PLC 程序开发或现场下载。
 
-离线文件读写不启动厂商软件、不连接设备。离线 `apply` 默认只预检；提交输出新文件，或在独立备份后就地修改。在线入口使用当前 Pro 的原生对象及保存方法，也不连接设备。文件回读、原厂检查、关闭重开和本机模拟分别验收。
+离线文件读写使用独立工程文件。离线 `apply` 默认只预检，提交可输出新文件，也可在独立备份后就地修改。在线入口使用当前 Stu 或 Pro 的原生对象及保存方法。文件回读、原厂检查、关闭重开和本机模拟分别验收。
 
 重复修改优先使用 `baseline`、`batch-edit` 和 `apply -ExportAfter`：一次准备基线、多项修改合成一次提交，并复用提交后完整回读生成导出。Stu/Pro 离线预览可只解析本次修改页及公共层；命令、规格和实测见[离线提速](references/offline-performance.md)。
 
@@ -57,7 +57,7 @@ Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](referen
 环境检查完成后，智能体会向使用者说明并询问采用哪一种方式；已明确选择时不重复询问。
 
 - **离线修改**：直接处理工程文件，适合批量生成和整页调整，完成后在原厂软件查看。
-- **在线修改（Pro）**：通过内部接口修改当前已打开工程，可以看到画面逐步变化，并调用原厂保存和检查；需接入本机桥，频繁刷新通常更慢。
+- **在线修改（Stu / Pro）**：接入当前已打开工程，按对应产品的能力修改画面或其它工程模块，并调用原厂保存与检查。
 
 普通启动的 Pro 优先热接入，不要求每次经桥接启动器重启；已有桥直接复用。实际模块、位数、对象布局及产品能力仍须匹配，软件版本号不作白名单。连接配置不是许可证，正常在线执行默认 direct，不要求许可文件或逐批审批。
 
@@ -67,7 +67,7 @@ Pro 离线新增按钮及 Stu/Pro 工具对接的规格见[离线工厂](referen
 
 ## 安装
 
-从 [Releases](https://github.com/SuperWater925/mcgs-engineering-skill/releases/latest) 下载 ZIP，按同页 `SHA256SUMS.txt` 核对 SHA256。解压后的顶层目录是 `mcgs-engineering`，放入其中一处：
+已有整合包时，按发布说明核对增量 ZIP 的 SHA-256，再从更新后的目录安装技能。单独安装源码时，将 `mcgs-engineering` 目录放入对应智能体的技能目录。 [公开增量](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.27-engineering-update)
 
 - Claude Code：`%USERPROFILE%\.claude\skills\mcgs-engineering`
 - Codex：`%USERPROFILE%\.codex\skills\mcgs-engineering`
@@ -85,7 +85,7 @@ git clone https://github.com/SuperWater925/mcgs-engineering-skill.git "$env:USER
 
 旧仓库 `mcgs-offline-edit-skill` 地址已由 GitHub 重定向到本仓库。先核提交和实际文件；两者相同时无需重装技能或 Pro，也不用停止绑定。仅在真正迁移旧技能或清理重复安装时，先保全本地修改，将旧副本备份到 `skills` 外，保留一个 `$mcgs-engineering`。已有在线运行资料不自动搬动，技能或仓库更名不要求重建 scope。
 
-安装后先按用途检查：离线用 `pwsh -NoProfile -File .\run.ps1 doctor`；Pro 在线先用 `pwsh -NoProfile -File .\run.ps1 turnkey fetch-bundle`，再用 `native-doctor --install-root '<实际安装根目录>' --editor-executable '<实际Pro EXE完整路径>'`。源码技能也走自动获取预编译包；缺包时预检给获取指引，不要求重新编译。完整包可用 `McgsRun.cmd turnkey prepare-online`。`native-engineering --help` 只表示命令入口可读；预检通过不代表已连接或业务接口全部适配。维护源码构建时另读[源码准备](references/pro-native-deployment.md#首次热接的文件准备)，预检加 `--source-build`。仅复制 SKILL.md 不会自动建立连接。历史安装验证见[安装验证记录](references/installation-validation.json)。
+安装后，离线用 `pwsh -NoProfile -File .\run.ps1 doctor` 核对 ACE 和读取环境。Stu 或 Pro 在线用 `turnkey fetch-bundle --family stu` 或 `--family pro` 找到匹配的预编译引擎，再用 `turnkey prepare-online` 接入普通打开的实例。在多实例环境指定实际 PID，接入后按当前工程读回对应业务能力。维护源码构建时可用 `native-doctor --source-build` 预检。 [Stu 在线接入](references/stu-native-engineering.md#接入和选择工程) · [Pro 在线接入](references/pro-native-deployment.md#首次热接的文件准备) · [历史安装验证](references/installation-validation.json)
 
 ## 共用环境
 

@@ -21,13 +21,20 @@ namespace McgsInternalBridge {
             LifecycleRead, LifecycleClose, LifecycleOpen, PageCreateAction, PageCopyAction,
             DataCatalogAction, DataReadAction, DataEditAction, RecipeCatalogAction, RecipeReadAction, RecipeEditAction,
             StrategyCatalogAction, StrategyReadAction, StrategyEditAction, PagePropertiesReadAction, PageBackgroundEditAction,
-            VisibilityReadAction, VisibilityEditAction
+            VisibilityReadAction, VisibilityEditAction, PageDescriptionReadAction, PageDescriptionEditAction,
+            PageReferenceReadAction, PageRenameAction, DataReferenceReadAction, DataRenameAction,
+            TriggerCatalogAction, TriggerReadAction, LanguageCatalogAction, LanguageTextEditAction, LanguageAddAction,
+            PictureCatalogAction, PictureImportAction, PictureCopyAction, PictureReplaceAction, PictureExportAction,
+            PageGenerateAction, ControlReferenceReadAction, ControlRenameAction, RecipeReferenceReadAction, RecipeRenameAction,
+            SerialDeviceReadAction, SerialDeviceEditAction
         };
 
         private static readonly string[] PageWrites = {
             "label-properties-batch", "control-geometry-batch", "control-template-clone-batch", NativeCreateAction,
             PageCreateAction, PageCopyAction, DataEditAction, RecipeEditAction, StrategyEditAction, PageBackgroundEditAction,
-            VisibilityEditAction
+            VisibilityEditAction, PageDescriptionEditAction, PageRenameAction, DataRenameAction,
+            LanguageTextEditAction, LanguageAddAction, PictureImportAction, PictureCopyAction, PictureReplaceAction,
+            PageGenerateAction, ControlRenameAction, RecipeRenameAction, SerialDeviceEditAction
         };
 
         private sealed class Context {
@@ -109,7 +116,7 @@ namespace McgsInternalBridge {
                     Object.Equals(request["expected_creation_filetime"], creation),
                     "The request targets another Stu process, thread or process creation.");
                 bool lifecycle = IsLifecycleAction(action);
-                if (lifecycle || action == "page-view-open" || Array.IndexOf(PageWrites, action) >= 0)
+                if (lifecycle || action == "page-view-open" || action == PictureExportAction || Array.IndexOf(PageWrites, action) >= 0)
                     Require(NativeEngineeringDeliveryLayout.Value(request, "engineering_delivery_scope_sha256") == scope.Sha256,
                         "The Stu view or edit request belongs to a different delivery scope.");
                 string project = NativeEngineeringDeliveryLayout.Absolute(NativeEngineeringDeliveryLayout.Value(request, "expected_project"));
@@ -161,6 +168,9 @@ namespace McgsInternalBridge {
                         request.TryGetValue("options", out pageOptions);
                         new StuDocument(context).ApplyPageStructure(action, window, pageOptions, response);
                         break;
+                    case PageGenerateAction:
+                        new StuDocument(context).GeneratePage(window, request["options"], response);
+                        break;
                     case DataCatalogAction:
                     case DataReadAction:
                     case DataEditAction:
@@ -186,6 +196,52 @@ namespace McgsInternalBridge {
                     case PageBackgroundEditAction:
                         VerifyFeature(context.Abi, action);
                         new StuDocument(context).ApplyPageProperties(action, request["options"], response);
+                        break;
+                    case PageDescriptionReadAction:
+                    case PageDescriptionEditAction:
+                        new StuDocument(context).ApplyPageDescription(action, request["options"], response);
+                        break;
+                    case PageReferenceReadAction:
+                    case PageRenameAction:
+                        new StuDocument(context).ApplyPageReference(action, window, request["options"], response);
+                        break;
+                    case DataReferenceReadAction:
+                    case DataRenameAction:
+                        new StuDocument(context).ApplyDataReference(action, window, request["options"], response);
+                        break;
+                    case ControlReferenceReadAction:
+                    case ControlRenameAction:
+                        new StuDocument(context).ApplyControlReferenceRename(action, window, request["options"], response);
+                        break;
+                    case RecipeReferenceReadAction:
+                    case RecipeRenameAction:
+                        new StuDocument(context).ApplyRecipeRenameAction(action, window, request["options"], response);
+                        break;
+                    case SerialDeviceReadAction:
+                    case SerialDeviceEditAction:
+                        new StuDocument(context).ApplySerialDeviceAction(action, request["options"], response);
+                        break;
+                    case TriggerCatalogAction:
+                    case TriggerReadAction:
+                        object triggerOptions;
+                        request.TryGetValue("options", out triggerOptions);
+                        new StuDocument(context).ReadTriggers(action, triggerOptions, response);
+                        break;
+                    case LanguageCatalogAction:
+                    case LanguageTextEditAction:
+                    case LanguageAddAction:
+                        object languageOptions;
+                        request.TryGetValue("options", out languageOptions);
+                        new StuDocument(context).ApplyLanguage(action, window, languageOptions, response);
+                        break;
+                    case PictureCatalogAction:
+                    case PictureImportAction:
+                    case PictureCopyAction:
+                    case PictureReplaceAction:
+                    case PictureExportAction:
+                        object pictureOptions;
+                        request.TryGetValue("options", out pictureOptions);
+                        new StuDocument(context).ApplyPicture(action, window, pictureOptions, response);
                         break;
                     case VisibilityReadAction:
                     case VisibilityEditAction:
@@ -213,7 +269,12 @@ namespace McgsInternalBridge {
                 LifecycleRead, LifecycleClose, LifecycleOpen, PageCreateAction, PageCopyAction,
                 DataCatalogAction, DataReadAction, DataEditAction, RecipeCatalogAction, RecipeReadAction, RecipeEditAction,
                 StrategyCatalogAction, StrategyReadAction, StrategyEditAction, PagePropertiesReadAction, PageBackgroundEditAction,
-                VisibilityReadAction, VisibilityEditAction }) {
+                VisibilityReadAction, VisibilityEditAction, PageDescriptionReadAction, PageDescriptionEditAction,
+                PageReferenceReadAction, PageRenameAction, DataReferenceReadAction, DataRenameAction,
+                TriggerCatalogAction, TriggerReadAction, LanguageCatalogAction, LanguageTextEditAction, LanguageAddAction,
+                PictureCatalogAction, PictureImportAction, PictureCopyAction, PictureReplaceAction, PictureExportAction,
+                PageGenerateAction, ControlReferenceReadAction, ControlRenameAction, RecipeReferenceReadAction, RecipeRenameAction,
+                SerialDeviceReadAction, SerialDeviceEditAction }) {
                 try {
                     VerifyFeature(abi, feature);
                     var result = new Dictionary<string, object> { {"state", "located"}, {"native_action_executed", false} };
@@ -233,6 +294,8 @@ namespace McgsInternalBridge {
                                 classes[item.Key] = new Dictionary<string, object> { {"state", "unavailable"}, {"reason", error.Message} };
                             }
                         }
+                        if (feature == NativeCreateAction || feature == "control-geometry-batch")
+                            available += AddShapeCapabilities(abi, classes, feature == NativeCreateAction);
                         result["classes"] = classes;
                         if (available == 0) result["state"] = "unavailable";
                     }
@@ -260,6 +323,48 @@ namespace McgsInternalBridge {
         }
 
         private static void VerifyFeature(StuNativeProfile abi, string feature) {
+            if (feature == ControlReferenceReadAction || feature == ControlRenameAction) {
+                VerifyControlRenameFeature(abi, feature);
+                return;
+            }
+            if (feature == RecipeReferenceReadAction || feature == RecipeRenameAction) {
+                VerifyRecipeRenameFeature(abi, feature);
+                return;
+            }
+            if (feature == SerialDeviceReadAction || feature == SerialDeviceEditAction) {
+                VerifySerialDeviceFeature(abi, feature);
+                return;
+            }
+            if (feature == TriggerCatalogAction || feature == TriggerReadAction) {
+                abi.RequireFeature(StrategyCatalogAction);
+                abi.RequireFeature(TriggerCatalogAction);
+                return;
+            }
+            if (feature == PageReferenceReadAction || feature == PageRenameAction ||
+                feature == DataReferenceReadAction || feature == DataRenameAction) {
+                abi.RequireFeature("registered-reference-read");
+                abi.RequireFeature(feature == PageReferenceReadAction || feature == PageRenameAction
+                    ? "page-catalog" : DataCatalogAction);
+                if (feature == PageRenameAction || feature == DataRenameAction) {
+                    abi.RequireFeature("registered-reference-rename");
+                    abi.RequireFeature("page-catalog");
+                    abi.RequireFeature("page-view-inspect");
+                    abi.RequireFeature("top-level-control-catalog");
+                    abi.RequireFeature("page-authoring-common");
+                    abi.RequireFeature(StrategyCatalogAction);
+                    abi.RequireFeature(StrategyReadAction);
+                    abi.RequireFeature(StrategyEditAction);
+                }
+                if (feature == PageRenameAction) {
+                    abi.RequireFeature("control-catalog");
+                    abi.RequireFeature(PageDescriptionEditAction);
+                }
+                if (feature == DataRenameAction) {
+                    abi.RequireFeature(DataEditAction);
+                }
+                abi.RequireFeature(feature);
+                return;
+            }
             if (IsVisibilityAction(feature)) {
                 abi.RequireFeature("page-catalog");
                 abi.RequireFeature("top-level-control-catalog");
@@ -275,6 +380,12 @@ namespace McgsInternalBridge {
                 abi.RequireFeature("page-view-inspect");
                 abi.RequireFeature(PagePropertiesReadAction);
                 if (feature == PageBackgroundEditAction) abi.RequireFeature(PageBackgroundEditAction);
+                return;
+            }
+            if (IsPageDescriptionAction(feature)) {
+                abi.RequireFeature("page-catalog");
+                abi.RequireFeature(PageDescriptionReadAction);
+                if (feature == PageDescriptionEditAction) abi.RequireFeature(PageDescriptionEditAction);
                 return;
             }
             if (IsStrategyAction(feature)) {
@@ -304,6 +415,20 @@ namespace McgsInternalBridge {
                 abi.RequireFeature("page-authoring-common");
                 if (feature == PageCopyAction) abi.RequireFeature("control-catalog");
                 abi.RequireFeature(feature == PageCreateAction ? "page-create-original" : "page-copy-original");
+                return;
+            }
+            if (feature == LanguageCatalogAction || feature == LanguageTextEditAction || feature == LanguageAddAction) {
+                abi.RequireFeature(feature);
+                return;
+            }
+            if (IsPictureAction(feature)) {
+                VerifyPictureFeature(feature, abi);
+                return;
+            }
+            if (feature == PageGenerateAction) {
+                abi.RequireFeature("control-geometry-batch");
+                abi.RequireFeature("page-authoring-common");
+                abi.RequireFeature(PageGenerateAction);
                 return;
             }
             bool pageWrite = Array.IndexOf(PageWrites, feature) >= 0;

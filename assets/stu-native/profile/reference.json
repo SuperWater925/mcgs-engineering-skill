@@ -24,7 +24,9 @@
     "root_window_model": {
       "rtti": ".?AVObjectModel@@",
       "offset": 0,
-      "slots": []
+      "slots": [
+        "4"
+      ]
     },
     "page_manager": {
       "rtti": ".?AVUserWindowObjectManager@@",
@@ -50,7 +52,8 @@
       "offset": 0,
       "slots": [
         "17",
-        "18"
+        "18",
+        "21"
       ]
     },
     "page_document": {
@@ -79,7 +82,11 @@
     "label_view": {
       "rtti": ".?AVCDrawLabel@@",
       "offset": 4,
-      "slots": [],
+      "slots": [
+        "9",
+        "10",
+        "15"
+      ],
       "nonvirtual_bases": {
         ".?AVCDrawObj@@": 0
       }
@@ -187,7 +194,10 @@
     "standard_button_view": {
       "rtti": ".?AVCDrawButton@@",
       "offset": 4,
-      "slots": [],
+      "slots": [
+        "9",
+        "15"
+      ],
       "nonvirtual_bases": {
         ".?AVCDrawObj@@": 0
       }
@@ -216,7 +226,9 @@
       "rtti": ".?AVC0DocDev@@",
       "offset": 0,
       "slots": [
-        "26"
+        "26",
+        "27",
+        "83"
       ],
       "nonvirtual_bases": {
         ".?AVC0DocBase@@": 0
@@ -269,8 +281,10 @@
       "offset": 52,
       "slots": [
         "2",
+        "11",
         "21",
         "22",
+        "29",
         "30",
         "35",
         "37",
@@ -296,7 +310,9 @@
     "recipe_object": {
       "rtti": ".?AVCRecipe@@",
       "offset": 0,
-      "slots": []
+      "slots": [
+        "10"
+      ]
     },
     "recipe_column_array": {
       "rtti": ".?AV?$CArray@VCRecipeItem@@V1@@@",
@@ -407,6 +423,239 @@
       "nonvirtual_bases": {
         ".?AVCAniObj@@": 0
       }
+    },
+    "default_line": {
+      "rtti": ".?AVCDrawLine@@",
+      "offset": 0,
+      "slots": [
+        "1",
+        "21"
+      ],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "default_line_view": {
+      "rtti": ".?AVCDrawLine@@",
+      "offset": 4,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "default_rectangle": {
+      "rtti": ".?AVCDrawRect@@",
+      "offset": 0,
+      "slots": [
+        "1",
+        "21"
+      ],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "default_rectangle_view": {
+      "rtti": ".?AVCDrawRect@@",
+      "offset": 4,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "page_description_document": {
+      "rtti": ".?AVC0DocUser@@",
+      "offset": 0,
+      "slots": [
+        "2",
+        "83",
+        "102",
+        "85"
+      ]
+    },
+    "page_description_modifiable": {
+      "rtti": ".?AVUserWindowObject@@",
+      "offset": 4,
+      "slots": [
+        "2"
+      ],
+      "nonvirtual_bases": {
+        ".?AVIModifiable@@": 4
+      }
+    },
+    "strategy_trigger_start": {
+      "rtti": ".?AVCTriggerStart@@",
+      "offset": 0,
+      "slots": [
+        "2"
+      ]
+    },
+    "strategy_trigger_end": {
+      "rtti": ".?AVCTriggerEnd@@",
+      "offset": 0,
+      "slots": [
+        "2"
+      ]
+    },
+    "strategy_trigger_user": {
+      "rtti": ".?AVCTriggerUser@@",
+      "offset": 0,
+      "slots": [
+        "2"
+      ]
+    },
+    "strategy_trigger_loop": {
+      "rtti": ".?AVCTriggerLoop@@",
+      "offset": 0,
+      "slots": [
+        "2"
+      ]
+    },
+    "strategy_trigger_event": {
+      "rtti": ".?AVCTriggerEvent@@",
+      "offset": 0,
+      "slots": [
+        "2"
+      ]
+    },
+    "language_service": {
+      "rtti": ".?AVCLinguist@@",
+      "offset": 0,
+      "slots": [
+        "2",
+        "6",
+        "18",
+        "30",
+        "35",
+        "41",
+        "44",
+        "51"
+      ]
+    },
+    "picture_manager": {
+      "rtti": ".?AVPictureManager@@",
+      "offset": 0,
+      "slots": [
+        "16"
+      ]
+    },
+    "picture_service": {
+      "rtti": ".?AVPictureManager@@",
+      "offset": 52,
+      "slots": [
+        "2",
+        "3",
+        "4",
+        "13"
+      ]
+    },
+    "picture_object": {
+      "rtti": ".?AVCPicture@@",
+      "offset": 0,
+      "slots": [
+        "0",
+        "10"
+      ]
+    },
+    "picture_bitmap": {
+      "rtti": ".?AVCOwnerBitmap@@",
+      "offset": 0,
+      "slots": [
+        "6",
+        "14"
+      ]
+    },
+    "picture_bitmap_interface": {
+      "rtti": ".?AVCOwnerBitmap@@",
+      "offset": 4,
+      "slots": []
+    },
+    "serial_device_manager": {
+      "rtti": ".?AVDeviceObjectManager@@",
+      "offset": 0,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVBaseObjectManager@@": 0
+      }
+    },
+    "serial_device_manager_service": {
+      "rtti": ".?AVDeviceObjectManager@@",
+      "offset": 52,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVIDeviceService@ServiceCenter@@": 52
+      }
+    },
+    "serial_device_modified_service": {
+      "rtti": ".?AVDeviceObjectManager@@",
+      "offset": 56,
+      "slots": [
+        "3"
+      ],
+      "nonvirtual_bases": {
+        ".?AVIModifiable@@": 56
+      }
+    },
+    "serial_device_parent": {
+      "rtti": ".?AVCDevHalComm@@",
+      "offset": 0,
+      "slots": [
+        "12",
+        "14"
+      ],
+      "nonvirtual_bases": {
+        ".?AVCDevObj@@": 0
+      }
+    },
+    "serial_device_children": {
+      "rtti": ".?AV?$CTypedPtrArray@VCObArray@@PAVCDevObj@@@@",
+      "offset": 0,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVCObArray@@": 0
+      }
+    },
+    "serial_device_list": {
+      "rtti": ".?AV?$CTypedPtrList@VCObList@@PAVCDevObj@@@@",
+      "offset": 0,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVCObList@@": 0
+      }
+    },
+    "recipe_rename_manager_service": {
+      "rtti": ".?AVRecipeObjectManager@@",
+      "offset": 52,
+      "slots": [
+        "2",
+        "3"
+      ]
+    },
+    "saved_data_control": {
+      "rtti": ".?AVCDrawSaveData@@",
+      "offset": 0,
+      "slots": [],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "saved_data_control_view": {
+      "rtti": ".?AVCDrawSaveData@@",
+      "offset": 4,
+      "slots": [
+        "9",
+        "10",
+        "15"
+      ],
+      "nonvirtual_bases": {
+        ".?AVCDrawObj@@": 0
+      }
+    },
+    "recipe_rename_draw_dll": {
+      "rtti": ".?AVCDrawDll@@",
+      "offset": 0,
+      "slots": [
+        "39"
+      ]
     }
   },
   "functions": {
@@ -6527,6 +6776,3699 @@
       "relative_calls": [
         37
       ]
+    },
+    "set_data_initial_text": {
+      "bytes": "558bec51894dfc8b4508508b4dfc83e934e83a2300000fb6c885c974308b550c528b4508508b4dfc83c134e8c02a82ff8b0883c170ff15b0c406016a018b4dfc8b118b4dfc8b82a0000000ffd08be55dc20800",
+      "reloc_offsets": [
+        55
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        }
+      ],
+      "slot": [
+        "data_service",
+        29
+      ],
+      "relative_calls": [
+        17,
+        43
+      ]
+    },
+    "data_initial_setter_index_address": {
+      "bytes": "558bec51894dfc8b45fc8b088b55088d04918be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "caller": [
+        "set_data_initial_text",
+        43
+      ]
+    },
+    "default_line_factory_case": {
+      "bytes": "68e8000000e8585386ff8985fcfeffffc745fc0100000083bdfcfeffff0074108b8dfcfeffffe8471ed9ff8945d8eb07c745d8000000008b45d8898510feffffc745fcffffffff8b8d10feffff894df0",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        5,
+        38
+      ],
+      "dispatch_case": [
+        "create_default_control",
+        81,
+        68,
+        0
+      ]
+    },
+    "construct_default_line": {
+      "bytes": "558bec51894dfc68025000008b4dfce8ccf726008b45fcc700d45612018b4dfcc74104dc5712018b45fc8be55dc3",
+      "reloc_offsets": [
+        25,
+        35
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        15
+      ],
+      "caller": [
+        "default_line_factory_case",
+        38
+      ]
+    },
+    "allocate_default_line": {
+      "bytes": "558bec8b450850e8fce9b10083c4045dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        7
+      ],
+      "caller": [
+        "default_line_factory_case",
+        5
+      ]
+    },
+    "allocate_default_line_crt": {
+      "bytes": "ff2588c70601",
+      "reloc_offsets": [
+        2
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1502
+          }
+        }
+      ],
+      "caller": [
+        "allocate_default_line",
+        7
+      ]
+    },
+    "set_default_line_endpoints": {
+      "bytes": "558bec83ec1c894dfc8b450c508b4d08518b4dfce89791ffff837d0c0075248b55fc81c2800000008b45088b08890a8b4804894a048b4808894a088b400c89420ceb4a8b4d08e8252fb7ff8b088b5004894df48955f88b45f8508b4df4518d55e4528b4d0ce836b8fcff8b4d08e85eb5fcff8b088b5004894dec8955f08b45f0508b4dec518b4d0ce8f3b7fcff8be55dc20800",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        20,
+        70,
+        101,
+        109,
+        136
+      ],
+      "slot": [
+        "default_line",
+        21
+      ]
+    },
+    "default_line_geometry_base": {
+      "bytes": "558bec51894dfc8be55dc20800",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "caller": [
+        "set_default_line_endpoints",
+        20
+      ]
+    },
+    "delete_default_line": {
+      "bytes": "558bec51894dfc8b4dfce8d1e0ffff8b450883e00174098b4dfc51e8e092a7ff8b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10,
+        27
+      ],
+      "slot": [
+        "default_line",
+        1
+      ]
+    },
+    "destroy_default_line": {
+      "bytes": "558bec51894dfc8b4dfce8d1f421008be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10
+      ],
+      "caller": [
+        "delete_default_line",
+        10
+      ]
+    },
+    "deallocate_default_line": {
+      "bytes": "558bec8b450850e86658b20083c4045dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        7
+      ],
+      "caller": [
+        "delete_default_line",
+        27
+      ]
+    },
+    "deallocate_default_line_crt": {
+      "bytes": "ff258cc70601",
+      "reloc_offsets": [
+        2
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1504
+          }
+        }
+      ],
+      "caller": [
+        "deallocate_default_line",
+        7
+      ]
+    },
+    "default_rectangle_factory_case": {
+      "bytes": "68e8000000e8ae5286ff8985ecfeffffc745fc0300000083bdecfeffff0074108b8decfeffffe84d2ad9ff8945c8eb07c745c8000000008b4dc8898d08feffffc745fcffffffff8b9508feffff8955f0",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        5,
+        38
+      ],
+      "dispatch_case": [
+        "create_default_control",
+        81,
+        68,
+        2
+      ]
+    },
+    "construct_default_rectangle": {
+      "bytes": "558bec51894dfc68045000008b4dfce81ceb26008b45fcc7005c5812018b4dfcc74104645912018b45fc8be55dc3",
+      "reloc_offsets": [
+        25,
+        35
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        15
+      ],
+      "caller": [
+        "default_rectangle_factory_case",
+        38
+      ]
+    },
+    "allocate_default_rectangle": {
+      "bytes": "558bec8b450850e8fce9b10083c4045dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        7
+      ],
+      "caller": [
+        "default_rectangle_factory_case",
+        5
+      ]
+    },
+    "allocate_default_rectangle_crt": {
+      "bytes": "ff2588c70601",
+      "reloc_offsets": [
+        2
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1502
+          }
+        }
+      ],
+      "caller": [
+        "allocate_default_rectangle",
+        7
+      ]
+    },
+    "set_default_rectangle_bounds": {
+      "bytes": "558bec51894dfc8b450c508b4d08518b4dfce8b984ffff837d0c00752c8b4d08e87b37cbff8b55fc81c2800000008b45088b08890a8b4804894a048b4808894a088b400c89420ceb118b4d08e88f57adff508b4d0ce8c637cbff8be55dc2",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        18,
+        32,
+        76,
+        85
+      ],
+      "slot": [
+        "default_rectangle",
+        21
+      ]
+    },
+    "default_rectangle_geometry_base": {
+      "bytes": "558bec51894dfc8be55dc20800",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "caller": [
+        "set_default_rectangle_bounds",
+        18
+      ]
+    },
+    "delete_default_rectangle": {
+      "bytes": "558bec51894dfc8b4dfce8c1dfffff8b450883e00174098b4dfc51e87090a7ff8b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10,
+        27
+      ],
+      "slot": [
+        "default_rectangle",
+        1
+      ]
+    },
+    "destroy_default_rectangle": {
+      "bytes": "558bec51894dfc8b4dfce871f321008be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10
+      ],
+      "caller": [
+        "delete_default_rectangle",
+        10
+      ]
+    },
+    "deallocate_default_rectangle": {
+      "bytes": "558bec8b450850e86658b20083c4045dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        7
+      ],
+      "caller": [
+        "delete_default_rectangle",
+        27
+      ]
+    },
+    "deallocate_default_rectangle_crt": {
+      "bytes": "ff258cc70601",
+      "reloc_offsets": [
+        2
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1504
+          }
+        }
+      ],
+      "caller": [
+        "deallocate_default_rectangle",
+        7
+      ]
+    },
+    "default_rectangle_normalize": {
+      "bytes": "558bec83ec08894dfc8b45fc8b4dfc8b103b51087e1c8b45fc8b08894df88b55fc8b45fc8b4808890a8b55fc8b45f88942088b4dfc8b55fc8b41043b420c7e1e8b4dfc8b51048955f88b45fc8b4dfc8b510c8950048b45fc8b4df889480c8be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "caller": [
+        "set_default_rectangle_bounds",
+        32
+      ]
+    },
+    "page_description_archive_entry": {
+      "bytes": "558bec6aff68948dfc0064a1000000005081ec94000000a1f029340133c5508d45f464a300000000894df08b45088b4df08908",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "slot": [
+        "page_description_document",
+        2
+      ]
+    },
+    "page_description_archive_strings": {
+      "bytes": "8b55f08b8268020000508b4d08e86cdd8eff8b4df081c16c020000518b4dd8e81a2ea8ff8b55f081c270020000528b4dd8e8082ea8ff8b45f00574020000508b4dd8e8f72da8ff",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        13,
+        31,
+        49,
+        66
+      ]
+    },
+    "page_description_archive_bstr": {
+      "bytes": "558bec83ec08894dfc8b45fc8945f88b4d08518b4df8e815edf0ff8b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        22
+      ],
+      "caller": [
+        "page_description_archive_strings",
+        31
+      ]
+    },
+    "page_description_archive_restore": {
+      "bytes": "898598feffff8b8d98feffffe8a4ff9dff8945948b55948b4208508b4dec81c170020000ff15b0c406016a038d4dbce821ca0100",
+      "reloc_offsets": [
+        38
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        }
+      ],
+      "relative_calls": [
+        12,
+        47
+      ]
+    },
+    "page_description_dialog_entry": {
+      "bytes": "558bec6aff68e085fc0064a10000000050b800180000e8457b3d00a1f029340133c58945f05657508d45f4",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [
+        22
+      ],
+      "slot": [
+        "page_description_document",
+        102
+      ]
+    },
+    "page_description_dialog_copy_in": {
+      "bytes": "8b8dd0f7ffff81c174020000518d8d00fcffffff153cc706018b95d0f7ffff81c270020000528d8d04fcffffff153cc70601",
+      "reloc_offsets": [
+        21,
+        46
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ]
+    },
+    "page_description_dialog_copy_out": {
+      "bytes": "8d9500fcffff528b8dd0f7ffff81c174020000ff153cc706018d8504fcffff508b8dd0f7ffff81c170020000ff153cc70601",
+      "reloc_offsets": [
+        21,
+        46
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ]
+    },
+    "page_description_native_flush": {
+      "bytes": "558bec6aff68c00ffe0064a1000000005083ec5ca1f029340133c5508d45f464a300000000894df068a4fd17018d4de0ff1544c70601c745fc00000000e8fe0184ff8945e48b45f08b480c518b55f08b4208506860fd17018d4de051688a00000068c8fd170168e4fd17016a018d4dace84b5584ff8945cc8b55cc8955c8c645fc018b45c8508b4de4518b55e48b028b4810ffd183c414c645fc008d4dace84d5b84ffc745fcffffffff8d4de0ff1540c706018b55f08b420c508b4df083c108518b4df083e904e8142a00008945ec8b55f08b42103b45ec75448b4df08b51108b45f08b128b48108b4268ffd085c0742d6a018b4df08b51108b45f08b128b48108b426cffd06a008b4df08b51108b45f08b128b48108b824c010000ffd0",
+      "reloc_offsets": [
+        6,
+        21,
+        41,
+        50,
+        84,
+        98,
+        103,
+        175
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        61,
+        112,
+        158,
+        199
+      ],
+      "slot": [
+        "page_description_modifiable",
+        2
+      ]
+    },
+    "page_description_database_save": {
+      "bytes": "558bec6aff687686fc0064a100000000505181ec94020000535657a1f029340133c5508d45f464a3000000008965f0894dec8b45088945dc837d08007513e8bde88aff8b8820050000e8c21bffff8945dc",
+      "reloc_offsets": [
+        6,
+        28
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [
+        62,
+        73
+      ],
+      "slot": [
+        "page_description_document",
+        83
+      ]
+    },
+    "page_description_database_note": {
+      "bytes": "8b45ec0570020000508d8d6cffffffff153cc706018b4dec8b9114010000895580",
+      "reloc_offsets": [
+        17
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ]
+    },
+    "page_description_database_record_update": {
+      "bytes": "6a008d9570ffffff528d8dccfeffffe8f8a694ff6a018d8570ffffff508d8dccfeffffe8b4a694ff8d8dccfeffffe819a294ff8945d0837dd000740b8d8dccfeffffe835a594ff8d8dccfeffffe8caa194ff",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        15,
+        35,
+        46,
+        66,
+        77
+      ]
+    },
+    "reference_object_path": {
+      "bytes": "558bec6aff68d285fd0064a1000000005083ec18a1f029340133c5508d45f464a300000000894de8c745ec000000008d4df0e8494d0000c745fc000000008d45dc508b4de8e876fdffff8945e48b4de4894de0c645fc018b55e0528d4df0ff153cc70601c645fc008d4ddcff1540c706018d45f0508b4d08e8335280ff8b4dec83c901894decc745fcffffffff8d4df0e8ab5780ff8b45088b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        21,
+        96,
+        109
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        50,
+        69,
+        120,
+        144
+      ]
+    },
+    "reference_presence": {
+      "bytes": "558bec83ec1c894dfc8b4508508d4df4518b4dfc83c124e8240a01008d55f4528d45e4508b4dfc83c124e821fc00008bc8e8aa9400000fb6c885c9742d8b550c528d4df4e8b799000083c004508b450850e89a01000083c40c0fb6c885c9740ab801000000e9890000008b55fc83c2248955f08d45f8508b4df0e8f1ee00008d4de8518b4df0e8c5fb0000eb088d4df8e8eb9c00008d55e8528d4df8e83f9400000fb6c085c074498d4df8e8109a00008945ec8b4d08518b55ec52e8c001000083c4080fb6c085c074258b4d0c518b55ec83c204528b450850e81201000083c40c0fb6c885c97407b802000000eb04eb9c33c08be55dc20800",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        23,
+        42,
+        49,
+        68,
+        81,
+        122,
+        134,
+        144,
+        156,
+        171,
+        187,
+        217
+      ]
+    },
+    "reference_model_rename": {
+      "bytes": "558bec6aff684799fd0064a1000000005081ecf8000000a1f029340133c5508d45f464a300000000894dec837d0800750732c0e9030600008d45f0508b4d088b118b4d088b4224ffd0c745fc000000008b4d0cff1568c70601508d4df0ff156cc5060185c00f85b900000068246417018d4da4ff1544c70601c645fc0168446417018d4dbcff1544c70601c645fc02e8fc798aff8945c08d4da4518d55bc5268c1000000685c64170168746417016a018d8d4cffffffe855cd8aff898564ffffff8b8564ffffff89458cc645fc038b4d8c518b55c08b028b4dc08b500cffd2c645fc028d8d4cffffffe852d38affc645fc018d4dbcff1540c70601c645fc008d4da4ff1540c70601c645eb01c745fcffffffff8d4df0ff1540c706018a45ebe9170500000fb6451885c00f841f0100008b4d088b118b4d088b423cffd08945d0837dd000751cc645e600c745fcffffffff8d4df0ff1540c706018a45e6e9d90400008b4d0c518b55d08b028b4dd08b5040ffd2894580837d80000f84cf00000068c45600008d45cc50e842b4f5ff83c408c645fc0468906417018d4d94ff1544c70601c645fc05e8e4788aff8945b48d4dcc518d55945268d000000068a864170168c06417016a038d8d10ffffffe83dcc8aff89856cffffff8b856cffffff898578ffffffc645fc068b8d78ffffff518b55b48b028b4db48b500cffd2c645fc058d8d10ffffffe834d28affc645fc048d4d94ff1540c706018d45cc508b4d14ff153cc70601c645e800c645fc008d4dccff1540c70601c745fcffffffff8d4df0ff1540c706018a45e8e9ec0300008d4de0518b4d08e89574ffffc645fc07c745b8ffffffffff1538ae060150e8702d30008945d4837dd400740b8b4dd4e8bf3330008945b80fb6551085d20f84e20000008d45e0508b4dece8b21b00000fb6c885c90f85cb00000068dc6417018d4dc4ff1544c70601c645fc08680c6517018d4d9cff1544c70601c645fc09e8be778aff8945ac8d55c4528d459c5068e00000006824651701683c6517016a018d8d38ffffffe817cb8aff898568ffffff8b8d68ffffff898d70ffffffc645fc0a8b9570ffffff528b45ac8b108b4dac8b420cffd0c645fc098d8d38ffffffe80ed18affc645fc088d4d9cff1540c70601c645fc078d4dc4ff1540c70601c645e900c645fc008d4de0e8d4cb7fffc745fcffffffff8d4df0ff1540c706018a45e9e9c7020000837dd400740c8b4db8518b4dd4e89e2f30008b550c528b45088b108b4d088b4228ffd00fb6c885c90f85e200000068c55600008d55d852e820b2f5ff83c408c645fc0b8d45f0508d4dd8ff1514c5060168586517018d4da8ff1544c70601c645fc0ce8b5768aff8945b08d4dd8518d55a85268ec000000687065170168886517016a018d8d24ffffffe80eca8aff898560ffffff8b8560ffffff894588c645fc0d8b4d88518b55b08b028b4db08b500cffd2c645fc0c8d8d24ffffffe80bd08affc645fc0b8d4da8ff1540c706018d45d8508b4d14ff153cc70601c645e700c645fc078d4dd8ff1540c70601c645fc008d4de0e8c4ca7fffc745fcffffffff8d4df0ff1540c706018a45e7e9b70100008d4ddc518b4d08e86072ffffc645fc0e8b55ec83c204528d45dc508d4de0518b4dece8250c00008b55ec83c224528d45dc508d4de0518b4dece80e0c00008b55ec8b028b4dec8b10ffd28945846a00684cf4310168d4c031018d45dc508b4dec8b118b4dec8b4228ffd0508b4d84e8094001006a0050e8c54d300083c4148945c8837dc80074158b4d0c518d55f0528b45c88b108b4dc88b4204ffd08b4decc7416c000000008b550c528d45f0508b4d08518b4dece8a21000006a0068a46517018d4df0ff1564c5060183f8ff75166a008b550c528d45f0508d4ddc518b4dece84711000068a86517018d4d90ff1544c70601c645fc0f68d46517018d4d98ff1544c70601c645fc10e8fe748aff8945a08d5590528d459850680201000068ec65170168046617016a018d8dfcfeffffe857c88aff89857cffffff8b8d7cffffff898d74ffffffc645fc118b9574ffffff528b45a08b108b4da08b420cffd0c645fc108d8dfcfeffffe84ece8affc645fc0f8d4d98ff1540c70601c645fc0e8d4d90ff1540c70601c645ea01c645fc078d4ddce814c97fffc645fc008d4de0e808c97fffc745fcffffffff8d4df0ff1540c706018a45ea8b4df464890d00000000598be55dc21400",
+      "reloc_offsets": [
+        6,
+        24,
+        85,
+        95,
+        108,
+        117,
+        126,
+        135,
+        165,
+        170,
+        247,
+        260,
+        280,
+        342,
+        406,
+        415,
+        445,
+        450,
+        533,
+        546,
+        563,
+        579,
+        616,
+        682,
+        691,
+        700,
+        709,
+        739,
+        744,
+        827,
+        840,
+        872,
+        960,
+        965,
+        974,
+        1004,
+        1009,
+        1086,
+        1099,
+        1116,
+        1144,
+        1236,
+        1241,
+        1345,
+        1354,
+        1386,
+        1395,
+        1404,
+        1413,
+        1443,
+        1448,
+        1531,
+        1544,
+        1588
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 2941
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "user32.dll",
+            "name": "GetActiveWindow",
+            "ordinal": null
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1680
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 4603
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        143,
+        182,
+        233,
+        393,
+        423,
+        462,
+        519,
+        598,
+        621,
+        638,
+        665,
+        717,
+        756,
+        813,
+        855,
+        897,
+        939,
+        982,
+        1021,
+        1072,
+        1127,
+        1163,
+        1190,
+        1213,
+        1266,
+        1274,
+        1337,
+        1380,
+        1421,
+        1460,
+        1517,
+        1559,
+        1571
+      ],
+      "slot": [
+        "root_window_model",
+        4
+      ]
+    },
+    "reference_rename_registered_consumers": {
+      "bytes": "558bec6aff68a99afd0064a1000000005081ecb8000000a1f029340133c5508d45f464a300000000894db48d4d9ce84d970000c745fc000000008b45108945b08d4de0518b4db0e8c4ff00008d5594528b4db0e8980c0100eb088d4de0e8bead00008d4594508d4de0e812a500000fb6c885c90f84e8010000",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [
+        46,
+        71,
+        83,
+        93,
+        105
+      ],
+      "caller": [
+        "reference_model_rename",
+        1190
+      ]
+    },
+    "data_refresh_after_rename": {
+      "bytes": "558bec51894dfc6a03e8323c80ff8b882405000081c190030000e8514bc6ff8b08e89a60f3ff8be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        9,
+        26,
+        33
+      ],
+      "slot": [
+        "data_service",
+        11
+      ]
+    },
+    "strategy_trigger_common_archive": {
+      "bytes": "558bec83ec08894dfc8b4508508b4dfce83bed56ff8b4d08894df88b4d08e80d2f57ff85c0746b8b55fc8b4204508b4d08e88a0e5bff8b4dfc8b5108528b4d08e87b0e5bff8b45fc8b480c518b4d08e86c0e5bff8b55fc83c210528b4df8e81d5f74ff8b45fc8b4814518b4d08e8ee2572ff8b55fc8b4218508b4d08e8df2572ff8b4dfc8b511c528b4d08e8d02572ffeb698b45fc83c004508b4d08e84f0c5bff8b4dfc83c108518b4d08e8400c5bff8b55fc83c20c528b4d08e8310c5bff8b45fc83c010508b4df8e8b25b74ff8b4dfc83c114518b4d08e8930c5bff8b55fc83c218528b4d08e8840c5bff8b45fc83c01c508b4d08e8750c5bff8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        16,
+        30,
+        49,
+        64,
+        79,
+        94,
+        109,
+        124,
+        139,
+        156,
+        171,
+        186,
+        201,
+        216,
+        231,
+        246
+      ],
+      "slot": [
+        "strategy_trigger_start",
+        2
+      ]
+    },
+    "strategy_trigger_loop_archive": {
+      "bytes": "558bec83ec10894dfc8b4508508b4dfce81bf6ffff8b4d08e8432557ff85c00f84a30000008b4dfc8b512481e2ffff00000fb7c28b4dfc8b513083c20181e2ffff00000fb7cac1e1100bc18945f08b55f0528b4d08e8361c72ff8b45fc8b4828518b4d08e867045bff8b55fc8b4234508b4d08e858045bff8b4dfc8b5138528b4d08e849045bff8b45fc8b483c518b4d08e83a045bff8b55fc8b4240508b4d08e82b045bff8b4dfc8b5144528b4d08e81c045bff8b45fc8b482c518b4d08e8cd1b72ffe9640100008d55f4528b4d08e8cc025bff8b45f425ffff00000fb7c88b55fc894a248b45f4c1e81025ffff00000fb7c88b55fc894a308b45fc83c028508b4d08e8f8015bff8b4dfc83792400741d8b55fc837a240174148b45fcc74024000000008b4dfcc74128e80300008b55fc83c234528b4d08e8c3015bff8b45fc83c038508b4d08e8b4015bff8b4dfc83c13c518b4d08e8a5015bff8b55fc83c240528b4d08e896015bff8b45fc83c044508b4d08e887015bff8b4dfc83c12c518b4d08e818025bff8b55fc837a24010f85970000008b45fc837830007e1d8b4dfc8b51308955f88b45f883e8018945f88b4dfc8b55f8895130eb718b45fcc74030000000008b4dfc83793400740c8b55fcc7423000000000eb528b45fc83783800740c8b4dfcc7413001000000eb3d8b55fc837a3c00740c8b45fcc7403002000000eb288b4dfc83794000740c8b55fcc7423003000000eb138b45fc83784400740a8b4dfcc74130040000008be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        16,
+        24,
+        85,
+        100,
+        115,
+        130,
+        145,
+        160,
+        175,
+        190,
+        207,
+        259,
+        312,
+        327,
+        342,
+        357,
+        372,
+        387
+      ],
+      "slot": [
+        "strategy_trigger_loop",
+        2
+      ]
+    },
+    "strategy_trigger_event_archive": {
+      "bytes": "558bec83ec0c894dfc8b4508508b4dfce8ebeeffff8b4d08518b4dfc83c1248b55fc8b42248b5008ffd28b45088945f88b4d08e8f81d57ff85c0742f8b4dfc83c138518b4df8e8354e74ff8b55fc8b423c508b4d08e846fd5aff8b4dfc8b5140528b4d08e8f71472ffeb338b45fc83c038508b4df8e8064b74ff8b4dfc83c13c518b4d08e847fb5aff8d55f4528b4d08e8dbfb5aff8b45fc8b4df48948408be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        16,
+        51,
+        70,
+        85,
+        100,
+        117,
+        132,
+        144
+      ],
+      "slot": [
+        "strategy_trigger_event",
+        2
+      ]
+    },
+    "reference_graph_first": {
+      "bytes": "558bec51894dfc8b4508508b4dfce80d0100008b45088be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        14
+      ],
+      "caller": [
+        "reference_presence",
+        122
+      ]
+    },
+    "reference_graph_head_layout": {
+      "bytes": "558bec51894dfc8b45fc508b4dfc8b1152e8fae8ffff83c4048b00508b4d08e8fc8bffff8b45088be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        17,
+        31
+      ],
+      "caller": [
+        "reference_graph_first",
+        14
+      ]
+    },
+    "reference_graph_pair_layout": {
+      "bytes": "558bec51894dfc8b4dfce8b100000050e81b7b000083c4048be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10,
+        16
+      ],
+      "caller": [
+        "reference_presence",
+        68
+      ]
+    },
+    "reference_graph_read_value": {
+      "bytes": "558bec83ec108b450c8945f48d4dfc518b4df4e838ee00008d55f0528b4df4e8ac45ffffeb088d4dfce862b88aff8d45f0508d4dfce8e6b28aff0fb6c885c974498d4dfce80780feff8945f88b55f8528b4d08e828a1ffff0fb6c085c075178b4d08518b55f852e82400000083c4080fb6c085c07402ebae8b4df8518b4d10e8ecb38fffb001eb04eb9c32c08be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        19,
+        31,
+        41,
+        53,
+        68,
+        83,
+        103,
+        127
+      ],
+      "caller": [
+        "reference_presence",
+        81
+      ]
+    },
+    "reference_graph_value_first": {
+      "bytes": "558bec51894dfc8b4508508b4dfce82d0100008b45088be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        14
+      ],
+      "caller": [
+        "reference_graph_read_value",
+        19
+      ]
+    },
+    "reference_graph_value_current": {
+      "bytes": "558bec51894dfc8b45fc8b0851e8de668cff83c4048be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        13
+      ],
+      "caller": [
+        "reference_graph_read_value",
+        68
+      ]
+    },
+    "root_language_service_layout": {
+      "bytes": "6884000000e888a26d0083c4048985a8feffffc645fc1283bda8feffff0074138b8da8feffffe82fde270089857cfeffffeb0ac7857cfeffff000000008b957cfeffff899558feffffc645fc118b85d8feffff8b8d58feffff89880c020000e8368101008985d0feffff8b95d8feffff8b820c020000508b8dd0feffff8b118b8dd0feffff8b4230ffd0",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        5,
+        38,
+        95
+      ]
+    },
+    "language_service_constructor_layout": {
+      "bytes": "558bec6aff68bee8fb0064a1000000005083ec10a1f029340133c5508d45f464a300000000894df08b4df0e860cd00008b45f0c700a4a714018b4df083c104e88ccb0000c745fc000000008b4df083c10ce87acb0000c645fc018b4df0c64114008b4df083c118e864cb0000c645fc028b4df083c120e85598d3ffc645fc038b4df083c128e8465b95ffc645fc048b4df083c134e8179ad3ffc645fc058b4df083c154e82898d3ffc645fc068b4df083c15ce81998d3ffc645fc078b55f0c74264000000008b45f0c74068000000008b4df0c7416c000000008b4df083c178e8ec97d3ffc645fc088b55f0c78280000000000000008b4df0e8e36a00008b45f08b4868518b4df0e8145500008b4df0e87c5200008b55f0c742700200000068b8000000e810c3450083c4048945ecc645fc09837dec00740d8b4dece8d07701008945e8eb07c745e8000000008b45e88945e4c645fc088b4df08b55e4899180000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        53
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        43,
+        63,
+        81,
+        103,
+        118,
+        133,
+        148,
+        163,
+        178,
+        223,
+        248,
+        263,
+        271,
+        291,
+        315
+      ],
+      "caller": [
+        "root_language_service_layout",
+        38
+      ]
+    },
+    "language_next_project_text_id": {
+      "bytes": "558bec83ec24894df00fb6450885c0740b8b4df083c104894deceb098b55f083c20c8955ec8b45ec8945e88b4de8894df8c745fc102700008b4df8e810e500000fb6d085d275398d45f4508b4df8e8ede500006a008d4de4518d4df4e8ffbb00008d4df4e827b800008b55fc3b107f108d4df4e818b800008b0083c0018945fc817dfc90bd98007e3dc745fc102700008d4dfc518d55e0528b4df8e850fa0000508d45dc508b4df8e893e500008bc8e8ccb200000fb6c885c9740b8b55fc83c2018955fcebca8b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        59,
+        78,
+        92,
+        100,
+        115,
+        155,
+        168,
+        175
+      ],
+      "slot": [
+        "language_service",
+        30
+      ]
+    },
+    "language_set_translation": {
+      "bytes": "558bec6aff6892e9fb0064a1000000005083ec44a1f029340133c5508d45f464a300000000894de40fb6451485c0740b8b4de483c104894de0eb098b55e483c20c8955e08b45e08945d48b4dd4894de8837d08007d0732c0e965010000837d0c007d0732c0e9580100008d5508528d45ec508b4de8e8961501008d4dcc518b4de8e84a010100508d4dece8b1ce00000fb6d085d20f84ba0000008d4dece8eed3000083c0048945dc8d45f0508b4ddce84cfd00008d4dd0518b4ddce870010100eb088d4df0e816d700008d55d0528d4df0e8aace00000fb6c085c0742e8d4df0e87bd400008945d88b4dd88b113b550c75178b4510508b4dd883c104ff153cc70601b001e9b9000000ebb78d4dc4e8ddc70000c745fc000000008b4d0c894dc48b5510528d4dc8ff153cc706018d45c4508d4dece857d3000083c0048bc8e87d190100c745fcffffffff8d4dc4e8cec90000eb6c8d4dbce894c70000c745fc010000008b4d0c894dbc8b5510528d4dc0ff153cc706018d4db0e8f2c60000c645fc028d45bc508d4db0e8321901008d4db0518d5508528b4de8e892d100008bc8e84bca0000c645fc018d4db0e84fc90000c745fcffffffff8d4dbce860c90000b0018b4df464890d00000000598be55dc21000",
+      "reloc_offsets": [
+        6,
+        21,
+        254,
+        297,
+        370
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ],
+      "relative_calls": [
+        117,
+        129,
+        138,
+        157,
+        175,
+        187,
+        197,
+        209,
+        224,
+        270,
+        308,
+        318,
+        333,
+        343,
+        377,
+        393,
+        409,
+        416,
+        428,
+        443
+      ],
+      "slot": [
+        "language_service",
+        2
+      ]
+    },
+    "language_commit_translations": {
+      "bytes": "558bec51894dfc8b45fcc64014018b4dfc83c10c518b4dfc83c104e8708d00008be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        27
+      ],
+      "slot": [
+        "language_service",
+        41
+      ]
+    },
+    "save_language_module": {
+      "bytes": "558bec6aff6897ebfb0064a100000000505181ec40010000535657a1f029340133c5508d45f464a3000000008965f0894dec8b45ec0fb6481485c97505e99c0400008b55ecc6421400c745fc0000000068000400008d8db0feffffe8489545008985ecfeffffc645fc016a0068000040006a008d85b0feffff508d8d40ffffffe81ba8b0ff8985f4feffffc645fc0251f30f10053c563301f30f1104248d8d40ffffffe868adb0ff8b4dec8b5168528d8d40ffffffe846aeb0ff8b45ec8b486c518d8d40ffffffe834aeb0ff8b55ec8b4264508d8d40ffffffe822aeb0ff8b4dec83c128e867b095ff508d8d40ffffffe80baeb0ff8b4dec83c128894dd48d55dc528b4dd4e8a68e95ff8d4594508b4dd4e81a9795ffeb088d4ddce8b03c95ff8d4d94518d4ddce8843695ff8845e90fb655e985d274248d4ddce8013995ff8945908b45908b08894db08b55b0528d8d40ffffffe8a7adb0ffebbd8b4dec83c154e8caa49eff508d8d40ffffffe88eadb0ff8b45ec83c0548945cc8d4de4518b4dcce8c9989eff8d55b4528b4dcce8bd999effeb088d4de4e8c38a9eff8d45b4508d4de4e8e7899eff8845e80fb64de885c90f84c80000008d4de4e8308a9eff8945a48b55a4528d8df8feffffe89e869eff8985dcfeffffc645fc038b85f8feffff508d8d40ffffffe812adb0ff8d8dfcfeffff518d8d40ffffffe8d0acb0ff8d9500ffffff528d8d40ffffffe8beacb0ff8b8504ffffff508d8d40ffffffe8dcacb0ff8b8d08ffffff518d8d40ffffffe8caacb0ff8d950cffffff528d8d40ffffffe888acb0ff8b8510ffffff508d8d40ffffffe8a6acb0ff8b8d14ffffff518d8d40ffffffe894acb0ffc645fc028d8df8feffffe885889effe915ffffff8b4dec83c104e8a5ec0000508d8d40ffffffe869acb0ff8b55ec83c2048955d08d45e0508b4dd0e8c4cd00008d4dac518b4dd0e8e8d10000eb088d4de0e82ea600008d55ac528d4de0e8429f00008845eb0fb645eb85c00f84f00000008d4de0e81ba500008945c48b4dc4518d8d30ffffffe8e99600008985e4feffffc645fc048b9530ffffff528d8d40ffffffe8edabb0ff8d8d34ffffffe832ec0000508d8d40ffffffe8d6abb0ff8d8534ffffff8945c88d4dd8518b4dc8e891cd00008d55bc528b4dc8e8b5d10000eb088d4dd8e85ba700008d45bc508d4dd8e8ef9e00008845ea0fb64dea85c9744d8d4dd8e8bca400008945b88b55b8528d4d9ce80d9800008985f0feffffc645fc058b459c508d8d40ffffffe864abb0ff8d4da0518d8d40ffffffe825abb0ffc645fc048d4d9ce8399a0000eb94c645fc028d8d30ffffffe8a8990000e9edfeffff8b55ec8b4270508d8d40ffffffe821abb0ff8d8d40ffffffe8e29145008d8d1cffffffe82f8e45008985e8feffffc645fc068d8db0feffffe8964995ff8d8db0feffffe8b191450089458889558c6aff8b4d88518d8d1cffffffe8fe8d45008d8d1cffffffe8390993ff8945c08d8d1cffffffe8eb0893ff8945a88b55c0528b45a8508d8db0feffffe859914500e8302f93ff8945988d8d1cffffff5168c09c14018b55988b8a20050000e8a328d8ffc645fc028d8d1cffffffe8b08d4500c645fc018d8d40ffffffe835a4b0ffc645fc008d8db0feffffe804914500eb178b8de0feffffe805954500b82712ad00c3b81c12ad00c3c745fcffffffffeb09c745fcffffffffeb09eb07c745fcffffffff8b4df464890d00000000595f5e5b8be55dc3",
+      "reloc_offsets": [
+        6,
+        28,
+        148,
+        1131,
+        1208,
+        1214
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        91,
+        128,
+        163,
+        181,
+        199,
+        217,
+        228,
+        240,
+        261,
+        273,
+        283,
+        295,
+        314,
+        340,
+        353,
+        365,
+        386,
+        398,
+        408,
+        420,
+        443,
+        461,
+        489,
+        507,
+        525,
+        543,
+        561,
+        579,
+        597,
+        615,
+        630,
+        646,
+        658,
+        679,
+        691,
+        701,
+        713,
+        736,
+        754,
+        782,
+        793,
+        805,
+        826,
+        838,
+        848,
+        860,
+        879,
+        894,
+        919,
+        934,
+        946,
+        963,
+        986,
+        997,
+        1008,
+        1029,
+        1040,
+        1063,
+        1074,
+        1088,
+        1110,
+        1115,
+        1144,
+        1159,
+        1174,
+        1189,
+        1202
+      ],
+      "slot": [
+        "language_service",
+        35
+      ]
+    },
+    "language_append_builtin": {
+      "bytes": "558bec83ec1c894df8837d08007d0432c0eb7d8b45f883c0288945f48d4dfc518b4df4e8c8b895ff8d55f0528b4df4e83cc195ffeb088d4dfce8d26695ff8d45f0508d4dfce8a66095ff0fb6c885c9741b8d4dfce8276395ff8b108955ec8b45ec3b4508750432c0eb26ebca8d4d08518b4df883c128e8b5d695ff8d5508528d45e4508b4df883c134e842eed3ffb0018be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        35,
+        47,
+        57,
+        69,
+        84,
+        118,
+        137
+      ],
+      "slot": [
+        "language_service",
+        6
+      ]
+    },
+    "language_check_builtin_name": {
+      "bytes": "558bec83ec14894df48b45f483c0788945f88d4dfc518b4df8e8a2b59eff8d55f0528b4df8e896b69effeb088d4dfce84ca79eff8d45f0508d4dfce890a69eff0fb6c885c9742b8d4dfce8c1a69eff8945ec8b5508528b45ec83c00450e8de9293ff83c4080fb6c885c97404b001eb04ebba32c08be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        25,
+        37,
+        47,
+        59,
+        74,
+        93
+      ],
+      "slot": [
+        "language_service",
+        18
+      ]
+    },
+    "language_refresh_fonts": {
+      "bytes": "558bec83ec1c894dfc8b45fc83c0288945f48d4df8518b4df4e8b27495ff8d55e8528b4df4e8267d95ffeb088d4df8e8bc2295ff8d45e8508d4df8e8901c95ff0fb6c885c9745f8d4df8e8111f95ff8945ec8b55ec528d45f0508b4dfc83c154e8bb889eff8d4de4518b4dfc83c154e8fc7f9eff508d4df0e833709eff0fb6d085d274208d4df0e884c59eff83c008508b45ec8b08518b55fc8b8a80000000e82c350100eb868be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        25,
+        37,
+        47,
+        59,
+        74,
+        96,
+        111,
+        120,
+        135,
+        159
+      ],
+      "slot": [
+        "language_service",
+        44
+      ]
+    },
+    "set_language_module_dirty": {
+      "bytes": "558bec51894dfc8b45fc8a4d088848148be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [],
+      "slot": [
+        "language_service",
+        51
+      ]
+    },
+    "picture_manager_layout": {
+      "bytes": "c7410458c813018b55f0c7420864c813018b45f0c7403474c813018b4df083c14ce83a510000c645fc028b4df083c16ce83b809dffc645fc038b4df083c178e8ac9fadffc645fc048b4df081c198000000e84a510000c645fc058b4df081c1b8000000e898500000c645fc068b4df081c1c4000000e87698a8ff8b4df0c64138008b55f0c64239008b45f0c7403c000000008b4df0c74140000000008b55f0c64244018b45f0",
+      "reloc_offsets": [
+        3,
+        13,
+        23
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        33,
+        48,
+        63,
+        81,
+        99,
+        117
+      ]
+    },
+    "picture_find_by_name": {
+      "bytes": "558bec83ec0c894dfc8b4508508d4df8518b4dfc83c14ce8f46600008d55f4528b4dfc83c14ce805640000508d4df8e88c4a00000fb6c085c0740433c0eb0b8d4df8e8f94b00008b40088be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        23,
+        38,
+        47,
+        66
+      ],
+      "slot": [
+        "picture_manager",
+        16
+      ]
+    },
+    "picture_object_layout": {
+      "bytes": "558bec6aff68bb47fe0064a1000000005083ec0ca1f029340133c5508d45f464a300000000894df08b4df0e820d1d7ffc745fc000000008b45f0c7007c8718018b4df083c110ff1550c70601c645fc018b4df083c114ff1550c70601c645fc028b4df083c118e8150bfeffc645fc038b4df081c1bc000000e8f3fe84ff686c8718018b4df083c110ff15b0c4060168708718018b4df083c114ff15b0c406018b4df0c7410800000000c7410c000000006a006a008d4de8e864077fff8b108b40048b4df08991bc0000008981c00000008b55f0c782c4000000000000008b45f0c680c800000001c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        60,
+        72,
+        88,
+        126,
+        138,
+        143,
+        155
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        }
+      ],
+      "relative_calls": [
+        43,
+        102,
+        120,
+        183
+      ]
+    },
+    "picture_bitmap_layout": {
+      "bytes": "558bec6aff689726fe0064a1000000005083ec0ca1f029340133c5508d45f464a300000000894df08b4df0e800dd0000c745fc000000008b4df083c104e8fe7792ffc645fc018b45f0c7000c3618018b4df0c74104683618018b4df083c10cff1550c70601c645fc028b4df083c12ce840f42800c645fc038b4df083c140e85ddb0000c645fc048b4df083c178e85ef386ff6a008b4df081c180000000ff159cac0601c645fc056a0a8b4df081c188000000e839608dffc645fc068b55f0c6420800681d2618018b4df083c10cff15c4c306018b45f0c74024000000008b4df0c74114000000008b55f0c74228000000006a006a008d4de8e8a3fb80ff8b088b50048b45f089487889507c8b4df0c74118000000008b55f0c7421cc0c0c0008b45f0c74020000000008b4df0c74110000000008b55f0c7427400000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        75,
+        85,
+        97,
+        159,
+        195,
+        207
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "qt5svg.dll",
+            "name": "??0QSvgRenderer@@QAE@PAVQObject@@@Z",
+            "ordinal": null
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1517
+          }
+        }
+      ],
+      "relative_calls": [
+        43,
+        61,
+        111,
+        126,
+        141,
+        178,
+        248
+      ]
+    },
+    "picture_bitmap_destroy": {
+      "bytes": "558bec6aff680427fe0064a1000000005083ec10a1f029340133c5508d45f464a300000000894df08b45f0c7000c3618018b4df0c7410468361801c745fc060000008b55f081c28800000052e8bf9e000083c4048b45f083c02c50e830a1000083c4048b4df081c18000000051e8aea1000083c4048b55f083c21052e8bfa2000083c4048b45f083c04050e870a1000083c4048b4df083797400743a8b55f08b42748945e88b4de8894dec837dec0074146a018b55ec8b028b4dec8b5004ffd28945e4eb07c745e4000000008b45f0c7407400000000c645fc058b4df081c188000000e8b8a88dffc645fc048b4df081c180000000ff15a4ac0601c645fc038b4df083c140e8d6dc0000c645fc028b4df083c12ce853f22800c645fc018b4df083c10cff1540c70601c645fc008b4df083c104e8189176ffc745fcffffffff8b4df0e809dd00008b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        45,
+        55,
+        247,
+        293
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "qt5svg.dll",
+            "name": "??1QSvgRenderer@@UAE@XZ",
+            "ordinal": null
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        76,
+        91,
+        109,
+        124,
+        139,
+        227,
+        261,
+        276,
+        307,
+        322
+      ]
+    },
+    "picture_bitmap_assign": {
+      "bytes": "558bec83ec08894df86a0068f4a5330168d8a533016a008b450850e89411290083c4148945fc837dfc00740c8b4dfc518b4df8e878feffff8be55dc20400",
+      "reloc_offsets": [
+        12,
+        17
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [
+        27,
+        51
+      ],
+      "slot": [
+        "picture_bitmap",
+        6
+      ]
+    },
+    "picture_set_name": {
+      "bytes": "558bec51894dfc8b4508508b4dfc83c110ff153cc706018b4d08518b4dfc83c1188b55fc8b42188b5044ffd2b0018be55dc20400",
+      "reloc_offsets": [
+        19
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ],
+      "relative_calls": [],
+      "slot": [
+        "picture_object",
+        10
+      ]
+    },
+    "picture_assign_bitmap": {
+      "bytes": "558bec51894dfc8b4508508b4dfc83c1188b55fc8b42188b5018ffd28b45fc83c014508b4dfc83c118e80254feff8b4dfce86a0200008be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        41,
+        49
+      ]
+    },
+    "picture_destroy_unadopted": {
+      "bytes": "558bec51894dfc8b4dfce8e1e3ffff8b450883e001740c8b4dfc51e8f2e2260083c4048b45fc8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        10,
+        27
+      ],
+      "slot": [
+        "picture_object",
+        0
+      ]
+    },
+    "picture_manager_save": {
+      "bytes": "558bec51894dfc8b4dfc83e934e8ee100000b0018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        13
+      ],
+      "slot": [
+        "picture_service",
+        2
+      ]
+    },
+    "picture_manager_dirty": {
+      "bytes": "558bec51894dfc8b45fcc64005018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [],
+      "slot": [
+        "picture_service",
+        3
+      ]
+    },
+    "picture_manager_append": {
+      "bytes": "558bec6aff689840fb0064a1000000005081ec94000000a1f029340133c5508d45f464a300000000894df0837d0800750732c0e92e0200008d45ac508b4d088b118b4d088b4224ffd08945908b4d90894de4c745fc000000008b55e4528b4df083e9348b45f08b50cc8b4240ffd08945dcc745fcffffffff8d4dacff1540c70601837ddc00740732c0e9d80100008b4d088b118b4d088b4254ffd08d4d08518d55b4528b4d08e825a828008945988b45988945d4c745fc010000008b4dd4518d558452e8a846000083c40c8945a48b45a48945ccc645fc028b4dcc518d558c528b45088b108b4d088b4224ffd08945948b4d94894dc4c645fc038b55c4528d8570ffffff50e80647000083c40c89459c8b4d9c894dbcc645fc048b55bc528d8568ffffff508b4df083c118e8a0430000c645fc038d8d70ffffffe8114f0000c645fc028d4d8cff1540c70601c645fc018d4d84e8d84e0000c745fcffffffff8d4db4ff1540c706018d4de0518b55088b028b4d088b5024ffd28945ec8b45ec8945e8c745fc050000008b4de8518b4df083c138e8f8ad9dffc745fcffffffff8d4de0ff1540c706018d55a0528b45088b108b4d088b4224ffd08945d88b4dd8894dd0c745fc060000008b55d0528d45a8508b4d08e8f7a628008945c88b4dc8894dc0c645fc078b55c0528d857cffffff50e8ba46000083c40c8945b88b4db8894db0c645fc088b55b0528d8560ffffff508b4df083c144e814430000c645fc078d8d7cffffffe83530acffc645fc068d4da8ff1540c70601c745fcffffffff8d4da0ff1540c706018b4df08b118b4df08b420cffd08b4df08b510883c2018b45f0895008b0018b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24,
+        125,
+        328,
+        356,
+        420,
+        564,
+        580
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        166,
+        195,
+        261,
+        299,
+        314,
+        339,
+        403,
+        468,
+        497,
+        535,
+        550
+      ],
+      "slot": [
+        "picture_service",
+        4
+      ]
+    },
+    "picture_manager_refresh_hash": {
+      "bytes": "558bec6aff683b42fb0064a1000000005083ec40a1f029340133c5508d45f464a300000000894df08b4508508d4dec518b4df083c118e8455c00008d55cc528b4df083c118e856590000508d4dece8dd3f00000fb6c085c07405e95c0100000fb64d0c85c9741b8d4dece8414100008b50088955e08b45e08b108b4de08b4254ffd08d4dece82641000083c004508d4de4ff1548c70601c745fc000000008d4de8518d4dece8064100008b4808e87e972800c645fc018d55e8528d45e450e83d749dff83c4080fb6c885c97422c645fc008d4de8ff1540c70601c745fcffffffff8d4de4ff1540c70601e9cc0000008d55e4528d45dc508b4df083c144e86e20aeff8d4dc8518b4df083c144e84f10aeff508d4ddce8d69aadff0fb6d085d2747d8d45e8508d4dece88340000083c0048bc8ff153cc706018b4ddc894dd88b55d8528d45c4508b4df083c144e82f5900008b4d08518d55e8528d45bc50e82e34000083c40c8945d48b4dd4894dd0c645fc028b55d0528d45b4508b4df083c144e80b330000c645fc018d4dbce82f20acff8b4df08b118b4df08b420cffd0c645fc008d4de8ff1540c70601c745fcffffffff8d4de4ff1540c706018b4df464890d00000000598be55dc20800",
+      "reloc_offsets": [
+        6,
+        21,
+        147,
+        214,
+        230,
+        308,
+        423,
+        439
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        54,
+        69,
+        78,
+        106,
+        133,
+        165,
+        173,
+        190,
+        253,
+        268,
+        277,
+        296,
+        332,
+        349,
+        384,
+        396
+      ],
+      "slot": [
+        "picture_service",
+        13
+      ]
+    },
+    "picture_bitmap_load": {
+      "bytes": "558bec6aff68272afe0064a1000000005081ec00010000a1f029340133c5508d45f464a300000000894df08b45f00fb6480885c9745a8d8df4feffffe87fd4ffffc745fc000000008b5508528d8df4feffffe8a9ffffff8945e08b45f083c00c508d8df4feffff51e823511a0083c4088b55e08955e4c745fcffffffff8d8df4feffffe898d5ffff8b45e4e9840000008b4df0e8980a00006a0068000040006a018b4508508d4d98e843df93ffc745fc010000008b4df0c74128010000006a008d5598528b4df0e844f0ffff85c075238d4d98e844cc2800c745ec00000000c745fcffffffff8d4d98e832df93ff8b45eceb218d4d98e821cc2800c745e801000000c745fcffffffff8d4d98e80fdf93ff8b45e88b4df464890d00000000598be55dc20400",
+      "reloc_offsets": [
+        6,
+        24
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [
+        60,
+        82,
+        104,
+        131,
+        147,
+        168,
+        199,
+        211,
+        233,
+        246,
+        268
+      ]
+    },
+    "picture_bitmap_write": {
+      "bytes": "558bec83ec38a1f029340133c58945fc56894de88b45e80fb6480885c974188b5508528b45e883c00c50e801581a0083c408e9110200008b4de883792401741b8b55e8837a240274128b45e88378240374098b4de883792405752f8b4de883c12ce82a4376ff508b4de883c12ce8de4276ff508b55088b028b4d088b5044ffd2b801000000e9be0100008b45e88b481051ff1538a206018945e4837de400750733c0e9a1010000c745d400000000c745e0000000008b55e4528b4de8e84f5900000fb7c08b4de403018945e08b55e48955dc8b45e48945d88b4de483392874568b55e452e8c772000083c4040fb6c085c074438b4dd88b118955d48b45d80fb770048b4dd80fb7510a0faff283c61fc1ee05c1e6028b45d80fb7480651e84aed280083c4040faff08975cc8b55e00355cc8955e0eb688b45dc8b08894dd48b55dc837a100274098b45dc83781001750e8b4ddc8b55e00351148955e0eb408b45dc0fb7480e8b55dc8bf10faf720483c61fc1ee05c1e6028b45dc8b480851e82d4a82ff83c4040faff08975d08b55e00355d08955e08b45dc8b4dd0894814ba424d0000668955ec8b45e083c00e8945ee33c966894df233d2668955f48b45e4508b4de8e8485800000fb7c88b55d48d440a0e8945f66a0e8d4dec518b55088b028b4d088b5044ffd28b45e0508b4de4518b55088b028b4d088b5044ffd28b45e8837818007430c745c8010000006a048d4dc8518b55088b028b4d088b5044ffd26a048b45e883c01c508b4d088b118b4d088b4244ffd08b4de88b511052ff153ca20601b8010000005e8b4dfc33cde84de828008be55dc20400",
+      "reloc_offsets": [
+        7,
+        147,
+        575
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "kernel32.dll",
+            "name": "GlobalLock",
+            "ordinal": null
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "kernel32.dll",
+            "name": "GlobalUnlock",
+            "ordinal": null
+          }
+        }
+      ],
+      "relative_calls": [
+        42,
+        97,
+        109,
+        188,
+        228,
+        285,
+        382,
+        451,
+        590
+      ],
+      "slot": [
+        "picture_bitmap",
+        14
+      ]
+    },
+    "picture_import_begin": {
+      "bytes": "558bec51894dfce8049a8a008b4dfc89018b55fc833a0075136a01e8009a8a0083c4048b45fcc6400400eb078b4dfcc64104018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        7,
+        27
+      ]
+    },
+    "picture_import_end": {
+      "bytes": "558bec51894dfc8b45fc0fb6480485c975198b55fc833a00750a6a00e8ff308b0083c4048b45fcc64004018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        28
+      ]
+    },
+    "picture_mode_read": {
+      "bytes": "558beca108f334015dc3cccc",
+      "reloc_offsets": [
+        4
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [],
+      "caller": [
+        "picture_import_begin",
+        7
+      ]
+    },
+    "picture_mode_write": {
+      "bytes": "558bec8b4508a308f334015dc3cccccc",
+      "reloc_offsets": [
+        7
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [],
+      "caller": [
+        "picture_import_begin",
+        27
+      ]
+    },
+    "generate_single_page": {
+      "bytes": "558bec6aff688013fe0064a1000000005081ecb4000000a1f029340133c5508d45f464a300000000894df068f0ef17018d4de0ff1544c70601c745fc00000000e8abde83ff8945c88b45f08b480c5168b8ef17018d55e05268db0200006814f017016830f017016a018d8d7cffffffe8fc3184ff8945b88b45b8894590c645fc018b4d90518b55c8528b45c88b088b5110ffd283c410c645fc008d8d7cffffffe8fb3784ffc745fcffffffff8d4de0ff1540c70601e8262af9ff8945c08d45a4508b4df0e887daf8ff8945ac8b4dac894d94c745fc020000008b5594528b45c08b108b4dc08b4208ffd0c745fcffffffff8d4da4e8973279ff8b4df08b5110528b45f083c00c508b4df0e8810600008945ec837dec000f85a40000006850f117018d4dd0ff1544c70601c745fc0300000068bcf017018d4de8ff1544c70601c645fc04e8a8dd83ff8945d88d4dd0518d55e85268e002000068b8f1170168d4f117016a038d8d54ffffffe8013184ff8945988b459889459cc645fc058b4d9c518b55d88b028b4dd88b500cffd2c645fc048d8d54ffffffe8043784ffc645fc038d4de8ff1540c70601c745fcffffffff8d4dd0ff1540c7060132c0e96d0100008b45ec8b108b4dec8b8254010000ffd085c00f84a40000006870f217018d4dd4ff1544c70601c745fc06000000684cf217018d4ddcff1544c70601c645fc07e8ecdc83ff8945e48d4dd4518d55dc5268e502000068d8f2170168f4f217016a018d8d68ffffffe8453084ff8945b48b45b48945b0c645fc088b4db0518b55e48b028b4de48b500cffd2c645fc078d8d68ffffffe8483684ffc645fc068d4ddcff1540c70601c745fcffffffff8d4dd4ff1540c7060132c0e9b10000006a008b45ec8b108b4dec8b824c010000ffd06878f317018d4dbcff1544c70601c745fc0900000068b0f317018d4dc4ff1544c70601c645fc0ae836dc83ff8945cc8d4dbc518d55c45268eb02000068d4f3170168f0f317016a018d8d40ffffffe88f2f84ff8945a88b45a88945a0c645fc0b8b4da0518b55cc8b028b4dcc8b500cffd2c645fc0a8d8d40ffffffe8923584ffc645fc098d4dc4ff1540c70601c745fcffffffff8d4dbcff1540c70601b0018b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        44,
+        53,
+        80,
+        94,
+        99,
+        177,
+        285,
+        294,
+        306,
+        315,
+        345,
+        350,
+        421,
+        437,
+        473,
+        482,
+        494,
+        503,
+        533,
+        538,
+        609,
+        625,
+        655,
+        664,
+        676,
+        685,
+        715,
+        720,
+        791,
+        807
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        64,
+        111,
+        160,
+        181,
+        196,
+        244,
+        266,
+        323,
+        362,
+        407,
+        511,
+        550,
+        595,
+        693,
+        732,
+        777
+      ],
+      "slot": [
+        "page",
+        21
+      ]
+    },
+    "generate_user_document": {
+      "bytes": "558bec6aff68c186fc0064a1000000005083ec78a1f029340133c5508d45f464a300000000894dec8b4dece8e0cafeff6a00e829d90c0083c4048945e48b45ec056c020000508b4de48b118b4de48b4240ffd08945e8837de80075178b4decc7811401000000000000b801000000e9850300008b55e8528d8d7cffffffe87e840c00c745fc000000008d857cffffff508b4de88b118b4de88b4244ffd0e8aed80c008945e08d4dd4518b4de8e80f890c008945dc8b55dc8955d8c645fc018b45d8508b4de08b118b4de08b4208ffd0c645fc008d4dd4e825e18cff8d4d8ce89d3796ffc645fc028d4d8c518d55c8528b4de8e889860c008945d08b45d08945ccc645fc038b4dcc51e8836f9aff83c4088845f3c645fc028d4dc8ff1540c706010fb655f385d20f849b0000008d4d8ce8bcb38bff85c00f868b0000006a008d4594508d4d8ce8069f8bff8bc8e82f878bff8bc8ff1568c70601508d4dbc518b4de8e81a860c008945c48b55c48955c0c645fc048b4dc0ff1568c7060150e8eee18aff8b8820050000e88367cfffc645fc028d4dbcff1540c70601c745b801000000c645fc008d4d8ce883858bffc745fcffffffff8d8d7cffffffe881830c008b45b8e9310200008b4dece8811a00000fb6c085c0753a8b4decc7811401000000000000c745b401000000c645fc008d4d8ce83a858bffc745fcffffffff8d8d7cffffffe838830c008b45b4e9e80100008b55e8528b4dece8241400000fb6c085c0753a8b4decc7811401000000000000c745b001000000c645fc008d4d8ce8ed848bffc745fcffffffff8d8d7cffffffe8eb820c008b45b0e99b0100008b55e852e81a07000083c4040fb6c085c0753a8b4decc7811401000000000000c745ac01000000c645fc008d4d8ce8a0848bffc745fcffffffff8d8d7cffffffe89e820c008b45ace94e0100008b4dece88e0500000fb6d085d2753a8b45ecc7801401000000000000c745a801000000c645fc008d4d8ce857848bffc745fcffffffff8d8d7cffffffe855820c008b45a8e9050100008b4de8518b4dece8611000000fb6d085d2753a8b45ecc7801401000000000000c745a401000000c645fc008d4d8ce80a848bffc745fcffffffff8d8d7cffffffe808820c008b45a4e9b80000008b4de8518b4dece8841000000fb6d085d275378b45ecc7801401000000000000c745a001000000c645fc008d4d8ce8bd838bffc745fcffffffff8d8d7cffffffe8bb810c008b45a0eb6e8b4dece83e0b00000fb6c885c975378b55ecc7821401000000000000c7459c01000000c645fc008d4d8ce877838bffc745fcffffffff8d8d7cffffffe875810c008b459ceb28c7459800000000c645fc008d4d8ce84d838bffc745fcffffffff8d8d7cffffffe84b810c008b45988b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        21,
+        284,
+        341,
+        376,
+        406
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        43,
+        50,
+        125,
+        157,
+        172,
+        214,
+        222,
+        242,
+        264,
+        303,
+        325,
+        332,
+        353,
+        381,
+        392,
+        424,
+        442,
+        458,
+        497,
+        515,
+        535,
+        574,
+        592,
+        609,
+        651,
+        669,
+        685,
+        724,
+        742,
+        762,
+        801,
+        819,
+        839,
+        878,
+        896,
+        909,
+        948,
+        966,
+        990,
+        1008
+      ],
+      "slot": [
+        "page_description_document",
+        85
+      ]
+    },
+    "control_reference_name": {
+      "bytes": "558bec83ec08894df8c745fc000000008b45f883c048508b4d08ff1548c706018b4dfc83c901894dfc",
+      "reloc_offsets": [
+        28
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 280
+          }
+        }
+      ],
+      "relative_calls": [],
+      "slot": [
+        "label_view",
+        9
+      ]
+    },
+    "control_reference_set_name": {
+      "bytes": "558bec51894dfc8b4508508b4dfc83c148ff153cc70601b0018be55dc20400",
+      "reloc_offsets": [
+        19
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ],
+      "relative_calls": [],
+      "slot": [
+        "label_view",
+        10
+      ]
+    },
+    "control_reference_container": {
+      "bytes": "558bec6aff68290cfe0064a1000000005083ec40a1f029340133c5508d45f464a300000000894df08b45f0837804007567",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "relative_calls": [],
+      "slot": [
+        "label_view",
+        15
+      ]
+    },
+    "serial_device_manager_layout": {
+      "bytes": "558bec6aff687e2bfd0064a1000000005051a1f029340133c5508d45f464a300000000894df08b4df0e8f248ffffc745fc000000008b4df083c134e8601c0000c645fc018b4df083c138e8419bfdffc645fc028b45f0c7001cb216018b4df0c7410490b216018b55f0c742089cb216018b45f0c74034a8b216018b4df0c74138d0b216016820a416018b4df083c13cff1544c706018b55f0c74240ffffffff8b45f0c74044000000008b4df0c6414800c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        88,
+        98,
+        108,
+        118,
+        128,
+        133,
+        145
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        }
+      ],
+      "relative_calls": [
+        41,
+        59,
+        74
+      ]
+    },
+    "serial_device_document_layout": {
+      "bytes": "558bec6aff68769ffc0064a1000000005051a1f029340133c5508d45f464a300000000894df08b4df0e8e2bafdffc745fc000000008b45f0c7001ca815018b4df081c150010000e8c4adbbffc645fc016a0a8b4df081c164010000e800aebbffc645fc028b4df0c781800100000000000068559300008b55f081c28401000052e84ba5010083c408c645fc03689c5615018b4df081c188010000ff1544c706018b45f0c6808c01000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        58,
+        141,
+        156
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        }
+      ],
+      "relative_calls": [
+        41,
+        71,
+        91,
+        128
+      ]
+    },
+    "serial_device_list_layout": {
+      "bytes": "558bec51894dfc8b4508508b4dfce81d0000008b4dfcc70100cc0d018b45fc8be55dc20400",
+      "reloc_offsets": [
+        24
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        14
+      ],
+      "caller": [
+        "serial_device_document_layout",
+        91
+      ]
+    },
+    "serial_device_parent_layout": {
+      "bytes": "558bec6aff683a7df60064a1000000005083ec34a1f029340133c5508d45f464a300000000894df08b4df0e830d8ffffc745fc000000008b45f0c700b4920d018b4df0c741045c930d018b55f0c74208d4930d018b4df081c19c000000ff1550c70601c645fc018b4df081c1a0000000ff1550c70601c645fc028b4df081c1a4000000e82816ffff",
+      "reloc_offsets": [
+        6,
+        21,
+        60,
+        70,
+        80,
+        95,
+        114
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        }
+      ],
+      "relative_calls": [
+        43,
+        131
+      ]
+    },
+    "serial_device_base_layout": {
+      "bytes": "558bec6aff686f79f60064a1000000005051a1f029340133c5508d45f464a300000000894df08b4df0e852a0cfffc745fc000000008b4df083c104e8d05b4a00c645fc018b45f0c70024860d018b4df0c74104cc860d018b55f0c7420844870d018b4df083c128ff1550c70601c645fc028b4df083c12cff1550c70601c645fc038b4df083c144e894240000c645fc048b4df083c158e8f75f8100c645fc058b4df083c16ce816e2d0ffc645fc068b4df081c180000000e804e2d0ffc645fc078b45f0c7401c0000000068d0820d018b4df083c128ff15b0c4060168d4820d018b4df083c12cff15b0c406018b4df0c74130000000008b55f0c74234000000008b45f0c74024000000008b4df0c74138640000008b55f0c7423c000000008b45f0c74040010000006aff6a008b4df083c144e8bf6181006aff6a008b4df083c158e83c6081006aff6a008b4df083c16ce88b48cfff6aff6a008b4df081c180000000e87948cfff8b4df0c7819400000000000000c745fcffffffff8b45f08b4df464890d00000000598be55dc3",
+      "reloc_offsets": [
+        6,
+        19,
+        73,
+        83,
+        93,
+        105,
+        121,
+        203,
+        215,
+        220,
+        232
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1516
+          }
+        }
+      ],
+      "relative_calls": [
+        41,
+        59,
+        135,
+        150,
+        165,
+        183,
+        306,
+        321,
+        336,
+        354
+      ],
+      "caller": [
+        "serial_device_parent_layout",
+        43
+      ]
+    },
+    "serial_device_children_layout": {
+      "bytes": "558bec51894dfc8b4dfce8c13d81008b45fcc70008860d018b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        10
+      ],
+      "caller": [
+        "serial_device_base_layout",
+        135
+      ]
+    },
+    "serial_device_defaults_layout": {
+      "bytes": "558bec51894dfc8b45fcc700010000008b4dfcc74104060000008b55fcc74208010000008b45fcc7400c000000008b4dfcc74110000000008b45fc8be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [],
+      "caller": [
+        "serial_device_parent_layout",
+        131
+      ]
+    },
+    "serial_device_exchange": {
+      "bytes": "558bec83ec10894dfc8b4508508b4dfce8dbe3ffff8b4d08e8730ad3ff0fb6c885c90f84e10000008b4dfc83c144e8fd3cd9ff508b4d08e854fed2ffc745f800000000eb098b55f883c2018955f88b4dfc83c144e8d73cd9ff3945f87d518b45f8508b4dfc83c144e86364f5ff8b08894df48b55f48b028b4df48b5014ffd2508b4d08e89813deff8b45f8508b4dfc83c144e83964f5ff8b08894df08b5508528b45f08b108b4df08b4230ffd0eb968b4dfc8b91b0000000528b4d08e85f13deff8b45fc8b88a4000000518b4d08e8bdfdd2ff8b55fc8b82b4000000508b4d08e83b13deff8b4dfc8b91a8000000528b4d08e82913deff8b45fc8b88ac000000518b4d08e81713deff8be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [
+        16,
+        24,
+        46,
+        55,
+        84,
+        104,
+        131,
+        146,
+        188,
+        206,
+        224,
+        242,
+        260
+      ],
+      "slot": [
+        "serial_device_parent",
+        12
+      ]
+    },
+    "serial_device_array_count_layout": {
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [],
+      "caller": [
+        "serial_device_exchange",
+        46
+      ]
+    },
+    "serial_device_editor": {
+      "bytes": "558bec6aff685d7ef60064a1000000005081ecec070000a1f029340133c58945f0508d45f464a300000000898dbcf9ffff8d8db4f9ffffff1550c70601c745fc00000000686f9100008d8db4f9ffffff1538c206018d8db8f9ffffff1550c70601c645fc0168719100008d8db8f9ffffff1538c206018d85b4f9ffff508d8db8f9ffff518d95a8f9ffff52e8e0c7ceff83c40c8985acf9ffff8b85acf9ffff8985b0f9ffffc645fc028b8db0f9ffffff1568c70601508d8d08f8ffffe8bfbc5d00c645fc048d8da8f9ffffff1540c706016a008d8dc0f9ffffe822060000c645fc058d8d98f9ffffe8a30bffffc645fc068b8dbcf9ffff83c128518d8d98f9ffffff153cc706018b95bcf9ffff83c22c528d8d9cf9ffffff153cc706018b85bcf9ffff8b4838898da0f9ffff8b95bcf9ffff8b42408985a4f9ffff8b8dbcf9ffff81c1a4000000518d8dc0f9ffffe80d0700008d9598f9ffff528d8dc0f9ffffe83b0700008d85c0f9ffff5068d80600008d8d08f8ffffe8340400008d8d08f8ffffe8792a810083f8010f85f40000008b8dbcf9ffff83b9940000000074286a016a016a008b95bcf9ffff8b82940000008b8dbcf9ffff8b108b89940000008b8280010000ffd08d8dc0f9ffffe82e0700008d8d88f9ffffe8b30affffc645fc078d8dc0f9ffffe8f4060000508d8d88f9ffffe8280300008d8d88f9ffff518b8dbcf9ffff83c128ff153cc706018d958cf9ffff528b8dbcf9ffff83c12cff153cc706018b85bcf9ffff8b8d90f9ffff8948388b95bcf9ffff8b8594f9ffff8942408d8dc0f9ffffe8730600008b8dbcf9ffff81c1a40000008b1089118b50048951048b50088951088b500c89510c8b4010894110c645fc068d8d88f9ffffe87c020000c645fc058d8d98f9ffffe86d020000c645fc048d8dc0f9ffffe8fe000000c645fc018d8d08f8ffffe87f010000c645fc008d8db8f9ffffff1540c70601c745fcffffffff8d8db4f9ffffff1540c706018b4df464890d00000000598b4df033cde8974881008be55dc3",
+      "reloc_offsets": [
+        6,
+        24,
+        57,
+        81,
+        93,
+        114,
+        177,
+        205,
+        259,
+        281,
+        522,
+        544,
+        701,
+        720
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 296
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 8308
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1654
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        }
+      ],
+      "relative_calls": [
+        139,
+        188,
+        217,
+        232,
+        334,
+        352,
+        375,
+        386,
+        461,
+        472,
+        487,
+        499,
+        584,
+        639,
+        654,
+        669,
+        684,
+        740
+      ],
+      "slot": [
+        "serial_device_parent",
+        14
+      ]
+    },
+    "serial_device_mark_modified": {
+      "bytes": "558bec83ec0c894dfc8b4dfc83e9348b45fc8b50cc8b4204ffd08b4dfc83790c0074350fb6550885d27409c745f801000000eb07c745f8000000008b45f88945f48b4df4518b55fc8b420c8b4dfc8b108b490c8b426cffd08be55dc20400",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "relative_calls": [],
+      "slot": [
+        "serial_device_modified_service",
+        3
+      ]
+    },
+    "save_serial_device_document": {
+      "bytes": "558bec6aff68649dfc0064a100000000505181ec64020000535657a1f029340133c5508d45f464a3000000008965f0894dec8b45088945e8837de8007513e8cdd289ff8b8820050000e8d205feff8945e8c745fc000000008b4de8518d8d8cfdffffe809a9a8ff8945c0c645fc016a006a006aff8d8d8cfdffffe8c18f93ff8d8d8cfdffffe8669093ff8945d4837dd40175578b55e8528d8d44feffffe8cea8a8ff8945b4c645fc026a006a006aff8d8d44feffffe8868f93ff8d8d44feffffe8bb9293ff8d8d44feffffe8109393ff8d8d44feffffe8a58f93ffc645fc018d8d44feffffe836c6a8ff8d8d8cfdffffe88b8f93ffc645fc008d8d8cfdffffe81cc6a8ffeb32e8a56b99ff0fb6c085c0750dc745c401000000b82b6fb600c3b8226fb600c3c745dc01000000b8116fb600c3b8296fb600c3c745fcffffffffeb0fc745fcffffffff8b45dce9b9010000eb07c745fcffffffffeb0fc745fcffffffff8b45c4e99f010000c745fc040000008b4de8518d8dfcfeffffe8f0a7a8ff8945b8c645fc056a006a006aff8d8dfcfeffffe8a88e93ff8d8dfcfeffffe84d8f93ff8945c8837dc80175298d8dfcfeffffe8c98e93ffc745d001000000c645fc048d8dfcfeffffe853c5a8ff8b45d0e9340100008d8dfcfeffffe8709093ff8d8dfcfeffffe8c59193ff8b55ec81c284010000528d4d98ff153cc706018b45ec0588010000508d4d9cff153cc706018b4dec8b91140100008955b06a008b45ec508d4da051e8654aceff83c40c8945d8837dd801751ec745e401000000c645fc048d8dfcfeffffe8d3c4a8ff8b45e4e9b40000006a008d55a0528d8dfcfeffffe80a9393ff6a018d45a0508d8dfcfeffffe8c99293ff8d8dfcfeffffe82e8e93ff8945cc837dcc00740b8d8dfcfeffffe84a9193ff8d8dfcfeffffe8df8d93ff6a016a006a008b4dec8b118b4dec8b8280010000ffd0c645fc048d8dfcfeffffe85ac4a8ffeb218b4dbce86c363c00c745e001000000b8cb70b600c3b8c970b600c3b8c270b600c3c745fcffffffffeb07c745fcffffffffeb0cc745fcffffffff8b45e0eb0233c08b4df464890d00000000595f5e5b8be55dc20400",
+      "reloc_offsets": [
+        6,
+        28,
+        282,
+        288,
+        301,
+        307,
+        506,
+        524,
+        728,
+        734,
+        740
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        }
+      ],
+      "relative_calls": [
+        62,
+        73,
+        98,
+        122,
+        133,
+        157,
+        181,
+        192,
+        203,
+        214,
+        229,
+        240,
+        255,
+        262,
+        379,
+        403,
+        414,
+        434,
+        456,
+        475,
+        486,
+        550,
+        584,
+        609,
+        626,
+        637,
+        657,
+        668,
+        705,
+        715
+      ],
+      "slot": [
+        "lifecycle_device_document",
+        83
+      ]
+    },
+    "recipe_rename_set_name": {
+      "bytes": "558bec51894dfc8b4508508b4dfc83c10851e8e93f6eff83c4080fb6d052e8ed70000083c4048b4508508b4dfc83c108ff153cc70601b0018be55dc20400",
+      "reloc_offsets": [
+        50
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ],
+      "slot": [
+        "recipe_object",
+        10
+      ]
+    },
+    "recipe_rename_save_directory": {
+      "bytes": "558bec51894dfc8b4dfc83e934e86e060000b0018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "slot": [
+        "recipe_rename_manager_service",
+        2
+      ]
+    },
+    "recipe_rename_save_worker": {
+      "bytes": "558bec6aff685946fd0064a100000000505181ec6c010000535657a1f029340133c5508d45f464a3000000008965f0894de86858da16018d4ddcff1544c70601c745fc00000000687cda16018d4dd4ff1544c70601c645fc01e892028eff8945c48d45d4506a5168a4da160168c0da16016a018d8df4feffffe8f2558eff89857cffffff8b8d7cffffff894d88c645fc028d55dc528b4588508b4dc48b118b4dc48b420cffd0c645fc018d8df4feffffe8eb5b8effc645fc008d4dd4ff1540c70601c745fcffffffff8d4ddcff1540c70601e8295881ff83b820050000000f845c0300008b4de80fb6513885d20f844d0300008b45e80fb6483985c90f843e0300006a006a006a008d8d60ffffffe82dca90ffc745fc03000000c645fc0468000400008d8d08ffffffe8eab93300898548ffffffc645fc056a0068000040006a008d9508ffffff528d8d84feffffe8bdcc9eff898538ffffffc645fc068b4de883c13ce8a82d00008945808b4580508d8d84feffffe8f6d29eff8b4de883c13c894dcc8d55e4528b4dcce8e12900008d45a4508b4dcce8252b0000eb088d4de4e89b2000008d4da4518d4de4e8af1f00008845ef0fb655ef85d274598d4de4e8fc1f00008945848b45848b08894de08d55bc528b45e08b108b4de08b4224ffd089853cffffffc645fc078d4dbc518d8d84feffffe847d29eff8b4de0e86f6c1300e89acd90ffc645fc068d4dbcff1540c70601eb888d8d84feffffe81cb933008d8d08ffffffe8ffb833008d8d08ffffffe800b93300898574ffffff899578ffffff83bd78ffffff00770d83bd74ffffff000f86bd0000008d8d4cffffffe831b53300898540ffffffc645fc088d8d08ffffffe8beb83300898568ffffff89956cffffff6aff8b9568ffffff528d8d4cffffffe802b533008d8d08ffffffe86d7083ff8d8d4cffffffe8323081ff89459c8d8d4cffffffe8e42f81ff898570ffffff8b459c508b8d70ffffff518d8d08ffffffe84cb833008945948b5594899544ffffffe8175681ff8945b48d854cffffff50684cdb16018b4db48b8920050000e88a4fc6ffc645fc068d8d4cffffffe897b433008d8d08ffffffe810b83300c645fc058d8d84feffffe811cb9effc645fc048d8d08ffffffe8e0b73300e9b70000008b8d34ffffffe8debb330068e0db16018d4dd0ff1544c70601c645fc0ae88bff8dff8945d868a35600008d559852e8ba3af9ff83c40889458c8b458c8945a8c645fc0b8d4dd0516a6e6814dc16016830dc16016a038d8de0feffffe8cd528eff8945ac8b55ac8955a0c645fc0c8b45a8508b4da0518b55d88b028b4dd88b500cffd2c645fc0b8d8de0feffffe8cc588effc645fc0a8d4d98ff1540c70601c645fc098d4dd0ff1540c70601b8eeebbe00c3b8e3ebbe00c3c745fc03000000eb09c745fc03000000eb09eb07c745fc030000008b45e8c64038018b4de8c64139008d8d60ffff",
+      "reloc_offsets": [
+        6,
+        28,
+        51,
+        60,
+        72,
+        81,
+        104,
+        109,
+        190,
+        206,
+        527,
+        756,
+        847,
+        856,
+        909,
+        914,
+        989,
+        1002,
+        1007,
+        1013
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 286
+          }
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1039
+          }
+        },
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": true,
+          "writable": false
+        }
+      ],
+      "caller": [
+        "recipe_rename_save_directory",
+        13
+      ]
+    },
+    "recipe_rename_mark_dirty": {
+      "bytes": "558bec51894dfc8b45fcc64005018be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "slot": [
+        "recipe_rename_manager_service",
+        3
+      ]
+    },
+    "recipe_rename_page_sources_layout": {
+      "bytes": "8b4df081c150010000518d4de8ff153cc706018d55e8528b4d08e8060e14008b45f00554010000508d4de8ff153cc706018d4de8518b4d08e8e80d14008b55f08b8258010000508b4d08e806d88eff8b4df081c15c010000518d4de8ff153cc706018d55e8528b4d08e8b70d1400c745ec00000000c745",
+      "reloc_offsets": [
+        15,
+        45,
+        94
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        },
+        {
+          "executable": false,
+          "writable": false,
+          "import": {
+            "dll": "mfc110u.dll",
+            "name": null,
+            "ordinal": 1514
+          }
+        }
+      ]
+    },
+    "recipe_rename_page_dispatch_init": {
+      "bytes": "8b4df081c154020000e812b4e2ffc645fc",
+      "reloc_offsets": [],
+      "highlow_roles": []
+    },
+    "recipe_rename_page_dispatch_array_ctor": {
+      "bytes": "558bec51894dfc8b4dfce8616a5a008b45fcc7009c5312018b45fc8be55dc3",
+      "reloc_offsets": [
+        20
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": false
+        }
+      ],
+      "caller": [
+        "recipe_rename_page_dispatch_init",
+        9
+      ]
+    },
+    "recipe_rename_page_dispatch_consumer": {
+      "bytes": "558bec83ec10894df8c745fc00000000c745f400000000eb098b45f483c0018945f48b4df881c154020000e8b04795ff3945f47d388b4df4518b4df881c154020000e8d934e3ff8b108955f08b4510508b4d0c518b5508528b45f08b108b4df08b4218ffd00345fc8945fcebac8b4d10518b550c528b45f8055001000050e88d7c0f0083c40c0345fc8945fc8b4d10518b550c528b45f8055401000050e86e7c0f0083c40c0345fc8945fc8b4d10518b550c528b45f8055c01000050e84f7c0f0083c40c0345fc8945fc8b45fc8be55dc20c00",
+      "reloc_offsets": [],
+      "highlow_roles": []
+    },
+    "recipe_rename_page_dispatch_count": {
+      "bytes": "558bec51894dfc8b45fc8b40088be55dc3",
+      "reloc_offsets": [],
+      "highlow_roles": [],
+      "caller": [
+        "recipe_rename_page_dispatch_consumer",
+        43
+      ]
+    },
+    "recipe_rename_draw_dll_dispatch": {
+      "bytes": "558bec6aff68500cf90064a1000000005083ec2ca1f029340133c5508d45f464a300000000894df08b45f083b8e80000000074748b4df00fb6913401000085d27466837d0c00742e8b45f00580000000508b4d0c8b5120528b4508508b4df081c1ec000000518b4df081c138010000e8",
+      "reloc_offsets": [
+        6,
+        21
+      ],
+      "highlow_roles": [
+        {
+          "executable": true,
+          "writable": false
+        },
+        {
+          "executable": false,
+          "writable": true
+        }
+      ],
+      "slot": [
+        "recipe_rename_draw_dll",
+        39
+      ]
+    },
+    "recipe_rename_draw_dll_path_layout": {
+      "bytes": "68488e34018b55e881c2fc000000528b4de8e89ae6ffff0fb6c085c0755f8b4de881c1ec000000518b4de881c138010000e80b3001008b55e88b82e8",
+      "reloc_offsets": [
+        1
+      ],
+      "highlow_roles": [
+        {
+          "executable": false,
+          "writable": true
+        }
+      ]
+    },
+    "recipe_rename_close_cache_layout": {
+      "bytes": "c28b4df081c188010000e89f858aff508b4d08e806d78effc745ec00000000eb098b55ec83c2018955ec",
+      "reloc_offsets": [],
+      "highlow_roles": []
     }
   },
   "capabilities": {
@@ -8507,6 +12449,1269 @@
         "drawing_view_hwnd": 32,
         "drawing_view_document": 116
       }
+    },
+    "data-edit-initial_text": {
+      "depends": [
+        "data-edit"
+      ],
+      "tables": [
+        "data_service"
+      ],
+      "functions": [
+        "set_data_initial_text",
+        "data_initial_setter_index_address",
+        "data_service_index_guard_layout"
+      ],
+      "layout": {},
+      "call_targets": [
+        [
+          "set_data_initial_text",
+          17,
+          "data_service_index_guard_layout"
+        ]
+      ]
+    },
+    "control-create-line": {
+      "depends": [
+        "control-create-batch"
+      ],
+      "tables": [
+        "default_line",
+        "default_line_view"
+      ],
+      "functions": [
+        "default_line_factory_case",
+        "construct_default_line",
+        "allocate_default_line",
+        "allocate_default_line_crt",
+        "set_default_line_endpoints",
+        "default_line_geometry_base",
+        "delete_default_line",
+        "destroy_default_line",
+        "deallocate_default_line",
+        "deallocate_default_line_crt",
+        "create_default_drawing_base_layout",
+        "label_array_cleanup_layout"
+      ],
+      "imports": [
+        "default_shape_operator_new",
+        "default_shape_operator_delete"
+      ],
+      "layout": {
+        "default_shape_pen_marker": 104,
+        "default_shape_brush_marker": 124,
+        "default_shape_pen": 108,
+        "default_shape_brush": 144
+      },
+      "call_targets": [
+        [
+          "construct_default_line",
+          15,
+          "create_default_drawing_base_layout"
+        ],
+        [
+          "destroy_default_line",
+          10,
+          "label_array_cleanup_layout"
+        ]
+      ],
+      "table_operands": [
+        [
+          "construct_default_line",
+          25,
+          "default_line"
+        ],
+        [
+          "construct_default_line",
+          35,
+          "default_line_view"
+        ]
+      ]
+    },
+    "control-create-rectangle": {
+      "depends": [
+        "control-create-batch"
+      ],
+      "tables": [
+        "default_rectangle",
+        "default_rectangle_view"
+      ],
+      "functions": [
+        "default_rectangle_factory_case",
+        "construct_default_rectangle",
+        "allocate_default_rectangle",
+        "allocate_default_rectangle_crt",
+        "set_default_rectangle_bounds",
+        "default_rectangle_geometry_base",
+        "delete_default_rectangle",
+        "destroy_default_rectangle",
+        "deallocate_default_rectangle",
+        "deallocate_default_rectangle_crt",
+        "create_default_drawing_base_layout",
+        "label_array_cleanup_layout",
+        "default_rectangle_normalize"
+      ],
+      "imports": [
+        "default_shape_operator_new",
+        "default_shape_operator_delete"
+      ],
+      "layout": {
+        "default_shape_pen_marker": 104,
+        "default_shape_brush_marker": 124,
+        "default_shape_pen": 108,
+        "default_shape_brush": 144
+      },
+      "call_targets": [
+        [
+          "construct_default_rectangle",
+          15,
+          "create_default_drawing_base_layout"
+        ],
+        [
+          "destroy_default_rectangle",
+          10,
+          "label_array_cleanup_layout"
+        ]
+      ],
+      "table_operands": [
+        [
+          "construct_default_rectangle",
+          25,
+          "default_rectangle"
+        ],
+        [
+          "construct_default_rectangle",
+          35,
+          "default_rectangle_view"
+        ]
+      ]
+    },
+    "page-description-read": {
+      "depends": [
+        "page-view-inspect"
+      ],
+      "tables": [
+        "page_description_document"
+      ],
+      "functions": [
+        "page_description_archive_entry",
+        "page_description_archive_strings",
+        "page_description_archive_bstr",
+        "page_description_archive_restore"
+      ],
+      "layout": {
+        "page_description_text": 624
+      },
+      "call_targets": [
+        [
+          "page_description_archive_strings",
+          31,
+          "page_description_archive_bstr"
+        ],
+        [
+          "page_description_archive_strings",
+          49,
+          "page_description_archive_bstr"
+        ],
+        [
+          "page_description_archive_strings",
+          66,
+          "page_description_archive_bstr"
+        ]
+      ]
+    },
+    "page-description-edit": {
+      "depends": [
+        "page-description-read",
+        "control-geometry-batch"
+      ],
+      "tables": [
+        "page_description_document",
+        "page_description_modifiable"
+      ],
+      "imports": [
+        "copy_page_description",
+        "page_string_ctor",
+        "page_string_dtor"
+      ],
+      "functions": [
+        "page_description_dialog_entry",
+        "page_description_dialog_copy_in",
+        "page_description_dialog_copy_out",
+        "page_description_native_flush",
+        "page_description_database_save",
+        "page_description_database_note",
+        "page_description_database_record_update",
+        "get_drawing_view",
+        "drawing_view_owner_layout",
+        "invalidate_drawing_view",
+        "update_drawing_view",
+        "set_page_modified",
+        "set_root_modified",
+        "save_page",
+        "save_root"
+      ],
+      "layout": {
+        "page_description_adjacent_string": 628,
+        "page_description_modifiable_offset": 4
+      }
+    },
+    "control-geometry-line": {
+      "depends": [
+        "control-geometry-batch"
+      ],
+      "tables": [
+        "default_line",
+        "default_line_view",
+        "control_event_array",
+        "control_animation_array"
+      ],
+      "functions": [
+        "set_default_line_endpoints",
+        "default_line_geometry_base",
+        "construct_default_line",
+        "clone_document_mode_layout",
+        "label_array_storage_layout",
+        "control_event_array_create_layout",
+        "control_animation_array_create_layout",
+        "label_array_cleanup_layout",
+        "label_array_count_layout",
+        "create_default_drawing_base_layout"
+      ],
+      "layout": {
+        "clone_document_mode": 664,
+        "label_event_array": 48,
+        "label_animation_array": 156,
+        "pointer_array_count": 8,
+        "pointer_array_capacity": 12,
+        "pointer_array_data": 4,
+        "default_shape_pen_marker": 104,
+        "default_shape_brush_marker": 124,
+        "default_shape_pen": 108,
+        "default_shape_brush": 144
+      },
+      "call_targets": [
+        [
+          "construct_default_line",
+          15,
+          "create_default_drawing_base_layout"
+        ]
+      ],
+      "table_operands": [
+        [
+          "construct_default_line",
+          25,
+          "default_line"
+        ],
+        [
+          "construct_default_line",
+          35,
+          "default_line_view"
+        ]
+      ]
+    },
+    "control-geometry-rectangle": {
+      "depends": [
+        "control-geometry-batch"
+      ],
+      "tables": [
+        "default_rectangle",
+        "default_rectangle_view",
+        "control_event_array",
+        "control_animation_array"
+      ],
+      "functions": [
+        "set_default_rectangle_bounds",
+        "default_rectangle_geometry_base",
+        "construct_default_rectangle",
+        "clone_document_mode_layout",
+        "label_array_storage_layout",
+        "control_event_array_create_layout",
+        "control_animation_array_create_layout",
+        "label_array_cleanup_layout",
+        "label_array_count_layout",
+        "create_default_drawing_base_layout",
+        "default_rectangle_normalize"
+      ],
+      "layout": {
+        "clone_document_mode": 664,
+        "label_event_array": 48,
+        "label_animation_array": 156,
+        "pointer_array_count": 8,
+        "pointer_array_capacity": 12,
+        "pointer_array_data": 4,
+        "default_shape_pen_marker": 104,
+        "default_shape_brush_marker": 124,
+        "default_shape_pen": 108,
+        "default_shape_brush": 144
+      },
+      "call_targets": [
+        [
+          "construct_default_rectangle",
+          15,
+          "create_default_drawing_base_layout"
+        ]
+      ],
+      "table_operands": [
+        [
+          "construct_default_rectangle",
+          25,
+          "default_rectangle"
+        ],
+        [
+          "construct_default_rectangle",
+          35,
+          "default_rectangle_view"
+        ]
+      ]
+    },
+    "registered-reference-read": {
+      "depends": [
+        "inspect"
+      ],
+      "tables": [
+        "root_window_model"
+      ],
+      "functions": [
+        "reference_object_path",
+        "reference_presence",
+        "reference_graph_first",
+        "reference_graph_head_layout",
+        "reference_graph_pair_layout",
+        "reference_graph_read_value",
+        "reference_graph_value_first",
+        "reference_graph_value_current"
+      ],
+      "imports": [
+        "page_string_ctor",
+        "page_string_dtor"
+      ],
+      "layout": {
+        "root_window_model": 732,
+        "reference_graph_forward": 4,
+        "reference_graph_reverse": 36,
+        "reference_graph_set_count": 4,
+        "reference_graph_next": 0,
+        "reference_graph_previous": 4,
+        "reference_graph_node_string": 8,
+        "reference_graph_node_value_set": 12
+      }
+    },
+    "registered-reference-rename": {
+      "depends": [
+        "registered-reference-read"
+      ],
+      "tables": [
+        "root_window_model"
+      ],
+      "functions": [
+        "reference_model_rename",
+        "reference_rename_registered_consumers"
+      ],
+      "layout": {},
+      "call_targets": [
+        [
+          "reference_model_rename",
+          598,
+          "reference_object_path"
+        ],
+        [
+          "reference_model_rename",
+          1163,
+          "reference_object_path"
+        ],
+        [
+          "reference_model_rename",
+          1213,
+          "reference_rename_registered_consumers"
+        ]
+      ]
+    },
+    "page-reference-inspect": {
+      "depends": [
+        "registered-reference-read",
+        "page-catalog"
+      ],
+      "tables": [
+        "page"
+      ],
+      "functions": [],
+      "layout": {}
+    },
+    "page-rename-referenced": {
+      "depends": [
+        "page-reference-inspect",
+        "registered-reference-rename",
+        "page-authoring-common",
+        "page-view-inspect",
+        "top-level-control-catalog",
+        "control-catalog",
+        "page-description-edit",
+        "strategy-source-edit"
+      ],
+      "tables": [
+        "user_window_workbench",
+        "page_description_document",
+        "root",
+        "designer_template",
+        "lifecycle_control_document",
+        "lifecycle_device_document",
+        "lifecycle_strategy_document"
+      ],
+      "functions": [
+        "lifecycle_root_is_modified",
+        "template_first_document",
+        "template_next_document",
+        "lifecycle_frame_templates_layout"
+      ],
+      "layout": {},
+      "slot_targets": [
+        [
+          "lifecycle_control_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_device_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "page_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_strategy_document",
+          26,
+          "lifecycle_root_is_modified"
+        ]
+      ]
+    },
+    "data-reference-inspect": {
+      "depends": [
+        "registered-reference-read",
+        "data-catalog"
+      ],
+      "tables": [
+        "data_object"
+      ],
+      "functions": [],
+      "layout": {}
+    },
+    "data-rename-referenced": {
+      "depends": [
+        "data-reference-inspect",
+        "registered-reference-rename",
+        "data-edit",
+        "strategy-source-edit"
+      ],
+      "tables": [
+        "data_service"
+      ],
+      "functions": [
+        "data_refresh_after_rename"
+      ],
+      "layout": {}
+    },
+    "strategy-trigger-catalog": {
+      "depends": [
+        "strategy-catalog",
+        "strategy-source-edit"
+      ],
+      "tables": [
+        "strategy_trigger_start",
+        "strategy_trigger_end",
+        "strategy_trigger_user"
+      ],
+      "functions": [
+        "strategy_trigger_common_archive"
+      ],
+      "layout": {
+        "trigger_id": 4,
+        "trigger_owner": 8,
+        "trigger_type": 12,
+        "trigger_note": 16,
+        "trigger_raw_word": 20
+      },
+      "slot_targets": [
+        [
+          "strategy_trigger_end",
+          2,
+          "strategy_trigger_common_archive"
+        ],
+        [
+          "strategy_trigger_user",
+          2,
+          "strategy_trigger_common_archive"
+        ]
+      ]
+    },
+    "strategy-trigger-loop": {
+      "depends": [
+        "strategy-trigger-catalog"
+      ],
+      "tables": [
+        "strategy_trigger_loop"
+      ],
+      "functions": [
+        "strategy_trigger_loop_archive"
+      ],
+      "layout": {
+        "trigger_loop_mode": 36,
+        "trigger_loop_interval": 40,
+        "trigger_loop_period": 48,
+        "trigger_loop_date_fields": 52
+      },
+      "call_targets": [
+        [
+          "strategy_trigger_loop_archive",
+          16,
+          "strategy_trigger_common_archive"
+        ]
+      ]
+    },
+    "strategy-trigger-event": {
+      "depends": [
+        "strategy-trigger-catalog"
+      ],
+      "tables": [
+        "strategy_trigger_event"
+      ],
+      "functions": [
+        "strategy_trigger_event_archive"
+      ],
+      "layout": {
+        "trigger_event_expression": 56,
+        "trigger_event_words": 60
+      },
+      "call_targets": [
+        [
+          "strategy_trigger_event_archive",
+          16,
+          "strategy_trigger_common_archive"
+        ]
+      ]
+    },
+    "language-catalog": {
+      "depends": [
+        "inspect"
+      ],
+      "tables": [
+        "root",
+        "language_service"
+      ],
+      "functions": [
+        "root_language_service_layout",
+        "language_service_constructor_layout",
+        "language_next_project_text_id"
+      ],
+      "layout": {
+        "root_language_service": 524,
+        "language_saved_texts": 4,
+        "language_working_texts": 12,
+        "language_dirty": 20,
+        "language_configured_ids": 40,
+        "language_configured_count": 56,
+        "language_definitions": 84,
+        "language_initial": 100,
+        "language_current": 104,
+        "language_preview": 108,
+        "language_mode": 112,
+        "language_font_manager": 128,
+        "language_tree_count": 4,
+        "language_node_parent": 4,
+        "language_node_right": 8,
+        "language_node_sentinel": 13,
+        "language_node_key": 16,
+        "language_text_translations": 20,
+        "language_definition_name": 20,
+        "language_definition_primary_font": 24,
+        "language_definition_alternate_font": 36,
+        "language_translation_name": 4
+      },
+      "table_operands": [
+        [
+          "language_service_constructor_layout",
+          53,
+          "language_service"
+        ]
+      ]
+    },
+    "language-text-edit": {
+      "depends": [
+        "language-catalog",
+        "page-authoring-common"
+      ],
+      "tables": [
+        "app",
+        "root",
+        "frame",
+        "language_service"
+      ],
+      "functions": [
+        "get_main_frame",
+        "lifecycle_root_is_modified",
+        "set_root_modified",
+        "save_root",
+        "language_set_translation",
+        "language_commit_translations",
+        "save_language_module"
+      ],
+      "layout": {}
+    },
+    "language-add": {
+      "depends": [
+        "language-catalog",
+        "page-authoring-common"
+      ],
+      "tables": [
+        "app",
+        "root",
+        "frame",
+        "language_service"
+      ],
+      "functions": [
+        "get_main_frame",
+        "lifecycle_root_is_modified",
+        "set_root_modified",
+        "save_root",
+        "language_append_builtin",
+        "language_check_builtin_name",
+        "language_refresh_fonts",
+        "set_language_module_dirty",
+        "save_language_module"
+      ],
+      "layout": {}
+    },
+    "picture-catalog": {
+      "depends": [
+        "inspect"
+      ],
+      "tables": [
+        "picture_manager",
+        "picture_service",
+        "picture_object",
+        "picture_bitmap",
+        "picture_bitmap_interface",
+        "root_window_model"
+      ],
+      "functions": [
+        "get_module_object",
+        "picture_manager_layout",
+        "picture_find_by_name",
+        "picture_object_layout",
+        "picture_bitmap_layout"
+      ],
+      "layout": {
+        "picture_service_offset": 52,
+        "picture_loaded": 56,
+        "picture_dirty": 57,
+        "picture_vector_begin": 108,
+        "picture_vector_end": 112,
+        "picture_vector_capacity": 116,
+        "picture_index_count": 80,
+        "picture_name": 16,
+        "picture_hash": 20,
+        "picture_image": 24,
+        "picture_image_interface": 4,
+        "picture_image_reference": 8,
+        "picture_image_kind": 36,
+        "picture_image_cache": 44,
+        "picture_image_width": 120,
+        "picture_image_height": 124,
+        "recipe_array_count": 8,
+        "recipe_array_capacity": 12,
+        "recipe_array_data": 4
+      },
+      "table_operands": [
+        [
+          "picture_manager_layout",
+          23,
+          "picture_service"
+        ],
+        [
+          "picture_bitmap_layout",
+          75,
+          "picture_bitmap"
+        ],
+        [
+          "picture_bitmap_layout",
+          85,
+          "picture_bitmap_interface"
+        ],
+        [
+          "picture_object_layout",
+          60,
+          "picture_object"
+        ]
+      ]
+    },
+    "picture-export": {
+      "depends": [
+        "picture-catalog"
+      ],
+      "tables": [
+        "root"
+      ],
+      "functions": [
+        "read_named_recipe_bytes",
+        "picture_bitmap_destroy",
+        "picture_bitmap_assign",
+        "picture_bitmap_write",
+        "lifecycle_root_is_modified"
+      ],
+      "imports": [
+        "construct_recipe_byte_array",
+        "destroy_recipe_byte_array",
+        "page_mem_file_ctor",
+        "page_mem_file_dtor"
+      ],
+      "layout": {
+        "recipe_byte_array_size": 20,
+        "recipe_byte_array_runtime_class_ordinal": 6361,
+        "recipe_byte_array_serialize_ordinal": 12951,
+        "picture_bitmap_size": 164,
+        "picture_mem_file_size": 44,
+        "picture_mem_file_length": 32,
+        "picture_mem_file_data": 36,
+        "picture_mem_file_growth": 40
+      }
+    },
+    "picture-mutate": {
+      "depends": [
+        "picture-export",
+        "page-authoring-common"
+      ],
+      "tables": [
+        "picture_service",
+        "picture_object",
+        "root",
+        "frame"
+      ],
+      "functions": [
+        "picture_manager_save",
+        "picture_manager_dirty",
+        "set_root_modified",
+        "save_root",
+        "picture_set_name",
+        "picture_assign_bitmap",
+        "get_main_frame"
+      ],
+      "layout": {}
+    },
+    "picture-copy": {
+      "depends": [
+        "picture-mutate"
+      ],
+      "tables": [
+        "picture_object",
+        "picture_service"
+      ],
+      "functions": [
+        "picture_manager_append",
+        "picture_destroy_unadopted"
+      ],
+      "imports": [
+        "picture_allocate"
+      ],
+      "layout": {
+        "picture_object_size": 208
+      }
+    },
+    "picture-load-image": {
+      "depends": [
+        "picture-mutate"
+      ],
+      "tables": [],
+      "functions": [
+        "picture_bitmap_load",
+        "picture_import_begin",
+        "picture_import_end",
+        "picture_mode_read",
+        "picture_mode_write"
+      ],
+      "imports": [
+        "picture_borrow_file"
+      ],
+      "layout": {
+        "picture_import_scope_size": 8
+      },
+      "call_targets": [
+        [
+          "picture_import_end",
+          28,
+          "picture_mode_write"
+        ]
+      ],
+      "shared_writable_rva": {
+        "picture_import_active": [
+          [
+            "picture_mode_read",
+            4
+          ],
+          [
+            "picture_mode_write",
+            7
+          ]
+        ]
+      }
+    },
+    "picture-import": {
+      "depends": [
+        "picture-copy",
+        "picture-load-image"
+      ],
+      "tables": [],
+      "functions": [],
+      "layout": {}
+    },
+    "picture-replace": {
+      "depends": [
+        "picture-load-image"
+      ],
+      "tables": [
+        "picture_service"
+      ],
+      "functions": [
+        "picture_manager_refresh_hash"
+      ],
+      "layout": {}
+    },
+    "page-native-generate": {
+      "depends": [
+        "control-geometry-batch",
+        "page-authoring-common",
+        "page-description-read"
+      ],
+      "tables": [
+        "page",
+        "page_description_document",
+        "window_service",
+        "root",
+        "frame"
+      ],
+      "functions": [
+        "generate_single_page",
+        "generate_user_document",
+        "page_description_database_save",
+        "get_main_frame",
+        "lifecycle_root_is_modified",
+        "set_page_modified",
+        "set_root_modified",
+        "save_page",
+        "save_root"
+      ],
+      "layout": {}
+    },
+    "control-reference-inspect": {
+      "depends": [
+        "registered-reference-read",
+        "label-static-read",
+        "top-level-control-catalog",
+        "page-view-inspect"
+      ],
+      "tables": [
+        "label",
+        "label_view"
+      ],
+      "functions": [
+        "control_reference_name",
+        "control_reference_set_name",
+        "control_reference_container",
+        "get_drawing_view"
+      ],
+      "layout": {}
+    },
+    "control-rename-referenced": {
+      "depends": [
+        "control-reference-inspect",
+        "registered-reference-rename",
+        "page-authoring-common",
+        "strategy-source-read"
+      ],
+      "tables": [
+        "page_document",
+        "page_description_document",
+        "root",
+        "frame",
+        "designer_template",
+        "lifecycle_control_document",
+        "lifecycle_device_document",
+        "lifecycle_strategy_document"
+      ],
+      "functions": [
+        "set_page_modified",
+        "page_description_database_save",
+        "lifecycle_root_is_modified"
+      ],
+      "layout": {},
+      "slot_targets": [
+        [
+          "root",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "page_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_control_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_device_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_strategy_document",
+          26,
+          "lifecycle_root_is_modified"
+        ]
+      ]
+    },
+    "device-serial-config-read": {
+      "depends": [
+        "page-catalog"
+      ],
+      "tables": [
+        "root_window_model",
+        "lifecycle_device_document",
+        "serial_device_manager",
+        "serial_device_manager_service",
+        "serial_device_modified_service",
+        "serial_device_parent",
+        "serial_device_children",
+        "serial_device_list"
+      ],
+      "functions": [
+        "get_module_object",
+        "serial_device_manager_layout",
+        "serial_device_document_layout",
+        "serial_device_list_layout",
+        "serial_device_parent_layout",
+        "serial_device_base_layout",
+        "serial_device_children_layout",
+        "serial_device_defaults_layout",
+        "serial_device_exchange",
+        "serial_device_array_count_layout",
+        "serial_device_editor"
+      ],
+      "layout": {
+        "serial_device_manager_service": 52,
+        "serial_device_modified_service": 56,
+        "serial_device_manager_document": 68,
+        "serial_device_manager_loaded": 72,
+        "serial_device_document_list": 356,
+        "serial_device_list_count": 12,
+        "serial_device_list_head": 4,
+        "serial_device_list_tail": 8,
+        "serial_device_node_next": 0,
+        "serial_device_node_previous": 4,
+        "serial_device_node_object": 8,
+        "serial_device_owner": 148,
+        "serial_device_parent_object": 36,
+        "serial_device_id": 20,
+        "serial_device_name": 40,
+        "serial_device_driver": 44,
+        "serial_device_children": 68,
+        "serial_device_array_count": 8,
+        "serial_device_binding_count": 96,
+        "serial_device_port": 164,
+        "serial_device_baud": 168,
+        "serial_device_data_bits": 172,
+        "serial_device_stop_bits": 176,
+        "serial_device_parity": 180,
+        "document_dirty": 72
+      },
+      "table_operands": [
+        [
+          "serial_device_manager_layout",
+          88,
+          "serial_device_manager"
+        ],
+        [
+          "serial_device_manager_layout",
+          118,
+          "serial_device_manager_service"
+        ],
+        [
+          "serial_device_manager_layout",
+          128,
+          "serial_device_modified_service"
+        ],
+        [
+          "serial_device_document_layout",
+          58,
+          "lifecycle_device_document"
+        ],
+        [
+          "serial_device_list_layout",
+          24,
+          "serial_device_list"
+        ],
+        [
+          "serial_device_parent_layout",
+          60,
+          "serial_device_parent"
+        ],
+        [
+          "serial_device_children_layout",
+          20,
+          "serial_device_children"
+        ]
+      ]
+    },
+    "device-serial-config-edit": {
+      "depends": [
+        "device-serial-config-read",
+        "compile",
+        "engineering-project-lifecycle-read"
+      ],
+      "tables": [
+        "root",
+        "frame",
+        "designer_template",
+        "lifecycle_control_document",
+        "lifecycle_device_document",
+        "page_document",
+        "lifecycle_strategy_document",
+        "serial_device_modified_service"
+      ],
+      "functions": [
+        "serial_device_mark_modified",
+        "save_serial_device_document",
+        "set_root_modified",
+        "save_root",
+        "get_main_frame",
+        "template_first_document",
+        "template_next_document",
+        "lifecycle_frame_templates_layout",
+        "lifecycle_root_is_modified"
+      ],
+      "layout": {
+        "lifecycle_frame_template_0": 1140,
+        "lifecycle_frame_template_1": 1144,
+        "lifecycle_frame_template_2": 1148,
+        "lifecycle_frame_template_3": 1152
+      },
+      "slot_targets": [
+        [
+          "lifecycle_device_document",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "lifecycle_device_document",
+          27,
+          "set_root_modified"
+        ],
+        [
+          "lifecycle_device_document",
+          83,
+          "save_serial_device_document"
+        ],
+        [
+          "root",
+          26,
+          "lifecycle_root_is_modified"
+        ],
+        [
+          "root",
+          27,
+          "set_root_modified"
+        ],
+        [
+          "root",
+          34,
+          "save_root"
+        ]
+      ]
+    },
+    "recipe-reference-inspect": {
+      "depends": [
+        "recipe-cell-edit",
+        "registered-reference-read",
+        "page-view-inspect",
+        "top-level-control-catalog",
+        "strategy-catalog",
+        "page-description-read",
+        "strategy-trigger-catalog"
+      ],
+      "tables": [
+        "page_description_document",
+        "control_event_array"
+      ],
+      "functions": [
+        "recipe_rename_page_sources_layout",
+        "recipe_rename_page_dispatch_init",
+        "recipe_rename_page_dispatch_array_ctor",
+        "recipe_rename_page_dispatch_consumer",
+        "recipe_rename_page_dispatch_count"
+      ],
+      "layout": {
+        "recipe_rename_object_owner": 4,
+        "recipe_rename_page_open_source": 336,
+        "recipe_rename_page_cycle_source": 340,
+        "recipe_rename_page_close_source": 348,
+        "recipe_rename_page_dispatch_array": 596,
+        "recipe_rename_page_dispatch_count": 8
+      },
+      "table_operands": [
+        [
+          "recipe_rename_page_dispatch_array_ctor",
+          20,
+          "control_event_array"
+        ]
+      ]
+    },
+    "recipe-rename-referenced": {
+      "depends": [
+        "recipe-reference-inspect",
+        "registered-reference-rename",
+        "page-authoring-common",
+        "recipe-edit-workbench",
+        "compile"
+      ],
+      "tables": [
+        "recipe_object",
+        "recipe_rename_manager_service"
+      ],
+      "functions": [
+        "recipe_rename_set_name",
+        "recipe_rename_save_directory",
+        "recipe_rename_save_worker",
+        "recipe_rename_mark_dirty"
+      ],
+      "layout": {
+        "recipe_rename_manager_service_offset": 52
+      },
+      "slot_targets": [
+        [
+          "recipe_object",
+          10,
+          "recipe_rename_set_name"
+        ],
+        [
+          "recipe_rename_manager_service",
+          2,
+          "recipe_rename_save_directory"
+        ],
+        [
+          "recipe_rename_manager_service",
+          3,
+          "recipe_rename_mark_dirty"
+        ]
+      ],
+      "call_targets": [
+        [
+          "recipe_rename_save_directory",
+          13,
+          "recipe_rename_save_worker"
+        ]
+      ]
+    },
+    "saved-data-control-reference-read": {
+      "depends": [
+        "control-reference-inspect",
+        "recipe-reference-inspect",
+        "strategy-source-read",
+        "control-template-clone-batch"
+      ],
+      "tables": [
+        "saved_data_control",
+        "saved_data_control_view",
+        "standard_button",
+        "standard_button_view",
+        "page_description_document"
+      ],
+      "functions": [
+        "control_reference_name",
+        "control_reference_set_name",
+        "control_reference_container"
+      ],
+      "layout": {},
+      "slot_targets": [
+        [
+          "saved_data_control_view",
+          9,
+          "control_reference_name"
+        ],
+        [
+          "saved_data_control_view",
+          10,
+          "control_reference_set_name"
+        ],
+        [
+          "saved_data_control_view",
+          15,
+          "control_reference_container"
+        ],
+        [
+          "standard_button_view",
+          9,
+          "control_reference_name"
+        ],
+        [
+          "standard_button_view",
+          15,
+          "control_reference_container"
+        ]
+      ]
+    },
+    "saved-data-control-reference-rename": {
+      "depends": [
+        "saved-data-control-reference-read",
+        "control-rename-referenced",
+        "strategy-source-edit"
+      ],
+      "tables": [
+        "root",
+        "page_description_document"
+      ],
+      "functions": [
+        "page_description_database_save",
+        "read_named_recipe_bytes"
+      ],
+      "layout": {}
+    },
+    "recipe-rename-consumer-read": {
+      "depends": [
+        "recipe-reference-inspect",
+        "strategy-source-read",
+        "label-static-read",
+        "page-authoring-common"
+      ],
+      "tables": [
+        "recipe_rename_draw_dll"
+      ],
+      "functions": [
+        "recipe_rename_draw_dll_dispatch",
+        "recipe_rename_draw_dll_path_layout",
+        "recipe_rename_close_cache_layout"
+      ],
+      "layout": {
+        "recipe_rename_draw_dll_path": 252,
+        "recipe_rename_draw_dll_plugin": 236,
+        "recipe_rename_page_close_cache": 392
+      }
+    },
+    "recipe-rename-consumer-write": {
+      "depends": [
+        "recipe-rename-referenced",
+        "recipe-rename-consumer-read",
+        "strategy-source-edit"
+      ],
+      "imports": [
+        "recipe_rename_resize_close_cache"
+      ],
+      "layout": {},
+      "tables": [],
+      "functions": []
     }
   },
   "imports": {
@@ -8559,6 +13764,36 @@
       "dll": "mfc110u.dll",
       "name": null,
       "ordinal": 14226
+    },
+    "default_shape_operator_new": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 1502
+    },
+    "default_shape_operator_delete": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 1504
+    },
+    "copy_page_description": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 1514
+    },
+    "picture_allocate": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 1502
+    },
+    "picture_borrow_file": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 567
+    },
+    "recipe_rename_resize_close_cache": {
+      "dll": "mfc110u.dll",
+      "name": null,
+      "ordinal": 13781
     }
   }
 }

@@ -81,8 +81,9 @@ namespace McgsInternalBridge {
       NativeMemory.Require(name==NativeUsableEditPermit.ReadCurrentCString(nameField,4096),
        "MulBtn catalog image resource name changed while reading.");
       row["resource_name"]=name;
-      if(imageGeometry)MulVisualCatalogImageGeometry(frame,row);
      }
+     // Both COwnerBitmap source modes use the same enclosing CSelectSubObj geometry.
+     if(imageGeometry)MulVisualCatalogImageGeometry(frame,row);
      NativeMemory.Require(image==NativeMemory.Ptr(frame,0x68)&&mode==Marshal.ReadByte(image,8),
       "MulBtn catalog frame image changed while reading.");
     }

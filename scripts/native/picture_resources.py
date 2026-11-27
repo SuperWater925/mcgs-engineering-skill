@@ -251,6 +251,14 @@ def image_hex(value):
     return payload
 
 
+def uses_picture_reference(value):
+    if isinstance(value, dict):
+        return 'reference' in value or any(uses_picture_reference(child) for child in value.values())
+    if isinstance(value, list):
+        return any(uses_picture_reference(child) for child in value)
+    return False
+
+
 def replace_picture(original, spec, references=None):
     old = Picture.parse(original)
     if not isinstance(spec, dict):

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "purpose": "Guard the original CLinguist project current and preview language ID setters independently",
+  "binary_sha256": "bf0b6a0933d9147013638996083509d3b4711805ff3eb88963a0c35b3a660084",
+  "preferred_base": 4194304,
+  "functions": [
+    {
+      "name": "SetCurrentLanguageId",
+      "rva": 153536,
+      "bytes": "e92bcd6200",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetCurrentLanguageIdBody",
+      "rva": 6628592,
+      "bytes": "558bec51894dfc837d08007d0432c0eb1a8b45fc8b48443b4d08750432c0eb0b8b55fc8b4508894244b0018be55dc20400",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetPreviewLanguageId",
+      "rva": 303276,
+      "bytes": "e99f846000",
+      "reloc_offsets": []
+    },
+    {
+      "name": "SetPreviewLanguageIdBody",
+      "rva": 6628688,
+      "bytes": "558bec51894dfc837d08007d0432c0eb218b45fc8b48483b4d08750432c0eb128b55fc8b45088942488b4dfcc6411401b0018be55dc20400",
+      "reloc_offsets": []
+    }
+  ],
+  "evidence": {
+    "current_vtable_slot": 20,
+    "preview_vtable_slot": 22,
+    "current_id_offset": 68,
+    "preview_id_offset": 72,
+    "preview_modified_byte_offset": 20,
+    "save_body_rva": 6634528,
+    "save_current_id_instruction_rva": 6634699,
+    "save_preview_id_instruction_rva": 6634717,
+    "save_order": ["current_language_id", "preview_language_id"],
+    "native_calls_performed": false
+  }
+}

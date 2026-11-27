@@ -3,12 +3,87 @@
 The projected fields are never written to the database. Other parts of these
 archives still go through the ordinary reference check.
 """
+import re
 import struct
 
 import native_format as fmt
 from mcs_window_archive import Reader, write_cstring
 from offline_picture_library import mentions
-from offline_structure import _data_group_members
+from offline_structure import _data_group_members, _group_member_span
+
+
+# Whole-group and whole-record calls observed in Pro release bytecode. The
+# three numbers are the original function, result type, and argument count.
+_RECIPE_REORDER_CALLS = {
+    'RecipeLoad': (1, 2, 1), 'RecipeLoadByDialog': (2, 2, 2),
+    'RecipeGetCurrentPosition': (3, 2, 1), 'RecipeGetName': (4, 4, 1),
+    'RecipeGetCurrentValue': (5, 2, 1),
+}
+_RECIPE_REORDER_OUTPUTS = {'RecipeGetCurrentPosition': (2, b'\x47\x3e'), 'RecipeGetName': (3, b'\x3f')}
+# Exact no-argument DrawRecipe Refresh method call from the original release
+# cache. Only use it when the source names a verified same-page table.
+_RECIPE_REFRESH = bytes.fromhex('050500000003fefffffffeffffff000000000000000000000000')
+
+
+def recipe_reorder_release_cache(source, group, refresh_targets, variables):
+    """Match a complete known release program without a column-position operand."""
+    from mcs_plugin_controls import utf8_write
+
+    body = bytearray(12)
+    recipe_calls = 0
+    for line in source.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        method = re.fullmatch(r'(.+\.Refresh)\s*\(\s*\)', line)
+        if method and method[1] in refresh_targets:
+            body.extend(_RECIPE_REFRESH)
+            continue
+        call = re.fullmatch(r'(?:(?P<output>[^\W\d]\w*)\s*=\s*)?!(?P<function>[A-Za-z]+)\s*\((?P<args>[^()]*)\)', line)
+        args = re.fullmatch(r'\s*"([^"\r\n]*)"\s*(?:,\s*"([^"\r\n]*)"\s*)?', call['args']) if call else None
+        function = _RECIPE_REORDER_CALLS.get(call['function']) if call else None
+        if (not args or not function or args[1] != group or ('\0' in line)
+                or (args[2] is not None) != (function[2] == 2)):
+            raise ValueError('Unsupported recipe release call for column reorder')
+        output = _RECIPE_REORDER_OUTPUTS.get(call['function'])
+        target = variables.get(call['output']) if output and call['output'] else None
+        if output:
+            if not target or target['kind'] != output[0]:
+                raise ValueError('Recipe release output does not resolve to the expected native scalar')
+            statement = output[1] + struct.pack('<I', target['id'])
+        else:
+            if call['output']:
+                raise ValueError('Unsupported recipe release output for column reorder')
+            statement = b'\0'
+        for literal in args.groups():
+            if literal is not None:
+                body.extend(b'\x13' + utf8_write(literal))
+        body.extend(b'\x07' + struct.pack('<3I', *function) + statement)
+        recipe_calls += 1
+    if not recipe_calls:
+        raise ValueError('Expected an existing whole-recipe release call')
+    return bytes(body) + b'\1'
+
+
+def require_recipe_reorder_safe_button(control, group, refresh_targets, variables):
+    from mcs_button_control import ButtonArchive
+    from 原生界面样式 import CommonEnvelope
+
+    common = CommonEnvelope.parse(control)
+    projected = common.project_without_animations()
+    button = ButtonArchive.parse(projected)
+    if common.to_record().payload != control.payload or button.to_bytes() != projected.payload:
+        raise ValueError('Recipe button does not round-trip')
+    expected = recipe_reorder_release_cache(button.release_script.value, group, refresh_targets, variables)
+    if not button.release_compiled.value or button.release_compiled.value != expected:
+        raise ValueError('Original recipe release compilation does not match its supported source')
+    # Prove every other owner byte remains independently visible to the
+    # reference guard. This projection is never written to the database.
+    button.release_script.value = ''
+    button.release_compiled.value = b''
+    projected.payload = button.to_bytes()
+    if mentions(common.restore_projected(projected).payload, group):
+        raise ValueError('Another field of the recipe button also references the group')
 
 
 def objdata_names(raw, records):
@@ -56,7 +131,8 @@ def typeinfo_names(raw, records, by_name):
         seen.add(ident)
         yield span
         if record["kind"] == 0xffffffff:
-            members, _, supported = _data_group_members(record, records.group_member_spans.get(ident), by_name)
+            group_span, uses_ids = _group_member_span(records, ident)
+            members, _, supported = _data_group_members(record, group_span, by_name, by_id if uses_ids else None)
             if not supported or reader.u32() != len(members):
                 raise ValueError("TYPEINFO group member count differs from ObjData")
             for member in members:

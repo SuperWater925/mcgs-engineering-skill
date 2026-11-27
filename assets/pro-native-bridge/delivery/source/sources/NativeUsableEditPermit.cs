@@ -78,6 +78,13 @@ namespace McgsInternalBridge {
    internal void RequireCurrent(){Require(plan.ClaimCallReturned,"Execution context has not started.");plan.RequireCurrent();}
    internal void BeginApply(Dictionary<string,object> action){Boundary();string id=plan.CheckAction(action);Require(stages[id]==0,"Action already entered Apply; unknown results are not replayed.");stages[id]=1;activeAction=id;activePhase="apply";}
    internal void RequireApplying(Dictionary<string,object> action){RequireCurrent();Require(stages[plan.CheckAction(action)]==1,"Action is not in its claimed Apply phase.");}
+   internal Action BindApplying(Dictionary<string,object> action){
+    RequireCurrent();
+    string id=plan.CheckAction(action);
+    RequireActiveApply(id);
+    return delegate{RequireCurrent();RequireActiveApply(id);};
+   }
+   void RequireActiveApply(string id){Require(activePhase=="apply"&&activeAction==id&&stages[id]==1,"Action is not in its claimed Apply phase.");}
    internal void CompleteApply(Dictionary<string,object> action){RequireApplying(action);string id=plan.CheckAction(action);Require(activeAction==id&&activePhase=="apply","Apply completion belongs to another active action.");stages[id]=2;UpdateBoundary();activeAction=null;activePhase=null;}
    internal void RegisterCreatedPage(Dictionary<string,object> action,int nativeId){RequireApplying(action);plan.CheckCreated(action,nativeId,true);string id=plan.CheckAction(action);Require(!createdPages.ContainsKey(id)&&!createdPages.ContainsValue(nativeId),"Created page ID was already registered.");createdPages.Add(id,nativeId);}
    internal void RegisterCreatedStrategy(Dictionary<string,object> action,int nativeId){RequireApplying(action);plan.CheckCreated(action,nativeId,false);string id=plan.CheckAction(action);Require(!createdStrategies.ContainsKey(id)&&!createdStrategies.ContainsValue(nativeId),"Created strategy ID was already registered.");createdStrategies.Add(id,nativeId);}

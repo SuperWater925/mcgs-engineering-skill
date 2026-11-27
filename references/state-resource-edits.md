@@ -74,6 +74,8 @@
 {"button_pictures": {"primary": {"reference": "图片8"}, "properties": {"reference": "图片9"}}}
 ```
 
+原生位图 `CDrawBitmap`（类型 `0x5009`）使用 `{"bitmap_picture":{"reference":"图片9"}}`，可走共享 `controls` 的完整路径或普通 `edit` 的顶层现有控件。具名引用须已登记在当前工程图库中。写入独立像素时，改用 `bitmap_picture.embedded_hex` 并提供完整 BMP、PNG 或 JPEG 文件字节。两种写法均针对选定的图片封套，保留图库和其它引用者、原控件事件、动画及非图片字段。
+
 `primary` 和 `properties` 是原生主归档、属性归档中两个独立图片槽的名称，不能把它们假定为所有布局的按下/释放语义。只替换已序列化的图片槽，不修改启用位、动作、安全条件或脚本。
 
 图片可指定 `reference`（安全导出中唯一存在的图库名称；不是资源 hash identity），或 `embedded_hex`（完整 BMP/PNG/JPEG 文件的十六进制字符串）。嵌入时从真实文件解码读取宽高，再写 mode=2 原生封套及精确字节长度；无需用户手填尺寸。尺寸和 payload 字节数必须能由原生封套的 DWORD 字段表示，并通过已有预览环境中 Pillow 的实际格式检查、尺寸保护及完整解码；内存与解码器限制按实际错误报告。工具不另设 64 MiB、16M 像素或 8K 分辨率门槛，不关闭 Pillow 自身的保护，也不重编码图片。旧 mode=2 中未知 payload 可原样保留，不能当作已支持的图像内部结构。

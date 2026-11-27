@@ -1,8 +1,8 @@
-# MCGS 在线工程小更新包
+# MCGS Stu / Pro 工程小更新包
 
-小更新包供 Windows x64 用户使用。它更新技能、说明、清单和预编译业务引擎，复用已有完整包或上一次更新目录中的安装介质与运行时。包含 Stu 的更新会同时提供 Stu DLL、源合同及匹配的共用热接桥。按当前产品选择匹配的预编译文件。 [已发布的 Pro 小更新](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.16-native-page-update) · [完整基底](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey-bootstrap)
+小更新包供 Windows x64 用户使用。它更新技能、说明、清单和预编译业务引擎，复用已有完整包或上一次更新目录中的安装介质与运行时。包含 Stu 的更新会同时提供 Stu DLL、源合同及匹配的共用热接桥。按当前产品选择匹配的预编译文件。 [当前 Stu / Pro 增量](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.27-engineering-update) · [完整基底](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.06-turnkey-bootstrap)
 
-新版支持同页同源原生批量克隆、整页设计计划、工具栏语义发现，以及可逐项回读的原生规则阵列复制。已有连接可以选用新预编译引擎。 [在线工程编辑](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/pro-native-engineering.md) · [实测范围](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/pro-native-page-update-validation.md)
+新版包含 Stu 与 Pro 原生在线编辑和离线工程工具。 [Stu 在线工程编辑](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.27-engineering-update/references/stu-native-engineering.md) · [Pro 在线工程编辑](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.27-engineering-update/references/pro-native-engineering.md) · [实测范围](https://github.com/SuperWater925/mcgs-engineering-skill/releases/tag/v2026.11.27-engineering-update)
 
 ## 交给 AI 更新
 

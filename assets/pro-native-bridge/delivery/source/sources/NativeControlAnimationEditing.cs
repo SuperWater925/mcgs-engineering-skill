@@ -1,5 +1,6 @@
 // Original CAni factory/Serialize ownership and whole-list commit, under the unified Lease.
 using System;using System.Collections;using System.Collections.Generic;using System.Globalization;using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using A=McgsInternalBridge.NativeAnimationListEditing;
 namespace McgsInternalBridge {
  internal static partial class NativeCurrentTemplateControlOperations {
@@ -55,7 +56,7 @@ namespace McgsInternalBridge {
        NativeMemory.Require(Object.Equals(row["restore_observed_vmove_clone"],true)&&sameSourceSlot&&!item.Retained
          &&name=="CAniVMove"&&row.ContainsKey("native_member_updates")&&!row.ContainsKey("properties")&&!row.ContainsKey("clone_source"),
          "Vertical movement clone restoration requires updating the original CAniVMove slot on the same control.");
-       PrepareObservedVMoveClone(item,Map(row["native_member_updates"]));
+       item.SerializedCloneBaseline=PrepareObservedVMoveClone(item,Map(row["native_member_updates"]));
       }
       if(row.ContainsKey("restore_observed_palette_clone")){
        NativeMemory.Require(Object.Equals(row["restore_observed_palette_clone"],true)&&sameSourceSlot&&!item.Retained
@@ -136,14 +137,17 @@ namespace McgsInternalBridge {
     return baseline;
    }
    static readonly string[] VMoveWordKeys={"8","c","30","34","38","3c","40"};
-   static void PrepareObservedVMoveClone(Item item,Dictionary<string,object> updates){
+   static Dictionary<string,object> PrepareObservedVMoveClone(Item item,Dictionary<string,object> updates){
     var source=item.SourceValues;
     var words=Map(source["words_uint32"]);
     var strings=Map(source["strings"]);
     var bytes=Map(source["byte_arrays_hex"]);
+    object rawCache;
+    string cache=bytes.TryGetValue("14",out rawCache)?rawCache as string:null;
     NativeMemory.Require(words.Count==VMoveWordKeys.Length&&Array.TrueForAll(VMoveWordKeys,words.ContainsKey)
       &&strings.Count==1&&strings.ContainsKey("2c")&&Map(source["arrays"]).Count==0
-      &&bytes.Count==1&&bytes.ContainsKey("14")&&Object.Equals(bytes["14"],""),
+      &&bytes.Count==1&&cache!=null&&(cache.Length==0||(cache.Length==62&&Regex.IsMatch(cache,
+        @"\A030000000000000001000000030000000000000026[0-9a-f]{8}2c0000000001\z"))),
       "The vertical movement animation does not have the observed original serialization layout.");
     NativeMemory.Require(updates.Count==1&&updates.ContainsKey("strings"),
       "A vertical movement clone accepts only an expression update.");
@@ -152,16 +156,21 @@ namespace McgsInternalBridge {
     NativeMemory.Require(changedStrings.Count==1&&changedStrings.TryGetValue("2c",out expression)
       &&expression is string&&!String.IsNullOrWhiteSpace((string)expression)&&!Object.Equals(expression,strings["2c"]),
       "Vertical movement clone restoration requires a different nonempty expression.");
-    var expected=new Dictionary<string,object>(source);
+    // Private original archives omit the runtime expression cache. Check the private
+    // clone against all other source fields before setting the new expression.
+    var baseline=new Dictionary<string,object>(source);
+    baseline["byte_arrays_hex"]=new Dictionary<string,object>{{"14",""}};
+    var expected=new Dictionary<string,object>(baseline);
     expected["strings"]=changedStrings;
     NativePageControlPreparation.Same(expected,item.Expected,
-      "Only the vertical movement expression may differ in the prepared item.");
+      "Only the vertical movement expression may change and its cache be deferred.");
     NativeMemory.Require(Convert.ToUInt32(words["40"],CultureInfo.InvariantCulture)!=0,
       "The original vertical movement dimension does not require restoration.");
     // The original archive does not store this owner-derived dimension.
     // The private object's initial value is immaterial once the live value is
     // restored and the complete resulting private record matches the source.
     item.VMoveDimensionRestoration=new Dictionary<string,object>{{"words_uint32",new Dictionary<string,object>{{"40",words["40"]}}}};
+    return baseline;
    }
    static Dictionary<string,object> PrepareObservedPaletteClone(Item item,Dictionary<string,object> updates){
     var source=item.SourceValues;

@@ -15,6 +15,8 @@ namespace McgsInternalBridge {
             [return: MarshalAs(UnmanagedType.I1)]
             private delegate bool RenameUserPage(IntPtr service, IntPtr oldName, IntPtr newName);
             [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
+            private delegate IntPtr FindUserPage(IntPtr manager, IntPtr name);
+            [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
             private delegate IntPtr PageStringConstructor(IntPtr self, IntPtr text);
             [UnmanagedFunctionPointer(CallingConvention.ThisCall)]
             private delegate void PageArchiveTransfer(IntPtr list, int sourceId, IntPtr archive);
@@ -93,6 +95,15 @@ namespace McgsInternalBridge {
                         Require(modified(context.Root) == 0 && context.Word(context.Root, "document_dirty") == 0,
                             "The current Stu project has unsaved changes.");
                         result["clean_open_documents"] = VerifyOpenChildrenClean(Abi, frame, modified, false);
+                        if (!copying) {
+                            result["operation_phase"] = "native_page_name_index_preflight";
+                            RefreshPageNameIndex(before);
+                            context.RequireProject();
+                            Require(modified(context.Root) == 0 && context.Word(context.Root, "document_dirty") == 0,
+                                "Rebuilding the Stu user-window name index changed the original project state.");
+                            result["native_page_name_index_rebuilt"] = true;
+                            result["native_existing_page_names_verified"] = before.Count;
+                        }
 
                         result["read_only"] = false;
                         result["write_attempted"] = true;
@@ -269,6 +280,29 @@ namespace McgsInternalBridge {
                     pages.Add(page.Id, page);
                 });
                 return pages;
+            }
+
+            private void RefreshPageNameIndex(Dictionary<int, Window> before) {
+                IntPtr manager = UserWindowManager();
+                const string lookupRole = "authoring_find_page_for_rename_layout";
+                Abi.CheckSlot(manager, "page_manager", 16, lookupRole);
+                var find = Abi.Bind<FindUserPage>(lookupRole);
+                // A name miss makes the original manager rebuild its transient name index from the page IDs.
+                using (var missing = new AuthoringPageString(Abi, "__McgsEngineering_" + Guid.NewGuid().ToString("N")))
+                    Require(find(manager, missing.Storage) == IntPtr.Zero,
+                        "The original Stu user-window name index did not report a missing name.");
+                var current = AuthoringPages();
+                Require(manager == UserWindowManager() && current.Count == before.Count,
+                    "The original Stu page catalog changed during name index preflight.");
+                foreach (var previous in before.Values) {
+                    Window page;
+                    Require(current.TryGetValue(previous.Id, out page) && page.Page == previous.Page &&
+                        page.Name == previous.Name && page.Service == previous.Service,
+                        "The original Stu page identity changed during name index preflight.");
+                    using (var name = new AuthoringPageString(Abi, page.Name))
+                        Require(find(manager, name.Storage) == page.Page,
+                            "The original Stu name index does not resolve the current page: " + page.Name);
+                }
             }
 
             private static Window ConfirmPageAddition(Dictionary<int, Window> before, Dictionary<int, Window> after) {

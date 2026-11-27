@@ -2,9 +2,9 @@
 
 本整合包面向 Windows x64。请完整解压到本机固定目录，再运行 `McgsStart.exe`。不要只从压缩包拖出 EXE，也不要只把 skill 子目录发给别人；运行时和预编译引擎位于相邻目录。
 
-包内包括 McgsPro 3.5.2.12210、McgsStu 3.5.3.9198 SP1 完整安装介质、统一的便携 Python/PowerShell、预编译在线业务引擎与热接桥、Codex 技能和说明。上述版本是随包安装介质的信息。Pro 可在线增量组态，Stu 可在线查询、激活设计页、批量修改同页标签与几何和执行原厂检查。
+包内包括 McgsPro 3.5.2.12210、McgsStu 3.5.3.9198 SP1 完整安装介质、统一的便携 Python/PowerShell、预编译在线业务引擎与热接桥、Codex 技能和说明。上述版本是随包安装介质的信息。Stu 和 Pro 均可在线组态、原厂检查和同进程重开，具体操作按各自已验证的接口。
 
-先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。显式指定 `--destination` 时填单个技能的目录，例如 `.codex/skills/mcgs-engineering`。已连接的实例沿用当前桥和队列，并按当前技能合同选择相符的业务引擎。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.16-native-page-update/references/turnkey-update-zh.md)
+先解压 11 月 6 日 bootstrap 完整包作为基底。已有该包时，下载小更新 ZIP，让 AI 复用本机文件，生成包含新版预编译 `flat-v1` 引擎的完整目录。随后从更新后的目录运行 `McgsStart.exe` 或 `turnkey install-skill`，登记新版技能和引擎。显式指定 `--destination` 时填单个技能的目录，例如 `.codex/skills/mcgs-engineering`。已连接的实例沿用当前桥和队列，并按当前技能合同选择相符的业务引擎。 [小更新包用法](https://github.com/SuperWater925/mcgs-engineering-skill/blob/v2026.11.27-engineering-update/references/turnkey-update-zh.md)
 
 ## 首次配置
 
@@ -14,7 +14,7 @@
 4. UAC、未保存工程、原厂许可及要求重启等提示按实际情况处理；不强杀编辑器，不删除整个目录冒充卸载，不猜静默目录参数，不把旧程序 DLL 覆盖回新版本。用户工程和冲突文件保留在备份及恢复报告中。
 5. 点击“安装 Codex 技能”。原有技能先留备份，技能记录此完整包的位置。移动整包后重新点一次安装即可更新位置。
 
-环境就绪后，智能体简要说明并询问可用选项。**离线**直接处理文件，适合批量修改。**在线**接入已打开的原厂编辑器，Pro 可实时编辑，Stu 当前可读目录和做原厂检查。已明确选择时沿用。
+环境就绪后，智能体简要说明并询问可用选项。**离线**直接处理文件，适合批量修改。**在线**接入已打开的原厂编辑器，Stu 和 Pro 均按当前原厂接口提供实时编辑。已明确选择时沿用。
 
 ## 交给智能体的命令
 

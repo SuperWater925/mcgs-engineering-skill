@@ -3,6 +3,7 @@ import argparse
 from collections import Counter
 from copy import deepcopy
 import json
+import re
 import struct
 from pathlib import Path
 
@@ -83,8 +84,11 @@ def observed_size_clone(record, changes):
 def validate_observed_vmove_clone(record, changes):
     words = record["words_uint32"]
     dimension = words.get("40")
+    caches = record["byte_arrays_hex"]
     if (set(words) != VMOVE_CLONE_WORDS or type(dimension) is not int or not 0 < dimension <= 0xffffffff
-            or set(record["strings"]) != {"2c"} or record["arrays"] or record["byte_arrays_hex"] != {"14": ""}):
+            or set(record["strings"]) != {"2c"} or record["arrays"] or set(caches) != {"14"}
+            or not isinstance(caches["14"], str) or (caches["14"] and not re.fullmatch(
+                r"030000000000000001000000030000000000000026[0-9a-f]{8}2c0000000001", caches["14"]))):
         raise ValueError("CAniVMove does not match the observed original serialization layout")
     expression = changes["strings"]["2c"]
     if expression == record["strings"]["2c"]:
@@ -386,6 +390,7 @@ def prepare(capture, items, action_id="edit-animations", *, variable_catalog=Non
                 raise ValueError("Keep the original VMove animation slot when changing its expression")
             validate_observed_vmove_clone(expected, changes)
             row["restore_observed_vmove_clone"] = True
+            expected["byte_arrays_hex"]["14"] = ""
         if (op == "update" and expected["class"] in PALETTE_CLASSES and expected.get("byte_arrays_hex", {}).get("14")
                 and observed_palette_clone(expected, changes)):
             if index != len(rows):

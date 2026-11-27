@@ -40,6 +40,79 @@ class OfflineProgramRecipeTests(unittest.TestCase):
         apply_program_recipe(self.data,{"recipe_edits":[{"op":"delete_column","name":"batch","index":1}]})
         self.assertEqual(recipe_state(self.data)[3]["batch"][1].records,[["one"]])
 
+    def test_recipe_column_title_requires_a_text_id_in_the_target_project(self):
+        import native_format as native
+
+        rows = {row['strName']: row for row in self.data['System']['rows']}
+        variables = native.variables(native.archive(rows['ObjData']['lbContext']))
+        variable = next(row for row in variables if row['kind'] in (1, 2, 3))
+        definition = struct.pack('<I', 0) + native.text('简体中文')
+        definition += (native.text('Arial') + struct.pack('<II', 100, 0xffffffff)) * 2
+        dictionary = bytes(12) + struct.pack('<III', 1, 0, 1) + definition
+        dictionary += struct.pack('<IIII', 1, 10420, 1, 0) + native.text('当前项目标题') + struct.pack('<I', 1)
+        rows['MCGSLINGUIST']['lbContext'] = native.wrap(dictionary)
+
+        field = {'binding': variable['name'], 'type': variable['kind'], 'title': '\x0710420'}
+        add = {'op': 'add_group', 'name': 'batch', 'columns': [field]}
+        before = copy.deepcopy(self.data)
+        with self.assertRaisesRegex(ValueError, 'title text ID 10421 is missing'):
+            apply_program_recipe(self.data, {'recipe_edits': [dict(add, columns=[dict(field, title='\x0710421')])]})
+        self.assertEqual(self.data, before)
+        apply_program_recipe(self.data, {'recipe_edits': [add]})
+        self.assertEqual(recipe_state(self.data)[3]['batch'][1].fields[1].title, '\x0710420')
+
+        saved = copy.deepcopy(self.data)
+        insert = {'op': 'insert_column', 'name': 'batch', 'index': 1, 'column': dict(field, title='\x0710421')}
+        update = dict(insert, op='update_column')
+        for edit in (insert, update):
+            with self.assertRaisesRegex(ValueError, 'title text ID 10421 is missing'):
+                apply_program_recipe(self.data, {'recipe_edits': [edit]})
+            self.assertEqual(self.data, saved)
+
+    def test_recipe_reorder_checks_exact_whole_record_release_program(self):
+        from control_factory import primitive_record
+        from mcs_button_control import ButtonArchive
+        from offline_recipe_references import require_recipe_reorder_safe_button
+
+        source = '\n'.join(['!RecipeLoad("Batch")', '!RecipeLoadByDialog("Batch", "Choose")',
+                          'Position=!RecipeGetCurrentPosition("Batch")',
+                          'BatchName = !RecipeGetName("Batch")', '!RecipeGetCurrentValue("Batch")',
+                          'Main.Form.Refresh( )'])
+        cache = bytes.fromhex(
+            '000000000000000000000000'
+            '130500000042617463680701000000020000000100000000'
+            '13050000004261746368130600000043686f6f73650702000000020000000200000000'
+            '1305000000426174636807030000000200000001000000473eaa000000'
+            '13050000004261746368070400000004000000010000003fab000000'
+            '130500000042617463680705000000020000000100000000'
+            '050500000003fefffffffeffffff00000000000000000000000001')
+        variables = {'Position': {'kind': 2, 'id': 170}, 'BatchName': {'kind': 3, 'id': 171}}
+        release = primitive_record('button')
+        button = ButtonArchive.parse(release)
+        button.release_script.value = source
+        button.release_compiled.value = cache
+        release.payload = button.to_bytes()
+        before = release.payload
+        require_recipe_reorder_safe_button(release, 'Batch', {'Main.Form.Refresh'}, variables)
+        self.assertEqual(release.payload, before)
+        for bad in (source.replace('"Batch")\nMain.Form.Refresh', '"Batch",1)\nMain.Form.Refresh'),
+                    source.replace('Main.Form.Refresh', 'Other.Form.Refresh'),
+                    source.replace('!RecipeLoad("Batch")', '!RecipeLoadByNum("Batch",1)')):
+            button.release_script.value = bad
+            release.payload = button.to_bytes()
+            with self.assertRaisesRegex(ValueError, 'Unsupported recipe release call'):
+                require_recipe_reorder_safe_button(release, 'Batch', {'Main.Form.Refresh'}, variables)
+        button.release_script.value = source
+        button.release_compiled.value = cache.replace(b'\xaa\0\0\0', b'\xa9\0\0\0')
+        release.payload = button.to_bytes()
+        with self.assertRaisesRegex(ValueError, 'compilation does not match'):
+            require_recipe_reorder_safe_button(release, 'Batch', {'Main.Form.Refresh'}, variables)
+        button.release_compiled.value = cache
+        button.metadata.properties.press_script.value = '!RecipeGetCurrentValue("Batch")'
+        release.payload = button.to_bytes()
+        with self.assertRaisesRegex(ValueError, 'Another field'):
+            require_recipe_reorder_safe_button(release, 'Batch', {'Main.Form.Refresh'}, variables)
+
     def test_bound_column_transaction_and_undo(self):
         import struct
         import native_format as fmt
@@ -92,6 +165,107 @@ class OfflineProgramRecipeTests(unittest.TestCase):
         apply_program_recipe(self.data, {"recipe_edits": [delete]})
         self.assertEqual([q.columns for _, q in recipe_consumers(self.data, name)], [columns[:2]] * 2)
         self.assertEqual(recipe_state(self.data)[3][name][1].records, [["item"]])
+
+    def test_bound_recipe_reorder_and_type_change_with_display_template(self):
+        import mcgs_file as project
+        import native_format as fmt
+        from control_factory import primitive_record
+        from mcs_plugin_controls import RecipeCore, RecipeColumn, buffer_write
+        from mcs_window_archive import WindowArchive, write_cstring
+        from offline_program_recipe import recipe_consumers
+        from 原生界面样式 import CommonEnvelope
+
+        for family in ("Stu", "Pro"):
+            with self.subTest(family=family):
+                name = "RecordColumnPlan"
+                data = project.create_data({"pages": [{"name": "Main"}], "variables": [
+                    {"name": "RecipeTemperature", "type": "number"},
+                    {"name": "RecipeLabel", "type": "string"},
+                ]}, family)
+                number = {"binding": "RecipeTemperature", "title": "Numeric", "type": 2}
+                text = {"binding": "RecipeLabel", "title": "Character", "type": 3}
+                apply_program_recipe(data, {"recipe_edits": [{"op": "add_group", "name": name,
+                    "columns": [number, text], "records": [["Item A", "12.5", "Alpha"], ["Item B", "23.25", "Beta"]]}]})
+                group = recipe_state(data)[3][name][1]
+                fields = {key: (b"font" if kind == "bytes" else "" if kind == "str" else 0)
+                          for key, kind in RecipeCore.SPEC}
+                columns = [RecipeColumn("", "序号", [3, 1, 2, 0, 4, 5, 6, 7])]
+                columns.extend(RecipeColumn(entry.binding, entry.title, [entry.data_type, i + 90, 0, 1, 2, 3, 4, 5])
+                               for i, entry in enumerate(group.fields))
+                core = RecipeCore(bytes(16) + struct.pack("<I", 22), name, columns, fields)
+                common = CommonEnvelope.parse(primitive_record("rectangle"))
+                common.content = write_cstring("DrawRecipe.ui#配方") + buffer_write(core.to_bytes())
+                control = common.to_record()
+                control.type_id = 0x503d
+                page = data["WndUser"]["rows"][0]
+                window = WindowArchive.parse(fmt.archive(page["lbObjects"]))
+                window.controls[:] = [control]
+                page["lbObjects"] = fmt.wrap_like(page["lbObjects"], window.to_bytes())
+
+                first = copy.deepcopy(data)
+                move = {"op": "reorder_columns", "name": name, "order": [2, 1], "sync_controls": True}
+                with self.assertRaisesRegex(ValueError, "permutation"):
+                    apply_program_recipe(data, {"recipe_edits": [dict(move, order=[0, 2])]})
+                with self.assertRaisesRegex(ValueError, "used on page"):
+                    apply_program_recipe(data, {"recipe_edits": [dict(move, sync_controls=False)]})
+                apply_program_recipe(data, {"recipe_edits": [move]})
+                group = recipe_state(data)[3][name][1]
+                self.assertEqual(group.records, [["Item A", "Alpha", "12.5"], ["Item B", "Beta", "23.25"]])
+                current, = (core for _, core in recipe_consumers(data, name))
+                self.assertEqual(current.columns, [*columns[:2], columns[3], columns[2]])
+                self.assertEqual(current.fields, fields)
+                apply_program_recipe(data, {"recipe_edits": [move]})
+                self.assertEqual(data, first)
+
+                convert = {"op": "update_column", "name": name, "index": 1, "sync_controls": True,
+                           "column": dict(text, title="Converted"), "values": ["New A", "New B"]}
+                with self.assertRaisesRegex(ValueError, "native display settings"):
+                    apply_program_recipe(data, {"recipe_edits": [convert]})
+                with self.assertRaisesRegex(ValueError, "type differs"):
+                    apply_program_recipe(data, {"recipe_edits": [dict(convert, display_template_index=1)]})
+                self.assertEqual(data, first)
+                apply_program_recipe(data, {"recipe_edits": [dict(convert, display_template_index=2)]})
+                current, = (core for _, core in recipe_consumers(data, name))
+                self.assertEqual(current.columns[0:2], columns[0:2])
+                self.assertEqual(current.columns[2], RecipeColumn(text["binding"], "Converted", columns[3].values))
+                self.assertEqual(current.columns[3], columns[3])
+                self.assertEqual(recipe_state(data)[3][name][1].records, [["Item A", "New A", "Alpha"], ["Item B", "New B", "Beta"]])
+
+    def test_loop_and_event_metadata_preserve_both_trigger_archives(self):
+        import mcgs_file as project
+
+        for family in ("Stu", "Pro"):
+            with self.subTest(family=family):
+                data = project.create_data({"pages": [{"name": "Main"}], "variables": [
+                    {"name": "LocalTrigger", "type": "boolean"}]}, family)
+                ident = project.VariableCatalog(data)["LocalTrigger"]["id"]
+                apply_program_recipe(data, {"strategy_edits": [
+                    {"op": "add_loop_strategy", "name": "IntervalTrial", "interval_ms": 251},
+                    {"op": "add_event_strategy", "name": "EventTrial", "variable": {"id": ident, "name": "LocalTrigger"}},
+                ]})
+                before = copy.deepcopy(data)
+                before_rows = strategy_state(data)[2].triggers
+                apply_program_recipe(data, {"strategy_edits": [
+                    {"op": "rename_loop_strategy", "name": "IntervalTrial", "new_name": "IntervalFinal"},
+                    {"op": "rename_event_strategy", "name": "EventTrial", "new_name": "EventFinal"},
+                    {"op": "set_strategy_comment", "name": "IntervalFinal", "comment": "每251毫秒"},
+                    {"op": "set_strategy_comment", "name": "EventFinal", "comment": "只保留原事件开关"},
+                ]})
+                registry = strategy_state(data)[2]
+                self.assertEqual(data["Trigger"], before["Trigger"])
+                self.assertEqual(registry.triggers, before_rows)
+                self.assertEqual({b.fields["name"]: b.fields["comment"] for b in registry.strategies}["EventFinal"],
+                                 "只保留原事件开关")
+                with self.assertRaisesRegex(ValueError, "different native trigger"):
+                    apply_program_recipe(data, {"strategy_edits": [
+                        {"op": "rename_loop_strategy", "name": "EventFinal", "new_name": "WrongTrigger"}]})
+                apply_program_recipe(data, {"strategy_edits": [
+                    {"op": "set_strategy_comment", "name": "IntervalFinal", "comment": ""},
+                    {"op": "set_strategy_comment", "name": "EventFinal", "comment": ""},
+                    {"op": "rename_loop_strategy", "name": "IntervalFinal", "new_name": "IntervalTrial"},
+                    {"op": "rename_event_strategy", "name": "EventFinal", "new_name": "EventTrial"},
+                ]})
+                self.assertEqual(data, before)
 
     def test_synchronized_recipe_rename_retargets_only_verified_consumer_group(self):
         import native_format as fmt
@@ -466,8 +640,7 @@ class OfflineProgramRecipeTests(unittest.TestCase):
 
                 with_body = m.edit_data(copy.deepcopy(data),{"strategy_edits":[
                     {"op":"insert_script_row","name":add["name"],"row":0,"source":"EventSwitch=0"}]})
-                with self.assertRaisesRegex(ValueError,"Only an empty custom Event"):
-                    m.edit_data(with_body,{"strategy_edits":[remove]})
+                self.assertEqual(m.edit_data(with_body,{"strategy_edits":[remove]}),baseline)
                 referenced = m.edit_data(copy.deepcopy(data),{"pages":[{"id":1,"events":{"open":add["name"]}}]})
                 with self.assertRaisesRegex(ValueError,"name reference"):
                     m.edit_data(referenced,{"strategy_edits":[remove]})
@@ -595,6 +768,73 @@ class OfflineProgramRecipeTests(unittest.TestCase):
                     dict(op="set_loop_calendar", name=name, calendar_period="hour", minute=15, second=20),
                     dict(op="delete_loop_strategy", name=name)]})
                 self.assertEqual(data, before)
+
+    def test_delete_nonempty_timed_strategies_preserves_survivors_and_blocks_references(self):
+        import mcgs_file as m
+        import mcgs_recipe_strategy as archive
+
+        loop, event, survivor = "AuditTimedLoop", "AuditTimedEvent", "AuditSurvivingProg"
+        for family in ("Stu", "Pro"):
+            with self.subTest(family=family):
+                data = m.create_data({"variables": [{"name": "AuditSwitch", "type": "boolean"}],
+                                      "pages": [{"name": "Main"}]}, family)
+                before = copy.deepcopy(data)
+                switch = next(row for row in m.f.variables(m.f.archive(m.system(data, "ObjData")["lbContext"]))
+                              if row["name"] == "AuditSwitch")
+                apply_program_recipe(data, {"strategy_edits": [
+                    {"op": "add_loop_strategy", "name": loop, "interval_ms": 1000},
+                    {"op": "add_event_strategy", "name": event,
+                     "variable": {"id": switch["id"], "name": switch["name"]}},
+                    {"op": "add_user_strategy", "name": survivor, "source": "AuditSwitch=0"},
+                    {"op": "insert_script_row", "name": loop, "row": 0, "source": "AuditSwitch=1"},
+                    {"op": "insert_script_row", "name": event, "row": 0, "source": "AuditSwitch=0"},
+                ]})
+                row, system, registry = strategy_state(data)
+                actions = {block.fields["name"]: archive.single_program_action(block)
+                           for block in registry.strategies[-3:]}
+                for index, action in enumerate(actions.values(), 1):
+                    action.fields["compiled"] = bytes((index, 7, 0, 1))
+                row["lbObjects"] = m.f.wrap_like(row["lbObjects"], archive.serialize_strategy_array(registry.strategies))
+                system["lbContext"] = m.f.wrap_like(system["lbContext"], registry.serialize())
+                selected = registry.strategies[-3:-1]
+                removed_ids = {block.fields["tail_words"][2] for block in selected}
+                survivors = registry.strategies[:-3] + registry.strategies[-1:]
+                kept_triggers = [trigger for trigger in registry.triggers
+                                 if trigger.fields["strategy_id"] not in removed_ids]
+                kept_rows = [item for item in data["Trigger"]["rows"] if item["lStgyID"] not in removed_ids]
+                deletions = [{"op": "delete_loop_strategy", "name": loop},
+                             {"op": "delete_event_strategy", "name": event}]
+
+                referenced = m.edit_data(copy.deepcopy(data), {
+                    "pages": [{"id": 1, "events": {"open": f"!SetStgyMode({loop})"}}],
+                    "strategy_edits": [{"op": "set_script", "name": survivor, "row": 0, "cell": 0,
+                                        "index": 0, "value": f"!SetStgyMode({event})"}],
+                })
+                expected_unchanged = copy.deepcopy(referenced)
+                for operation in deletions:
+                    with self.assertRaisesRegex(ValueError, "name reference"):
+                        apply_program_recipe(referenced, {"strategy_edits": [operation]})
+                    self.assertEqual(referenced, expected_unchanged)
+
+                shared = copy.deepcopy(data)
+                other_row, other_system, other_registry = strategy_state(shared)
+                program = archive.single_program_action(other_registry.strategies[-1])
+                other_registry.strategies[-2].fields["rows"][0].fields["cells"][0].fields["actions"][0] = program
+                other_row["lbObjects"] = m.f.wrap_like(other_row["lbObjects"],
+                                                        archive.serialize_strategy_array(other_registry.strategies))
+                other_system["lbContext"] = m.f.wrap_like(other_system["lbContext"], other_registry.serialize())
+                expected_unchanged = copy.deepcopy(shared)
+                with self.assertRaisesRegex(ValueError, "shared with another block"):
+                    apply_program_recipe(shared, {"strategy_edits": deletions})
+                self.assertEqual(shared, expected_unchanged)
+
+                changed = m.edit_data(copy.deepcopy(data), {"strategy_edits": deletions})
+                result = strategy_state(changed)[2]
+                self.assertEqual((result.strategies, result.triggers), (survivors, kept_triggers))
+                self.assertEqual(changed["Trigger"]["rows"], kept_rows)
+                self.assertEqual({key for key in data if data[key] != changed[key]}, {"System", "Stgy", "Trigger"})
+                restored = m.edit_data(changed, {"strategy_edits": [{"op": "delete_user_strategy", "name": survivor}]})
+                self.assertEqual(restored, before)
 
     def test_rename_recipe_and_delete_user_strategy(self):
         for filename in ("blank-project.json", "blank-project-stu.json"):

@@ -146,7 +146,7 @@ class CommonEnvelope:
 class EventDispatch:
     header:bytes
     compiled:ByteArray
-    empty_arrays:bytes
+    argument_arrays:bytes
     event_id:int
     event_name:CString
     kind:int
@@ -155,7 +155,7 @@ class EventDispatch:
     source:CString
     tail_array:ByteArray
     @classmethod
-    def parse(cls,r):
+    def parse(cls, r, *, read_arguments=None):
         start=r.pos
         if not hasattr(r,'event_classes'):r.event_classes={};r.event_next_index=1
         tag=r.u16();large=tag==0x7fff
@@ -173,14 +173,43 @@ class EventDispatch:
         r.event_next_index+=1
         header=r.data[start:r.pos];compiled=ByteArray.parse(r)
         start=r.pos
-        if any(r.count() for _ in range(3)):raise FormatError('Nonempty generic-event argument arrays require separate schema')
+        if read_arguments is None:
+            if any(r.count() for _ in range(3)):
+                raise FormatError('Nonempty generic-event argument arrays require separate schema')
+        else:
+            read_arguments(r, header)
         arrays=r.data[start:r.pos]
         return cls(header,compiled,arrays,r.u32(),CString.parse(r),r.u32(),CString.parse(r),r.u32(),CString.parse(r),ByteArray.parse(r))
     def to_bytes(self):
-        return self.header+self.compiled.to_bytes()+self.empty_arrays+struct.pack('<I',self.event_id)+self.event_name.to_bytes()+struct.pack('<I',self.kind)+self.reserved.to_bytes()+struct.pack('<I',self.unknown)+self.source.to_bytes()+self.tail_array.to_bytes()
+        return self.header+self.compiled.to_bytes()+self.argument_arrays+struct.pack('<I',self.event_id)+self.event_name.to_bytes()+struct.pack('<I',self.kind)+self.reserved.to_bytes()+struct.pack('<I',self.unknown)+self.source.to_bytes()+self.tail_array.to_bytes()
     def set_source(self,source):
         if self.source.value!=source:
             self.source.value=source;self.compiled.value=b'';self.tail_array.value=b''
+
+    def click_identity(self):
+        return self.identity()
+
+    def identity(self):
+        return {'event_type_id': self.event_id, 'event_id': self.kind, 'name': self.event_name.value,
+                'sha256': hashlib.sha256(self.to_bytes()).hexdigest()}
+
+    def is_unparameterized_click(self, native_type):
+        return (self.event_id == native_type and self.kind == 0 and self.event_name.value == 'Click'
+                and not self.reserved.value and self.unknown == 0xffffffff and not self.tail_array.value)
+
+    def set_click_source(self, change):
+        self.set_script_source(change)
+
+    def set_script_source(self, change):
+        before = self.identity()
+        if (not isinstance(change, dict) or change.keys() != before.keys() | {'source'}
+                or type(change['event_type_id']) is not int or type(change['event_id']) is not int
+                or any(change[key] != expected for key, expected in before.items())):
+            raise ValueError(f"Native {before['name']} event preimage differs")
+        source = change['source']
+        if not isinstance(source, str) or not source.strip() or '\0' in source:
+            raise ValueError(f"Native {before['name']} requires a nonempty script without NUL")
+        self.set_source(source)
 
 @dataclass
 class GenericMetadata:
@@ -188,10 +217,10 @@ class GenericMetadata:
     events:list[EventDispatch]
     tail:bytes
     @classmethod
-    def parse(cls,data):
+    def parse(cls, data, *, event_parser=EventDispatch.parse):
         r=Reader(data);start=r.pos;n=r.count();count=data[start:r.pos]
         r.count_extent(n,2,'Generic event')
-        events=[EventDispatch.parse(r) for _ in range(n)]
+        events=[event_parser(r) for _ in range(n)]
         return cls(count,events,data[r.pos:])
     def to_bytes(self):return self.count_raw+b''.join(v.to_bytes() for v in self.events)+self.tail
 
