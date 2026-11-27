@@ -11,7 +11,11 @@
     "wrapper_limitation": "BA2080->BD21C0 always passes confirm1."
   },
   "decision": {
-    "sole_argument_read": [],
+    "sole_argument_read": [
+      {
+        "address": "0xbd6b76"
+      }
+    ],
     "zero_branch": "BD6B7C jeBD6C64 bypasses onlyBD83C0",
     "confirmation_worker": "BD83C0 checks exactmodel+24 refs; if found calls resource56C7/AfxMessageBox(style21), IDOKtrue; no save here.",
     "common_downstream": [
@@ -62,12 +66,8 @@
   ],
   "evidence": [
     {
-      "file": "D:\\unbound-task-root\\extensions\\page\\function-00bd68e0.json",
-      "sha256": "9e17a45c192e57a59f22bf8217e1f44fab016278bad3eceb3ac01ce093af16f3"
-    },
-    {
       "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-rename-bd83c0.json",
-      "sha256": "44e26e54ef47ead7c6d735bf60a43d877cb353188870a559b7ebec88e04b892a"
+      "sha256": "de8552aa547628ef345f16bf961349013718db4ea108d4e85a08feb3fa66b661"
     },
     {
       "file": "D:\\unbound-task-root\\coverage-20261101\\references-view\\headless-rename-mfc-ordinals.json",

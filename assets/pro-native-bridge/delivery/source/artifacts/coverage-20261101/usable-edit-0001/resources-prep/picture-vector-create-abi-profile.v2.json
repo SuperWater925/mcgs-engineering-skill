@@ -342,141 +342,121 @@
       "name": "ListCtor",
       "entry": "0x450844",
       "body": "0x661240",
-      "end_exclusive": "0x661265",
-      "code": []
+      "end_exclusive": "0x661265"
     },
     {
       "name": "ListDtor",
       "entry": "0x43fef4",
       "body": "0x661870",
-      "end_exclusive": "0x661883",
-      "code": []
+      "end_exclusive": "0x661883"
     },
     {
       "name": "ListAddTail",
       "entry": "0x409462",
       "body": "0x782380",
-      "end_exclusive": "0x782397",
-      "code": []
+      "end_exclusive": "0x782397"
     },
     {
       "name": "ListSerialize",
       "entry": "0xf2f948",
       "body": "0xf2f948",
-      "end_exclusive": "0xf2f94e",
-      "code": []
+      "end_exclusive": "0xf2f94e"
     },
     {
       "name": "MemorySeekBegin",
       "entry": "0x40453e",
       "body": "0x46ee10",
-      "end_exclusive": "0x46ee50",
-      "code": []
+      "end_exclusive": "0x46ee50"
     },
     {
       "name": "ImageLoadControlArchive",
       "entry": "0x40df35",
       "body": "0xc5e9f0",
-      "end_exclusive": "0xc5ea37",
-      "code": []
+      "end_exclusive": "0xc5ea37"
     },
     {
       "name": "ImageHash",
       "entry": "0x4374d4",
       "body": "0xc62780",
-      "end_exclusive": "0xc628de",
-      "code": []
+      "end_exclusive": "0xc628de"
     },
     {
       "name": "ImageMakeReference",
       "entry": "0x451c94",
       "body": "0xc635f0",
-      "end_exclusive": "0xc6363e",
-      "code": []
+      "end_exclusive": "0xc6363e"
     },
     {
       "name": "ImageSetReferenceName",
       "entry": "0x4097be",
       "body": "0xc603e0",
-      "end_exclusive": "0xc603fd",
-      "code": []
+      "end_exclusive": "0xc603fd"
     },
     {
       "name": "PictureRecomputeHash",
       "entry": "0xc82800",
       "body": "0xc82800",
-      "end_exclusive": "0xc8281f",
-      "code": []
+      "end_exclusive": "0xc8281f"
     },
     {
       "name": "OriginalVectorConstructorWorker",
       "entry": "0xc68410",
       "body": "0xc68410",
-      "end_exclusive": "0xc68ec4",
-      "code": []
+      "end_exclusive": "0xc68ec4"
     },
     {
       "name": "OriginalCloneIntoCell",
       "entry": "0xc67d50",
       "body": "0xc67d50",
-      "end_exclusive": "0xc68000",
-      "code": []
+      "end_exclusive": "0xc68000"
     },
     {
       "name": "OriginalFrameDeepCopy",
       "entry": "0xc67670",
       "body": "0xc67670",
-      "end_exclusive": "0xc67837",
-      "code": []
+      "end_exclusive": "0xc67837"
     },
     {
       "name": "OriginalNamedImageStore",
       "entry": "0xc5ea40",
       "body": "0xc5ea40",
-      "end_exclusive": "0xc5eac0",
-      "code": []
+      "end_exclusive": "0xc5eac0"
     },
     {
       "name": "OriginalReferenceRegistration",
       "entry": "0xe55980",
       "body": "0xe55980",
-      "end_exclusive": "0xe55be0",
-      "code": []
+      "end_exclusive": "0xe55be0"
     },
     {
       "name": "ObjectListBaseCtor",
       "entry": "0x4538a5",
       "body": "0x661270",
-      "end_exclusive": "0x661293",
-      "code": []
+      "end_exclusive": "0x661293"
     },
     {
       "name": "ObjectListBaseDtor",
       "entry": "0x40cb5d",
       "body": "0x661890",
-      "end_exclusive": "0x6618a3",
-      "code": []
+      "end_exclusive": "0x6618a3"
     },
     {
       "name": "ObjectListMfcCtor",
       "entry": "0xf2f92a",
       "body": "0xf2f92a",
-      "end_exclusive": "0xf2f930",
-      "code": []
+      "end_exclusive": "0xf2f930"
     },
     {
       "name": "ObjectListMfcDtor",
       "entry": "0xf2f942",
       "body": "0xf2f942",
-      "end_exclusive": "0xf2f948",
-      "code": []
+      "end_exclusive": "0xf2f948"
     },
     {
       "name": "ObjectListMfcAddTail",
       "entry": "0xf2f930",
       "body": "0xf2f930",
-      "end_exclusive": "0xf2f936",
-      "code": []
+      "end_exclusive": "0xf2f936"
     },
     {
       "name": "ImageInitializeNamedReference",
@@ -501,7 +481,6 @@
         ],
         "dword1c": 12632256
       },
-      "code": [],
       "does_not_call_make_reference_or_picture_manager": true,
       "requires_exclusively_owned_private_embedded_image": true
     }
@@ -528,7 +507,6 @@
     "existing_catalog_and_both_indexes_must_remain_exact": true,
     "native_global_registration_mode_must_remain_zero": true,
     "old_automatically_added_picture_is_never_deleted_or_reclassified": true,
-    "actual_hash_index_miss_proof_file": "D:\\unbound-task-root\\coverage-20261101\\usable-edit-0001\\resources-prep\\picture-make-reference-hash-index-miss-static-0001.json",
     "actual_hash_index_miss_proof_sha256": "c13ce0e9db1cdf6be1ea6293ec35ac57b740941090a919a7c4bd774d775e35d9"
   }
 }

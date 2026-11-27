@@ -37,32 +37,28 @@
       "rva": "0x27327",
       "length": 5,
       "bytes": "e934863f00",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "SliderFillPrimary18",
       "rva": "0x41f960",
       "length": 33,
       "bytes": "558bec51894dfc8b45fc8b4d088988940000008b4dfce84c52c0ff8be55dc20400",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "CommonNotifyThunk",
       "rva": "0x24bc7",
       "length": 5,
       "bytes": "e924bd3f00",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "CommonNotify",
       "rva": "0x4208f0",
       "length": 30,
       "bytes": "558bec51894dfc8b45fc506a016a008b4dfc8b4964e878e670008be55dc3",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "UpdateAllViewsImportThunk",
@@ -71,16 +67,14 @@
       "bytes": "ff25988d3c01",
       "reloc_offsets": [
         2
-      ],
-      "instructions": []
+      ]
     },
     {
       "name": "DrawingViewOnUpdateThunk",
       "rva": "0x26bc",
       "length": 5,
       "bytes": "e98f9e5900",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "DrawingViewOnUpdate",
@@ -91,16 +85,14 @@
         31,
         287,
         293
-      ],
-      "instructions": []
+      ]
     },
     {
       "name": "DrawingViewHint1Thunk",
       "rva": "0x2dabf",
       "length": 5,
       "bytes": "e9acbf5600",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "DrawingViewHint1InvalidateObjectAndDependentViews",
@@ -115,8 +107,7 @@
         138,
         170,
         175
-      ],
-      "instructions": []
+      ]
     }
   ],
   "mfc": {
@@ -132,8 +123,7 @@
         "rva": "0x2004ec",
         "length": 65,
         "bytes": "558bec51568bf18b06ff50708945fc85c074298b068d4dfc518bceff50743b45087413ff75108b10ff750c8bc8ff7508ff929c010000837dfc0075d75ec9c20c00",
-        "reloc_offsets": [],
-        "instructions": []
+        "reloc_offsets": []
       }
     ]
   },
@@ -152,8 +142,7 @@
         "reloc_offsets": [
           41,
           184
-        ],
-        "instructions": []
+        ]
       },
       {
         "name": "SliderFillFilledRegionAllBranches",
@@ -191,8 +180,7 @@
           1281,
           1308,
           1338
-        ],
-        "instructions": []
+        ]
       },
       {
         "name": "CommonDeserialize",
@@ -201,8 +189,7 @@
         "bytes": "5589e557565383ec5c8b5d08894dcc85db0f84de0300008b7dcc89d98b03c744240401000000c7442408000000008d577c891424ff500c83ec0c84c00f84b30300008b038d75e089d9c745e000000000c745e400000000c744240404000000c744240800000000893424ff500c83ec0c84c00f847d0300008b038d55e489d9c744240404000000c744240800000000891424ff500c83ec0c84c00f84550300008b55e08b4de489d0c1e8106631c909c880e6018987d00000000f85480300008b75cc89d98b03c744240410000000c7442408000000008d565c891424ff500c83ec0c84c00f840b0300008b038d55da89d9c744240402000000c744240800000000891424ff500c83ec0c84c00f84e30200000fb645da89d98b75cc668945da8946448b038d5648c744240410000000c744240800000000891424ff500c83ec0c84c00f84ad0200008b75cc8b4654890424e87ad3ffff8946548b464883f805740f83f801760a8b45ccc74048000000008b038d55da89d9c744240402000000c744240800000000891424ff500c83ec0c84c00f845d0200000fb645da89d98b75cc668945da8946588b038d566cc74424040c000000c744240800000000891424ff500c83ec0c84c00f84270200008b75cc8b4670890424e8f4d2ffff8b8e8400000089467031c085c97e2d8b75cc895d0889c38b96800000008b0c9a83c3018b11893424ff521483ec04399e840000007fe18b5d088975cc8b038d55da89d9c744240402000000c744240800000000891424ff500c83ec0c84c00f84b50100000fb745da8d7dda89d98b75cc8946248b03c744240402000000c744240800000000893c24ff500c83ec0c84c00f848301000066817ddacdcd0f84fc010000a1d85502648d4ddc891c248945dce8ff80ffff84c0520f843c0100008b75cc8d45dc8904248d8eb0000000e80a81ffff508b0389d98d561cc744240404000000c744240800000000891424ff500c83ec0c84c00f84ff0000008b038d562089d9c744240404000000c744240800000000891424ff500c83ec0c84c00f84d700000089f031d28b75cc83b884000000007e268b86800000008b0c9085c9740b8b018955d0ff50048b55d083c2013996840000007fdd8975cc8b75ccc7442404ffffffff",
         "reloc_offsets": [
           639
-        ],
-        "instructions": []
+        ]
       },
       {
         "name": "SliderFillDeserializeAllBranches",
@@ -216,8 +203,7 @@
           232,
           264,
           272
-        ],
-        "instructions": []
+        ]
       },
       {
         "name": "QtRgbToGbr",
@@ -226,8 +212,7 @@
         "bytes": "8b54240489d189d0c1e9102500ff00ff0fb6c90fb6d209c8c1e21009d0c390905589e557565383ec2c8b5d0889d9ff15505802648b45108b55108b4d0cc1f81f",
         "reloc_offsets": [
           48
-        ],
-        "instructions": []
+        ]
       }
     ],
     "read_contract": {
@@ -266,8 +251,7 @@
       "rva": "0x285ab",
       "length": 5,
       "bytes": "e940174d00",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "SliderSerializeWrapper",
@@ -290,8 +274,7 @@
         642,
         698,
         754
-      ],
-      "instructions": []
+      ]
     },
     {
       "name": "CommonSerialize",
@@ -303,8 +286,7 @@
         25,
         1877,
         1893
-      ],
-      "instructions": []
+      ]
     },
     {
       "name": "SliderSerializeOwnedFields",
@@ -331,24 +313,21 @@
         1101,
         1117,
         1207
-      ],
-      "instructions": []
+      ]
     },
     {
       "name": "SliderDeclaredGetter",
       "rva": "0x4fbc10",
       "length": 381,
       "bytes": "558bec83ec20894dfc8b45fc83e80474088b4dfc894df8eb07c745f80000000068ff0000008b55fc8b8244010000506a048b4df8518b550852e8263fb5ff83c4148b45fc83e80474088b4dfc894df4eb07c745f4000000008b55fc81c284010000526a0d8b45f4508b4d0851e841a6b4ff83c4108b55fc83ea0474088b45fc8945f0eb07c745f00000000068ff0000008b4dfc8b915c010000526a088b45f0508b4d0851e8bb3eb5ff83c4148b55fc83ea0474088b45fc8945eceb07c745ec000000008b4dfc81c19c010000516a218b55ec528b450850e891f2b1ff83c4108b4dfc83e90474088b55fc8955e8eb07c745e8000000008b45fc05b0010000506a208b4de8518b550852e85ff2b1ff83c4108b45fc83e80474088b4dfc894de4eb07c745e4000000008b55fc81c2a8010000526a228b45e4508b4d0851e82cf2b1ff83c4108b55fc83ea0474088b45fc8945e0eb07c745e0000000008b4dfc81c1ac010000516a238b55e0528b450850e8f9f1b1ff83c4108be55dc20400",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "SliderDeclaredSetter",
       "rva": "0x4fbb40",
       "length": 201,
       "bytes": "558bec51894dfc8b45fc0544010000506a048b4d0851e8d1c8b0ff83c40c8b55fc8b82440100000d000000018b4dfc8981440100008b55fc81c284010000526a0d8b450850e86596b1ff83c40c8b4dfc81c15c010000516a088b550852e88ac8b0ff83c40c8b45fc059c010000506a218b4d0851e84d1ab2ff83c40c8b55fc81c2b0010000526a208b450850e8351ab2ff83c40c8b4dfc81c1a8010000516a228b550852e81d1ab2ff83c40c8b45fc05ac010000506a238b4d0851e8061ab2ff83c40c8be55dc20400",
-      "reloc_offsets": [],
-      "instructions": []
+      "reloc_offsets": []
     },
     {
       "name": "SliderConstructorAllOwnedMembers",
@@ -364,8 +343,7 @@
         217,
         232,
         247
-      ],
-      "instructions": []
+      ]
     }
   ],
   "limitations": [
@@ -416,7 +394,6 @@
         19,
         58
       ],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -425,7 +402,6 @@
       "length": 109,
       "bytes": "558bec83ec085657894dfc837d08007d24e848e19dff8b80200500008b880c020000894df88b55f88b028b4df88b5054ffd28945088b750c8d4508508b4dfc83c110e85e0d9effb9170000008bf8f3a50fb64d1085c9740d8b55fc8b028b4dfc8b5018ffd25f5e8be55dc20c00",
       "reloc_offsets": [],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -437,7 +413,6 @@
         6,
         24
       ],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -448,7 +423,6 @@
       "reloc_offsets": [
         10
       ],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -461,7 +435,6 @@
         21,
         119
       ],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -470,7 +443,6 @@
       "length": 11,
       "bytes": "558bec8b450883c0105dc3",
       "reloc_offsets": [],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     },
     {
@@ -481,7 +453,6 @@
       "reloc_offsets": [
         10
       ],
-      "instructions": [],
       "scope": "Static normal body through final observed ret; invoked by original font code, not this adapter"
     }
   ],

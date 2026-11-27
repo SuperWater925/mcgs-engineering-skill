@@ -2,7 +2,7 @@
   "schema": 1,
   "reviewer": "static_interface_inventory",
   "status": "static_candidate_plan_control_flow_review_passed_not_runtime_validated",
-  "plan_sha256": "6f032b190f7b7c2700735658c1f77bbab401931fb596521138baa7d1ec97230c",
+  "plan_sha256": "544f9f590f9e697adb842b04126c4a1db4cde0a2b71addcc94755e02493d24c4",
   "checks": [
     "Only actual BD68F0..BD6F37 function is analysed; neighboring functions in the bounded dump have separate argument reads/returns and are excluded",
     "Third business argument low byte atEBP+10 has one read, BD6B76;zero jumpsBD6C64 past the confirmation/check/cancel-error UI branch",

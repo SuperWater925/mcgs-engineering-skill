@@ -50,6 +50,8 @@ pwsh -NoProfile -File scripts/check_powershell.ps1
 
 `--update-manifest`只更新文件指纹清单，不修复代码或文档。更新后仍需运行默认检查。CI 使用同样的静态检查，不连接设备、不运行工程、不调用厂商软件；原厂编译状态另行记录。
 
+公开源码和技能 ZIP 只交付在线定位、校验和业务调用实际消费的结构化数据。逐条反汇编正文及研发期控制流取证留在本地验证资料。Pro 定位目录保留跨构建匹配所需的规范化签名和传递标记。CI 扫描源码和技能 ZIP，包括压缩目录。构建小更新后也运行 `python scripts/audit_public_content.py --update-zip <增量ZIP>`。增量仍复用用户已有完整包中的安装介质。
+
 按改动范围补充验证：
 
 | 改动 | 至少提供的结果 |

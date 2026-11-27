@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "self_excluded": true,
-  "file_count": 683,
-  "descriptor_sha256": "26b3a60340f90c91ef56a5ccc3e490d4149b8880363eb4836f57ec715a2d8a81",
+  "file_count": 668,
+  "descriptor_sha256": "6f2028485077d97e57075d80110544eb135a1d9d9bc7c92a2026a7223dbb47ba",
   "files": [
     {
       "file": ".gitattributes",
@@ -36,8 +36,8 @@
     },
     {
       "file": ".github/workflows/offline-checks.yml",
-      "bytes": 2924,
-      "sha256": "e06786e05a8ece2facb3fde6bac280e14b7f787a7465937c756aedf969e43dc0"
+      "bytes": 3300,
+      "sha256": "67fa9c8931ddf559ca3dd93d052dfed2e548aa2043867cb037d2dc16a3b7d4de"
     },
     {
       "file": ".gitignore",
@@ -201,8 +201,8 @@
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/reference.json.gz",
-      "bytes": 2979579,
-      "sha256": "ea6e86c036220d2aa9bd2e20bc5f338b3d651a19a5589fd7e22d9fd5875b6e56"
+      "bytes": 2979570,
+      "sha256": "1acecc1435a6cc6b6f4f899434b6bc332b8a14687f73d3ecdeaa7c94357929e2"
     },
     {
       "file": "assets/pro-native-bridge/abi-adapter/catalogs/source-addresses.json",
@@ -491,8 +491,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/controls/button-action-layout-proof.json",
-      "bytes": 2258,
-      "sha256": "b0a3007c8ba8ae9f473c8419337f09abd5c3f511e713ece12a3a3f73fef399fb"
+      "bytes": 1926,
+      "sha256": "69c63105ae3252cb1820ed75d3f8b6f33929b68366f844cd3fc615a0f35a7250"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/controls/button-edit-metadata-static-0001/button-edit-metadata-condition-data-guards.json",
@@ -512,27 +512,22 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/controls/button-reference-read-profile.json",
       "bytes": 9665,
-      "sha256": "298328bd73c6bc9d8806c89c4a6917525e6fe02b4b013ed9bfeb1ec40e8edb88"
+      "sha256": "c225bb3c6e0a32cbef4b18a1e79d4fe2c6efec7cf28b2b38130ed5f6d9beb9d8"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/controls/installed-control-abi-inventory.json",
-      "bytes": 47156,
-      "sha256": "3db4d5362d2c1a9c344f630d7ed7e79b42051c0723b5ecc54f9cdd99f6fba2fe"
+      "bytes": 43433,
+      "sha256": "0418175f0c8c19b607099c99720b926f74cb76c4af1d7d950d18941df85dd01f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/headless-run-0001/field60-raw-rpm-profile.json",
       "bytes": 19893,
-      "sha256": "825b76f062d8b0c84c27fbb08437c91fff3409714778a52ff4a5e3bd43b1f729"
+      "sha256": "93803773a9520397b8c82c19425730ee3a6356c000ab507468b23f3c086e673f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/headless-run-0001/headless-reference-rename-abi-profile.json",
       "bytes": 15216,
-      "sha256": "20f22854db96c49c4ec0310469ba59847f3e0fb7f1d533109e38df8cee154db7"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-current-app-global-instance-initializer.json",
-      "bytes": 199,
-      "sha256": "e80fae203dc1ac135c2ec4592f826e3b62d1810b282aa5a8756d8379dde7f2b2"
+      "sha256": "8c2de866700aa57378fc7b226ee943a59d6f611df3c6261aa9f184f459fb6347"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-current-app-static-vtables.json",
@@ -540,39 +535,14 @@
       "sha256": "c38040bb52718fe265c38ec86340c80b5d6dbe805e1ba9569f9667f0632f79bd"
     },
     {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-module-state-first-return-static.json",
-      "bytes": 942,
-      "sha256": "db55b9dce0cbe25a6054acd8e4e77ba15cec1a76545aabefdba1f9ca0e6d9322"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-module-state-global-fallback-static.json",
-      "bytes": 167,
-      "sha256": "c7cc75dc5dc695ad1ace9f31ee802b681efe3a61235d8cf0eb2f8572fcc68025"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-module-state-nonlazy-branches-static.json",
-      "bytes": 248,
-      "sha256": "d505cfcda4c9ba7ed0992d0da80f0b584265795c962c53ae49932d6a4b37111e"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/afx-module-state-storage-static.json",
-      "bytes": 167,
-      "sha256": "b4c664a52b1b2c4e5a8a16924650d5f3ef3c0393ce757ac6ca3617804f18df05"
-    },
-    {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/native-trace-preparation/native-root-global-read-profile.json",
-      "bytes": 4035,
-      "sha256": "c363c5c6d58bf8ae9d1bcdfba3cb994f9d8de16dbe393252a6694a71ba557f0a"
+      "bytes": 3231,
+      "sha256": "c926f761ee4a09bfc00e34f24daaaaf2099891a65756bef782fe7ad1102f7601"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cached-schema-output/label-metadata-cached-schema-profile.json",
       "bytes": 20612,
       "sha256": "4ee8958e79dc40e51f0d41671bcd9941d4f2a321cdeee948a2c4f2d9bdc7b6a0"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cold-init/cold-key-complete-functions.json",
-      "bytes": 151827,
-      "sha256": "9e4a0306addbada60d2c1b6069a8352b855e9f6498a7e1021abae7ad0e8ba3d6"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cold-init/cold-key-exact-constructor-data.json",
@@ -581,18 +551,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cold-init/cold-key-initialization-profile.json",
-      "bytes": 68274,
-      "sha256": "559c3494c65f2ca389571b02d9a60980186b210bcdd72a56c60533962148d1fd"
+      "bytes": 68032,
+      "sha256": "c54ec9a320167e93b74a0847a0b74735fca50195399895a601c7e9a59fafcb07"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cold-init/cold-key-map-layout-supplement.json",
-      "bytes": 15289,
-      "sha256": "53442556577da1718d989214c5ea920f38a21736e11f3f7e3a502e2d92f04dce"
+      "bytes": 14852,
+      "sha256": "aa7ee9a08cbe250ad89df075dca49db7a7a11ed2f58b57543d7d4533a3d165e5"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/cold-init/engine0042-import-and-component-guards.json",
       "bytes": 6854,
-      "sha256": "76b0e50a0b545a6bedfae702347b31d29b42fa145b442ef3f71f1d012ef103b3"
+      "sha256": "27ca37b8ce1b678da5404bd906ff2e1da923a55a3fcae56247861d568745e1b5"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-metadata-0001/label-metadata-native-profile.json",
@@ -601,38 +571,23 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/generic-map-destruction-normal-cfg-0002.json",
-      "bytes": 146732,
-      "sha256": "129b5613543973a7ff21a0d51db37678428fadda33a6ee946072b13a25032e20"
+      "bytes": 137272,
+      "sha256": "fb0982d014d8a874a96f3664a8b265596994d231442186a0110b8e4b550f1aeb"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/global-json-cached-label-read-profile.json",
-      "bytes": 6457,
-      "sha256": "ef45d729cac8cb25b6297f00c551062b68735a0fc456503826eba9e0af26bd35"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/json-service-cold-static-functions.json",
-      "bytes": 2478,
-      "sha256": "484d3cc594c7ddc236b8c9357748f90f6bfbc390b351c064295a64c6db1a9fe0"
+      "bytes": 6354,
+      "sha256": "505d4531f2140594362808f16505a19f10274a29ec197b4675bf0c5426d323b6"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/json-service-raw-read-profile.json",
-      "bytes": 7951,
-      "sha256": "bf09fd5a7cd824989bca68fedbde1a8894d3dc4ad1ac0455fb86d928fe5b0e0e"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/review/global-json-type-cache-key-composition-static-0001.json",
-      "bytes": 9341,
-      "sha256": "d72a5396c2069322561b642887fb124688edde85a26deebb3fb72d6c46ebb2c8"
+      "bytes": 7783,
+      "sha256": "4ee7aa3bba378508e336c12161358c6869400d71d165e97ff6122fef8c6400af"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/review/pm-aux-map-static-closure-0001.json",
-      "bytes": 38424,
-      "sha256": "05fabae738304041291e6d295d5c30e955cb631d05017277bd9e892a421d75f3"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/review/pm-owner-inner-map-layout-static-erratum-0001.json",
-      "bytes": 26980,
-      "sha256": "9ddc2bbc3cb0c806a04863fa9ecf2f4af91ab9b4d85aab61819b36b021f3efe0"
+      "bytes": 114638,
+      "sha256": "c41fa770d1fdc05987980399f9d2b2b54be721a95f131582af69f09e627b6e01"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/review/prepare_pm_aux_map_closure_0001.py",
@@ -642,12 +597,12 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/scalar3-helper-glue-profile-0001.json",
       "bytes": 2202,
-      "sha256": "ff8f2689c7780606804d964215ec89ac44ed0b0909403c53973ced8587437d08"
+      "sha256": "ea157ddd0d6150c57a89ecf977545b80056c7dc4b7ea365f15d46eeaeded6588"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/properties-values-0001/scalar3-native-owned-candidate-profile-0001.json",
       "bytes": 73257,
-      "sha256": "150c96fa2020b43e7127f7b551640037d5ff8bae0884d5ac6d4d8af4c98438b9"
+      "sha256": "8707265aa80476cb5a5238209456599608c2204caed4dc9c6a9604c0874ceffa"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/audit_reference_rename_persistence.py",
@@ -657,17 +612,17 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/headless-referenced-rename-plan-independent-review.json",
       "bytes": 1685,
-      "sha256": "3b860856ea33c5e0a1ea44d0bea92b0cfb20dac04762fcaad67b343388d46f5d"
+      "sha256": "51e8fba2109eb951976334b0cca3f37cd1c434dc4e89668dbf7458fe81cce2b6"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/headless-referenced-rename-static-plan.json",
-      "bytes": 3874,
-      "sha256": "6f032b190f7b7c2700735658c1f77bbab401931fb596521138baa7d1ec97230c"
+      "bytes": 3748,
+      "sha256": "544f9f590f9e697adb842b04126c4a1db4cde0a2b71addcc94755e02493d24c4"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/headless-rename-bd83c0.json",
-      "bytes": 1103,
-      "sha256": "44e26e54ef47ead7c6d735bf60a43d877cb353188870a559b7ebec88e04b892a"
+      "bytes": 1088,
+      "sha256": "de8552aa547628ef345f16bf961349013718db4ea108d4e85a08feb3fa66b661"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/headless-rename-mfc-ordinals.json",
@@ -686,8 +641,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/mainctrl-doc-save83-full.json",
-      "bytes": 287,
-      "sha256": "a7627a08a17f89d000ec6f6d5afa4b5d02f23373b15734dd359fc3fa78f4a191"
+      "bytes": 272,
+      "sha256": "14279f1d710e90cf1ad83b990a0e6647fbbc76bb2da102b5351cbe05697f5e39"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/mainctrl-persistence-abi-profile.json",
@@ -696,23 +651,23 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/mainctrl-recordset-specific-methods.json",
-      "bytes": 384,
-      "sha256": "8e9c966a03ced90f403c0b93c86844f226b8c17ea5e2ab697ab9beb08c9b9cff"
+      "bytes": 316,
+      "sha256": "b01142a658c3a9a6512ec0a4ca5f56031194d59e1701b5f859844c20c3067d1e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/mainctrl-restoration-guard.json",
       "bytes": 2682,
-      "sha256": "e3fb0db9ee33dc7fa206c7f808716190f1e5f6757d5c7e0c69d91f64f2b4229a"
+      "sha256": "c179fadd0de2b6e41483460e0d5debe69317d9cd9b4126c3cf540eea64f4b2d8"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/page-doc-save83-linear.json",
-      "bytes": 155,
-      "sha256": "7524c4ffc703dfa1ef6ac6e32d6c5459fbd485fa15a9e5467787c8a7b247275c"
+      "bytes": 140,
+      "sha256": "b998b548ff312e501d136ede79e32b9302a136253d0b9ebf0e6a5158e79039bd"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/password-empty-string-and-gate-proof.json",
-      "bytes": 3732,
-      "sha256": "d20f071ae3ab5473575b7a6ea014ab1c628e9e308d17b14e05938124567f7a09"
+      "bytes": 14714,
+      "sha256": "e13fb906571280ccc18946edeb7870264c3b6c1a6028086e985cdeb079cd424b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/references-view/reference-rename-abi-profile.json",
@@ -727,12 +682,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/state-reproduction-run-0001/headless-reference-rename-abi-profile.json",
       "bytes": 15216,
-      "sha256": "20f22854db96c49c4ec0310469ba59847f3e0fb7f1d533109e38df8cee154db7"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-array-name-generator-static-0001.json",
-      "bytes": 28124,
-      "sha256": "50c297b1af9349bc57e8a483b37e9f043e0cefc6b2939c4840ac7ecc81d58400"
+      "sha256": "8c2de866700aa57378fc7b226ee943a59d6f611df3c6261aa9f184f459fb6347"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-batch-scope.json",
@@ -741,8 +691,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-array-abi-profile.json",
-      "bytes": 5151,
-      "sha256": "6e955ccf1c618ecd2a04d3fb0834f6635ddfc22a76aa38657a43028594bd3279"
+      "bytes": 4969,
+      "sha256": "555d7aff754ca2877be98fe6ee36e1cd1e91647e49c45224a2121bd37ef9a03a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-array-static-proof.json",
@@ -752,17 +702,17 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-delete-abi-profile.json",
       "bytes": 850,
-      "sha256": "260e9edfdd907ad5dd1721a85c4f3a93b748e399a9ef9587bff9f0dc99b75fb3"
+      "sha256": "25cc10ab49a48637e38c2dcfda43533e1361177e31e00f5d36edbb7593b737ba"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-group-delete-static-source.json",
-      "bytes": 7171,
-      "sha256": "b6b5428ca3d8038b166a64e946e055713c8e63b83a07f70d51bb56a0c707610d"
+      "bytes": 7154,
+      "sha256": "7621f601d55f053de054860197246e5c3309a13f2bf998b82783e3f8179b6196"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-prototype-owned-editing-abi-profile.v4.json",
       "bytes": 20703,
-      "sha256": "fe056c79f983e0e341fc8605b6b954f5401009e881fa0ebbe4a3f46456f2082f"
+      "sha256": "4cfa816b30c95fd427020b9abf78bfee1418a3743d08246048acf3141d7fa508"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-native-abi-profile.json",
@@ -772,7 +722,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/data-recipe-referenced-rename-scope.json",
       "bytes": 1048,
-      "sha256": "a206c5bc205e84da344627ed937fd805816fde22315f919f308e5287fb959755"
+      "sha256": "14c9c2687306fd79837610c19041233da17429377a3149fc064a0062fc34f6bb"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/add-driver-prep/device-installed-driver-add-abi-profile.json",
@@ -786,18 +736,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-native-owned-list-abi-profile.json",
-      "bytes": 20484,
-      "sha256": "14d786b30595b689b43f09eec7a7b95f8c7ba79650181e6cc135578dac0712a1"
+      "bytes": 20351,
+      "sha256": "44e41f6087d2c8070de18a0c82f0638fa8378e0a1b621af09b535aad20fa311d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-original-selector-set-abi-profile.json",
       "bytes": 15762,
-      "sha256": "25f60f4a373727d172b1b234da95c254c477efe989e657da4bd95f66410509f8"
+      "sha256": "061e3dcafa90551f5c6f2677df62ab42b08440bbe0886357fd539d044165fb13"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/alarm-typed-specification-abi-profile.json",
       "bytes": 15793,
-      "sha256": "c7214e8dacd85aa4e95df73684108bb3b3384571eef4e5b75f8644a38aa1e8f1"
+      "sha256": "10082330ccccb1bbb8eee9e8f1eda88a98567c7678ccbc71f19cdbae3e9d12ad"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-driver-properties-abi-profile.json",
@@ -842,7 +792,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/device-reference-aware-rename-scope.json",
       "bytes": 1084,
-      "sha256": "b09053525cc55bfda7154a73362ccb5c067522e13e98c211ec4296b00f6ca79e"
+      "sha256": "9b4b9ca9721094ac9f40926f17de0921105eb9cc6d9f214cbb54d30132c7e396"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/data-recipe-device-prep/devices/h5u-native-store-empty-string-profile.json",
@@ -871,8 +821,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/native-project-check-prep-0001/native-full-project-check-static-entry-evidence-0001.json",
-      "bytes": 33873,
-      "sha256": "df371a747ee2e6051710e7efb830ae3befc1060e34d1ba2504756dbb7a29b7ce"
+      "bytes": 67783,
+      "sha256": "da1cf174286c38f8ae335b3b0d76988694d4070c28a112edf29a6f8fc35d201b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/button-actions-abi-profile.json",
@@ -882,7 +832,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/button-actions-abi-profile.v2.json",
       "bytes": 7307,
-      "sha256": "d0881dd58ae05f29561be29cb8b93ae75abd1c52fee727c70cffd8f0b48f5590"
+      "sha256": "29d584717dfffc4d71e6604f67ea9beb2d8e1d0fdb73540b49db1e24be5174c1"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/button-actions-native-static-proof.json",
@@ -891,8 +841,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/button-string-array-fix/button-string-array-static-proof-0001.json",
-      "bytes": 7260,
-      "sha256": "0e61b55ba3ac752e40e8f0dcdea1a64e6487b8651d193ace7b8f1ffe544ebfe8"
+      "bytes": 7171,
+      "sha256": "c31766aa4b795c53ac5290cead41f25ce79f1d86d73fe5eb30f46c66add61040"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/contained-control-image-members-abi-profile.json",
@@ -932,7 +882,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/complex-control-prep/reference-sync-abi-profile.json",
       "bytes": 26619,
-      "sha256": "e9fe9088851daaff12d467d2e46e0c17c40658e6804881e6ac76692a14d76622"
+      "sha256": "1316a513e76039066ef72e7434dd7b883f711db6f27fe18062d8a4213cd82eea"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/control-event-owner-type-native-caller-erratum.json",
@@ -972,12 +922,12 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/current-template-control-abi-profile.v2.json",
       "bytes": 698996,
-      "sha256": "094a8f07100d8c14b59274d220ff825b70f6cff27348f6a833b198a66478abe0"
+      "sha256": "3ad5b03872897a6a5313fc06d354a6cb41123cc576598e18a242c18a35e0f1ca"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/drawing-command-abi-profile.v2.json",
-      "bytes": 101171,
-      "sha256": "d5af6dc32a7eba5aecc04a8b482e971625f1d4b14901386b4396c66049e55cf3"
+      "bytes": 100835,
+      "sha256": "5676844d86c1dea0cb45a5309f9d259b82fdfbc7150642dadd451392b0c58246"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/event-argument-text-copy-and-derived-bindings-static-proof.json",
@@ -1002,7 +952,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/language-management-prep/language-management-abi-profile.v2.json",
       "bytes": 6884,
-      "sha256": "835ae892e61826da2357d74465990d1f95230e7d63f8785f11802349bffaecab"
+      "sha256": "d9b5a48f0157d961d8aafcd96b8cc34382cdcca8d73d5d4919b258fd22084f4b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/language-management-prep/language-selector-abi-profile.json",
@@ -1011,28 +961,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/linguist-editing-abi-profile.json",
-      "bytes": 7590,
-      "sha256": "32ca87912700b5d7f4aa5523aedb18bc59ae50a8fee813904a452dcf6b24a224"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/linguist-editing-static-proof.json",
-      "bytes": 5441,
-      "sha256": "6f977a0510be96ef09430d18913a20eb7ef66b3dbb4fda06748992d32b7dc480"
+      "bytes": 7496,
+      "sha256": "81a210a950d9c2e53c49cf9f41566ed1d0a8f77867034cf3e05c12b0464f5d2e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/linguist-open-view-refresh-abi-profile.json",
-      "bytes": 1780,
-      "sha256": "32bb1724b19585aef8a31e1fa3c82da8edef0f07f419abc1ad7b37a70eaf02ab"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/linguist-open-view-refresh-static-proof.json",
-      "bytes": 1975,
-      "sha256": "fd5f5ba3845ceca82760f5a866c6a6c75461d33826cc7da7843065b4b5e4a84b"
+      "bytes": 1686,
+      "sha256": "3e9be5d50766c19a05affb8dfe182eb31c75c025766b1bf84d345303e7597d79"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/native-control-placement-factory-abi-profile.v3.json",
-      "bytes": 345908,
-      "sha256": "e31929a7092f9b9d726130879ebde4bee7ae1660c4b04b71eebf7187d7f2d3d2"
+      "bytes": 342062,
+      "sha256": "e1361a8d83ca1d48bc70417f462f3b072d43789278dadce383428cdc9c4e633e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-document-properties-abi-profile.json",
@@ -1052,7 +992,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-definitions-abi-profile.json",
       "bytes": 16251,
-      "sha256": "967afb93b658d637ace5194c41d2046c0494a521ff33d67b3f5c03959ea66f90"
+      "sha256": "cdf4b64609858684b4353a358a853c065b363e6271086338da7c0698a9ed500a"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-definitions-installed-declarations.json",
@@ -1066,23 +1006,13 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-list-abi-profile.v4.json",
-      "bytes": 4108,
-      "sha256": "b39e4cabc62d457a63b9f8372c91ad4bc2873a670978ad5bcaf3c3429ae9aee5"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-list-static-proof.json",
-      "bytes": 2370,
-      "sha256": "b214259d20a66e122119ef9c45fc16e405d3b2467f6fbf03475cabf8337ba760"
+      "bytes": 4014,
+      "sha256": "2d4eb7e51a69a8f6649b0ac86fbf4770ba30830919fa8403d45081420cd8381e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-source-abi-profile.json",
-      "bytes": 2485,
-      "sha256": "da3bd4935b3048baac7c5684aa17462e272a762437d7ee0f3bba607b9a2047d2"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-event-source-static-proof.json",
-      "bytes": 2489,
-      "sha256": "7e55e5b0967e05d3ceb65f0d7c8cbf4feb1fe0090fb87c17a9f82c97d52dbe73"
+      "bytes": 2391,
+      "sha256": "17a30ea9b76b95d052b7fee047f1f6cf59d4ff3336c9db5800382eb0e7173e1c"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/page-name-cache-abi-profile.v3.json",
@@ -1097,42 +1027,37 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/reference-graph-and-rename-abi-profile.json",
       "bytes": 23717,
-      "sha256": "25c70a53d4462a9aff06517a3c7aa476fd5b2e20970b66c1b2667b2efd481637"
+      "sha256": "3a49f0579485d7fb1f08c8698e1392dce72b765f3d30e0367996519f7a64b542"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/reference-prog-compiler-prep/reference-prog-compiler-contract.json",
       "bytes": 1134,
-      "sha256": "5f7b747b55e30b5fb5c9de0f60c96a04ae5fcfe59226d4fea9f4ed3adb13d1d4"
+      "sha256": "dda528b892e4a196cca05a08c117c1673520784ba18c6386f4d4f0a83c5798b7"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/page-control-prep/slider-fill-visual-abi-profile.v4.json",
-      "bytes": 34525,
-      "sha256": "8bb33cb6750c1785167b31395a5d57cea1cab6d22ee0696751465cf7b485006c"
+      "bytes": 33730,
+      "sha256": "147ceb6e584c0da8654e2689f513a6f580d392e7bd52e95bc2c6bed4ab709b9b"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/performance-prep/prog-original-generate-trim-static-proof-0001.json",
-      "bytes": 3494,
-      "sha256": "f32a8fba632ad314e4a46e7b027aa758242d30710435e3164324829bfdfb77c3"
+      "bytes": 3386,
+      "sha256": "2aa2e1b288d36343369e20de11b0c6e11b66b3a8f6be9fab9ac70bbe541c889f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/performance-prep/rootadd-prog-empty-compile-static-0001.json",
-      "bytes": 3271,
-      "sha256": "0b6a5997be88a0f33bdbdfbbd58b75595a77d8945314c8ecd04291e0e218c4b0"
+      "bytes": 2893,
+      "sha256": "4d59d1bc47ff20b81b70b126b63a8093d4265de22216a5b355c3ea5c7abdd147"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/project-services-prep/domain-project-check-0001/project-check-domain-abi-profile.json",
-      "bytes": 9350,
-      "sha256": "ecf7bee721d5c985e3ede6de4171d94bb0905c0f24c17e831a45ac9263ab5bf2"
+      "bytes": 9110,
+      "sha256": "49ecf71f4fd4315162cf6bd57e74b089cf0a3efe8890a9d0907d028dbc463506"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/project-services-prep/page-view-open-abi-profile.v2.json",
       "bytes": 3887,
       "sha256": "7727edf7dc5cfc4c4deb4724c91cf6ea6c6421f4014deebe86cdcccf92aff5f2"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/project-services-prep/project-check-worker-static-source.json",
-      "bytes": 16558,
-      "sha256": "f0c3e728e421825c51e25cf448682a6e53848f57d0f76b2b142a4e9394cab0fc"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/project-services-prep/project-compile-diagnostics-abi-profile.json",
@@ -1161,13 +1086,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/resources-prep/picture-edit-abi-profile.v3.json",
-      "bytes": 36178,
-      "sha256": "ff1ea24a91e49b527e7a352a2c792a9789da596aefc9dfcc685d520f9e67b289"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/resources-prep/picture-make-reference-hash-index-miss-static-0001.json",
-      "bytes": 1597,
-      "sha256": "4e1e3ac5146cbc1fc9f49b94533148ded49e057f552c108fba0dbfd762af1226"
+      "bytes": 36045,
+      "sha256": "634f303af66167b7500eb000a6bcbb3eb95ab94a89df129d9f026c49ecad91eb"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/resources-prep/picture-raw-catalog-abi-profile.json",
@@ -1181,18 +1101,18 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/resources-prep/picture-vector-create-abi-profile.v2.json",
-      "bytes": 16188,
-      "sha256": "6a886aac6d4f525cd202e1d294f66f11a924b8490bb03b49e5be0f1337db680c"
+      "bytes": 15612,
+      "sha256": "d40ae1cfd07054df70c2233e03254201f98858544a970db2a8d4fafeb8496088"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-document-close-abi-profile.json",
       "bytes": 4989,
-      "sha256": "ef49c32410f89f3fea081a36f1d20d1194c1df9eedd250640088cfe0c138d2d5"
+      "sha256": "a855dfd62099b42aee7e6863feef1254f65078f3629b92ef3cddc49ed9c7d6d3"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-lifecycle-abi-profile.json",
       "bytes": 32058,
-      "sha256": "ae392bc1f600be07cc2b79104f347646675376377a28ac462dd6660ff4e5edac"
+      "sha256": "aa53c872a02fddc2dfa10f5e4bbc091dfefe243cf0dc770c943781710b9912d2"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-protected-copy-abi-profile.json",
@@ -1202,22 +1122,22 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/lifecycle-prep/strategy-rootadd-generation-abi-profile.json",
       "bytes": 18826,
-      "sha256": "fc9e5ae9194134f9b72e45acf9eaec55b200e6e5cb8285f0dbefd588c753fe99"
+      "sha256": "02817e7e5cae3583a266cff3cc5d3a58eb6adb5d843221897f7f6c197ab121cd"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/product-capability-prep/strategy-product-capability-abi-profile.json",
       "bytes": 11282,
-      "sha256": "68af2b0712e1f11dd1f2dd274375803093a1b95a6c877590975d707041beface"
+      "sha256": "4446bafacd06ffc150cfc20c3993d79d82a4ea336b7bdac015dd0b2a40e13106"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/product-capability-prep/strategy-product-capability-static-proof-0001.json",
-      "bytes": 52347,
-      "sha256": "2dd8e7c553f26a530e6212ac41c4ca57a1078510b73faa3c696744f46ec95c8d"
+      "bytes": 51777,
+      "sha256": "d2aae10764194f5779d6e6bb995decb78bd42696521172b8d846e101068fa00f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-native-primary7-derived-static-source.json",
-      "bytes": 90888,
-      "sha256": "9c6b7056ae786aff316f1964d902ae6fd0d1961aa3e2407715ee8eb74071317c"
+      "bytes": 90660,
+      "sha256": "9bca3774acd3dda34b327e0ecb527317320dfa0bbce364794b19c210ce72d7ee"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-node-abi-profile.v2.json",
@@ -1227,32 +1147,32 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-owned-generation-abi-profile.json",
       "bytes": 34475,
-      "sha256": "bac8505718b595ebfa66dc12ebde9ca25f5823d0d035407aca2887c203014570"
+      "sha256": "38f807cd36b7683350742d850c3d7b31255cee211cf7b1eb3ce4ba44861bd1ef"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/strategy-prog-source-normalization-abi-profile.json",
       "bytes": 1804,
-      "sha256": "6f6371fba83232392acf26424fcb6b06eac7b61551793a9c3399da55b67c358b"
+      "sha256": "3a60c7df157052ad792a436ae1a42d52fcf2fbf51ee8a5df92c2e762fd93807f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/counter-ddx-static.json",
-      "bytes": 1052,
-      "sha256": "8d0a309bb857665d1f9e2c68ad510e4711d9940074842d59559ef881447dc24c"
+      "bytes": 1037,
+      "sha256": "40a9fa08ebb738470072dbb2fa26faacbdf253afd26bc3a4e14275741f48efa2"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/data-condition-ddx-static.json",
-      "bytes": 1996,
-      "sha256": "d58f1f786e1d4b34ffc66d6a426be6cb10007d4aecd4704317322f24abf927ae"
+      "bytes": 1981,
+      "sha256": "9ee2152fa6aaa3e32e94337aab893732794b5ea161ef929f01eea5259029ce7d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/data-limits-dialog-contract-static.json",
-      "bytes": 7581,
-      "sha256": "5b97bb4d2ce26009d88d74706563b7377b6d4e3342d873348eaf9f264ba2f8fe"
+      "bytes": 7526,
+      "sha256": "397a800c3459f205206caa7d4dbf6bedc8e613f40ae7c1cfd3473b0db2cd7463"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/if-ddx-static.json",
-      "bytes": 656,
-      "sha256": "c16015472e2127c5107532a077f3d6a07443b11bb17dd4d1ff99b95390085859"
+      "bytes": 641,
+      "sha256": "a5aef310b85b4d623c62ad97fd217942d2871c3efc8d321d43efc456bc8e177e"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/original-combo-init-resources.json",
@@ -1261,8 +1181,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/proc-time-dialog-contract-static.json",
-      "bytes": 4233,
-      "sha256": "b74bb05647c4f01ca42ed98d1ae4589b2eb8cedc99da3b9db03e21ff8fe21c02"
+      "bytes": 4178,
+      "sha256": "f1a7d9a06909dbedc60495b07cd326c7f09648c3ff6363be273122671b1e8fa9"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-original-property-page-resources.json",
@@ -1272,22 +1192,22 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-standard-svr-abi-profile.json",
       "bytes": 7048,
-      "sha256": "892dd797564f4700959463499c0ced7fe294d647a2ef933321019bdf36dafffb"
+      "sha256": "32f66fd4bc80f84d06400e478e4c7db446b8e862cdcbe68c8ea01e13c2affa76"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/strategy-typed-parameters-abi-profile.v2.json",
       "bytes": 56197,
-      "sha256": "a8a1d07425943f94ec4cd771033c4997646e211bc2b800dbf644b90b06c1c413"
+      "sha256": "3614ad4267df1e680533687f3fbef832f0a377a7977ebd9e17385ead077ca0b2"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/timer-ddx-static.json",
-      "bytes": 953,
-      "sha256": "d9d1ff13d876fbe3e103d6ca735fc7e5d0b77e3d4096228fd7f77413675a6674"
+      "bytes": 938,
+      "sha256": "c1cd5db6b6ed059efd09ae65bd65bfbb3c15253f8e8f7da3e52bf7af254799f7"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/typed-parameters-prep/wnd-dialog-contract-static.json",
-      "bytes": 8316,
-      "sha256": "f64745842b47062cb33481b35a2c5d11e45127acde084797fbdd93ac32566b33"
+      "bytes": 8261,
+      "sha256": "651d0db764423ab903eddd16142db9e867331a524ea77a775e17c347b61c2d1d"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/node-edit-prep/working-sync-prefix-prep/strategy-working-sync-prefix-abi-profile.v2.json",
@@ -1327,7 +1247,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/strategy-prep/trigger-context-prep/typed-ui-prep/strategy-trigger-properties-abi-profile.json",
       "bytes": 10750,
-      "sha256": "7ade4e210011a45e5e3ffdb756cc86a22b845a4b5948afab34c329d7a6460df7"
+      "sha256": "c91012457e9ec76ad1cf38fcc76823d6590dd109490b16b44d9cd0a7dfb3a999"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/typed-properties/control-properties-abi-profile.json",
@@ -1337,7 +1257,7 @@
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/typed-properties/control-rename-scope.json",
       "bytes": 795,
-      "sha256": "8a219e082b56232d4b568109465ffe2e4b405ba03beaad2a9ab7a461bcb1c83d"
+      "sha256": "f2850987d2ed64ed64a3c4898782724fb982c29d103bed225a660f6fb8b4aa1f"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/coverage-20261101/usable-edit-0001/typed-properties/font-value-abi-profile.json",
@@ -1353,11 +1273,6 @@
       "file": "assets/pro-native-bridge/delivery/source/artifacts/extensions/control/standard-controls-abi-guard-v3.json",
       "bytes": 6527,
       "sha256": "73090bee820bcec329947c2ba458fed5a327ac2263743ea70dc1cf892d0c3170"
-    },
-    {
-      "file": "assets/pro-native-bridge/delivery/source/artifacts/extensions/page/function-00bd68e0.json",
-      "bytes": 6887,
-      "sha256": "9e17a45c192e57a59f22bf8217e1f44fab016278bad3eceb3ac01ce093af16f3"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/artifacts/extensions/page/page-delete-abi-profile.json",
@@ -1446,8 +1361,8 @@
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/source-and-dependency-manifest.json",
-      "bytes": 83676,
-      "sha256": "e80a1ada19e5f6616bf36ec9a7c2c39915ac447dea3dda2469b41e11df13c842"
+      "bytes": 78703,
+      "sha256": "f170b21267f6b40da2988c74115198f81d7ba55c9a50a5bc1d89bc964e5f1055"
     },
     {
       "file": "assets/pro-native-bridge/delivery/source/sources/bootstrap__NativeTrialActions.cs",
@@ -2411,8 +2326,8 @@
     },
     {
       "file": "assets/pro-native-bridge/script-adapters/generic-action-source-native-declarations.json",
-      "bytes": 4240,
-      "sha256": "ac6907dffe909faa9d91c7f10e7373535da0f571d31e8383c47ab3faa08d2937"
+      "bytes": 4108,
+      "sha256": "c911b614d95197e2c8615a576d87bedb1a4330096963c31e2a4f5ad1378910a3"
     },
     {
       "file": "assets/pro-native-bridge/script-adapters/generic_action_source.py",
@@ -2421,8 +2336,8 @@
     },
     {
       "file": "assets/pro-native-bridge/script-adapters/timer-counter-native-static-proof.json",
-      "bytes": 15579,
-      "sha256": "cea9c2ffd87ee9d258901dd3031587e4343a8c663534b29816b55a33aa9bba68"
+      "bytes": 15091,
+      "sha256": "a008ead1d8c8636b4e0a7d8bb55dcf16adc662f1d2b08b77f9889cedc21cf267"
     },
     {
       "file": "assets/pro-native-bridge/script-adapters/timer-counter-source-semantics.json",
@@ -2631,8 +2546,8 @@
     },
     {
       "file": "CONTRIBUTING.md",
-      "bytes": 6883,
-      "sha256": "196039e99e2acaf3429dd1f4be5f05551b2d01712ce71c7970a9cb09fa45afcb"
+      "bytes": 7348,
+      "sha256": "32caa139e65e575d026022390ffbeb14250168db7ba71555c0653c86d5a701cf"
     },
     {
       "file": "LICENSE",
@@ -3015,6 +2930,11 @@
       "sha256": "c07c4f815ea36fdf4d589c9e68fb9f8c1ceb091a2d61794557c2207d5d777845"
     },
     {
+      "file": "scripts/audit_public_content.py",
+      "bytes": 12057,
+      "sha256": "4b0a85fd6311907f52424214f2755c091c2aa2162d41e5fc8b801ca64bf0e782"
+    },
+    {
       "file": "scripts/build_local_candidate.py",
       "bytes": 10959,
       "sha256": "96868ac974d7f937569a956f9cb7d2d4ac00c1e06b633b6ac716842b2f1bb70d"
@@ -3308,6 +3228,11 @@
       "file": "scripts/test_pro_page_plan.py",
       "bytes": 51932,
       "sha256": "97412072edc1cfe84fd01e3563ae4f4b5e725a99acefeda737d9220b6f5ad3db"
+    },
+    {
+      "file": "scripts/test_public_content_audit.py",
+      "bytes": 5735,
+      "sha256": "13104ff03f0cdf55d0798d6a3b5749c45f28bbe74f483e5a9d3e5ba9c599f69c"
     },
     {
       "file": "scripts/test_state_resources.py",
